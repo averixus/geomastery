@@ -1,0 +1,57 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "newsoftwood": "jjmod:blocks/building/newsoftwood",
+    "log_spruce": "jjmod:blocks/building/log_spruce"
+},
+"elements": [ 
+{
+    "from": [ 0, 15, 0 ],
+    "to": [ 4, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 12, 0 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 0, 0, 4, 16 ], "texture": "#log_spruce" },
+        "north": { "uv": [ 12, 8, 16, 9 ], "texture": "#log_spruce" },
+        "south": { "uv": [ 0, 8, 4, 9 ], "texture": "#log_spruce" },
+        "west":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" },
+        "east":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" }
+    }
+},
+{
+    "from": [ 5, 15, 0 ],
+    "to": [ 7, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 14, 0 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 0, 0, 2, 16 ], "texture": "#log_spruce" },
+        "north": { "uv": [ 14, 8, 16, 9 ], "texture": "#log_spruce" },
+        "south": { "uv": [ 0, 8, 2, 9 ], "texture": "#log_spruce" },
+        "west":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" },
+        "east":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" }
+    }
+},
+{
+    "from": [ 8, 15, 0 ],
+    "to": [ 11, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 8, 16, 5, 0 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 8, 0, 11, 16 ], "texture": "#log_spruce" },
+        "north": { "uv": [ 5, 8, 8, 9 ], "texture": "#log_spruce" },
+        "south": { "uv": [ 8, 8, 11, 9 ], "texture": "#log_spruce" },
+        "west":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" },
+        "east":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" }
+    }
+},
+{
+    "from": [ 12, 15, 0 ],
+    "to": [ 15, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 4, 16, 1, 0 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 12, 0, 15, 16 ], "texture": "#log_spruce" },
+        "north": { "uv": [ 1, 8, 4, 9 ], "texture": "#log_spruce" },
+        "south": { "uv": [ 12, 8, 15, 9 ], "texture": "#log_spruce" },
+        "west":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" },
+        "east":  { "uv": [ 0, 8, 16, 9 ], "texture": "#log_spruce" }
+    }
+}
+]
+}

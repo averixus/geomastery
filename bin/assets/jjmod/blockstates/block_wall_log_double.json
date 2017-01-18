@@ -1,0 +1,13 @@
+{
+    "multipart": [
+        {   "when": { "straight": "no" },
+            "apply": { "model": "jjmod:building/log_double_cross" }
+        },
+        {   "when": { "straight": "ns" },
+            "apply": { "model": "jjmod:building/log_double_straight" }
+        },
+        {   "when": { "straight": "ew" },
+            "apply": { "model": "jjmod:building/log_double_straight", "y": 90 }
+        }
+    ]
+}

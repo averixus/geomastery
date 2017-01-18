@@ -1,0 +1,56 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "mudbrickwall": "jjmod:blocks/building/mudbrickwall"
+},
+"elements": [ 
+{
+    "from": [ 3, 8, 12 ],
+    "to": [ 11, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 13, 16, 5, 12 ], "texture": "#mudbrickwall" },
+        "up":    { "uv": [ 3, 12, 11, 16 ], "texture": "#mudbrickwall" },
+        "north": { "uv": [ 5, 0, 13, 8 ], "texture": "#mudbrickwall" },
+        "south": { "uv": [ 3, 0, 11, 8 ], "texture": "#mudbrickwall" },
+        "west":  { "uv": [ 12, 0, 16, 8 ], "texture": "#mudbrickwall" },
+        "east":  { "uv": [ 0, 0, 4, 8 ], "texture": "#mudbrickwall" }
+    }
+},
+{
+    "from": [ 4, 8, 10 ],
+    "to": [ 6, 16, 12 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 10, 10 ], "texture": "#mudbrickwall" },
+        "up":    { "uv": [ 4, 10, 6, 12 ], "texture": "#mudbrickwall" },
+        "north": { "uv": [ 10, 0, 12, 8 ], "texture": "#mudbrickwall" },
+        "south": { "uv": [ 4, 0, 6, 8 ], "texture": "#mudbrickwall" },
+        "west":  { "uv": [ 10, 0, 12, 8 ], "texture": "#mudbrickwall" },
+        "east":  { "uv": [ 4, 0, 6, 8 ], "texture": "#mudbrickwall" }
+    }
+},
+{
+    "from": [ 2, 0, 13 ],
+    "to": [ 12, 8, 16 ],
+    "faces": {
+        "down":  { "uv": [ 14, 16, 4, 13 ], "texture": "#mudbrickwall" },
+        "up":    { "uv": [ 2, 13, 12, 16 ], "texture": "#mudbrickwall" },
+        "north": { "uv": [ 4, 8, 14, 16 ], "texture": "#mudbrickwall" },
+        "south": { "uv": [ 2, 8, 12, 16 ], "texture": "#mudbrickwall" },
+        "west":  { "uv": [ 13, 8, 16, 16 ], "texture": "#mudbrickwall" },
+        "east":  { "uv": [ 0, 8, 3, 16 ], "texture": "#mudbrickwall" }
+    }
+},
+{
+    "from": [ 3, 0, 11 ],
+    "to": [ 5, 8, 13 ],
+    "faces": {
+        "down":  { "uv": [ 13, 13, 11, 11 ], "texture": "#mudbrickwall" },
+        "up":    { "uv": [ 3, 11, 5, 13 ], "texture": "#mudbrickwall" },
+        "north": { "uv": [ 11, 8, 13, 16 ], "texture": "#mudbrickwall" },
+        "south": { "uv": [ 3, 8, 5, 16 ], "texture": "#mudbrickwall" },
+        "west":  { "uv": [ 11, 8, 13, 16 ], "texture": "#mudbrickwall" },
+        "east":  { "uv": [ 3, 8, 5, 16 ], "texture": "#mudbrickwall" }
+    }
+}
+]
+}

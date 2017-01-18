@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "facing=north,part=bl": { "model": "jjmod:crafters/forge_bl", "y": 270 },
+        "facing=east,part=bl":  { "model": "jjmod:crafters/forge_bl" },
+        "facing=south,part=bl": { "model": "jjmod:crafters/forge_bl", "y": 90 },
+        "facing=west,part=bl":  { "model": "jjmod:crafters/forge_bl", "y": 180 },
+        "facing=north,part=bm": { "model": "jjmod:crafters/forge_bm", "y": 270 },
+        "facing=east,part=bm":  { "model": "jjmod:crafters/forge_bm" },
+        "facing=south,part=bm": { "model": "jjmod:crafters/forge_bm", "y": 90 },
+        "facing=west,part=bm":  { "model": "jjmod:crafters/forge_bm", "y": 180 },
+        "facing=north,part=br": { "model": "jjmod:crafters/forge_br", "y": 270 },
+        "facing=east,part=br":  { "model": "jjmod:crafters/forge_br" },
+        "facing=south,part=br": { "model": "jjmod:crafters/forge_br", "y": 90 },
+        "facing=west,part=br":  { "model": "jjmod:crafters/forge_br", "y": 180 },
+        "facing=north,part=fl": { "model": "jjmod:crafters/forge_fl", "y": 270 },
+        "facing=east,part=fl":  { "model": "jjmod:crafters/forge_fl" },
+        "facing=south,part=fl": { "model": "jjmod:crafters/forge_fl", "y": 90 },
+        "facing=west,part=fl":  { "model": "jjmod:crafters/forge_fl", "y": 180 },
+        "facing=north,part=fm": { "model": "jjmod:crafters/forge_fm", "y": 270 },
+        "facing=east,part=fm":  { "model": "jjmod:crafters/forge_fm" },
+        "facing=south,part=fm": { "model": "jjmod:crafters/forge_fm", "y": 90 },
+        "facing=west,part=fm":  { "model": "jjmod:crafters/forge_fm", "y": 180 },
+        "facing=north,part=fr": { "model": "jjmod:crafters/forge_fr", "y": 270 },
+        "facing=east,part=fr":  { "model": "jjmod:crafters/forge_fr" },
+        "facing=south,part=fr": { "model": "jjmod:crafters/forge_fr", "y": 90 },
+        "facing=west,part=fr":  { "model": "jjmod:crafters/forge_fr", "y": 180 }
+    }
+}

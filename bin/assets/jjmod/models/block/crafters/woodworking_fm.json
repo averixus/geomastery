@@ -1,0 +1,32 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "woodwork1": "jjmod:blocks/crafters/woodwork1",
+    "woodwork2": "jjmod:blocks/crafters/woodwork2",
+    "notexture": "jjmod:blocks/crafters/notexture",
+    "sawdust": "jjmod:blocks/crafters/sawdust",
+    "particle": "jjmod:blocks/crafters/woodwork1"
+},
+"elements": [ 
+{
+    "from": [ 13, 12, 0 ],
+    "to": [ 16, 14, 16 ],
+    "faces": {
+        "down":  { "uv": [ 3, 16, 0, 0 ], "texture": "#woodwork1" },
+        "up":    { "uv": [ 13, 0, 16, 16 ], "texture": "#woodwork1" },
+        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#woodwork2" },
+        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#woodwork2" },
+        "west":  { "uv": [ 0, 2, 16, 4 ], "texture": "#woodwork2" },
+        "east":  { "uv": [ 0, 2, 16, 4 ], "texture": "#woodwork2" }
+    }
+},
+{
+    "from": [ 9, 0, 0 ],
+    "to": [ 16, 0.001, 16 ],
+    "faces": {
+        "down":  { "uv": [ 7, 16, 0, 0 ], "texture": "#notexture" },
+        "up":    { "uv": [ 0, 0, 7, 16 ], "texture": "#sawdust" }
+    }
+}
+]
+}

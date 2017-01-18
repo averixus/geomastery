@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "age=0": { "model": "jjmod:plants/seedling_apple" },
+        "age=1": { "model": "jjmod:plants/seedling_apple" }
+    }
+}

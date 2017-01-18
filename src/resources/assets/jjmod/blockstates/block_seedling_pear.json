@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "age=0": { "model": "jjmod:plants/seedling_pear" },
+        "age=1": { "model": "jjmod:plants/seedling_pear" }
+    }
+}

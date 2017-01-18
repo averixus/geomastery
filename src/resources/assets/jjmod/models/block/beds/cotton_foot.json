@@ -1,0 +1,21 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "cotton1": "jjmod:blocks/beds/cotton1",
+    "particle": "jjmod:blocks/beds/cotton1"
+},
+"elements": [ 
+{
+    "from": [ 1, 0, 2 ],
+    "to": [ 16, 1, 14 ],
+    "faces": {
+        "down":  { "uv": [ 15, 14, 0, 2 ], "texture": "#cotton1" },
+        "up":    { "uv": [ 1, 4, 16, 16 ], "texture": "#cotton1" },
+        "north": { "uv": [ 0, 15, 15, 16 ], "texture": "#cotton1" },
+        "south": { "uv": [ 1, 15, 16, 16 ], "texture": "#cotton1" },
+        "west":  { "uv": [ 2, 15, 14, 16 ], "texture": "#cotton1" },
+        "east":  { "uv": [ 2, 15, 14, 16 ], "texture": "#cotton1" }
+    }
+}
+]
+}

@@ -1,0 +1,59 @@
+{
+"__comment": "Designed by bdcraftjgrowe65 with bDcraft Cubik pRO 0.96 beta - http://bdcraft.net",
+"textures": {
+    "woodworkingbenchpanels": "jjmod:blocks/building/woodworkingbenchpanels",
+    "door_spruce_lower": "jjmod:blocks/building/door_spruce_lower",
+    "door_spruce_upper": "jjmod:blocks/building/door_spruce_upper",
+    "door_spruce_upperflipped": "jjmod:blocks/building/door_spruce_upperflipped"
+},
+"elements": [ 
+{
+    "from": [ 8, 0, 0 ],
+    "to": [ 11, 16, 1 ],
+    "faces": {
+        "down":  { "uv": [ 8, 1, 5, 0 ], "texture": "#woodworkingbenchpanels" },
+        "up":    { "uv": [ 9, 0, 12, 1 ], "texture": "#woodworkingbenchpanels" },
+        "north": { "uv": [ 5, 0, 8, 16 ], "texture": "#woodworkingbenchpanels" },
+        "south": { "uv": [ 5, 0, 8, 16 ], "texture": "#woodworkingbenchpanels" },
+        "west":  { "uv": [ 1, 0, 2, 16 ], "texture": "#woodworkingbenchpanels" },
+        "east":  { "uv": [ 14, 0, 15, 16 ], "texture": "#woodworkingbenchpanels" }
+    }
+},
+{
+    "from": [ 10, 0, 1 ],
+    "to": [ 11, 15, 15 ],
+    "faces": {
+        "down":  { "uv": [ 6, 16, 5, 1 ], "texture": "#door_spruce_lower" },
+        "up":    { "uv": [ 8, 1, 9, 16 ], "texture": "#door_spruce_lower" },
+        "north": { "uv": [ 5, 1, 6, 16 ], "texture": "#door_spruce_upper" },
+        "south": { "uv": [ 10, 1, 11, 16 ], "texture": "#door_spruce_upperflipped" },
+        "west":  { "uv": [ 1, 1, 16, 16 ], "texture": "#door_spruce_upper" },
+        "east":  { "uv": [ 0, 1, 15, 16 ], "texture": "#door_spruce_upperflipped" }
+    }
+},
+{
+    "from": [ 8, 0, 15 ],
+    "to": [ 11, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 8, 16, 5, 15 ], "texture": "#woodworkingbenchpanels" },
+        "up":    { "uv": [ 9, 15, 12, 16 ], "texture": "#woodworkingbenchpanels" },
+        "north": { "uv": [ 5, 0, 8, 16 ], "texture": "#woodworkingbenchpanels" },
+        "south": { "uv": [ 9, 0, 12, 16 ], "texture": "#woodworkingbenchpanels" },
+        "west":  { "uv": [ 15, 0, 16, 16 ], "texture": "#woodworkingbenchpanels" },
+        "east":  { "uv": [ 1, 0, 2, 16 ], "texture": "#woodworkingbenchpanels" }
+    }
+},
+{
+    "from": [ 8, 15, 1 ],
+    "to": [ 11, 16, 15 ],
+    "faces": {
+        "down":  { "uv": [ 8, 15, 5, 1 ], "texture": "#woodworkingbenchpanels" },
+        "up":    { "uv": [ 9, 0.5, 12, 14.5 ], "texture": "#woodworkingbenchpanels" },
+        "north": { "uv": [ 5, 0, 8, 1 ], "texture": "#woodworkingbenchpanels" },
+        "south": { "uv": [ 9, 0, 12, 1 ], "texture": "#woodworkingbenchpanels" },
+        "west":  { "uv": [ 1, 0, 15, 1 ], "texture": "#woodworkingbenchpanels" },
+        "east":  { "uv": [ 1, 0, 15, 1 ], "texture": "#woodworkingbenchpanels" }
+    }
+}
+]
+}

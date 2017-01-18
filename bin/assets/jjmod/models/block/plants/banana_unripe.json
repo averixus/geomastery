@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "jjmod:blocks/plants/banana_unripe"
+    }
+}
+

@@ -1,0 +1,6 @@
+{
+    "parent": "block/crop",
+    "textures": {
+        "crop": "jjmod:blocks/plants/cotton1"
+    }
+}

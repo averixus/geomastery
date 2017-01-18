@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "jjmod:lights/candle_beeswax_up" },
+        "facing=east": { "model": "jjmod:lights/candle_beeswax_side" },
+        "facing=south": { "model": "jjmod:lights/candle_beeswax_side", "y": 90 },
+        "facing=west": { "model": "jjmod:lights/candle_beeswax_side", "y": 180 },
+        "facing=north": { "model": "jjmod:lights/candle_beeswax_side", "y": 270 }
+    }
+}

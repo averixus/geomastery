@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "facing=north,part=bl": { "model": "jjmod:crafters/stone_bl", "y": 270 },
+        "facing=east,part=bl":  { "model": "jjmod:crafters/stone_bl" },
+        "facing=south,part=bl": { "model": "jjmod:crafters/stone_bl", "y": 90 },
+        "facing=west,part=bl":  { "model": "jjmod:crafters/stone_bl", "y": 180 },
+        "facing=north,part=bm": { "model": "jjmod:crafters/stone_bm", "y": 270 },
+        "facing=east,part=bm":  { "model": "jjmod:crafters/stone_bm" },
+        "facing=south,part=bm": { "model": "jjmod:crafters/stone_bm", "y": 90 },
+        "facing=west,part=bm":  { "model": "jjmod:crafters/stone_bm", "y": 180 },
+        "facing=north,part=br": { "model": "jjmod:crafters/stone_br", "y": 270 },
+        "facing=east,part=br":  { "model": "jjmod:crafters/stone_br" },
+        "facing=south,part=br": { "model": "jjmod:crafters/stone_br", "y": 90 },
+        "facing=west,part=br":  { "model": "jjmod:crafters/stone_br", "y": 180 },
+        "facing=north,part=tl": { "model": "jjmod:crafters/stone_tl", "y": 270 },
+        "facing=east,part=tl":  { "model": "jjmod:crafters/stone_tl" },
+        "facing=south,part=tl": { "model": "jjmod:crafters/stone_tl", "y": 90 },
+        "facing=west,part=tl":  { "model": "jjmod:crafters/stone_tl", "y": 180 },
+        "facing=north,part=tm": { "model": "jjmod:crafters/stone_tm", "y": 270 },
+        "facing=east,part=tm":  { "model": "jjmod:crafters/stone_tm" },
+        "facing=south,part=tm": { "model": "jjmod:crafters/stone_tm", "y": 90 },
+        "facing=west,part=tm":  { "model": "jjmod:crafters/stone_tm", "y": 180 },
+        "facing=north,part=tr": { "model": "jjmod:crafters/stone_tr", "y": 270 },
+        "facing=east,part=tr":  { "model": "jjmod:crafters/stone_tr" },
+        "facing=south,part=tr": { "model": "jjmod:crafters/stone_tr", "y": 90 },
+        "facing=west,part=tr":  { "model": "jjmod:crafters/stone_tr", "y": 180 }
+    }
+}

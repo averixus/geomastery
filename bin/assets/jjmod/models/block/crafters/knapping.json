@@ -1,0 +1,52 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "knappingblock": "jjmod:blocks/crafters/knappingblock",
+        "knappingseat": "jjmod:blocks/crafters/knappingseat",
+        "knappingstone": "jjmod:blocks/crafters/knappingstone",
+        "particle": "jjmod:blocks/crafters/knappingstone"
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 1.0, 0.0, 0.0 ], 
+            "to": [ 13.0, 3.0, 7.0 ], 
+            "faces": {
+                "north": { "texture": "#knappingblock", "uv": [ 0.0, 0.0, 12.0, 3.0 ] },
+                "east": { "texture": "#knappingblock", "uv": [ 0.0, 0.0, 7.0, 3.0 ] },
+                "south": { "texture": "#knappingblock", "uv": [ 0.0, 0.0, 12.0, 3.0 ] },
+                "west": { "texture": "#knappingblock", "uv": [ 0.0, 0.0, 7.0, 3.0 ] },
+                "up": { "texture": "#knappingblock", "uv": [ 0.0, 3.0, 12.0, 10.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 12.0, 7.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 4.0, 0.0, 11.0 ], 
+            "to": [ 11.0, 2.0, 15.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": -22.5 },
+            "faces": {
+                "north": { "texture": "#knappingseat", "uv": [ 0.0, 0.0, 7.0, 2.0 ] },
+                "east": { "texture": "#knappingseat", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "south": { "texture": "#knappingseat", "uv": [ 0.0, 0.0, 7.0, 2.0 ] },
+                "west": { "texture": "#knappingseat", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "up": { "texture": "#knappingseat", "uv": [ 0.0, 0.0, 7.0, 4.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 7.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 10.0, 3.0, 2.0 ], 
+            "to": [ 12.0, 4.0, 5.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#knappingstone", "uv": [ 0.0, 8.0, 2.0, 9.0 ] },
+                "east": { "texture": "#knappingstone", "uv": [ 0.0, 0.0, 3.0, 1.0 ] },
+                "south": { "texture": "#knappingstone", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "west": { "texture": "#knappingstone", "uv": [ 0.0, 0.0, 3.0, 1.0 ] },
+                "up": { "texture": "#knappingstone", "uv": [ 0.0, 0.0, 2.0, 3.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 3.0 ] }
+            }
+        }
+    ]
+}

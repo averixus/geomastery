@@ -1,0 +1,48 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "brickpavetest": "jjmod:blocks/building/brickpave",
+    "texture": "jjmod:blocks/building/wholebrickwall",
+    "wholebrickwallupper": "jjmod:blocks/building/wholebrickwallupper",
+    "wholebrickwalltop": "jjmod:blocks/building/wholebrickwalltop",
+    "halfbrickwalltop2": "jjmod:blocks/building/halfbrickwalltop2"
+},
+"elements": [ 
+{
+    "from": [ 3, 14, 3 ],
+    "to": [ 13, 16, 13 ],
+    "faces": {
+        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#wholebrickwalltop" },
+        "up":    { "uv": [ 0, 0, 10, 10 ], "texture": "#halfbrickwalltop2" },
+        "north": { "uv": [ 3, 0, 13, 2 ], "texture": "#wholebrickwallupper" },
+        "south": { "uv": [ 3, 0, 13, 2 ], "texture": "#wholebrickwallupper" },
+        "west":  { "uv": [ 2, 0, 12, 2 ], "texture": "#wholebrickwallupper" },
+        "east":  { "uv": [ 2, 0, 12, 2 ], "texture": "#wholebrickwallupper" }
+    }
+},
+{
+    "from": [ 3, 0, 3 ],
+    "to": [ 13, 4, 13 ],
+    "faces": {
+        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#brickpavetest" },
+        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#brickpavetest" },
+        "north": { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" },
+        "south": { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" },
+        "west":  { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" },
+        "east":  { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" }
+    }
+},
+{
+    "from": [ 4, 4, 4 ],
+    "to": [ 12, 14, 12 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#brickpavetest" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#brickpavetest" },
+        "north": { "uv": [ 4, 2, 12, 12 ], "texture": "#texture" },
+        "south": { "uv": [ 4, 2, 12, 12 ], "texture": "#texture" },
+        "west":  { "uv": [ 4, 2, 12, 12 ], "texture": "#texture" },
+        "east":  { "uv": [ 4, 2, 12, 12 ], "texture": "#texture" }
+    }
+}
+]
+}

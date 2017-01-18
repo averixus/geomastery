@@ -1,0 +1,22 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "normal": [{
+            "custom": {
+                "base": "jjmod:block_rice_base#base",
+                "Mipped Cutout": "jjmod:block_rice_base#base",
+                "Translucent": "jjmod:block_rice_base#trans"
+            }
+        }],
+        "base": [{
+            "model": "jjmod:plants/rice_base"
+        }],
+        "trans": [{
+            "model": "jjmod:plants/water"
+        }]
+    }
+}

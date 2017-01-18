@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "age=0": { "model": "jjmod:plants/tomato_unripe" },
+        "age=1": { "model": "jjmod:plants/tomato_unripe" },
+        "age=2": { "model": "jjmod:plants/tomato_unripe" },
+        "age=3": { "model": "jjmod:plants/tomato_unripe" },
+        "age=4": { "model": "jjmod:plants/tomato_unripe" },
+        "age=5": { "model": "jjmod:plants/tomato_ripe" }
+    }
+}

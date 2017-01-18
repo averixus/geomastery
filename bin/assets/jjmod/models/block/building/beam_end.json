@@ -1,0 +1,20 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "newsoftwood": "jjmod:blocks/building/newsoftwood"
+},
+"elements": [ 
+{
+    "from": [ 16, 8, 6 ],
+    "to": [ 24, 15, 10 ],
+    "faces": {
+        "down":  { "uv": [ 8, 10, 0, 6 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 8, 6, 16, 10 ], "texture": "#newsoftwood" },
+        "north": { "uv": [ 0, 1, 8, 8 ], "texture": "#newsoftwood" },
+        "south": { "uv": [ 8, 1, 16, 8 ], "texture": "#newsoftwood" },
+        "west":  { "uv": [ 6, 1, 10, 8 ], "texture": "#newsoftwood" },
+        "east":  { "uv": [ 6, 1, 10, 8 ], "texture": "#newsoftwood" }
+    }
+}
+]
+}

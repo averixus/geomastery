@@ -1,0 +1,45 @@
+---- Minecraft Crash Report ----
+// Everything's going to plan. No, really, that was supposed to happen.
+
+Time: 21/12/16 14:42
+Description: Exception in server tick loop
+
+java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at net.minecraft.world.chunk.storage.AnvilChunkLoader.writeChunkToNBT(AnvilChunkLoader.java:357)
+	at net.minecraft.world.chunk.storage.AnvilChunkLoader.saveChunk(AnvilChunkLoader.java:191)
+	at net.minecraft.world.gen.ChunkProviderServer.saveChunkData(ChunkProviderServer.java:209)
+	at net.minecraft.world.gen.ChunkProviderServer.saveChunks(ChunkProviderServer.java:237)
+	at net.minecraft.world.WorldServer.saveAllChunks(WorldServer.java:1065)
+	at net.minecraft.server.MinecraftServer.saveAllWorlds(MinecraftServer.java:425)
+	at net.minecraft.server.integrated.IntegratedServer.saveAllWorlds(IntegratedServer.java:238)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:721)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:156)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:547)
+	at java.lang.Thread.run(Unknown Source)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.11
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_111, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 116211904 bytes (110 MB) / 930611200 bytes (887 MB) up to 930611200 bytes (887 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP 9.35 Powered by Forge 13.19.1.2188 5 mods loaded, 5 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAAAAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAAAAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.11-13.19.1.2188.jar) 
+	UCHIJAAAAAAAAA	forge{13.19.1.2188} [Minecraft Forge] (forgeSrc-1.11-13.19.1.2188.jar) 
+	UCHIJAAAAAAAAA	jjmod{1.0} [JJ Mod] (bin) 
+	UCHIJAAAAAAAAA	examplemod{1.0} [Example Mod] (bin) 
+	Loaded coremods (and transformers): 
+	GL info: ~~ERROR~~ RuntimeException: No OpenGL context found in the current thread.
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 8; [EntityPlayerMP['Jazzable'/134275, l='New World', x=780.50, y=231.00, z=-221.50]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'

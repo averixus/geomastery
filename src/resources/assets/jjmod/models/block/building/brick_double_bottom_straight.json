@@ -1,0 +1,33 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "brickpavetest": "jjmod:blocks/building/brickpave",
+    "texture": "jjmod:blocks/building/wholebrickwall"
+},
+"elements": [ 
+{
+    "from": [ 0, 0, 0 ],
+    "to": [ 16, 4, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#brickpavetest" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#brickpavetest" },
+        "north": { "uv": [ 0, 12, 16, 16 ], "texture": "#texture" },
+        "south": { "uv": [ 0, 12, 16, 16 ], "texture": "#texture" },
+        "west":  { "uv": [ 0, 12, 16, 16 ], "texture": "#texture" },
+        "east":  { "uv": [ 0, 12, 16, 16 ], "texture": "#texture" }
+    }
+},
+{
+    "from": [ 1, 4, 0 ],
+    "to": [ 15, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#brickpavetest" },
+        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#brickpavetest" },
+        "north": { "uv": [ 1, 0, 15, 12 ], "texture": "#texture" },
+        "south": { "uv": [ 1, 0, 15, 12 ], "texture": "#texture" },
+        "west":  { "uv": [ 0, 0, 16, 12 ], "texture": "#texture" },
+        "east":  { "uv": [ 0, 0, 16, 12 ], "texture": "#texture" }
+    }
+}
+]
+}
