@@ -1,0 +1,116 @@
+---- Minecraft Crash Report ----
+// I blame Dinnerbone.
+
+Time: 21/01/17 21:40
+Description: Unexpected error
+
+java.lang.NullPointerException: Unexpected error
+	at com.jj.jjmod.items.ItemBucket.tryPlaceContainedLiquid(ItemBucket.java:197)
+	at com.jj.jjmod.items.ItemBucket.onItemRightClick(ItemBucket.java:114)
+	at net.minecraft.item.ItemStack.useItemRightClick(ItemStack.java:210)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.processRightClick(PlayerControllerMP.java:529)
+	at net.minecraft.client.Minecraft.rightClickMouse(Minecraft.java:1622)
+	at net.minecraft.client.Minecraft.processKeyBinds(Minecraft.java:2274)
+	at net.minecraft.client.Minecraft.runTickKeyboard(Minecraft.java:2051)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1839)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1117)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:405)
+	at net.minecraft.client.main.Main.main(Main.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Client thread
+Stacktrace:
+	at com.jj.jjmod.items.ItemBucket.tryPlaceContainedLiquid(ItemBucket.java:197)
+	at com.jj.jjmod.items.ItemBucket.onItemRightClick(ItemBucket.java:114)
+	at net.minecraft.item.ItemStack.useItemRightClick(ItemStack.java:210)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.processRightClick(PlayerControllerMP.java:529)
+	at net.minecraft.client.Minecraft.rightClickMouse(Minecraft.java:1622)
+	at net.minecraft.client.Minecraft.processKeyBinds(Minecraft.java:2274)
+	at net.minecraft.client.Minecraft.runTickKeyboard(Minecraft.java:2051)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['Jazzable'/59, l='MpServer', x=-520.18, y=4.00, z=-550.76]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (-504,4,-543), Chunk: (at 8,0,1 in -32,-34; contains blocks -512,0,-544 to -497,255,-529), Region: (-1,-2; contains chunks -32,-64 to -1,-33, blocks -512,0,-1024 to -1,255,-513)
+	Level time: 105971 game time, 11472 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 22 total; [EntityPig['Pig'/0, l='MpServer', x=-578.48, y=4.00, z=-588.32], EntityChicken['Chicken'/1, l='MpServer', x=-580.21, y=4.00, z=-546.60], EntityItem['item.item.egg'/2, l='MpServer', x=-580.63, y=4.00, z=-546.09], EntityCow['Cow'/3, l='MpServer', x=-565.87, y=4.00, z=-528.21], EntitySheep['Sheep'/4, l='MpServer', x=-569.84, y=4.00, z=-527.16], EntitySheep['Sheep'/5, l='MpServer', x=-555.23, y=4.00, z=-585.46], EntitySheep['Sheep'/6, l='MpServer', x=-547.21, y=4.00, z=-498.58], EntityHorse['Horse'/7, l='MpServer', x=-551.87, y=4.00, z=-508.14], EntityChicken['Chicken'/8, l='MpServer', x=-532.92, y=4.00, z=-626.84], EntityHorse['Horse'/9, l='MpServer', x=-528.82, y=4.00, z=-499.49], EntitySheep['Sheep'/11, l='MpServer', x=-522.56, y=4.00, z=-615.27], EntityHorse['Horse'/13, l='MpServer', x=-496.08, y=4.00, z=-512.68], EntityChicken['Chicken'/15, l='MpServer', x=-486.85, y=4.00, z=-500.14], EntityItem['item.item.egg'/16, l='MpServer', x=-486.81, y=4.00, z=-499.55], EntityChicken['Chicken'/17, l='MpServer', x=-494.36, y=4.00, z=-491.79], EntityDonkey['Donkey'/18, l='MpServer', x=-489.14, y=4.00, z=-490.22], EntityItem['item.item.egg'/19, l='MpServer', x=-494.82, y=4.00, z=-491.42], EntityPig['Pig'/20, l='MpServer', x=-484.25, y=4.00, z=-475.56], EntitySheep['Sheep'/23, l='MpServer', x=-470.57, y=4.00, z=-525.45], EntityPig['Pig'/24, l='MpServer', x=-470.78, y=4.00, z=-520.73], EntityDonkey['Donkey'/25, l='MpServer', x=-467.16, y=4.00, z=-488.84], EntityPlayerSP['Jazzable'/59, l='MpServer', x=-520.18, y=4.00, z=-550.76]]
+	Retry entities: 0 total; []
+	Server brand: fml,forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:451)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2772)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:434)
+	at net.minecraft.client.main.Main.main(Main.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.11
+	Operating System: Mac OS X (x86_64) version 10.12.2
+	Java Version: 1.8.0_121, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 839284800 bytes (800 MB) / 1901068288 bytes (1813 MB) up to 3817865216 bytes (3641 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP 9.35 Powered by Forge 13.19.1.2189 5 mods loaded, 5 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.11-13.19.1.2189.jar) 
+	UCHIJAAAA	forge{13.19.1.2189} [Minecraft Forge] (forgeSrc-1.11-13.19.1.2189.jar) 
+	UCHIJAAAA	jjmod{1.0} [JJ Mod] (bin) 
+	UCHIJAAAA	examplemod{1.0} [Example Mod] (bin) 
+	Loaded coremods (and transformers): 
+	GL info: ' Vendor: 'Intel Inc.' Version: '2.1 INTEL-10.22.25' Renderer: 'Intel(R) Iris(TM) Graphics 6100'
+	Launched Version: 1.11
+	LWJGL: 2.9.2
+	OpenGL: Intel(R) Iris(TM) Graphics 6100 GL version 2.1 INTEL-10.22.25, Intel Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because ARB_framebuffer_object is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-5287U CPU @ 2.90GHz

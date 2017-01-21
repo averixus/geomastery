@@ -21,13 +21,14 @@ public class ModLiquids {
     public static Fluid tarFluid;
     public static BlockFluidClassic tarBlock;
     
-    public static final ResourceLocation TAR_LOCATION = new ResourceLocation("jjmod:tar");
+    public static final ResourceLocation TAR_LOCATION = new ResourceLocation("jjmod:block_tar");
+    public static final ResourceLocation TAR_TEXTURE = new ResourceLocation("jjmod:blocks/liquids/tar");
     
     public static void preInit() {
         
-        tarFluid = new Fluid("tar_fluid", TAR_LOCATION, TAR_LOCATION);
+        tarFluid = new Fluid("fluid_tar", TAR_TEXTURE, TAR_TEXTURE);
         FluidRegistry.registerFluid(tarFluid);
-        tarBlock = (BlockFluidClassic) new BlockFluidClassic(tarFluid, BlockMaterial.TAR).setRegistryName("tar_block").setUnlocalizedName("tar_block");
+        tarBlock = (BlockFluidClassic) new BlockFluidClassic(tarFluid, BlockMaterial.TAR).setRegistryName("block_tar").setUnlocalizedName("block_tar");
         GameRegistry.register(tarBlock);
         tarBlock.setCreativeTab(CreativeTabs.MISC);
         
@@ -35,7 +36,7 @@ public class ModLiquids {
 
         ModelBakery.registerItemVariants(item);
 
-        ModelResourceLocation modelResourceLocation = new ModelResourceLocation(TAR_LOCATION, tarBlock.getFluid().getName());
+        ModelResourceLocation modelResourceLocation = new ModelResourceLocation(TAR_LOCATION, "normal");
 
         ModelLoader.setCustomMeshDefinition(item, stack -> modelResourceLocation);
 

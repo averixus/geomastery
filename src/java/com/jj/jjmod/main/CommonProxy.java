@@ -26,11 +26,11 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
 
         ModBlocks.preInit();
+        ModLiquids.preInit();
         ModItems.preInit();
         ModPackets.preInit();
         ModCapabilities.preInit();
         ModEntities.preInit();
-        ModLiquids.preInit();
         
         GameRegistry.registerWorldGenerator(WORLDGEN, 0);
         MinecraftForge.TERRAIN_GEN_BUS.register(WORLDGEN);

@@ -41,11 +41,12 @@ public class ItemBucket extends ItemNew {
         this.tar = tar;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack,
-            World world, EntityPlayer player, EnumHand hand) {
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
         System.out.println("item right click bucket");
         boolean empty = this.CONTENTS == Blocks.AIR;
+        ItemStack stack = player.getHeldItem(hand);
         RayTraceResult rayTrace = this.rayTrace(world, player, empty);
         ActionResult<ItemStack> result = net.minecraftforge.event
                 .ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
@@ -58,7 +59,7 @@ public class ItemBucket extends ItemNew {
         if (rayTrace == null ||
                 rayTrace.typeOfHit != RayTraceResult.Type.BLOCK) {
             System.out.println("not a block " + rayTrace.typeOfHit);
-            return new ActionResult(EnumActionResult.PASS, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
 
         BlockPos posTarget = rayTrace.getBlockPos();
@@ -67,7 +68,7 @@ public class ItemBucket extends ItemNew {
                 !player.canPlayerEdit(posTarget.offset(rayTrace.sideHit),
                 rayTrace.sideHit, stack)) {
             System.out.println("can't edit/modify position");
-            return new ActionResult(EnumActionResult.FAIL, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
         }
 
         if (empty) {
@@ -82,7 +83,7 @@ public class ItemBucket extends ItemNew {
                         Blocks.AIR.getDefaultState(), 11);
                 player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1, 1);
                 System.out.println("filled with water");
-                return new ActionResult(EnumActionResult.SUCCESS,
+                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,
                         this.fillBucket(stack, player, this.getWater()));
             }
 
@@ -93,7 +94,7 @@ public class ItemBucket extends ItemNew {
                         Blocks.AIR.getDefaultState(), 11);
                 player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 1, 1);
                 System.out.println("filled with tar");
-                return new ActionResult(EnumActionResult.SUCCESS,
+                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,
                         this.fillBucket(stack, player, this.getTar()));
             }
 
@@ -107,17 +108,17 @@ public class ItemBucket extends ItemNew {
             if (!player.canPlayerEdit(posPlace,
                     rayTrace.sideHit, stack)) {
                 System.out.println("can't edit position");
-                return new ActionResult(EnumActionResult.FAIL, stack);
+                return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
             }
 
             if (this.tryPlaceContainedLiquid(player, world, posPlace)) {
                 System.out.println("succeeded placing liquid");
-                return new ActionResult(EnumActionResult.SUCCESS,
+                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,
                         new ItemStack(this.getEmpty()));
             }
         }
 
-        return new ActionResult(EnumActionResult.FAIL, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
 
     private ItemStack fillBucket(ItemStack emptyBuckets,
@@ -148,7 +149,7 @@ public class ItemBucket extends ItemNew {
 
     public boolean tryPlaceContainedLiquid(@Nullable EntityPlayer player,
             World world, BlockPos pos) {
-        System.out.println("trying to place contents");
+        System.out.println("trying to place contents " + this.CONTENTS);
         if (this.CONTENTS == Blocks.AIR) {
 
             return false;
@@ -192,7 +193,7 @@ public class ItemBucket extends ItemNew {
 
             SoundEvent sound = SoundEvents.ITEM_BUCKET_EMPTY;
             world.playSound(player, pos, sound, SoundCategory.BLOCKS, 1, 1);
-            System.out.println("setting state to contents " + this.CONTENTS.getDefaultState());
+            System.out.println("setting state to contents " + this.CONTENTS);
             world.setBlockState(pos, this.CONTENTS.getDefaultState(), 11);
             System.out.println("finished setting state to contents " + world.getBlockState(pos));
         }
