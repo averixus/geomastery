@@ -25,9 +25,9 @@ public class CookingManager {
 
         for (Entry<ItemStack, ItemStack> entry: this.recipes.entrySet()) {
 
-            if (this.compareItemStacks(stack, (ItemStack) entry.getKey())) {
+            if (compareItemStacks(stack, entry.getKey())) {
 
-                return (ItemStack) entry.getValue();
+                return entry.getValue();
             }
         }
 

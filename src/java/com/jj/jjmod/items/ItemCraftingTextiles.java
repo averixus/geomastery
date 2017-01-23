@@ -41,7 +41,7 @@ public class ItemCraftingTextiles extends ItemNew {
         // Calculate positions
         BlockPos frontPos = pos.up();
         int i = MathHelper.floor_double(
-                (double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+                player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing facing = EnumFacing.getHorizontal(i);
         BlockPos backPos = frontPos.offset(facing);
 

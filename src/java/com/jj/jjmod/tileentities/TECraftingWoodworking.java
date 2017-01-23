@@ -85,22 +85,29 @@ public class TECraftingWoodworking extends TileEntity {
         FR("fr", true);
 
         private final String NAME;
-        public final boolean IS_FLAT;
+        private final boolean isFlat;
 
         private EnumPartWoodworking(String name, boolean isFlat) {
 
             this.NAME = name;
-            this.IS_FLAT = isFlat;
+            this.isFlat = isFlat;
         }
 
+        @Override
         public String toString() {
 
             return this.NAME;
         }
 
+        @Override
         public String getName() {
 
             return this.NAME;
+        }
+        
+        public boolean isFlat() {
+            
+            return this.isFlat;
         }
     }
 }

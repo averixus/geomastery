@@ -79,6 +79,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         return FULL_BLOCK_AABB;
     }
     
+    @Override
     protected boolean canStay(World world, BlockPos pos, IBlockState state) {
         
         BlockPos downPos = pos.down();

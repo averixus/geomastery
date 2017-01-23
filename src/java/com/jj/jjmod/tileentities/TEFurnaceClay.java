@@ -191,11 +191,13 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
             this.NAME = name;
         }
 
+        @Override
         public String toString() {
 
             return this.NAME;
         }
 
+        @Override
         public String getName() {
 
             return this.NAME;

@@ -22,6 +22,7 @@ public class BlockWood extends BlockLog {
         return new BlockStateContainer(this, new IProperty[] {LOG_AXIS});        
     }
     
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         
         IBlockState state = this.getDefaultState();
@@ -56,6 +57,7 @@ public class BlockWood extends BlockLog {
         return state;        
     }
     
+    @Override
     @SuppressWarnings("incomplete-switch")
     public int getMetaFromState(IBlockState state) {
         

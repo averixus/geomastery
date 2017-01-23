@@ -53,19 +53,9 @@ public class RenderProjectile<T extends Entity>
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer vertexbuffer = tessellator.getBuffer();
 
-        int i = 0;
-        float f = 0.0F;
-        float f1 = 0.5F;
-        float f2 = 0.0F;
-        float f3 = 0.15625F;
-        float f4 = 0.0F;
-        float f5 = 0.15625F;
-        float f6 = 0.15625F;
-        float f7 = 0.3125F;
-        float f8 = 0.05625F;
         GlStateManager.enableRescaleNormal();
 
-        float f9 = (float) entity.arrowShake - partialTicks;
+        float f9 = entity.arrowShake - partialTicks;
         
         if (f9 > 0.0F) {
             

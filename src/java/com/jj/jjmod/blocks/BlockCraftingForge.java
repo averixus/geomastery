@@ -160,7 +160,7 @@ public class BlockCraftingForge extends BlockComplexAbstract
         }
 
         TECraftingForge tileForge = (TECraftingForge) tileEntity;
-        return tileForge.getPart().IS_FLAT ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return tileForge.getPart().isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override
@@ -181,7 +181,6 @@ public class BlockCraftingForge extends BlockComplexAbstract
 
             state = state.withProperty(PART, tileForge.getPart());
             state = state.withProperty(FACING, tileForge.getFacing());
-
         }
 
         return state;

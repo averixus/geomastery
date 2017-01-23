@@ -25,6 +25,7 @@ public abstract class WorldGenTree extends WorldGenAbstract {
         this.seedlingType = seedlingType;
     }
     
+    @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
         
         Biome biome = this.world.getBiome(new

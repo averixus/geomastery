@@ -40,8 +40,7 @@ public class ItemCraftingClayworks extends ItemNew {
 
         // Calculate positions
         BlockPos posFR = pos.up();
-        int intFacing = MathHelper.floor_double((double)
-                (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int intFacing = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posFL = posFR.offset(enumFacing.rotateY().getOpposite());
         BlockPos posBL = posFL.offset(enumFacing);

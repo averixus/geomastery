@@ -30,6 +30,8 @@ public class ItemDoor extends ItemNew {
             World world, BlockPos pos, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
         
+        System.out.println("on item use");
+        
         if (world.isRemote) {
             
             return EnumActionResult.SUCCESS;
@@ -39,7 +41,7 @@ public class ItemDoor extends ItemNew {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         
-        if (!block.isReplaceable(world, pos) || !this.block.isValidPosition(world, pos)) {
+        if (!block.isReplaceable(world, pos) || !this.block.canPlaceBlockAt(world, pos)) {
             
             pos = pos.offset(side);
         }
@@ -48,25 +50,27 @@ public class ItemDoor extends ItemNew {
         IBlockState stateTop = world.getBlockState(top);
         Block blockTop = stateTop.getBlock();
         
-        if (!block.isReplaceable(world, pos) || !blockTop.isReplaceable(world, top) || !this.block.isValidPosition(world, pos)) {
-            
+        if (!block.isReplaceable(world, pos) || !blockTop.isReplaceable(world, top) || !this.block.canPlaceBlockAt(world, pos)) {
+            System.out.println("this block " + block + " not replaceable OR");
+            System.out.println("upper block " + blockTop + " not replaceable OR");
+            System.out.println("can't place block at " + pos);
             return EnumActionResult.FAIL;
         }
         
-        int facing = MathHelper.floor_double((double)
-                (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int facing = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing playerFacing = EnumFacing.getHorizontal(facing);
         
-        IBlockState placeState = this.block.getDefaultState().withProperty(BlockDoor.FACING, playerFacing);
-        //IBlockState bottomState = placeState.withProperty(BlockDoor.IS_TOP, false);
-        //IBlockState topState = placeState.withProperty(BlockDoor.IS_TOP, true);
+        IBlockState placeState = this.block.getDefaultState().withProperty(BlockDoor.FACING, playerFacing).withProperty(BlockDoor.OPEN, false);
+        IBlockState bottomState = placeState.withProperty(BlockDoor.PART, BlockDoor.EnumPart.SB);
+        IBlockState topState = placeState.withProperty(BlockDoor.PART, BlockDoor.EnumPart.ST);
 
-        //world.setBlockState(pos, bottomState);
-        //world.setBlockState(top, topState);
+        world.setBlockState(pos, bottomState);
+        world.setBlockState(top, topState);
         
         SoundType soundtype = world.getBlockState(pos).getBlock().getSoundType(world.getBlockState(pos), world, pos, player);
         world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
         stack.func_190918_g(1);
+        System.out.println("success place");
         return EnumActionResult.SUCCESS;
     }
 }

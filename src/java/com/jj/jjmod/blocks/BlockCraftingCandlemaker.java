@@ -68,7 +68,7 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART).IS_FLAT ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return state.getValue(PART).isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override
@@ -141,14 +141,21 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
             this.IS_FLAT = isFlat;
         }
 
+        @Override
         public String toString() {
 
             return this.NAME;
         }
 
+        @Override
         public String getName() {
 
             return this.NAME;
+        }
+        
+        public boolean isFlat() {
+            
+            return this.IS_FLAT;
         }
     }
 }

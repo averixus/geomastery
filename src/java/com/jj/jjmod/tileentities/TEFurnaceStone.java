@@ -209,11 +209,13 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
             this.NAME = name;
         }
 
+        @Override
         public String toString() {
 
             return this.NAME;
         }
 
+        @Override
         public String getName() {
 
             return this.NAME;

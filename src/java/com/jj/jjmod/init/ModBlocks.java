@@ -14,6 +14,7 @@ import com.jj.jjmod.blocks.BlockCarcassCowpart;
 import com.jj.jjmod.blocks.BlockCarcassPig;
 import com.jj.jjmod.blocks.BlockCarcassRabbit;
 import com.jj.jjmod.blocks.BlockCarcassSheep;
+import com.jj.jjmod.blocks.BlockCraftingSawpit;
 import com.jj.jjmod.blocks.BlockCraftingCandlemaker;
 import com.jj.jjmod.blocks.BlockCraftingClayworks;
 import com.jj.jjmod.blocks.BlockCraftingForge;
@@ -47,6 +48,7 @@ import com.jj.jjmod.blocks.BlockFurnaceStone;
 import com.jj.jjmod.blocks.BlockHarvestableLeaves;
 import com.jj.jjmod.blocks.BlockLight;
 import com.jj.jjmod.blocks.BlockLode;
+import com.jj.jjmod.blocks.BlockPeat;
 import com.jj.jjmod.blocks.BlockRiceBase;
 import com.jj.jjmod.blocks.BlockRiceTop;
 import com.jj.jjmod.blocks.BlockRock;
@@ -111,6 +113,8 @@ public class ModBlocks {
     public static BlockCraftingMason craftingMason;
     public static BlockCraftingTextiles craftingTextiles;
     public static BlockCraftingWoodworking craftingWoodworking;
+    //ublic static BlockCraftingArmourer craftingArmourer;
+    public static BlockCraftingSawpit craftingSawpit;
 
     public static BlockDrying drying;
 
@@ -156,6 +160,8 @@ public class ModBlocks {
     public static BlockRock salt;
     public static BlockRock chalk;
     
+    public static BlockPeat peat;
+    
     public static BlockCropHarvestable berry;
     public static BlockCropHarvestable bean;
     public static BlockCropHarvestable tomato;
@@ -189,7 +195,8 @@ public class ModBlocks {
     
     public static BlockFoundation foundation;
     
-    public static BlockDoor door;
+    public static BlockDoor doorPole;
+    public static BlockDoor doorWood;
     
     public static BlockBeam beam;
     
@@ -234,7 +241,9 @@ public class ModBlocks {
         register(craftingMason = new BlockCraftingMason());
         register(craftingTextiles = new BlockCraftingTextiles());
         register(craftingWoodworking = new BlockCraftingWoodworking());
-
+        //register(craftingArmourer = new BlockCraftingSawpit());
+        register(craftingSawpit = new BlockCraftingSawpit());
+        
         register(drying = new BlockDrying());
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
@@ -286,6 +295,8 @@ public class ModBlocks {
         
         register(salt = new BlockRock("salt", 1F));
         register(chalk = new BlockRock("chalk", 3F));
+        
+        register(peat = new BlockPeat());
 
         register(berry = new BlockCropHarvestableBerry());
         register(bean = new BlockCropHarvestableBean());
@@ -345,7 +356,8 @@ public class ModBlocks {
         
         register(foundation = new BlockFoundation());
         
-        // TODO register(door = new BlockDoor("door", () -> ModItems.door));
+        register(doorPole = new BlockDoor("door_pole", () -> ModItems.doorPole));
+        register(doorWood = new BlockDoor("door_wood", () -> ModItems.doorWood));
         
         register(beam = new BlockBeam());
         

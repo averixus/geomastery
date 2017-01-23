@@ -32,7 +32,7 @@ public class ItemCraftingForge extends ItemNew {
             EnumFacing side,
             float x, float y, float z) {
         
-        ItemStack stack = player.getActiveItemStack();
+        ItemStack stack = player.getHeldItem(hand);
 
         if (world.isRemote) {
 

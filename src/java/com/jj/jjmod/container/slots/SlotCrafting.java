@@ -28,11 +28,13 @@ public class SlotCrafting extends Slot {
         this.craftingManager = craftingManager;
     }
 
+    @Override
     public boolean isItemValid(@Nullable ItemStack stack) {
 
         return false;
     }
 
+    @Override
     public ItemStack decrStackSize(int amount) {
 
         if (this.getHasStack()) {
@@ -44,12 +46,14 @@ public class SlotCrafting extends Slot {
         return super.decrStackSize(amount);
     }
 
+    @Override
     protected void onCrafting(ItemStack stack, int amount) {
 
         this.amountCrafted += amount;
         this.onCrafting(stack);
     }
 
+    @Override
     protected void onCrafting(ItemStack stack) {
 
         if (this.amountCrafted > 0) {

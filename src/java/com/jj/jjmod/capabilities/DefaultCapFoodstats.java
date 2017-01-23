@@ -61,17 +61,17 @@ public class DefaultCapFoodstats implements ICapFoodstats {
         
         if (this.carbs.update(this.player)) {
             
-            this.sendMessage(FoodType.CARBS, this.carbs.getFoodLevel());
+            this.sendMessage(FoodType.FOOD_CARBS, this.carbs.getFoodLevel());
         }
         
         if (this.protein.update(this.player)) {
             
-            this.sendMessage(FoodType.PROTEIN, this.protein.getFoodLevel());
+            this.sendMessage(FoodType.FOOD_PROTEIN, this.protein.getFoodLevel());
         }
         
         if (this.fruitveg.update(this.player)) {
             
-            this.sendMessage(FoodType.FRUITVEG, this.fruitveg.getFoodLevel());
+            this.sendMessage(FoodType.FOOD_FRUITVEG, this.fruitveg.getFoodLevel());
         }
     }
     
@@ -126,9 +126,9 @@ public class DefaultCapFoodstats implements ICapFoodstats {
         
         if (this.player instanceof EntityPlayerMP) {
             
-            this.sendMessage(FoodType.CARBS, this.carbs.getFoodLevel());
-            this.sendMessage(FoodType.PROTEIN, this.protein.getFoodLevel());
-            this.sendMessage(FoodType.FRUITVEG, this.fruitveg.getFoodLevel());
+            this.sendMessage(FoodType.FOOD_CARBS, this.carbs.getFoodLevel());
+            this.sendMessage(FoodType.FOOD_PROTEIN, this.protein.getFoodLevel());
+            this.sendMessage(FoodType.FOOD_FRUITVEG, this.fruitveg.getFoodLevel());
         }
     }
     
@@ -147,19 +147,19 @@ public class DefaultCapFoodstats implements ICapFoodstats {
         
         switch (type) {
             
-            case CARBS: {
+            case FOOD_CARBS: {
                 
                 this.carbs.setFoodLevel(hunger);
                 break;
             }
             
-            case PROTEIN: {
+            case FOOD_PROTEIN: {
                 
                 this.protein.setFoodLevel(hunger);
                 break;
             }
             
-            case FRUITVEG: {
+            case FOOD_FRUITVEG: {
                 
                 this.fruitveg.setFoodLevel(hunger);
                 break;

@@ -64,7 +64,7 @@ public class ContainerDrying extends ContainerAbstract {
         for (int i = 0; i < this.listeners.size(); ++i) {
             
             IContainerListener icontainerlistener =
-                    (IContainerListener) this.listeners.get(i);
+                    this.listeners.get(i);
 
             if (this.drySpent != this.dryingInv.getField(0)) {
 
@@ -96,11 +96,12 @@ public class ContainerDrying extends ContainerAbstract {
         return this.dryingInv.isUseableByPlayer(player);
     }
 
+    @Override
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
 
@@ -119,7 +120,7 @@ public class ContainerDrying extends ContainerAbstract {
 
             } else if (index != INPUT_I) {
 
-                if (((TEDrying) this.dryingInv).RECIPES
+                if (((TEDrying) this.dryingInv).recipes
                         .getSmeltingResult(stack1) != null) {
 
                     if (!this.mergeItemStack(stack1, INPUT_I, INPUT_I + 1,

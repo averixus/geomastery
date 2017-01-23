@@ -27,6 +27,7 @@ import com.jj.jjmod.utilities.FoodStatsWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockStone;
@@ -254,9 +255,6 @@ public class EventHandler {
     public void harvestDrops(HarvestDropsEvent event) {
 
         World world = event.getWorld();
-        int x = event.getPos().getX();
-        int y = event.getPos().getY();
-        int z = event.getPos().getZ();
         Block block = event.getState().getBlock();
         ItemStack stack = event.getHarvester() == null ? null :
                 event.getHarvester().getHeldItemMainhand();
@@ -502,7 +500,7 @@ public class EventHandler {
         }
 
         EnumPartBed part = state.getValue(BlockBedAbstract.PART);
-        EnumFacing facing = state.getValue(BlockBedAbstract.FACING);
+        EnumFacing facing = state.getValue(BlockHorizontal.FACING);
 
         BlockPos posFoot;
         BlockPos posHead;

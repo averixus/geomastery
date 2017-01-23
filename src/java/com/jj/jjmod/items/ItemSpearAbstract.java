@@ -28,6 +28,7 @@ public abstract class ItemSpearAbstract extends ItemTool {
         ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
     }
 
+    @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world,
             EntityLivingBase entity, int timeLeft) {
 
@@ -87,11 +88,13 @@ public abstract class ItemSpearAbstract extends ItemTool {
         return velocity;
     }
 
+    @Override
     public int getMaxItemUseDuration(ItemStack stack) {
 
         return 72000;
     }
 
+    @Override
     public EnumAction getItemUseAction(ItemStack stack) {
 
         return EnumAction.BOW;

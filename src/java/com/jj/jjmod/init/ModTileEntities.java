@@ -5,6 +5,7 @@ import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBox;
 import com.jj.jjmod.tileentities.TECraftingForge;
 import com.jj.jjmod.tileentities.TECraftingMason;
+import com.jj.jjmod.tileentities.TECraftingSawpit;
 import com.jj.jjmod.tileentities.TECraftingWoodworking;
 import com.jj.jjmod.tileentities.TEDrying;
 import com.jj.jjmod.tileentities.TEFurnaceCampfire;
@@ -34,6 +35,8 @@ public class ModTileEntities {
                 "crafting_forge");
         GameRegistry.registerTileEntity(TECraftingWoodworking.class,
                 "crafting_woodworking");
+        GameRegistry.registerTileEntity(TECraftingSawpit.class,
+                "crafting_sawpit");
 
         GameRegistry.registerTileEntity(TEDrying.class, "drying");
         

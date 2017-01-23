@@ -206,8 +206,6 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 
                 for (int l3 = 0; l3 < 16; ++l3) {
                     
-                    int l4 = 4;
-
                     if (this.world.canBlockFreezeWater(position.add(k2, 4, l3))) {
                         
                         this.world.setBlockState(position.add(k2, 4, l3), Blocks.ICE.getDefaultState(), 2);

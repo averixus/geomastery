@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class FoodUpdateClient implements IMessage {
     
-    private int type;
-    private int hunger;
+    protected int type;
+    protected int hunger;
     
     public FoodUpdateClient() {}
     

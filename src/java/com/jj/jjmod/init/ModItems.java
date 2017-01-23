@@ -18,6 +18,7 @@ import com.jj.jjmod.items.ItemCraftingCandlemaker;
 import com.jj.jjmod.items.ItemCraftingClayworks;
 import com.jj.jjmod.items.ItemCraftingForge;
 import com.jj.jjmod.items.ItemCraftingMason;
+import com.jj.jjmod.items.ItemCraftingSawpit;
 import com.jj.jjmod.items.ItemCraftingTextiles;
 import com.jj.jjmod.items.ItemCraftingWoodworking;
 import com.jj.jjmod.items.ItemDoor;
@@ -152,7 +153,9 @@ public class ModItems {
     public static ItemCraftingMason craftingMason;
     public static ItemCraftingTextiles craftingTextiles;
     public static ItemCraftingWoodworking craftingWoodworking;
-
+    public static ItemCraftingSawpit craftingSawpit;
+    //public static ItemCraftingArmourer craftingArmourer;
+    
     public static ItemFurnaceClay furnaceClay;
     public static ItemFurnaceStone furnaceStone;
 
@@ -287,7 +290,8 @@ public class ModItems {
     public static ItemWall wallStone;
     public static ItemWall wallLog;
     
-    public static ItemDoor door;
+    public static ItemDoor doorPole;
+    public static ItemDoor doorWood;
     
     public static ItemBeam beamLong;
     public static ItemBeam beamShort;
@@ -300,22 +304,22 @@ public class ModItems {
 
     public static void preInit() {
 
-        register(banana = new ItemEdible("banana", 4, 6F, 5), FoodType.FRUITVEG);
-        register(pear = new ItemEdible("pear", 4, 4F, 5), FoodType.FRUITVEG);
-        register(orange = new ItemEdible("orange", 3, 3F, 6), FoodType.FRUITVEG);
-        register(honey = new ItemEdible("honey", 4, 1F, 8), FoodType.CARBS);
-        register(wheatBoiled = new ItemEdible("wheat_boiled", 4, 2F, 10), FoodType.CARBS);
-        register(riceBoiled = new ItemEdible("rice_boiled", 4, 2, 12), FoodType.CARBS);
-        register(chickpeasBoiled = new ItemEdible("chickpeas_boiled", 3, 3, 10), FoodType.PROTEIN);
+        register(banana = new ItemEdible("banana", 4, 6F, 5), FoodType.FOOD_FRUITVEG);
+        register(pear = new ItemEdible("pear", 4, 4F, 5), FoodType.FOOD_FRUITVEG);
+        register(orange = new ItemEdible("orange", 3, 3F, 6), FoodType.FOOD_FRUITVEG);
+        register(honey = new ItemEdible("honey", 4, 1F, 8), FoodType.FOOD_CARBS);
+        register(wheatBoiled = new ItemEdible("wheat_boiled", 4, 2F, 10), FoodType.FOOD_CARBS);
+        register(riceBoiled = new ItemEdible("rice_boiled", 4, 2, 12), FoodType.FOOD_CARBS);
+        register(chickpeasBoiled = new ItemEdible("chickpeas_boiled", 3, 3, 10), FoodType.FOOD_PROTEIN);
         
-        register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean), FoodType.FRUITVEG);
-        register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper), FoodType.FRUITVEG);
-        register(tomato = new ItemEdibleSeed("tomato", 3, 3F, 7, ModBlocks.tomato), FoodType.FRUITVEG);
-        register(berry = new ItemEdibleSeed("berry", 1, 1F, 20, ModBlocks.berry), FoodType.FRUITVEG);
+        register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean), FoodType.FOOD_FRUITVEG);
+        register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper), FoodType.FOOD_FRUITVEG);
+        register(tomato = new ItemEdibleSeed("tomato", 3, 3F, 7, ModBlocks.tomato), FoodType.FOOD_FRUITVEG);
+        register(berry = new ItemEdibleSeed("berry", 1, 1F, 20, ModBlocks.berry), FoodType.FOOD_FRUITVEG);
         
-        register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato), FoodType.CARBS);
-        register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot), FoodType.FRUITVEG);
-        register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot), FoodType.FRUITVEG);
+        register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato), FoodType.FOOD_CARBS);
+        register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot), FoodType.FOOD_FRUITVEG);
+        register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot), FoodType.FOOD_FRUITVEG);
 
         register(rice = new ItemRice());
         
@@ -399,7 +403,9 @@ public class ModItems {
         register(craftingMason = new ItemCraftingMason(), true);
         register(craftingTextiles = new ItemCraftingTextiles(), true);
         register(craftingWoodworking = new ItemCraftingWoodworking(), true);
-
+        register(craftingSawpit = new ItemCraftingSawpit(), true);
+        //register(craftingArmourer = new ItemCraftingArmourer(), true);
+        
         register(furnaceClay = new ItemFurnaceClay(), true);
         register(furnaceStone = new ItemFurnaceStone(), true);
 
@@ -580,7 +586,8 @@ public class ModItems {
         register(wallLog = new ItemWall("wall_log", 1,
                 ModBlocks.wallLogSingle, ModBlocks.wallLogDouble));
         
-        register(door = new ItemDoor(ModBlocks.door, "door"), true);
+        register(doorPole = new ItemDoor(ModBlocks.doorPole, "door_pole"), true);
+        register(doorWood = new ItemDoor(ModBlocks.doorWood, "door_wood"), true);
         
         register(beamLong = new ItemBeam("beam_long", 4, 8));
         register(beamShort = new ItemBeam("beam_short", 2, 4));
@@ -606,19 +613,19 @@ public class ModItems {
         
         switch (foodType) {
             
-            case FRUITVEG: {
+            case FOOD_FRUITVEG: {
                 
                 FRUITVEG.add(item);
                 break;
             }
             
-            case PROTEIN: {
+            case FOOD_PROTEIN: {
                 
                 PROTEIN.add(item);
                 break;
             }
             
-            case CARBS: {
+            case FOOD_CARBS: {
                 
                 CARBS.add(item);
                 break;
@@ -642,6 +649,6 @@ public class ModItems {
     
     public enum FoodType {
         
-        CARBS, PROTEIN, FRUITVEG;
+        FOOD_CARBS, FOOD_PROTEIN, FOOD_FRUITVEG;
     }
 }

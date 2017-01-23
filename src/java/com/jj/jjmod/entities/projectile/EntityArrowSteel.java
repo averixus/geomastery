@@ -36,8 +36,6 @@ public class EntityArrowSteel extends EntityArrow {
     @Override
     public void onUpdate() {
         
-        float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-        int i = MathHelper.ceiling_double_int((double)f * this.getDamage());
         super.onUpdate();
     }
 }

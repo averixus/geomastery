@@ -79,7 +79,7 @@ public class ContainerFurnace extends ContainerAbstract {
         for (int i = 0; i < this.listeners.size(); ++i) {
             
             IContainerListener icontainerlistener =
-                    (IContainerListener) this.listeners.get(i);
+                    this.listeners.get(i);
 
             if (this.fuelLeft != this.furnaceInv.getField(0)) {
 
@@ -125,11 +125,12 @@ public class ContainerFurnace extends ContainerAbstract {
         return this.furnaceInv.isUseableByPlayer(player);
     }
 
+    @Override
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
 
@@ -148,7 +149,7 @@ public class ContainerFurnace extends ContainerAbstract {
 
             } else if (index != INPUT_I && index != FUEL_I) {
 
-                if (((TEFurnaceAbstract) this.furnaceInv).RECIPES
+                if (((TEFurnaceAbstract) this.furnaceInv).recipes
                         .getSmeltingResult(stack1) != null) {
 
                     if (!this.mergeItemStack(stack1, INPUT_I, INPUT_I + 1,

@@ -8,9 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
 public class BlockSlabDouble extends BlockSlabSingle implements IBuildingBlock {
-    
-    public Supplier<Item> item;
-    
+        
     public BlockSlabDouble(Material material, String name, float hardness, ToolType harvestTool, Supplier<Item> item) {
         
         super(material, name, hardness, harvestTool, item);

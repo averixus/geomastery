@@ -13,10 +13,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class FloorUpdateClient implements IMessage {
     
-    private EnumFloor floor;
-    private int x;
-    private int y;
-    private int z;
+    protected EnumFloor floor;
+    protected int x;
+    protected int y;
+    protected int z;
     
     public FloorUpdateClient() {}
     

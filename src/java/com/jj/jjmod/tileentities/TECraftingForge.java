@@ -81,23 +81,30 @@ public class TECraftingForge extends TileEntity {
         BR("br", false),
         FR("fr", true);
 
-        private final String NAME;
-        public final boolean IS_FLAT;
+        private final String name;
+        private final boolean isFlat;
 
         private EnumPartForge(String name, boolean isFlat) {
 
-            this.NAME = name;
-            this.IS_FLAT = isFlat;
+            this.name = name;
+            this.isFlat = isFlat;
         }
 
+        @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
+        @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
+        }
+        
+        public boolean isFlat() {
+            
+            return this.isFlat;
         }
     }
 }

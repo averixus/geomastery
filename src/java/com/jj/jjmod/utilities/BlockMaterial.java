@@ -10,7 +10,7 @@ public class BlockMaterial extends Material {
     public static final BlockMaterial STONE_FURNITURE = new BlockMaterial(MapColor.STONE, true, false, false, true, false, true, false);
     public static final BlockMaterial WATER_PLANT = new BlockMaterial(MapColor.WATER, true, false, false, true, false, true, false);
     public static final BlockMaterial CARCASS = new BlockMaterial(MapColor.BROWN, true, true, true, true, false, false, false);
-    public static final BlockMaterial GROUND = new BlockMaterial(MapColor.DIRT, true, false, false, false, false, false, false);
+    public static final BlockMaterial SOIL = new BlockMaterial(MapColor.DIRT, true, false, false, false, false, false, false);
     public static final BlockMaterial TAR = new BlockMaterial(MapColor.BLACK, false, false, false, true, true, false, true);
     
     protected boolean isSolid;

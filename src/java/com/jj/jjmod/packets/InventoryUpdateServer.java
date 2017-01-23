@@ -15,9 +15,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class InventoryUpdateServer implements IMessage {
 
-    private InvType type;
-    private int slot;
-    private ItemStack stack;
+    protected InvType type;
+    protected int slot;
+    protected ItemStack stack;
 
     public InventoryUpdateServer() {}
 
@@ -54,6 +54,7 @@ public class InventoryUpdateServer implements IMessage {
             ctx.getServerHandler().playerEntity.getServer()
                     .addScheduledTask(new Runnable() {
 
+                        @Override
                         public void run() {
 
                             processMessage(message, ctx);

@@ -22,7 +22,7 @@ import net.minecraft.util.NonNullList;
 public class TEDrying extends TileEntityLockable
         implements ITickable, IInventory {
 
-    public static final CookingManager RECIPES = ModRecipes.DRYING;
+    public final CookingManager recipes = ModRecipes.DRYING;
 
     public List<ItemStack> stacks = NonNullList.<ItemStack>func_191197_a(2, ItemStack.field_190927_a);
     public int drySpent;
@@ -184,7 +184,7 @@ public class TEDrying extends TileEntityLockable
             return false;
         }
 
-        ItemStack result = RECIPES.getSmeltingResult(this.stacks.get(0));
+        ItemStack result = recipes.getSmeltingResult(this.stacks.get(0));
 
         // Check recipe and space
         if (result == null) {
@@ -213,7 +213,7 @@ public class TEDrying extends TileEntityLockable
             return;
         }
 
-        ItemStack result = RECIPES.getSmeltingResult(this.stacks.get(0));
+        ItemStack result = recipes.getSmeltingResult(this.stacks.get(0));
 
         // If output empty
         if (this.stacks.get(1) == null) {
@@ -252,9 +252,9 @@ public class TEDrying extends TileEntityLockable
     public boolean isUseableByPlayer(EntityPlayer player) {
 
         return this.worldObj.getTileEntity(this.pos) != this ? false
-                : player.getDistanceSq((double) this.pos.getX() + 0.5D,
-                        (double) this.pos.getY() + 0.5D,
-                        (double) this.pos.getZ() + 0.5D) <= 64.0D;
+                : player.getDistanceSq(this.pos.getX() + 0.5D,
+                        this.pos.getY() + 0.5D,
+                        this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override

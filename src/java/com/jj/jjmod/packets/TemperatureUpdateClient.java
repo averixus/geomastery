@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class TemperatureUpdateClient implements IMessage {
     
-    private int icon;
+    protected int icon;
     
     public TemperatureUpdateClient() {}
     
@@ -41,6 +41,7 @@ public class TemperatureUpdateClient implements IMessage {
             
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 
+                @Override
                 public void run() {
                     
                     processMessage(message);

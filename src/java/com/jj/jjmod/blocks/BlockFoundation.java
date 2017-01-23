@@ -15,7 +15,7 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
 
     public BlockFoundation() {
         
-        super(BlockMaterial.GROUND, "foundation", CreativeTabs.BUILDING_BLOCKS, 1.5F, ToolType.PICKAXE);
+        super(BlockMaterial.SOIL, "foundation", CreativeTabs.BUILDING_BLOCKS, 1.5F, ToolType.PICKAXE);
     }
     
     @Override

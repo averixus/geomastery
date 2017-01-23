@@ -429,11 +429,13 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
             this.name = name;
         }
 
+        @Override
         public String toString() {
 
             return this.name;
         }
 
+        @Override
         public String getName() {
 
             return this.name;

@@ -27,11 +27,11 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
     public int cookSpent;
     public int cookEach;
     
-    public final CookingManager RECIPES;
+    public final CookingManager recipes;
 
     public TEFurnaceAbstract(CookingManager recipes) {
 
-        this.RECIPES = recipes;
+        this.recipes = recipes;
     }
     
     public boolean isHeating() {
@@ -221,7 +221,7 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
             return false;
         }
 
-        ItemStack result = this.RECIPES.getSmeltingResult(this.stacks.get(0));
+        ItemStack result = this.recipes.getSmeltingResult(this.stacks.get(0));
 
         if (result == null) {
 
@@ -249,7 +249,7 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
             return;
         }
 
-        ItemStack result = this.RECIPES.getSmeltingResult(this.stacks.get(0));
+        ItemStack result = this.recipes.getSmeltingResult(this.stacks.get(0));
 
         // If output empty
         if (this.stacks.get(2) == null) {
@@ -279,15 +279,16 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
     public boolean isUseableByPlayer(EntityPlayer player) {
 
         return this.worldObj.getTileEntity(this.pos) != this ? false
-                : player.getDistanceSq((double) this.pos.getX() + 0.5D,
-                        (double) this.pos.getY() + 0.5D,
-                        (double) this.pos.getZ() + 0.5D) <= 64.0D;
+                : player.getDistanceSq(this.pos.getX() + 0.5D,
+                        this.pos.getY() + 0.5D,
+                        this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override
     public abstract Container createContainer(InventoryPlayer playerInv,
             EntityPlayer player);
 
+    @Override
     public int getField(int id) {
 
         switch (id) {
@@ -319,6 +320,7 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         }
     }
 
+    @Override
     public void setField(int id, int value) {
 
         switch (id) {

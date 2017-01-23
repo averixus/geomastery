@@ -102,7 +102,7 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART).IS_FLAT ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return state.getValue(PART).isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override
@@ -159,22 +159,29 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
         BR("br", false);
 
         private final String NAME;
-        private final boolean IS_FLAT;
+        private final boolean isFlat;
 
         private EnumPartClayworks(String name, boolean isFlat) {
 
             this.NAME = name;
-            this.IS_FLAT = isFlat;
+            this.isFlat = isFlat;
         }
 
+        @Override
         public String toString() {
 
             return this.NAME;
         }
 
+        @Override
         public String getName() {
 
             return this.NAME;
+        }
+        
+        public boolean isFlat() {
+            
+            return this.isFlat;
         }
     }
 }

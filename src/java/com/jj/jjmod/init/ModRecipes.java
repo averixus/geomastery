@@ -21,6 +21,7 @@ public class ModRecipes {
     public static final CraftingManager FORGE = new CraftingManager();
     public static final CraftingManager MASON = new CraftingManager();
     public static final CraftingManager ARMOURER = new CraftingManager();
+    public static final CraftingManager SAWPIT = new CraftingManager();
     public static final CookingManager CAMPFIRE = new CookingManager();
     public static final CookingManager POTFIRE = new CookingManager();
     public static final CookingManager CLAY = new CookingManager();
@@ -41,6 +42,7 @@ public class ModRecipes {
         setupForge();
         setupMason();
         setupArmourer();
+        setupSawpit();
         setupCampfire();
         setupPotfire();
         setupClay();
@@ -333,6 +335,11 @@ public class ModRecipes {
         ARMOURER.addShapedRecipe(new ItemStack(Items.SHIELD), "SP ",
                 "PPP", " PS", 'S', ModItems.ingotSteel, 'P',
                 ModItems.pole);
+    }
+    
+    public static void setupSawpit() {
+        
+        
     }
 
     // CONFIG furnace recipes

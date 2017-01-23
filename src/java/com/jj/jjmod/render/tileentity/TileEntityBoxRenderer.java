@@ -12,6 +12,7 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
     
     private ModelBox model = new ModelBox();
     
+    @Override
     public void renderTileEntityAt(TEBox te, double x, double y,
             double z, float ticks, int destroyStage) {
         

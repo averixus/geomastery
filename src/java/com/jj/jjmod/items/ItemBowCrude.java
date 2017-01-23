@@ -45,7 +45,7 @@ public class ItemBowCrude extends ItemNew {
 
                 ItemStack activeStack = entity.getActiveItemStack();
 
-                if (entity == null || activeStack == null ||
+                if (activeStack == null ||
                         activeStack.getItem() != ModItems.bowCrude) {
 
                     return 0F;
@@ -62,6 +62,7 @@ public class ItemBowCrude extends ItemNew {
         this.addPropertyOverride(new ResourceLocation("pulling"),
                 new IItemPropertyGetter() {
 
+            @Override
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World world,
                     @Nullable EntityLivingBase entity) {
@@ -111,6 +112,7 @@ public class ItemBowCrude extends ItemNew {
         return stack != null && stack.getItem() instanceof ItemArrow;
     }
 
+    @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world,
             EntityLivingBase entity, int timeLeft) {
 
@@ -235,15 +237,16 @@ public class ItemBowCrude extends ItemNew {
 
         if (!player.capabilities.isCreativeMode && !hasAmmo) {
 
-            return new ActionResult(EnumActionResult.FAIL, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 
         } else {
 
             player.setActiveHand(hand);
-            return new ActionResult(EnumActionResult.SUCCESS, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
     }
 
+    @Override
     public int getItemEnchantability() {
 
         return 1;
@@ -262,11 +265,13 @@ public class ItemBowCrude extends ItemNew {
         return velocity;
     }
 
+    @Override
     public int getMaxItemUseDuration(ItemStack stack) {
 
         return 72000;
     }
 
+    @Override
     public EnumAction getItemUseAction(ItemStack stack) {
 
         return EnumAction.BOW;

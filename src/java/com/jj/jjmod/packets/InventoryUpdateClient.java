@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class InventoryUpdateClient implements IMessage {
 
-    private InvType type;
-    private int slot;
-    private ItemStack stack;
+    protected InvType type;
+    protected int slot;
+    protected ItemStack stack;
 
     public InventoryUpdateClient() {}
 
@@ -51,6 +51,7 @@ public class InventoryUpdateClient implements IMessage {
 
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 
+                @Override
                 public void run() {
 
                     processMessage(message);

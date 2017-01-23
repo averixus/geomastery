@@ -26,9 +26,9 @@ public class ModLiquids {
     
     public static void preInit() {
         
-        tarFluid = new Fluid("fluid_tar", TAR_TEXTURE, TAR_TEXTURE);
+        tarFluid = new Fluid("fluid_tar", TAR_TEXTURE, TAR_TEXTURE).setViscosity(5000);
         FluidRegistry.registerFluid(tarFluid);
-        tarBlock = (BlockFluidClassic) new BlockFluidClassic(tarFluid, BlockMaterial.TAR).setRegistryName("block_tar").setUnlocalizedName("block_tar");
+        tarBlock = (BlockFluidClassic) new BlockFluidClassic(tarFluid, BlockMaterial.TAR).setQuantaPerBlock(3).setRegistryName("block_tar").setUnlocalizedName("block_tar");
         GameRegistry.register(tarBlock);
         tarBlock.setCreativeTab(CreativeTabs.MISC);
         

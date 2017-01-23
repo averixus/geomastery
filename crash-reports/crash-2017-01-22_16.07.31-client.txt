@@ -1,0 +1,110 @@
+---- Minecraft Crash Report ----
+// Don't do that.
+
+Time: 22/01/17 16:07
+Description: Initializing game
+
+java.lang.RuntimeException: ConditionPropertyValue{key=istop, value=false}: Definition: BlockStateContainer{block=jjmod:block_door, properties=[facing, half, hinge, open, powered]} has no property: istop
+	at net.minecraft.client.renderer.block.model.multipart.ConditionPropertyValue.getPredicate(ConditionPropertyValue.java:37)
+	at net.minecraft.client.renderer.block.model.multipart.ConditionAnd$1.apply(ConditionAnd.java:30)
+	at net.minecraft.client.renderer.block.model.multipart.ConditionAnd$1.apply(ConditionAnd.java:26)
+	at com.google.common.collect.Iterators$8.transform(Iterators.java:794)
+	at com.google.common.collect.TransformedIterator.next(TransformedIterator.java:48)
+	at com.google.common.base.Predicates.defensiveCopy(Predicates.java:647)
+	at com.google.common.base.Predicates.and(Predicates.java:107)
+	at net.minecraft.client.renderer.block.model.multipart.ConditionAnd.getPredicate(ConditionAnd.java:25)
+	at net.minecraft.client.renderer.block.model.multipart.Selector.getPredicate(Selector.java:53)
+	at net.minecraftforge.client.model.ModelLoader$MultipartModel.bake(ModelLoader.java:1243)
+	at net.minecraftforge.client.model.ModelLoader.setupModelRegistry(ModelLoader.java:182)
+	at net.minecraft.client.renderer.block.model.ModelManager.onResourceManagerReload(ModelManager.java:28)
+	at net.minecraft.client.resources.SimpleReloadableResourceManager.registerReloadListener(SimpleReloadableResourceManager.java:122)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:539)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:385)
+	at net.minecraft.client.main.Main.main(Main.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Client thread
+Stacktrace:
+	at net.minecraft.client.renderer.block.model.multipart.ConditionPropertyValue.getPredicate(ConditionPropertyValue.java:37)
+	at net.minecraft.client.renderer.block.model.multipart.ConditionAnd$1.apply(ConditionAnd.java:30)
+	at net.minecraft.client.renderer.block.model.multipart.ConditionAnd$1.apply(ConditionAnd.java:26)
+	at com.google.common.collect.Iterators$8.transform(Iterators.java:794)
+	at com.google.common.collect.TransformedIterator.next(TransformedIterator.java:48)
+	at com.google.common.base.Predicates.defensiveCopy(Predicates.java:647)
+	at com.google.common.base.Predicates.and(Predicates.java:107)
+	at net.minecraft.client.renderer.block.model.multipart.ConditionAnd.getPredicate(ConditionAnd.java:25)
+	at net.minecraft.client.renderer.block.model.multipart.Selector.getPredicate(Selector.java:53)
+	at net.minecraftforge.client.model.ModelLoader$MultipartModel.bake(ModelLoader.java:1243)
+	at net.minecraftforge.client.model.ModelLoader.setupModelRegistry(ModelLoader.java:182)
+	at net.minecraft.client.renderer.block.model.ModelManager.onResourceManagerReload(ModelManager.java:28)
+	at net.minecraft.client.resources.SimpleReloadableResourceManager.registerReloadListener(SimpleReloadableResourceManager.java:122)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:539)
+
+-- Initialization --
+Details:
+Stacktrace:
+	at net.minecraft.client.Minecraft.run(Minecraft.java:385)
+	at net.minecraft.client.main.Main.main(Main.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.11
+	Operating System: Mac OS X (x86_64) version 10.12.2
+	Java Version: 1.8.0_121, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 689732120 bytes (657 MB) / 1396178944 bytes (1331 MB) up to 3817865216 bytes (3641 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP 9.35 Powered by Forge 13.19.1.2189 5 mods loaded, 5 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCH	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCH	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.11-13.19.1.2189.jar) 
+	UCH	forge{13.19.1.2189} [Minecraft Forge] (forgeSrc-1.11-13.19.1.2189.jar) 
+	UCH	jjmod{1.0} [JJ Mod] (bin) 
+	UCH	examplemod{1.0} [Example Mod] (bin) 
+	Loaded coremods (and transformers): 
+	GL info: ' Vendor: 'Intel Inc.' Version: '2.1 INTEL-10.22.25' Renderer: 'Intel(R) Iris(TM) Graphics 6100'
+	Launched Version: 1.11
+	LWJGL: 2.9.2
+	OpenGL: Intel(R) Iris(TM) Graphics 6100 GL version 2.1 INTEL-10.22.25, Intel Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because ARB_framebuffer_object is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-5287U CPU @ 2.90GHz

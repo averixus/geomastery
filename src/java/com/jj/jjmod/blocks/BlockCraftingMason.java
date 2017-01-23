@@ -144,7 +144,7 @@ public class BlockCraftingMason extends BlockComplexAbstract
         }
 
         TECraftingMason tileMason = (TECraftingMason) tileEntity;
-        return tileMason.getPart().IS_FLAT ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return tileMason.getPart().isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override

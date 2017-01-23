@@ -67,6 +67,18 @@ public class GuiHandler implements IGuiHandler {
             return new ContainerCrafting(player, world,
                     new BlockPos(x, y, z), ModRecipes.MASON);
         }
+        
+        if (ID == GuiList.SAWPIT.ordinal()) {
+            
+            return new ContainerCrafting(player, world,
+                    new BlockPos(x, y, z), ModRecipes.SAWPIT);
+        }
+        
+        if (ID == GuiList.ARMOURER.ordinal()) {
+            
+            return new ContainerCrafting(player, world,
+                    new BlockPos(x, y, z), ModRecipes.ARMOURER);
+        }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
@@ -160,6 +172,20 @@ public class GuiHandler implements IGuiHandler {
                     new BlockPos(x, y, z), ModRecipes.MASON,
                     GuiList.MASON.NAME);
         }
+        
+        if (ID == GuiList.ARMOURER.ordinal()) {
+            
+            return new GuiCrafting(player, world,
+                    new BlockPos(x, y, z), ModRecipes.ARMOURER,
+                    GuiList.ARMOURER.NAME);
+        }
+        
+        if (ID == GuiList.SAWPIT.ordinal()) {
+            
+            return new GuiCrafting(player, world,
+                    new BlockPos(x, y, z), ModRecipes.SAWPIT,
+                    GuiList.SAWPIT.NAME);
+        }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
@@ -213,6 +239,8 @@ public class GuiHandler implements IGuiHandler {
         CANDLEMAKER("Candlemaker's Bench"),
         FORGE("Forge"),
         MASON("Mason's Workshop"),
+        SAWPIT("Sawpit"),
+        ARMOURER("armourer"),
         CAMPFIRE("Campfire"),
         POTFIRE("Campfire with Pot"),
         CLAY("Clay Oven"),

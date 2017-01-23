@@ -23,8 +23,6 @@ public abstract class WorldGenAbstract {
     protected int findValidLog(int x, int z) {
         
         BlockPos midPos = new BlockPos(x, 256, z);
-        IBlockState midState = this.world.getBlockState(midPos);
-        Block midBlock = midState.getBlock();
         
         BlockPos southPos = midPos.south();
         IBlockState southState = this.world.getBlockState(southPos);

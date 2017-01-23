@@ -81,22 +81,29 @@ public class TECraftingMason extends TileEntity {
         FR("fr", false);
 
         private final String NAME;
-        public final boolean IS_FLAT;
+        private final boolean isFlat;
 
         private EnumPartMason(String name, boolean isFlat) {
 
             this.NAME = name;
-            this.IS_FLAT = isFlat;
+            this.isFlat = isFlat;
         }
 
+        @Override
         public String toString() {
 
             return this.NAME;
         }
 
+        @Override
         public String getName() {
 
             return this.NAME;
+        }
+        
+        public boolean isFlat() {
+            
+            return this.isFlat;
         }
     }
 }

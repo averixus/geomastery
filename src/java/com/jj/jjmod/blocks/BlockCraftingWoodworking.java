@@ -172,7 +172,7 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract
 
         TECraftingWoodworking tileWoodworking =
                 (TECraftingWoodworking) tileEntity;
-        return tileWoodworking.getPart().IS_FLAT ? FLAT_BOUNDS
+        return tileWoodworking.getPart().isFlat() ? FLAT_BOUNDS
                 : FULL_BLOCK_AABB;
     }
 

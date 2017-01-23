@@ -24,10 +24,10 @@ public class GuiDrying extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
-        int stringWidth = this.fontRendererObj.getStringWidth(this.NAME);
+        int stringWidth = this.fontRendererObj.getStringWidth(NAME);
         int start = this.xSize / 2 - stringWidth / 2;
 
-        this.fontRendererObj.drawString(this.NAME, start, 6, FOREGROUND);
+        this.fontRendererObj.drawString(NAME, start, 6, FOREGROUND);
     }
 
     @Override
