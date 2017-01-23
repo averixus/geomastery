@@ -83,9 +83,19 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return this.hasValidSide(world, pos, direction) && this.hasValidSide(world, pos, direction.rotateY());
     }
     
+    protected boolean isCentreCorner(IBlockAccess world, BlockPos pos, EnumFacing direction) {
+        
+        return this.hasValidSide(world, pos, direction.rotateY()) &&
+                this.hasValidSide(world, pos, direction) &&
+                this.hasValidSide(world, pos, direction.rotateYCCW());
+    }
+    
     protected boolean hasLintel(IBlockAccess world, BlockPos pos, EnumFacing direction) {
         
-        return this.hasValidSide(world, pos, direction) && this.hasValidSide(world, pos, direction.getOpposite());        
+        return this.hasValidSide(world, pos, direction) &&
+                this.hasValidSide(world, pos, direction.getOpposite()) &&
+                !this.hasValidSide(world, pos, direction.rotateY()) &&
+                !this.hasValidSide(world, pos, direction.rotateYCCW());        
     }
     
     @Override
@@ -139,6 +149,16 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
             if (this.hasLintel(world, pos, facing)) {
                 
                 state = state.withProperty(SHAPE, EnumShape.LINTEL);
+                state = state.withProperty(FACING, facing);
+                return state;
+            }
+        }
+        
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+            
+            if (this.isCentreCorner(world, pos, facing)) {
+                
+                state = state.withProperty(SHAPE, EnumShape.SINGLE);
                 state = state.withProperty(FACING, facing);
                 return state;
             }

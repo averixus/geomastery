@@ -40,6 +40,7 @@ import com.jj.jjmod.blocks.BlockCropPotato;
 import com.jj.jjmod.blocks.BlockCropWheat;
 import com.jj.jjmod.blocks.BlockDoor;
 import com.jj.jjmod.blocks.BlockDrying;
+import com.jj.jjmod.blocks.BlockFence;
 import com.jj.jjmod.blocks.BlockFoundation;
 import com.jj.jjmod.blocks.BlockFurnaceCampfire;
 import com.jj.jjmod.blocks.BlockFurnaceClay;
@@ -199,6 +200,8 @@ public class ModBlocks {
     public static BlockDoor doorWood;
     
     public static BlockBeam beam;
+    
+    public static BlockFence fence;
     
     public static BlockSlabSingle slabStoneSingle;
     public static BlockSlabDouble slabStoneDouble;
@@ -361,6 +364,8 @@ public class ModBlocks {
         
         register(beam = new BlockBeam());
         
+        register(fence = new BlockFence());
+        
         register(slabStoneSingle = new BlockSlabSingle(BlockMaterial
                 .STONE_FURNITURE, "slab_stone_single", 2F, ToolType.PICKAXE,
                 () -> ModItems.slabStone));
@@ -430,15 +435,15 @@ public class ModBlocks {
     
     private static void buildSets() {
         
-        Block[] heavy = new Block[] {Blocks.BEDROCK, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.OBSIDIAN, Blocks.STONE, Blocks.STONEBRICK, Blocks.PRISMARINE, Blocks.QUARTZ_BLOCK, Blocks.BRICK_BLOCK, Blocks.COAL_ORE, Blocks.DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.GOLD_ORE, Blocks.IRON_ORE, Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE};
+        Block[] heavy = {Blocks.BEDROCK, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.OBSIDIAN, Blocks.STONE, Blocks.STONEBRICK, Blocks.PRISMARINE, Blocks.QUARTZ_BLOCK, Blocks.BRICK_BLOCK, Blocks.COAL_ORE, Blocks.DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.GOLD_ORE, Blocks.IRON_ORE, Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE};
         
         for (Block block : heavy) {
             
             HEAVY.add(block);
         }
         
-        Block[] light = new Block[] {Blocks.CLAY, Blocks.DIRT, Blocks.GRAVEL, Blocks.ICE, Blocks.PACKED_ICE, Blocks.SAND, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
-   
+        Block[] light = {Blocks.CLAY, Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL, Blocks.ICE, Blocks.PACKED_ICE, Blocks.SAND, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
+        
         for (Block block : light) {
             
             LIGHT.add(block);

@@ -1,7 +1,9 @@
 package com.jj.jjmod.blocks;
 
 import java.util.List;
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.utilities.BlockMaterial;
+import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -39,6 +41,31 @@ public class BlockStairsStraight extends BlockNew {
     
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
+        
+        return this.hasFoundation(world, pos) &&
+                this.hasValidConnections(world, pos);
+    }
+    
+    private boolean hasFoundation(World world, BlockPos pos) {
+        
+        Block block = world.getBlockState(pos.down()).getBlock();
+        
+        boolean natural = false;
+        boolean built = false;
+        
+        natural = ModBlocks.LIGHT.contains(block) ||
+                ModBlocks.HEAVY.contains(block);
+        
+        if (block instanceof IBuildingBlock) {
+            
+            IBuildingBlock builtBlock = (IBuildingBlock) block;
+            built = builtBlock.isLight() || builtBlock.isHeavy();
+        }
+        
+        return natural || built;
+    }
+    
+    private boolean hasValidConnections(World world, BlockPos pos) {
         
         int count = 0;
 
