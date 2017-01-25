@@ -4,6 +4,7 @@
     "newsoftwood": "jjmod:blocks/building/newsoftwood",
     "texture": "jjmod:blocks/building/sprucepole2"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 7, 0, 3 ],

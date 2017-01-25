@@ -5,6 +5,7 @@
     "sheep2": "jjmod:blocks/carcass/sheep2",
     "sheep3": "jjmod:blocks/carcass/sheep3"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 0, 1 ],

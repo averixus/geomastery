@@ -1,6 +1,9 @@
 package com.jj.jjmod.init;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.jj.jjmod.blocks.BlockAntler;
 import com.jj.jjmod.blocks.BlockBeam;
@@ -81,6 +84,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
+    
+    public static final Map<Block, Item> MOD_BLOCKS = Maps.newHashMap();
     
     public static final Set<Item> OFFHAND_ONLY = Sets.newHashSet();
     
@@ -389,14 +394,28 @@ public class ModBlocks {
         Blocks.COBBLESTONE.setHarvestLevel("pickaxe", 1);
         Blocks.STONE.setHarvestLevel("pickaxe", 1);
         Blocks.COAL_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.DIAMOND_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.EMERALD_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.GOLD_ORE.setHarvestLevel("pickaxe", 1);
+        Blocks.DIAMOND_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
+        Blocks.EMERALD_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
+        Blocks.GOLD_ORE.setHardness(3F).setHarvestLevel("pickaxe", 1);
         Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.LIT_REDSTONE_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.REDSTONE_ORE.setHarvestLevel("pickaxe", 1);
+        Blocks.LAPIS_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
+        Blocks.LIT_REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
+        Blocks.REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 1);
+        Blocks.LEAVES.setHardness(0.2F).setHarvestLevel(ToolType.MACHETE.name(), 1);
+        Blocks.REEDS.setHardness(0.2F).setHarvestLevel(ToolType.SICKLE.name(), 1);
+        Blocks.PUMPKIN.setHardness(0.2F);
+        Blocks.MELON_BLOCK.setHardness(0.2F);
+        
+    
+    }
+    
+    public static void preInitClient() {
+        
+        for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
+            
+            model(entry.getKey(), entry.getValue());
+        }
     }
     
     private static void register(Block block, boolean isOffhandOnly) {
@@ -428,9 +447,17 @@ public class ModBlocks {
         GameRegistry.register(item
                 .setRegistryName(block.getRegistryName()));
 
+        MOD_BLOCKS.put(block, item);
+        
+       // ModelLoader.setCustomModelResourceLocation(item, 0,
+       //         new ModelResourceLocation(block.getRegistryName(),
+       //         "inventory"));
+    }
+    
+    private static void model(Block block, Item item) {
+        
         ModelLoader.setCustomModelResourceLocation(item, 0,
-                new ModelResourceLocation(block.getRegistryName(),
-                "inventory"));
+                new ModelResourceLocation(block.getRegistryName(), "inventory"));
     }
     
     private static void buildSets() {

@@ -46,6 +46,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -70,9 +71,11 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -256,15 +259,14 @@ public class EventHandler {
 
         World world = event.getWorld();
         Block block = event.getState().getBlock();
-        ItemStack stack = event.getHarvester() == null ? null :
+        ItemStack stack = event.getHarvester() == null ? ItemStack.field_190927_a :
                 event.getHarvester().getHeldItemMainhand();
         
         if (block instanceof BlockCarcass) {
 
             BlockCarcass carcass = (BlockCarcass) block;
 
-            if ((stack == null) ||
-                    !(stack.getItem() instanceof ItemHuntingknife)) {
+            if (!(stack.getItem() instanceof ItemHuntingknife)) {
 
                 // No change to drops
 
@@ -281,15 +283,29 @@ public class EventHandler {
 
         if (block instanceof BlockLeaves) {
 
-            if (world.rand.nextInt(4) == 0) {
-
-                event.getDrops().add(new ItemStack(ModItems.leafpile));
-            }
+            event.getDrops().add(new ItemStack(ModItems.leafpile));
 
             if (world.rand.nextInt(8) == 0) {
 
                 event.getDrops().add(new ItemStack(Items.STICK));
             }
+        }
+        
+        if (block == Blocks.TALLGRASS) {
+            
+            event.getDrops().clear();
+        }
+        
+        if (block == Blocks.PUMPKIN) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.pumpkin));
+        }
+        
+        if (block == Blocks.MELON_BLOCK) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.melon));
         }
 
         if (block instanceof BlockLog) {
@@ -330,11 +346,53 @@ public class EventHandler {
 
             event.getDrops().add(new ItemStack(ModItems.dirt, 4));
         }
+        
+        if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(Items.REDSTONE, world.rand.nextInt(4) + 1));
+        }
+        
+        if (block == Blocks.LAPIS_ORE) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(Items.DYE, world.rand.nextInt(5) + 1, EnumDyeColor.BLUE.getMetadata()));
+        }
+        
+        if (block == Blocks.DIAMOND_ORE) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(Items.DIAMOND));
+        }
+        
+        if (block == Blocks.GOLD_ORE) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.oreGold));
+        }
+        
+        if (block == Blocks.EMERALD_ORE) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(Items.EMERALD));
+        }
 
         if (block instanceof BlockStone) {
 
             event.getDrops().clear();
             event.getDrops().add(new ItemStack(ModItems.stoneLoose, 4));
+        }
+    }
+    
+    @SubscribeEvent
+    public void cropGrow(CropGrowEvent.Pre event) {
+        
+        if (event.getState().getBlock() == Blocks.REEDS) {
+            
+            if (event.getWorld().rand.nextFloat() > 0.4) {
+                
+                event.setResult(Result.DENY);
+            }
         }
     }
     

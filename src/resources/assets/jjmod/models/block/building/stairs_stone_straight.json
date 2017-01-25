@@ -4,6 +4,7 @@
     "stone": "jjmod:blocks/building/stone",
     "dressedstonewall": "jjmod:blocks/building/dressedstonewall"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 3, 0 ],

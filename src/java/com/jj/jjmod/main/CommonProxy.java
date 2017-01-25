@@ -42,7 +42,6 @@ public class CommonProxy {
         ModBiomes.init();
         ModRecipes.init();
         ModTileEntities.init();
-        ModEntities.preInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance,
                 new GuiHandler());

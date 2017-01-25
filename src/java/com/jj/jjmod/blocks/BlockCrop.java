@@ -3,6 +3,7 @@ package com.jj.jjmod.blocks;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import com.jj.jjmod.utilities.IBiomeCheck;
 import com.jj.jjmod.utilities.ToolType;
@@ -13,6 +14,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,22 +43,23 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
     
     protected Supplier<Item> cropRef;
     protected Supplier<Item> seedRef;
-    protected int yield;
+    protected Supplier<Integer> yieldRef;
     protected float growthChance;
 
-    public BlockCrop(String name, Supplier<Item> cropRef, int yield,
+    public BlockCrop(String name, Supplier<Item> cropRef, Supplier<Integer> yieldRef, float growthChance,
             float hardness, ToolType tool) {
 
-        this(name, cropRef, cropRef, yield, hardness, tool);
+        this(name, cropRef, cropRef, yieldRef, growthChance, hardness, tool);
     }
 
     public BlockCrop(String name, Supplier<Item> cropRef,
-            Supplier<Item> seedRef, int yield, float hardness, ToolType tool) {
+            Supplier<Item> seedRef, Supplier<Integer> yieldRef, float growthChance, float hardness, ToolType tool) {
 
         super(Material.PLANTS, name, null, hardness, tool);
         this.cropRef = cropRef;
         this.seedRef = seedRef;
-        this.yield = yield;
+        this.yieldRef = yieldRef;
+        this.growthChance = growthChance;
         this.setTickRandomly(true);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(AGE, 0));
@@ -199,7 +202,7 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
         if (state.getValue(AGE) == 7) {
             
             items.add(new ItemStack(this.seedRef.get()));
-            items.add(new ItemStack(this.cropRef.get(), this.yield));
+            items.add(new ItemStack(this.cropRef.get(), this.yieldRef.get()));
         }
         
         return items;

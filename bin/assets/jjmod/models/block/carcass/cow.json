@@ -4,6 +4,7 @@
     "cow1": "jjmod:blocks/carcass/cow1",
     "cow2": "jjmod:blocks/carcass/cow2"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 0, 0 ],

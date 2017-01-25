@@ -8,6 +8,7 @@
     "water": "jjmod:blocks/crafters/water",
     "particle": "jjmod:blocks/crafters/bark"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 0, 6 ],

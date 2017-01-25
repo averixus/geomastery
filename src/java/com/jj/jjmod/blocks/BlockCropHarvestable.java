@@ -22,9 +22,9 @@ public abstract class BlockCropHarvestable extends BlockCrop {
     protected int maxHeight;
 
     public BlockCropHarvestable(String name, int maxHeight,
-            Supplier<Item> cropRef, int yield, float hardness) {
+            Supplier<Item> cropRef, Supplier<Integer> yieldRef, float growthRate, float hardness) {
         
-        super(name, cropRef, yield, hardness, ToolType.NONE);
+        super(name, cropRef, yieldRef, growthRate, hardness, ToolType.NONE);
         this.maxHeight = maxHeight;
     }
     

@@ -3,6 +3,7 @@
 "textures": {
     "stone": "jjmod:blocks/building/stone"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 12, 0 ],

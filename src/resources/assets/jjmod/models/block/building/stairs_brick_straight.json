@@ -4,6 +4,7 @@
     "brickstairs": "jjmod:blocks/building/brickstairs",
     "texture": "jjmod:blocks/building/wholebrickwall"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 2, 0 ],

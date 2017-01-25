@@ -1,0 +1,46 @@
+{
+"__comment": "Designed by bdcraftjgrowe65 with bDcraft cubik pRO 0.96 beta - http://bdcraft.net",
+"textures": {
+    "woodwork1": "jjmod:blocks/crafters/woodwork1",
+    "woodwork1 - copy": "jjmod:blocks/crafters/woodwork2"
+},
+"parent": "block/block",
+"elements": [ 
+{
+    "from": [ 3, 0, 2.9375 ],
+    "to": [ 14, 6, 13.9375 ],
+    "faces": {
+        "down":  { "uv": [ 13, 13.9375, 2, 2.9375 ], "texture": "#woodwork1" },
+        "up":    { "uv": [ 3, 2.9375, 14, 13.9375 ], "texture": "#woodwork1" },
+        "north": { "uv": [ 0, 3, 11, 9 ], "texture": "#woodwork1 - copy" },
+        "south": { "uv": [ 5, 3, 16, 9 ], "texture": "#woodwork1 - copy" },
+        "west":  { "uv": [ 2, 7, 13, 13 ], "texture": "#woodwork1 - copy" },
+        "east":  { "uv": [ 5, 7, 16, 13 ], "texture": "#woodwork1 - copy" }
+    }
+},
+{
+    "from": [ 3, 6, 2.9375 ],
+    "to": [ 14, 7, 13.9375 ],
+    "faces": {
+        "down":  { "uv": [ 13, 13.9375, 2, 2.9375 ], "texture": "#woodwork1" },
+        "up":    { "uv": [ 3, 2.9375, 14, 13.9375 ], "texture": "#woodwork1" },
+        "north": { "uv": [ 4, 0, 15, 1 ], "texture": "#woodwork2" },
+        "south": { "uv": [ 1, 0, 12, 1 ], "texture": "#woodwork2" },
+        "west":  { "uv": [ 1, 0, 12, 1 ], "texture": "#woodwork2" },
+        "east":  { "uv": [ 4, 0, 15, 1 ], "texture": "#woodwork2" }
+    }
+},
+{
+    "from": [ 6.9375, 7, 8 ],
+    "to": [ 9.9375, 8, 9 ],
+    "faces": {
+        "down":  { "uv": [ 4, 7, 1, 6 ], "texture": "#woodwork2" },
+        "up":    { "uv": [ 2, 7, 5, 8 ], "texture": "#woodwork2" },
+        "north": { "uv": [ 2, 6, 5, 7 ], "texture": "#woodwork2" },
+        "south": { "uv": [ 2, 7, 5, 8 ], "texture": "#woodwork2" },
+        "west":  { "uv": [ 4, 6, 5, 7 ], "texture": "#woodwork2" },
+        "east":  { "uv": [ 4, 7, 5, 8 ], "texture": "#woodwork2" }
+    }
+}
+]
+}

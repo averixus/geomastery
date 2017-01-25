@@ -58,6 +58,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
     
+    public static final Set<Item> MOD_ITEMS = Sets.newHashSet();
+    
     public static final Set<Item> FRUITVEG = Sets.newHashSet();
     public static final Set<Item> PROTEIN = Sets.newHashSet();
     public static final Set<Item> CARBS = Sets.newHashSet();
@@ -69,6 +71,8 @@ public class ModItems {
     public static ItemEdible wheatBoiled;
     public static ItemEdible riceBoiled;
     public static ItemEdible chickpeasBoiled;
+    public static ItemEdible pumpkin;
+    public static ItemEdible melon;
     
     public static ItemEdibleSeed bean;
     public static ItemEdibleSeed onion;
@@ -79,6 +83,7 @@ public class ModItems {
     public static ItemEdibleSeed carrot;
     public static ItemEdibleSeed potato;
     public static ItemEdibleSeed beetroot;
+    public static ItemEdibleSeed seedPumpkin;
         
     public static ItemRice rice;
 
@@ -90,7 +95,6 @@ public class ModItems {
     public static ItemSeed cuttingHemp;
     
     public static ItemSeed wheat;
-    public static ItemSeed seedPumpkin;
     public static ItemSeed seedMelon;
 
     public static ItemBedPlainAbstract bedLeaf;
@@ -321,6 +325,8 @@ public class ModItems {
         register(wheatBoiled = new ItemEdible("wheat_boiled", 4, 2F, 10), FoodType.FOOD_CARBS);
         register(riceBoiled = new ItemEdible("rice_boiled", 4, 2, 12), FoodType.FOOD_CARBS);
         register(chickpeasBoiled = new ItemEdible("chickpeas_boiled", 3, 3, 10), FoodType.FOOD_PROTEIN);
+        register(pumpkin = new ItemEdible("pumpkin", 10, 10, 2), FoodType.FOOD_FRUITVEG);
+        register(melon = new ItemEdible("melon", 12, 12, 2), FoodType.FOOD_FRUITVEG);
         
         register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean), FoodType.FOOD_FRUITVEG);
         register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper), FoodType.FOOD_FRUITVEG);
@@ -330,7 +336,8 @@ public class ModItems {
         register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato), FoodType.FOOD_CARBS);
         register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot), FoodType.FOOD_FRUITVEG);
         register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot), FoodType.FOOD_FRUITVEG);
-
+        register(seedPumpkin = new ItemEdibleSeed("seed_pumpkin", 1, 1, 15, ModBlocks.pumpkin), FoodType.FOOD_PROTEIN);
+        
         register(rice = new ItemRice());
         
         register(cotton = new ItemNew("cotton", 6));
@@ -341,8 +348,7 @@ public class ModItems {
         register(cuttingHemp = new ItemSeed("cutting_hemp", 1, ModBlocks.hemp));
 
         register(wheat = new ItemSeed("wheat", 10, ModBlocks.wheat));
-        register(seedPumpkin = new ItemSeed("seed_pumpkin", 10, ModBlocks.pumpkin));
-        register(seedMelon = new ItemSeed("seed_melon", 10, ModBlocks.melon));
+        register(seedMelon = new ItemSeed("seed_melon", 15, ModBlocks.melon));
         
         register(bedLeaf = new ItemBedPlainAbstract("bed_leaf",
                 ModBlocks.bedLeaf), true);
@@ -622,6 +628,14 @@ public class ModItems {
         
     }
     
+    public static void preInitClient() {
+        
+        for (Item item : MOD_ITEMS) {
+            
+            model(item);
+        }
+    }
+    
     private static void register(Item item) {
         
         register(item, false);
@@ -662,9 +676,17 @@ public class ModItems {
             ModBlocks.OFFHAND_ONLY.add(item);
         }
 
+        MOD_ITEMS.add(item);
+        
+       // ModelLoader.setCustomModelResourceLocation(item, 0,
+       //         new ModelResourceLocation(item.getRegistryName(),
+       //         "inventory"));
+    }
+    
+    private static void model(Item item) {
+        
         ModelLoader.setCustomModelResourceLocation(item, 0,
-                new ModelResourceLocation(item.getRegistryName(),
-                "inventory"));
+                new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
     
     public enum FoodType {

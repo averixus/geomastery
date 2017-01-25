@@ -4,6 +4,7 @@
     "woodwork1": "jjmod:blocks/crafters/woodwork1",
     "particle": "jjmod:blocks/crafters/woodwork1"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 0, 1 ],

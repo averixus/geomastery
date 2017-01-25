@@ -12,8 +12,7 @@ public class BlockCropHarvestableBean extends BlockCropHarvestable {
     public BlockCropHarvestableBean() {
         
         super("bean", 3,
-                () -> ModItems.bean, 4, 0.2F);
-        this.growthChance = 0.4F;
+                () -> ModItems.bean, () -> 4, 0.4F, 0.2F);
     }
 
     @Override

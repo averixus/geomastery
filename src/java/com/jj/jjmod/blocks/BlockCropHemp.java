@@ -15,8 +15,7 @@ public class BlockCropHemp extends BlockCrop {
     public BlockCropHemp() {
         
         super("hemp", () -> ModItems.twineHemp,
-                () -> ModItems.cuttingHemp, 1, 0.2F, ToolType.SICKLE);
-        this.growthChance = 0.4F;
+                () -> ModItems.cuttingHemp, () -> 1, 0.4F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

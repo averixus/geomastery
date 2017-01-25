@@ -68,7 +68,7 @@ public class ModEntities {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void registerRenderers() {
+    public static void initClient() {
 
         RenderingRegistry.registerEntityRenderingHandler(
                 EntitySpearWood.class, RenderSpearWood::new);

@@ -12,8 +12,7 @@ public class BlockCropCotton extends BlockCrop {
     public BlockCropCotton() {
         
         super("cotton", () -> ModItems.cotton,
-        () -> ModItems.cuttingCotton, 1, 0.2F, ToolType.SICKLE);
-        this.growthChance = 0.3F;
+        () -> ModItems.cuttingCotton, () -> 1, 0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

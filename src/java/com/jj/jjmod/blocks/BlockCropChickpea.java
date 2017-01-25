@@ -21,8 +21,7 @@ public class BlockCropChickpea extends BlockCrop {
     
     public BlockCropChickpea() {
         
-        super("chickpea", () -> ModItems.chickpeas, 1, 0.2F, ToolType.SICKLE);
-        this.growthChance = 0.3F;
+        super("chickpea", () -> ModItems.chickpeas, () -> 2, 0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

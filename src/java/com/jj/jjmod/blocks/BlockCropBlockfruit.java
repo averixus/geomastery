@@ -10,6 +10,7 @@ import net.minecraft.block.BlockTorch;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -34,10 +35,10 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
             new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D),
             new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 1.0D, 0.625D)};
 
-    public BlockCropBlockfruit(String name, Supplier<Item> seedRef,
+    public BlockCropBlockfruit(String name, float growthChance,
             float hardness, ToolType tool, Block fruit) {
         
-        super(name, () -> null, seedRef, 0, hardness, tool);
+        super(name, () -> Items.field_190931_a, () -> new Integer(0), growthChance, hardness, tool);
         this.fruit = fruit;
     }
     

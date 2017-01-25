@@ -22,8 +22,7 @@ public class BlockCropPepper extends BlockCrop {
     
     public BlockCropPepper() {
         
-        super("pepper", () -> ModItems.pepper, 3, 0.2F, ToolType.SICKLE);
-        this.growthChance = 0.3F;
+        super("pepper", () -> ModItems.pepper, () -> 3, 0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

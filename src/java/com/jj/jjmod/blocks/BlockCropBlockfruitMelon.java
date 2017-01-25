@@ -13,7 +13,7 @@ public class BlockCropBlockfruitMelon extends BlockCropBlockfruit {
     
     public BlockCropBlockfruitMelon() {
         
-        super("melon", () -> ModItems.seedMelon, 0.2F, ToolType.SICKLE, Blocks.MELON_BLOCK);
+        super("melon", 0.4F, 0.2F, ToolType.SICKLE, Blocks.MELON_BLOCK);
     }
 
     @Override

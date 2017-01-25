@@ -45,7 +45,7 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
     }
     
-    public static void registerRenderers() {
+    public static void preInitClient() {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TEBox.class,
                 new TileEntityBoxRenderer());
