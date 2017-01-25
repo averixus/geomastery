@@ -1,0 +1,44 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
+"elements": [ 
+{
+    "from": [ 0, -0.0625, 0 ],
+    "to": [ 16, 0, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#notexture" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#sawdust5" },
+        "north": { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
+        "south": { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
+        "west":  { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
+        "east":  { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" }
+    }
+},
+{
+    "from": [ 6, 0, 8 ],
+    "to": [ 7, 1, 11 ],
+    "rotation": { "origin": [ 6, 0, 8 ], "axis": "y", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 10, 11, 9, 8 ], "texture": "#newSoftwood" },
+        "up":    { "uv": [ 6, 8, 7, 11 ], "texture": "#newSoftwood" },
+        "north": { "uv": [ 9, 15, 10, 16 ], "texture": "#newSoftwood" },
+        "south": { "uv": [ 6, 15, 7, 16 ], "texture": "#newSoftwood" },
+        "west":  { "uv": [ 8, 15, 11, 16 ], "texture": "#newSoftwood" },
+        "east":  { "uv": [ 5, 15, 8, 16 ], "texture": "#newSoftwood" }
+    }
+},
+{
+    "from": [ 13, 0, 11 ],
+    "to": [ 14, 1, 13 ],
+    "rotation": { "origin": [ 13, 0, 11 ], "axis": "y", "angle": 22.5 },
+    "faces": {
+        "down":  { "uv": [ 10, 11, 9, 8 ], "texture": "#newSoftwood" },
+        "up":    { "uv": [ 6, 8, 7, 11 ], "texture": "#newSoftwood" },
+        "north": { "uv": [ 9, 15, 10, 16 ], "texture": "#newSoftwood" },
+        "south": { "uv": [ 6, 15, 7, 16 ], "texture": "#newSoftwood" },
+        "west":  { "uv": [ 8, 15, 11, 16 ], "texture": "#newSoftwood" },
+        "east":  { "uv": [ 5, 15, 8, 16 ], "texture": "#newSoftwood" }
+    }
+}
+]
+}

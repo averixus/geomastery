@@ -101,6 +101,7 @@ public class ModItems {
     public static ItemBucket bucketEmpty;
     public static ItemBucket bucketWater;
     public static ItemBucket bucketTar;
+    public static ItemNew bucketMilk;
 
     public static ItemNew backpack;
     public static ItemNew yoke;
@@ -139,6 +140,15 @@ public class ModItems {
     public static ItemNew mudbricksWet;
     public static ItemNew peatDry;
     public static ItemNew peatWet;
+    
+    public static ItemNew salt;
+    public static ItemNew chalk;
+    
+    public static ItemNew oreTin;
+    public static ItemNew oreCopper;
+    public static ItemNew oreIron;
+    public static ItemNew oreSilver;
+    public static ItemNew oreGold;
 
     public static ItemNew stoneLoose;
     public static ItemNew stoneRough;
@@ -352,7 +362,8 @@ public class ModItems {
         register(bucketTar = new ItemBucket("bucket_tar",
                 ModLiquids.tarBlock, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);
-
+        register(bucketMilk = new ItemNew("bucket_milk"));
+        
         register(backpack = new ItemNew("backpack"));
         register(yoke = new ItemNew("yoke"));
 
@@ -389,7 +400,16 @@ public class ModItems {
         register(mudbricksWet = new ItemNew("mudbricks_wet"));
         register(peatDry = new ItemNew("peat_dry"));
         register(peatWet = new ItemNew("peat_wet"));
+        
+        register(salt = new ItemNew("salt"));
+        register(chalk = new ItemNew("chalk"));        
 
+        register(oreTin = new ItemNew("ore_tin"));
+        register(oreCopper = new ItemNew("ore_copper"));
+        register(oreIron = new ItemNew("ore_iron"));
+        register(oreSilver = new ItemNew("ore_silver"));
+        register(oreGold = new ItemNew("ore_gold"));
+        
         register(stoneLoose = new ItemNew("stone_loose", 4));
         register(stoneRough = new ItemNew("stone_rough", 4));
         register(stoneDressed = new ItemNew("stone_dressed", 4));

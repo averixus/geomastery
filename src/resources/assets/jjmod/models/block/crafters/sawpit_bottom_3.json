@@ -1,0 +1,61 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"texures": {
+    "notexture": "jjmod:blocks/crafters/notexture",
+    "sawdust3": "jjmod:blocks/crafters/sawdust",
+    "texture": "jjmodb:locks/crafters/sawdust",
+    "newsoftwood": "jjmod:blocks/crafters/newsoftwood"
+},
+"elements": [ 
+{
+    "from": [ 0, -0.0625, 0 ],
+    "to": [ 16, 0, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#notexture" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#sawdust3" },
+        "north": { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
+        "south": { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
+        "west":  { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
+        "east":  { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" }
+    }
+},
+{
+    "from": [ 8, 0, 4 ],
+    "to": [ 15, 1, 13 ],
+    "rotation": { "origin": [ 8, 0, 4 ], "axis": "y", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 8, 13, 1, 4 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 8, 4, 15, 13 ], "texture": "#newsoftwood" },
+        "north": { "uv": [ 1, 15, 8, 16 ], "texture": "#newsoftwood" },
+        "south": { "uv": [ 8, 15, 15, 16 ], "texture": "#newsoftwood" },
+        "west":  { "uv": [ 4, 15, 13, 16 ], "texture": "#newsoftwood" },
+        "east":  { "uv": [ 3, 15, 12, 16 ], "texture": "#newsoftwood" }
+    }
+},
+{
+    "from": [ 7, 1, 7 ],
+    "to": [ 12, 2, 12 ],
+    "faces": {
+        "down":  { "uv": [ 9, 12, 4, 7 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 7, 7, 12, 12 ], "texture": "#newsoftwood" },
+        "north": { "uv": [ 4, 14, 9, 15 ], "texture": "#newsoftwood" },
+        "south": { "uv": [ 7, 14, 12, 15 ], "texture": "#newsoftwood" },
+        "west":  { "uv": [ 7, 14, 12, 15 ], "texture": "#newsoftwood" },
+        "east":  { "uv": [ 4, 14, 9, 15 ], "texture": "#newsoftwood" }
+    }
+},
+{
+    "from": [ 8, 2, 9 ],
+    "to": [ 11, 3, 12 ],
+    "rotation": { "origin": [ 8, 2, 9 ], "axis": "y", "angle": 22.5 },
+    "faces": {
+        "down":  { "uv": [ 8, 12, 5, 9 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 8, 9, 11, 12 ], "texture": "#newsoftwood" },
+        "north": { "uv": [ 5, 13, 8, 14 ], "texture": "#newsoftwood" },
+        "south": { "uv": [ 8, 13, 11, 14 ], "texture": "#newsoftwood" },
+        "west":  { "uv": [ 9, 13, 12, 14 ], "texture": "#newsoftwood" },
+        "east":  { "uv": [ 4, 13, 7, 14 ], "texture": "#newsoftwood" }
+    }
+}
+]
+}

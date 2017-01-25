@@ -67,21 +67,28 @@ public class TECraftingSawpit extends TileEntity {
     
     public enum EnumPartSawpit implements IStringSerializable {
         
-        B1 ("b1"), B2("b2"), B3("b3"), B4("b4"), B5("b5"),
-        M1 ("m1"), M2("m2"), M3("m3"), M4("m4"), M5("m5"),
-        T1 ("t1"), T2("t2"), T3("t3"), T4("t4"), T5("t5");
+        B1 ("b1", true), B2("b2", true), B3("b3", true), B4("b4", true), B5("b5", true),
+        M1 ("m1", true), M2("m2", true), M3("m3", true), M4("m4", true), M5("m5", true),
+        T1 ("t1", false), T2("t2", false), T3("t3", false), T4("t4", false), T5("t5", false);
         
         private final String name;
+        private final boolean isPassable;
         
-        private EnumPartSawpit(String name) {
+        private EnumPartSawpit(String name, boolean isPassable) {
             
             this.name = name;
+            this.isPassable = isPassable;
         }
 
         @Override
         public String getName() {
 
             return this.name;
+        }
+        
+        public boolean isPassable() {
+            
+            return this.isPassable;
         }
     }
 }
