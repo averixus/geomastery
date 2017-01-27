@@ -10,7 +10,7 @@ public class WorldGenLapis extends WorldGenStone {
 
     public WorldGenLapis(World world, Random rand) {
 
-        super(world, rand, Blocks.LAPIS_ORE.getDefaultState(), 60, 70, 2);
+        super(world, rand, Blocks.LAPIS_ORE.getDefaultState(), 60, 70, 2, 1);
     }
 
     @Override

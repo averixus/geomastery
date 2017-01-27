@@ -10,7 +10,7 @@ public class WorldGenSapphire extends WorldGenStone {
     public WorldGenSapphire(World world, Random rand) {
 
         super(world, rand, ModBlocks.lodeSapphire.getDefaultState(),
-                80, 120, 4);
+                80, 120, 4, 1);
     }
 
     @Override

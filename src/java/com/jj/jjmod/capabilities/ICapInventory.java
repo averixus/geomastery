@@ -5,4 +5,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ICapInventory extends INBTSerializable<NBTTagCompound> {
 
+    public void update();
+    public boolean canRun();
+
 }

@@ -2,25 +2,92 @@ package com.jj.jjmod.capabilities;
 
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.utilities.EquipMaterial;
+import jline.console.history.PersistentHistory;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.container.ContainerInventory.InvType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
 public class DefaultCapInventory implements ICapInventory {
 
+    private static final float SPEED_MODIFIER = 43;
+    
     public EntityPlayer player;
     public ItemStack backpack = ItemStack.field_190927_a;
     public ItemStack yoke = ItemStack.field_190927_a;
+    
+    private boolean canRun = true;
 
     public DefaultCapInventory(EntityPlayer player) {
 
         this.player = player;
     }
 
+    @Override
+    public boolean canRun() {
+        
+        return this.canRun;
+    }
+    
+    @Override
+    public void update() {
+        
+        double speed = 4.3;
+        this.canRun = true;
+        
+        for (ItemStack stack : this.player.inventory.armorInventory) {
+
+            if (stack != null && stack.getItem() != null &&
+                    stack.getItem() instanceof ItemArmor) {
+                
+                ItemArmor armor = (ItemArmor) stack.getItem();
+                
+                if (armor.getArmorMaterial() == EquipMaterial.LEATHER_APPAREL) {
+
+                    speed -= 0.2;
+                    
+                } else if (armor.getArmorMaterial() == EquipMaterial.STEELMAIL_APPAREL) {
+
+                    speed -= 0.4;
+                    
+                } else if (armor.getArmorMaterial() == EquipMaterial.STEELPLATE_APPAREL) {
+                    
+                    speed -= 0.5;
+                }
+            }
+        }
+        
+        if (ModBlocks.OFFHAND_ONLY.contains(this.player.getHeldItemOffhand().getItem())) {
+            
+            speed -= 2.0;
+            this.canRun = false;
+        }
+        
+        if (this.backpack.getItem() == ModItems.backpack) {
+            
+            speed -= 0.5;
+        }
+        
+        if (this.yoke.getItem() == ModItems.yoke) {
+            
+            speed -= 1.5;
+            this.canRun = false;
+        }
+        
+        if (speed < 2) {
+            
+            speed = 2;
+        }
+        
+        float adjustedSpeed = (float) speed / SPEED_MODIFIER;
+        this.player.capabilities.setPlayerWalkSpeed(adjustedSpeed);
+    }
+    
     // Put stack in inventory, return amount remaining
     public int add(ItemStack stack) {
         
@@ -38,7 +105,7 @@ public class DefaultCapInventory implements ICapInventory {
 
         stack.func_190920_e(remaining);
         remaining = this.putInEmptySlot(stack);
-
+        
         return remaining;
     }
 

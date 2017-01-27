@@ -13,7 +13,7 @@ public class WorldGenTreeOrange extends WorldGenTree {
     
     public WorldGenTreeOrange(World world, Random rand, boolean isSapling) {
         
-        super(world, rand, isSapling, 30, 3, ModBlocks.seedlingOrange);
+        super(world, rand, isSapling, 30, 4, ModBlocks.seedlingOrange);
     }
 
     @Override

@@ -160,7 +160,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
             int riceCount = 0;
             int riceMax = this.rand.nextInt(6) + 1;
             
-            while (riceCount < riceMax && possibles.size() > 0) {
+            while (riceCount <= riceMax && possibles.size() > 0) {
                 
                 BlockPos rice = possibles.remove(this.rand.nextInt(possibles.size()));
                 

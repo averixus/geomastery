@@ -13,7 +13,7 @@ public class WorldGenMelon extends WorldGenCrop {
 
     public WorldGenMelon(World world, Random rand) {
         
-        super(world, rand, ModBlocks.melon.getDefaultState(), 10, 10);
+        super(world, rand, ModBlocks.melon.getDefaultState(), 6, 4);
     }
 
     @Override

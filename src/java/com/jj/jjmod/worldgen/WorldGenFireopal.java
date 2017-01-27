@@ -10,7 +10,7 @@ public class WorldGenFireopal extends WorldGenStone {
 
     public WorldGenFireopal(World world, Random rand) {
 
-        super(world, rand, ModBlocks.lodeFireopal.getDefaultState(), 5, 15, 2);
+        super(world, rand, ModBlocks.lodeFireopal.getDefaultState(), 5, 15, 2, 1);
     }
 
     @Override

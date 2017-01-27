@@ -10,7 +10,7 @@ public class WorldGenEmerald extends WorldGenStone {
 
     public WorldGenEmerald(World world, Random rand) {
 
-        super(world, rand, Blocks.EMERALD_ORE.getDefaultState(), 0, 30, 1);
+        super(world, rand, Blocks.EMERALD_ORE.getDefaultState(), 0, 30, 1, 1);
     }
 
     @Override

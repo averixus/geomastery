@@ -153,12 +153,12 @@ public class ContainerInventory extends ContainerAbstract {
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
-        ItemStack result = null;
+        ItemStack result = ItemStack.field_190927_a;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot == null || !slot.getHasStack()) {
 
-            return null;
+            return ItemStack.field_190927_a;
         }
 
         ItemStack slotStack = slot.getStack();
@@ -175,7 +175,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         HEAD_I, HEAD_I + 1, true)) {
 
-                    result = null;
+                    result = ItemStack.field_190927_a;
                 }
 
             } else if (armourType == EntityEquipmentSlot.CHEST &&
@@ -184,7 +184,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, CHEST_I, CHEST_I + 1,
                         true)) {
 
-                    result = null;
+                    result = ItemStack.field_190927_a;
                 }
 
             } else if (armourType == EntityEquipmentSlot.LEGS &&
@@ -193,7 +193,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         LEGS_I, LEGS_I + 1, true)) {
 
-                    result = null;
+                    result = ItemStack.field_190927_a;
                 }
 
             } else if (armourType == EntityEquipmentSlot.FEET &&
@@ -202,7 +202,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         FEET_I, FEET_I + 1, true)) {
 
-                    result = null;
+                    result = ItemStack.field_190927_a;
                 }
             }
         }
@@ -213,7 +213,7 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack,
                     SHIELD_I, SHIELD_I + 1, true)) {
 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
         }
 
@@ -223,7 +223,7 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, BACKPACK_I, BACKPACK_I + 1,
                     true)) {
                 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
         }
 
@@ -232,7 +232,7 @@ public class ContainerInventory extends ContainerAbstract {
 
             if (!this.mergeItemStack(slotStack, YOKE_I, YOKE_I + 1, true)) {
 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
         }
 
@@ -241,10 +241,11 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
                     true)) {
 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
 
             slot.onSlotChange(slotStack, result);
+            ((SlotCrafting) slot).onPickupFromSlot(player, slotStack);
 
         } else if ((index >= this.CRAFT_START && index <= this.CRAFT_END) ||
                 (index >= FEET_I && index <= YOKE_I)) {
@@ -252,7 +253,7 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
                     true)) {
 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
 
         } else if (index >= HOT_START && index <= HOT_END) {
@@ -260,14 +261,14 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, INV_START, this.INV_END + 1,
                     true)) {
 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
 
         } else if (index >= INV_START && index <= this.INV_END) {
 
             if (!this.mergeItemStack(slotStack, HOT_START, HOT_END + 1, true)) {
 
-                result = null;
+                result = ItemStack.field_190927_a;
             }
         }
 
@@ -280,7 +281,6 @@ public class ContainerInventory extends ContainerAbstract {
             slot.onSlotChanged();
         }
 
-        ((SlotCrafting) slot).onPickupFromSlot(player, slotStack);
         return result;
     }
 

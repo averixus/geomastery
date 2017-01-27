@@ -18,20 +18,27 @@ public abstract class WorldGenStone extends WorldGenAbstract {
     protected int minHeight;
     protected int maxHeight;
     protected int veinCount;
+    protected double veinChance;
 
     public WorldGenStone(World world, Random rand, IBlockState state,
-            int minHeight, int maxHeight, int veinCount) {
+            int minHeight, int maxHeight, int veinCount, double veinChance) {
 
         super(world, rand);
         this.state = state;
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         this.veinCount = veinCount;
+        this.veinChance = veinChance;
     }
 
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
 
+        if (this.rand.nextDouble() >= this.veinChance) {
+            
+            return;
+        }
+        
         for (int i = 0; i < this.veinCount; i++) {
 
             // Weighted random y co-ordinate

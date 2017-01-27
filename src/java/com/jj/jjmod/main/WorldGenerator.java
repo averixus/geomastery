@@ -9,6 +9,7 @@ import com.jj.jjmod.worldgen.WorldGenBeehive;
 import com.jj.jjmod.worldgen.WorldGenBeetroot;
 import com.jj.jjmod.worldgen.WorldGenBerry;
 import com.jj.jjmod.worldgen.WorldGenCarrot;
+import com.jj.jjmod.worldgen.WorldGenChalk;
 import com.jj.jjmod.worldgen.WorldGenChickpea;
 import com.jj.jjmod.worldgen.WorldGenCoal;
 import com.jj.jjmod.worldgen.WorldGenCopper;
@@ -26,6 +27,7 @@ import com.jj.jjmod.worldgen.WorldGenPotato;
 import com.jj.jjmod.worldgen.WorldGenPumpkin;
 import com.jj.jjmod.worldgen.WorldGenRedstone;
 import com.jj.jjmod.worldgen.WorldGenRuby;
+import com.jj.jjmod.worldgen.WorldGenSalt;
 import com.jj.jjmod.worldgen.WorldGenSapphire;
 import com.jj.jjmod.worldgen.WorldGenSilver;
 import com.jj.jjmod.worldgen.WorldGenTin;
@@ -43,8 +45,8 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldGenerator implements IWorldGenerator {
@@ -110,6 +112,9 @@ public class WorldGenerator implements IWorldGenerator {
         new WorldGenTin(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenAmethyst(world, rand).generateChunk(xFromChunk, zFromChunk);
         
+        new WorldGenSalt(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenChalk(world, rand).generateChunk(xFromChunk, zFromChunk);
+        
         new WorldGenAntler(world, rand).generateChunk(xFromChunk, zFromChunk);
         
         new WorldGenBean(world, rand).generateChunk(xFromChunk, zFromChunk);
@@ -150,7 +155,7 @@ public class WorldGenerator implements IWorldGenerator {
         Random rand = event.getRand();        
         
         if (event.getType() == PopulateChunkEvent.Populate.EventType.LAKE &&
-                rand.nextFloat() <= 1) {
+                rand.nextFloat() <= 0.1) {
             
             event.setResult(Result.DENY);
             new PopulateChunkRicelake(event.getWorld(), rand)

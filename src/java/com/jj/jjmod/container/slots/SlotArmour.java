@@ -1,5 +1,7 @@
 package com.jj.jjmod.container.slots;
 
+import com.jj.jjmod.capabilities.CapInventory;
+import com.jj.jjmod.capabilities.DefaultCapInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

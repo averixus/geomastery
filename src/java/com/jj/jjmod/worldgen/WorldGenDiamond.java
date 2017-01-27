@@ -10,7 +10,7 @@ public class WorldGenDiamond extends WorldGenStone {
 
     public WorldGenDiamond(World world, Random rand) {
 
-        super(world, rand, Blocks.DIAMOND_ORE.getDefaultState(), 0, 15, 1);
+        super(world, rand, Blocks.DIAMOND_ORE.getDefaultState(), 0, 15, 1, 1);
     }
 
     @Override

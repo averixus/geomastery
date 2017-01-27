@@ -464,6 +464,7 @@ public class EventHandler {
 
         EntityPlayer player = event.player;        
         player.getCapability(CapTemperature.CAP_TEMPERATURE, null).update();
+        player.getCapability(CapInventory.CAP_INVENTORY, null).update();
                 
         if (player.inventoryContainer instanceof ContainerPlayer &&
                 !player.capabilities.isCreativeMode) {
@@ -486,6 +487,9 @@ public class EventHandler {
             ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
                     new FoodStatsWrapper(player), "foodStats");
         }
+        
+        // TEST
+        System.out.println("speed " + player.capabilities.getWalkSpeed());
     }
     
     @SubscribeEvent

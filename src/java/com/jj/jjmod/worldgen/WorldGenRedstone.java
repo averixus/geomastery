@@ -10,7 +10,7 @@ public class WorldGenRedstone extends WorldGenStone {
 
     public WorldGenRedstone(World world, Random rand) {
 
-        super(world, rand, Blocks.REDSTONE_ORE.getDefaultState(), 5, 45, 2);
+        super(world, rand, Blocks.REDSTONE_ORE.getDefaultState(), 5, 45, 2, 1);
     }
 
     @Override

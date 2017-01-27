@@ -11,7 +11,7 @@ public class WorldGenAmethyst extends WorldGenStone {
     public WorldGenAmethyst(World world, Random rand) {
 
         super(world, rand, ModBlocks.lodeAmethyst.getDefaultState(),
-                90, 256, 2);
+                90, 256, 2, 1);
     }
 
     @Override

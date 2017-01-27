@@ -10,7 +10,7 @@ public class WorldGenGold extends WorldGenStone {
 
     public WorldGenGold(World world, Random rand) {
 
-        super(world, rand, Blocks.GOLD_ORE.getDefaultState(), 0, 40, 1);
+        super(world, rand, Blocks.GOLD_ORE.getDefaultState(), 0, 40, 1, 1);
     }
 
     @Override

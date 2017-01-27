@@ -10,7 +10,7 @@ public class WorldGenCoal extends WorldGenStone {
 
     public WorldGenCoal(World world, Random rand) {
 
-        super(world, rand, Blocks.COAL_ORE.getDefaultState(), 5, 60, 20);
+        super(world, rand, Blocks.COAL_ORE.getDefaultState(), 5, 60, 20, 1);
     }
 
     @Override

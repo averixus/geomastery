@@ -10,7 +10,7 @@ public class WorldGenTin extends WorldGenStone {
 
     public WorldGenTin(World world, Random rand) {
 
-        super(world, rand, ModBlocks.oreTin.getDefaultState(), 30, 80, 5);
+        super(world, rand, ModBlocks.oreTin.getDefaultState(), 30, 80, 5, 1);
     }
 
     @Override

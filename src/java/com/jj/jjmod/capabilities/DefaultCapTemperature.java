@@ -16,10 +16,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 
 public class DefaultCapTemperature implements ICapTemperature {
+    
+    private static final int WATER_MAX = 3600;
     
     public EntityPlayer player;
     public EnumTempIcon icon = EnumTempIcon.OK;
@@ -41,10 +44,12 @@ public class DefaultCapTemperature implements ICapTemperature {
         
         EnumTempIcon oldIcon = this.icon;
         float temp = 0;
-
         BlockPos playerPos = new BlockPos(this.player.posX,
                 this.player.posY, this.player.posZ);
-        Biome biome = this.player.worldObj.getBiomeForCoordsBody(playerPos);
+        World world = this.player.worldObj;
+        
+        
+        Biome biome = world.getBiomeForCoordsBody(playerPos);
         float biomeVar = ModBiomes.getTemp(biome);
         
         temp += biomeVar;
@@ -52,7 +57,7 @@ public class DefaultCapTemperature implements ICapTemperature {
         float heightVar = 0;
         float belowSea = (float) (64 - this.player.posY);
         
-        if (this.player.worldObj.getWorldType() != WorldType.FLAT &&
+        if (world.getWorldType() != WorldType.FLAT &&
                 belowSea != 0) {
 
             heightVar += belowSea / 12F;
@@ -61,7 +66,7 @@ public class DefaultCapTemperature implements ICapTemperature {
         temp += heightVar;
 
         float timeVar;
-        long time = this.player.worldObj.getWorldTime();
+        long time = world.getWorldTime();
         
         if ((time > 0 && time <= 3000) || (time > 12000 && time <= 18000)) {
 
@@ -78,19 +83,48 @@ public class DefaultCapTemperature implements ICapTemperature {
         }
         
         if (biomeVar > 3 && time > 4000 && time <= 8000 &&
-                !this.player.worldObj.canSeeSky(playerPos)) {
+                !world.canSeeSky(playerPos)) {
 
             timeVar += -1;
         }
         
         temp += timeVar;
+        
+        boolean isCave = true;
+        
+        outer: 
+        for (int x = -10; x <= 10; x++) {
+            
+            for (int y = -10; y <= 10; y++) {
+                
+                for (int z = -10; z <= 10; z++) {
+                    
+                    double xPos = this.player.posX + x;
+                    double yPos = this.player.posY + y;
+                    double zPos = this.player.posZ + z;
+                    
+                    BlockPos pos = new BlockPos(xPos, yPos, zPos);
+                    
+                    if (world.canSeeSky(pos)) {
+                        
+                        isCave = false;
+                        break outer;
+                    }
+                }
+            }
+        }
+        
+        if (isCave) {
+            
+            temp = 0;
+        }
 
         float waterVar = 0;
         
         if (this.player.isInWater() || this.player.isWet()) {
             
             waterVar = -3;
-            this.wetTimer = 1200;
+            this.wetTimer = WATER_MAX;
             
         } else if (this.wetTimer > 0) {
             
@@ -141,7 +175,7 @@ public class DefaultCapTemperature implements ICapTemperature {
                     
                     BlockPos pos = new BlockPos(xPos, yPos, zPos);
                     
-                    Block block = this.player.worldObj
+                    Block block = world
                             .getBlockState(pos).getBlock();
                     
                     boolean fireLit = false;
@@ -152,7 +186,7 @@ public class DefaultCapTemperature implements ICapTemperature {
                             block == ModBlocks.furnaceStone) {
                         
                         TEFurnaceAbstract furnace =
-                                (TEFurnaceAbstract) this.player.worldObj
+                                (TEFurnaceAbstract) world
                                 .getTileEntity(pos);
                         
                         fireLit = furnace.isHeating();

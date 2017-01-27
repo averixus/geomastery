@@ -23,6 +23,7 @@ import com.jj.jjmod.items.ItemCraftingTextiles;
 import com.jj.jjmod.items.ItemCraftingWoodworking;
 import com.jj.jjmod.items.ItemDoor;
 import com.jj.jjmod.items.ItemEdible;
+import com.jj.jjmod.items.ItemEdiblePoison;
 import com.jj.jjmod.items.ItemEdibleSeed;
 import com.jj.jjmod.items.ItemFloor;
 import com.jj.jjmod.items.ItemFurnaceClay;
@@ -50,7 +51,9 @@ import com.jj.jjmod.items.ItemWoolknife;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.utilities.EquipMaterial;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.passive.EntityVillager.ItemAndEmeraldToItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -74,6 +77,26 @@ public class ModItems {
     public static ItemEdible pumpkin;
     public static ItemEdible melon;
     
+    public static ItemEdible apple;
+    public static ItemEdible sugar;
+    public static ItemEdible potatoBaked;
+    public static ItemEdible egg;
+    
+    public static ItemEdiblePoison beefRaw;
+    public static ItemEdiblePoison porkRaw;
+    public static ItemEdiblePoison chickenRaw;
+    public static ItemEdiblePoison muttonRaw;
+    public static ItemEdiblePoison rabbitRaw;
+    public static ItemEdiblePoison fishRaw;
+    
+    public static ItemEdible beefCooked;
+    public static ItemEdible porkCooked;
+    public static ItemEdible muttonCooked;
+    public static ItemEdible rabbitCooked;
+    public static ItemEdible chickenCooked;
+    public static ItemEdible fishCooked;
+    
+    
     public static ItemEdibleSeed bean;
     public static ItemEdibleSeed onion;
     public static ItemEdibleSeed pepper;
@@ -89,6 +112,7 @@ public class ModItems {
 
     public static ItemNew cotton;
     public static ItemNew twineHemp;
+    public static ItemNew wool;
     
     public static ItemSeed chickpeas;
     public static ItemSeed cuttingCotton;
@@ -136,6 +160,7 @@ public class ModItems {
     public static ItemNew pole;
     public static ItemNew log;
     public static ItemNew thicklog;
+    public static ItemNew timber;
 
     public static ItemNew claybricksDry;
     public static ItemNew claybricksWet;
@@ -328,6 +353,25 @@ public class ModItems {
         register(pumpkin = new ItemEdible("pumpkin", 10, 10, 2), FoodType.FOOD_FRUITVEG);
         register(melon = new ItemEdible("melon", 12, 12, 2), FoodType.FOOD_FRUITVEG);
         
+        register(apple = new ItemEdible("apple", 4, 4, 5), FoodType.FOOD_FRUITVEG);
+        register(sugar = new ItemEdible("sugar", 5, 0, 10), FoodType.FOOD_CARBS);
+        register(potatoBaked = new ItemEdible("potato_baked", 8, 6, 5), FoodType.FOOD_CARBS);
+        register(egg = new ItemEdible("egg", 5, 5, 6), FoodType.FOOD_PROTEIN);
+        
+        register(beefRaw = new ItemEdiblePoison("beef_raw", 3, 6, 5), FoodType.FOOD_PROTEIN);
+        register(porkRaw = new ItemEdiblePoison("pork_raw", 2, 5, 6), FoodType.FOOD_PROTEIN);
+        register(chickenRaw = new ItemEdiblePoison("chicken_raw", 1, 3, 10), FoodType.FOOD_PROTEIN);
+        register(muttonRaw = new ItemEdiblePoison("mutton_raw", 2, 4, 7), FoodType.FOOD_PROTEIN);
+        register(rabbitRaw = new ItemEdiblePoison("rabbit_raw", 1, 2, 15), FoodType.FOOD_PROTEIN);
+        register(fishRaw = new ItemEdiblePoison("fish_raw", 1, 3, 10), FoodType.FOOD_PROTEIN);
+        
+        register(beefCooked = new ItemEdible("beef_cooked", 6, 6, 5), FoodType.FOOD_PROTEIN);
+        register(porkCooked = new ItemEdible("pork_cooked", 5, 5, 6), FoodType.FOOD_PROTEIN);
+        register(muttonCooked = new ItemEdible("mutton_cooked", 4, 4, 7), FoodType.FOOD_PROTEIN);
+        register(rabbitCooked = new ItemEdible("rabbit_cooked", 2, 2, 15), FoodType.FOOD_PROTEIN);
+        register(chickenCooked = new ItemEdible("chicken_cooked", 3, 3, 10), FoodType.FOOD_PROTEIN);
+        register(fishCooked = new ItemEdible("fish_cooked", 3, 3, 10), FoodType.FOOD_PROTEIN);
+        
         register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean), FoodType.FOOD_FRUITVEG);
         register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper), FoodType.FOOD_FRUITVEG);
         register(tomato = new ItemEdibleSeed("tomato", 3, 3F, 7, ModBlocks.tomato), FoodType.FOOD_FRUITVEG);
@@ -342,6 +386,7 @@ public class ModItems {
         
         register(cotton = new ItemNew("cotton", 6));
         register(twineHemp = new ItemNew("twine_hemp", 3));
+        register(wool = new ItemNew("wool", 4));
         
         register(chickpeas = new ItemSeed("chickpeas", 1, ModBlocks.chickpea));
         register(cuttingCotton = new ItemSeed("cutting_cotton", 1, ModBlocks.cotton));
@@ -398,6 +443,7 @@ public class ModItems {
         register(pole = new ItemNew("pole", 4));
         register(log = new ItemNew("log"));
         register(thicklog = new ItemNew("thicklog"));
+        register(timber = new ItemNew("timber", 3));
 
         register(claybricksDry = new ItemNew("claybricks_dry"));
         register(claybricksWet = new ItemNew("claybricks_wet"));
@@ -626,6 +672,12 @@ public class ModItems {
         register(slabBrick = new ItemSlab("slab_brick", 1,
                 ModBlocks.slabBrickSingle, ModBlocks.slabBrickDouble));
         
+        Items.STICK.setMaxStackSize(8);
+        Items.BONE.setMaxStackSize(6);
+        Items.FLINT.setMaxStackSize(6);
+        Items.LEATHER.setMaxStackSize(3);
+        Items.COAL.setMaxStackSize(1);
+        Items.RABBIT_HIDE.setMaxStackSize(4);
     }
     
     public static void preInitClient() {

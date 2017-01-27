@@ -1,6 +1,7 @@
 package com.jj.jjmod.utilities;
 
 import com.jj.jjmod.capabilities.CapFoodstats;
+import com.jj.jjmod.capabilities.CapInventory;
 import com.jj.jjmod.capabilities.DefaultCapFoodstats;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModItems.FoodType;
@@ -62,8 +63,15 @@ public class FoodStatsWrapper extends FoodStats {
     @Override
     public int getFoodLevel() {
         
+        if (!this.player.getCapability(CapInventory.CAP_INVENTORY, null).canRun()) {
+            
+            return 0;
+            
+        } else {
+        
         return this.player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
                 .getFoodLevel();
+        }
     }
     
     // Only used to check whether player is allowed to eat

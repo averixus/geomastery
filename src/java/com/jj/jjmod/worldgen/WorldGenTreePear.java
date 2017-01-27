@@ -13,7 +13,7 @@ public class WorldGenTreePear extends WorldGenTree {
     
     public WorldGenTreePear(World world, Random rand, boolean isSapling) {
         
-        super(world, rand, isSapling, 30, 4, ModBlocks.seedlingPear);
+        super(world, rand, isSapling, 30, 3, ModBlocks.seedlingPear);
     }
     
     @Override

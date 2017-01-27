@@ -10,7 +10,7 @@ public class WorldGenCopper extends WorldGenStone {
 
     public WorldGenCopper(World world, Random rand) {
 
-        super(world, rand, ModBlocks.oreCopper.getDefaultState(), 40, 120, 20);
+        super(world, rand, ModBlocks.oreCopper.getDefaultState(), 40, 120, 20, 1);
     }
 
     @Override
