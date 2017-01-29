@@ -52,6 +52,7 @@ import com.jj.jjmod.items.ItemWoolknife;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.utilities.EquipMaterial;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -407,7 +408,7 @@ public class ModItems {
         register(bucketTar = new ItemBucket("bucket_tar",
                 ModLiquids.tarBlock, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);
-        register(bucketMilk = new ItemNew("bucket_milk"));
+        register(bucketMilk = new ItemNew("bucket_milk", 1, CreativeTabs.MISC));
         
         register(backpack = new ItemNew("backpack"));
         register(yoke = new ItemNew("yoke"));
@@ -618,22 +619,22 @@ public class ModItems {
         register(woolFeet = new ItemApparel("wool_feet",
                 EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.FEET));
         
-        register(steelmailHead = new ItemApparel("steelmail_head",
+        register(steelmailHead = new ItemApparel("mail_head",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD));
-        register(steelmailChest = new ItemApparel("steelmail_chest",
+        register(steelmailChest = new ItemApparel("mail_chest",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.CHEST));
-        register(steelmailLegs = new ItemApparel("steelmail_legs",
+        register(steelmailLegs = new ItemApparel("mail_legs",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.LEGS));
-        register(steelmailFeet = new ItemApparel("steelmail_feet",
+        register(steelmailFeet = new ItemApparel("mail_feet",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.FEET));
         
-        register(steelplateHead = new ItemApparel("steelplate_head",
+        register(steelplateHead = new ItemApparel("plate_head",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.HEAD));
-        register(steelplateChest = new ItemApparel("steelplate_chest",
+        register(steelplateChest = new ItemApparel("plate_chest",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.CHEST));
-        register(steelplateLegs = new ItemApparel("steelplate_legs",
+        register(steelplateLegs = new ItemApparel("plate_legs",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.LEGS));
-        register(steelplateFeet = new ItemApparel("steelplate_feet",
+        register(steelplateFeet = new ItemApparel("plate_feet",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET));
 
         register(bowCrude = new ItemCrudebow());

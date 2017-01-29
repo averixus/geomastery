@@ -48,7 +48,7 @@ import com.jj.jjmod.blocks.BlockFence;
 import com.jj.jjmod.blocks.BlockFoundation;
 import com.jj.jjmod.blocks.BlockFurnaceCampfire;
 import com.jj.jjmod.blocks.BlockFurnaceClay;
-import com.jj.jjmod.blocks.BlockFurnacePotfire;
+import com.jj.jjmod.blocks.BlockFurnaceCookfire;
 import com.jj.jjmod.blocks.BlockFurnaceStone;
 import com.jj.jjmod.blocks.BlockHarvestableLeaves;
 import com.jj.jjmod.blocks.BlockLight;
@@ -126,7 +126,7 @@ public class ModBlocks {
     public static BlockDrying drying;
 
     public static BlockFurnaceCampfire furnaceCampfire;
-    public static BlockFurnacePotfire furnacePotfire;
+    public static BlockFurnaceCookfire furnaceCookfire;
     public static BlockFurnaceClay furnaceClay;
     public static BlockFurnaceStone furnaceStone;
     
@@ -256,7 +256,7 @@ public class ModBlocks {
         register(drying = new BlockDrying());
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
-        register(furnacePotfire = new BlockFurnacePotfire());
+        register(furnaceCookfire = new BlockFurnaceCookfire());
         register(furnaceClay = new BlockFurnaceClay());
         register(furnaceStone = new BlockFurnaceStone());
         

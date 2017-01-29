@@ -181,7 +181,7 @@ public class DefaultCapTemperature implements ICapTemperature {
                     boolean fireLit = false;
                     
                     if (block == ModBlocks.furnaceCampfire || 
-                            block == ModBlocks.furnacePotfire ||
+                            block == ModBlocks.furnaceCookfire ||
                             block == ModBlocks.furnaceClay ||
                             block == ModBlocks.furnaceStone) {
                         

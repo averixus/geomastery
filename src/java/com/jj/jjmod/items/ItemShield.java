@@ -1,6 +1,8 @@
 package com.jj.jjmod.items;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.translation.I18n;
 
 public class ItemShield extends net.minecraft.item.ItemShield {
 
@@ -9,5 +11,12 @@ public class ItemShield extends net.minecraft.item.ItemShield {
         super();
         this.setMaxDamage(durability);
         ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
+    }
+    
+    // Bypass vanilla shield naming
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        
+        return I18n.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name").trim();
     }
 }

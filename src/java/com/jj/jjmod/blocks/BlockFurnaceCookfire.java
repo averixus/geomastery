@@ -20,12 +20,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFurnacePotfire extends BlockComplexAbstract
+public class BlockFurnaceCookfire extends BlockComplexAbstract
         implements ITileEntityProvider {
 
-    public BlockFurnacePotfire() {
+    public BlockFurnaceCookfire() {
 
-        super("furnace_potfire", BlockMaterial.STONE_FURNITURE, 5F, ToolType.NONE);
+        super("furnace_cookfire", BlockMaterial.STONE_FURNITURE, 5F, ToolType.NONE);
         this.lightValue = 14;
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
