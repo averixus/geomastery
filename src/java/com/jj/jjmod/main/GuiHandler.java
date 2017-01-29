@@ -240,7 +240,7 @@ public class GuiHandler implements IGuiHandler {
         FORGE("Forge"),
         MASON("Mason's Workshop"),
         SAWPIT("Sawpit"),
-        ARMOURER("armourer"),
+        ARMOURER("Armourer's Workshop"),
         CAMPFIRE("Campfire"),
         POTFIRE("Campfire with Pot"),
         CLAY("Clay Oven"),

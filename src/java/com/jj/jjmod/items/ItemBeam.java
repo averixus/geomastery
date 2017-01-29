@@ -1,12 +1,12 @@
 package com.jj.jjmod.items;
 
 import java.util.ArrayList;
-import com.jj.jjmod.blocks.BlockWallSingle;
 import com.jj.jjmod.blocks.BlockWall;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBeam.EnumPartBeam;
+import com.jj.jjmod.utilities.IBuildingBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -44,11 +44,8 @@ public class ItemBeam extends ItemNew {
 
             return EnumActionResult.SUCCESS;
         }
-        
-        Block block = world.getBlockState(pos).getBlock();
-        
-        if (!(block instanceof BlockWall) ||
-                side == EnumFacing.UP || side == EnumFacing.DOWN) {
+                
+        if (side == EnumFacing.UP || side == EnumFacing.DOWN) {
             
             return EnumActionResult.FAIL;
         }
@@ -72,27 +69,44 @@ public class ItemBeam extends ItemNew {
         }
         
         BlockPos posFront = posMiddle;
-        Block wallEnd = world.getBlockState(posFront.offset(side)).getBlock();
+        
+        Block frontEnd = world.getBlockState(posFront.offset(side)).getBlock();
+        Block backEnd = world.getBlockState(pos).getBlock();
         System.out.println("pos front is " + posFront);
-        if (length > this.maxLength ||
-                !(wallEnd instanceof BlockWall)) {
+        
+        // Check validity
+        boolean frontValid = ModBlocks.HEAVY.contains(frontEnd);
+        boolean backValid = ModBlocks.HEAVY.contains(backEnd);
+        
+        if (frontEnd instanceof IBuildingBlock) {
+            
+            IBuildingBlock frontBuilding = (IBuildingBlock) frontEnd;
+            frontValid = frontBuilding.supportsBeam();
+        }
+        
+        if (backEnd instanceof IBuildingBlock) {
+            
+            IBuildingBlock backBuilding = (IBuildingBlock) backEnd;
+            backValid = backBuilding.supportsBeam();
+        }
+        if (length > this.maxLength || !frontValid || !backValid) {
             
             System.out.println("length " + length + " too long OR");
-            System.out.println("block " + wallEnd + " at " + posFront.offset(side) + " is not wall or fence");
+            System.out.println("block " + frontEnd + " at " + posFront.offset(side) + " is not wall or fence");
             return EnumActionResult.FAIL;
         }
         
         
-        // Check replaceable
-        IBlockState stateStart = world.getBlockState(posBack);
-        Block blockStart = stateStart.getBlock();
-        boolean replaceableStart = blockStart.isReplaceable(world, posBack);
+        // Check ends replaceable
+        IBlockState stateBack = world.getBlockState(posBack);
+        Block blockBack = stateBack.getBlock();
+        boolean replaceableBack = blockBack.isReplaceable(world, posBack);
         
-        IBlockState stateEnd = world.getBlockState(posFront);
-        Block blockEnd = stateEnd.getBlock();
-        boolean replaceableEnd = blockEnd.isReplaceable(world, posFront);
+        IBlockState stateFront = world.getBlockState(posFront);
+        Block blockFront = stateFront.getBlock();
+        boolean replaceableFront = blockFront.isReplaceable(world, posFront);
         
-        if (!replaceableStart || !replaceableEnd) {
+        if (!replaceableBack || !replaceableFront) {
             System.out.println("start or end not replaceable");
             return EnumActionResult.FAIL;
         }
@@ -132,5 +146,4 @@ public class ItemBeam extends ItemNew {
         
         return EnumActionResult.SUCCESS;
     }
-
 }

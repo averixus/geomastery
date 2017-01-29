@@ -6,5 +6,5 @@ public interface IBuildingBlock {
     public boolean isLight();
     public boolean isHeavy();
     public boolean isDouble();
-
+    public boolean supportsBeam();
 }

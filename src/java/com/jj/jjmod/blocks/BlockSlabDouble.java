@@ -37,4 +37,10 @@ public class BlockSlabDouble extends BlockSlabSingle implements IBuildingBlock {
         
         return true;
     }
+    
+    @Override
+    public boolean supportsBeam() {
+        
+        return false;
+    }
 }

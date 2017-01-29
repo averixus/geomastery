@@ -58,7 +58,7 @@ public class ModRecipes {
         INVENTORY.addShapelessRecipe(new ItemStack(Items.BEEF), new ItemStack(Items.APPLE, 3), Items.STICK);
 
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf), "LLL",
-                'L', ModItems.leafpile);
+                'L', ModItems.leaves);
 
         INVENTORY.addShapelessRecipe(
                 new ItemStack(ModItems.hoeAntler),

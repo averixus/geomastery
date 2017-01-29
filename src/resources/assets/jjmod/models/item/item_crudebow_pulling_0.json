@@ -1,0 +1,6 @@
+{
+    "parent": "item/bow",
+    "textures": {
+        "layer0": "jjmod:items/crudebow_pulling_0"
+    }
+}

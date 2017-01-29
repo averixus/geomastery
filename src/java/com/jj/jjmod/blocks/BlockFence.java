@@ -38,4 +38,10 @@ public class BlockFence extends net.minecraft.block.BlockFence implements IBuild
 
         return false;
     }
+    
+    @Override
+    public boolean supportsBeam() {
+        
+        return false;
+    }
 }

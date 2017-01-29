@@ -24,8 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCraftingForge extends BlockComplexAbstract
-        implements ITileEntityProvider {
+public class BlockCraftingForge extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartForge> PART =
             PropertyEnum.<EnumPartForge>create("part", EnumPartForge.class);
@@ -38,7 +37,7 @@ public class BlockCraftingForge extends BlockComplexAbstract
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createTileEntity(World world, IBlockState state) {
 
         return new TECraftingForge();
     }

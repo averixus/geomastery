@@ -1,40 +1,46 @@
 {
 "__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "spruce1": "jjmod:blocks/crafters/spruce1",
+    "sprucewall": "jjmod:blocks/crafters/sprucewall",
+    "spruce2": "jjmod:blocks/crafters/spruce2",
+    "saw": "jjmod:blocks/crafters/saw"
+},
 "elements": [ 
 {
     "from": [ 6, 3, 0 ],
     "to": [ 10, 5, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 6, 14, 10, 16 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 6, 14, 10, 16 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 11, 16, 13 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 11, 16, 13 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 14, 10, 16 ], "texture": "#sprucewall" },
+        "south": { "uv": [ 6, 14, 10, 16 ], "texture": "#sprucewall" },
+        "west":  { "uv": [ 0, 11, 16, 13 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 11, 16, 13 ], "texture": "#spruce2" }
     }
 },
 {
     "from": [ 6, 9, 0 ],
     "to": [ 10, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 6, 0, 10, 2 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 6, 0, 10, 2 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 5, 16, 7 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 5, 16, 7 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 0, 10, 2 ], "texture": "#sprucewall" },
+        "south": { "uv": [ 6, 0, 10, 2 ], "texture": "#sprucewall" },
+        "west":  { "uv": [ 0, 5, 16, 7 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 5, 16, 7 ], "texture": "#spruce2" }
     }
 },
 {
     "from": [ 4, 5, 0 ],
     "to": [ 12, 9, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 4, 10, 12, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 4, 10, 12, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 7, 16, 11 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 7, 16, 11 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 4, 10, 12, 14 ], "texture": "#sprucewall" },
+        "south": { "uv": [ 4, 10, 12, 14 ], "texture": "#sprucewall" },
+        "west":  { "uv": [ 0, 7, 16, 11 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 7, 16, 11 ], "texture": "#spruce2" }
     }
 },
 {
@@ -81,12 +87,12 @@
     "to": [ 9, 19.25, 18.4375 ],
     "rotation": { "origin": [ 8, 19.25, 17.4375 ], "axis": "x", "angle": -45 },
     "faces": {
-        "down":  { "uv": [ 8, 11, 9, 12 ], "texture": "#JJlog_spruce_wall_end" },
-        "up":    { "uv": [ 8, 11, 9, 12 ], "texture": "#JJlog_spruce_wall_end" },
-        "north": { "uv": [ 7, 10, 8, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 7, 10, 8, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 7, 11, 8, 15 ], "texture": "#JJlog_spruce_wall_end" },
-        "east":  { "uv": [ 8, 9, 9, 13 ], "texture": "#JJlog_spruce_wall_end" }
+        "down":  { "uv": [ 8, 11, 9, 12 ], "texture": "#sprucewall" },
+        "up":    { "uv": [ 8, 11, 9, 12 ], "texture": "#sprucewall" },
+        "north": { "uv": [ 7, 10, 8, 14 ], "texture": "#sprucewall" },
+        "south": { "uv": [ 7, 10, 8, 14 ], "texture": "#sprucewall" },
+        "west":  { "uv": [ 7, 11, 8, 15 ], "texture": "#sprucewall" },
+        "east":  { "uv": [ 8, 9, 9, 13 ], "texture": "#sprucewall" }
     }
 },
 {
@@ -107,12 +113,12 @@
     "to": [ 9, -1.25, -2.0625 ],
     "rotation": { "origin": [ 8, -1.25, -3.0625 ], "axis": "x", "angle": -45 },
     "faces": {
-        "down":  { "uv": [ 8, 11, 9, 12 ], "texture": "#JJlog_spruce_wall_end" },
-        "up":    { "uv": [ 8, 11, 9, 12 ], "texture": "#JJlog_spruce_wall_end" },
-        "north": { "uv": [ 7, 10, 8, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 7, 10, 8, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 7, 11, 8, 15 ], "texture": "#JJlog_spruce_wall_end" },
-        "east":  { "uv": [ 8, 9, 9, 13 ], "texture": "#JJlog_spruce_wall_end" }
+        "down":  { "uv": [ 8, 11, 9, 12 ], "texture": "#sprucewall" },
+        "up":    { "uv": [ 8, 11, 9, 12 ], "texture": "#sprucewall" },
+        "north": { "uv": [ 7, 10, 8, 14 ], "texture": "#sprucewall" },
+        "south": { "uv": [ 7, 10, 8, 14 ], "texture": "#sprucewall" },
+        "west":  { "uv": [ 7, 11, 8, 15 ], "texture": "#sprucewall" },
+        "east":  { "uv": [ 8, 9, 9, 13 ], "texture": "#sprucewall" }
     }
 }
 ]

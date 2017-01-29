@@ -3,6 +3,7 @@ package com.jj.jjmod.init;
 import com.jj.jjmod.render.tileentity.TileEntityBoxRenderer;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBox;
+import com.jj.jjmod.tileentities.TECraftingArmourer;
 import com.jj.jjmod.tileentities.TECraftingForge;
 import com.jj.jjmod.tileentities.TECraftingMason;
 import com.jj.jjmod.tileentities.TECraftingSawpit;
@@ -37,6 +38,8 @@ public class ModTileEntities {
                 "crafting_woodworking");
         GameRegistry.registerTileEntity(TECraftingSawpit.class,
                 "crafting_sawpit");
+        GameRegistry.registerTileEntity(TECraftingArmourer.class,
+                "crafting_armourer");
 
         GameRegistry.registerTileEntity(TEDrying.class, "drying");
         

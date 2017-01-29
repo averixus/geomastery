@@ -283,7 +283,7 @@ public class EventHandler {
 
         if (block instanceof BlockLeaves) {
 
-            event.getDrops().add(new ItemStack(ModItems.leafpile));
+            event.getDrops().add(new ItemStack(ModItems.leaves));
 
             if (world.rand.nextInt(8) == 0) {
 
@@ -376,11 +376,17 @@ public class EventHandler {
             event.getDrops().clear();
             event.getDrops().add(new ItemStack(Items.EMERALD));
         }
+        
+        if (block == Blocks.IRON_ORE) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.oreIron));
+        }
 
         if (block instanceof BlockStone) {
 
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.stoneLoose, 4));
+            event.getDrops().add(new ItemStack(ModItems.stoneRough, 4));
         }
     }
     
@@ -487,9 +493,6 @@ public class EventHandler {
             ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
                     new FoodStatsWrapper(player), "foodStats");
         }
-        
-        // TEST
-        System.out.println("speed " + player.capabilities.getWalkSpeed());
     }
     
     @SubscribeEvent

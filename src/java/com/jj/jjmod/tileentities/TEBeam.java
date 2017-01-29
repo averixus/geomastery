@@ -2,6 +2,7 @@ package com.jj.jjmod.tileentities;
 
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import com.jj.jjmod.blocks.BlockBeam.EnumAxis;
 import com.jj.jjmod.blocks.BlockWall;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
@@ -75,7 +76,7 @@ public class TEBeam extends TileEntity {
     
     public boolean hasSideConnection(EnumFacing facing) {
                 
-        if (facing == this.facing || facing == this.facing.getOpposite() || facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
+        if (facing == this.facing || facing == this.facing.getOpposite() || facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
             
             return false;
         }
@@ -86,7 +87,7 @@ public class TEBeam extends TileEntity {
     
     public boolean hasEndConnection(EnumFacing facing) {
         
-        if ((facing != this.facing) && (facing != this.facing.getOpposite())) {
+        if (facing != this.facing && facing != this.facing.getOpposite()) {
             
             return false;
         }

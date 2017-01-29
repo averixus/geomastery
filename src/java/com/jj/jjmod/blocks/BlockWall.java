@@ -36,17 +36,19 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     public final boolean isDouble;
     public final boolean isHeavy;
     public final int selfHeight;
+    public final boolean supportsBeam;
     
     protected Supplier<Item> item;
 
     public BlockWall(BlockMaterial material, String name, float hardness,
             ToolType toolType, boolean isDouble, Supplier<Item> item,
-            boolean isHeavy, int selfHeight) {
+            boolean isHeavy, int selfHeight, boolean supportsBeam) {
         
         super(material, name, null, hardness, toolType);
         this.isDouble = isDouble;
         this.isHeavy = isHeavy;
         this.selfHeight = selfHeight;
+        this.supportsBeam = supportsBeam;
         
         if (this.item != null) {
         
@@ -75,6 +77,12 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     public boolean isDouble() {
         
         return this.isDouble;
+    }
+    
+    @Override
+    public boolean supportsBeam() {
+        
+        return this.supportsBeam;
     }
     
     @Override

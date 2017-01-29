@@ -37,6 +37,12 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
     }
     
     @Override
+    public boolean supportsBeam() {
+        
+        return true;
+    }
+    
+    @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
         
         int count = 0;
@@ -45,7 +51,7 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
             
             Block block = world.getBlockState(pos.offset(facing)).getBlock();
             
-            if (ModBlocks.LIGHT.contains(block) || ModBlocks.HEAVY.contains(block) || ((block instanceof IBuildingBlock) && ((IBuildingBlock) block).isLight())) {
+            if (ModBlocks.LIGHT.contains(block) || ModBlocks.HEAVY.contains(block)) {
                 
                 count++;
             }

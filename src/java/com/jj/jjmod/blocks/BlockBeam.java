@@ -1,23 +1,20 @@
 package com.jj.jjmod.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.tileentities.TEBeam.EnumPartBeam;
 import com.jj.jjmod.utilities.BlockMaterial;
+import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -83,7 +80,13 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
                 BlockPos posFront = pos.offset(facing);
                 IBlockState stateFront = world.getBlockState(posFront);
                 Block blockFront = stateFront.getBlock();
-                boolean validFront = blockFront instanceof BlockWall;
+                boolean validFront = ModBlocks.HEAVY.contains(blockFront);
+                
+                if (blockFront instanceof IBuildingBlock) {
+                    
+                    IBuildingBlock buildingFront = (IBuildingBlock) blockFront;
+                    validFront = buildingFront.supportsBeam();
+                }
                 
                 BlockPos posBack = pos.offset(facing.getOpposite());
                 IBlockState stateBack = world.getBlockState(posBack);
@@ -140,7 +143,13 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
                 BlockPos posBack = pos.offset(facing.getOpposite());
                 IBlockState stateBack = world.getBlockState(posBack);
                 Block blockBack = stateBack.getBlock();
-                boolean validBack = blockBack instanceof BlockWall;
+                boolean validBack = ModBlocks.HEAVY.contains(blockBack);
+                
+                if (blockBack instanceof IBuildingBlock) {
+                    
+                    IBuildingBlock buildingBack = (IBuildingBlock) blockBack;
+                    validBack = buildingBack.supportsBeam();
+                }
                 
                 if (!validBack || !validFront) {
                     
@@ -281,6 +290,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
             TEBeam tileBeam = (TEBeam) tileEntity;
             
             state = state.withProperty(FLOOR, tileBeam.getFloor());
+            state = state.withProperty(AXIS, EnumAxis.get(tileBeam.getFacing()));
             state = state.withProperty(NORTH_SIDE, tileBeam.hasSideConnection(EnumFacing.NORTH)); 
             state = state.withProperty(EAST_SIDE, tileBeam.hasSideConnection(EnumFacing.EAST));
             state = state.withProperty(SOUTH_SIDE, tileBeam.hasSideConnection(EnumFacing.SOUTH));
@@ -333,6 +343,39 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
         public String getName() {
             
             return this.name;
+        }
+        
+        public static EnumAxis get(EnumFacing facing) {
+            
+            if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
+                
+                return NS;
+                
+            } else {
+                
+                return EW;
+            }
+        }
+        
+        public boolean matches(EnumFacing facing) {
+            
+            switch (this) {
+                
+                case NS: {
+                    
+                    return facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH;
+                }
+                
+                case EW: {
+                    
+                    return facing == EnumFacing.EAST || facing == EnumFacing.WEST;
+                }
+                
+                default: {
+                    
+                    return false;
+                }
+            }
         }
     }
 }

@@ -17,12 +17,13 @@ import com.jj.jjmod.blocks.BlockCarcassCowpart;
 import com.jj.jjmod.blocks.BlockCarcassPig;
 import com.jj.jjmod.blocks.BlockCarcassRabbit;
 import com.jj.jjmod.blocks.BlockCarcassSheep;
-import com.jj.jjmod.blocks.BlockCraftingSawpit;
+import com.jj.jjmod.blocks.BlockCraftingArmourer;
 import com.jj.jjmod.blocks.BlockCraftingCandlemaker;
 import com.jj.jjmod.blocks.BlockCraftingClayworks;
 import com.jj.jjmod.blocks.BlockCraftingForge;
 import com.jj.jjmod.blocks.BlockCraftingKnapping;
 import com.jj.jjmod.blocks.BlockCraftingMason;
+import com.jj.jjmod.blocks.BlockCraftingSawpit;
 import com.jj.jjmod.blocks.BlockCraftingTextiles;
 import com.jj.jjmod.blocks.BlockCraftingWoodworking;
 import com.jj.jjmod.blocks.BlockCrop;
@@ -119,7 +120,7 @@ public class ModBlocks {
     public static BlockCraftingMason craftingMason;
     public static BlockCraftingTextiles craftingTextiles;
     public static BlockCraftingWoodworking craftingWoodworking;
-    //ublic static BlockCraftingArmourer craftingArmourer;
+    public static BlockCraftingArmourer craftingArmourer;
     public static BlockCraftingSawpit craftingSawpit;
 
     public static BlockDrying drying;
@@ -249,7 +250,7 @@ public class ModBlocks {
         register(craftingMason = new BlockCraftingMason());
         register(craftingTextiles = new BlockCraftingTextiles());
         register(craftingWoodworking = new BlockCraftingWoodworking());
-        //register(craftingArmourer = new BlockCraftingSawpit());
+        register(craftingArmourer = new BlockCraftingArmourer());
         register(craftingSawpit = new BlockCraftingSawpit());
         
         register(drying = new BlockDrying());
@@ -320,36 +321,36 @@ public class ModBlocks {
         
         register(wallBrickSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_brick_single", 2F, ToolType.PICKAXE, false,
-                () -> ModItems.wallBrick, true, 6));
+                () -> ModItems.wallBrick, true, 6, true));
         register(wallBrickDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_brick_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallBrick, true, 6));
+                () -> ModItems.wallBrick, true, 6, true));
         register(wallMudSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_single", 1F, ToolType.PICKAXE, false,
-                () -> ModItems.wallMud, false, 1));
+                () -> ModItems.wallMud, false, 1, false));
         register(wallMudDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallMud, false, 1));
+                () -> ModItems.wallMud, false, 1, false));
         register(wallRoughSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_single", 1.5F, ToolType.PICKAXE, false,
-                () -> ModItems.wallRough, true, 1));
+                () -> ModItems.wallRough, false, 1, false));
         register(wallRoughDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallRough, true, 1));
+                () -> ModItems.wallRough, false, 1, false));
         register(wallStoneSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_single", 2F, ToolType.PICKAXE, false,
-                () -> ModItems.wallStone, true, 6));
+                () -> ModItems.wallStone, true, 6, true));
         register(wallStoneDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallStone, true, 6));
+                () -> ModItems.wallStone, true, 6, true));
         register(wallLogSingle = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_single", 1F, ToolType.AXE, false,
-                () -> ModItems.wallLog, false, 4));
+                () -> ModItems.wallLog, false, 4, true));
         register(wallLogDouble = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_double", 3F, ToolType.AXE, true,
-                () -> ModItems.wallLog, false, 4));
+                () -> ModItems.wallLog, false, 4, true));
         register(wallPole = new BlockWallSingle(BlockMaterial.WOOD_FURNITURE,
-                "wall_pole", 2F, ToolType.AXE, false, 4));
+                "wall_pole", 2F, ToolType.AXE, false, 4, false));
         
         register(stairsBrick = new BlockStairs("stairs_brick",
                 wallBrickDouble.getDefaultState(), ToolType.PICKAXE));
@@ -397,7 +398,7 @@ public class ModBlocks {
         Blocks.DIAMOND_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.EMERALD_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.GOLD_ORE.setHardness(3F).setHarvestLevel("pickaxe", 1);
-        Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1);
+        Blocks.IRON_ORE.setHardness(3F).setHarvestLevel("pickaxe", 1);
         Blocks.LAPIS_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.LIT_REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);

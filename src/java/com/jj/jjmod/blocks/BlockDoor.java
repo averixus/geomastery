@@ -58,6 +58,12 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     }
     
     @Override
+    public boolean supportsBeam() {
+        
+        return false;
+    }
+    
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         
         //if (state.getValue(OPEN)) {

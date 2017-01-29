@@ -15,10 +15,10 @@ import net.minecraft.world.IBlockAccess;
 public class BlockWallSingle extends BlockWall {
     
     public BlockWallSingle(BlockMaterial material, String name, float hardness,
-            ToolType toolType, boolean isHeavy, int selfHeight) {
+            ToolType toolType, boolean isHeavy, int selfHeight, boolean supportsBeam) {
                 
         super(material, name, hardness, toolType, false, null,
-                isHeavy, selfHeight);
+                isHeavy, selfHeight, supportsBeam);
         this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
     

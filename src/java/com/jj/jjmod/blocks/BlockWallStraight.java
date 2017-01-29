@@ -17,9 +17,9 @@ public class BlockWallStraight extends BlockWall {
     
     public BlockWallStraight(BlockMaterial material, String name,
             float hardness, ToolType toolType, boolean isDouble,
-            Supplier<Item> wall, boolean isHeavy, int selfHeight) {
+            Supplier<Item> wall, boolean isHeavy, int selfHeight, boolean supportsBeam) {
         
-        super(material, name, hardness, toolType, isDouble, wall, isHeavy, selfHeight);
+        super(material, name, hardness, toolType, isDouble, wall, isHeavy, selfHeight, supportsBeam);
     }
     
     @Override

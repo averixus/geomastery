@@ -2,7 +2,7 @@
 "__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
     "notexture": "jjmod:blocks/crafters/notexture",
-    "sawdust2": "jjmod:blocks/crafters/sawdust",
+    "sawdust2": "jjmod:blocks/crafters/sawdust2",
     "texture": "jjmod:blocks/crafters/sawdust"
 },
 "elements": [ 

@@ -12,8 +12,9 @@ import com.jj.jjmod.items.ItemAxe;
 import com.jj.jjmod.items.ItemBeam;
 import com.jj.jjmod.items.ItemBedBreakableAbstract;
 import com.jj.jjmod.items.ItemBedPlainAbstract;
-import com.jj.jjmod.items.ItemBowCrude;
+import com.jj.jjmod.items.ItemCrudebow;
 import com.jj.jjmod.items.ItemBucket;
+import com.jj.jjmod.items.ItemCraftingArmourer;
 import com.jj.jjmod.items.ItemCraftingCandlemaker;
 import com.jj.jjmod.items.ItemCraftingClayworks;
 import com.jj.jjmod.items.ItemCraftingForge;
@@ -51,7 +52,6 @@ import com.jj.jjmod.items.ItemWoolknife;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.utilities.EquipMaterial;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.passive.EntityVillager.ItemAndEmeraldToItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -79,7 +79,7 @@ public class ModItems {
     
     public static ItemEdible apple;
     public static ItemEdible sugar;
-    public static ItemEdible potatoBaked;
+    public static ItemEdible potatoCooked;
     public static ItemEdible egg;
     
     public static ItemEdiblePoison beefRaw;
@@ -96,9 +96,7 @@ public class ModItems {
     public static ItemEdible chickenCooked;
     public static ItemEdible fishCooked;
     
-    
     public static ItemEdibleSeed bean;
-    public static ItemEdibleSeed onion;
     public static ItemEdibleSeed pepper;
     public static ItemEdibleSeed tomato;
     public static ItemEdibleSeed berry;
@@ -140,7 +138,6 @@ public class ModItems {
     public static ItemNew sapphire;
 
     public static ItemNew beeswax;
-    public static ItemNew fur;
     public static ItemNew skinBear;
     public static ItemNew skinCow;
     public static ItemNew skinPig;
@@ -156,17 +153,15 @@ public class ModItems {
     public static ItemNew ingotSteel;
     public static ItemNew ingotTin;
 
-    public static ItemNew leafpile;
+    public static ItemNew leaves;
     public static ItemNew pole;
     public static ItemNew log;
     public static ItemNew thicklog;
     public static ItemNew timber;
 
-    public static ItemNew claybricksDry;
-    public static ItemNew claybricksWet;
+    public static ItemNew bricksClay;
     public static ItemNew dirt;
-    public static ItemNew mudbricksDry;
-    public static ItemNew mudbricksWet;
+    public static ItemNew bricksMud;
     public static ItemNew peatDry;
     public static ItemNew peatWet;
     
@@ -179,7 +174,6 @@ public class ModItems {
     public static ItemNew oreSilver;
     public static ItemNew oreGold;
 
-    public static ItemNew stoneLoose;
     public static ItemNew stoneRough;
     public static ItemNew stoneDressed;
 
@@ -193,7 +187,7 @@ public class ModItems {
     public static ItemCraftingTextiles craftingTextiles;
     public static ItemCraftingWoodworking craftingWoodworking;
     public static ItemCraftingSawpit craftingSawpit;
-    //public static ItemCraftingArmourer craftingArmourer;
+    public static ItemCraftingArmourer craftingArmourer;
     
     public static ItemFurnaceClay furnaceClay;
     public static ItemFurnaceStone furnaceStone;
@@ -321,7 +315,7 @@ public class ModItems {
     public static ItemApparel steelplateLegs;
     public static ItemApparel steelplateFeet;
 
-    public static ItemBowCrude bowCrude;
+    public static ItemCrudebow bowCrude;
     
     public static ItemWall wallBrick;
     public static ItemWall wallMud;
@@ -355,7 +349,7 @@ public class ModItems {
         
         register(apple = new ItemEdible("apple", 4, 4, 5), FoodType.FOOD_FRUITVEG);
         register(sugar = new ItemEdible("sugar", 5, 0, 10), FoodType.FOOD_CARBS);
-        register(potatoBaked = new ItemEdible("potato_baked", 8, 6, 5), FoodType.FOOD_CARBS);
+        register(potatoCooked = new ItemEdible("potato_cooked", 8, 6, 5), FoodType.FOOD_CARBS);
         register(egg = new ItemEdible("egg", 5, 5, 6), FoodType.FOOD_PROTEIN);
         
         register(beefRaw = new ItemEdiblePoison("beef_raw", 3, 6, 5), FoodType.FOOD_PROTEIN);
@@ -380,7 +374,7 @@ public class ModItems {
         register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato), FoodType.FOOD_CARBS);
         register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot), FoodType.FOOD_FRUITVEG);
         register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot), FoodType.FOOD_FRUITVEG);
-        register(seedPumpkin = new ItemEdibleSeed("seed_pumpkin", 1, 1, 15, ModBlocks.pumpkin), FoodType.FOOD_PROTEIN);
+        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkin), FoodType.FOOD_PROTEIN);
         
         register(rice = new ItemRice());
         
@@ -393,7 +387,7 @@ public class ModItems {
         register(cuttingHemp = new ItemSeed("cutting_hemp", 1, ModBlocks.hemp));
 
         register(wheat = new ItemSeed("wheat", 10, ModBlocks.wheat));
-        register(seedMelon = new ItemSeed("seed_melon", 15, ModBlocks.melon));
+        register(seedMelon = new ItemSeed("seeds_melon", 15, ModBlocks.melon));
         
         register(bedLeaf = new ItemBedPlainAbstract("bed_leaf",
                 ModBlocks.bedLeaf), true);
@@ -439,17 +433,15 @@ public class ModItems {
         register(ingotSteel = new ItemNew("ingot_steel", 2));
         register(ingotTin = new ItemNew("ingot_tin", 2));
 
-        register(leafpile = new ItemNew("leafpile", 2));
+        register(leaves = new ItemNew("leaves", 2));
         register(pole = new ItemNew("pole", 4));
         register(log = new ItemNew("log"));
         register(thicklog = new ItemNew("thicklog"));
         register(timber = new ItemNew("timber", 3));
 
-        register(claybricksDry = new ItemNew("claybricks_dry"));
-        register(claybricksWet = new ItemNew("claybricks_wet"));
+        register(bricksClay = new ItemNew("bricks_clay"));
         register(dirt = new ItemNew("dirt", 4));
-        register(mudbricksDry = new ItemNew("mudbricks_dry"));
-        register(mudbricksWet = new ItemNew("mudbricks_wet"));
+        register(bricksMud = new ItemNew("bricks_mud"));
         register(peatDry = new ItemNew("peat_dry"));
         register(peatWet = new ItemNew("peat_wet"));
         
@@ -462,7 +454,6 @@ public class ModItems {
         register(oreSilver = new ItemNew("ore_silver"));
         register(oreGold = new ItemNew("ore_gold"));
         
-        register(stoneLoose = new ItemNew("stone_loose", 4));
         register(stoneRough = new ItemNew("stone_rough", 4));
         register(stoneDressed = new ItemNew("stone_dressed", 4));
 
@@ -476,7 +467,7 @@ public class ModItems {
         register(craftingTextiles = new ItemCraftingTextiles(), true);
         register(craftingWoodworking = new ItemCraftingWoodworking(), true);
         register(craftingSawpit = new ItemCraftingSawpit(), true);
-        //register(craftingArmourer = new ItemCraftingArmourer(), true);
+        register(craftingArmourer = new ItemCraftingArmourer(), true);
         
         register(furnaceClay = new ItemFurnaceClay(), true);
         register(furnaceStone = new ItemFurnaceStone(), true);
@@ -645,7 +636,7 @@ public class ModItems {
         register(steelplateFeet = new ItemApparel("steelplate_feet",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET));
 
-        register(bowCrude = new ItemBowCrude());
+        register(bowCrude = new ItemCrudebow());
         
         register(wallBrick = new ItemWall("wall_brick", 1,
                 ModBlocks.wallBrickSingle, ModBlocks.wallBrickDouble));

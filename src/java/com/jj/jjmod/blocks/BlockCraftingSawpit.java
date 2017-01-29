@@ -1,9 +1,8 @@
 package com.jj.jjmod.blocks;
 
-import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
-import com.jj.jjmod.tileentities.TECraftingForge;
 import com.jj.jjmod.tileentities.TECraftingSawpit;
 import com.jj.jjmod.tileentities.TECraftingSawpit.EnumPartSawpit;
 import com.jj.jjmod.utilities.BlockMaterial;
@@ -18,8 +17,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -49,10 +46,10 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos unusued) {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos unused) {
         
         //TODO
-        
+        System.out.println("neighbor changed at " + pos + " from " + unused);
         TileEntity tileEntity = world.getTileEntity(pos);
         
         if (!(tileEntity instanceof TECraftingSawpit)) {
@@ -63,6 +60,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
         TECraftingSawpit tileSawpit = (TECraftingSawpit) tileEntity;
         EnumPartSawpit part = tileSawpit.getPart();
         EnumFacing facing = tileSawpit.getFacing();
+        
+        System.out.println("neighbour changed, pos " + pos + ", part " + part);
         
         switch (part) {
             
@@ -84,8 +83,9 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
                 
                 boolean brokenB3 = world.getBlockState(pos
                         .offset(facing.rotateY())).getBlock() != this;
+                boolean brokenB1 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
                 
-                if (brokenB3) {
+                if (brokenB3 || brokenB1) {
                     
                     world.setBlockToAir(pos);
                     System.out.println("breaking on update at " + pos);
@@ -138,8 +138,9 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
             case M5: {
                 
                 boolean brokenM4 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenB5 = world.getBlockState(pos.down()).getBlock() != this;
                 
-                if (brokenM4) {
+                if (brokenM4 || brokenB5) {
                     
                     world.setBlockToAir(pos);
                     System.out.println("breaking on update at " + pos);
@@ -190,8 +191,9 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
             case M1: {
                 
                 boolean brokenT1 = world.getBlockState(pos.up()).getBlock() != this;
+                boolean brokenB1 = world.getBlockState(pos.down()).getBlock() != this;
                 
-                if (brokenT1) {
+                if (brokenT1 || brokenB1) {
                     
                     world.setBlockToAir(pos);
                     System.out.println("breaking on update at " + pos);
@@ -203,6 +205,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
             case T1: {
                 
                 boolean brokenT2 = world.getBlockState(pos.offset(facing.rotateY())).getBlock() != this;
+                boolean brokenM1 = world.getBlockState(pos.down()).getBlock() != this;
                 
                 IBlockState frontSupport = world.getBlockState(pos.offset(facing.getOpposite()));
                 Block fsBlock = frontSupport.getBlock();
@@ -233,7 +236,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
                     bsValid = true;
                 }
                 
-                if (brokenT2 || !fsValid || !bsValid) {
+                if (brokenT2 || brokenM1 || !fsValid || !bsValid) {
                     
                     world.setBlockToAir(pos);
                     System.out.println("breaking on update at " + pos);
@@ -283,7 +286,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
             
             case T5: {
                 
-                boolean brokenB1 = world.getBlockState(pos.down(2).offset(facing.rotateYCCW(), 4)).getBlock() != this;
+                boolean brokenT4 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenM5 = world.getBlockState(pos.down()).getBlock() != this;
                 
                 IBlockState frontSupport = world.getBlockState(pos.offset(facing.getOpposite()));
                 Block fsBlock = frontSupport.getBlock();
@@ -314,7 +318,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
                     bsValid = true;
                 }
                 
-                if (brokenB1 || !fsValid || !bsValid) {
+                if (brokenT4 || brokenM5 || !fsValid || !bsValid) {
                     
                     world.setBlockToAir(pos);
                     System.out.println("breaking on update at " + pos);
@@ -327,14 +331,14 @@ public class BlockCraftingSawpit extends BlockComplexAbstract implements ITileEn
     
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-        
+
         return FULL_BLOCK_AABB;
     }
     
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         
-        return state.getValue(PART).isPassable() ? NULL_AABB : FULL_BLOCK_AABB;
+        return this.getActualState(state, world, pos).getValue(PART).isPassable() ? NULL_AABB : FULL_BLOCK_AABB;
     }
     
     @Override

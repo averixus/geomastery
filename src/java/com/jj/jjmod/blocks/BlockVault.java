@@ -47,6 +47,12 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return true;
     }
     
+    @Override
+    public boolean supportsBeam() {
+        
+        return true;
+    }
+    
     protected boolean hasValidSide(IBlockAccess world, BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
