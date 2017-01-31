@@ -4,15 +4,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class CookingManager {
 
     private final Map<ItemStack, ItemStack> recipes;
+    private final Map<ItemStack, Integer> fuels;
 
     public CookingManager() {
 
         this.recipes = Maps.<ItemStack, ItemStack>newHashMap();
+        this.fuels = Maps.<ItemStack, Integer>newHashMap();
     }
 
     public void addSmeltingRecipe(ItemStack input, ItemStack output) {
@@ -32,6 +35,24 @@ public class CookingManager {
         }
 
         return null;
+    }
+    
+    public void addFuel(ItemStack fuel, int time) {
+        
+        this.fuels.put(fuel, time);
+    }
+    
+    public int getFuelTime(ItemStack fuel) {
+        
+        for (Entry<ItemStack, Integer> entry: this.fuels.entrySet()) {
+
+            if (compareItemStacks(fuel, entry.getKey())) {
+
+                return entry.getValue();
+            }
+        }
+
+        return 0;
     }
 
     private static boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {

@@ -160,9 +160,9 @@ public class ModItems {
     public static ItemNew thicklog;
     public static ItemNew timber;
 
-    public static ItemNew bricksClay;
+    public static ItemNew claybricks;
     public static ItemNew dirt;
-    public static ItemNew bricksMud;
+    public static ItemNew mudbricks;
     public static ItemNew peatDry;
     public static ItemNew peatWet;
     
@@ -440,9 +440,9 @@ public class ModItems {
         register(thicklog = new ItemNew("thicklog"));
         register(timber = new ItemNew("timber", 3));
 
-        register(bricksClay = new ItemNew("bricks_clay"));
+        register(claybricks = new ItemNew("clayrbcisk"));
         register(dirt = new ItemNew("dirt", 4));
-        register(bricksMud = new ItemNew("bricks_mud"));
+        register(mudbricks = new ItemNew("mudbricks"));
         register(peatDry = new ItemNew("peat_dry"));
         register(peatWet = new ItemNew("peat_wet"));
         
@@ -721,10 +721,6 @@ public class ModItems {
         }
 
         MOD_ITEMS.add(item);
-        
-       // ModelLoader.setCustomModelResourceLocation(item, 0,
-       //         new ModelResourceLocation(item.getRegistryName(),
-       //         "inventory"));
     }
     
     private static void model(Item item) {

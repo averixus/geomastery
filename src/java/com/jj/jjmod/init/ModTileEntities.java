@@ -11,7 +11,7 @@ import com.jj.jjmod.tileentities.TECraftingWoodworking;
 import com.jj.jjmod.tileentities.TEDrying;
 import com.jj.jjmod.tileentities.TEFurnaceCampfire;
 import com.jj.jjmod.tileentities.TEFurnaceClay;
-import com.jj.jjmod.tileentities.TEFurnacePotfire;
+import com.jj.jjmod.tileentities.TEFurnaceCookfire;
 import com.jj.jjmod.tileentities.TEFurnaceStone;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -24,7 +24,7 @@ public class ModTileEntities {
 
         GameRegistry.registerTileEntity(TEFurnaceCampfire.class,
                 "furnace_campfire");
-        GameRegistry.registerTileEntity(TEFurnacePotfire.class,
+        GameRegistry.registerTileEntity(TEFurnaceCookfire.class,
                 "furnace_potfire");
         GameRegistry.registerTileEntity(TEFurnaceClay.class, "furnace_clay");
         GameRegistry.registerTileEntity(TEFurnaceStone.class,

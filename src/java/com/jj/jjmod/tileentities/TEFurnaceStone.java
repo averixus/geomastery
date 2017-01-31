@@ -129,56 +129,6 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
     }
 
     @Override
-    public int getFuelTime(ItemStack stack) {
-
-        // CONFIG furnaceStone fuel times
-
-        if (stack == null) {
-
-            return 0;
-        }
-
-        Item item = stack.getItem();
-
-        if (item == Items.STICK) {
-
-            return 200;
-        }
-
-        if (item == ModItems.pole) {
-
-            return 500;
-        }
-
-        if (item == ModItems.log) {
-
-            return 2000;
-        }
-
-        if (item == ModItems.thicklog) {
-
-            return 2000;
-        }
-
-        if (item == ModItems.peatDry) {
-
-            return 2400;
-        }
-
-        if (item == Items.COAL && stack.getMetadata() == 1) {
-
-            return 3000;
-        }
-
-        if (item == Items.COAL) {
-
-            return 4000;
-        }
-
-        return 0;
-    }
-
-    @Override
     public int getCookTime(ItemStack stack) {
 
         // CONFIG furnaceStone item cook times

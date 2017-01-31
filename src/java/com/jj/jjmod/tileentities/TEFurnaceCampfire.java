@@ -25,41 +25,6 @@ public class TEFurnaceCampfire extends TEFurnaceConstantAbstract {
     }
 
     @Override
-    public int getFuelTime(ItemStack stack) {
-
-        // CONFIG furnaceCampfire fuel times
-
-        if (stack == null) {
-
-            return 0;
-        }
-
-        Item item = stack.getItem();
-
-        if (item == Items.STICK) {
-
-            return 200;
-        }
-
-        if (item == ModItems.pole) {
-
-            return 500;
-        }
-
-        if (item == ModItems.log) {
-
-            return 2000;
-        }
-
-        if (item == ModItems.thicklog) {
-
-            return 2000;
-        }
-
-        return 0;
-    }
-
-    @Override
     public int getCookTime(ItemStack stack) {
 
         // CONFIG furnaceCampfire item cook times

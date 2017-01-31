@@ -86,7 +86,10 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         }
     }
 
-    public abstract int getFuelTime(ItemStack stack);
+    public int getFuelTime(ItemStack stack) {
+        
+        return this.recipes.getFuelTime(stack);
+    }
 
     public abstract int getCookTime(ItemStack stack);
 

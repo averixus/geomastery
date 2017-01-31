@@ -35,8 +35,7 @@ public class ItemEdibleDecayable extends ItemEdible {
                 entity instanceof EntityPlayer) {
         
             EntityPlayer player = (EntityPlayer) entity;
-            int size = stack.func_190916_E();  
-            ItemStack rot = new ItemStack(ModItems.rot, size);
+            ItemStack rot = new ItemStack(ModItems.rot);
             
             ItemStack compare = player.inventory.mainInventory.get(slot);
             
@@ -60,8 +59,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         if (!entity.worldObj.isRemote && entity.getEntityItem()
                 .getCapability(CapDecay.CAP_DECAY, null).updateAndRot()) {
             
-            entity.setEntityItemStack(new ItemStack(ModItems.rot,
-                    entity.getEntityItem().func_190916_E()));
+            entity.setEntityItemStack(new ItemStack(ModItems.rot));
         }
         
         return false;

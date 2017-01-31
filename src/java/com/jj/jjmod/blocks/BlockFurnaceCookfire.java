@@ -4,7 +4,7 @@ import java.util.Random;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
-import com.jj.jjmod.tileentities.TEFurnacePotfire;
+import com.jj.jjmod.tileentities.TEFurnaceCookfire;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
@@ -33,7 +33,7 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        return new TEFurnacePotfire();
+        return new TEFurnaceCookfire();
     }
 
     @Override

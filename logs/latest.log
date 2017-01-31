@@ -1,11 +1,11 @@
-[23:47:30] [main/INFO]: Logging in with username & password
-[23:47:45] [Client thread/INFO]: Setting user: Jazzable
-[23:47:55] [Client thread/WARN]: Skipping bad option: lastServer:
-[23:47:55] [Client thread/INFO]: LWJGL Version: 2.9.2
-[23:47:56] [Client thread/INFO]: [STDOUT]: ---- Minecraft Crash Report ----
-// You should try our sister game, Minceraft!
+[13:44:30] [main/INFO]: Logging in with username & password
+[13:44:42] [Client thread/INFO]: Setting user: Jazzable
+[13:44:55] [Client thread/WARN]: Skipping bad option: lastServer:
+[13:44:55] [Client thread/INFO]: LWJGL Version: 2.9.2
+[13:44:56] [Client thread/INFO]: [STDOUT]: ---- Minecraft Crash Report ----
+// I let you down. Sorry :(
 
-Time: 29/01/17 23:47
+Time: 31/01/17 13:44
 Description: Loading screen debug info
 
 This is just a prompt for computer specs to be printed. THIS IS NOT A ERROR
@@ -20,71 +20,59 @@ Details:
 	Operating System: Mac OS X (x86_64) version 10.12.2
 	Java Version: 1.8.0_121, Oracle Corporation
 	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
-	Memory: 253016104 bytes (241 MB) / 771751936 bytes (736 MB) up to 3817865216 bytes (3641 MB)
+	Memory: 267901408 bytes (255 MB) / 768081920 bytes (732 MB) up to 3817865216 bytes (3641 MB)
 	JVM Flags: 0 total; 
 	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
 	FML: 
 	Loaded coremods (and transformers): 
 	GL info: ' Vendor: 'Intel Inc.' Version: '2.1 INTEL-10.22.25' Renderer: 'Intel(R) Iris(TM) Graphics 6100'
-[23:48:01] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:JJ Mod, FMLFileResourcePack:Example Mod
-[23:48:09] [Sound Library Loader/INFO]: Starting up SoundSystem...
-[23:48:09] [Thread-7/INFO]: Initializing LWJGL OpenAL
-[23:48:09] [Thread-7/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
-[23:48:09] [Thread-7/INFO]: OpenAL initialized.
-[23:48:09] [Sound Library Loader/INFO]: Sound engine started
-[23:48:20] [Client thread/INFO]: Created: 16x16 textures-atlas
-[23:48:33] [Client thread/INFO]: [STDOUT]: DIRT BLOCK >> tile.dirt
-[23:48:33] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:JJ Mod, FMLFileResourcePack:Example Mod
-[23:48:36] [Client thread/INFO]: SoundSystem shutting down...
-[23:48:36] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
-[23:48:36] [Sound Library Loader/INFO]: Starting up SoundSystem...
-[23:48:36] [Thread-9/INFO]: Initializing LWJGL OpenAL
-[23:48:36] [Thread-9/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
-[23:48:36] [Thread-9/INFO]: OpenAL initialized.
-[23:48:37] [Sound Library Loader/INFO]: Sound engine started
-[23:48:48] [Client thread/INFO]: Created: 1024x512 textures-atlas
-[23:48:59] [Client thread/WARN]: Skipping bad option: lastServer:
-[23:50:42] [Server thread/INFO]: Starting integrated minecraft server version 1.11
-[23:50:42] [Server thread/INFO]: Generating keypair
-[23:50:44] [Server thread/INFO]: Preparing start region for level 0
-[23:50:45] [Server thread/INFO]: Preparing spawn area: 26%
-[23:50:48] [Server thread/INFO]: [STDOUT]: deserializing nbt foodinfo
-[23:50:48] [Server thread/INFO]: Jazzable[local:E:2a45bfc7] logged in with entity id 91 at (772.5479592542861, 4.0, -396.38892408917906)
-[23:50:49] [Server thread/INFO]: Jazzable joined the game
-[23:50:54] [Server thread/INFO]: Saving and pausing game...
-[23:50:54] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:50:54] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:50:54] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[23:50:54] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[23:50:54] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[23:50:54] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 4017ms behind, skipping 80 tick(s)
-[23:51:36] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:51:36] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:52:21] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:52:21] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:53:06] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:53:06] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:53:51] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:53:51] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:17] [Server thread/INFO]: Saving and pausing game...
-[23:54:17] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:17] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:17] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[23:54:17] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[23:54:17] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[23:54:18] [Server thread/INFO]: Stopping server
-[23:54:18] [Server thread/INFO]: Saving players
-[23:54:18] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:18] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:18] [Server thread/INFO]: Jazzable lost connection: TextComponent{text='Disconnected', siblings=[], style=Style{hasParent=false, color=null, bold=null, italic=null, underlined=null, obfuscated=null, clickEvent=null, hoverEvent=null, insertion=null}}
-[23:54:18] [Server thread/INFO]: Jazzable left the game
-[23:54:18] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:18] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
-[23:54:18] [Server thread/INFO]: Stopping singleplayer server as player logged out
-[23:54:18] [Server thread/INFO]: Saving worlds
-[23:54:18] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[23:54:18] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[23:54:18] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[23:54:23] [Client thread/INFO]: Stopping!
-[23:54:23] [Client thread/INFO]: SoundSystem shutting down...
-[23:54:23] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
+[13:45:02] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:JJ Mod, FMLFileResourcePack:Example Mod
+[13:45:08] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[13:45:08] [Thread-7/INFO]: Initializing LWJGL OpenAL
+[13:45:08] [Thread-7/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[13:45:08] [Thread-7/INFO]: OpenAL initialized.
+[13:45:08] [Sound Library Loader/INFO]: Sound engine started
+[13:45:15] [Client thread/INFO]: Created: 16x16 textures-atlas
+[13:45:25] [Client thread/INFO]: [STDOUT]: DIRT BLOCK >> tile.dirt
+[13:45:25] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:JJ Mod, FMLFileResourcePack:Example Mod
+[13:45:28] [Client thread/INFO]: SoundSystem shutting down...
+[13:45:28] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
+[13:45:28] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[13:45:28] [Thread-9/INFO]: Initializing LWJGL OpenAL
+[13:45:28] [Thread-9/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[13:45:28] [Thread-9/INFO]: OpenAL initialized.
+[13:45:29] [Sound Library Loader/INFO]: Sound engine started
+[13:45:36] [Client thread/INFO]: Created: 1024x512 textures-atlas
+[13:45:47] [Client thread/WARN]: Skipping bad option: lastServer:
+[13:46:44] [Server thread/INFO]: Starting integrated minecraft server version 1.11
+[13:46:44] [Server thread/INFO]: Generating keypair
+[13:46:45] [Server thread/INFO]: Preparing start region for level 0
+[13:46:48] [Server thread/INFO]: [STDOUT]: deserializing nbt foodinfo
+[13:46:48] [Server thread/INFO]: Jazzable[local:E:d8437555] logged in with entity id 87 at (778.5230447690941, 4.0, -385.88604927357017)
+[13:46:48] [Server thread/INFO]: Jazzable joined the game
+[13:46:50] [Server thread/INFO]: Saving and pausing game...
+[13:46:50] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:46:50] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:46:50] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[13:46:51] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[13:46:51] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[13:46:51] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2633ms behind, skipping 52 tick(s)
+[13:47:02] [Server thread/INFO]: Saving and pausing game...
+[13:47:02] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:47:02] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:47:02] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[13:47:02] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[13:47:02] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[13:47:03] [Server thread/INFO]: Stopping server
+[13:47:03] [Server thread/INFO]: Saving players
+[13:47:03] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:47:03] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:47:03] [Server thread/INFO]: Jazzable lost connection: TextComponent{text='Disconnected', siblings=[], style=Style{hasParent=false, color=null, bold=null, italic=null, underlined=null, obfuscated=null, clickEvent=null, hoverEvent=null, insertion=null}}
+[13:47:03] [Server thread/INFO]: Jazzable left the game
+[13:47:03] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:47:03] [Server thread/INFO]: [STDOUT]: serializing nbt foodinfo
+[13:47:03] [Server thread/INFO]: Stopping singleplayer server as player logged out
+[13:47:03] [Server thread/INFO]: Saving worlds
+[13:47:03] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[13:47:03] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[13:47:03] [Server thread/INFO]: Saving chunks for level 'New World'/The End

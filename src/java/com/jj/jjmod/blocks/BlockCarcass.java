@@ -8,6 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public abstract class BlockCarcass extends BlockNew {
@@ -28,7 +29,8 @@ public abstract class BlockCarcass extends BlockNew {
         }
     }
     
-    public AxisAlignedBB getBoundingBox(IBlockState state, World world, BlockPos pos) {
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         
         return HALF_BOUNDS;
     }
