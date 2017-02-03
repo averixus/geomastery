@@ -306,6 +306,11 @@ public class ModItems {
     public static ItemApparel woolLegs;
     public static ItemApparel woolFeet;
     
+    public static ItemApparel furHead;
+    public static ItemApparel furChest;
+    public static ItemApparel furLegs;
+    public static ItemApparel furFeet;
+    
     public static ItemApparel steelmailHead;
     public static ItemApparel steelmailChest;
     public static ItemApparel steelmailLegs;
@@ -618,6 +623,11 @@ public class ModItems {
                 EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.LEGS));
         register(woolFeet = new ItemApparel("wool_feet",
                 EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.FEET));
+        
+        register(furHead = new ItemApparel("fur_head", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.HEAD));
+        register(furChest = new ItemApparel("fur_chest", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.CHEST));
+        register(furLegs = new ItemApparel("fur_legs", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.LEGS));
+        register(furFeet = new ItemApparel("fur_feet", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.FEET));
         
         register(steelmailHead = new ItemApparel("mail_head",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD));
