@@ -1,6 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "cross": "jjmod:blocks/plants/seedling_apple"
-    }
-}
