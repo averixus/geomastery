@@ -8,7 +8,8 @@ public class BlockCarcassPig extends BlockCarcass {
 
     public BlockCarcassPig() {
         
-        super("carcass_pig", new ItemStack[] {new ItemStack(Items.PORKCHOP, 4),
+        super("carcass_pig", new ItemStack[]
+                {new ItemStack(ModItems.porkRaw, 4),
                 new ItemStack(ModItems.skinPig, 6),
                 new ItemStack(Items.BONE, 4),
                 new ItemStack(ModItems.tallow)}, 1F);

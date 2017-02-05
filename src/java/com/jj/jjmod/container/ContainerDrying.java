@@ -100,7 +100,7 @@ public class ContainerDrying extends ContainerAbstract {
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
-        ItemStack itemstack = null;
+        ItemStack itemstack = ItemStack.field_190927_a;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
@@ -113,7 +113,7 @@ public class ContainerDrying extends ContainerAbstract {
                 if (!this.mergeItemStack(stack1, HOT_START, this.INV_END + 1,
                         true)) {
 
-                    return null;
+                    return ItemStack.field_190927_a;
                 }
 
                 slot.onSlotChange(stack1, itemstack);
@@ -126,7 +126,7 @@ public class ContainerDrying extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, INPUT_I, INPUT_I + 1,
                             false)) {
 
-                        return null;
+                        return ItemStack.field_190927_a;
                     }
 
                 } else if (index >= INV_START && index <= this.INV_END) {
@@ -134,7 +134,7 @@ public class ContainerDrying extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, HOT_START, HOT_END + 1,
                             false)) {
 
-                        return null;
+                        return ItemStack.field_190927_a;
                     }
 
                 } else if (index >= HOT_START && index <= HOT_END)
@@ -142,18 +142,18 @@ public class ContainerDrying extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, INV_START, this.INV_END + 1,
                             false)) {
 
-                        return null;
+                        return ItemStack.field_190927_a;
                     }
 
             } else if (!this.mergeItemStack(stack1, HOT_START, this.INV_END + 1,
                     false)) {
 
-                return null;
+                return ItemStack.field_190927_a;
             }
 
             if (stack1.func_190916_E() == 0) {
 
-                slot.putStack(null);
+                slot.putStack(ItemStack.field_190927_a);
 
             } else {
 
@@ -162,10 +162,10 @@ public class ContainerDrying extends ContainerAbstract {
 
             if (stack1.func_190916_E() == itemstack.func_190916_E()) {
 
-                return null;
+                return ItemStack.field_190927_a;
             }
 
-            ((SlotCrafting) slot).onPickupFromSlot(player, stack1);
+            ((SlotCrafting) slot).func_190901_a(player, stack1);
         }
 
         return itemstack;

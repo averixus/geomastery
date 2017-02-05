@@ -57,23 +57,30 @@ public abstract class ContainerAbstract extends Container {
 
         int invIndex = 0;
 
-        for (int m = 0; m < ROW_LENGTH; m++) {
+        for (int m = 0; m < ROW_LENGTH; m++, invIndex++) {
 
             this.addSlotToContainer(new SlotInventory(this.playerInv,
-                    invIndex++, getInvX(m), HOT_Y));
+                    invIndex, getInvX(m), HOT_Y));
+        }
+        
+        invIndex--;
+        
+        if (this.capInv.getInventoryRows() == 0) {
+            
+            return invIndex;
         }
 
-        for (int k = 0; k < this.capInv.getInventoryRows(); k++) {
+        for (int k = 0; k < this.capInv.getInventoryRows(); k++, invIndex++) {
 
             for (int l = 0; l < ROW_LENGTH; l++) {
 
                 this.addSlotToContainer(new SlotInventory(
-                        this.playerInv, invIndex++,
+                        this.playerInv, invIndex,
                         getInvX(l), getInvY(k)));
             }
         }
-
-        return invIndex;
+        
+        return --invIndex;
     }
 
     protected static int getInvX(int index) {

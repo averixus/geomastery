@@ -101,7 +101,7 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 int k = i - a;
                 int l = j - b;
-                ItemStack required = null;
+                ItemStack required = ItemStack.field_190927_a;
 
                 if (k >= 0 && l >= 0 && k < this.recipeWidth &&
                         l < this.recipeHeight) {
@@ -119,10 +119,10 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 ItemStack inInv = inv.getStackInRowAndColumn(i, j);
 
-                if (inInv != null || required != null) {
+                if (inInv != ItemStack.field_190927_a || required != ItemStack.field_190927_a) {
 
-                    if (inInv == null && required != null ||
-                            inInv != null && required == null) {
+                    if (inInv == ItemStack.field_190927_a && required != ItemStack.field_190927_a ||
+                            inInv != ItemStack.field_190927_a && required == ItemStack.field_190927_a) {
 
                         return false;
                     }

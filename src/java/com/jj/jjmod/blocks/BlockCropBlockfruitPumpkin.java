@@ -1,5 +1,6 @@
 package com.jj.jjmod.blocks;
 
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
@@ -16,7 +17,7 @@ public class BlockCropBlockfruitPumpkin extends BlockCropBlockfruit {
     
     public BlockCropBlockfruitPumpkin() {
         
-        super("pumpkin", 0.3F, 0.2F, ToolType.SICKLE, Blocks.PUMPKIN);
+        super("pumpkin_crop", 0.3F, 0.2F, ToolType.SICKLE, ModBlocks.pumpkinFruit);
     }
 
     @Override

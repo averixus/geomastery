@@ -13,7 +13,7 @@ public class WorldGenPumpkin extends WorldGenCrop {
 
     public WorldGenPumpkin(World world, Random rand) {
         
-        super(world, rand, ModBlocks.pumpkin.getDefaultState(), 4, 3);
+        super(world, rand, ModBlocks.pumpkinCrop.getDefaultState(), 4, 3);
     }
 
     @Override

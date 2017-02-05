@@ -72,7 +72,7 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.craftingKnapping), "FFF", 'F', Items.FLINT);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingCandlemaker), "PPP", "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingTextiles), "BPP", "PPP",'B', Items.BONE, 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingClayworks), "PCP", "PPP", 'P', ModItems.pole, "C", Items.CLAY_BALL);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingClayworks), "PCP", "PPP", 'P', ModItems.pole, 'C', Items.CLAY_BALL);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer), "SRP", "LBP", 'S', ModItems.ingotSteel, 'R', ModItems.stoneRough, 'P', ModItems.pole, 'L', Items.LEATHER, 'B', ModItems.beeswax);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingSawpit), "PSP", " S ", 'P', ModItems.pole, 'S', ModItems.ingotSteel);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire), "S S", "SSS", 'S', Items.STICK);
@@ -81,7 +81,6 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.drying), "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf), "LLL", 'L', ModItems.leaves);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud), "MMM", "MMM", 'M', ModItems.mudbricks);
-        
         
         for (Item metal : METALS) {
         
@@ -235,7 +234,7 @@ public class ModRecipes {
 
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 15), "H", "T", "T", 'H', ModItems.twineHemp, 'T', ModItems.tallow);
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleBeeswax, 15), "H", "B", "B", 'H', ModItems.twineHemp, 'B', ModItems.beeswax);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4), "T", "C", "S", 'T', ModItems.tallow, 'C', ModItems.cotton, Items.STICK);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4), "T", "C", "S", 'T', ModItems.tallow, 'C', ModItems.cotton, 'S', Items.STICK);
     }
 
     public static void setupForge() {

@@ -8,7 +8,8 @@ public class BlockCarcassSheep extends BlockCarcass {
     
     public BlockCarcassSheep() {
         
-        super("carcass_sheep", new ItemStack[] {new ItemStack(Items.MUTTON, 3),
+        super("carcass_sheep", new ItemStack[]
+                {new ItemStack(ModItems.muttonRaw, 3),
                 new ItemStack(ModItems.skinSheep, 4),
                 new ItemStack(Items.BONE, 3),
                 new ItemStack(ModItems.tallow)}, 1F);

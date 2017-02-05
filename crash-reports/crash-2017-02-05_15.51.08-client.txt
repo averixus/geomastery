@@ -1,0 +1,136 @@
+---- Minecraft Crash Report ----
+// But it works on my machine.
+
+Time: 05/02/17 15:51
+Description: Playing level event
+
+java.lang.IllegalArgumentException: Cannot set property PropertyDirection{name=facing, clazz=class net.minecraft.util.EnumFacing, values=[up, north, south, west, east]} as it does not exist in BlockStateContainer{block=jjmod:block_melon_crop, properties=[age]}
+	at net.minecraft.block.state.BlockStateContainer$StateImplementation.withProperty(BlockStateContainer.java:215)
+	at com.jj.jjmod.blocks.BlockCropBlockfruit.getActualState(BlockCropBlockfruit.java:76)
+	at net.minecraft.block.state.BlockStateContainer$StateImplementation.getActualState(BlockStateContainer.java:429)
+	at net.minecraft.client.particle.ParticleManager.addBlockDestroyEffects(ParticleManager.java:401)
+	at net.minecraft.client.renderer.RenderGlobal.playEvent(RenderGlobal.java:2421)
+	at net.minecraft.world.World.playEvent(World.java:3938)
+	at net.minecraft.world.World.playEvent(World.java:3929)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.onPlayerDestroyBlock(PlayerControllerMP.java:171)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.clickBlockCreative(PlayerControllerMP.java:78)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.clickBlock(PlayerControllerMP.java:241)
+	at net.minecraft.client.Minecraft.clickMouse(Minecraft.java:1540)
+	at net.minecraft.client.Minecraft.processKeyBinds(Minecraft.java:2269)
+	at net.minecraft.client.Minecraft.runTickKeyboard(Minecraft.java:2051)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1839)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1117)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:405)
+	at net.minecraft.client.main.Main.main(Main.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Client thread
+Stacktrace:
+	at net.minecraft.block.state.BlockStateContainer$StateImplementation.withProperty(BlockStateContainer.java:215)
+	at com.jj.jjmod.blocks.BlockCropBlockfruit.getActualState(BlockCropBlockfruit.java:76)
+	at net.minecraft.block.state.BlockStateContainer$StateImplementation.getActualState(BlockStateContainer.java:429)
+	at net.minecraft.client.particle.ParticleManager.addBlockDestroyEffects(ParticleManager.java:401)
+	at net.minecraft.client.renderer.RenderGlobal.playEvent(RenderGlobal.java:2421)
+
+-- Level event being played --
+Details:
+	Block coordinates: World: (788,4,-389), Chunk: (at 4,0,11 in 49,-25; contains blocks 784,0,-400 to 799,255,-385), Region: (1,-1; contains chunks 32,-32 to 63,-1, blocks 512,0,-512 to 1023,255,-1)
+	Event source: ~~NULL~~
+	Event type: 2001
+	Event data: 4426
+Stacktrace:
+	at net.minecraft.world.World.playEvent(World.java:3938)
+	at net.minecraft.world.World.playEvent(World.java:3929)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.onPlayerDestroyBlock(PlayerControllerMP.java:171)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.clickBlockCreative(PlayerControllerMP.java:78)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.clickBlock(PlayerControllerMP.java:241)
+	at net.minecraft.client.Minecraft.clickMouse(Minecraft.java:1540)
+	at net.minecraft.client.Minecraft.processKeyBinds(Minecraft.java:2269)
+	at net.minecraft.client.Minecraft.runTickKeyboard(Minecraft.java:2051)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['Jazzable'/87, l='MpServer', x=787.18, y=4.00, z=-386.56]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (784,4,-389), Chunk: (at 0,0,11 in 49,-25; contains blocks 784,0,-400 to 799,255,-385), Region: (1,-1; contains chunks 32,-32 to 63,-1, blocks 512,0,-512 to 1023,255,-1)
+	Level time: 48511 game time, 11359 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 47 total; [EntityCow['Cow'/64, l='MpServer', x=862.01, y=4.00, z=-377.12], EntitySheep['Sheep'/65, l='MpServer', x=862.94, y=4.00, z=-382.33], EntityCow['Cow'/66, l='MpServer', x=864.14, y=4.00, z=-360.18], EntityCow['Cow'/67, l='MpServer', x=851.54, y=4.00, z=-363.76], EntitySlime['Slime'/5060, l='MpServer', x=812.49, y=4.00, z=-417.34], EntitySlime['Slime'/73, l='MpServer', x=866.87, y=5.33, z=-428.92], EntitySlime['Slime'/9290, l='MpServer', x=715.47, y=4.42, z=-431.78], EntitySlime['Slime'/74, l='MpServer', x=866.17, y=5.17, z=-403.67], EntitySlime['Slime'/75, l='MpServer', x=850.01, y=4.00, z=-391.00], EntitySlime['Slime'/76, l='MpServer', x=861.89, y=4.00, z=-381.37], EntitySlime['Slime'/79, l='MpServer', x=853.13, y=4.42, z=-381.42], EntitySheep['Sheep'/15, l='MpServer', x=711.37, y=4.00, z=-456.37], EntitySheep['Sheep'/16, l='MpServer', x=707.22, y=4.00, z=-440.20], EntitySlime['Slime'/18, l='MpServer', x=716.25, y=4.00, z=-311.13], EntitySheep['Sheep'/24, l='MpServer', x=727.80, y=4.00, z=-433.58], EntitySlime['Slime'/25, l='MpServer', x=717.51, y=5.17, z=-407.24], EntitySlime['Slime'/26, l='MpServer', x=731.26, y=5.25, z=-310.45], EntitySlime['Slime'/30, l='MpServer', x=757.47, y=4.14, z=-389.63], EntitySlime['Slime'/31, l='MpServer', x=748.55, y=4.00, z=-389.90], EntitySlime['Slime'/32, l='MpServer', x=742.10, y=4.00, z=-375.42], EntitySlime['Slime'/33, l='MpServer', x=746.07, y=4.00, z=-351.40], EntitySlime['Slime'/34, l='MpServer', x=746.07, y=4.14, z=-348.82], EntitySlime['Slime'/35, l='MpServer', x=747.32, y=4.28, z=-334.17], EntitySlime['Slime'/36, l='MpServer', x=768.38, y=5.18, z=-376.69], EntityPig['Pig'/37, l='MpServer', x=782.74, y=4.00, z=-309.69], EntitySlime['Slime'/38, l='MpServer', x=804.62, y=5.25, z=-431.80], EntitySlime['Slime'/39, l='MpServer', x=784.82, y=4.00, z=-408.06], EntityCreeper['Creeper'/40, l='MpServer', x=779.81, y=4.00, z=-351.81], EntityPig['Pig'/41, l='MpServer', x=796.77, y=4.00, z=-324.34], EntitySheep['Sheep'/42, l='MpServer', x=796.78, y=4.00, z=-311.68], EntitySlime['Slime'/44, l='MpServer', x=816.53, y=4.00, z=-430.71], EntitySlime['Slime'/45, l='MpServer', x=801.81, y=5.25, z=-414.47], EntitySlime['Slime'/46, l='MpServer', x=803.92, y=4.00, z=-413.41], EntitySlime['Slime'/47, l='MpServer', x=800.56, y=4.75, z=-363.16], EntitySheep['Sheep'/48, l='MpServer', x=815.40, y=4.00, z=-327.75], EntitySlime['Slime'/49, l='MpServer', x=806.80, y=5.18, z=-310.20], EntitySlime['Slime'/52, l='MpServer', x=823.98, y=4.00, z=-420.25], EntitySlime['Slime'/53, l='MpServer', x=823.30, y=4.00, z=-429.65], EntitySlime['Slime'/54, l='MpServer', x=816.30, y=4.00, z=-378.82], EntityPlayerSP['Jazzable'/87, l='MpServer', x=787.18, y=4.00, z=-386.56], EntitySheep['Sheep'/57, l='MpServer', x=842.79, y=4.00, z=-423.28], EntitySheep['Sheep'/59, l='MpServer', x=856.30, y=4.00, z=-417.49], EntitySlime['Slime'/11003, l='MpServer', x=738.19, y=5.10, z=-354.68], EntitySlime['Slime'/60, l='MpServer', x=849.45, y=4.00, z=-424.45], EntitySlime['Slime'/61, l='MpServer', x=851.53, y=4.00, z=-413.95], EntitySlime['Slime'/62, l='MpServer', x=862.19, y=4.00, z=-413.26], EntitySlime['Slime'/63, l='MpServer', x=854.84, y=4.00, z=-388.79]]
+	Retry entities: 0 total; []
+	Server brand: fml,forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:451)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2772)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:426)
+	at net.minecraft.client.main.Main.main(Main.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:97)
+	at GradleStart.main(GradleStart.java:26)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.11
+	Operating System: Mac OS X (x86_64) version 10.12.3
+	Java Version: 1.8.0_121, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 1775761760 bytes (1693 MB) / 2795503616 bytes (2666 MB) up to 3817865216 bytes (3641 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP 9.35 Powered by Forge 13.19.1.2189 5 mods loaded, 5 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.11-13.19.1.2189.jar) 
+	UCHIJAAAA	forge{13.19.1.2189} [Minecraft Forge] (forgeSrc-1.11-13.19.1.2189.jar) 
+	UCHIJAAAA	jjmod{1.0} [JJ Mod] (bin) 
+	UCHIJAAAA	examplemod{1.0} [Example Mod] (bin) 
+	Loaded coremods (and transformers): 
+	GL info: ' Vendor: 'Intel Inc.' Version: '2.1 INTEL-10.22.29' Renderer: 'Intel(R) Iris(TM) Graphics 6100'
+	Launched Version: 1.11
+	LWJGL: 2.9.2
+	OpenGL: Intel(R) Iris(TM) Graphics 6100 GL version 2.1 INTEL-10.22.29, Intel Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because ARB_framebuffer_object is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-5287U CPU @ 2.90GHz

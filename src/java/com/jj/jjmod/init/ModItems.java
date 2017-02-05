@@ -380,7 +380,7 @@ public class ModItems {
         register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato), FoodType.FOOD_CARBS);
         register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot), FoodType.FOOD_FRUITVEG);
         register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot), FoodType.FOOD_FRUITVEG);
-        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkin), FoodType.FOOD_PROTEIN);
+        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkinCrop), FoodType.FOOD_PROTEIN);
         
         register(rice = new ItemRice());
         
@@ -393,7 +393,7 @@ public class ModItems {
         register(cuttingHemp = new ItemSeed("cutting_hemp", 1, ModBlocks.hemp));
 
         register(wheat = new ItemSeed("wheat", 10, ModBlocks.wheat));
-        register(seedMelon = new ItemSeed("seeds_melon", 15, ModBlocks.melon));
+        register(seedMelon = new ItemSeed("seeds_melon", 15, ModBlocks.melonCrop));
         
         register(bedLeaf = new ItemBedPlainAbstract("bed_leaf",
                 ModBlocks.bedLeaf), true);
@@ -439,7 +439,7 @@ public class ModItems {
         register(ingotSteel = new ItemNew("ingot_steel", 2));
         register(ingotTin = new ItemNew("ingot_tin", 2));
 
-        register(leaves = new ItemNew("leaves", 2));
+        register(leaves = new ItemNew("leaves", 1));
         register(pole = new ItemNew("pole", 4));
         register(log = new ItemNew("log"));
         register(thicklog = new ItemNew("thicklog"));

@@ -12,6 +12,7 @@ public class BlockMaterial extends Material {
     public static final BlockMaterial CARCASS = new BlockMaterial(MapColor.BROWN, true, true, true, true, false, false, false);
     public static final BlockMaterial SOIL = new BlockMaterial(MapColor.DIRT, true, false, false, false, false, false, false);
     public static final BlockMaterial TAR = new BlockMaterial(MapColor.BLACK, false, false, false, true, true, false, true);
+    public static final BlockMaterial FRUIT = new BlockMaterial(MapColor.GREEN, true, true, true, true, false, false, false);
     
     protected boolean isSolid;
     protected boolean isHandHarvestable;

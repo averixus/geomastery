@@ -46,6 +46,7 @@ import com.jj.jjmod.blocks.BlockDoor;
 import com.jj.jjmod.blocks.BlockDrying;
 import com.jj.jjmod.blocks.BlockFence;
 import com.jj.jjmod.blocks.BlockFoundation;
+import com.jj.jjmod.blocks.BlockFruit;
 import com.jj.jjmod.blocks.BlockFurnaceCampfire;
 import com.jj.jjmod.blocks.BlockFurnaceClay;
 import com.jj.jjmod.blocks.BlockFurnaceCookfire;
@@ -173,8 +174,11 @@ public class ModBlocks {
     public static BlockCropHarvestable bean;
     public static BlockCropHarvestable tomato;
     
-    public static BlockCropBlockfruit melon;
-    public static BlockCropBlockfruit pumpkin;
+    public static BlockCropBlockfruit melonCrop;
+    public static BlockCropBlockfruit pumpkinCrop;
+    
+    public static BlockFruit pumpkinFruit;
+    public static BlockFruit melonFruit;
     
     public static BlockSeedling seedlingApple;
     public static BlockSeedling seedlingPear;
@@ -311,8 +315,11 @@ public class ModBlocks {
         register(bean = new BlockCropHarvestableBean());
         register(tomato = new BlockCropHarvestableTomato());
         
-        register(melon = new BlockCropBlockfruitMelon());
-        register(pumpkin = new BlockCropBlockfruitPumpkin());
+        register(melonCrop = new BlockCropBlockfruitMelon());
+        register(pumpkinCrop = new BlockCropBlockfruitPumpkin());
+        
+        register(melonFruit = new BlockFruit("melon_fruit", () -> ModItems.melon));
+        register(pumpkinFruit = new BlockFruit("pumpkin_fruit", () -> ModItems.pumpkin));
         
         register(seedlingApple = new BlockSeedlingApple());
         register(seedlingPear = new BlockSeedlingPear());
@@ -413,10 +420,10 @@ public class ModBlocks {
     
     public static void preInitClient() {
         
-        for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
+        /*for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
             
             model(entry.getKey(), entry.getValue());
-        }
+        }*/
     }
     
     private static void register(Block block, boolean isOffhandOnly) {
@@ -448,11 +455,11 @@ public class ModBlocks {
         GameRegistry.register(item
                 .setRegistryName(block.getRegistryName()));
 
-        MOD_BLOCKS.put(block, item);
+      //  MOD_BLOCKS.put(block, item);
         
-       // ModelLoader.setCustomModelResourceLocation(item, 0,
-       //         new ModelResourceLocation(block.getRegistryName(),
-       //         "inventory"));
+        ModelLoader.setCustomModelResourceLocation(item, 0,
+                new ModelResourceLocation(block.getRegistryName(),
+                "inventory"));
     }
     
     private static void model(Block block, Item item) {

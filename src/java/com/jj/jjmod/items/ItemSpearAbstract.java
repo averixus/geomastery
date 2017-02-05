@@ -49,15 +49,19 @@ public abstract class ItemSpearAbstract extends ItemTool {
                 if (!world.isRemote) {
 
                     throwSpear(world, player, velocity * 1.8F, stack.getItemDamage() - 1);
-                    stack.func_190918_g(1);
-
-                    if (stack.func_190916_E() == 0) {
-
-                        stack = null;
+                    
+                    if (!player.capabilities.isCreativeMode) {
+                        
+                        stack.func_190918_g(1);
+    
+                        if (stack.func_190916_E() == 0) {
+    
+                            stack = null;
+                        }
+    
+                        ((ContainerInventory) player.inventoryContainer)
+                                .sendUpdateHighlight();
                     }
-
-                    ((ContainerInventory) player.inventoryContainer)
-                            .sendUpdateHighlight();
                 }
 
                 world.playSound(null, player.posX, player.posY, player.posZ,

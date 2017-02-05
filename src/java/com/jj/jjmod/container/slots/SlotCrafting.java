@@ -65,8 +65,10 @@ public class SlotCrafting extends Slot {
         this.amountCrafted = 0;
     }
 
-    public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
+    @Override // onPickupFromSlot
+    public ItemStack func_190901_a(EntityPlayer player, ItemStack stack) {
 
+        System.out.println("on pickup from craft slot");
         net.minecraftforge.fml.common.FMLCommonHandler.instance()
                 .firePlayerCraftingEvent(player, stack, this.craftInv);
         this.onCrafting(stack);
@@ -82,8 +84,8 @@ public class SlotCrafting extends Slot {
             ItemStack itemstack2 = stacks.get(i);
 
             // Use up correct amount of all the input items
-            if (itemstack1 != null) {
-
+            if (itemstack1 != ItemStack.field_190927_a) {
+                System.out.println("using up input items");
                 this.craftInv.decrStackSize(i, amountsUsed[i]);
                 itemstack1 = this.craftInv.getStackInSlot(i);
             }
@@ -111,5 +113,7 @@ public class SlotCrafting extends Slot {
                 }
             }
         }
+        
+        return stack;
     }
 }

@@ -15,6 +15,7 @@ public class ClientProxy extends CommonProxy {
 
         super.preInit(e);
         
+        ModEntities.preInitClient();
         ModTileEntities.preInitClient();
         ModBlocks.preInitClient();
         ModItems.preInitClient();
@@ -24,8 +25,6 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent e) {
 
         super.init(e);
-        
-        ModEntities.initClient();
     }
 
     @Override

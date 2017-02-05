@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -14,23 +13,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderProjectile<T extends Entity>
-        extends Render<EntityArrow> {
+public class RenderProjectile extends Render<EntityArrow> {
 
-    public final ResourceLocation TEXTURE;
+    public final ResourceLocation texture;
 
-    public RenderProjectile(RenderManager renderManager,
-            ResourceLocation resourceLocation) {
+    public RenderProjectile(RenderManager renderManager, ResourceLocation resourceLocation) {
 
         super(renderManager);
-        this.TEXTURE = resourceLocation;
+        this.texture = resourceLocation;
     }
 
     @Override
     protected ResourceLocation
             getEntityTexture(EntityArrow entity) {
 
-        return this.TEXTURE;
+        return this.texture;
     }
 
     @Override

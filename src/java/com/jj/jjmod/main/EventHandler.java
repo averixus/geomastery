@@ -26,6 +26,8 @@ import com.jj.jjmod.utilities.FoodStatsPartial;
 import com.jj.jjmod.utilities.FoodStatsWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockDoublePlant.EnumPlantType;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockLeaves;
@@ -54,6 +56,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -74,8 +77,8 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -262,6 +265,8 @@ public class EventHandler {
         ItemStack stack = event.getHarvester() == null ? ItemStack.field_190927_a :
                 event.getHarvester().getHeldItemMainhand();
         
+        System.out.println("dropping " + event.getDrops() + " from " + event.getState() + " block " + block + " does equal " + Blocks.TALLGRASS + "? + " + (block == Blocks.TALLGRASS));
+        
         if (block instanceof BlockCarcass) {
 
             BlockCarcass carcass = (BlockCarcass) block;
@@ -291,21 +296,9 @@ public class EventHandler {
             }
         }
         
-        if (block == Blocks.TALLGRASS) {
-            
-            event.getDrops().clear();
-        }
-        
-        if (block == Blocks.PUMPKIN) {
-            
-            event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.pumpkin));
-        }
-        
-        if (block == Blocks.MELON_BLOCK) {
-            
-            event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.melon));
+        if (block == Blocks.TALLGRASS || block == Blocks.DOUBLE_PLANT) {
+
+            event.getDrops().replaceAll((Object) -> ItemStack.field_190927_a);
         }
 
         if (block instanceof BlockLog) {
@@ -337,14 +330,16 @@ public class EventHandler {
 
         if (block instanceof BlockDirt || block instanceof BlockGrass) {
 
+            System.out.println("is dirt, clearing drops " + event.getDrops());
             event.getDrops().clear();
-
+            System.out.println("drops now " + event.getDrops());
             if (world.rand.nextInt(10) == 0) {
 
                 event.getDrops().add(new ItemStack(Items.FLINT));
             }
 
             event.getDrops().add(new ItemStack(ModItems.dirt, 4));
+            System.out.println("added dirt, drops now " + event.getDrops());
         }
         
         if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {

@@ -11,16 +11,7 @@ import com.jj.jjmod.entities.projectile.EntitySpearFlint;
 import com.jj.jjmod.entities.projectile.EntitySpearSteel;
 import com.jj.jjmod.entities.projectile.EntitySpearWood;
 import com.jj.jjmod.main.Main;
-import com.jj.jjmod.render.projectile.RenderArrowBronze;
-import com.jj.jjmod.render.projectile.RenderArrowCopper;
-import com.jj.jjmod.render.projectile.RenderArrowFlint;
-import com.jj.jjmod.render.projectile.RenderArrowSteel;
-import com.jj.jjmod.render.projectile.RenderArrowWood;
-import com.jj.jjmod.render.projectile.RenderSpearBronze;
-import com.jj.jjmod.render.projectile.RenderSpearCopper;
-import com.jj.jjmod.render.projectile.RenderSpearFlint;
-import com.jj.jjmod.render.projectile.RenderSpearSteel;
-import com.jj.jjmod.render.projectile.RenderSpearWood;
+import com.jj.jjmod.render.projectile.RenderFactory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -64,32 +55,31 @@ public class ModEntities {
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_steel"), EntityArrowSteel.class,
                 "arrow_steel", entityID++, Main.instance, 80, 3, true);
-
     }
+    
+    public static void preInitClient() {
+        
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntitySpearWood.class, RenderFactory.SPEAR_WOOD);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntitySpearFlint.class, RenderFactory.SPEAR_FLINT);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntitySpearCopper.class, RenderFactory.SPEAR_COPPER);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntitySpearBronze.class, RenderFactory.SPEAR_BRONZE);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntitySpearSteel.class, RenderFactory.SPEAR_STEEL);
 
-    @SideOnly(Side.CLIENT)
-    public static void initClient() {
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntityArrowWood.class, RenderFactory.ARROW_WOOD);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntityArrowFlint.class, RenderFactory.ARROW_FLINT);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntityArrowCopper.class, RenderFactory.ARROW_COPPER);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntityArrowBronze.class, RenderFactory.ARROW_BRONZE);
+        RenderingRegistry.registerEntityRenderingHandler(
+                EntityArrowSteel.class, RenderFactory.ARROW_STEEL);
 
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntitySpearWood.class, RenderSpearWood::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntitySpearFlint.class, RenderSpearFlint::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntitySpearCopper.class, RenderSpearCopper::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntitySpearBronze.class, RenderSpearBronze::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntitySpearSteel.class, RenderSpearSteel::new);
-
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityArrowWood.class, RenderArrowWood::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityArrowFlint.class, RenderArrowFlint::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityArrowCopper.class, RenderArrowCopper::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityArrowBronze.class, RenderArrowBronze::new);
-        RenderingRegistry.registerEntityRenderingHandler(
-                EntityArrowSteel.class, RenderArrowSteel::new);
     }
 }

@@ -83,7 +83,7 @@ public class ContainerCrafting extends ContainerAbstract {
 
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
 
-                if (stack != null) {
+                if (stack != ItemStack.field_190927_a) {
 
                     player.dropItem(stack, false);
                 }
@@ -123,7 +123,7 @@ public class ContainerCrafting extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         this.INV_END + 1, true)) {
 
-                    return null;
+                    return ItemStack.field_190927_a;
                 }
 
                 slot.onSlotChange(slotStack, result);
@@ -133,7 +133,7 @@ public class ContainerCrafting extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, INV_START,
                         this.INV_END + 1, true)) {
 
-                    return null;
+                    return ItemStack.field_190927_a;
                 }
 
             } else if (index >= INV_START && index <= this.INV_END) {
@@ -141,7 +141,7 @@ public class ContainerCrafting extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         HOT_END + 1, true)) {
 
-                    return null;
+                    return ItemStack.field_190927_a;
                 }
 
             } else if (index >= this.CRAFT_START && index <= this.CRAFT_END) {
@@ -149,17 +149,19 @@ public class ContainerCrafting extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         this.INV_END + 1, true)) {
 
-                    return null;
+                    return ItemStack.field_190927_a;
                 }
 
             }
 
             if (slotStack.func_190916_E() == 0) {
 
-                slot.putStack(null);
-            }
+                slot.putStack(ItemStack.field_190927_a);
+                
+            } else {
 
-            ((SlotCrafting) slot).onPickupFromSlot(player, slotStack);
+                slot.onSlotChanged();
+            }
         }
 
         return result;

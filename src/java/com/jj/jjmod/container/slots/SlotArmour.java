@@ -41,7 +41,7 @@ public class SlotArmour extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
 
-        if (stack == null || stack == ItemStack.field_190927_a) {
+        if (stack == ItemStack.field_190927_a) {
 
             return false;
 

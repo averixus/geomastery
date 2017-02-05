@@ -37,7 +37,7 @@ public class CraftingManager {
         if (recipeComponents[i] instanceof String[]) {
 
             String[] stringArray =
-                    (String[]) ((String[]) recipeComponents[i++]);
+                    ((String[]) recipeComponents[i++]);
 
             for (String string: stringArray) {
                 
@@ -92,7 +92,7 @@ public class CraftingManager {
 
             if (map.containsKey(Character.valueOf(c0))) {
                 
-                stackArray[l] = ((ItemStack) map.get(Character.valueOf(c0)))
+                stackArray[l] = map.get(Character.valueOf(c0))
                                 .copy();
 
             } else {

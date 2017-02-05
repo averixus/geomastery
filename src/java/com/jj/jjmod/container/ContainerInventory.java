@@ -107,10 +107,8 @@ public class ContainerInventory extends ContainerAbstract {
     @Override
     public void onCraftMatrixChanged(IInventory craftMatrix) {
 
-        @Nullable
         ItemStack stack = ModRecipes.INVENTORY
                 .findMatchingRecipe(this.craftMatrix, this.world);
-
         this.craftResult.setInventorySlotContents(0, stack);
     }
     
@@ -153,6 +151,7 @@ public class ContainerInventory extends ContainerAbstract {
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
+        System.out.println("transferring index " + index);
         ItemStack result = ItemStack.field_190927_a;
         Slot slot = this.inventorySlots.get(index);
 
@@ -245,11 +244,11 @@ public class ContainerInventory extends ContainerAbstract {
             }
 
             slot.onSlotChange(slotStack, result);
-            ((SlotCrafting) slot).onPickupFromSlot(player, slotStack);
+            ((SlotCrafting) slot).func_190901_a(player, slotStack);
 
         } else if ((index >= this.CRAFT_START && index <= this.CRAFT_END) ||
                 (index >= FEET_I && index <= YOKE_I)) {
-
+            System.out.println("transferring from craft grid index " + index + " to inventory between " + HOT_START + " and " + this.INV_END);
             if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
                     true)) {
 
@@ -286,8 +285,7 @@ public class ContainerInventory extends ContainerAbstract {
 
     public void setStack(InvType type, int slot, ItemStack stack) {
 
-        ItemStack replace = (stack == null ||
-                stack == ItemStack.field_190927_a ||
+        ItemStack replace = (stack == ItemStack.field_190927_a ||
                 stack.func_190916_E() == 0) ?
                 ItemStack.field_190927_a : stack;
 

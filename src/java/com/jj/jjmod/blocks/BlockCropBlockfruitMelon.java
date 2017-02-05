@@ -1,5 +1,6 @@
 package com.jj.jjmod.blocks;
 
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
@@ -13,7 +14,7 @@ public class BlockCropBlockfruitMelon extends BlockCropBlockfruit {
     
     public BlockCropBlockfruitMelon() {
         
-        super("melon", 0.4F, 0.2F, ToolType.SICKLE, Blocks.MELON_BLOCK);
+        super("melon_crop", 0.4F, 0.2F, ToolType.SICKLE, ModBlocks.melonFruit);
     }
 
     @Override
