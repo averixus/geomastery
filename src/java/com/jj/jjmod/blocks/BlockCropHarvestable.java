@@ -63,7 +63,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
             
             if (!world.isRemote) {
                 
-                world.spawnEntityInWorld(new EntityItem(world,
+                world.spawnEntity(new EntityItem(world,
                         pos.getX(), pos.getY(), pos.getZ(),
                         new ItemStack(this.cropRef.get())));
             }

@@ -36,13 +36,13 @@ public class FoodStatsPartial extends FoodStats {
     
     public boolean update(EntityPlayer player) {
         
-        if (player.worldObj.isRemote) {
+        if (player.world.isRemote) {
             
             return false;
         }
         
         boolean hasChanged = false;
-        EnumDifficulty difficulty = player.worldObj.getDifficulty();
+        EnumDifficulty difficulty = player.world.getDifficulty();
         this.prevHunger = this.hunger;
         
         if (this.exhaustion > 4.0F) {
@@ -60,7 +60,7 @@ public class FoodStatsPartial extends FoodStats {
             }
         }
         
-        boolean regen = player.worldObj.getGameRules().getBoolean("naturalRegeneration");
+        boolean regen = player.world.getGameRules().getBoolean("naturalRegeneration");
         
         if (regen && this.saturation > 0.0F && player.shouldHeal() && this.hunger >= 20) {
             
@@ -96,7 +96,7 @@ public class FoodStatsPartial extends FoodStats {
                         (player.getHealth() > 1.0F &&
                         difficulty == EnumDifficulty.NORMAL)) {
                     
-                    player.attackEntityFrom(DamageSource.starve, 1.0F);
+                    player.attackEntityFrom(DamageSource.STARVE, 1.0F);
                 }
                 
                 this.timer = 0;

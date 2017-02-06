@@ -62,11 +62,11 @@ public class EntitySpearSteel extends EntityProjectile {
        
        if (this.isDead) {
 
-           EntitySpearSteel replace = new EntitySpearSteel(this.worldObj,
+           EntitySpearSteel replace = new EntitySpearSteel(this.world,
                    this.posX, this.posY, this.posZ);
            replace.durability = this.durability;
            replace.pickupStatus = PickupStatus.ALLOWED;
-           this.worldObj.spawnEntityInWorld(replace);
+           this.world.spawnEntity(replace);
        }
     }
 }

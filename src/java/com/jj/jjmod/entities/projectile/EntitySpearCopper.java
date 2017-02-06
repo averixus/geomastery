@@ -51,11 +51,11 @@ public class EntitySpearCopper extends EntityProjectile {
        
        if (this.isDead) {
 
-           EntitySpearCopper replace = new EntitySpearCopper(this.worldObj,
+           EntitySpearCopper replace = new EntitySpearCopper(this.world,
                    this.posX, this.posY, this.posZ);
            replace.durability = this.durability;
            replace.pickupStatus = PickupStatus.ALLOWED;
-           this.worldObj.spawnEntityInWorld(replace);
+           this.world.spawnEntity(replace);
        }
     }
 }

@@ -41,8 +41,7 @@ public class ItemCraftingMason extends ItemNew {
 
         // Calculate positions
         BlockPos posFM = pos.up();
-        int intFacing = MathHelper.floor_double(
-                (double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int intFacing = MathHelper.floor((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posFL = posFM.offset(enumFacing.rotateY().getOpposite());
         BlockPos posBM = posFM.offset(enumFacing);
@@ -103,9 +102,9 @@ public class ItemCraftingMason extends ItemNew {
                 SoundType.METAL.getVolume() + 1.0F / 2.0F,
                 SoundType.METAL.getPitch() * 0.8F);
         
-        stack.func_190918_g(1);
+        stack.shrink(1);
 
-        if (stack.func_190916_E() == 0) {
+        if (stack.getCount() == 0) {
 
             stack = null;
         }

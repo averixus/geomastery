@@ -1,7 +1,7 @@
 package com.jj.jjmod.container;
 
 import javax.annotation.Nullable;
-
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
@@ -24,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 public class ContainerInventory extends ContainerAbstract {
@@ -103,6 +104,107 @@ public class ContainerInventory extends ContainerAbstract {
 
         this.onCraftMatrixChanged(this.craftMatrix);
     }
+    
+    public ItemStack add(ItemStack stack) {
+        
+        ItemStack remaining = stack;
+        
+        if (ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
+            
+            remaining = this.addToOffhand(remaining);
+        }
+        
+        if (!remaining.isEmpty()) {
+            
+            remaining = this.putInMatchingSlot(stack);
+        }
+        
+        if (!remaining.isEmpty()) {
+            
+            remaining = this.putInEmptySlot(remaining);
+        }
+        
+        return remaining;
+    }
+    
+    private ItemStack putInMatchingSlot(ItemStack stack) {
+        
+        NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
+        ItemStack remaining = stack.copy();
+
+        for (int slot = 0; slot < this.capInv.getInventorySize() && !remaining.isEmpty(); slot++) {
+
+            if (ItemStack.areItemsEqual(remaining, inv.get(slot))) {
+            
+                remaining = this.addToSlot(slot, remaining);
+            }
+        }
+
+        return remaining;
+    }
+    
+    private ItemStack putInEmptySlot(ItemStack stack) {
+        
+        NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
+        ItemStack remaining = stack.copy();
+
+        for (int slot = 0; slot < this.capInv.getInventorySize() && !remaining.isEmpty(); slot++) {
+
+            if (inv.get(slot).isEmpty()) {
+            
+                remaining = this.addToSlot(slot, remaining);
+            }
+        }
+
+        return remaining;
+    }
+    
+    private ItemStack addToOffhand(ItemStack stack) {
+        
+        if (this.playerInv.offHandInventory.get(0).isEmpty()) {
+            
+            this.playerInv.offHandInventory.set(0, stack);
+            this.sendUpdateOffhand();
+            return ItemStack.EMPTY;
+        }
+        
+        return stack;
+    }
+    
+    private ItemStack addToSlot(int slot, ItemStack stack) {
+        
+        NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
+        ItemStack result = stack;
+        ItemStack inSlot = inv.get(slot);
+        
+        if (inSlot.isEmpty()) {
+            
+            inv.set(slot, stack);
+            result = ItemStack.EMPTY;
+            
+        } else if (ItemStack.areItemStacksEqual(stack, inSlot)) {
+            
+            ItemStack added = inSlot.copy();
+            int total = inSlot.getCount() + stack.getCount();
+            int max = stack.getMaxStackSize();
+
+            if (max >= total) {
+                
+                added.setCount(total);
+                inv.set(slot, added);
+                result = ItemStack.EMPTY;
+                
+            } else {
+                
+                added.setCount(max);
+                inv.set(slot, added);
+                result.setCount(total - max);
+            }
+        }
+        
+        this.sendUpdateInventory(InvType.INVENTORY, slot, inv.get(slot));
+        return result;
+    }
 
     @Override
     public void onCraftMatrixChanged(IInventory craftMatrix) {
@@ -132,10 +234,10 @@ public class ContainerInventory extends ContainerAbstract {
 
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
 
-                if (stack != ItemStack.field_190927_a) {
+                if (stack != ItemStack.EMPTY) {
 
                     player.dropItem(stack, false);
-                    this.sendUpdateInventory(InvType.CRAFTGRID, i, ItemStack.field_190927_a);
+                    this.sendUpdateInventory(InvType.CRAFTGRID, i, ItemStack.EMPTY);
                 }
             }
         }
@@ -152,12 +254,12 @@ public class ContainerInventory extends ContainerAbstract {
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
         System.out.println("transferring index " + index);
-        ItemStack result = ItemStack.field_190927_a;
+        ItemStack result = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot == null || !slot.getHasStack()) {
 
-            return ItemStack.field_190927_a;
+            return ItemStack.EMPTY;
         }
 
         ItemStack slotStack = slot.getStack();
@@ -174,7 +276,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         HEAD_I, HEAD_I + 1, true)) {
 
-                    result = ItemStack.field_190927_a;
+                    result = ItemStack.EMPTY;
                 }
 
             } else if (armourType == EntityEquipmentSlot.CHEST &&
@@ -183,7 +285,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, CHEST_I, CHEST_I + 1,
                         true)) {
 
-                    result = ItemStack.field_190927_a;
+                    result = ItemStack.EMPTY;
                 }
 
             } else if (armourType == EntityEquipmentSlot.LEGS &&
@@ -192,7 +294,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         LEGS_I, LEGS_I + 1, true)) {
 
-                    result = ItemStack.field_190927_a;
+                    result = ItemStack.EMPTY;
                 }
 
             } else if (armourType == EntityEquipmentSlot.FEET &&
@@ -201,7 +303,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         FEET_I, FEET_I + 1, true)) {
 
-                    result = ItemStack.field_190927_a;
+                    result = ItemStack.EMPTY;
                 }
             }
         }
@@ -212,7 +314,7 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack,
                     SHIELD_I, SHIELD_I + 1, true)) {
 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
         }
 
@@ -222,7 +324,7 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, BACKPACK_I, BACKPACK_I + 1,
                     true)) {
                 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
         }
 
@@ -231,7 +333,7 @@ public class ContainerInventory extends ContainerAbstract {
 
             if (!this.mergeItemStack(slotStack, YOKE_I, YOKE_I + 1, true)) {
 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
         }
 
@@ -240,11 +342,11 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
                     true)) {
 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
 
             slot.onSlotChange(slotStack, result);
-            ((SlotCrafting) slot).func_190901_a(player, slotStack);
+            slot.onTake(player, slotStack);
 
         } else if ((index >= this.CRAFT_START && index <= this.CRAFT_END) ||
                 (index >= FEET_I && index <= YOKE_I)) {
@@ -252,7 +354,7 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
                     true)) {
 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
 
         } else if (index >= HOT_START && index <= HOT_END) {
@@ -260,20 +362,20 @@ public class ContainerInventory extends ContainerAbstract {
             if (!this.mergeItemStack(slotStack, INV_START, this.INV_END + 1,
                     true)) {
 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
 
         } else if (index >= INV_START && index <= this.INV_END) {
 
             if (!this.mergeItemStack(slotStack, HOT_START, HOT_END + 1, true)) {
 
-                result = ItemStack.field_190927_a;
+                result = ItemStack.EMPTY;
             }
         }
 
-        if (slot.getStack().func_190916_E() == 0) {
+        if (slot.getStack().getCount() == 0) {
 
-            slot.putStack(ItemStack.field_190927_a);
+            slot.putStack(ItemStack.EMPTY);
             
         } else {
 
@@ -285,9 +387,9 @@ public class ContainerInventory extends ContainerAbstract {
 
     public void setStack(InvType type, int slot, ItemStack stack) {
 
-        ItemStack replace = (stack == ItemStack.field_190927_a ||
-                stack.func_190916_E() == 0) ?
-                ItemStack.field_190927_a : stack;
+        ItemStack replace = (stack == ItemStack.EMPTY ||
+                stack.getCount() == 0) ?
+                ItemStack.EMPTY : stack;
 
         switch (type) {
 

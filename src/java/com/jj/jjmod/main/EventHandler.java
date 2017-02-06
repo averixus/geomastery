@@ -1,10 +1,12 @@
 package com.jj.jjmod.main;
 
+import java.util.Arrays;
 import com.jj.jjmod.blocks.BlockBedAbstract;
 import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
 import com.jj.jjmod.blocks.BlockBedBreakable;
 import com.jj.jjmod.blocks.BlockCarcass;
 import com.jj.jjmod.blocks.BlockRock;
+import com.jj.jjmod.capabilities.CapDecay;
 import com.jj.jjmod.capabilities.CapFoodstats;
 import com.jj.jjmod.capabilities.CapInventory;
 import com.jj.jjmod.capabilities.CapTemperature;
@@ -18,6 +20,7 @@ import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.items.ItemAxe;
+import com.jj.jjmod.items.ItemEdibleDecayable;
 import com.jj.jjmod.items.ItemHoe;
 import com.jj.jjmod.items.ItemHuntingknife;
 import com.jj.jjmod.items.ItemPickaxe;
@@ -51,6 +54,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -82,6 +86,7 @@ import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -93,7 +98,7 @@ public class EventHandler {
     public void renderGameOverlay(RenderGameOverlayEvent.Pre event) {
         
         Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayer player = mc.thePlayer;
+        EntityPlayer player = mc.player;
         
         if (event.getType() == ElementType.HOTBAR) {
         
@@ -196,7 +201,7 @@ public class EventHandler {
     @SubscribeEvent
     public void guiOpen(GuiOpenEvent event) {
 
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayer player = Minecraft.getMinecraft().player;
 
         if (event.getGui() instanceof
                 net.minecraft.client.gui.inventory.GuiInventory &&
@@ -213,15 +218,15 @@ public class EventHandler {
 
         Minecraft mc = Minecraft.getMinecraft();
         
-        if (!mc.thePlayer.isSpectator() &&
-                !mc.thePlayer.capabilities.isCreativeMode &&
+        if (!mc.player.isSpectator() &&
+                !mc.player.capabilities.isCreativeMode &&
                 mc.gameSettings.keyBindSwapHands.isPressed()) {
            
             ContainerInventory inv =
-                    (ContainerInventory) mc.thePlayer.inventoryContainer;
+                    (ContainerInventory) mc.player.inventoryContainer;
             
-            if (mc.thePlayer.inventory.offHandInventory.get(0) != null &&
-                    ModBlocks.OFFHAND_ONLY.contains(mc.thePlayer.inventory
+            if (mc.player.inventory.offHandInventory.get(0) != null &&
+                    ModBlocks.OFFHAND_ONLY.contains(mc.player.inventory
                     .offHandInventory.get(0).getItem())) {
                 
                 return;
@@ -326,7 +331,7 @@ public class EventHandler {
                                 new EntityFallingBlock(world, pos.getX() + 0.5D,
                                 pos.getY(), pos.getZ() + 0.5D,
                                 fallState);
-                        world.spawnEntityInWorld(falling);
+                        world.spawnEntity(falling);
                     }
                     
                 } else {
@@ -370,7 +375,7 @@ public class EventHandler {
 
         World world = event.getWorld();
         Block block = event.getState().getBlock();
-        ItemStack stack = event.getHarvester() == null ? ItemStack.field_190927_a :
+        ItemStack stack = event.getHarvester() == null ? ItemStack.EMPTY :
                 event.getHarvester().getHeldItemMainhand();
                 
         if (block instanceof BlockCarcass) {
@@ -384,7 +389,7 @@ public class EventHandler {
             } else {
 
                 event.getDrops().clear();
-                event.getDrops().addAll(carcass.DROPS);
+                event.getDrops().addAll(Arrays.asList(carcass.drops));
             }
 
             return;
@@ -404,7 +409,7 @@ public class EventHandler {
         
         if (block == Blocks.TALLGRASS || block == Blocks.DOUBLE_PLANT) {
 
-            event.getDrops().replaceAll((Object) -> ItemStack.field_190927_a);
+            event.getDrops().replaceAll((Object) -> ItemStack.EMPTY);
         }
 
         if (block instanceof BlockLog) {
@@ -578,6 +583,11 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerTick(PlayerTickEvent event) {
+        
+        if (event.phase == Phase.START) {
+            
+            return;
+        }
 
         EntityPlayer player = event.player;        
         player.getCapability(CapTemperature.CAP_TEMPERATURE, null).update();
@@ -587,16 +597,32 @@ public class EventHandler {
                 !player.capabilities.isCreativeMode) {
             
             player.inventoryContainer =
-                    new ContainerInventory(player, player.worldObj);
+                    new ContainerInventory(player, player.world);
             player.openContainer = player.inventoryContainer;
             
         } else if (player.inventoryContainer instanceof ContainerInventory &&
                 player.capabilities.isCreativeMode) {
             
             player.inventoryContainer = new ContainerPlayer(player.inventory,
-                    !player.worldObj.isRemote, player);
+                    !player.world.isRemote, player);
             player.openContainer = player.inventoryContainer;
 
+        }
+        
+        if (player.inventoryContainer instanceof ContainerInventory) {
+            
+            for (Slot slot : player.inventoryContainer.inventorySlots) {
+                
+                ItemStack stack = slot.getStack();
+                
+                if (stack.getItem() instanceof ItemEdibleDecayable) {
+                    
+                    if (stack.getCapability(CapDecay.CAP_DECAY, null).updateAndRot()) {
+                        
+                        slot.putStack(new ItemStack(ModItems.rot));
+                    }
+                }
+            }
         }
 
         if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
@@ -618,36 +644,17 @@ public class EventHandler {
         
         ItemStack stack = event.getItem().getEntityItem();
         Item item = stack.getItem();
-        int remaining = stack.func_190916_E();
-
+        ItemStack remaining = stack;
         
-        if (ModBlocks.OFFHAND_ONLY.contains(item)) {
-            
-            ItemStack inSlot = player.inventory.offHandInventory.get(0);
-            
-            if (inSlot == null) {
-                
-                player.inventory.offHandInventory.set(0, stack);
-                ((ContainerInventory) player.inventoryContainer)
-                        .sendUpdateOffhand();
-                remaining = 0;
-            }
-            
-        } else {
+        remaining = ((ContainerInventory) player.inventoryContainer).add(remaining);
 
-            remaining = ((DefaultCapInventory) player
-                    .getCapability(CapInventory.CAP_INVENTORY, null))
-                    .add(stack);
-        }
-
-        if (remaining == 0) {
+        if (remaining.isEmpty()) {
 
             event.getItem().setDead();
 
         } else {
             
-            stack.func_190920_e(remaining);
-            event.getItem().setEntityItemStack(stack);
+            event.getItem().setEntityItemStack(remaining);
         }
 
         event.setCanceled(true);
@@ -667,7 +674,7 @@ public class EventHandler {
     public void playerWakeUp(PlayerWakeUpEvent event) {
 
         BlockPos pos = new BlockPos(event.getEntityPlayer());
-        World world = event.getEntityPlayer().worldObj;
+        World world = event.getEntityPlayer().world;
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
@@ -750,21 +757,21 @@ public class EventHandler {
                     
                     EnumHand hand = player.getActiveHand();
                     player.getActiveItemStack().damageItem(1 +
-                            MathHelper.floor_float(event.getAmount()), player);
+                            MathHelper.floor(event.getAmount()), player);
                     
-                    if (player.getActiveItemStack().func_190926_b()) {
+                    if (player.getActiveItemStack().isEmpty()) {
                         
                         if (hand == EnumHand.MAIN_HAND) {
                             
                             player.setItemStackToSlot(
                                     EntityEquipmentSlot.MAINHAND,
-                                    ItemStack.field_190927_a);
+                                    ItemStack.EMPTY);
                             
                         } else {
                             
                             player.setItemStackToSlot(
                                     EntityEquipmentSlot.OFFHAND,
-                                    ItemStack.field_190927_a);
+                                    ItemStack.EMPTY);
                         }
                     }
                     
@@ -790,7 +797,7 @@ public class EventHandler {
 
         Entity entity = event.getEntity();
 
-        if (entity.worldObj.isRemote) {
+        if (entity.world.isRemote) {
 
             return;
         }

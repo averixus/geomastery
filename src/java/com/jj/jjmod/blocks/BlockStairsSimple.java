@@ -78,7 +78,7 @@ public class BlockStairsSimple extends BlockNew {
     }
     
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing side, float x, float y, float z, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float x, float y, float z, int meta, EntityLivingBase placer) {
         
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
     }

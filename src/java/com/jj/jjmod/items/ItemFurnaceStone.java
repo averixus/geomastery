@@ -40,8 +40,7 @@ public class ItemFurnaceStone extends ItemNew {
 
         // Calculate positions
         BlockPos posBM = pos.up();
-        int facing = MathHelper.floor_double((double)
-                (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int facing = MathHelper.floor((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(facing);
         BlockPos posBL = posBM.offset(enumFacing.rotateY().getOpposite());
         BlockPos posBR = posBM.offset(enumFacing.rotateY());
@@ -110,9 +109,9 @@ public class ItemFurnaceStone extends ItemNew {
                 SoundType.STONE.getVolume() + 1.0F / 2.0F,
                 SoundType.STONE.getPitch() * 0.8F);
 
-        stack.func_190918_g(1);
+        stack.shrink(1);
 
-        if (stack.func_190916_E() == 0) {
+        if (stack.getCount() == 0) {
 
             stack = null;
         }

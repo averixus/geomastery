@@ -57,7 +57,7 @@ public class ItemDoor extends ItemNew {
             return EnumActionResult.FAIL;
         }
         
-        int facing = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing playerFacing = EnumFacing.getHorizontal(facing);
         
         IBlockState placeState = this.block.getDefaultState().withProperty(BlockDoor.FACING, playerFacing).withProperty(BlockDoor.OPEN, false);
@@ -69,7 +69,7 @@ public class ItemDoor extends ItemNew {
         
         SoundType soundtype = world.getBlockState(pos).getBlock().getSoundType(world.getBlockState(pos), world, pos, player);
         world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-        stack.func_190918_g(1);
+        stack.shrink(1);
         System.out.println("success place");
         return EnumActionResult.SUCCESS;
     }

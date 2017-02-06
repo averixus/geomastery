@@ -58,7 +58,7 @@ public class FoodUpdateClient implements IMessage {
         
         public void processMessage(FoodUpdateClient message) {
             
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            EntityPlayer player = Minecraft.getMinecraft().player;
             ((DefaultCapFoodstats) player
                     .getCapability(CapFoodstats.CAP_FOODSTATS, null))
                     .processMessage(FoodType.values()[message.type],

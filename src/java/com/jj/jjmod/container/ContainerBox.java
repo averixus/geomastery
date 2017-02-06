@@ -46,7 +46,7 @@ public class ContainerBox extends ContainerAbstract {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         
-        ItemStack result = ItemStack.field_190927_a;
+        ItemStack result = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
         
         if (slot != null && slot.getHasStack()) {
@@ -59,7 +59,7 @@ public class ContainerBox extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         this.CHEST_START, this.CHEST_END + 1, true)) {
                     
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
                 
             } else if (index >= this.CHEST_START && index <= this.CHEST_END) {
@@ -67,13 +67,13 @@ public class ContainerBox extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack,
                         HOT_START, this.INV_END + 1, true)) {
                     
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
             }
             
-            if (slotStack.func_190916_E() == 0) {
+            if (slotStack.getCount() == 0) {
 
-                slot.putStack(ItemStack.field_190927_a);
+                slot.putStack(ItemStack.EMPTY);
             }
         }
         
@@ -83,7 +83,7 @@ public class ContainerBox extends ContainerAbstract {
     @Override
     public boolean canInteractWith(EntityPlayer player) {
         
-        return this.boxInv.isUseableByPlayer(player);
+        return this.boxInv.isUsableByPlayer(player);
     }
     
     @Override

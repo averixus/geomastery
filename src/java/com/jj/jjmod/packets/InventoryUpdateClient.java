@@ -63,7 +63,7 @@ public class InventoryUpdateClient implements IMessage {
 
         public void processMessage(InventoryUpdateClient message) {
 
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            EntityPlayer player = Minecraft.getMinecraft().player;
             ContainerInventory inv =
                     (ContainerInventory) player.inventoryContainer;
             inv.setStack(message.type, message.slot, message.stack);

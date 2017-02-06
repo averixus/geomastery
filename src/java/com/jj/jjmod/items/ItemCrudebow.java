@@ -122,7 +122,7 @@ public class ItemCrudebow extends ItemNew {
             return check;
         }
         
-        return ItemStack.field_190927_a;
+        return ItemStack.EMPTY;
     }
 
     // Check whether itemstack is an arrow
@@ -154,7 +154,7 @@ public class ItemCrudebow extends ItemNew {
             return;
         }
 
-        if (ammo == ItemStack.field_190927_a) {
+        if (ammo == ItemStack.EMPTY) {
 
             if (creative) {
 
@@ -183,7 +183,7 @@ public class ItemCrudebow extends ItemNew {
                     arrowType.createArrow(world, ammo, player);
             entityArrow.setAim(player, player.rotationPitch,
                     player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntityInWorld(entityArrow);
+            world.spawnEntity(entityArrow);
 
         } else if (arrow == ModItems.arrowFlint) {
 
@@ -192,7 +192,7 @@ public class ItemCrudebow extends ItemNew {
                     arrowType.createArrow(world, ammo, player);
             entityArrow.setAim(player, player.rotationPitch,
                     player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntityInWorld(entityArrow);
+            world.spawnEntity(entityArrow);
 
         } else if (arrow == ModItems.arrowCopper) {
 
@@ -201,7 +201,7 @@ public class ItemCrudebow extends ItemNew {
                     arrowType.createArrow(world, ammo, player);
             entityArrow.setAim(player, player.rotationPitch,
                     player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntityInWorld(entityArrow);
+            world.spawnEntity(entityArrow);
 
         } else if (arrow == ModItems.arrowBronze) {
 
@@ -210,7 +210,7 @@ public class ItemCrudebow extends ItemNew {
                     arrowType.createArrow(world, ammo, player);
             entityArrow.setAim(player, player.rotationPitch,
                     player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntityInWorld(entityArrow);
+            world.spawnEntity(entityArrow);
 
         } else {
 
@@ -219,7 +219,7 @@ public class ItemCrudebow extends ItemNew {
                     arrowType.createArrow(world, ammo, player);
             entityArrow.setAim(player, player.rotationPitch,
                     player.rotationYaw, 0F, velocity * 2.55F, 1F);
-            world.spawnEntityInWorld(entityArrow);
+            world.spawnEntity(entityArrow);
 
         }
 
@@ -231,9 +231,9 @@ public class ItemCrudebow extends ItemNew {
 
         if (!creative) {
 
-            ammo.func_190918_g(1);
+            ammo.shrink(1);
 
-            if (ammo.func_190916_E() == 0) {
+            if (ammo.getCount() == 0) {
 
                 player.inventory.deleteStack(ammo);
             }

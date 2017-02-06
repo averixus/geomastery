@@ -435,7 +435,7 @@ public class ModItems {
         register(tallow = new ItemNew("tallow"));
         register(honeycomb = new ItemNew("honeycomb"));
         
-        register(rot = new ItemNew("rot", 10));
+        register(rot = new ItemNew("rot"));
 
         register(ingotCopper = new ItemNew("ingot_copper", 2));
         register(ingotSilver = new ItemNew("ingot_silver", 2));

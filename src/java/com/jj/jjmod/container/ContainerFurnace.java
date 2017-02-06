@@ -122,14 +122,14 @@ public class ContainerFurnace extends ContainerAbstract {
     @Override
     public boolean canInteractWith(EntityPlayer player) {
 
-        return this.furnaceInv.isUseableByPlayer(player);
+        return this.furnaceInv.isUsableByPlayer(player);
     }
 
     @Override
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
-        ItemStack itemstack = ItemStack.field_190927_a;
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
@@ -142,7 +142,7 @@ public class ContainerFurnace extends ContainerAbstract {
                 if (!this.mergeItemStack(stack1, HOT_START, this.INV_END + 1,
                         true)) {
 
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(stack1, itemstack);
@@ -155,7 +155,7 @@ public class ContainerFurnace extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, INPUT_I, INPUT_I + 1,
                             false)) {
 
-                        return ItemStack.field_190927_a;
+                        return ItemStack.EMPTY;
                     }
 
                 } else if (((TEFurnaceAbstract) this.furnaceInv)
@@ -164,7 +164,7 @@ public class ContainerFurnace extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, FUEL_I, FUEL_I + 1,
                             false)) {
 
-                        return ItemStack.field_190927_a;
+                        return ItemStack.EMPTY;
                     }
 
                 } else if (index >= INV_START && index <= this.INV_END) {
@@ -172,7 +172,7 @@ public class ContainerFurnace extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, HOT_START, HOT_END + 1,
                             false)) {
 
-                        return ItemStack.field_190927_a;
+                        return ItemStack.EMPTY;
                     }
 
                 } else if (index >= HOT_START && index <= HOT_END)
@@ -180,30 +180,30 @@ public class ContainerFurnace extends ContainerAbstract {
                     if (!this.mergeItemStack(stack1, INV_START, this.INV_END + 1,
                             false)) {
 
-                        return ItemStack.field_190927_a;
+                        return ItemStack.EMPTY;
                     }
 
             } else if (!this.mergeItemStack(stack1, HOT_START, this.INV_END + 1,
                     false)) {
 
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
 
-            if (stack1.func_190916_E() == 0) {
+            if (stack1.getCount() == 0) {
 
-                slot.putStack(ItemStack.field_190927_a);
+                slot.putStack(ItemStack.EMPTY);
 
             } else {
 
                 slot.onSlotChanged();
             }
 
-            if (stack1.func_190916_E() == itemstack.func_190916_E()) {
+            if (stack1.getCount() == itemstack.getCount()) {
 
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
 
-            ((SlotCrafting) slot).func_190901_a(player, stack1);
+            slot.onTake(player, stack1);
         }
 
         return itemstack;

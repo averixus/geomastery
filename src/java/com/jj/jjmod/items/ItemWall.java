@@ -67,11 +67,11 @@ public class ItemWall extends ItemNew {
         
         if (!player.capabilities.isCreativeMode) {
             
-            stack.func_190918_g(1);
+            stack.shrink(1);
             
-            if (stack.func_190916_E() == 0) {
+            if (stack.getCount() == 0) {
                 
-                stack = ItemStack.field_190927_a;
+                stack = ItemStack.EMPTY;
             }
             
             ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();

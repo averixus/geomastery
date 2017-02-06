@@ -124,7 +124,7 @@ public class ItemBucket extends ItemNew {
     private ItemStack fillBucket(ItemStack emptyBuckets,
             EntityPlayer player, Item fullBucket) {
 
-        if (emptyBuckets.func_190916_E() <= 1) {
+        if (emptyBuckets.getCount() <= 1) {
 
             return new ItemStack(fullBucket);
 
@@ -136,9 +136,9 @@ public class ItemBucket extends ItemNew {
                 player.dropItem(new ItemStack(fullBucket), false);
             }
 
-            emptyBuckets.func_190918_g(1);
+            emptyBuckets.shrink(1);
             
-            if (emptyBuckets.func_190916_E() == 0) {
+            if (emptyBuckets.getCount() == 0) {
                 
                 emptyBuckets = null;                
             }

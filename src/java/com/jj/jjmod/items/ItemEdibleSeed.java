@@ -40,7 +40,7 @@ public class ItemEdibleSeed extends ItemEdibleDecayable
                 pos, EnumFacing.UP, this) && world.isAirBlock(pos.up())) {
             
             world.setBlockState(pos.up(), this.crop.getDefaultState());
-            itemstack.func_190918_g(1);
+            itemstack.shrink(1);
             return EnumActionResult.SUCCESS;
             
         } else {

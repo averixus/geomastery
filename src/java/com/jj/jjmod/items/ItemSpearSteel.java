@@ -20,6 +20,6 @@ public class ItemSpearSteel extends ItemSpearAbstract {
                 new EntitySpearSteel(world, player, damage);
         thrown.setAim(player, player.rotationPitch,
                 player.rotationYaw, 0.0F, velocity, 1.0F);
-        world.spawnEntityInWorld(thrown);
+        world.spawnEntity(thrown);
     }
 }

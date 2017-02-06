@@ -37,7 +37,7 @@ public class ItemCraftingArmourer extends ItemNew {
 
         // Calculate Positions
         BlockPos posM = pos.up();
-        int intFacing = MathHelper.floor_double(player.rotationYaw* 4.0F / 360.0F + 0.5D) & 3;
+        int intFacing = MathHelper.floor(player.rotationYaw* 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posL = posM.offset(enumFacing.rotateYCCW());
         BlockPos posT = posL.up();
@@ -89,7 +89,7 @@ public class ItemCraftingArmourer extends ItemNew {
         
         if (!player.capabilities.isCreativeMode) {
             
-            stack.func_190918_g(1);
+            stack.shrink(1);
             ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
         }
         

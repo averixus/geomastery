@@ -140,7 +140,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
     public Container createContainer(InventoryPlayer playerInv,
             EntityPlayer player) {
 
-        return new ContainerFurnace(player, this.worldObj, this);
+        return new ContainerFurnace(player, this.world, this);
     }
 
     public enum EnumPartStone implements IStringSerializable {

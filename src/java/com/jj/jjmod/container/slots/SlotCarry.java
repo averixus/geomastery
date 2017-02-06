@@ -31,7 +31,7 @@ public class SlotCarry extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
 
-        if (stack == ItemStack.field_190927_a) {
+        if (stack == ItemStack.EMPTY) {
 
             return false;
 
@@ -48,17 +48,17 @@ public class SlotCarry extends Slot {
 
             case BACKPACK: {
                 
-                return this.capInv.backpack;
+                return this.capInv.stacks.get(0);
             }
             
             case YOKE: {
                
-                return this.capInv.yoke;
+                return this.capInv.stacks.get(1);
             }
             
             default: {
                 
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
         }
     }
@@ -70,13 +70,13 @@ public class SlotCarry extends Slot {
 
             case BACKPACK: {
 
-                this.capInv.backpack = stack;
+                this.capInv.stacks.set(0, stack);
                 break;
             }
 
             case YOKE: {
 
-                this.capInv.yoke = stack;
+                this.capInv.stacks.set(1, stack);
                 break;
             }
         }
@@ -92,21 +92,21 @@ public class SlotCarry extends Slot {
 
             case BACKPACK: {
                
-                return this.capInv.backpack == ItemStack.field_190927_a ?
-                        ItemStack.field_190927_a
-                        : this.capInv.backpack.splitStack(amount);
+                return this.capInv.stacks.get(0) == ItemStack.EMPTY ?
+                        ItemStack.EMPTY
+                        : this.capInv.stacks.get(0).splitStack(amount);
             }
             
             case YOKE: {
                 
-                return this.capInv.yoke == ItemStack.field_190927_a ?
-                        ItemStack.field_190927_a
-                        : this.capInv.yoke.splitStack(amount);
+                return this.capInv.stacks.get(1) == ItemStack.EMPTY ?
+                        ItemStack.EMPTY
+                        : this.capInv.stacks.get(1).splitStack(amount);
             }
             
             default: {
                 
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
         }
     }

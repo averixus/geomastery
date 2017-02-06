@@ -52,7 +52,7 @@ public class TEBeam extends TileEntity {
     
     protected void sendFloorUpdate() {
         
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             
             ModPackets.INSTANCE
                     .sendToAll(new FloorUpdateClient(this.floor,this.pos));
@@ -81,7 +81,7 @@ public class TEBeam extends TileEntity {
             return false;
         }
         
-        Block block = this.worldObj.getBlockState(this.pos.offset(facing)).getBlock();
+        Block block = this.world.getBlockState(this.pos.offset(facing)).getBlock();
         return block instanceof BlockWall;
     }
     
@@ -92,7 +92,7 @@ public class TEBeam extends TileEntity {
             return false;
         }
         
-        Block block = this.worldObj.getBlockState(this.pos.offset(facing)).getBlock();
+        Block block = this.world.getBlockState(this.pos.offset(facing)).getBlock();
         return block instanceof BlockWall;
     }
     
@@ -166,7 +166,7 @@ public class TEBeam extends TileEntity {
     
     public enum EnumFloor implements IStringSerializable {
         
-        NONE("none", () -> Items.field_190931_a), POLE("pole", () -> ModItems.floorPole), WOOD("wood", () -> ModItems.floorWood);
+        NONE("none", () -> Items.AIR), POLE("pole", () -> ModItems.floorPole), WOOD("wood", () -> ModItems.floorWood);
         
         private String name;
         private Supplier<Item> item;

@@ -139,7 +139,7 @@ public class ItemBeam extends ItemNew {
         
         if (!player.capabilities.isCreativeMode) {
             System.out.println("using item, before " + stack);
-            stack.func_190918_g(1);
+            stack.shrink(1);
             System.out.println("after " + stack);
             ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
         }

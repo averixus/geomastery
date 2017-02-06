@@ -150,7 +150,7 @@ public class CraftingManager {
             }
         }
 
-        return ItemStack.field_190927_a;
+        return ItemStack.EMPTY;
     }
 
     public NonNullList<ItemStack> getRemainingItems(InventoryCrafting craftMatrix,
@@ -164,7 +164,7 @@ public class CraftingManager {
             }
         }
 
-        NonNullList<ItemStack> result = NonNullList.<ItemStack>func_191197_a(craftMatrix.getSizeInventory(), ItemStack.field_190927_a);
+        NonNullList<ItemStack> result = NonNullList.withSize(craftMatrix.getSizeInventory(), ItemStack.EMPTY);
 
         for (int i = 0; i < result.size(); ++i) {
 

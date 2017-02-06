@@ -41,7 +41,7 @@ public class ItemCraftingForge extends ItemNew {
 
         // Calculate positions
         BlockPos posFM = pos.up();
-        int intFacing = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int intFacing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posFL =
                 posFM.offset(enumFacing.rotateY().getOpposite());
@@ -121,7 +121,7 @@ public class ItemCraftingForge extends ItemNew {
         
         if (!player.capabilities.isCreativeMode) {
             
-            stack.func_190918_g(1);
+            stack.shrink(1);
             ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
         }
         

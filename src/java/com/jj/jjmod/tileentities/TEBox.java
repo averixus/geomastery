@@ -24,7 +24,7 @@ public class TEBox extends TileEntityChest {
     @Override
     public Container createContainer(InventoryPlayer playerInv, EntityPlayer player) {
         
-        return new ContainerBox(player, this.worldObj, this);
+        return new ContainerBox(player, this.world, this);
     }
     
     @Override
@@ -37,15 +37,15 @@ public class TEBox extends TileEntityChest {
         int j = this.pos.getY();
         int k = this.pos.getZ();
         
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
 
-            for (EntityPlayer entityplayer : this.worldObj
+            for (EntityPlayer entityplayer : this.world
                     .getEntitiesWithinAABB(EntityPlayer.class,
-                    new AxisAlignedBB((double)((float)i - 5.0F),
-                    (double)((float)j - 5.0F), (double)((float)k - 5.0F),
-                    (double)((float)(i + 1) + 5.0F),
-                    (double)((float)(j + 1) + 5.0F),
-                    (double)((float)(k + 1) + 5.0F)))) {
+                    new AxisAlignedBB(i - 5.0F,
+                    j - 5.0F, k - 5.0F,
+                    i + 1 + 5.0F,
+                    j + 1 + 5.0F,
+                    k + 1 + 5.0F))) {
                
                 if (entityplayer.openContainer instanceof ContainerBox) {
                    
@@ -64,12 +64,12 @@ public class TEBox extends TileEntityChest {
         
         if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F) {
             
-            double d1 = (double)i + 0.5D;
-            double d2 = (double)k + 0.5D;
+            double d1 = i + 0.5D;
+            double d2 = k + 0.5D;
 
-            this.worldObj.playSound((EntityPlayer)null, d1, (double)j + 0.5D,
+            this.world.playSound((EntityPlayer)null, d1, j + 0.5D,
                     d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS,
-                    0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                    0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
         }
         
         if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F ||
@@ -92,16 +92,14 @@ public class TEBox extends TileEntityChest {
                 this.lidAngle = 1.0F;
             }
 
-            float f3 = 0.5F;
-
             if (this.lidAngle < 0.5F && f2 >= 0.5F) {
                 
-                double d3 = (double)i + 0.5D;
-                double d0 = (double)k + 0.5D;
+                double d3 = i + 0.5D;
+                double d0 = k + 0.5D;
 
-                this.worldObj.playSound(null, d3, (double)j + 0.5D, d0,
+                this.world.playSound(null, d3, j + 0.5D, d0,
                         SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS,
-                        0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                        0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
             }
 
             if (this.lidAngle < 0.0F) {
@@ -117,9 +115,9 @@ public class TEBox extends TileEntityChest {
         if (!player.isSpectator() && this.getBlockType() instanceof BlockBox) {
             
             this.numPlayersUsing--;
-            this.worldObj.addBlockEvent(this.pos, this.getBlockType(),
+            this.world.addBlockEvent(this.pos, this.getBlockType(),
                     1, this.numPlayersUsing);
-            this.worldObj.notifyNeighborsOfStateChange(this.pos,
+            this.world.notifyNeighborsOfStateChange(this.pos,
                     this.getBlockType(), false);
         }
     }

@@ -6,6 +6,7 @@ import com.jj.jjmod.container.ContainerInventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class EntityProjectile extends EntityArrow {
@@ -31,16 +32,15 @@ public abstract class EntityProjectile extends EntityArrow {
     @Override
     public void onCollideWithPlayer(EntityPlayer player) {
         
-        if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0) {
+        if (!this.world.isRemote && this.inGround && this.arrowShake <= 0) {
             
             boolean pickup = this.pickupStatus == EntityArrow.PickupStatus.ALLOWED || this.pickupStatus == EntityArrow.PickupStatus.CREATIVE_ONLY && player.capabilities.isCreativeMode;
             
             if (this.pickupStatus == EntityArrow.PickupStatus.ALLOWED && !player.capabilities.isCreativeMode) {
                 
-                int remaining = ((DefaultCapInventory) player.getCapability(CapInventory.CAP_INVENTORY, null))
-                        .add(this.getArrowStack());
-                
-                if (remaining > 0) {
+                ItemStack remaining = ((ContainerInventory) player.inventoryContainer).add(this.getArrowStack());
+           
+                if (!remaining.isEmpty()) {
                     
                     pickup = false;
                 }

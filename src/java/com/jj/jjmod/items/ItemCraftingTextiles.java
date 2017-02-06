@@ -40,7 +40,7 @@ public class ItemCraftingTextiles extends ItemNew {
 
         // Calculate positions
         BlockPos frontPos = pos.up();
-        int i = MathHelper.floor_double(
+        int i = MathHelper.floor(
                 player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         EnumFacing facing = EnumFacing.getHorizontal(i);
         BlockPos backPos = frontPos.offset(facing);
@@ -77,9 +77,9 @@ public class ItemCraftingTextiles extends ItemNew {
                 (SoundType.WOOD.getVolume() + 1.0F) / 2.0F,
                 SoundType.WOOD.getPitch() * 0.8F);
         
-        stack.func_190918_g(1);
+        stack.shrink(1);
 
-        if (stack.func_190916_E() == 0) {
+        if (stack.getCount() == 0) {
 
             stack = null;
         }

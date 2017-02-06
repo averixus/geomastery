@@ -26,7 +26,7 @@ public class ItemWoolknife extends ItemTool {
             net.minecraft.entity.player.EntityPlayer player,
             EntityLivingBase entity, net.minecraft.util.EnumHand hand) {
 
-        if (entity.worldObj.isRemote) {
+        if (entity.world.isRemote) {
             
             return false;
         }
@@ -37,10 +37,10 @@ public class ItemWoolknife extends ItemTool {
                     (net.minecraftforge.common.IShearable) entity;
             BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
             
-            if (target.isShearable(itemstack, entity.worldObj, pos)) {
+            if (target.isShearable(itemstack, entity.world, pos)) {
                 
                 java.util.List<ItemStack> drops =
-                        target.onSheared(itemstack, entity.worldObj, pos,
+                        target.onSheared(itemstack, entity.world, pos,
                         net.minecraft.enchantment.EnchantmentHelper
                         .getEnchantmentLevel(net.minecraft.init
                         .Enchantments.FORTUNE, itemstack));

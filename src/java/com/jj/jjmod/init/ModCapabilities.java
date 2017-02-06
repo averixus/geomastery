@@ -18,8 +18,8 @@ public class ModCapabilities {
 
     public static void preInit() {
 
-        CapabilityManager.INSTANCE.register(ICapInventory.class,
-                new StorageCapInventory(), DefaultCapInventory.class);
+     //   CapabilityManager.INSTANCE.register(ICapInventory.class,
+     //           new StorageCapInventory(), DefaultCapInventory.class);
         CapabilityManager.INSTANCE.register(ICapTemperature.class,
                 new StorageCapTemperature(), DefaultCapTemperature.class);
         CapabilityManager.INSTANCE.register(ICapDecay.class,

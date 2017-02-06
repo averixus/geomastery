@@ -37,7 +37,7 @@ public class DefaultCapTemperature implements ICapTemperature {
     @Override
     public void update() {
         
-        if (this.player.worldObj.isRemote) {
+        if (this.player.world.isRemote) {
             
             return;
         }
@@ -46,7 +46,7 @@ public class DefaultCapTemperature implements ICapTemperature {
         float temp = 0;
         BlockPos playerPos = new BlockPos(this.player.posX,
                 this.player.posY, this.player.posZ);
-        World world = this.player.worldObj;
+        World world = this.player.world;
         
         
         Biome biome = world.getBiomeForCoordsBody(playerPos);
@@ -252,7 +252,7 @@ public class DefaultCapTemperature implements ICapTemperature {
         if ((this.icon == EnumTempIcon.HOT ||
                 this.icon == EnumTempIcon.COLD) && this.timer == 0) {
 
-            this.player.attackEntityFrom(DamageSource.generic, 1);
+            this.player.attackEntityFrom(DamageSource.GENERIC, 1);
             this.timer = 200;
             
         } else if (this.timer != 0) {

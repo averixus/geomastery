@@ -36,7 +36,7 @@ public class EntitySpearBronze extends EntityProjectile {
 
         if (this.durability >= ModItems.spearBronze.getMaxDamage()) {
             
-            return ItemStack.field_190927_a;
+            return ItemStack.EMPTY;
             
         } else {
 
@@ -51,11 +51,11 @@ public class EntitySpearBronze extends EntityProjectile {
        
        if (this.isDead) {
 
-           EntitySpearBronze replace = new EntitySpearBronze(this.worldObj,
+           EntitySpearBronze replace = new EntitySpearBronze(this.world,
                    this.posX, this.posY, this.posZ);
            replace.durability = this.durability;
            replace.pickupStatus = PickupStatus.ALLOWED;
-           this.worldObj.spawnEntityInWorld(replace);
+           this.world.spawnEntity(replace);
        }
     }
 }

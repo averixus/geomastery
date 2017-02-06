@@ -51,11 +51,11 @@ public class EntitySpearFlint extends EntityProjectile {
        
        if (this.isDead) {
 
-           EntitySpearFlint replace = new EntitySpearFlint(this.worldObj,
+           EntitySpearFlint replace = new EntitySpearFlint(this.world,
                    this.posX, this.posY, this.posZ);
            replace.durability = this.durability;
            replace.pickupStatus = PickupStatus.ALLOWED;
-           this.worldObj.spawnEntityInWorld(replace);
+           this.world.spawnEntity(replace);
        }
     }
 }

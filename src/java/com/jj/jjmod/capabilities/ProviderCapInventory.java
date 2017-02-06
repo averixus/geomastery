@@ -35,12 +35,13 @@ public class ProviderCapInventory implements ICapabilitySerializable {
     @Override
     public NBTBase serializeNBT() {
 
-        return this.instance.serializeNBT();
+      //  return this.instance.serializeNBT();
+        return new NBTTagCompound();
     }
 
     @Override
     public void deserializeNBT(NBTBase nbt) {
 
-        this.instance.deserializeNBT((NBTTagCompound) nbt);
+       // this.instance.deserializeNBT((NBTTagCompound) nbt);
     }
 }

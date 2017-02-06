@@ -50,11 +50,11 @@ public class EntitySpearWood extends EntityProjectile {
        
        if (this.isDead) {
 
-           EntitySpearWood replace = new EntitySpearWood(this.worldObj,
+           EntitySpearWood replace = new EntitySpearWood(this.world,
                    this.posX, this.posY, this.posZ);
            replace.durability = this.durability;
            replace.pickupStatus = PickupStatus.ALLOWED;
-           this.worldObj.spawnEntityInWorld(replace);
+           this.world.spawnEntity(replace);
        }
     }
 }

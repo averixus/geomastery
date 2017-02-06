@@ -41,7 +41,7 @@ public class SlotArmour extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
 
-        if (stack == ItemStack.field_190927_a) {
+        if (stack == ItemStack.EMPTY) {
 
             return false;
 
@@ -87,7 +87,7 @@ public class SlotArmour extends Slot {
             
             default: {
                 
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
         }
     }
@@ -145,7 +145,7 @@ public class SlotArmour extends Slot {
             case HEAD: {
 
                 return this.playerInv.armorInventory.get(3) ==
-                        ItemStack.field_190927_a ? ItemStack.field_190927_a :
+                        ItemStack.EMPTY ? ItemStack.EMPTY :
                         ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 3, amount);
             }
@@ -153,7 +153,7 @@ public class SlotArmour extends Slot {
             case CHEST: {
 
                 return this.playerInv.armorInventory.get(2) ==
-                        ItemStack.field_190927_a ? ItemStack.field_190927_a :
+                        ItemStack.EMPTY ? ItemStack.EMPTY :
                         ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 2, amount);
             }
@@ -161,7 +161,7 @@ public class SlotArmour extends Slot {
             case LEGS: {
 
                 return this.playerInv.armorInventory.get(1) ==
-                        ItemStack.field_190927_a ? ItemStack.field_190927_a :
+                        ItemStack.EMPTY ? ItemStack.EMPTY :
                         ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 1, amount);
             }
@@ -169,7 +169,7 @@ public class SlotArmour extends Slot {
             case FEET: {
 
                 return this.playerInv.armorInventory.get(0) ==
-                        ItemStack.field_190927_a ? ItemStack.field_190927_a :
+                        ItemStack.EMPTY ? ItemStack.EMPTY :
                         ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 0, amount);
             }
@@ -177,14 +177,14 @@ public class SlotArmour extends Slot {
             case OFFHAND: {
 
                 return this.playerInv.offHandInventory.get(0) ==
-                        ItemStack.field_190927_a ? ItemStack.field_190927_a :
+                        ItemStack.EMPTY ? ItemStack.EMPTY :
                         ItemStackHelper
                         .getAndSplit(this.playerInv.offHandInventory, 0, amount);
             }
 
             default: {
 
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
         }
     }

@@ -1,11 +1,10 @@
 package com.jj.jjmod.tileentities;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
+import com.jj.jjmod.container.ContainerDrying;
 import com.jj.jjmod.crafting.CookingManager;
 import com.jj.jjmod.init.ModRecipes;
-import com.jj.jjmod.container.ContainerDrying;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -24,7 +23,7 @@ public class TEDrying extends TileEntityLockable
 
     public final CookingManager recipes = ModRecipes.DRYING;
 
-    public List<ItemStack> stacks = NonNullList.<ItemStack>func_191197_a(2, ItemStack.field_190927_a);
+    public List<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
     public int drySpent;
     public int dryEach;
 
@@ -58,10 +57,10 @@ public class TEDrying extends TileEntityLockable
                 ItemStack.areItemStackTagsEqual(stack, this.stacks.get(index));
         this.stacks.set(index, stack);
 
-        if (stack != null && stack.func_190916_E() > this
+        if (stack != null && stack.getCount() > this
                 .getInventoryStackLimit()) {
 
-            stack.func_190920_e(this.getInventoryStackLimit());
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         if (index == 0 && !same) {
@@ -78,7 +77,7 @@ public class TEDrying extends TileEntityLockable
         super.readFromNBT(compound);
 
         NBTTagList taglist = compound.getTagList("stacks", 10);
-        this.stacks =  NonNullList.<ItemStack>func_191197_a(this.getSizeInventory(), ItemStack.field_190927_a);;
+        this.stacks =  NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);;
 
         for (int i = 0; i < taglist.tagCount(); ++i) {
 
@@ -125,7 +124,7 @@ public class TEDrying extends TileEntityLockable
 
         boolean isDirty = false;
 
-        if (this.worldObj.isRemote) {
+        if (this.world.isRemote) {
 
             return;
         }
@@ -154,7 +153,7 @@ public class TEDrying extends TileEntityLockable
                 this.drySpent = 1;
 
                 // If used last item
-                if (this.stacks.get(0).func_190916_E() == 0) {
+                if (this.stacks.get(0).getCount() == 0) {
 
                     this.stacks.set(0, this.stacks.get(0)
                             .getItem().getContainerItem(this.stacks.get(1)));
@@ -198,7 +197,7 @@ public class TEDrying extends TileEntityLockable
         }
 
         boolean outputCorrect = this.stacks.get(1).isItemEqual(result);
-        int output = this.stacks.get(1).func_190916_E() + result.func_190916_E();
+        int output = this.stacks.get(1).getCount() + result.getCount();
         boolean hasRoom = output < getInventoryStackLimit() &&
                 output < this.stacks.get(1).getMaxStackSize();
 
@@ -223,14 +222,14 @@ public class TEDrying extends TileEntityLockable
         // If output contains same as result
         } else if (this.stacks.get(1).getItem() == result.getItem()) {
 
-            this.stacks.get(1).func_190917_f(result.func_190916_E());
+            this.stacks.get(1).grow(result.getCount());
         }
 
-        this.stacks.get(0).func_190918_g(1);
+        this.stacks.get(0).shrink(1);
         
-        if (this.stacks.get(0).func_190916_E() <= 0) {
+        if (this.stacks.get(0).getCount() <= 0) {
 
-            this.stacks.set(0, ItemStack.field_190927_a);
+            this.stacks.set(0, ItemStack.EMPTY);
         }
     }
 
@@ -249,19 +248,10 @@ public class TEDrying extends TileEntityLockable
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-
-        return this.worldObj.getTileEntity(this.pos) != this ? false
-                : player.getDistanceSq(this.pos.getX() + 0.5D,
-                        this.pos.getY() + 0.5D,
-                        this.pos.getZ() + 0.5D) <= 64.0D;
-    }
-
-    @Override
     public Container createContainer(InventoryPlayer playerInv,
             EntityPlayer player) {
 
-        return new ContainerDrying(player, this.worldObj, this);
+        return new ContainerDrying(player, this.world, this);
     }
 
     @Override
@@ -322,7 +312,7 @@ public class TEDrying extends TileEntityLockable
 
         for (int i = 0; i < this.stacks.size(); i++) {
 
-            this.stacks.set(i, ItemStack.field_190927_a);
+            this.stacks.set(i, ItemStack.EMPTY);
         }
     }
 
@@ -362,10 +352,19 @@ public class TEDrying extends TileEntityLockable
     @Override
     public void closeInventory(EntityPlayer player) {}
 
-    // Unknown?
     @Override
-    public boolean func_191420_l() {
+    public boolean isEmpty() {
 
+        // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public boolean isUsableByPlayer(EntityPlayer player) {
+
+        return this.world.getTileEntity(this.pos) != this ? false
+                : player.getDistanceSq(this.pos.getX() + 0.5D,
+                        this.pos.getY() + 0.5D,
+                        this.pos.getZ() + 0.5D) <= 64.0D;
     }
 }

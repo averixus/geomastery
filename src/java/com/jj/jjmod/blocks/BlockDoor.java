@@ -123,7 +123,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             
         } else {
             
-            return Items.field_190931_a;
+            return Items.AIR;
         }
     }
     

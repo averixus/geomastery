@@ -40,7 +40,7 @@ public class SlotCrafting extends Slot {
         if (this.getHasStack()) {
 
             this.amountCrafted += Math.min(amount,
-                    this.getStack().func_190916_E());
+                    this.getStack().getCount());
         }
 
         return super.decrStackSize(amount);
@@ -58,7 +58,7 @@ public class SlotCrafting extends Slot {
 
         if (this.amountCrafted > 0) {
 
-            stack.onCrafting(this.player.worldObj, this.player,
+            stack.onCrafting(this.player.world, this.player,
                     this.amountCrafted);
         }
 
@@ -66,7 +66,7 @@ public class SlotCrafting extends Slot {
     }
 
     @Override // onPickupFromSlot
-    public ItemStack func_190901_a(EntityPlayer player, ItemStack stack) {
+    public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 
         System.out.println("on pickup from craft slot");
         net.minecraftforge.fml.common.FMLCommonHandler.instance()
@@ -74,9 +74,9 @@ public class SlotCrafting extends Slot {
         this.onCrafting(stack);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(player);
         NonNullList<ItemStack> stacks = this.craftingManager
-                .getRemainingItems(this.craftInv, player.worldObj);
+                .getRemainingItems(this.craftInv, player.world);
         int[] amountsUsed = this.craftingManager
-                .getAmountsUsed(this.craftInv, player.worldObj);
+                .getAmountsUsed(this.craftInv, player.world);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
         for (int i = 0; i < stacks.size(); ++i) {
 
@@ -84,16 +84,16 @@ public class SlotCrafting extends Slot {
             ItemStack itemstack2 = stacks.get(i);
 
             // Use up correct amount of all the input items
-            if (itemstack1 != ItemStack.field_190927_a) {
+            if (itemstack1 != ItemStack.EMPTY) {
                 System.out.println("using up input items");
                 this.craftInv.decrStackSize(i, amountsUsed[i]);
                 itemstack1 = this.craftInv.getStackInSlot(i);
             }
 
             // Add any extra remaining items from recipe
-            if (itemstack2 != ItemStack.field_190927_a) {
+            if (itemstack2 != ItemStack.EMPTY) {
 
-                if (itemstack1 == ItemStack.field_190927_a) {
+                if (itemstack1 == ItemStack.EMPTY) {
 
                     this.craftInv.setInventorySlotContents(i,
                             itemstack2);
@@ -102,7 +102,7 @@ public class SlotCrafting extends Slot {
                         ItemStack.areItemStackTagsEqual(itemstack1,
                         itemstack2)) {
 
-                    itemstack2.func_190917_f(itemstack1.func_190916_E());
+                    itemstack2.grow(itemstack1.getCount());
                     this.craftInv.setInventorySlotContents(i,
                             itemstack2);
 

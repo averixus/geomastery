@@ -100,7 +100,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
                     }
                 }
                 
-                world.spawnEntityInWorld(new EntityItem(world,
+                world.spawnEntity(new EntityItem(world,
                         pos.getX(), pos.getY(), pos.getZ(),
                         new ItemStack(this.itemRef.get())));
             }  

@@ -44,7 +44,7 @@ public class BlockNew extends Block {
         
         if (!world.isRemote) {
             
-            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item)));
+            world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item)));
         }
     }
     

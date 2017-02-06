@@ -21,6 +21,6 @@ public class BlockRubble extends BlockFalling {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         
-        return Items.field_190931_a;
+        return Items.AIR;
     }
 }

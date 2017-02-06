@@ -38,8 +38,7 @@ public class ItemCraftingCandlemaker extends ItemNew {
         }
 
         // Calculate positions
-        int intFacing = MathHelper.floor_double((double)
-                (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int intFacing = MathHelper.floor((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posFront = pos.up();
         BlockPos posBack = posFront.offset(enumFacing);
@@ -76,11 +75,11 @@ public class ItemCraftingCandlemaker extends ItemNew {
                 SoundCategory.BLOCKS, (SoundType.WOOD.getVolume() + 1) / 2,
                 SoundType.WOOD.getPitch() * 0.8F);
         
-        stack.func_190918_g(1);
+        stack.shrink(1);
 
-        if (stack.func_190916_E() == 0) {
+        if (stack.getCount() == 0) {
 
-            stack = ItemStack.field_190927_a;
+            stack = ItemStack.EMPTY;
         }
 
         ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();

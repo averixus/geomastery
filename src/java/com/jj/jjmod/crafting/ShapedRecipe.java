@@ -78,12 +78,12 @@ public class ShapedRecipe extends ShapedRecipes {
                     if (flag) {
 
                         amounts[amount] = this.recipeItems[this.recipeWidth -
-                                k - 1 + l * this.recipeWidth].func_190916_E();
+                                k - 1 + l * this.recipeWidth].getCount();
 
                     } else {
 
                         amounts[amount] = this.recipeItems[k + l *
-                                this.recipeWidth].func_190916_E();
+                                this.recipeWidth].getCount();
                     }
                 }
             }
@@ -101,7 +101,7 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 int k = i - a;
                 int l = j - b;
-                ItemStack required = ItemStack.field_190927_a;
+                ItemStack required = ItemStack.EMPTY;
 
                 if (k >= 0 && l >= 0 && k < this.recipeWidth &&
                         l < this.recipeHeight) {
@@ -119,10 +119,10 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 ItemStack inInv = inv.getStackInRowAndColumn(i, j);
 
-                if (inInv != ItemStack.field_190927_a || required != ItemStack.field_190927_a) {
+                if (inInv != ItemStack.EMPTY || required != ItemStack.EMPTY) {
 
-                    if (inInv == ItemStack.field_190927_a && required != ItemStack.field_190927_a ||
-                            inInv != ItemStack.field_190927_a && required == ItemStack.field_190927_a) {
+                    if (inInv == ItemStack.EMPTY && required != ItemStack.EMPTY ||
+                            inInv != ItemStack.EMPTY && required == ItemStack.EMPTY) {
 
                         return false;
                     }
@@ -138,7 +138,7 @@ public class ShapedRecipe extends ShapedRecipes {
                         return false;
                     }
 
-                    if (required.func_190916_E() > inInv.func_190916_E()) {
+                    if (required.getCount() > inInv.getCount()) {
                         
                         return false;
                     }

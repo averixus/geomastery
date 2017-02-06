@@ -2,7 +2,6 @@ package com.jj.jjmod.tileentities;
 
 import javax.annotation.Nullable;
 import com.jj.jjmod.crafting.CookingManager;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -14,14 +13,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 
 public abstract class TEFurnaceAbstract extends TileEntityLockable
         implements ITickable, IInventory {
 
-    public NonNullList<ItemStack> stacks = NonNullList.<ItemStack>func_191197_a(2, ItemStack.field_190927_a);
+    public NonNullList<ItemStack> stacks = NonNullList.withSize(3, ItemStack.EMPTY);
     public int fuelLeft;
     public int fuelEach;
     public int cookSpent;
@@ -40,21 +37,18 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
     }
 
     @Override
-    @Nullable
     public ItemStack getStackInSlot(int index) {
 
         return this.stacks.get(index);
     }
 
     @Override
-    @Nullable
     public ItemStack decrStackSize(int index, int count) {
 
         return ItemStackHelper.getAndSplit(this.stacks, index, count);
     }
 
     @Override
-    @Nullable
     public ItemStack removeStackFromSlot(int index) {
 
         return ItemStackHelper.getAndRemove(this.stacks, index);
@@ -65,16 +59,16 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
             @Nullable ItemStack stack) {
 
         // Check if the same item
-        boolean same = stack != null &&
+        boolean same = !stack.isEmpty() &&
                 stack.isItemEqual(this.stacks.get(index)) &&
                 ItemStack.areItemStackTagsEqual(stack, this.stacks.get(index));
         this.stacks.set(index, stack);
 
         // Make sure the stack is not illegal size
-        if (stack != null &&
-                stack.func_190916_E() > this.getInventoryStackLimit()) {
+        if (!stack.isEmpty() &&
+                stack.getCount() > this.getInventoryStackLimit()) {
 
-            stack.func_190920_e(this.getInventoryStackLimit());
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         // If a new item and in the cooking slot then update cook info
@@ -99,7 +93,6 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         super.readFromNBT(compound);
 
         NBTTagList taglist = compound.getTagList("stacks", 10);
-        this.stacks = NonNullList.<ItemStack>func_191197_a(2, ItemStack.field_190927_a);
 
         for (int i = 0; i < taglist.tagCount(); ++i) {
 
@@ -131,7 +124,7 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
 
         for (int i = 0; i < this.stacks.size(); ++i) {
             
-            if (this.stacks.get(i) != null) {
+            if (!this.stacks.get(i).isEmpty()) {
                 
                 NBTTagCompound tagcompound = new NBTTagCompound();
                 tagcompound.setByte("slot", (byte) i);
@@ -161,13 +154,13 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         }
 
         // Do nothing if wrong side
-        if (this.worldObj.isRemote) {
+        if (this.world.isRemote) {
 
             return;
         }
 
         // If ready to cook
-        if (this.canSmelt() && this.stacks.get(0) != null && this.stacks.get(1) != null) {
+        if (this.canSmelt() && !this.stacks.get(0).isEmpty() && !this.stacks.get(1).isEmpty()) {
 
             // If already cooking
             if (this.isBurning()) {
@@ -189,10 +182,10 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
                 // Start new cook
                 this.fuelEach = getFuelTime(this.stacks.get(1));
                 this.fuelLeft = this.fuelEach;
-                this.stacks.get(1).func_190920_e(1);
+                this.stacks.get(1).shrink(1);
 
                 // If used last item
-                if (this.stacks.get(0).func_190916_E() == 0) {
+                if (this.stacks.get(0).getCount() == 0) {
 
                     this.stacks.set(1, this.stacks.get(1).getItem()
                             .getContainerItem(this.stacks.get(1)));
@@ -206,7 +199,7 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         if (!this.isBurning() && this.cookSpent > 0) {
 
             this.cookSpent =
-                    MathHelper.clamp_int(this.cookSpent - 2, 0, this.cookEach);
+                    MathHelper.clamp(this.cookSpent - 2, 0, this.cookEach);
         }
 
         // If dirty
@@ -219,25 +212,25 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
     protected boolean canSmelt() {
 
         // If no input
-        if (this.stacks.get(0) == null) {
+        if (this.stacks.get(0).isEmpty()) {
 
             return false;
         }
 
         ItemStack result = this.recipes.getSmeltingResult(this.stacks.get(0));
 
-        if (result == null) {
+        if (result.isEmpty()) {
 
             return false;
         }
 
-        if (this.stacks.get(2) == null) {
+        if (this.stacks.get(2).isEmpty()) {
 
             return true;
         }
 
         boolean outputCorrect = this.stacks.get(2).isItemEqual(result);
-        int output = this.stacks.get(2).func_190916_E() + result.func_190916_E();
+        int output = this.stacks.get(2).getCount() + result.getCount();
         boolean hasRoom = output < getInventoryStackLimit() &&
                 output < this.stacks.get(2).getMaxStackSize();
 
@@ -255,36 +248,27 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         ItemStack result = this.recipes.getSmeltingResult(this.stacks.get(0));
 
         // If output empty
-        if (this.stacks.get(2) == null) {
+        if (this.stacks.get(2).isEmpty()) {
 
             this.stacks.set(2, result.copy());
 
         // If output contains same as result
-        } else if (this.stacks.get(2).getItem() == result.getItem()) {
+        } else if (ItemStack.areItemsEqual(this.stacks.get(2), result)) {
 
-            this.stacks.get(2).func_190917_f(result.func_190916_E());
+            this.stacks.get(2).grow(result.getCount());
         }
 
-        this.stacks.get(0).func_190918_g(1);
+        this.stacks.get(0).shrink(1);
 
-        if (this.stacks.get(0).func_190916_E() <= 0) {
+        if (this.stacks.get(0).getCount() <= 0) {
 
-            this.stacks.set(0, ItemStack.field_190927_a);
+            this.stacks.set(0, ItemStack.EMPTY);
         }
     }
 
     public boolean isItemFuel(ItemStack stack) {
 
         return getFuelTime(stack) > 0;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-
-        return this.worldObj.getTileEntity(this.pos) != this ? false
-                : player.getDistanceSq(this.pos.getX() + 0.5D,
-                        this.pos.getY() + 0.5D,
-                        this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override
@@ -370,7 +354,7 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
 
         for (int i = 0; i < this.stacks.size(); i++) {
 
-            this.stacks.set(i, ItemStack.field_190927_a);
+            this.stacks.set(i, ItemStack.EMPTY);
         }
     }
 
@@ -410,10 +394,18 @@ public abstract class TEFurnaceAbstract extends TileEntityLockable
         return null;
     }
     
-    // Unknown?
     @Override
-    public boolean func_191420_l() {
-
-        return false;
+    public boolean isUsableByPlayer(EntityPlayer player) {
+    
+        return this.world.getTileEntity(this.pos) != this ? false
+            : player.getDistanceSq(this.pos.getX() + 0.5D,
+                    this.pos.getY() + 0.5D,
+                    this.pos.getZ() + 0.5D) <= 64.0D;
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        
+        return this.stacks.isEmpty();
     }
 }

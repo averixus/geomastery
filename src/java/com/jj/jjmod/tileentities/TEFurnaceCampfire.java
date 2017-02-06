@@ -21,7 +21,7 @@ public class TEFurnaceCampfire extends TEFurnaceConstantAbstract {
     public Container createContainer(InventoryPlayer playerInv,
             EntityPlayer player) {
 
-        return new ContainerFurnace(player, this.worldObj, this);
+        return new ContainerFurnace(player, this.world, this);
     }
 
     @Override

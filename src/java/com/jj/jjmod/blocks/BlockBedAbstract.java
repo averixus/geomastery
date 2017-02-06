@@ -74,7 +74,7 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         // *** TEST pathfinding enclosure checks ***
 
         EntityZombie testZombie = new EntityZombie(world);
-        world.spawnEntityInWorld(testZombie);
+        world.spawnEntity(testZombie);
         testZombie.setPosition(pos.getX() + 20, pos.getY(), pos.getZ());
         PathNavigateClimber pathfinder =
                 new PathNavigateClimber(testZombie, world);
@@ -120,8 +120,8 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
             EntityPlayer sleeper = this.getPlayerInBed(world, pos);
 
             if (sleeper != null) {
-
-                player.addChatMessage(new TextComponentTranslation(
+                
+                player.sendMessage(new TextComponentTranslation(
                         "tile.bed.occupied", new Object[0]));
                 return true;
             }
@@ -141,14 +141,14 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
 
         if (sleepable == EntityPlayer.SleepResult.NOT_POSSIBLE_NOW) {
 
-            player.addChatMessage(new TextComponentTranslation(
+            player.sendMessage(new TextComponentTranslation(
                     "tile.bed.noSleep", new Object[0]));
             return true;
         }
 
         if (sleepable == EntityPlayer.SleepResult.NOT_SAFE) {
 
-            player.addChatMessage(new TextComponentTranslation(
+            player.sendMessage(new TextComponentTranslation(
                     "tile.bed.notSafe", new Object[0]));
             return true;
         }

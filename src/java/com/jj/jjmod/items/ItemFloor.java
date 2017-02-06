@@ -67,7 +67,7 @@ public class ItemFloor extends ItemNew {
             
             if (!player.capabilities.isCreativeMode) {
                 System.out.println("using item");
-                stack.func_190918_g(1);
+                stack.shrink(1);
                 ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
             }
             

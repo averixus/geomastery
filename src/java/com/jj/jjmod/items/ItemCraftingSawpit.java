@@ -40,7 +40,7 @@ public class ItemCraftingSawpit extends ItemNew {
         
         // Calculate positions
         BlockPos posB3 = pos.up();
-        int intFacing = MathHelper.floor_double(player.rotationYaw * 4F / 360F + 0.5D) & 3;
+        int intFacing = MathHelper.floor(player.rotationYaw * 4F / 360F + 0.5D) & 3;
         EnumFacing facing = EnumFacing.getHorizontal(intFacing);
         
         System.out.println("centre pos " + posB3 + ", facing " + facing);
@@ -142,7 +142,7 @@ public class ItemCraftingSawpit extends ItemNew {
         
         if (!player.capabilities.isCreativeMode) {
             
-            stack.func_190918_g(1);
+            stack.shrink(1);
             ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
         }
         System.out.println("placed success");

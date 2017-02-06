@@ -58,7 +58,7 @@ public class GuiInventory extends GuiContainer {
         this.drawTexturedModalRect(i, j, 0, 0, X_SIZE, Y_SIZE);
         drawEntityOnScreen(i + 51, j + 75, 30,
                 i + 51 - this.oldMouseX,
-                j + 75 - 50 - this.oldMouseY, this.mc.thePlayer);
+                j + 75 - 50 - this.oldMouseY, this.mc.player);
     }
 
     protected static void drawEntityOnScreen(int posX, int posY, int scale,

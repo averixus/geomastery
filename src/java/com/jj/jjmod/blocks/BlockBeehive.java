@@ -132,7 +132,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
     }
     
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos,
+    public IBlockState getStateForPlacement(World world, BlockPos pos,
             EnumFacing placeFacing, float x, float y, float z,
             int meta, EntityLivingBase placer) {
         
@@ -152,8 +152,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
 
         if (!placerFacing.getAxis().isHorizontal()) {
             
-            int i = MathHelper.floor_double(
-                    (double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+            int i = MathHelper.floor(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
             placerFacing = EnumFacing.getHorizontal(i);
         }
 
@@ -225,10 +224,10 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             
             if (!world.isRemote) {
                 
-                world.spawnEntityInWorld(new EntityItem(world,
+                world.spawnEntity(new EntityItem(world,
                         pos.getX(), pos.getY(), pos.getZ(),
                         new ItemStack(ModItems.honey, 4)));
-                world.spawnEntityInWorld(new EntityItem(world,
+                world.spawnEntity(new EntityItem(world,
                         pos.getX(), pos.getY(), pos.getZ(),
                         new ItemStack(ModItems.beeswax)));
             }

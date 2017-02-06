@@ -55,8 +55,7 @@ public abstract class ItemBedAbstract extends ItemNew {
                 posFoot = posFoot.up();
             }
 
-            int i = MathHelper.floor_double(
-                    (double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+            int i = MathHelper.floor((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
             EnumFacing enumFacing = EnumFacing.getHorizontal(i);
             BlockPos posHead = posFoot.offset(enumFacing);
 
@@ -92,9 +91,9 @@ public abstract class ItemBedAbstract extends ItemNew {
                     (SoundType.CLOTH.getVolume() + 1.0F) / 2.0F,
                     SoundType.CLOTH.getPitch() * 0.8F);
 
-            stack.func_190918_g(1);
+            stack.shrink(1);
 
-            if (stack.func_190916_E() == 0) {
+            if (stack.getCount() == 0) {
 
                 stack = null;
             }

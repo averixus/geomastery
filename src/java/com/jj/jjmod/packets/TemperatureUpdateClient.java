@@ -53,7 +53,7 @@ public class TemperatureUpdateClient implements IMessage {
         
         public void processMessage(TemperatureUpdateClient message) {
             
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            EntityPlayer player = Minecraft.getMinecraft().player;
             player.getCapability(CapTemperature.CAP_TEMPERATURE, null).processMessage(message.icon);
         }
     }

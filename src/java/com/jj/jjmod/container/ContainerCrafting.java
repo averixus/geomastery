@@ -7,6 +7,7 @@ import com.jj.jjmod.crafting.CraftingManager;
 import com.jj.jjmod.container.slots.SlotCrafting;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.InventoryCrafting;
@@ -24,14 +25,14 @@ public class ContainerCrafting extends ContainerAbstract {
     public static final int CRAFT_COLS = 3;
     public static final int CRAFT_ROWS = 3;
 
-    public static final int OUTPUT_I = 0;
-    public static final int HOT_START = 1;
-    public static final int HOT_END = 9;
-    public static final int INV_START = 10;
+    public static final int HOT_START = 0;
+    public static final int HOT_END = 8;
+    public static final int INV_START = 9;
 
     public final int INV_END;
     public final int CRAFT_START;
     public final int CRAFT_END;
+    public final int OUTPUT_I;
 
     public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
@@ -45,21 +46,22 @@ public class ContainerCrafting extends ContainerAbstract {
         this.craftManager = craftManager;
         this.pos = pos;
 
+        // Inventory and craft grid
+        int invIndex = this.buildInvGrid();
+        this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
+                CRAFT_X, CRAFT_Y);
+        
         // Output slot
         this.addSlotToContainer(new SlotCrafting(this.player,
                 this.craftMatrix, this.craftResult, 0, OUTPUT_X,
                 OUTPUT_Y, this.craftManager));
 
-        // Inventory and craft grid
-        int invIndex = this.buildInvGrid();
-        this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
-                CRAFT_X, CRAFT_Y);
-
         // Container indices
         this.INV_END = HOT_START + invIndex;
         this.CRAFT_START = this.INV_END + 1;
         this.CRAFT_END = this.INV_END + this.craftMatrix.getSizeInventory();
-
+        this.OUTPUT_I = this.CRAFT_END + 1;
+        
         this.onCraftMatrixChanged(this.craftMatrix);
     }
 
@@ -70,6 +72,15 @@ public class ContainerCrafting extends ContainerAbstract {
         ItemStack stack = this.craftManager
                 .findMatchingRecipe(this.craftMatrix, this.world);
         this.craftResult.setInventorySlotContents(0, stack);
+    }
+    
+    @Override
+    public ItemStack slotClick(int slot, int dragType,
+            ClickType clickType, EntityPlayer player) {
+        
+        ItemStack result = super.slotClick(slot, dragType, clickType, player);
+        this.onCraftMatrixChanged(this.craftMatrix);
+        return result;
     }
 
     @Override
@@ -83,7 +94,7 @@ public class ContainerCrafting extends ContainerAbstract {
 
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
 
-                if (stack != ItemStack.field_190927_a) {
+                if (stack != ItemStack.EMPTY) {
 
                     player.dropItem(stack, false);
                 }
@@ -110,7 +121,7 @@ public class ContainerCrafting extends ContainerAbstract {
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
-        ItemStack result = null;
+        ItemStack result = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
@@ -118,22 +129,23 @@ public class ContainerCrafting extends ContainerAbstract {
             ItemStack slotStack = slot.getStack();
             result = slotStack.copy();
 
-            if (index == OUTPUT_I) {
+            if (index == this.OUTPUT_I) {
 
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         this.INV_END + 1, true)) {
 
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(slotStack, result);
+                slot.onTake(player, slotStack);
 
             } else if (index >= HOT_START && index <= HOT_END) {
 
                 if (!this.mergeItemStack(slotStack, INV_START,
                         this.INV_END + 1, true)) {
 
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
 
             } else if (index >= INV_START && index <= this.INV_END) {
@@ -141,7 +153,7 @@ public class ContainerCrafting extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         HOT_END + 1, true)) {
 
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
 
             } else if (index >= this.CRAFT_START && index <= this.CRAFT_END) {
@@ -149,14 +161,14 @@ public class ContainerCrafting extends ContainerAbstract {
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         this.INV_END + 1, true)) {
 
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
 
             }
 
-            if (slotStack.func_190916_E() == 0) {
+            if (slotStack.getCount() == 0) {
 
-                slot.putStack(ItemStack.field_190927_a);
+                slot.putStack(ItemStack.EMPTY);
                 
             } else {
 

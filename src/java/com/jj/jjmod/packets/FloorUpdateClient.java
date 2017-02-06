@@ -65,7 +65,7 @@ public class FloorUpdateClient implements IMessage {
         
         public void processMessage(FloorUpdateClient message) {
             
-            World world = Minecraft.getMinecraft().theWorld;
+            World world = Minecraft.getMinecraft().world;
             TileEntity tileEntity = world.getTileEntity(new
                     BlockPos(message.x, message.y, message.z));
             
@@ -73,7 +73,7 @@ public class FloorUpdateClient implements IMessage {
                 
                 TEBeam tileBeam = (TEBeam) tileEntity;
                 tileBeam.applyFloor(message.floor);
-                Minecraft.getMinecraft().theWorld
+                Minecraft.getMinecraft().world
                         .markBlockRangeForRenderUpdate(message.x, message.y,
                         message.z, message.x + 1,
                         message.y + 1, message.z + 1);

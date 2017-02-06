@@ -79,9 +79,9 @@ public class ItemRice extends ItemNew {
         world.setBlockState(target, ModBlocks.riceBase.getDefaultState());
         world.setBlockState(above, ModBlocks.riceTop.getDefaultState());
         
-        stack.func_190918_g(1);
+        stack.shrink(1);
         
-        if (stack.func_190916_E() == 0) {
+        if (stack.getCount() == 0) {
             
             stack = null;
         }

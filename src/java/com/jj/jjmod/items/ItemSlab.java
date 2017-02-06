@@ -65,7 +65,7 @@ public class ItemSlab extends ItemNew {
         
         if (!player.capabilities.isCreativeMode) {
             
-            stack.func_190918_g(1);
+            stack.shrink(1);
             ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
         }
         

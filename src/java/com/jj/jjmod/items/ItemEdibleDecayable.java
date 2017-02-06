@@ -1,5 +1,7 @@
 package com.jj.jjmod.items;
 
+import java.util.Arrays;
+import java.util.List;
 import com.jj.jjmod.capabilities.CapDecay;
 import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
@@ -9,6 +11,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -28,35 +31,9 @@ public class ItemEdibleDecayable extends ItemEdible {
     }
     
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity,
-            int slot, boolean isSelected) {
-        
-        if (stack.getCapability(CapDecay.CAP_DECAY, null).updateAndRot() &&
-                entity instanceof EntityPlayer) {
-        
-            EntityPlayer player = (EntityPlayer) entity;
-            ItemStack rot = new ItemStack(ModItems.rot);
-            
-            ItemStack compare = player.inventory.mainInventory.get(slot);
-            
-            if (ItemStack.areItemStacksEqual(stack, compare)) {
-                
-                player.inventory.mainInventory.set(slot, rot);
-            }
-            
-            compare = player.inventory.offHandInventory.get(slot);
-            
-            if (ItemStack.areItemStacksEqual(stack, compare)) {
-                
-                player.inventory.offHandInventory.set(slot, rot);
-            }
-        }
-    }
-    
-    @Override
     public boolean onEntityItemUpdate(EntityItem entity) {
         
-        if (!entity.worldObj.isRemote && entity.getEntityItem()
+        if (!entity.world.isRemote && entity.getEntityItem()
                 .getCapability(CapDecay.CAP_DECAY, null).updateAndRot()) {
             
             entity.setEntityItemStack(new ItemStack(ModItems.rot));
