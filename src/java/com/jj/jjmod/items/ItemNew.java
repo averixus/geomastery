@@ -20,13 +20,12 @@ public class ItemNew extends Item {
         this(name, 1);
     }
     
-    public static void setupItem(Item item, String name, int stackSize, CreativeTabs tab) {
+    public static void setupItem(Item item, String name,
+            int stackSize, CreativeTabs tab) {
         
         item.setRegistryName("item_" + name);
         item.setUnlocalizedName(item.getRegistryName().toString());
         item.setMaxStackSize(stackSize);
         item.setCreativeTab(tab);
-
     }
-
 }

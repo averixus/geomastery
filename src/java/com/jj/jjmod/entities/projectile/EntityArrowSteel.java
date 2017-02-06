@@ -7,35 +7,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityArrowSteel extends EntityArrow {
+public class EntityArrowSteel extends EntityProjectile {
 
+    private static final double damage = 1.77;
+    
     public EntityArrowSteel(World world) {
 
-        super(world);
-        this.setDamage(1.77);
+        super(world, damage);
     }
 
     public EntityArrowSteel(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(1.77);
+        super(world, x, y, z, damage);
     }
 
     public EntityArrowSteel(World world, EntityLivingBase shooter) {
 
-        super(world, shooter);
-        this.setDamage(1.77);
+        super(world, shooter, damage);
     }
 
     @Override
     protected ItemStack getArrowStack() {
 
         return new ItemStack(ModItems.arrowSteel);
-    }
-    
-    @Override
-    public void onUpdate() {
-        
-        super.onUpdate();
     }
 }

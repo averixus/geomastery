@@ -1,8 +1,8 @@
 package com.jj.jjmod.capabilities;
 
-import com.jj.jjmod.init.ModItems;
-import com.jj.jjmod.init.ModItems.FoodType;
 import com.jj.jjmod.init.ModPackets;
+import com.jj.jjmod.items.ItemEdible;
+import com.jj.jjmod.items.ItemEdible.FoodType;
 import com.jj.jjmod.packets.FoodUpdateClient;
 import com.jj.jjmod.utilities.FoodStatsPartial;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,25 +61,45 @@ public class DefaultCapFoodstats implements ICapFoodstats {
         
         if (this.carbs.update(this.player)) {
             
-            this.sendMessage(FoodType.FOOD_CARBS, this.carbs.getFoodLevel());
+            this.sendMessage(FoodType.CARBS, this.carbs.getFoodLevel());
         }
         
         if (this.protein.update(this.player)) {
             
-            this.sendMessage(FoodType.FOOD_PROTEIN, this.protein.getFoodLevel());
+            this.sendMessage(FoodType.PROTEIN, this.protein.getFoodLevel());
         }
         
         if (this.fruitveg.update(this.player)) {
             
-            this.sendMessage(FoodType.FOOD_FRUITVEG, this.fruitveg.getFoodLevel());
+            this.sendMessage(FoodType.FRUITVEG, this.fruitveg.getFoodLevel());
         }
     }
     
     @Override
-    public boolean needFood() {
+    public boolean canEat(FoodType type) {
         
-        return this.carbs.needFood() || this.protein.needFood() ||
-                this.fruitveg.needFood();
+        switch (type) {
+            
+            case CARBS: {
+                
+                return this.carbs.needFood();
+            }
+            
+            case PROTEIN: {
+                
+                return this.protein.needFood();
+            }
+            
+            case FRUITVEG: {
+                
+                return this.fruitveg.needFood();
+            }
+            
+            default: {
+                
+                return false;
+            }
+        }
     }
     
     @Override
@@ -101,17 +121,28 @@ public class DefaultCapFoodstats implements ICapFoodstats {
     @Override
     public void addStats(ItemFood item, ItemStack stack) {
         
-        if (ModItems.CARBS.contains(item)) {
+        FoodType type = item instanceof ItemEdible ?
+                ((ItemEdible) item).getType() : FoodType.CARBS;
+                
+        switch (type) {
             
-            this.carbs.addStats(item, stack);
+            case CARBS : {
+                
+                this.carbs.addStats(item, stack);
+                break;
+            }
             
-        } else if (ModItems.PROTEIN.contains(item)) {
+            case PROTEIN : {
+                
+                this.protein.addStats(item, stack);
+                break;
+            }
             
-            this.protein.addStats(item, stack);
-            
-        } else if (ModItems.FRUITVEG.contains(item)) {
-            
-            this.fruitveg.addStats(item, stack);
+            case FRUITVEG : {
+                
+                this.fruitveg.addStats(item, stack);
+                break;
+            }
         }
     }
     
@@ -126,9 +157,9 @@ public class DefaultCapFoodstats implements ICapFoodstats {
         
         if (this.player instanceof EntityPlayerMP) {
             
-            this.sendMessage(FoodType.FOOD_CARBS, this.carbs.getFoodLevel());
-            this.sendMessage(FoodType.FOOD_PROTEIN, this.protein.getFoodLevel());
-            this.sendMessage(FoodType.FOOD_FRUITVEG, this.fruitveg.getFoodLevel());
+            this.sendMessage(FoodType.CARBS, this.carbs.getFoodLevel());
+            this.sendMessage(FoodType.PROTEIN, this.protein.getFoodLevel());
+            this.sendMessage(FoodType.FRUITVEG, this.fruitveg.getFoodLevel());
         }
     }
     
@@ -147,19 +178,19 @@ public class DefaultCapFoodstats implements ICapFoodstats {
         
         switch (type) {
             
-            case FOOD_CARBS: {
+            case CARBS: {
                 
                 this.carbs.setFoodLevel(hunger);
                 break;
             }
             
-            case FOOD_PROTEIN: {
+            case PROTEIN: {
                 
                 this.protein.setFoodLevel(hunger);
                 break;
             }
             
-            case FOOD_FRUITVEG: {
+            case FRUITVEG: {
                 
                 this.fruitveg.setFoodLevel(hunger);
                 break;

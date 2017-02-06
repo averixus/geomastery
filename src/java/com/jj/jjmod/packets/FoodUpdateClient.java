@@ -2,8 +2,7 @@ package com.jj.jjmod.packets;
 
 import com.jj.jjmod.capabilities.CapFoodstats;
 import com.jj.jjmod.capabilities.DefaultCapFoodstats;
-import com.jj.jjmod.init.ModItems.FoodType;
-import com.jj.jjmod.utilities.FoodStatsWrapper;
+import com.jj.jjmod.items.ItemEdible.FoodType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

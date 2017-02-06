@@ -12,7 +12,6 @@ import com.jj.jjmod.items.ItemAxe;
 import com.jj.jjmod.items.ItemBeam;
 import com.jj.jjmod.items.ItemBedBreakableAbstract;
 import com.jj.jjmod.items.ItemBedPlainAbstract;
-import com.jj.jjmod.items.ItemCrudebow;
 import com.jj.jjmod.items.ItemBucket;
 import com.jj.jjmod.items.ItemCraftingArmourer;
 import com.jj.jjmod.items.ItemCraftingCandlemaker;
@@ -22,8 +21,10 @@ import com.jj.jjmod.items.ItemCraftingMason;
 import com.jj.jjmod.items.ItemCraftingSawpit;
 import com.jj.jjmod.items.ItemCraftingTextiles;
 import com.jj.jjmod.items.ItemCraftingWoodworking;
+import com.jj.jjmod.items.ItemCrudebow;
 import com.jj.jjmod.items.ItemDoor;
 import com.jj.jjmod.items.ItemEdible;
+import com.jj.jjmod.items.ItemEdible.FoodType;
 import com.jj.jjmod.items.ItemEdiblePoison;
 import com.jj.jjmod.items.ItemEdibleSeed;
 import com.jj.jjmod.items.ItemFloor;
@@ -340,47 +341,49 @@ public class ModItems {
     
     public static ItemSlab slabStone;
     public static ItemSlab slabBrick;
+    
+    public static ItemNew sand;
 
     public static void preInit() {
 
-        register(banana = new ItemEdible("banana", 4, 6F, 5), FoodType.FOOD_FRUITVEG);
-        register(pear = new ItemEdible("pear", 4, 4F, 5), FoodType.FOOD_FRUITVEG);
-        register(orange = new ItemEdible("orange", 3, 3F, 6), FoodType.FOOD_FRUITVEG);
-        register(honey = new ItemEdible("honey", 4, 1F, 8), FoodType.FOOD_CARBS);
-        register(wheatBoiled = new ItemEdible("wheat_boiled", 4, 2F, 10), FoodType.FOOD_CARBS);
-        register(riceBoiled = new ItemEdible("rice_boiled", 4, 2, 12), FoodType.FOOD_CARBS);
-        register(chickpeasBoiled = new ItemEdible("chickpeas_boiled", 3, 3, 10), FoodType.FOOD_PROTEIN);
-        register(pumpkin = new ItemEdible("pumpkin", 10, 10, 2), FoodType.FOOD_FRUITVEG);
-        register(melon = new ItemEdible("melon", 12, 12, 2), FoodType.FOOD_FRUITVEG);
+        register(banana = new ItemEdible("banana", 4, 6F, 5, FoodType.FRUITVEG));
+        register(pear = new ItemEdible("pear", 4, 4F, 5, FoodType.FRUITVEG));
+        register(orange = new ItemEdible("orange", 3, 3F, 6, FoodType.FRUITVEG));
+        register(honey = new ItemEdible("honey", 4, 1F, 8, FoodType.CARBS));
+        register(wheatBoiled = new ItemEdible("wheat_boiled", 4, 2F, 10, FoodType.CARBS));
+        register(riceBoiled = new ItemEdible("rice_boiled", 4, 2, 12, FoodType.CARBS));
+        register(chickpeasBoiled = new ItemEdible("chickpeas_boiled", 3, 3, 10, FoodType.PROTEIN));
+        register(pumpkin = new ItemEdible("pumpkin", 10, 10, 2, FoodType.FRUITVEG));
+        register(melon = new ItemEdible("melon", 12, 12, 2, FoodType.FRUITVEG));
         
-        register(apple = new ItemEdible("apple", 4, 4, 5), FoodType.FOOD_FRUITVEG);
-        register(sugar = new ItemEdible("sugar", 5, 0, 10), FoodType.FOOD_CARBS);
-        register(potatoCooked = new ItemEdible("potato_cooked", 8, 6, 5), FoodType.FOOD_CARBS);
-        register(egg = new ItemEdible("egg", 5, 5, 6), FoodType.FOOD_PROTEIN);
+        register(apple = new ItemEdible("apple", 4, 4, 5, FoodType.FRUITVEG));
+        register(sugar = new ItemEdible("sugar", 5, 0, 10, FoodType.CARBS));
+        register(potatoCooked = new ItemEdible("potato_cooked", 8, 6, 5, FoodType.CARBS));
+        register(egg = new ItemEdible("egg", 5, 5, 6, FoodType.PROTEIN));
         
-        register(beefRaw = new ItemEdiblePoison("beef_raw", 3, 6, 5), FoodType.FOOD_PROTEIN);
-        register(porkRaw = new ItemEdiblePoison("pork_raw", 2, 5, 6), FoodType.FOOD_PROTEIN);
-        register(chickenRaw = new ItemEdiblePoison("chicken_raw", 1, 3, 10), FoodType.FOOD_PROTEIN);
-        register(muttonRaw = new ItemEdiblePoison("mutton_raw", 2, 4, 7), FoodType.FOOD_PROTEIN);
-        register(rabbitRaw = new ItemEdiblePoison("rabbit_raw", 1, 2, 15), FoodType.FOOD_PROTEIN);
-        register(fishRaw = new ItemEdiblePoison("fish_raw", 1, 3, 10), FoodType.FOOD_PROTEIN);
+        register(beefRaw = new ItemEdiblePoison("beef_raw", 3, 6, 5, FoodType.PROTEIN));
+        register(porkRaw = new ItemEdiblePoison("pork_raw", 2, 5, 6, FoodType.PROTEIN));
+        register(chickenRaw = new ItemEdiblePoison("chicken_raw", 1, 3, 10, FoodType.PROTEIN));
+        register(muttonRaw = new ItemEdiblePoison("mutton_raw", 2, 4, 7, FoodType.PROTEIN));
+        register(rabbitRaw = new ItemEdiblePoison("rabbit_raw", 1, 2, 15, FoodType.PROTEIN));
+        register(fishRaw = new ItemEdiblePoison("fish_raw", 1, 3, 10, FoodType.PROTEIN));
         
-        register(beefCooked = new ItemEdible("beef_cooked", 6, 6, 5), FoodType.FOOD_PROTEIN);
-        register(porkCooked = new ItemEdible("pork_cooked", 5, 5, 6), FoodType.FOOD_PROTEIN);
-        register(muttonCooked = new ItemEdible("mutton_cooked", 4, 4, 7), FoodType.FOOD_PROTEIN);
-        register(rabbitCooked = new ItemEdible("rabbit_cooked", 2, 2, 15), FoodType.FOOD_PROTEIN);
-        register(chickenCooked = new ItemEdible("chicken_cooked", 3, 3, 10), FoodType.FOOD_PROTEIN);
-        register(fishCooked = new ItemEdible("fish_cooked", 3, 3, 10), FoodType.FOOD_PROTEIN);
+        register(beefCooked = new ItemEdible("beef_cooked", 6, 6, 5, FoodType.PROTEIN));
+        register(porkCooked = new ItemEdible("pork_cooked", 5, 5, 6, FoodType.PROTEIN));
+        register(muttonCooked = new ItemEdible("mutton_cooked", 4, 4, 7, FoodType.PROTEIN));
+        register(rabbitCooked = new ItemEdible("rabbit_cooked", 2, 2, 15, FoodType.PROTEIN));
+        register(chickenCooked = new ItemEdible("chicken_cooked", 3, 3, 10, FoodType.PROTEIN));
+        register(fishCooked = new ItemEdible("fish_cooked", 3, 3, 10, FoodType.PROTEIN));
         
-        register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean), FoodType.FOOD_FRUITVEG);
-        register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper), FoodType.FOOD_FRUITVEG);
-        register(tomato = new ItemEdibleSeed("tomato", 3, 3F, 7, ModBlocks.tomato), FoodType.FOOD_FRUITVEG);
-        register(berry = new ItemEdibleSeed("berry", 1, 1F, 20, ModBlocks.berry), FoodType.FOOD_FRUITVEG);
+        register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG));
+        register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG));
+        register(tomato = new ItemEdibleSeed("tomato", 3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG));
+        register(berry = new ItemEdibleSeed("berry", 1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG));
         
-        register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato), FoodType.FOOD_CARBS);
-        register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot), FoodType.FOOD_FRUITVEG);
-        register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot), FoodType.FOOD_FRUITVEG);
-        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkinCrop), FoodType.FOOD_PROTEIN);
+        register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato, FoodType.CARBS));
+        register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG));
+        register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG));
+        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkinCrop, FoodType.PROTEIN));
         
         register(rice = new ItemRice());
         
@@ -674,6 +677,8 @@ public class ModItems {
         register(slabBrick = new ItemSlab("slab_brick", 1,
                 ModBlocks.slabBrickSingle, ModBlocks.slabBrickDouble));
         
+        register(sand = new ItemNew("sand"));
+        
         Items.STICK.setMaxStackSize(8);
         Items.BONE.setMaxStackSize(6);
         Items.FLINT.setMaxStackSize(6);
@@ -694,32 +699,6 @@ public class ModItems {
         
         register(item, false);
     }
-    
-    private static void register(Item item, FoodType foodType) {
-        
-        register(item, false);
-        
-        switch (foodType) {
-            
-            case FOOD_FRUITVEG: {
-                
-                FRUITVEG.add(item);
-                break;
-            }
-            
-            case FOOD_PROTEIN: {
-                
-                PROTEIN.add(item);
-                break;
-            }
-            
-            case FOOD_CARBS: {
-                
-                CARBS.add(item);
-                break;
-            }
-        }
-    }
 
     private static void register(Item item, boolean isOffhandOnly) {
 
@@ -737,10 +716,5 @@ public class ModItems {
         
         ModelLoader.setCustomModelResourceLocation(item, 0,
                 new ModelResourceLocation(item.getRegistryName(), "inventory"));
-    }
-    
-    public enum FoodType {
-        
-        FOOD_CARBS, FOOD_PROTEIN, FOOD_FRUITVEG;
     }
 }

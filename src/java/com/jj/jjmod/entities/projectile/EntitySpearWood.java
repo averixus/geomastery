@@ -8,27 +8,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntitySpearWood extends EntityArrow {
+public class EntitySpearWood extends EntityProjectile {
 
     public int durability = 0;
+    
+    private static final double damage = 5.33D;
 
     public EntitySpearWood(World world) {
 
-        super(world);
-        this.setDamage(5.33);
+        super(world, damage);
     }
 
     public EntitySpearWood(World world, EntityLivingBase thrower, int durability) {
 
-        super(world, thrower);
+        super(world, thrower, damage);
         this.durability = durability;
-        this.setDamage(5.33);
     }
 
     public EntitySpearWood(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(5.33);
+        super(world, x, y, z, damage);
     }
 
     @Override

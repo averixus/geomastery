@@ -8,28 +8,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntitySpearCopper extends EntityArrow {
+public class EntitySpearCopper extends EntityProjectile {
 
     public int durability = 0;
+    
+    private static final double damage = 8D;
 
     public EntitySpearCopper(World world) {
 
-        super(world);
-        this.setDamage(8);
+        super(world, damage);
     }
 
     public EntitySpearCopper(World world, EntityLivingBase thrower,
             int durability) {
 
-        super(world, thrower);
+        super(world, thrower, damage);
         this.durability = durability;
-        this.setDamage(8);
     }
 
     public EntitySpearCopper(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(8);
+        super(world, x, y, z, damage);
     }
 
     @Override

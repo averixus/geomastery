@@ -15,9 +15,9 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 public class ItemEdibleDecayable extends ItemEdible {
 
     public ItemEdibleDecayable(String name, int hunger, float saturation,
-            int stackSize) {
+            int stackSize, FoodType foodType) {
         
-        super(name, hunger, saturation, stackSize);
+        super(name, hunger, saturation, stackSize, foodType);
     }
     
     @Override

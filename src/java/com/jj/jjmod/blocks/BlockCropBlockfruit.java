@@ -3,6 +3,7 @@ package com.jj.jjmod.blocks;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
@@ -23,7 +24,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
 
     public static final PropertyDirection FACING = BlockTorch.FACING;
 
-    protected BlockFruit fruit;
+    protected Supplier<BlockFruit> fruit;
 
     protected static final AxisAlignedBB[] STEM_BOUNDS =
             new AxisAlignedBB[] {new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D,
@@ -54,7 +55,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
                                                                             0.625D)};
 
     public BlockCropBlockfruit(String name, float growthChance,
-            float hardness, ToolType tool, BlockFruit fruit) {
+            float hardness, ToolType tool, Supplier<BlockFruit> fruit) {
 
         super(name, () -> Items.field_190931_a, () -> new Integer(0),
                 growthChance, hardness, tool);
@@ -126,7 +127,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
                 world, pos.down(), EnumFacing.UP,
                 this) || soilBlock == Blocks.DIRT || soilBlock == Blocks.GRASS)) {
 
-            world.setBlockState(fruitPos, this.fruit.getDefaultState()
+            world.setBlockState(fruitPos, this.fruit.get().getDefaultState()
                     .withProperty(BlockFruit.STEM, side.getOpposite()));
         }
     }

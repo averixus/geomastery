@@ -6,24 +6,23 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class EntityArrowWood extends EntityArrow {
+public class EntityArrowWood extends EntityProjectile {
 
+    private static final double damage = 0.44D;
+    
     public EntityArrowWood(World world) {
 
-        super(world);
-        this.setDamage(0.44);
+        super(world, damage);
     }
 
     public EntityArrowWood(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(0.44);
+        super(world, x, y, z, damage);
     }
 
     public EntityArrowWood(World world, EntityLivingBase shooter) {
 
-        super(world, shooter);
-        this.setDamage(0.44);
+        super(world, shooter, damage);
     }
 
     @Override

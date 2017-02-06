@@ -17,7 +17,7 @@ public class BlockCropBlockfruitPumpkin extends BlockCropBlockfruit {
     
     public BlockCropBlockfruitPumpkin() {
         
-        super("pumpkin_crop", 0.3F, 0.2F, ToolType.SICKLE, ModBlocks.pumpkinFruit);
+        super("pumpkin_crop", 0.3F, 0.2F, ToolType.SICKLE, () -> ModBlocks.pumpkinFruit);
     }
 
     @Override

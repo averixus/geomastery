@@ -48,7 +48,7 @@ public abstract class ItemSpearAbstract extends ItemTool {
 
                 if (!world.isRemote) {
 
-                    throwSpear(world, player, velocity * 1.8F, stack.getItemDamage() - 1);
+                    throwSpear(world, player, velocity * 1.8F, stack.getItemDamage() + 1);
                     
                     if (!player.capabilities.isCreativeMode) {
                         

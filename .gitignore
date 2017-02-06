@@ -3,6 +3,8 @@ run/
 build/
 gradle-app.setting
 saves/
+crash-reports/
+logs/
 options.txt
 usercache.json
 usernamecache.json

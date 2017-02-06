@@ -2,13 +2,7 @@ package com.jj.jjmod.utilities;
 
 import com.jj.jjmod.capabilities.CapFoodstats;
 import com.jj.jjmod.capabilities.CapInventory;
-import com.jj.jjmod.capabilities.DefaultCapFoodstats;
-import com.jj.jjmod.init.ModItems;
-import com.jj.jjmod.init.ModItems.FoodType;
-import com.jj.jjmod.init.ModPackets;
-import com.jj.jjmod.packets.FoodUpdateClient;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -74,12 +68,11 @@ public class FoodStatsWrapper extends FoodStats {
         }
     }
     
-    // Only used to check whether player is allowed to eat
+    // Only used to check whether player is allowed to eat vanilla food
     @Override
     public boolean needFood() {
         
-        return this.player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
-                .needFood();
+        return false;
     }
     
     // Only used for eating cake

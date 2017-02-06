@@ -8,28 +8,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntitySpearFlint extends EntityArrow {
+public class EntitySpearFlint extends EntityProjectile {
 
     public int durability = 0;
+    
+    private static final double damage = 6.66D;
 
     public EntitySpearFlint(World world) {
 
-        super(world);
-        this.setDamage(6.66);
+        super(world, damage);
     }
 
     public EntitySpearFlint(World world,
             EntityLivingBase thrower, int durability) {
 
-        super(world, thrower);
+        super(world, thrower, damage);
         this.durability = durability;
-        this.setDamage(6.66);
     }
 
     public EntitySpearFlint(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(6.66);
+        super(world, x, y, z, damage);
     }
 
     @Override

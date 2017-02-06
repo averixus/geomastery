@@ -1,6 +1,8 @@
  package com.jj.jjmod.items;
 
 import javax.annotation.Nullable;
+import com.jj.jjmod.container.ContainerInventory;
+import com.jj.jjmod.container.ContainerInventory.InvType;
 import com.jj.jjmod.entities.projectile.EntityArrowBronze;
 import com.jj.jjmod.entities.projectile.EntityArrowCopper;
 import com.jj.jjmod.entities.projectile.EntityArrowFlint;
@@ -8,10 +10,8 @@ import com.jj.jjmod.entities.projectile.EntityArrowSteel;
 import com.jj.jjmod.entities.projectile.EntityArrowWood;
 import com.jj.jjmod.init.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
@@ -80,15 +80,15 @@ public class ItemCrudebow extends ItemNew {
         });
     }
 
-    private ItemStack findAmmo(EntityPlayer player) {
+    private int findAmmoSlot(EntityPlayer player) {
 
         if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
 
-            return player.getHeldItem(EnumHand.OFF_HAND);
+            return 0;
 
         } else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
 
-            return player.getHeldItem(EnumHand.MAIN_HAND);
+            return player.inventory.currentItem;
 
         } else {
 
@@ -98,12 +98,31 @@ public class ItemCrudebow extends ItemNew {
 
                 if (this.isArrow(stack)) {
 
-                    return stack;
+                    return i;
                 }
             }
 
-            return null;
+            return -1;
         }
+    }
+    
+    private ItemStack getAmmoStack(EntityPlayer player, int slot) {
+        
+        ItemStack check = player.inventory.mainInventory.get(slot);
+        
+        if (this.isArrow(check)) {
+            
+            return check;
+        }
+        
+        check = player.inventory.offHandInventory.get(slot);
+        
+        if (this.isArrow(check)) {
+            
+            return check;
+        }
+        
+        return ItemStack.field_190927_a;
     }
 
     // Check whether itemstack is an arrow
@@ -122,22 +141,22 @@ public class ItemCrudebow extends ItemNew {
         }
 
         EntityPlayer player = (EntityPlayer) entity;
-        boolean isInfinite = player.capabilities.isCreativeMode ||
-                EnchantmentHelper
-                .getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-        ItemStack ammo = this.findAmmo(player);
+        boolean creative = player.capabilities.isCreativeMode;
+        int ammoSlot = this.findAmmoSlot(player);
+        ItemStack ammo = this.getAmmoStack(player, ammoSlot);
+        
         int timeSpent = this.getMaxItemUseDuration(stack) - timeLeft;
 
         if ((net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack,
                 world, player, timeSpent,
-                stack != null || isInfinite)) < 0) {
+                stack != null || creative)) < 0) {
 
             return;
         }
 
-        if (ammo == null) {
+        if (ammo == ItemStack.field_190927_a) {
 
-            if (isInfinite) {
+            if (creative) {
 
                 ammo = new ItemStack(ModItems.arrowSteel);
 
@@ -210,7 +229,7 @@ public class ItemCrudebow extends ItemNew {
 
         stack.damageItem(1, player);
 
-        if (!isInfinite) {
+        if (!creative) {
 
             ammo.func_190918_g(1);
 
@@ -218,13 +237,16 @@ public class ItemCrudebow extends ItemNew {
 
                 player.inventory.deleteStack(ammo);
             }
+            
+            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ((ContainerInventory) player.inventoryContainer).sendUpdateInventory(InvType.INVENTORY, ammoSlot, ammo);
         }
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-        boolean hasAmmo = this.findAmmo(player) != null;
+        boolean hasAmmo = this.findAmmoSlot(player) != -1;
         ItemStack stack = player.getHeldItem(hand);
 
         ActionResult<ItemStack> action = net.minecraftforge.event

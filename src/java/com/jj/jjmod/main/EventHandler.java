@@ -4,6 +4,7 @@ import com.jj.jjmod.blocks.BlockBedAbstract;
 import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
 import com.jj.jjmod.blocks.BlockBedBreakable;
 import com.jj.jjmod.blocks.BlockCarcass;
+import com.jj.jjmod.blocks.BlockRock;
 import com.jj.jjmod.capabilities.CapFoodstats;
 import com.jj.jjmod.capabilities.CapInventory;
 import com.jj.jjmod.capabilities.CapTemperature;
@@ -26,18 +27,20 @@ import com.jj.jjmod.utilities.FoodStatsPartial;
 import com.jj.jjmod.utilities.FoodStatsWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockDoublePlant.EnumPlantType;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
@@ -56,7 +59,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -235,9 +237,115 @@ public class EventHandler {
     @SubscribeEvent
     public void notifyNeighbor(NeighborNotifyEvent event) {
         
-        if (event.getState().getBlock() == Blocks.PORTAL) {
+        Block sourceBlock = event.getState().getBlock();
+        World world = event.getWorld();
+        BlockPos sourcePos = event.getPos();
+        
+        if (sourceBlock == Blocks.PORTAL) {
 
-            event.getWorld().setBlockToAir(event.getPos());
+            world.setBlockToAir(sourcePos);
+        }
+
+        for (EnumFacing facing : EnumFacing.VALUES) {
+        
+            BlockPos pos = sourcePos.offset(facing);
+            IBlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
+            
+            boolean shouldFall = false;
+            IBlockState fallState = state;
+            
+            boolean airBelow = world.isAirBlock(pos.down());
+            
+            if (block instanceof BlockStone || block instanceof BlockRock ||
+                    block instanceof BlockOre) {
+                System.out.println("is stone/ore");
+                boolean airAround = false;
+                
+                for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                    
+                    if (world.isAirBlock(pos.offset(direction))) {
+                        
+                        airAround = true;
+                        break;
+                    }
+                }
+                
+                if (block instanceof BlockStone) {
+                    System.out.println("is stone");
+                    EnumType type = state.getValue(BlockStone.VARIANT);
+                    
+                    if (type == EnumType.GRANITE) {
+                        System.out.println("is granite");
+                        shouldFall = false;
+                        
+                    } else if (type == EnumType.ANDESITE) {
+                        System.out.println("is andesite");
+                        shouldFall = airAround && airBelow ?
+                                world.rand.nextFloat() < 0.33 : airBelow ?
+                                world.rand.nextFloat() < 0.04F : false;
+                        
+                    } else if (type == EnumType.DIORITE) {
+                        System.out.println("is diorite");
+                        shouldFall = airAround && airBelow ?
+                                world.rand.nextFloat() < 0.25 : airBelow ?
+                                world.rand.nextFloat() < 0.03F : false;
+                        
+                    } else {
+                        System.out.println("is normal stone");
+                        shouldFall = airAround && airBelow ?
+                                world.rand.nextFloat() < 0.17F : airBelow ?
+                                world.rand.nextFloat() < 0.02F : false;
+                    }
+                    
+                    fallState = ModBlocks.rubble.getDefaultState();
+                    
+                } else {
+                    System.out.println("is ore");
+                    shouldFall = airAround && airBelow ?
+                            world.rand.nextFloat()< 0.17F : airBelow ?
+                            world.rand.nextFloat() < 0.02F : false;
+                }
+                    
+            
+            } else if (block == Blocks.DIRT || block == Blocks.GRASS) {
+                System.out.println("is dirt");
+                shouldFall = airBelow;
+            }
+            
+            if (shouldFall) {
+                    System.out.println("should fall");
+                if (!BlockFalling.fallInstantly &&
+                        world.isAreaLoaded(pos.add(-32, -32, -32),
+                        pos.add(32, 32, 32))) {
+                    
+                    if (!world.isRemote) {
+                        System.out.println("falling");
+                        world.setBlockState(pos, fallState);
+                        EntityFallingBlock falling =
+                                new EntityFallingBlock(world, pos.getX() + 0.5D,
+                                pos.getY(), pos.getZ() + 0.5D,
+                                fallState);
+                        world.spawnEntityInWorld(falling);
+                    }
+                    
+                } else {
+                    System.out.println("instant falling");
+                    world.setBlockToAir(pos);
+                    BlockPos checkPos;
+
+                    for (checkPos = pos.down(); world.isAirBlock(checkPos) &&
+                            checkPos.getY() > 0; checkPos = checkPos.down()) {
+                        
+                        ;
+                    }
+
+                    if (checkPos.getY() > 0) {
+                        System.out.println("about to set block state for " + fallState + " at " + checkPos.up() + " from falling " + pos);
+                        world.setBlockState(checkPos.up(), fallState, 0);
+                    }
+                }
+            }
         }
     }
     
@@ -264,9 +372,7 @@ public class EventHandler {
         Block block = event.getState().getBlock();
         ItemStack stack = event.getHarvester() == null ? ItemStack.field_190927_a :
                 event.getHarvester().getHeldItemMainhand();
-        
-        System.out.println("dropping " + event.getDrops() + " from " + event.getState() + " block " + block + " does equal " + Blocks.TALLGRASS + "? + " + (block == Blocks.TALLGRASS));
-        
+                
         if (block instanceof BlockCarcass) {
 
             BlockCarcass carcass = (BlockCarcass) block;
@@ -330,16 +436,14 @@ public class EventHandler {
 
         if (block instanceof BlockDirt || block instanceof BlockGrass) {
 
-            System.out.println("is dirt, clearing drops " + event.getDrops());
             event.getDrops().clear();
-            System.out.println("drops now " + event.getDrops());
+            
             if (world.rand.nextInt(10) == 0) {
 
                 event.getDrops().add(new ItemStack(Items.FLINT));
             }
 
             event.getDrops().add(new ItemStack(ModItems.dirt, 4));
-            System.out.println("added dirt, drops now " + event.getDrops());
         }
         
         if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {
@@ -382,6 +486,18 @@ public class EventHandler {
 
             event.getDrops().clear();
             event.getDrops().add(new ItemStack(ModItems.stoneRough, 4));
+        }
+        
+        if (block == Blocks.SAND) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.sand, 4));
+        }
+        
+        if (block == Blocks.GRAVEL) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(Items.FLINT));
         }
     }
     
@@ -500,9 +616,10 @@ public class EventHandler {
             return;
         }
         
-        int remaining = event.getItem().getEntityItem().func_190916_E();
-        Item item = event.getItem().getEntityItem().getItem();
         ItemStack stack = event.getItem().getEntityItem();
+        Item item = stack.getItem();
+        int remaining = stack.func_190916_E();
+
         
         if (ModBlocks.OFFHAND_ONLY.contains(item)) {
             

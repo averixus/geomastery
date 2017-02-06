@@ -19,28 +19,27 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntitySpearSteel extends EntityArrow {
+public class EntitySpearSteel extends EntityProjectile {
 
     public int durability = 0;
+    
+    private static final double damage = 10.66D;
 
     public EntitySpearSteel(World world) {
 
-        super(world);
-        this.setDamage(10.66);
+        super(world, damage);
     }
 
     public EntitySpearSteel(World world,
             EntityLivingBase thrower, int durability) {
 
-        super(world, thrower);
+        super(world, thrower, damage);
         this.durability = durability;
-        this.setDamage(10.66);
     }
 
     public EntitySpearSteel(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(10.66);
+        super(world, x, y, z, damage);
     }
 
     @Override

@@ -8,47 +8,46 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntitySpearBronze extends EntityArrow {
+public class EntitySpearBronze extends EntityProjectile {
 
     public int durability = 0;
+    
+    private static final double damage = 9.33;
 
     public EntitySpearBronze(World world) {
 
-        super(world);
-        this.setDamage(9.33);
+        super(world, damage);
     }
 
     public EntitySpearBronze(World world, EntityLivingBase thrower,
             int durability) {
 
-        super(world, thrower);
+        super(world, thrower, damage);
         this.durability = durability;
-        this.setDamage(9.33);
     }
 
     public EntitySpearBronze(World world, double x, double y, double z) {
 
-        super(world, x, y, z);
-        this.setDamage(9.33);
+        super(world, x, y, z, damage);
     }
 
     @Override
     public ItemStack getArrowStack() {
 
-        if (this.durability + 1 >= ModItems.spearBronze.getMaxDamage()) {
+        if (this.durability >= ModItems.spearBronze.getMaxDamage()) {
             
-            return null;
+            return ItemStack.field_190927_a;
             
         } else {
-            
+
             return new ItemStack(ModItems.spearBronze, 1, this.durability);
         }
     }
     
     @Override
-    public void onHit(RayTraceResult raytraceResultIn) {
+    public void onHit(RayTraceResult raytrace) {
         
-       super.onHit(raytraceResultIn);
+       super.onHit(raytrace);
        
        if (this.isDead) {
 

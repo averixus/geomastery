@@ -58,6 +58,7 @@ import com.jj.jjmod.blocks.BlockPeat;
 import com.jj.jjmod.blocks.BlockRiceBase;
 import com.jj.jjmod.blocks.BlockRiceTop;
 import com.jj.jjmod.blocks.BlockRock;
+import com.jj.jjmod.blocks.BlockRubble;
 import com.jj.jjmod.blocks.BlockSeedling;
 import com.jj.jjmod.blocks.BlockSeedlingApple;
 import com.jj.jjmod.blocks.BlockSeedlingBanana;
@@ -218,20 +219,22 @@ public class ModBlocks {
     public static BlockSlabSingle slabBrickSingle;
     public static BlockSlabDouble slabBrickDouble;
     
+    public static BlockRubble rubble;
+    
     public static void preInit() {
         
         buildSets();
         
-        register(bedLeaf = new BlockBedPlain("bed_leaf", 0.2F, 
+        registerItemless(bedLeaf = new BlockBedPlain("bed_leaf", 0.2F, 
                 () -> null, true, null));
-        register(bedCotton = new BlockBedBreakable("bed_cotton", 2.0F,
+        registerItemless(bedCotton = new BlockBedBreakable("bed_cotton", 2.0F,
                 () -> ModItems.bedCotton, true, ToolType.NONE));
-        register(bedWool = new BlockBedBreakable("bed_wool", 2.0F,
+        registerItemless(bedWool = new BlockBedBreakable("bed_wool", 2.0F,
                 () -> ModItems.bedWool, true, ToolType.NONE));
-        register(bedSimple = new BlockBedPlain("bed_simple", 2.0F,
+        registerItemless(bedSimple = new BlockBedPlain("bed_simple", 2.0F,
                 () -> ModItems.bedSimple, false, ToolType.NONE));
         
-        register(antler = new BlockAntler());
+        registerItemless(antler = new BlockAntler());
         
         register(beehive = new BlockBeehive());
 
@@ -247,37 +250,37 @@ public class ModBlocks {
         register(carcassSheep = new BlockCarcassSheep(), true);
         register(carcassRabbit = new BlockCarcassRabbit());
 
-        register(craftingCandlemaker = new BlockCraftingCandlemaker());
-        register(craftingClayworks = new BlockCraftingClayworks());
-        register(craftingForge = new BlockCraftingForge());
+        registerItemless(craftingCandlemaker = new BlockCraftingCandlemaker());
+        registerItemless(craftingClayworks = new BlockCraftingClayworks());
+        registerItemless(craftingForge = new BlockCraftingForge());
         register(craftingKnapping = new BlockCraftingKnapping());
-        register(craftingMason = new BlockCraftingMason());
-        register(craftingTextiles = new BlockCraftingTextiles());
-        register(craftingWoodworking = new BlockCraftingWoodworking());
-        register(craftingArmourer = new BlockCraftingArmourer());
-        register(craftingSawpit = new BlockCraftingSawpit());
+        registerItemless(craftingMason = new BlockCraftingMason());
+        registerItemless(craftingTextiles = new BlockCraftingTextiles());
+        registerItemless(craftingWoodworking = new BlockCraftingWoodworking());
+        registerItemless(craftingArmourer = new BlockCraftingArmourer());
+        registerItemless(craftingSawpit = new BlockCraftingSawpit());
         
         register(drying = new BlockDrying());
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
         register(furnaceCookfire = new BlockFurnaceCookfire());
-        register(furnaceClay = new BlockFurnaceClay());
-        register(furnaceStone = new BlockFurnaceStone());
+        registerItemless(furnaceClay = new BlockFurnaceClay());
+        registerItemless(furnaceStone = new BlockFurnaceStone());
         
         register(box = new BlockBox());
 
-        register(chickpea = new BlockCropChickpea());
-        register(cotton = new BlockCropCotton());
-        register(hemp = new BlockCropHemp());
-        register(pepper = new BlockCropPepper());
+        registerItemless(chickpea = new BlockCropChickpea());
+        registerItemless(cotton = new BlockCropCotton());
+        registerItemless(hemp = new BlockCropHemp());
+        registerItemless(pepper = new BlockCropPepper());
         
-        register(wheat = new BlockCropWheat());
-        register(carrot = new BlockCropCarrot());
-        register(potato = new BlockCropPotato());
-        register(beetroot = new BlockCropBeetroot());
+        registerItemless(wheat = new BlockCropWheat());
+        registerItemless(carrot = new BlockCropCarrot());
+        registerItemless(potato = new BlockCropPotato());
+        registerItemless(beetroot = new BlockCropBeetroot());
         
-        register(riceBase = new BlockRiceBase());
-        register(riceTop = new BlockRiceTop());
+        registerItemless(riceBase = new BlockRiceBase());
+        registerItemless(riceTop = new BlockRiceTop());
 
         register(leafApple = new BlockHarvestableLeaves("leaf_apple",
                 () -> Items.APPLE, 0.2F));
@@ -311,12 +314,12 @@ public class ModBlocks {
         
         register(peat = new BlockPeat());
 
-        register(berry = new BlockCropHarvestableBerry());
-        register(bean = new BlockCropHarvestableBean());
-        register(tomato = new BlockCropHarvestableTomato());
+        registerItemless(berry = new BlockCropHarvestableBerry());
+        registerItemless(bean = new BlockCropHarvestableBean());
+        registerItemless(tomato = new BlockCropHarvestableTomato());
         
-        register(melonCrop = new BlockCropBlockfruitMelon());
-        register(pumpkinCrop = new BlockCropBlockfruitPumpkin());
+        registerItemless(melonCrop = new BlockCropBlockfruitMelon());
+        registerItemless(pumpkinCrop = new BlockCropBlockfruitPumpkin());
         
         register(melonFruit = new BlockFruit("melon_fruit", () -> ModItems.melon));
         register(pumpkinFruit = new BlockFruit("pumpkin_fruit", () -> ModItems.pumpkin));
@@ -326,37 +329,37 @@ public class ModBlocks {
         register(seedlingOrange = new BlockSeedlingOrange());
         register(seedlingBanana = new BlockSeedlingBanana());
         
-        register(wallBrickSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallBrickSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_brick_single", 2F, ToolType.PICKAXE, false,
                 () -> ModItems.wallBrick, true, 6, true));
-        register(wallBrickDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallBrickDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_brick_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallBrick, true, 6, true));
-        register(wallMudSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallMudSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_single", 1F, ToolType.PICKAXE, false,
                 () -> ModItems.wallMud, false, 1, false));
-        register(wallMudDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallMudDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallMud, false, 1, false));
-        register(wallRoughSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallRoughSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_single", 1.5F, ToolType.PICKAXE, false,
                 () -> ModItems.wallRough, false, 1, false));
-        register(wallRoughDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallRoughDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallRough, false, 1, false));
-        register(wallStoneSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallStoneSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_single", 2F, ToolType.PICKAXE, false,
                 () -> ModItems.wallStone, true, 6, true));
-        register(wallStoneDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallStoneDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallStone, true, 6, true));
-        register(wallLogSingle = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
+        registerItemless(wallLogSingle = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_single", 1F, ToolType.AXE, false,
                 () -> ModItems.wallLog, false, 4, true));
-        register(wallLogDouble = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
+        registerItemless(wallLogDouble = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_double", 3F, ToolType.AXE, true,
                 () -> ModItems.wallLog, false, 4, true));
-        register(wallPole = new BlockWallSingle(BlockMaterial.WOOD_FURNITURE,
+        registerItemless(wallPole = new BlockWallSingle(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE, false, 4, false));
         
         register(stairsBrick = new BlockStairs("stairs_brick",
@@ -372,25 +375,29 @@ public class ModBlocks {
         
         register(foundation = new BlockFoundation());
         
-        register(doorPole = new BlockDoor("door_pole", () -> ModItems.doorPole));
-        register(doorWood = new BlockDoor("door_wood", () -> ModItems.doorWood));
+        registerItemless(doorPole = new BlockDoor("door_pole",
+                () -> ModItems.doorPole));
+        registerItemless(doorWood = new BlockDoor("door_wood",
+                () -> ModItems.doorWood));
         
-        register(beam = new BlockBeam());
+        registerItemless(beam = new BlockBeam());
         
         register(fence = new BlockFence());
         
-        register(slabStoneSingle = new BlockSlabSingle(BlockMaterial
+        registerItemless(slabStoneSingle = new BlockSlabSingle(BlockMaterial
                 .STONE_FURNITURE, "slab_stone_single", 2F, ToolType.PICKAXE,
                 () -> ModItems.slabStone));
-        register(slabStoneDouble = new BlockSlabDouble(BlockMaterial
+        registerItemless(slabStoneDouble = new BlockSlabDouble(BlockMaterial
                 .STONE_FURNITURE, "slab_stone_double", 2F, ToolType.PICKAXE,
                 () -> ModItems.slabStone));
-        register(slabBrickSingle = new BlockSlabSingle(BlockMaterial
+        registerItemless(slabBrickSingle = new BlockSlabSingle(BlockMaterial
                 .STONE_FURNITURE, "slab_brick_single", 2F, ToolType.PICKAXE,
                 () -> ModItems.slabBrick));
-        register(slabBrickDouble = new BlockSlabDouble(BlockMaterial
+        registerItemless(slabBrickDouble = new BlockSlabDouble(BlockMaterial
                 .STONE_FURNITURE, "slab_brick_double", 2F, ToolType.PICKAXE,
                 () -> ModItems.slabBrick));
+        
+        register(rubble = new BlockRubble());
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
@@ -420,10 +427,10 @@ public class ModBlocks {
     
     public static void preInitClient() {
         
-        /*for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
+        for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
             
             model(entry.getKey(), entry.getValue());
-        }*/
+        }
     }
     
     private static void register(Block block, boolean isOffhandOnly) {
@@ -455,11 +462,17 @@ public class ModBlocks {
         GameRegistry.register(item
                 .setRegistryName(block.getRegistryName()));
 
-      //  MOD_BLOCKS.put(block, item);
+        MOD_BLOCKS.put(block, item);
         
-        ModelLoader.setCustomModelResourceLocation(item, 0,
-                new ModelResourceLocation(block.getRegistryName(),
-                "inventory"));
+      //  ModelLoader.setCustomModelResourceLocation(item, 0,
+      //          new ModelResourceLocation(block.getRegistryName(),
+      //          "inventory"));
+    }
+    
+    private static void registerItemless(Block block) {
+        
+        GameRegistry.register(block);
+        model(block, Item.getItemFromBlock(block));
     }
     
     private static void model(Block block, Item item) {
