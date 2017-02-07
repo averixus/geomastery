@@ -2,7 +2,13 @@ package com.jj.jjmod.container.slots;
 
 import com.jj.jjmod.capabilities.CapInventory;
 import com.jj.jjmod.capabilities.DefaultCapInventory;
+import com.jj.jjmod.container.ContainerInventory;
+import com.jj.jjmod.gui.GuiInventory;
 import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.main.GuiHandler;
+import com.jj.jjmod.main.GuiHandler.GuiList;
+import com.jj.jjmod.main.Main;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -13,12 +19,14 @@ public class SlotCarry extends Slot {
 
     public CarryType type;
     public DefaultCapInventory capInv;
+    private EntityPlayer player;
 
     public SlotCarry(EntityPlayer player, int x, int y, CarryType type) {
 
         super(null, 0, x, y);
         this.capInv = (DefaultCapInventory) player
                 .getCapability(CapInventory.CAP_INVENTORY, null);
+        this.player = player;
         this.type = type;
     }
 
@@ -80,10 +88,30 @@ public class SlotCarry extends Slot {
                 break;
             }
         }
-    }
+        
+        this.onSlotChanged();
+      /*  
+        this.player.inventoryContainer = new ContainerInventory(this.player,
+                this.player.world);
+        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory((ContainerInventory) this.player.inventoryContainer));
+  */  }
 
     @Override
-    public void onSlotChanged() {}
+    public void onSlotChanged() {
+        
+        ((ContainerInventory) this.player.inventoryContainer).refresh();
+    }
+    
+    @Override
+    public ItemStack onTake(EntityPlayer player, ItemStack stack) {
+        
+    /*    this.player.inventoryContainer = new ContainerInventory(this.player,
+                this.player.world);
+        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory((ContainerInventory) this.player.inventoryContainer));
+        this.player.inventory.setItemStack(stack);*/
+        this.onSlotChanged();
+        return stack;
+    }
 
     @Override
     public ItemStack decrStackSize(int amount) {

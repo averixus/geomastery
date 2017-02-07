@@ -53,34 +53,36 @@ public abstract class ContainerAbstract extends Container {
         return craftMatrix;
     }
 
-    protected int buildInvGrid() {
+    protected void buildHotbar() {
 
-        int invIndex = 0;
 
-        for (int m = 0; m < ROW_LENGTH; m++, invIndex++) {
+        for (int m = 0; m < ROW_LENGTH; m++) {
 
             this.addSlotToContainer(new SlotInventory(this.playerInv,
-                    invIndex, getInvX(m), HOT_Y));
+                    m, getInvX(m), HOT_Y));
         }
+    }
+    
+    protected int buildInvgrid() { 
         
-        invIndex--;
-        
+        int invIndex = -1;
+
         if (this.capInv.getInventoryRows() == 0) {
             
             return invIndex;
         }
 
-        for (int k = 0; k < this.capInv.getInventoryRows(); k++, invIndex++) {
+        for (int k = 0; k < this.capInv.getInventoryRows(); k++) {
 
             for (int l = 0; l < ROW_LENGTH; l++) {
 
                 this.addSlotToContainer(new SlotInventory(
-                        this.playerInv, invIndex,
-                        getInvX(l), getInvY(k)));
+                        this.playerInv, ++invIndex + ROW_LENGTH,
+                        getInvX(l), getInvY(invertRowIndex(k))));
             }
         }
         
-        return --invIndex;
+        return invIndex;
     }
 
     protected static int getInvX(int index) {
@@ -89,8 +91,23 @@ public abstract class ContainerAbstract extends Container {
     }
 
     protected static int getInvY(int index) {
-
+        System.out.println("inventory slot y " + (INV_Y + index * SLOT_SIZE));
         return INV_Y + index * SLOT_SIZE;
+    }
+    
+    protected static int invertRowIndex(int index) {
+        
+        if (index == 0) {
+            
+            return 2;
+        }
+        
+        if (index == 2) {
+            
+            return 0;
+        }
+        
+        return index;
     }
 
     protected static int getInvIndex(int rowPos, int row) {

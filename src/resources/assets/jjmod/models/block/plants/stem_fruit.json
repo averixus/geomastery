@@ -1,0 +1,7 @@
+{
+    "parent": "block/stem_fruit",
+    "textures": {
+        "stem": "jjmod:blocks/plants/stem_disconnected",
+        "upperstem": "jjmod:blocks/plants/stem_connected"
+    }
+}

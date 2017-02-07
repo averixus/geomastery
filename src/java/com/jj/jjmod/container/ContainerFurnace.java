@@ -59,9 +59,10 @@ public class ContainerFurnace extends ContainerAbstract {
                 this.furnaceInv, OUTPUT_I, OUTPUT_X, OUTPUT_Y));
 
         // Inventory grid
-        int invIndex = this.buildInvGrid();
+        this.buildHotbar();
+        int invIndex = this.buildInvgrid();
 
-        this.INV_END = HOT_START + invIndex;
+        this.INV_END = INV_START + invIndex;
     }
 
     @Override

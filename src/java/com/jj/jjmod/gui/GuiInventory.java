@@ -22,14 +22,12 @@ public class GuiInventory extends GuiContainer {
 
     protected float oldMouseY;
     protected float oldMouseX;
-    public ResourceLocation background;
+   // public ResourceLocation background;
 
     public GuiInventory(ContainerInventory container) {
 
         super(container);
         this.allowUserInput = true;
-        this.background = new ResourceLocation("jjmod:textures/gui/inventory_"
-                + container.capInv.getInventoryRows() + ".png");
     }
 
     @Override
@@ -52,7 +50,7 @@ public class GuiInventory extends GuiContainer {
             int mouseX, int mouseY) {
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(this.background);
+        this.mc.getTextureManager().bindTexture(((ContainerInventory) this.inventorySlots).getBackground());
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawTexturedModalRect(i, j, 0, 0, X_SIZE, Y_SIZE);

@@ -14,9 +14,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 
-public class ItemEdibleSeed extends ItemEdibleDecayable
-        implements IPlantable {
-    
+public class ItemEdibleSeed extends ItemEdible implements IPlantable {
+
     private final Block crop;
 
     public ItemEdibleSeed(String name, int hunger,

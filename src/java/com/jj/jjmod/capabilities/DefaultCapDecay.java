@@ -8,85 +8,53 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DefaultCapDecay implements ICapDecay {
     
-    protected int shelfLife;
-    public DecayLevel level;
-    protected int timer = 0;
+    public static final int DAY_TICKS = 24000;
+    public static final int MAX_STAGE = 10;
+    protected int maxAge;
+    protected int stage = 0;
+    protected int ageTimer = 0;
     
-    public DefaultCapDecay(int shelfLife) {
+    public DefaultCapDecay(int maxDays) {
         
-        this.shelfLife = shelfLife;
-        this.level = DecayLevel.FRESH;
+        this.maxAge = maxDays * DAY_TICKS;
     }
     
     @Override
     public boolean updateAndRot() {
         
-        if (this.timer >= (this.shelfLife / 4)) {
+        this.stage = (int) (((float) this.ageTimer / this.maxAge) * MAX_STAGE);
+
+        if (this.stage >= MAX_STAGE) {
             
-            if (this.level == DecayLevel.SPOILED) {
-
-                return true;
-                
-            } else if (this.level == DecayLevel.OLD) {
-
-                this.level = DecayLevel.SPOILED;
-                this.timer = 0;
-                
-            } else if (this.level == DecayLevel.STALE) {
-
-                this.level = DecayLevel.OLD;
-                this.timer = 0;
-                
-            } else if (this.level == DecayLevel.FRESH) {
-
-                this.level = DecayLevel.STALE;
-                this.timer = 0;
-            }
-                        
+            return true;
+            
         } else {
             
-            this.timer++;
+            this.ageTimer++;
+            return false;
         }
-        
-        return false;
     }
     
     @Override
     public float getRenderFraction() {
-        
-        return this.level.getRenderFraction();
+
+        return 1F - ((float) this.stage / MAX_STAGE);
     }
     
     @Override
     public NBTTagCompound serializeNBT() {
         
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("level", this.level.ordinal());
-        nbt.setInteger("shelfLife", this.shelfLife);
+        nbt.setInteger("stage", this.stage);
+        nbt.setInteger("maxage", this.maxAge);
         return nbt;
     }
     
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         
-        this.level = DecayLevel.values()[nbt.getInteger("level")];
-        this.shelfLife = nbt.getInteger("shelfLife");
-    }
-
-    public enum DecayLevel {
-        
-        FRESH(0), STALE(0.25F), OLD(0.5F), SPOILED(0.75F);
-        
-        private float renderFraction;
-        
-        private DecayLevel(float renderFraction) {
-            
-            this.renderFraction = renderFraction;
-        }
-        
-        public float getRenderFraction() {
-            
-            return this.renderFraction;
-        }
+        this.stage = nbt.getInteger("stage");
+        this.maxAge = nbt.getInteger("maxage");
+        this.ageTimer = this.stage / this.maxAge;
     }
 }

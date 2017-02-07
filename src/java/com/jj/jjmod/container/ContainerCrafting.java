@@ -47,7 +47,8 @@ public class ContainerCrafting extends ContainerAbstract {
         this.pos = pos;
 
         // Inventory and craft grid
-        int invIndex = this.buildInvGrid();
+        this.buildHotbar();
+        int invIndex = this.buildInvgrid();
         this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
                 CRAFT_X, CRAFT_Y);
         
@@ -57,7 +58,7 @@ public class ContainerCrafting extends ContainerAbstract {
                 OUTPUT_Y, this.craftManager));
 
         // Container indices
-        this.INV_END = HOT_START + invIndex;
+        this.INV_END = INV_START + invIndex;
         this.CRAFT_START = this.INV_END + 1;
         this.CRAFT_END = this.INV_END + this.craftMatrix.getSizeInventory();
         this.OUTPUT_I = this.CRAFT_END + 1;

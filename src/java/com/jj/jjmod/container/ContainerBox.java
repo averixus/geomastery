@@ -29,7 +29,8 @@ public class ContainerBox extends ContainerAbstract {
         boxInv.openInventory(player);
         
         // Inventory
-        int invIndex = this.buildInvGrid();
+        this.buildHotbar();
+        int invIndex = this.buildInvgrid();
         
         // Box inventory
         for (int i = 0; i < 9; i++) {
@@ -38,7 +39,7 @@ public class ContainerBox extends ContainerAbstract {
                     i, getInvX(i), CHEST_Y));
         }
         
-        this.INV_END = HOT_START + invIndex;
+        this.INV_END = INV_START + invIndex;
         this.CHEST_START = this.INV_END + 1;
         this.CHEST_END = this.INV_END + this.boxInv.getSizeInventory();
     }

@@ -1,17 +1,19 @@
 package com.jj.jjmod.container;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.Nullable;
-import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.init.ModItems;
-import com.jj.jjmod.init.ModPackets;
-import com.jj.jjmod.init.ModRecipes;
 import com.jj.jjmod.container.slots.SlotArmour;
 import com.jj.jjmod.container.slots.SlotCarry;
 import com.jj.jjmod.container.slots.SlotCarry.CarryType;
 import com.jj.jjmod.container.slots.SlotCrafting;
+import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.init.ModPackets;
+import com.jj.jjmod.init.ModRecipes;
 import com.jj.jjmod.packets.InventoryUpdateClient;
 import com.jj.jjmod.packets.InventoryUpdateServer;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
@@ -25,6 +27,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class ContainerInventory extends ContainerAbstract {
@@ -53,14 +56,16 @@ public class ContainerInventory extends ContainerAbstract {
     public static final int SHIELD_I = 4;
     public static final int BACKPACK_I = 5;
     public static final int YOKE_I = 6;
-    public static final int HOT_START = 7;
-    public static final int HOT_END = 15;
-    public static final int INV_START = 16;
-
-    public final int INV_END;
-    public final int CRAFT_START;
+    public final int CRAFT_START = 7;
+    
     public final int CRAFT_END;
     public final int OUTPUT_I;
+    public final int HOT_START;
+    public final int HOT_END;
+    public final int INV_START;
+    public int INV_END;
+
+    protected ResourceLocation background;
 
     public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
@@ -87,22 +92,142 @@ public class ContainerInventory extends ContainerAbstract {
                 YOKE_X, EQUIP_Y, CarryType.YOKE));
 
         // Inventory and craft grid slots
-        int invIndex = this.buildInvGrid();
         this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
                 CRAFT_X, CRAFT_Y);
-
-        // Container indices
-        this.INV_END = HOT_START + invIndex;
-        this.CRAFT_START = this.INV_END + 1;
-        this.CRAFT_END = this.INV_END + this.craftMatrix.getSizeInventory();
+        
+        this.CRAFT_END = YOKE_I + this.craftMatrix.getSizeInventory();
         this.OUTPUT_I = this.CRAFT_END + 1;
-
-        // Output slot
+        
         this.addSlotToContainer(new SlotCrafting(player,
                 this.craftMatrix, this.craftResult, this.OUTPUT_I, OUTPUT_X,
                 OUTPUT_Y, ModRecipes.INVENTORY));
+        
+        this.buildHotbar();
+        this.HOT_START = this.OUTPUT_I + 1;
+        this.HOT_END = this.OUTPUT_I + ROW_LENGTH;
+        this.INV_START = this.HOT_END + 1;
+        this.INV_END = this.INV_START + this.buildInvgrid();
+        
+        System.out.println("indices: \n  craftend: " + this.CRAFT_END + "\n output: " + this.OUTPUT_I + "\n hotstart: " + this.HOT_START + "\n hotend: " + this.HOT_END + "\n invstart: " + this.INV_START + "\n invend: " + this.INV_END);
 
+        this.setBackground();
         this.onCraftMatrixChanged(this.craftMatrix);
+    }
+    
+    public void refresh() {
+        
+        //set up
+      //  List<ItemStack> saved = NonNullList.create();
+        
+        // save old
+      /*  for (int i = this.INV_START; i <= this.INV_END; i++) {
+            System.out.println("saving " + this.inventorySlots.get(i).getStack() + " from slot " + i);
+            saved.add(this.inventorySlots.get(i).getStack());
+        }*/
+        
+        // kill old
+        int j = this.inventorySlots.size() - 1;
+        while (j >= this.INV_START) {
+            System.out.println("killing index " + j);
+            this.inventorySlots.remove(j);
+            this.inventoryItemStacks.remove(j);
+            j --;
+        }
+        
+      /*  // save and kill old
+        for (int i = this.INV_END, j = saved.size() - 1; i >= this.INV_START && j >= 0; i--, j--) {
+            System.out.println("saving and killing " + this.inventorySlots.get(i).getStack() + " at index " + i);
+            saved.set(j, this.inventorySlots.get(i).getStack());
+            this.inventorySlots.remove(i);
+            this.inventoryItemStacks.remove(i);
+        }*/
+        
+        //create and fill new
+        this.INV_END = this.INV_START + this.buildInvgrid();
+        System.out.println("grown, new invend: " + this.INV_END + " inventorysots size: " + this.inventorySlots.size());
+        
+        for (int i = this.capInv.getInventorySize(); i < this.playerInv.mainInventory.size(); i++) {
+            System.out.println("checking inventory index " + i);
+            ItemStack drop = this.playerInv.removeStackFromSlot(i);
+            if (!drop.isEmpty()) {
+            
+                if (this.mergeItemStack(drop, this.HOT_START, this.INV_END + 1, true)) {
+                    
+                    this.player.dropItem(drop, false);
+                }
+            }
+        }
+        
+       /* for (int i = 0; i < saved.size(); i++) {
+            
+            if (i + this.INV_START > this.INV_END) {
+                
+                System.out.println("dropping " + saved.get(i) + " from index " + i);
+                this.playerInv.removeStackFromSlot(this.inventorySlots.get(i + this.INV_START).getSlotIndex());
+                this.player.dropItem(saved.get(i), false);
+            }
+        }
+        
+        
+        for (int i = this.INV_END, k = saved.size() - 1; i >= this.INV_START && k >= 0; i--, k--) {
+            System.out.println("filling index " + i + " with " + saved.get(k));
+            this.inventorySlots.get(i).putStack(saved.get(k));
+        }
+        
+        // try again
+        System.out.println("refreshing inv");
+        List<Slot> range = this.inventorySlots.subList(this.INV_START, this.INV_END + 1);
+        int newSize = this.capInv.getInventorySize() - ROW_LENGTH;
+        System.out.println("new inv size " + newSize);
+        int rangeSize = range.size();
+        System.out.println("existing size " + rangeSize);
+        
+        if (newSize == rangeSize) {
+            System.out.println("no change, returing");
+            return;
+        }
+        
+        if (newSize > rangeSize) {
+            System.out.println("new > old");
+            List<ItemStack> stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
+            Collections.copy(stacks, this.inventoryItemStacks.subList(this.INV_START, this.INV_END + 1));
+            System.out.println("removing old");
+            this.inventorySlots.removeAll(range);
+            System.out.println("adding new");
+            this.INV_END = this.INV_START + this.buildInvgrid();
+            
+            System.out.println("copying old stacks to new");
+            for (int i = 0; i < stacks.size(); i++) {
+                
+                ItemStack stack = stacks.get(i);
+                this.inventoryItemStacks.set(i + this.INV_START, stack);
+            }
+            return;
+        }
+        
+        if (newSize < rangeSize) {
+            System.out.println("new < old");
+            System.out.println("dropping excess and removing old");
+            for (int i = range.size() - 1; i > newSize; i--) {
+                
+                this.player.dropItem(range.get(i).getStack(), false);
+                range.remove(i);
+            }
+            return;
+        }*/
+        
+        this.setBackground();
+    }
+    
+    private void setBackground() {
+        
+        this.background = new ResourceLocation("jjmod:textures/gui/inventory_"
+                + this.capInv.getInventoryRows() + ".png");
+    }
+    
+    public ResourceLocation getBackground() {
+        
+        return this.background;
     }
     
     public ItemStack add(ItemStack stack) {
@@ -339,7 +464,7 @@ public class ContainerInventory extends ContainerAbstract {
 
         if (index == this.OUTPUT_I) {
 
-            if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
+            if (!this.mergeItemStack(slotStack, this.HOT_START, this.INV_END + 1,
                     true)) {
 
                 result = ItemStack.EMPTY;
@@ -350,38 +475,31 @@ public class ContainerInventory extends ContainerAbstract {
 
         } else if ((index >= this.CRAFT_START && index <= this.CRAFT_END) ||
                 (index >= FEET_I && index <= YOKE_I)) {
-            System.out.println("transferring from craft grid index " + index + " to inventory between " + HOT_START + " and " + this.INV_END);
-            if (!this.mergeItemStack(slotStack, HOT_START, this.INV_END + 1,
+            System.out.println("transferring from craft grid index " + index + " to inventory between " + this.HOT_START + " and " + this.INV_END);
+            if (!this.mergeItemStack(slotStack, this.HOT_START, this.INV_END + 1,
+                    false)) {
+
+                result = ItemStack.EMPTY;
+            }
+
+        } else if (index >= this.HOT_START && index <= this.HOT_END) {
+
+            if (!this.mergeItemStack(slotStack, this.INV_START, this.INV_END + 1,
                     true)) {
 
                 result = ItemStack.EMPTY;
             }
 
-        } else if (index >= HOT_START && index <= HOT_END) {
+        } else if (index >= this.INV_START && index <= this.INV_END) {
 
-            if (!this.mergeItemStack(slotStack, INV_START, this.INV_END + 1,
-                    true)) {
-
-                result = ItemStack.EMPTY;
-            }
-
-        } else if (index >= INV_START && index <= this.INV_END) {
-
-            if (!this.mergeItemStack(slotStack, HOT_START, HOT_END + 1, true)) {
+            if (!this.mergeItemStack(slotStack, this.HOT_START, this.HOT_END + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
         }
 
-        if (slot.getStack().getCount() == 0) {
-
-            slot.putStack(ItemStack.EMPTY);
-            
-        } else {
-
-            slot.onSlotChanged();
-        }
-
+        slot.onSlotChanged();
+        
         return result;
     }
 

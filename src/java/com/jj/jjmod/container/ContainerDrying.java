@@ -44,9 +44,10 @@ public class ContainerDrying extends ContainerAbstract {
                 this.dryingInv, OUTPUT_I, OUTPUT_X, SLOTS_Y));
 
         // Inventory grid
-        int invIndex = this.buildInvGrid();
+        this.buildHotbar();
+        int invIndex = this.buildInvgrid();
 
-        this.INV_END = HOT_START + invIndex;
+        this.INV_END = INV_START + invIndex;
     }
 
     @Override

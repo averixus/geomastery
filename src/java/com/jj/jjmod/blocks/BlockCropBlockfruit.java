@@ -85,13 +85,13 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
             
             if (world.getBlockState(pos.offset(enumfacing))
-                    .getBlock() == this.fruit && age == 7) {
+                    .getBlock() == this.fruit.get() && age == 7) {
                 
                 state = state.withProperty(FACING, enumfacing);
                 break;
             }
         }
-
+        System.out.println("actual state is " + state);
         return state;
     }
 

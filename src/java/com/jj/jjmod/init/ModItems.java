@@ -25,7 +25,9 @@ import com.jj.jjmod.items.ItemCrudebow;
 import com.jj.jjmod.items.ItemDoor;
 import com.jj.jjmod.items.ItemEdible;
 import com.jj.jjmod.items.ItemEdible.FoodType;
-import com.jj.jjmod.items.ItemEdiblePoison;
+import com.jj.jjmod.items.ItemEdibleDecayable;
+import com.jj.jjmod.items.ItemEdibleDecayableSeed;
+import com.jj.jjmod.items.ItemEdibleDecayablePoison;
 import com.jj.jjmod.items.ItemEdibleSeed;
 import com.jj.jjmod.items.ItemFloor;
 import com.jj.jjmod.items.ItemFurnaceClay;
@@ -84,12 +86,12 @@ public class ModItems {
     public static ItemEdible potatoCooked;
     public static ItemEdible egg;
     
-    public static ItemEdiblePoison beefRaw;
-    public static ItemEdiblePoison porkRaw;
-    public static ItemEdiblePoison chickenRaw;
-    public static ItemEdiblePoison muttonRaw;
-    public static ItemEdiblePoison rabbitRaw;
-    public static ItemEdiblePoison fishRaw;
+    public static ItemEdibleDecayablePoison beefRaw;
+    public static ItemEdibleDecayablePoison porkRaw;
+    public static ItemEdibleDecayablePoison chickenRaw;
+    public static ItemEdibleDecayablePoison muttonRaw;
+    public static ItemEdibleDecayablePoison rabbitRaw;
+    public static ItemEdibleDecayablePoison fishRaw;
     
     public static ItemEdible beefCooked;
     public static ItemEdible porkCooked;
@@ -98,14 +100,14 @@ public class ModItems {
     public static ItemEdible chickenCooked;
     public static ItemEdible fishCooked;
     
-    public static ItemEdibleSeed bean;
-    public static ItemEdibleSeed pepper;
-    public static ItemEdibleSeed tomato;
-    public static ItemEdibleSeed berry;
+    public static ItemEdibleDecayableSeed bean;
+    public static ItemEdibleDecayableSeed pepper;
+    public static ItemEdibleDecayableSeed tomato;
+    public static ItemEdibleDecayableSeed berry;
     
-    public static ItemEdibleSeed carrot;
-    public static ItemEdibleSeed potato;
-    public static ItemEdibleSeed beetroot;
+    public static ItemEdibleDecayableSeed carrot;
+    public static ItemEdibleDecayableSeed potato;
+    public static ItemEdibleDecayableSeed beetroot;
     public static ItemEdibleSeed seedPumpkin;
         
     public static ItemRice rice;
@@ -346,43 +348,43 @@ public class ModItems {
 
     public static void preInit() {
 
-        register(banana = new ItemEdible("banana", 4, 6F, 5, FoodType.FRUITVEG));
-        register(pear = new ItemEdible("pear", 4, 4F, 5, FoodType.FRUITVEG));
-        register(orange = new ItemEdible("orange", 3, 3F, 6, FoodType.FRUITVEG));
+        register(banana = new ItemEdibleDecayable("banana", 4, 6F, 5, FoodType.FRUITVEG, 4));
+        register(pear = new ItemEdibleDecayable("pear", 4, 4F, 5, FoodType.FRUITVEG, 4));
+        register(orange = new ItemEdibleDecayable("orange", 3, 3F, 6, FoodType.FRUITVEG, 8));
         register(honey = new ItemEdible("honey", 4, 1F, 8, FoodType.CARBS));
-        register(wheatBoiled = new ItemEdible("wheat_boiled", 4, 2F, 10, FoodType.CARBS));
-        register(riceBoiled = new ItemEdible("rice_boiled", 4, 2, 12, FoodType.CARBS));
-        register(chickpeasBoiled = new ItemEdible("chickpeas_boiled", 3, 3, 10, FoodType.PROTEIN));
-        register(pumpkin = new ItemEdible("pumpkin", 10, 10, 2, FoodType.FRUITVEG));
-        register(melon = new ItemEdible("melon", 12, 12, 2, FoodType.FRUITVEG));
+        register(wheatBoiled = new ItemEdibleDecayable("wheat_boiled", 4, 2F, 10, FoodType.CARBS, 2));
+        register(riceBoiled = new ItemEdibleDecayable("rice_boiled", 4, 2, 12, FoodType.CARBS, 1));
+        register(chickpeasBoiled = new ItemEdibleDecayable("chickpeas_boiled", 3, 3, 10, FoodType.PROTEIN, 1));
+        register(pumpkin = new ItemEdibleDecayable("pumpkin", 10, 10, 2, FoodType.FRUITVEG, 8));
+        register(melon = new ItemEdibleDecayable("melon", 12, 12, 2, FoodType.FRUITVEG, 4));
         
-        register(apple = new ItemEdible("apple", 4, 4, 5, FoodType.FRUITVEG));
+        register(apple = new ItemEdibleDecayable("apple", 4, 4, 5, FoodType.FRUITVEG, 8));
         register(sugar = new ItemEdible("sugar", 5, 0, 10, FoodType.CARBS));
-        register(potatoCooked = new ItemEdible("potato_cooked", 8, 6, 5, FoodType.CARBS));
-        register(egg = new ItemEdible("egg", 5, 5, 6, FoodType.PROTEIN));
+        register(potatoCooked = new ItemEdibleDecayable("potato_cooked", 8, 6, 5, FoodType.CARBS, 4));
+        register(egg = new ItemEdibleDecayable("egg", 5, 5, 6, FoodType.PROTEIN, 8));
         
-        register(beefRaw = new ItemEdiblePoison("beef_raw", 3, 6, 5, FoodType.PROTEIN));
-        register(porkRaw = new ItemEdiblePoison("pork_raw", 2, 5, 6, FoodType.PROTEIN));
-        register(chickenRaw = new ItemEdiblePoison("chicken_raw", 1, 3, 10, FoodType.PROTEIN));
-        register(muttonRaw = new ItemEdiblePoison("mutton_raw", 2, 4, 7, FoodType.PROTEIN));
-        register(rabbitRaw = new ItemEdiblePoison("rabbit_raw", 1, 2, 15, FoodType.PROTEIN));
-        register(fishRaw = new ItemEdiblePoison("fish_raw", 1, 3, 10, FoodType.PROTEIN));
+        register(beefRaw = new ItemEdibleDecayablePoison("beef_raw", 3, 6, 5, FoodType.PROTEIN, 2));
+        register(porkRaw = new ItemEdibleDecayablePoison("pork_raw", 2, 5, 6, FoodType.PROTEIN, 2));
+        register(chickenRaw = new ItemEdibleDecayablePoison("chicken_raw", 1, 3, 10, FoodType.PROTEIN, 1));
+        register(muttonRaw = new ItemEdibleDecayablePoison("mutton_raw", 2, 4, 7, FoodType.PROTEIN, 2));
+        register(rabbitRaw = new ItemEdibleDecayablePoison("rabbit_raw", 1, 2, 15, FoodType.PROTEIN, 2));
+        register(fishRaw = new ItemEdibleDecayablePoison("fish_raw", 1, 3, 10, FoodType.PROTEIN, 1));
         
-        register(beefCooked = new ItemEdible("beef_cooked", 6, 6, 5, FoodType.PROTEIN));
-        register(porkCooked = new ItemEdible("pork_cooked", 5, 5, 6, FoodType.PROTEIN));
-        register(muttonCooked = new ItemEdible("mutton_cooked", 4, 4, 7, FoodType.PROTEIN));
-        register(rabbitCooked = new ItemEdible("rabbit_cooked", 2, 2, 15, FoodType.PROTEIN));
-        register(chickenCooked = new ItemEdible("chicken_cooked", 3, 3, 10, FoodType.PROTEIN));
-        register(fishCooked = new ItemEdible("fish_cooked", 3, 3, 10, FoodType.PROTEIN));
+        register(beefCooked = new ItemEdibleDecayable("beef_cooked", 6, 6, 5, FoodType.PROTEIN, 2));
+        register(porkCooked = new ItemEdibleDecayable("pork_cooked", 5, 5, 6, FoodType.PROTEIN, 2));
+        register(muttonCooked = new ItemEdibleDecayable("mutton_cooked", 4, 4, 7, FoodType.PROTEIN, 2));
+        register(rabbitCooked = new ItemEdibleDecayable("rabbit_cooked", 2, 2, 15, FoodType.PROTEIN, 2));
+        register(chickenCooked = new ItemEdibleDecayable("chicken_cooked", 3, 3, 10, FoodType.PROTEIN, 1));
+        register(fishCooked = new ItemEdibleDecayable("fish_cooked", 3, 3, 10, FoodType.PROTEIN, 1));
         
-        register(bean = new ItemEdibleSeed("bean", 2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG));
-        register(pepper = new ItemEdibleSeed("pepper", 3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG));
-        register(tomato = new ItemEdibleSeed("tomato", 3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG));
-        register(berry = new ItemEdibleSeed("berry", 1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG));
+        register(bean = new ItemEdibleDecayableSeed("bean", 2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG, 4));
+        register(pepper = new ItemEdibleDecayableSeed("pepper", 3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG, 4));
+        register(tomato = new ItemEdibleDecayableSeed("tomato", 3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG, 4));
+        register(berry = new ItemEdibleDecayableSeed("berry", 1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG, 4));
         
-        register(potato = new ItemEdibleSeed("potato", 1, 1F, 1, ModBlocks.potato, FoodType.CARBS));
-        register(carrot = new ItemEdibleSeed("carrot", 3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG));
-        register(beetroot = new ItemEdibleSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG));
+        register(potato = new ItemEdibleDecayableSeed("potato", 1, 1F, 1, ModBlocks.potato, FoodType.CARBS, 8));
+        register(carrot = new ItemEdibleDecayableSeed("carrot", 3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 8));
+        register(beetroot = new ItemEdibleDecayableSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG, 8));
         register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkinCrop, FoodType.PROTEIN));
         
         register(rice = new ItemRice());

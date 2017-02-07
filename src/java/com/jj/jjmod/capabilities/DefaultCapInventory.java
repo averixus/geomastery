@@ -16,10 +16,8 @@ public class DefaultCapInventory implements ICapInventory {
     private static final float SPEED_MODIFIER = 43;
     
     public EntityPlayer player;
-    public NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
-    
-  //  private IItemHandler backpackHandler = new ItemStackHandler();
-  //  private IItemHandler yokeHandler = new ItemStackHandler();
+    public NonNullList<ItemStack> stacks =
+            NonNullList.withSize(2, ItemStack.EMPTY);
     
     private boolean canRun = true;
 
@@ -87,125 +85,6 @@ public class DefaultCapInventory implements ICapInventory {
         float adjustedSpeed = (float) speed / SPEED_MODIFIER;
         this.player.capabilities.setPlayerWalkSpeed(adjustedSpeed);
     }
-    
-//    // Put stack in inventory, return amount remaining
-//    public int add(ItemStack stack) {
-//        
-//        if (ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
-//            
-//            return this.addToOffhand(stack);
-//        }
-//
-//        int remaining = this.putInMatchingSlot(stack);
-//
-//        if (remaining == 0) {
-//
-//            return 0;
-//        }
-//
-//        stack.shrink(remaining);
-//        remaining = this.putInEmptySlot(stack);
-//        
-//        return remaining;
-//    }
-//
-//    // Put stack in matching inventory slot/s and return amount remaining
-//    private int putInMatchingSlot(ItemStack stack) {
-//
-//        NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
-//        int remaining = stack.getCount();
-//
-//        for (int slot = 0; slot < this.getInventorySize(); slot++) {
-//
-//            if (inv.get(slot) != ItemStack.EMPTY && inv.get(slot).getCount() == 0) {
-//
-//                inv.set(slot, ItemStack.EMPTY);
-//            }
-//
-//            if (checkMatch(stack, inv.get(slot))) {
-//
-//                remaining = this.addToSlot(slot, stack);
-//
-//                if (remaining == 0) {
-//
-//                    return 0;
-//                }
-//            }
-//        }
-//
-//        return remaining;
-//    }
-//
-//    // Put the stack in empty inventory slot/s and return amount remaining
-//    private int putInEmptySlot(ItemStack stack) {
-//
-//        NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
-//        int remaining = stack.getCount();
-//
-//        for (int slot = 0; slot < this.getInventorySize(); slot++) {
-//
-//            if (inv.get(slot) != ItemStack.EMPTY && inv.get(slot).getCount() == 0) {
-//
-//                inv.set(slot, ItemStack.EMPTY);
-//            }
-//
-//            if (inv.get(slot) == ItemStack.EMPTY) {
-//
-//                remaining = this.addToSlot(slot, stack);
-//
-//                if (remaining == 0) {
-//
-//                    return 0;
-//                }
-//            }
-//        }
-//
-//        return remaining;
-//    }
-//    
-//    public int addToOffhand(ItemStack stack) {
-//        
-//        ItemStack inSlot = this.player.inventory.offHandInventory.get(0);
-//        
-//        if (inSlot == ItemStack.EMPTY) {
-//            
-//            this.player.inventory.offHandInventory.set(0, stack);
-//            ((ContainerInventory) this.player.inventoryContainer).sendUpdateOffhand();
-//            
-//            return 0;
-//        }
-//        
-//        return 1;
-//    }
-//
-//    // Add the stack to the slot and return amount remaining
-//    public int addToSlot(int slot, ItemStack stack) {
-//
-//        NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
-//        int result = stack.getCount();
-//
-//        int inSlot = inv.get(slot).getCount();
-//
-//        if (stack.getMaxStackSize() >= stack.getCount() + inSlot) {
-//
-//            ItemStack added = stack.copy();
-//            added.setCount(stack.getCount() + inSlot);
-//            inv.set(slot, added);
-//            result = 0;
-//
-//        } else {
-//
-//            ItemStack added = stack.copy();
-//            added.shrink(stack.getMaxStackSize());
-//            inv.set(slot, added);
-//            result -= stack.getMaxStackSize() + inSlot;
-//        }
-//
-//        ((ContainerInventory) this.player.inventoryContainer)
-//                .sendUpdateInventory(InvType.INVENTORY, slot, inv.get(slot));
-//
-//        return result;
-//    }
 
     public int getInventoryRows() {
 

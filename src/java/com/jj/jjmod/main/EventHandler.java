@@ -264,7 +264,7 @@ public class EventHandler {
             
             if (block instanceof BlockStone || block instanceof BlockRock ||
                     block instanceof BlockOre) {
-                System.out.println("is stone/ore");
+
                 boolean airAround = false;
                 
                 for (EnumFacing direction : EnumFacing.HORIZONTALS) {
@@ -277,27 +277,27 @@ public class EventHandler {
                 }
                 
                 if (block instanceof BlockStone) {
-                    System.out.println("is stone");
+
                     EnumType type = state.getValue(BlockStone.VARIANT);
                     
                     if (type == EnumType.GRANITE) {
-                        System.out.println("is granite");
+
                         shouldFall = false;
                         
                     } else if (type == EnumType.ANDESITE) {
-                        System.out.println("is andesite");
+
                         shouldFall = airAround && airBelow ?
                                 world.rand.nextFloat() < 0.33 : airBelow ?
                                 world.rand.nextFloat() < 0.04F : false;
                         
                     } else if (type == EnumType.DIORITE) {
-                        System.out.println("is diorite");
+
                         shouldFall = airAround && airBelow ?
                                 world.rand.nextFloat() < 0.25 : airBelow ?
                                 world.rand.nextFloat() < 0.03F : false;
                         
                     } else {
-                        System.out.println("is normal stone");
+
                         shouldFall = airAround && airBelow ?
                                 world.rand.nextFloat() < 0.17F : airBelow ?
                                 world.rand.nextFloat() < 0.02F : false;
@@ -306,7 +306,7 @@ public class EventHandler {
                     fallState = ModBlocks.rubble.getDefaultState();
                     
                 } else {
-                    System.out.println("is ore");
+
                     shouldFall = airAround && airBelow ?
                             world.rand.nextFloat()< 0.17F : airBelow ?
                             world.rand.nextFloat() < 0.02F : false;
@@ -314,18 +314,18 @@ public class EventHandler {
                     
             
             } else if (block == Blocks.DIRT || block == Blocks.GRASS) {
-                System.out.println("is dirt");
+
                 shouldFall = airBelow;
             }
             
             if (shouldFall) {
-                    System.out.println("should fall");
+
                 if (!BlockFalling.fallInstantly &&
                         world.isAreaLoaded(pos.add(-32, -32, -32),
                         pos.add(32, 32, 32))) {
                     
                     if (!world.isRemote) {
-                        System.out.println("falling");
+
                         world.setBlockState(pos, fallState);
                         EntityFallingBlock falling =
                                 new EntityFallingBlock(world, pos.getX() + 0.5D,
@@ -335,7 +335,7 @@ public class EventHandler {
                     }
                     
                 } else {
-                    System.out.println("instant falling");
+
                     world.setBlockToAir(pos);
                     BlockPos checkPos;
 
@@ -346,7 +346,7 @@ public class EventHandler {
                     }
 
                     if (checkPos.getY() > 0) {
-                        System.out.println("about to set block state for " + fallState + " at " + checkPos.up() + " from falling " + pos);
+
                         world.setBlockState(checkPos.up(), fallState, 0);
                     }
                 }
