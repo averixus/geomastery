@@ -108,113 +108,39 @@ public class ContainerInventory extends ContainerAbstract {
         this.INV_START = this.HOT_END + 1;
         this.INV_END = this.INV_START + this.buildInvgrid();
         
-        System.out.println("indices: \n  craftend: " + this.CRAFT_END + "\n output: " + this.OUTPUT_I + "\n hotstart: " + this.HOT_START + "\n hotend: " + this.HOT_END + "\n invstart: " + this.INV_START + "\n invend: " + this.INV_END);
-
         this.setBackground();
         this.onCraftMatrixChanged(this.craftMatrix);
     }
     
     public void refresh() {
         
-        //set up
-      //  List<ItemStack> saved = NonNullList.create();
-        
-        // save old
-      /*  for (int i = this.INV_START; i <= this.INV_END; i++) {
-            System.out.println("saving " + this.inventorySlots.get(i).getStack() + " from slot " + i);
-            saved.add(this.inventorySlots.get(i).getStack());
-        }*/
-        
-        // kill old
+        // Kill old slots
         int j = this.inventorySlots.size() - 1;
         while (j >= this.INV_START) {
-            System.out.println("killing index " + j);
+
             this.inventorySlots.remove(j);
             this.inventoryItemStacks.remove(j);
-            j --;
+            j--;
         }
         
-      /*  // save and kill old
-        for (int i = this.INV_END, j = saved.size() - 1; i >= this.INV_START && j >= 0; i--, j--) {
-            System.out.println("saving and killing " + this.inventorySlots.get(i).getStack() + " at index " + i);
-            saved.set(j, this.inventorySlots.get(i).getStack());
-            this.inventorySlots.remove(i);
-            this.inventoryItemStacks.remove(i);
-        }*/
-        
-        //create and fill new
+        // Build new slots
         this.INV_END = this.INV_START + this.buildInvgrid();
-        System.out.println("grown, new invend: " + this.INV_END + " inventorysots size: " + this.inventorySlots.size());
-        
-        for (int i = this.capInv.getInventorySize(); i < this.playerInv.mainInventory.size(); i++) {
-            System.out.println("checking inventory index " + i);
+
+        // Move or drop excess items
+        for (int i = this.capInv.getInventorySize();
+                i < this.playerInv.mainInventory.size(); i++) {
+
             ItemStack drop = this.playerInv.removeStackFromSlot(i);
+            
             if (!drop.isEmpty()) {
             
-                if (this.mergeItemStack(drop, this.HOT_START, this.INV_END + 1, true)) {
+                if (this.mergeItemStack(drop, this.HOT_START,
+                        this.INV_END + 1, true)) {
                     
                     this.player.dropItem(drop, false);
                 }
             }
         }
-        
-       /* for (int i = 0; i < saved.size(); i++) {
-            
-            if (i + this.INV_START > this.INV_END) {
-                
-                System.out.println("dropping " + saved.get(i) + " from index " + i);
-                this.playerInv.removeStackFromSlot(this.inventorySlots.get(i + this.INV_START).getSlotIndex());
-                this.player.dropItem(saved.get(i), false);
-            }
-        }
-        
-        
-        for (int i = this.INV_END, k = saved.size() - 1; i >= this.INV_START && k >= 0; i--, k--) {
-            System.out.println("filling index " + i + " with " + saved.get(k));
-            this.inventorySlots.get(i).putStack(saved.get(k));
-        }
-        
-        // try again
-        System.out.println("refreshing inv");
-        List<Slot> range = this.inventorySlots.subList(this.INV_START, this.INV_END + 1);
-        int newSize = this.capInv.getInventorySize() - ROW_LENGTH;
-        System.out.println("new inv size " + newSize);
-        int rangeSize = range.size();
-        System.out.println("existing size " + rangeSize);
-        
-        if (newSize == rangeSize) {
-            System.out.println("no change, returing");
-            return;
-        }
-        
-        if (newSize > rangeSize) {
-            System.out.println("new > old");
-            List<ItemStack> stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
-            Collections.copy(stacks, this.inventoryItemStacks.subList(this.INV_START, this.INV_END + 1));
-            System.out.println("removing old");
-            this.inventorySlots.removeAll(range);
-            System.out.println("adding new");
-            this.INV_END = this.INV_START + this.buildInvgrid();
-            
-            System.out.println("copying old stacks to new");
-            for (int i = 0; i < stacks.size(); i++) {
-                
-                ItemStack stack = stacks.get(i);
-                this.inventoryItemStacks.set(i + this.INV_START, stack);
-            }
-            return;
-        }
-        
-        if (newSize < rangeSize) {
-            System.out.println("new < old");
-            System.out.println("dropping excess and removing old");
-            for (int i = range.size() - 1; i > newSize; i--) {
-                
-                this.player.dropItem(range.get(i).getStack(), false);
-                range.remove(i);
-            }
-            return;
-        }*/
         
         this.setBackground();
     }
@@ -257,7 +183,8 @@ public class ContainerInventory extends ContainerAbstract {
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
         ItemStack remaining = stack.copy();
 
-        for (int slot = 0; slot < this.capInv.getInventorySize() && !remaining.isEmpty(); slot++) {
+        for (int slot = 0; slot < this.capInv.getInventorySize() &&
+                !remaining.isEmpty(); slot++) {
 
             if (ItemStack.areItemsEqual(remaining, inv.get(slot))) {
             
@@ -273,7 +200,8 @@ public class ContainerInventory extends ContainerAbstract {
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
         ItemStack remaining = stack.copy();
 
-        for (int slot = 0; slot < this.capInv.getInventorySize() && !remaining.isEmpty(); slot++) {
+        for (int slot = 0; slot < this.capInv.getInventorySize() &&
+                !remaining.isEmpty(); slot++) {
 
             if (inv.get(slot).isEmpty()) {
             
@@ -362,7 +290,8 @@ public class ContainerInventory extends ContainerAbstract {
                 if (stack != ItemStack.EMPTY) {
 
                     player.dropItem(stack, false);
-                    this.sendUpdateInventory(InvType.CRAFTGRID, i, ItemStack.EMPTY);
+                    this.sendUpdateInventory(InvType.CRAFTGRID,
+                            i, ItemStack.EMPTY);
                 }
             }
         }
@@ -378,7 +307,6 @@ public class ContainerInventory extends ContainerAbstract {
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
-        System.out.println("transferring index " + index);
         ItemStack result = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
@@ -464,8 +392,8 @@ public class ContainerInventory extends ContainerAbstract {
 
         if (index == this.OUTPUT_I) {
 
-            if (!this.mergeItemStack(slotStack, this.HOT_START, this.INV_END + 1,
-                    true)) {
+            if (!this.mergeItemStack(slotStack, this.HOT_START,
+                    this.INV_END + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -475,24 +403,25 @@ public class ContainerInventory extends ContainerAbstract {
 
         } else if ((index >= this.CRAFT_START && index <= this.CRAFT_END) ||
                 (index >= FEET_I && index <= YOKE_I)) {
-            System.out.println("transferring from craft grid index " + index + " to inventory between " + this.HOT_START + " and " + this.INV_END);
-            if (!this.mergeItemStack(slotStack, this.HOT_START, this.INV_END + 1,
-                    false)) {
+
+            if (!this.mergeItemStack(slotStack, this.HOT_START,
+                    this.INV_END + 1, false)) {
 
                 result = ItemStack.EMPTY;
             }
 
         } else if (index >= this.HOT_START && index <= this.HOT_END) {
 
-            if (!this.mergeItemStack(slotStack, this.INV_START, this.INV_END + 1,
-                    true)) {
+            if (!this.mergeItemStack(slotStack, this.INV_START,
+                    this.INV_END + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
 
         } else if (index >= this.INV_START && index <= this.INV_END) {
 
-            if (!this.mergeItemStack(slotStack, this.HOT_START, this.HOT_END + 1, true)) {
+            if (!this.mergeItemStack(slotStack, this.HOT_START,
+                    this.HOT_END + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -526,12 +455,6 @@ public class ContainerInventory extends ContainerAbstract {
             case CRAFTGRID: {
 
                 this.craftMatrix.setInventorySlotContents(slot, replace);
-                break;
-            }
-            
-            case CRAFTOUT : {
-                
-                this.craftResult.setInventorySlotContents(slot, replace);
                 break;
             }
         }
@@ -579,7 +502,6 @@ public class ContainerInventory extends ContainerAbstract {
 
         INVENTORY,
         OFFHAND,
-        CRAFTGRID,
-        CRAFTOUT;
+        CRAFTGRID;
     }
 }

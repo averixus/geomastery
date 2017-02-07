@@ -13,11 +13,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderProjectile extends Render<EntityArrow> {
+public class RenderArrow extends Render<EntityArrow> {
 
     public final ResourceLocation texture;
 
-    public RenderProjectile(RenderManager renderManager, ResourceLocation resourceLocation) {
+    public RenderArrow(RenderManager renderManager, ResourceLocation resourceLocation) {
 
         super(renderManager);
         this.texture = resourceLocation;
