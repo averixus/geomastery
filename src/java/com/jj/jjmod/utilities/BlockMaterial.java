@@ -7,7 +7,9 @@ import net.minecraft.block.material.Material;
 public class BlockMaterial extends Material {
     
     public static final BlockMaterial WOOD_FURNITURE = new BlockMaterial(MapColor.WOOD, true, false, true, true, false, true, false);
+    public static final BlockMaterial WOOD_HANDHARVESTABLE = new BlockMaterial(MapColor.WOOD, true, true, true, true, false, true, false);
     public static final BlockMaterial STONE_FURNITURE = new BlockMaterial(MapColor.STONE, true, false, false, true, false, true, false);
+    public static final BlockMaterial STONE_HANDHARVESTABLE = new BlockMaterial(MapColor.STONE, true, true, false, true, false, true, false);
     public static final BlockMaterial WATER_PLANT = new BlockMaterial(MapColor.WATER, true, false, false, true, false, true, false);
     public static final BlockMaterial CARCASS = new BlockMaterial(MapColor.BROWN, true, true, true, true, false, false, false);
     public static final BlockMaterial SOIL = new BlockMaterial(MapColor.DIRT, true, false, false, false, false, false, false);

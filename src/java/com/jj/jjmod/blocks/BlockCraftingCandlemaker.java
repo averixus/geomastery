@@ -1,11 +1,11 @@
 package com.jj.jjmod.blocks;
 
-import java.util.Random;
+import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
+import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
-import com.jj.jjmod.main.Main;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -13,10 +13,9 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +31,33 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
 
     public BlockCraftingCandlemaker() {
 
-        super("crafting_candlemaker", BlockMaterial.WOOD_FURNITURE, 5F, ToolType.NONE);
+        super("crafting_candlemaker", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, ToolType.NONE);
+    }
+    
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        
+        player.addExhaustion(0.005F);
+
+        if (state.getValue(PART) == EnumPartCandlemaker.FRONT) {
+
+            spawnItem(world, pos, ModItems.craftingCandlemaker);
+        }
+    }
+    
+    @Override
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+        
+        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartCandlemaker.FRONT) {
+        
+            spawnItem(world, pos, ModItems.craftingCandlemaker);
+        }
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta) {
+        
+        return null;
     }
 
     @Override
@@ -50,6 +75,7 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
             if (brokenBack) {
 
                 world.setBlockToAir(pos);
+                spawnItem(world, pos, ModItems.craftingCandlemaker);
             }
 
         } else {
@@ -132,30 +158,30 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
         FRONT("front", true),
         BACK("back", false);
 
-        private final String NAME;
-        private final boolean IS_FLAT;
+        private final String name;
+        private final boolean isFlat;
 
         private EnumPartCandlemaker(String name, boolean isFlat) {
 
-            this.NAME = name;
-            this.IS_FLAT = isFlat;
+            this.name = name;
+            this.isFlat = isFlat;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
         
         public boolean isFlat() {
             
-            return this.IS_FLAT;
+            return this.isFlat;
         }
     }
 }

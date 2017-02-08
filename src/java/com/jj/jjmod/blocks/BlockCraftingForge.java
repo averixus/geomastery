@@ -1,10 +1,12 @@
 package com.jj.jjmod.blocks;
 
 import java.util.Random;
+import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TECraftingForge;
+import com.jj.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
 import com.jj.jjmod.tileentities.TECraftingForge.EnumPartForge;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
@@ -16,7 +18,9 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -33,11 +37,22 @@ public class BlockCraftingForge extends BlockComplexAbstract {
 
     public BlockCraftingForge() {
 
-        super("crafting_forge", BlockMaterial.STONE_FURNITURE, 5F, ToolType.NONE);
+        super("crafting_forge", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+    }
+    
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        
+        player.addExhaustion(0.005F);
+
+        if (((TECraftingForge) te).getPart() == EnumPartForge.FM) {
+
+            spawnItem(world, pos, ModItems.craftingForge);
+        }
     }
 
     @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
+    public TileEntity createNewTileEntity(World world, int meta) {
 
         return new TECraftingForge();
     }
@@ -51,9 +66,9 @@ public class BlockCraftingForge extends BlockComplexAbstract {
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
-
+        System.out.println("neighbour changed, state " + state + ", actual state " + this.getActualState(state, world, pos) + " at " + pos);
         TileEntity tileEntity = world.getTileEntity(pos);
-
+        state = this.getActualState(state, world, pos);
         if (!(tileEntity instanceof TECraftingForge)) {
 
             return;
@@ -72,8 +87,9 @@ public class BlockCraftingForge extends BlockComplexAbstract {
                         .getOpposite())).getBlock() != this;
 
                 if (brokenFL) {
-
+                    System.out.println(" is FM with broken FL, dropping");
                     world.setBlockToAir(pos);
+                    spawnItem(world, pos, ModItems.craftingForge);
                 }
 
                 break;

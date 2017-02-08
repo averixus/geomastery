@@ -28,6 +28,13 @@ public class BlockDrying extends BlockComplexAbstract
         super("drying", BlockMaterial.WOOD_FURNITURE, 5F, ToolType.NONE);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
+    
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand,
+            int fortune) {
+        
+        return Item.getItemFromBlock(this);
+    }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {

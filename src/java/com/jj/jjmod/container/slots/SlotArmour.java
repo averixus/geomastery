@@ -8,7 +8,10 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SlotArmour extends Slot {
 
@@ -23,6 +26,44 @@ public class SlotArmour extends Slot {
         this.type = type;
         this.player = player;
         this.playerInv = playerInv;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getSlotTexture() {
+        
+        switch (this.type) {
+
+            case HEAD: {
+                
+                return "minecraft:items/empty_armor_slot_helmet";
+            }
+
+            case CHEST: {
+                
+                return "minecraft:items/empty_armor_slot_chestplate";
+            }
+
+            case LEGS: {
+                
+                return "minecraft:items/empty_armor_slot_leggings";
+            }
+            
+            case FEET: {
+                
+                return "minecraft:items/empty_armor_slot_boots";
+            }
+            
+            case OFFHAND: {
+               
+                return "minecraft:items/empty_armor_slot_shield";
+            }
+            
+            default: {
+                
+                return null;
+            }
+        }
     }
 
     @Override

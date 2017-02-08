@@ -31,7 +31,7 @@ public class ItemCraftingClayworks extends ItemNew {
             World world, BlockPos pos, EnumHand hand, EnumFacing playerFacing,
             float x, float y, float z) {
         
-        ItemStack stack = player.getActiveItemStack();
+        ItemStack stack = player.getHeldItem(hand);
 
         if (world.isRemote) {
 
@@ -95,14 +95,12 @@ public class ItemCraftingClayworks extends ItemNew {
                 SoundCategory.BLOCKS, SoundType.STONE.getVolume() +
                 1.0F / 2.0F, SoundType.STONE.getPitch() * 0.8F);
         
-        stack.shrink(1);
-
-        if (stack.getCount() == 0) {
-
-            stack = null;
+        if (!player.capabilities.isCreativeMode) {
+            
+            stack.shrink(1);
+            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
         }
-
-        ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
+        
         return EnumActionResult.SUCCESS;
     }
 }

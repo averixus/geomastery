@@ -1,5 +1,6 @@
  package com.jj.jjmod.items;
 
+import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.container.ContainerInventory.InvType;
@@ -28,7 +29,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCrudebow extends ItemNew {
-
+    
+    public static final Class[] PRIORITY = {ItemArrowSteel.class, ItemArrowBronze.class, ItemArrowCopper.class, ItemArrowFlint.class, ItemArrowWood.class};
+    
     public ItemCrudebow() {
 
         super("crudebow", 1, CreativeTabs.COMBAT);
@@ -92,13 +95,16 @@ public class ItemCrudebow extends ItemNew {
 
         } else {
 
-            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-
-                ItemStack stack = player.inventory.getStackInSlot(i);
-
-                if (this.isArrow(stack)) {
-
-                    return i;
+            for (Class<?> type : PRIORITY) {
+                
+                for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+    
+                    ItemStack stack = player.inventory.getStackInSlot(i);
+    
+                    if (type.isAssignableFrom(stack.getItem().getClass())) {
+    
+                        return i;
+                    }
                 }
             }
 

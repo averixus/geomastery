@@ -143,9 +143,9 @@ public class ItemCraftingSawpit extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
+            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
         }
-        System.out.println("placed success");
+        
         return EnumActionResult.SUCCESS;
     }
 }

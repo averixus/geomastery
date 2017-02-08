@@ -1,6 +1,7 @@
 package com.jj.jjmod.items;
 
 import java.util.Set;
+import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
 import com.jj.jjmod.container.ContainerInventory;
 import net.minecraft.block.Block;
@@ -9,13 +10,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class ItemSpearAbstract extends ItemTool {
 
@@ -26,6 +31,27 @@ public abstract class ItemSpearAbstract extends ItemTool {
 
         super(3F, -3.1F, material, EFFECTIVE_ON);
         ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
+        
+        // Check whether spear is being charged for the model
+        this.addPropertyOverride(new ResourceLocation("pulling"),
+                new IItemPropertyGetter() {
+
+            @Override
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, @Nullable World world,
+                    @Nullable EntityLivingBase entity) {
+
+                if (entity == null || !entity.isHandActive() ||
+                        entity.getActiveItemStack() != stack) {
+
+                    return 0F;
+
+                } else {
+
+                    return 1F;
+                }
+            }
+        });
     }
 
     @Override
@@ -61,6 +87,8 @@ public abstract class ItemSpearAbstract extends ItemTool {
     
                         ((ContainerInventory) player.inventoryContainer)
                                 .sendUpdateHighlight();
+                        ((ContainerInventory) player.inventoryContainer)
+                                .sendUpdateOffhand();
                     }
                 }
 

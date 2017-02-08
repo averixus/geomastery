@@ -38,10 +38,14 @@ import com.jj.jjmod.worldgen.WorldGenTreeOrange;
 import com.jj.jjmod.worldgen.WorldGenTreePear;
 import com.jj.jjmod.worldgen.WorldGenWheat;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderFlat;
+import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.InitMapGenEvent;
+import net.minecraftforge.event.terraingen.InitMapGenEvent.EventType;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -161,6 +165,19 @@ public class WorldGenerator implements IWorldGenerator {
             new PopulateChunkRicelake(event.getWorld(), rand)
             .generateChunk(event.getChunkX(), event.getChunkZ());
             return;
+        }
+    }
+    
+    @SubscribeEvent
+    public void cancelVillage(InitMapGenEvent event) {
+        
+        if (event.getType() == EventType.VILLAGE) {
+            System.out.println("got village gen event");
+            event.setNewGen(new MapGenVillage() {
+                
+                @Override
+                public void generate(World world, int x, int z, ChunkPrimer primer) {}
+            });
         }
     }
     

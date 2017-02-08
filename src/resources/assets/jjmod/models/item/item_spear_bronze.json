@@ -1,6 +1,14 @@
 {
-    "parent": "item/generated",
+    "parent": "jjmod:item/item_spear_abstract",
     "textures": {
         "layer0": "jjmod:items/spear_bronze"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "pulling": 1
+            },
+            "model": "jjmod:item/item_spear_bronze_pulling"
+        }
+    ]
 }

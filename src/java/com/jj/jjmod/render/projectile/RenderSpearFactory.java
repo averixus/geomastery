@@ -25,6 +25,6 @@ protected ResourceLocation texture;
     public Render<? super EntityArrow> createRenderFor(
             RenderManager manager) {
 
-        return new RenderArrow(manager, this.texture);
+        return new RenderSpear(manager, this.texture);
     }
 }

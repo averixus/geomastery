@@ -12,4 +12,10 @@ public class ItemApparel extends ItemArmor {
         super(material, (slot == EntityEquipmentSlot.LEGS ? 2 : 1), slot);
         ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
     }
+    
+    public ItemApparel(String name, ArmorMaterial material, EntityEquipmentSlot slot, CreativeTabs tab) {
+        
+        this(name, material, slot);
+        this.setCreativeTab(tab);
+    }
 }

@@ -420,8 +420,8 @@ public class ModItems {
                 () -> bucketWater, () -> bucketTar), true);
         register(bucketMilk = new ItemNew("bucket_milk", 1, CreativeTabs.MISC));
         
-        register(backpack = new ItemNew("backpack"));
-        register(yoke = new ItemNew("yoke"));
+        register(backpack = new ItemNew("backpack", 1, CreativeTabs.TRANSPORTATION));
+        register(yoke = new ItemNew("yoke", 1, CreativeTabs.TRANSPORTATION));
 
         register(amethyst = new ItemNew("amethyst", 64));
         register(fireopal = new ItemNew("fireopal", 64));
@@ -450,7 +450,7 @@ public class ModItems {
         register(thicklog = new ItemNew("thicklog"));
         register(timber = new ItemNew("timber", 3));
 
-        register(claybricks = new ItemNew("clayrbcisk"));
+        register(claybricks = new ItemNew("claybricks"));
         register(dirt = new ItemNew("dirt", 4));
         register(mudbricks = new ItemNew("mudbricks"));
         register(peatDry = new ItemNew("peat_dry"));
@@ -471,7 +471,7 @@ public class ModItems {
         register(potClay = new ItemNew("pot_clay"));
         register(potMetal = new ItemNew("pot_metal"));
 
-        register(craftingCandlemaker = new ItemCraftingCandlemaker());
+        register(craftingCandlemaker = new ItemCraftingCandlemaker(), true);
         register(craftingClayworks = new ItemCraftingClayworks(), true);
         register(craftingForge = new ItemCraftingForge(), true);
         register(craftingMason = new ItemCraftingMason(), true);
@@ -612,27 +612,27 @@ public class ModItems {
         register(shieldSteel = new ItemShield("shield_steel", 200));
         
         register(cottonHead = new ItemApparel("cotton_head",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.HEAD));
+                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
         register(cottonChest = new ItemApparel("cotton_chest",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.CHEST));
+                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
         register(cottonLegs = new ItemApparel("cotton_legs",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.LEGS));
+                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
         register(cottonFeet = new ItemApparel("cotton_feet",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.FEET));
+                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.FEET, CreativeTabs.MISC));
         
         register(woolHead = new ItemApparel("wool_head",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.HEAD));
+                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
         register(woolChest = new ItemApparel("wool_chest",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.CHEST));
+                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
         register(woolLegs = new ItemApparel("wool_legs",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.LEGS));
+                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
         register(woolFeet = new ItemApparel("wool_feet",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.FEET));
+                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.FEET, CreativeTabs.MISC));
         
-        register(furHead = new ItemApparel("fur_head", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.HEAD));
-        register(furChest = new ItemApparel("fur_chest", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.CHEST));
-        register(furLegs = new ItemApparel("fur_legs", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.LEGS));
-        register(furFeet = new ItemApparel("fur_feet", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.FEET));
+        register(furHead = new ItemApparel("fur_head", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
+        register(furChest = new ItemApparel("fur_chest", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
+        register(furLegs = new ItemApparel("fur_legs", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
+        register(furFeet = new ItemApparel("fur_feet", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.FEET, CreativeTabs.MISC));
         
         register(steelmailHead = new ItemApparel("mail_head",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD));
