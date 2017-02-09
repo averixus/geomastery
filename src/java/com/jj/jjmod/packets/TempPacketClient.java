@@ -1,9 +1,7 @@
 package com.jj.jjmod.packets;
 
-import com.jj.jjmod.capabilities.CapTemperature;
-import com.jj.jjmod.capabilities.DefaultCapTemperature;
-import com.jj.jjmod.capabilities.DefaultCapTemperature.EnumTempIcon;
-
+import com.jj.jjmod.capabilities.CapPlayer;
+import com.jj.jjmod.utilities.TempStage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,33 +9,33 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class TemperatureUpdateClient implements IMessage {
+public class TempPacketClient implements IMessage {
     
-    protected int icon;
+    protected int stage;
     
-    public TemperatureUpdateClient() {}
+    public TempPacketClient() {}
     
-    public TemperatureUpdateClient(int icon) {
+    public TempPacketClient(TempStage stage) {
         
-        this.icon = icon;
+        this.stage = stage.ordinal();
     }
     
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        this.icon = buf.readInt();
+        this.stage = buf.readInt();
     }
     
     @Override
     public void toBytes(ByteBuf buf) {
         
-        buf.writeInt(this.icon);
+        buf.writeInt(this.stage);
     }
     
-    public static class Handler implements IMessageHandler<TemperatureUpdateClient, IMessage> {
+    public static class Handler implements IMessageHandler<TempPacketClient, IMessage> {
         
         @Override
-        public IMessage onMessage(TemperatureUpdateClient message, MessageContext ctx) {
+        public IMessage onMessage(TempPacketClient message, MessageContext ctx) {
             
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 
@@ -51,10 +49,10 @@ public class TemperatureUpdateClient implements IMessage {
             return null;
         }
         
-        public void processMessage(TemperatureUpdateClient message) {
+        public void processMessage(TempPacketClient message) {
             
             EntityPlayer player = Minecraft.getMinecraft().player;
-            player.getCapability(CapTemperature.CAP_TEMPERATURE, null).processMessage(message.icon);
+            player.getCapability(CapPlayer.CAP_PLAYER, null).processTempMessage(TempStage.values()[message.stage]);
         }
     }
 }

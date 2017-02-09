@@ -2,6 +2,7 @@ package com.jj.jjmod.init;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
+import com.jj.jjmod.entities.projectile.EntityProjectile;
 import com.jj.jjmod.items.ItemApparel;
 import com.jj.jjmod.items.ItemArrowBronze;
 import com.jj.jjmod.items.ItemArrowCopper;
@@ -12,6 +13,7 @@ import com.jj.jjmod.items.ItemAxe;
 import com.jj.jjmod.items.ItemBeam;
 import com.jj.jjmod.items.ItemBedBreakableAbstract;
 import com.jj.jjmod.items.ItemBedPlainAbstract;
+import com.jj.jjmod.items.ItemBow;
 import com.jj.jjmod.items.ItemBucket;
 import com.jj.jjmod.items.ItemCraftingArmourer;
 import com.jj.jjmod.items.ItemCraftingCandlemaker;
@@ -21,13 +23,11 @@ import com.jj.jjmod.items.ItemCraftingMason;
 import com.jj.jjmod.items.ItemCraftingSawpit;
 import com.jj.jjmod.items.ItemCraftingTextiles;
 import com.jj.jjmod.items.ItemCraftingWoodworking;
-import com.jj.jjmod.items.ItemCrudebow;
 import com.jj.jjmod.items.ItemDoor;
 import com.jj.jjmod.items.ItemEdible;
-import com.jj.jjmod.items.ItemEdible.FoodType;
 import com.jj.jjmod.items.ItemEdibleDecayable;
-import com.jj.jjmod.items.ItemEdibleDecayableSeed;
 import com.jj.jjmod.items.ItemEdibleDecayablePoison;
+import com.jj.jjmod.items.ItemEdibleDecayableSeed;
 import com.jj.jjmod.items.ItemEdibleSeed;
 import com.jj.jjmod.items.ItemFloor;
 import com.jj.jjmod.items.ItemFurnaceClay;
@@ -54,6 +54,7 @@ import com.jj.jjmod.items.ItemWall;
 import com.jj.jjmod.items.ItemWoolknife;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.utilities.EquipMaterial;
+import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -324,7 +325,8 @@ public class ModItems {
     public static ItemApparel steelplateLegs;
     public static ItemApparel steelplateFeet;
 
-    public static ItemCrudebow bowCrude;
+    public static ItemBow bowCrude;
+    public static ItemBow bowNormal;
     
     public static ItemWall wallBrick;
     public static ItemWall wallMud;
@@ -652,7 +654,8 @@ public class ModItems {
         register(steelplateFeet = new ItemApparel("plate_feet",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET));
 
-        register(bowCrude = new ItemCrudebow());
+        register(bowCrude = new ItemBow("bow_crude", 200, EntityProjectile.CRUDE_MOD));
+        register(bowNormal = new ItemBow("bow_normal", 384, EntityProjectile.BOW_MOD));
         
         register(wallBrick = new ItemWall("wall_brick", 1,
                 ModBlocks.wallBrickSingle, ModBlocks.wallBrickDouble));

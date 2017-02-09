@@ -1,8 +1,7 @@
 package com.jj.jjmod.packets;
 
-import com.jj.jjmod.capabilities.CapFoodstats;
-import com.jj.jjmod.capabilities.DefaultCapFoodstats;
-import com.jj.jjmod.items.ItemEdible.FoodType;
+import com.jj.jjmod.capabilities.CapPlayer;
+import com.jj.jjmod.utilities.FoodType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,14 +9,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class FoodUpdateClient implements IMessage {
+public class FoodPacketClient implements IMessage {
     
     protected int type;
     protected int hunger;
     
-    public FoodUpdateClient() {}
+    public FoodPacketClient() {}
     
-    public FoodUpdateClient(FoodType type, int hunger) {
+    public FoodPacketClient(FoodType type, int hunger) {
         
         this.type = type.ordinal();
         this.hunger = hunger;
@@ -38,10 +37,10 @@ public class FoodUpdateClient implements IMessage {
     }
     
     public static class Handler
-            implements IMessageHandler<FoodUpdateClient, IMessage> {
+            implements IMessageHandler<FoodPacketClient, IMessage> {
         
         @Override
-        public IMessage onMessage(FoodUpdateClient message,
+        public IMessage onMessage(FoodPacketClient message,
                 MessageContext ctx) {
             
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
@@ -56,12 +55,11 @@ public class FoodUpdateClient implements IMessage {
             return null;
         }
         
-        public void processMessage(FoodUpdateClient message) {
+        public void processMessage(FoodPacketClient message) {
             
             EntityPlayer player = Minecraft.getMinecraft().player;
-            ((DefaultCapFoodstats) player
-                    .getCapability(CapFoodstats.CAP_FOODSTATS, null))
-                    .processMessage(FoodType.values()[message.type],
+            player.getCapability(CapPlayer.CAP_PLAYER, null)
+                    .processFoodMessage(FoodType.values()[message.type],
                     message.hunger);
         }
     }

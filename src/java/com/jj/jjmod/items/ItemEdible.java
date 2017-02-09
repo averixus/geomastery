@@ -1,7 +1,8 @@
 package com.jj.jjmod.items;
 
-import com.jj.jjmod.capabilities.CapFoodstats;
-import com.jj.jjmod.capabilities.ICapFoodstats;
+import com.jj.jjmod.capabilities.CapPlayer;
+import com.jj.jjmod.capabilities.ICapPlayer;
+import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -24,16 +25,17 @@ public class ItemEdible extends ItemFood {
     }
     
     @Override
-    public ActionResult<ItemStack> onItemRightClick (World world,
+    public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
         
         ItemStack stack = player.getHeldItem(hand);
-        ICapFoodstats food = player
-                .getCapability(CapFoodstats.CAP_FOODSTATS, null);
-        
-        if (food.canEat(this.type)) {
-            
-            super.onItemRightClick(world, player, hand);
+        ICapPlayer capability = player
+                .getCapability(CapPlayer.CAP_PLAYER, null);
+        System.out.println("on item right click " + this);
+        if (capability.canEat(this.type)) {
+            System.out.println("can eat, eating");
+            player.setActiveHand(hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
         
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
@@ -42,10 +44,5 @@ public class ItemEdible extends ItemFood {
     public FoodType getType() {
         
         return this.type;
-    }
-    
-    public enum FoodType {
-        
-        CARBS, PROTEIN, FRUITVEG;
     }
 }

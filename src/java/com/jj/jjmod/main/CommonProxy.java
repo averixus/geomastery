@@ -20,7 +20,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
-    public static final EventHandler EVENTS = new EventHandler();
+    public static final GuiEventHandler GUI = new GuiEventHandler();
+    public static final BlockEventHandler BLOCK = new BlockEventHandler();
+    public static final EntityEventHandler ENTITY = new EntityEventHandler();
+    public static final PlayerEventHandler PLAYER = new PlayerEventHandler();
+    public static final CapabilityEventHandler CAPABILITY = new CapabilityEventHandler();
     public static final IWorldGenerator WORLDGEN = new WorldGenerator();
 
     public void preInit(FMLPreInitializationEvent e) {
@@ -34,7 +38,11 @@ public class CommonProxy {
         
         GameRegistry.registerWorldGenerator(WORLDGEN, 0);
         MinecraftForge.TERRAIN_GEN_BUS.register(WORLDGEN);
-        MinecraftForge.EVENT_BUS.register(EVENTS);
+        MinecraftForge.EVENT_BUS.register(GUI);
+        MinecraftForge.EVENT_BUS.register(BLOCK);
+        MinecraftForge.EVENT_BUS.register(ENTITY);
+        MinecraftForge.EVENT_BUS.register(PLAYER);
+        MinecraftForge.EVENT_BUS.register(CAPABILITY);
     }
 
     public void init(FMLInitializationEvent e) {

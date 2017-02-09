@@ -1,15 +1,11 @@
  package com.jj.jjmod.items;
 
-import java.lang.reflect.Type;
 import javax.annotation.Nullable;
 import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.container.ContainerInventory.InvType;
-import com.jj.jjmod.entities.projectile.EntityArrowBronze;
-import com.jj.jjmod.entities.projectile.EntityArrowCopper;
-import com.jj.jjmod.entities.projectile.EntityArrowFlint;
-import com.jj.jjmod.entities.projectile.EntityArrowSteel;
-import com.jj.jjmod.entities.projectile.EntityArrowWood;
+import com.jj.jjmod.entities.projectile.EntityProjectile;
 import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.utilities.InvLocation;
+import com.jj.jjmod.utilities.InvLocation.InvType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,16 +24,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCrudebow extends ItemNew {
+public class ItemBow extends ItemNew {
     
     public static final Class[] PRIORITY = {ItemArrowSteel.class, ItemArrowBronze.class, ItemArrowCopper.class, ItemArrowFlint.class, ItemArrowWood.class};
     
-    public ItemCrudebow() {
+    private float powerModifier;
+    
+    public ItemBow(String name, int durability, float powerModifier) {
 
-        super("crudebow", 1, CreativeTabs.COMBAT);
-        this.setMaxDamage(200);
+        super(name, 1, CreativeTabs.COMBAT);
+        this.setMaxDamage(durability);
 
-        // Check how far the bow is pulled for the texture
+        // Check how far the bow is pulled for the model
         this.addPropertyOverride(new ResourceLocation("pull"),
                 new IItemPropertyGetter() {
 
@@ -61,7 +59,7 @@ public class ItemCrudebow extends ItemNew {
             }
         });
 
-        // Check whether the bow is being pulled for the texture
+        // Check whether the bow is being pulled for the model
         this.addPropertyOverride(new ResourceLocation("pulling"),
                 new IItemPropertyGetter() {
 
@@ -83,15 +81,19 @@ public class ItemCrudebow extends ItemNew {
         });
     }
 
-    private int findAmmoSlot(EntityPlayer player) {
+    private InvLocation findAmmoSlot(EntityPlayer player) {
 
-        if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
+        InvType invType = InvType.MAIN;
+        int index = -1;
+        
+        if (player.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemArrow) {
 
-            return 0;
+            index = 0;
+            invType = InvType.OFFHAND;
 
-        } else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
+        } else if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemArrow) {
 
-            return player.inventory.currentItem;
+            index = player.inventory.currentItem;
 
         } else {
 
@@ -103,38 +105,13 @@ public class ItemCrudebow extends ItemNew {
     
                     if (type.isAssignableFrom(stack.getItem().getClass())) {
     
-                        return i;
+                        index = i;
                     }
                 }
             }
-
-            return -1;
-        }
-    }
-    
-    private ItemStack getAmmoStack(EntityPlayer player, int slot) {
-        
-        ItemStack check = player.inventory.mainInventory.get(slot);
-        
-        if (this.isArrow(check)) {
-            
-            return check;
         }
         
-        check = player.inventory.offHandInventory.get(slot);
-        
-        if (this.isArrow(check)) {
-            
-            return check;
-        }
-        
-        return ItemStack.EMPTY;
-    }
-
-    // Check whether itemstack is an arrow
-    protected boolean isArrow(@Nullable ItemStack stack) {
-
-        return stack != null && stack.getItem() instanceof ItemArrow;
+        return new InvLocation(player, invType, index);
     }
 
     @Override
@@ -148,19 +125,11 @@ public class ItemCrudebow extends ItemNew {
 
         EntityPlayer player = (EntityPlayer) entity;
         boolean creative = player.capabilities.isCreativeMode;
-        int ammoSlot = this.findAmmoSlot(player);
-        ItemStack ammo = this.getAmmoStack(player, ammoSlot);
-        
-        int timeSpent = this.getMaxItemUseDuration(stack) - timeLeft;
+        InvLocation ammoSlot = this.findAmmoSlot(player);
+        ItemStack ammo = ammoSlot.getStack();
+        int chargeTime = this.getMaxItemUseDuration(stack) - timeLeft;
 
-        if ((net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack,
-                world, player, timeSpent,
-                stack != null || creative)) < 0) {
-
-            return;
-        }
-
-        if (ammo == ItemStack.EMPTY) {
+        if (ammo.isEmpty()) {
 
             if (creative) {
 
@@ -172,7 +141,7 @@ public class ItemCrudebow extends ItemNew {
             }
         }
 
-        float velocity = getArrowVelocity(timeSpent);
+        float velocity = getArrowVelocity(chargeTime);
 
         if (velocity < 0.1 || world.isRemote) {
 
@@ -181,54 +150,44 @@ public class ItemCrudebow extends ItemNew {
 
         // Create entity arrow
         Item arrow = ammo.getItem();
+        EntityProjectile entityArrow;
 
         if (arrow == ModItems.arrowWood) {
 
             ItemArrowWood arrowType = (ItemArrowWood) ammo.getItem();
-            EntityArrowWood entityArrow =
+            entityArrow =
                     arrowType.createArrow(world, ammo, player);
-            entityArrow.setAim(player, player.rotationPitch,
-                    player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntity(entityArrow);
+
 
         } else if (arrow == ModItems.arrowFlint) {
 
             ItemArrowFlint arrowType = (ItemArrowFlint) ammo.getItem();
-            EntityArrowFlint entityArrow =
+            entityArrow =
                     arrowType.createArrow(world, ammo, player);
-            entityArrow.setAim(player, player.rotationPitch,
-                    player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntity(entityArrow);
 
         } else if (arrow == ModItems.arrowCopper) {
 
             ItemArrowCopper arrowType = (ItemArrowCopper) ammo.getItem();
-            EntityArrowCopper entityArrow =
+            entityArrow =
                     arrowType.createArrow(world, ammo, player);
-            entityArrow.setAim(player, player.rotationPitch,
-                    player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntity(entityArrow);
 
         } else if (arrow == ModItems.arrowBronze) {
 
             ItemArrowBronze arrowType = (ItemArrowBronze) ammo.getItem();
-            EntityArrowBronze entityArrow =
+            entityArrow =
                     arrowType.createArrow(world, ammo, player);
-            entityArrow.setAim(player, player.rotationPitch,
-                    player.rotationYaw, 0F, velocity * 2F, 1F);
-            world.spawnEntity(entityArrow);
 
         } else {
 
             ItemArrowSteel arrowType = (ItemArrowSteel) ammo.getItem();
-            EntityArrowSteel entityArrow =
+            entityArrow =
                     arrowType.createArrow(world, ammo, player);
-            entityArrow.setAim(player, player.rotationPitch,
-                    player.rotationYaw, 0F, velocity * 2.55F, 1F);
-            world.spawnEntity(entityArrow);
 
         }
-
+        
+        entityArrow.setAim(player, player.rotationPitch,
+                player.rotationYaw, 0F, velocity * this.powerModifier, 1F);
+        world.spawnEntity(entityArrow);
         world.playSound(null, player.posX, player.posY, player.posZ,
                 SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F,
                 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
@@ -238,21 +197,22 @@ public class ItemCrudebow extends ItemNew {
         if (!creative) {
 
             ammo.shrink(1);
-
-            if (ammo.getCount() == 0) {
-
-                player.inventory.deleteStack(ammo);
-            }
             
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
-            ((ContainerInventory) player.inventoryContainer).sendUpdateInventory(InvType.INVENTORY, ammoSlot, ammo);
+            if (ammoSlot.getType() == InvType.OFFHAND) {
+            
+                ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+                
+            } else {
+            
+                ((ContainerInventory) player.inventoryContainer).sendUpdateInventory(ammoSlot.getIndex(), ammo);
+            }
         }
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-        boolean hasAmmo = this.findAmmoSlot(player) != -1;
+        boolean hasAmmo = this.findAmmoSlot(player).isValid();
         ItemStack stack = player.getHeldItem(hand);
 
         ActionResult<ItemStack> action = net.minecraftforge.event

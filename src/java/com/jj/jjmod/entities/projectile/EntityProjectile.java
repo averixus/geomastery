@@ -1,7 +1,5 @@
 package com.jj.jjmod.entities.projectile;
 
-import com.jj.jjmod.capabilities.CapInventory;
-import com.jj.jjmod.capabilities.DefaultCapInventory;
 import com.jj.jjmod.container.ContainerInventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class EntityProjectile extends EntityArrow {
+    
+    public static final float BOW_MOD = 3F;
+    public static final float CRUDE_MOD = 2F;
+    public static final float SPEAR_MOD = 1.8F;
     
     public EntityProjectile(World world, double damage) {
         

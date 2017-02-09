@@ -18,7 +18,7 @@ public class GuiDrying extends GuiContainer {
 
         super(container);
         this.TEXTURE = "jjmod:textures/gui/drying_" +
-                container.capInv.getInventoryRows() + ".png";
+                container.capability.getInventoryRows() + ".png";
     }
 
     @Override

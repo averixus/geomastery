@@ -6,25 +6,25 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class ProviderCapTemperature implements ICapabilitySerializable {
-
-    private final DefaultCapTemperature instance;
+public class ProviderCapPlayer implements ICapabilitySerializable {
     
-    public ProviderCapTemperature(DefaultCapTemperature instance) {
+    private final ICapPlayer instance;
+    
+    public ProviderCapPlayer(ICapPlayer instance) {
         
         this.instance = instance;
     }
     
     @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-
-        return capability == CapTemperature.CAP_TEMPERATURE;
+    public boolean hasCapability(Capability<?> capability, EnumFacing side) {
+        
+        return capability == CapPlayer.CAP_PLAYER;
     }
     
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, EnumFacing side) {
         
-        if (capability == CapTemperature.CAP_TEMPERATURE) {
+        if (capability == CapPlayer.CAP_PLAYER) {
             
             return (T) this.instance;
         }
@@ -34,13 +34,14 @@ public class ProviderCapTemperature implements ICapabilitySerializable {
     
     @Override
     public NBTBase serializeNBT() {
-
+        
         return this.instance.serializeNBT();
     }
-
+    
     @Override
     public void deserializeNBT(NBTBase nbt) {
-
+        
         this.instance.deserializeNBT((NBTTagCompound) nbt);
     }
+
 }

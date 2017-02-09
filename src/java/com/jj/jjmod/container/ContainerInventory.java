@@ -1,19 +1,16 @@
 package com.jj.jjmod.container;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import javax.annotation.Nullable;
 import com.jj.jjmod.container.slots.SlotArmour;
-import com.jj.jjmod.container.slots.SlotCarry;
-import com.jj.jjmod.container.slots.SlotCarry.CarryType;
+import com.jj.jjmod.container.slots.SlotBackpack;
 import com.jj.jjmod.container.slots.SlotCrafting;
+import com.jj.jjmod.container.slots.SlotYoke;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
-import com.jj.jjmod.packets.InventoryUpdateClient;
-import com.jj.jjmod.packets.InventoryUpdateServer;
+import com.jj.jjmod.packets.ContainerPacketClient;
+import com.jj.jjmod.packets.ContainerPacketServer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
@@ -53,7 +50,7 @@ public class ContainerInventory extends ContainerAbstract {
     public static final int LEGS_I = 1;
     public static final int CHEST_I = 2;
     public static final int HEAD_I = 3;
-    public static final int SHIELD_I = 4;
+    public static final int OFFHAND_I = 4;
     public static final int BACKPACK_I = 5;
     public static final int YOKE_I = 6;
     public final int CRAFT_START = 7;
@@ -86,10 +83,10 @@ public class ContainerInventory extends ContainerAbstract {
                 ARMOUR_X, HEAD_Y, EntityEquipmentSlot.HEAD));
         this.addSlotToContainer(new SlotArmour(this.playerInv, this.player,
                 SHIELD_X, EQUIP_Y, EntityEquipmentSlot.OFFHAND));
-        this.addSlotToContainer(new SlotCarry(this.player,
-                BACKPACK_X, EQUIP_Y, CarryType.BACKPACK));
-        this.addSlotToContainer(new SlotCarry(this.player,
-                YOKE_X, EQUIP_Y, CarryType.YOKE));
+        this.addSlotToContainer(new SlotBackpack(this.player,
+                BACKPACK_X, EQUIP_Y));
+        this.addSlotToContainer(new SlotYoke(this.player,
+                YOKE_X, EQUIP_Y));
 
         // Inventory and craft grid slots
         this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
@@ -127,7 +124,7 @@ public class ContainerInventory extends ContainerAbstract {
         this.INV_END = this.INV_START + this.buildInvgrid();
 
         // Move or drop excess items
-        for (int i = this.capInv.getInventorySize();
+        for (int i = this.capability.getInventorySize();
                 i < this.playerInv.mainInventory.size(); i++) {
 
             ItemStack drop = this.playerInv.removeStackFromSlot(i);
@@ -148,7 +145,7 @@ public class ContainerInventory extends ContainerAbstract {
     private void setBackground() {
         
         this.background = new ResourceLocation("jjmod:textures/gui/inventory_"
-                + this.capInv.getInventoryRows() + ".png");
+                + this.capability.getInventoryRows() + ".png");
     }
     
     public ResourceLocation getBackground() {
@@ -183,7 +180,7 @@ public class ContainerInventory extends ContainerAbstract {
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
         ItemStack remaining = stack.copy();
 
-        for (int slot = 0; slot < this.capInv.getInventorySize() &&
+        for (int slot = 0; slot < this.capability.getInventorySize() &&
                 !remaining.isEmpty(); slot++) {
 
             if (ItemStack.areItemsEqual(remaining, inv.get(slot))) {
@@ -200,7 +197,7 @@ public class ContainerInventory extends ContainerAbstract {
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
         ItemStack remaining = stack.copy();
 
-        for (int slot = 0; slot < this.capInv.getInventorySize() &&
+        for (int slot = 0; slot < this.capability.getInventorySize() &&
                 !remaining.isEmpty(); slot++) {
 
             if (inv.get(slot).isEmpty()) {
@@ -255,7 +252,7 @@ public class ContainerInventory extends ContainerAbstract {
             }
         }
         
-        this.sendUpdateInventory(InvType.INVENTORY, slot, inv.get(slot));
+        this.sendUpdateInventory(slot, inv.get(slot));
         return result;
     }
 
@@ -290,8 +287,8 @@ public class ContainerInventory extends ContainerAbstract {
                 if (stack != ItemStack.EMPTY) {
 
                     player.dropItem(stack, false);
-                    this.sendUpdateInventory(InvType.CRAFTGRID,
-                            i, ItemStack.EMPTY);
+              //      this.sendUpdateInventory(InvType.CRAFTGRID,
+              //              i, ItemStack.EMPTY);
                 }
             }
         }
@@ -362,10 +359,10 @@ public class ContainerInventory extends ContainerAbstract {
         }
 
         if (slotItem instanceof ItemShield &&
-                !this.inventorySlots.get(SHIELD_I).getHasStack()) {
+                !this.inventorySlots.get(OFFHAND_I).getHasStack()) {
 
             if (!this.mergeItemStack(slotStack,
-                    SHIELD_I, SHIELD_I + 1, true)) {
+                    OFFHAND_I, OFFHAND_I + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -428,36 +425,7 @@ public class ContainerInventory extends ContainerAbstract {
         }
 
         slot.onSlotChanged();
-        
         return result;
-    }
-
-    public void setStack(InvType type, int slot, ItemStack stack) {
-
-        ItemStack replace = (stack == ItemStack.EMPTY ||
-                stack.getCount() == 0) ?
-                ItemStack.EMPTY : stack;
-
-        switch (type) {
-
-            case INVENTORY: {
-
-                this.playerInv.mainInventory.set(slot, replace);
-                break;
-            }
-
-            case OFFHAND: {
-
-                this.playerInv.offHandInventory.set(slot, replace);
-                break;
-            }
-
-            case CRAFTGRID: {
-
-                this.craftMatrix.setInventorySlotContents(slot, replace);
-                break;
-            }
-        }
     }
 
     public void swapHands() {
@@ -471,37 +439,30 @@ public class ContainerInventory extends ContainerAbstract {
 
     public void sendUpdateOffhand() {
 
-        sendUpdateInventory(InvType.INVENTORY, this.playerInv.currentItem,
-                this.playerInv.mainInventory.get(this.playerInv.currentItem));
-        sendUpdateInventory(InvType.OFFHAND, 0,
+        sendUpdateInventory(OFFHAND_I,
                 this.playerInv.offHandInventory.get(0));
     }
 
     public void sendUpdateHighlight() {
 
-        sendUpdateInventory(InvType.INVENTORY, this.playerInv.currentItem,
+        sendUpdateInventory(this.playerInv.currentItem,
                 this.playerInv.mainInventory.get(this.playerInv.currentItem));
     }
 
-    public void sendUpdateInventory(InvType type, int slot, ItemStack stack) {
+    public void sendUpdateInventory(int slot, ItemStack stack) {
+        System.out.println("sending update for slot " + slot);
+        slot += this.HOT_START;
+        System.out.println("container index " + slot);
 
         if (this.player instanceof EntityPlayerMP) {
 
             ModPackets.INSTANCE
-                    .sendTo(new InventoryUpdateClient(type, slot, stack),
+                    .sendTo(new ContainerPacketClient(slot, stack),
                     (EntityPlayerMP) this.player);
 
         } else {
 
-            ModPackets.INSTANCE.sendToServer(new InventoryUpdateServer(type,
-                    slot, stack));
+            ModPackets.INSTANCE.sendToServer(new ContainerPacketServer(slot, stack));
         }
-    }
-
-    public enum InvType {
-
-        INVENTORY,
-        OFFHAND,
-        CRAFTGRID;
     }
 }

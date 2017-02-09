@@ -12,11 +12,89 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FoodStatsPartial extends FoodStats {
     
-    protected int hunger = 20;
-    protected float saturation = 5.0F;
-    protected float exhaustion;
-    protected int timer;
-    protected int prevHunger = 20;
+    private int hunger = 20;
+    private float saturation = 5.0F;
+    private float exhaustion;
+    private int damageTimer;
+    private int healTimer;
+    private EntityPlayer player;
+    
+    public FoodStatsPartial(EntityPlayer player) {
+        
+        this.player = player;
+    }
+    
+    public boolean tickHunger() {
+        
+        boolean hasChanged = false;
+                
+        if (this.exhaustion > 4.0F) {
+            
+            this.exhaustion -= 4.0F;
+
+            if (this.saturation > 0.0F) {
+                
+                this.saturation = Math.max(this.saturation - 1.0F, 0.0F);
+                
+            } else {
+                
+                this.hunger = Math.max(this.hunger - 1, 0);
+                hasChanged = true;
+            }
+        }
+        
+        if (this.hunger <= 0) {
+            
+            this.damageTimer++;
+            
+            if (this.damageTimer >= 240) {
+                
+                if (this.player.getHealth() > 1.0F) {
+                    
+                    this.player.attackEntityFrom(DamageSource.STARVE, 1.0F);
+                }
+                
+                this.damageTimer = 0;
+            }
+            
+        } else {
+            
+            this.damageTimer = 0;
+        }
+        
+        return hasChanged;
+    }
+    
+    public void heal() {
+        
+        if (this.saturation > 0.0F && this.hunger >= 20) {
+            
+            this.healTimer++;
+            
+            if (this.healTimer >= 30) {
+                
+                float f = Math.min(this.saturation, 4.0F);
+                this.player.heal(f / 4.0F);
+                this.addExhaustion(f);
+                this.healTimer = 0;
+            }
+            
+        } else if (this.hunger >= 18) {
+            
+            this.healTimer++;
+            
+            if (this.healTimer >= 240) {
+
+                this.player.heal(1.0F);
+                this.addExhaustion(4.0F);
+                this.healTimer = 0;
+            }
+            
+        } else {
+            
+            this.healTimer = 0;
+        }
+    }
     
     @Override
     public void addStats(int hunger, float saturation) {
@@ -29,106 +107,6 @@ public class FoodStatsPartial extends FoodStats {
     public void addStats(ItemFood item, ItemStack stack) {
         
         this.addStats(item.getHealAmount(stack), item.getSaturationModifier(stack));
-    }
-    
-    @Override
-    public void onUpdate(EntityPlayer player) {}
-    
-    public boolean update(EntityPlayer player) {
-        
-        if (player.world.isRemote) {
-            
-            return false;
-        }
-        
-        boolean hasChanged = false;
-        EnumDifficulty difficulty = player.world.getDifficulty();
-        this.prevHunger = this.hunger;
-        
-        if (this.exhaustion > 4.0F) {
-            
-            this.exhaustion -= 4.0F;
-
-            if (this.saturation > 0.0F) {
-                
-                this.saturation = Math.max(this.saturation - 1.0F, 0.0F);
-                
-            } else if (difficulty != EnumDifficulty.PEACEFUL) {
-                
-                this.hunger = Math.max(this.hunger - 1, 0);
-                hasChanged = true;
-            }
-        }
-        
-        boolean regen = player.world.getGameRules().getBoolean("naturalRegeneration");
-        
-        if (regen && this.saturation > 0.0F && player.shouldHeal() && this.hunger >= 20) {
-            
-            this.timer++;
-            
-            if (this.timer >= 30) {
-                
-                float f = Math.min(this.saturation, 4.0F);
-                player.heal(f / 4.0F);
-                this.addExhaustion(f);
-                this.timer = 0;
-            }
-            
-        } else if (regen && this.hunger >= 18 && player.shouldHeal()) {
-            
-            this.timer++;
-            
-            if (this.timer >= 240) {
-
-                player.heal(1.0F);
-                this.addExhaustion(4.0F);
-                this.timer = 0;
-            }
-            
-        } else if (this.hunger <= 0) {
-            
-            this.timer++;
-            
-            if (this.timer >= 240) {
-                
-                if (player.getHealth() > 10.0F ||
-                        difficulty == EnumDifficulty.HARD ||
-                        (player.getHealth() > 1.0F &&
-                        difficulty == EnumDifficulty.NORMAL)) {
-                    
-                    player.attackEntityFrom(DamageSource.STARVE, 1.0F);
-                }
-                
-                this.timer = 0;
-            }
-            
-        } else {
-            
-            this.timer = 0;
-        }
-        
-        return hasChanged;
-    }
-    
-    @Override
-    public void readNBT(NBTTagCompound nbt) {
-
-        if (nbt.hasKey("hunger", 99)) {
-            
-            this.hunger = nbt.getInteger("hunger");
-            this.timer = nbt.getInteger("timer");
-            this.saturation = nbt.getFloat("saturation");
-            this.exhaustion = nbt.getFloat("exhaustion");
-        }
-    }
-    
-    @Override
-    public void writeNBT(NBTTagCompound nbt) {
-
-        nbt.setInteger("hunger", this.hunger);
-        nbt.setInteger("timer", this.timer);
-        nbt.setFloat("saturation", this.saturation);
-        nbt.setFloat("exhaustion", this.exhaustion);
     }
     
     @Override
@@ -176,5 +154,32 @@ public class FoodStatsPartial extends FoodStats {
     public void setFoodSaturationLevel(float saturation) {
 
         this.saturation = saturation;
+    }
+    
+    /** Unused from super */
+    @Override
+    public void onUpdate(EntityPlayer player) {}
+    
+    @Override
+    public void readNBT(NBTTagCompound nbt) {
+
+        if (nbt.hasKey("hunger", 99)) {
+            
+            this.hunger = nbt.getInteger("hunger");
+            this.damageTimer = nbt.getInteger("damageTimer");
+            this.healTimer = nbt.getInteger("healTimer");
+            this.saturation = nbt.getFloat("saturation");
+            this.exhaustion = nbt.getFloat("exhaustion");
+        }
+    }
+    
+    @Override
+    public void writeNBT(NBTTagCompound nbt) {
+
+        nbt.setInteger("hunger", this.hunger);
+        nbt.setInteger("damageTimer", this.damageTimer);
+        nbt.setInteger("healTimer", this.healTimer);
+        nbt.setFloat("saturation", this.saturation);
+        nbt.setFloat("exhaustion", this.exhaustion);
     }
 }

@@ -21,7 +21,7 @@ public class GuiFurnace extends GuiContainer {
 
         super(new ContainerFurnace(player, world, furnaceInv));
         this.TEXTURE = "jjmod:textures/gui/furnace_" +
-                ((ContainerFurnace) this.inventorySlots).capInv
+                ((ContainerFurnace) this.inventorySlots).capability
                 .getInventoryRows() + ".png";
         this.NAME = name;
     }

@@ -1,5 +1,6 @@
 package com.jj.jjmod.items;
 
+import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 

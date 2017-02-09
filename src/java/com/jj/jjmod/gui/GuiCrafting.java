@@ -23,7 +23,7 @@ public class GuiCrafting extends GuiContainer {
         super(new ContainerCrafting(player, world, pos, craftManager));
         this.TEXTURE = "jjmod:textures/gui/crafting_" + 
                     ((ContainerCrafting) this.inventorySlots)
-                    .capInv.getInventoryRows() + ".png";
+                    .capability.getInventoryRows() + ".png";
         this.NAME = name;
     }
 

@@ -1,7 +1,6 @@
 package com.jj.jjmod.packets;
 
-import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.container.ContainerInventory.InvType;
+import com.jj.jjmod.utilities.InvLocation.InvType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,17 +10,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class InventoryUpdateClient implements IMessage {
+public class ContainerPacketClient implements IMessage {
 
-    protected InvType type;
+  //  protected InvType type;
     protected int slot;
     protected ItemStack stack;
 
-    public InventoryUpdateClient() {}
+    public ContainerPacketClient() {}
 
-    public InventoryUpdateClient(InvType type, int slot, ItemStack stack) {
+    public ContainerPacketClient(int slot, ItemStack stack) {
 
-        this.type = type;
+    //    this.type = type;
         this.slot = slot;
         this.stack = stack;
     }
@@ -29,7 +28,7 @@ public class InventoryUpdateClient implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
 
-        this.type = InvType.values()[buf.readInt()];
+     //   this.type = InvType.values()[buf.readInt()];
         this.slot = buf.readInt();
         this.stack = ByteBufUtils.readItemStack(buf);
     }
@@ -37,16 +36,16 @@ public class InventoryUpdateClient implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
 
-        buf.writeInt(this.type.ordinal());
+     //   buf.writeInt(this.type.ordinal());
         buf.writeInt(this.slot);
         ByteBufUtils.writeItemStack(buf, this.stack);
     }
 
     public static class Handler
-            implements IMessageHandler<InventoryUpdateClient, IMessage> {
+            implements IMessageHandler<ContainerPacketClient, IMessage> {
 
         @Override
-        public IMessage onMessage(InventoryUpdateClient message,
+        public IMessage onMessage(ContainerPacketClient message,
                 MessageContext ctx) {
 
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
@@ -61,12 +60,11 @@ public class InventoryUpdateClient implements IMessage {
             return null;
         }
 
-        public void processMessage(InventoryUpdateClient message) {
+        public void processMessage(ContainerPacketClient message) {
 
             EntityPlayer player = Minecraft.getMinecraft().player;
-            ContainerInventory inv =
-                    (ContainerInventory) player.inventoryContainer;
-            inv.setStack(message.type, message.slot, message.stack);
+            player.inventoryContainer.inventorySlots.get(message.slot).putStack(message.stack);
+           // inv.setStack(message.type, message.slot, message.stack);
         }
     }
 }

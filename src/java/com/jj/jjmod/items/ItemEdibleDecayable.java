@@ -1,19 +1,14 @@
 package com.jj.jjmod.items;
 
-import java.util.Arrays;
-import java.util.List;
 import com.jj.jjmod.capabilities.CapDecay;
 import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.init.ModItems;
-import net.minecraft.entity.Entity;
+import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 public class ItemEdibleDecayable extends ItemEdible {

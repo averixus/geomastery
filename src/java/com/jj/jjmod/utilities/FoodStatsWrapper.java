@@ -1,7 +1,6 @@
 package com.jj.jjmod.utilities;
 
-import com.jj.jjmod.capabilities.CapFoodstats;
-import com.jj.jjmod.capabilities.CapInventory;
+import com.jj.jjmod.capabilities.CapPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -19,82 +18,73 @@ public class FoodStatsWrapper extends FoodStats {
         this.player = player;
     }
     
+    /** Used for most eating */
     @Override
     public void addStats(ItemFood item, ItemStack stack) {
         
-        this.player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
+        this.player.getCapability(CapPlayer.CAP_PLAYER, null)
                 .addStats(item, stack);
     }
     
+    /** Update is all executed in event */
     @Override
-    public void onUpdate(EntityPlayer player) {
-        
-        player.getCapability(CapFoodstats.CAP_FOODSTATS, null).update();
-    }
+    public void onUpdate(EntityPlayer player) {}
     
+    /** All data is stored in the capability */
     @Override
-    public void readNBT(NBTTagCompound nbt) {
-
-        // Data is all stored in the capability
-    }
+    public void readNBT(NBTTagCompound nbt) {}
     
+    /** All data is stored in the capability */
     @Override
-    public void writeNBT(NBTTagCompound nbt) {
-        
-        // Data is all stored in the capability
-    }
+    public void writeNBT(NBTTagCompound nbt) {}
     
     
-    // Used to wear down hunger from actions
+    /** Used to wear down hunger from actions */
     @Override
     public void addExhaustion(float exhaustion) {
         
-        this.player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
+        this.player.getCapability(CapPlayer.CAP_PLAYER, null)
                 .addExhaustion(exhaustion);
     }
     
-    // Only used to check whether player is allowed to sprint
+    /** Only used to check whether player is allowed to sprint */
     @Override
     public int getFoodLevel() {
         
-        if (!this.player.getCapability(CapInventory.CAP_INVENTORY, null).canRun()) {
+        if (!this.player.getCapability(CapPlayer.CAP_PLAYER, null).canSprint()) {
             
             return 0;
             
         } else {
         
-        return this.player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
+        return this.player.getCapability(CapPlayer.CAP_PLAYER, null)
                 .getFoodLevel();
         }
     }
     
-    // Only used to check whether player is allowed to eat vanilla food
+    /** Only used to check whether player is allowed to eat vanilla food */
     @Override
     public boolean needFood() {
         
         return false;
     }
     
-    // Only used for eating cake
+    /** Only used for eating vanilla cake */
     @Override
-    public void addStats(int hunger, float saturation) {
-
-        this.player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
-                .addStats(hunger, saturation);
-    }
+    public void addStats(int hunger, float saturation) {}
     
-    // Only used to check whether updates need to be sent
+    /** Only used to check whether updates need to be sent */
     @Override
     public float getSaturationLevel() {
         
         return 5.0F;
     }
     
-    // Only used to process updates
+    /** Only used to process updates */
     @Override
     public void setFoodLevel(int hunger) {}
     
-    // Only used to process updates
+    /** Only used to process updates */
     @Override
     @SideOnly(Side.CLIENT)
     public void setFoodSaturationLevel(float saturation) {} 

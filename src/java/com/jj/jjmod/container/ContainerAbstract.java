@@ -1,7 +1,7 @@
 package com.jj.jjmod.container;
 
-import com.jj.jjmod.capabilities.CapInventory;
-import com.jj.jjmod.capabilities.DefaultCapInventory;
+import com.jj.jjmod.capabilities.CapPlayer;
+import com.jj.jjmod.capabilities.DefaultCapPlayer;
 import com.jj.jjmod.container.slots.SlotInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -20,15 +20,15 @@ public abstract class ContainerAbstract extends Container {
     public static final int INV_X = 8;
 
     public EntityPlayer player;
-    public DefaultCapInventory capInv;
+    public DefaultCapPlayer capability;
     public InventoryPlayer playerInv;
     public World world;
 
     public ContainerAbstract(EntityPlayer player, World world) {
 
         this.player = player;
-        this.capInv = (DefaultCapInventory) player
-                .getCapability(CapInventory.CAP_INVENTORY, null);
+        this.capability = (DefaultCapPlayer) player
+                .getCapability(CapPlayer.CAP_PLAYER, null);
         this.playerInv = player.inventory;
         this.world = world;
 
@@ -67,12 +67,12 @@ public abstract class ContainerAbstract extends Container {
         
         int invIndex = -1;
 
-        if (this.capInv.getInventoryRows() == 0) {
+        if (this.capability.getInventoryRows() == 0) {
             
             return invIndex;
         }
 
-        for (int k = 0; k < this.capInv.getInventoryRows(); k++) {
+        for (int k = 0; k < this.capability.getInventoryRows(); k++) {
 
             for (int l = 0; l < ROW_LENGTH; l++) {
 

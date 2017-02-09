@@ -16,7 +16,7 @@ public class GuiBox extends GuiContainer {
         
         super(container);
         this.TEXTURE = "jjmod:textures/gui/box_" +
-                container.capInv.getInventoryRows() + ".png";
+                container.capability.getInventoryRows() + ".png";
     }
     
     @Override
