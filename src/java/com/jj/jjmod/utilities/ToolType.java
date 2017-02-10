@@ -8,8 +8,7 @@ public enum ToolType {
     KNIFE("knife"),
     SICKLE("sickle"),
     MACHETE("machete"),
-    SHOVEL("shovel"),
-    NONE("none");
+    SHOVEL("shovel");
     
     private String NAME;
     

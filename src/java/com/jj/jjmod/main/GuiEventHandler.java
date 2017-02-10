@@ -1,9 +1,9 @@
 package com.jj.jjmod.main;
 
-import com.jj.jjmod.capabilities.CapPlayer;
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -17,31 +17,33 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
+/** Handler for Gui and player input related events. */
 public class GuiEventHandler {
     
-    /** ------------------------ GUI & INPUT EVENTS ------------------------ */
-    
+    /** Alters HUD rendering. */
     @SubscribeEvent
     public void renderGameOverlay(RenderGameOverlayEvent.Pre event) {
         
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.player;
         
+        // Draw the temperature icon opposite the offhand
         if (event.getType() == ElementType.HOTBAR) {
         
             EnumHandSide hand = player.getPrimaryHand();
-            ResourceLocation icon = player.getCapability(CapPlayer
+            ResourceLocation icon = player.getCapability(ModCapabilities
                     .CAP_PLAYER, null).getTempIcon();
             
-            int width = event.getResolution().getScaledWidth() / 2;
-            width = hand == EnumHandSide.LEFT ? width - 114 : width + 96;
-            int height = event.getResolution().getScaledHeight() - 21;
+            int x = event.getResolution().getScaledWidth() / 2;
+            x = hand == EnumHandSide.LEFT ? x - 114 : x + 96;
+            int y = event.getResolution().getScaledHeight() - 21;
             
             mc.getTextureManager().bindTexture(icon);
-            Gui.drawModalRectWithCustomSizedTexture(width, height,
+            Gui.drawModalRectWithCustomSizedTexture(x, y,
                     0, 0, 18, 18, 18, 18);
         }
         
+        // Draw food bars for each type
         if (event.getType() == ElementType.FOOD) {
 
             GlStateManager.enableBlend();
@@ -50,7 +52,8 @@ public class GuiEventHandler {
             Gui gui = new Gui();
             Minecraft.getMinecraft().getTextureManager()
             .bindTexture(new ResourceLocation("textures/gui/icons.png"));
-            ICapPlayer capability = player.getCapability(CapPlayer.CAP_PLAYER, null);
+            ICapPlayer capability = player.getCapability(ModCapabilities
+                    .CAP_PLAYER, null);
             
             int carbsHunger = capability.foodLevel(FoodType.CARBS);
             
@@ -121,6 +124,7 @@ public class GuiEventHandler {
         }
     }
     
+    /** Alters which vanilla Gui is opened. */
     @SubscribeEvent
     public void guiOpen(GuiOpenEvent event) {
 
@@ -136,6 +140,7 @@ public class GuiEventHandler {
         }
     }
     
+    /** Alters behaviour when keys are pressed. */
     @SubscribeEvent
     public void keyInput(KeyInputEvent event) {
 

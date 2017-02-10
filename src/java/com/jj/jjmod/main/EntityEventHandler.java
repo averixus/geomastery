@@ -11,11 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/** Handler for entity related events. */
 public class EntityEventHandler {
 
-    
-    /** ----------------------- GENERAL ENTITY EVENTS ---------------------- */
-
+    /** Alters drops for vanilla entities. */
     @SubscribeEvent
     public void livingDrops(LivingDropsEvent event) {
 

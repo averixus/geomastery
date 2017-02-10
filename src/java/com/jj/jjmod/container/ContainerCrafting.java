@@ -16,28 +16,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Container for Crafting devices. */
 public class ContainerCrafting extends ContainerAbstract {
 
-    public static final int OUTPUT_X = 124;
-    public static final int OUTPUT_Y = 35;
-    public static final int CRAFT_X = 30;
-    public static final int CRAFT_Y = 17;
-    public static final int CRAFT_COLS = 3;
-    public static final int CRAFT_ROWS = 3;
+    private static final int OUTPUT_X = 124;
+    private static final int OUTPUT_Y = 35;
+    private static final int CRAFT_X = 30;
+    private static final int CRAFT_Y = 17;
+    private static final int CRAFT_COLS = 3;
+    private static final int CRAFT_ROWS = 3;
 
-    public static final int HOT_START = 0;
-    public static final int HOT_END = 8;
-    public static final int INV_START = 9;
+    private static final int HOT_START = 0;
+    private static final int HOT_END = 8;
+    private static final int INV_START = 9;
 
-    public final int INV_END;
-    public final int CRAFT_START;
-    public final int CRAFT_END;
-    public final int OUTPUT_I;
+    private final int invEnd;
+    private final int craftStart;
+    private final int craftEnd;
+    private final int outputI;
 
-    public InventoryCrafting craftMatrix;
-    public IInventory craftResult = new InventoryCraftResult();
-    public CraftingManager craftManager;
-    public BlockPos pos;
+    private InventoryCrafting craftMatrix;
+    private IInventory craftResult = new InventoryCraftResult();
+    private CraftingManager craftManager;
+    private BlockPos pos;
 
     public ContainerCrafting(EntityPlayer player, World world,
             BlockPos pos, CraftingManager craftManager) {
@@ -46,22 +47,24 @@ public class ContainerCrafting extends ContainerAbstract {
         this.craftManager = craftManager;
         this.pos = pos;
 
-        // Inventory and craft grid
+        // Inventory
         this.buildHotbar();
         int invIndex = this.buildInvgrid();
+        
+        // Craft grid
         this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
                 CRAFT_X, CRAFT_Y);
         
         // Output slot
         this.addSlotToContainer(new SlotCrafting(this.player,
-                this.craftMatrix, this.craftResult, 0, OUTPUT_X,
+                this.craftMatrix, this.craftResult, OUTPUT_X,
                 OUTPUT_Y, this.craftManager));
 
         // Container indices
-        this.INV_END = INV_START + invIndex;
-        this.CRAFT_START = this.INV_END + 1;
-        this.CRAFT_END = this.INV_END + this.craftMatrix.getSizeInventory();
-        this.OUTPUT_I = this.CRAFT_END + 1;
+        this.invEnd = INV_START + invIndex;
+        this.craftStart = this.invEnd + 1;
+        this.craftEnd = this.invEnd + this.craftMatrix.getSizeInventory();
+        this.outputI = this.craftEnd + 1;
         
         this.onCraftMatrixChanged(this.craftMatrix);
     }
@@ -95,7 +98,7 @@ public class ContainerCrafting extends ContainerAbstract {
 
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
 
-                if (stack != ItemStack.EMPTY) {
+                if (!stack.isEmpty()) {
 
                     player.dropItem(stack, false);
                 }
@@ -130,10 +133,10 @@ public class ContainerCrafting extends ContainerAbstract {
             ItemStack slotStack = slot.getStack();
             result = slotStack.copy();
 
-            if (index == this.OUTPUT_I) {
+            if (index == this.outputI) {
 
                 if (!this.mergeItemStack(slotStack, HOT_START,
-                        this.INV_END + 1, true)) {
+                        this.invEnd + 1, true)) {
 
                     return ItemStack.EMPTY;
                 }
@@ -144,12 +147,12 @@ public class ContainerCrafting extends ContainerAbstract {
             } else if (index >= HOT_START && index <= HOT_END) {
 
                 if (!this.mergeItemStack(slotStack, INV_START,
-                        this.INV_END + 1, true)) {
+                        this.invEnd + 1, true)) {
 
                     return ItemStack.EMPTY;
                 }
 
-            } else if (index >= INV_START && index <= this.INV_END) {
+            } else if (index >= INV_START && index <= this.invEnd) {
 
                 if (!this.mergeItemStack(slotStack, HOT_START,
                         HOT_END + 1, true)) {
@@ -157,10 +160,10 @@ public class ContainerCrafting extends ContainerAbstract {
                     return ItemStack.EMPTY;
                 }
 
-            } else if (index >= this.CRAFT_START && index <= this.CRAFT_END) {
+            } else if (index >= this.craftStart && index <= this.craftEnd) {
 
                 if (!this.mergeItemStack(slotStack, HOT_START,
-                        this.INV_END + 1, true)) {
+                        this.invEnd + 1, true)) {
 
                     return ItemStack.EMPTY;
                 }

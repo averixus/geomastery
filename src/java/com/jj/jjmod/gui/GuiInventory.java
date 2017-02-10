@@ -12,17 +12,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Gui for the player inventory */
 public class GuiInventory extends GuiContainer {
+    
+    /** Text colour */
+    private static final int FOREGROUND = 4210752;
+    private static final int NAME_X = 97;
+    private static final int NAME_Y = 8;
+    private static final int X_SIZE = 176;
+    private static final int Y_SIZE = 166;
 
-    public static final int NAME_X = 97;
-    public static final int NAME_Y = 8;
-    public static final int FOREGROUND = 4210752;
-    public static final int X_SIZE = 176;
-    public static final int Y_SIZE = 166;
-
-    protected float oldMouseY;
-    protected float oldMouseX;
-   // public ResourceLocation background;
+    private float oldMouseY;
+    private float oldMouseX;
 
     public GuiInventory(ContainerInventory container) {
 
@@ -50,7 +51,9 @@ public class GuiInventory extends GuiContainer {
             int mouseX, int mouseY) {
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(((ContainerInventory) this.inventorySlots).getBackground());
+        this.mc.getTextureManager()
+                .bindTexture(((ContainerInventory) this.inventorySlots)
+                .getBackground());
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawTexturedModalRect(i, j, 0, 0, X_SIZE, Y_SIZE);
@@ -59,7 +62,8 @@ public class GuiInventory extends GuiContainer {
                 j + 75 - 50 - this.oldMouseY, this.mc.player);
     }
 
-    protected static void drawEntityOnScreen(int posX, int posY, int scale,
+    /** Utility method to draw the player, copied from vanilla */
+    private static void drawEntityOnScreen(int posX, int posY, int scale,
             float mouseX, float mouseY, EntityLivingBase ent) {
 
         GlStateManager.enableColorMaterial();

@@ -2,8 +2,6 @@ package com.jj.jjmod.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.jj.jjmod.capabilities.CapPlayer;
-import com.jj.jjmod.capabilities.ICapPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 

@@ -9,30 +9,31 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+/** Gui for Furnace devices */
 public class GuiFurnace extends GuiContainer {
 
-    public static final int FOREGROUND = 4210752;
-    
-    public final String TEXTURE;
-    public final String NAME;
+    /** Text colour */
+    private static final int FOREGROUND = 4210752;
+    private final String name;
+    private final String texture;
 
     public GuiFurnace(EntityPlayer player, World world, IInventory furnaceInv,
             String name) {
 
         super(new ContainerFurnace(player, world, furnaceInv));
-        this.TEXTURE = "jjmod:textures/gui/furnace_" +
+        this.texture = "jjmod:textures/gui/furnace_" +
                 ((ContainerFurnace) this.inventorySlots).capability
                 .getInventoryRows() + ".png";
-        this.NAME = name;
+        this.name = name;
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
-        int stringWidth = this.fontRendererObj.getStringWidth(this.NAME);
+        int stringWidth = this.fontRendererObj.getStringWidth(this.name);
         int start = this.xSize / 2 - stringWidth / 2;
 
-        this.fontRendererObj.drawString(this.NAME, start, 6, FOREGROUND);
+        this.fontRendererObj.drawString(this.name, start, 6, FOREGROUND);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class GuiFurnace extends GuiContainer {
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager()
-                .bindTexture(new ResourceLocation(this.TEXTURE));
+                .bindTexture(new ResourceLocation(this.texture));
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
@@ -58,6 +59,8 @@ public class GuiFurnace extends GuiContainer {
         this.drawTexturedModalRect(i + 79, j + 34, 176, 14, l + 1, 16);
     }
 
+    /** Gets the scaled size of the cook progress rectangle.
+     * @return Pixel length of the cook progress rectangle. */
     private int getCookProgress(int pixels) {
 
         int i = ((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)
@@ -67,6 +70,8 @@ public class GuiFurnace extends GuiContainer {
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 
+    /** Gets the scaled size of the flame progress rectangle.
+     * @return Pixel height of the flame progress rectangle. */
     private int getBurnLeft(int pixels) {
 
         int i = ((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)

@@ -21,32 +21,37 @@ public class ModLiquids {
     public static Fluid tarFluid;
     public static BlockFluidClassic tarBlock;
     
-    public static final ResourceLocation TAR_LOCATION = new ResourceLocation("jjmod:block_tar");
-    public static final ResourceLocation TAR_TEXTURE = new ResourceLocation("jjmod:blocks/liquids/tar");
+    public static final ResourceLocation TAR_LOCATION =
+            new ResourceLocation("jjmod:block_tar");
+    public static final ResourceLocation TAR_TEXTURE =
+            new ResourceLocation("jjmod:blocks/liquids/tar");
     
     public static void preInit() {
         
-        tarFluid = new Fluid("fluid_tar", TAR_TEXTURE, TAR_TEXTURE).setViscosity(5000);
+        tarFluid = new Fluid("fluid_tar", TAR_TEXTURE, TAR_TEXTURE)
+                .setViscosity(5000);
         FluidRegistry.registerFluid(tarFluid);
-        tarBlock = (BlockFluidClassic) new BlockFluidClassic(tarFluid, BlockMaterial.TAR).setQuantaPerBlock(3).setRegistryName("block_tar").setUnlocalizedName("block_tar");
-        GameRegistry.register(tarBlock);
+        
+        tarBlock = new BlockFluidClassic(tarFluid, BlockMaterial.TAR);
+        tarBlock.setQuantaPerBlock(3);
+        tarBlock.setRegistryName("block_tar");
+        tarBlock.setUnlocalizedName("block_tar");
         tarBlock.setCreativeTab(CreativeTabs.MISC);
+        GameRegistry.register(tarBlock);
         
         Item item = Item.getItemFromBlock(tarBlock);
-
         ModelBakery.registerItemVariants(item);
-
-        ModelResourceLocation modelResourceLocation = new ModelResourceLocation(TAR_LOCATION, "normal");
-
-        ModelLoader.setCustomMeshDefinition(item, stack -> modelResourceLocation);
+        ModelResourceLocation loc =
+                new ModelResourceLocation(TAR_LOCATION, "normal");
+        ModelLoader.setCustomMeshDefinition(item, stack -> loc);
 
         ModelLoader.setCustomStateMapper(tarBlock, new StateMapperBase() {
+            
             @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                return modelResourceLocation;
+            protected ModelResourceLocation getModelResourceLocation(
+                    IBlockState state) {
+                return loc;
             }
         });
-        
     }
-
 }

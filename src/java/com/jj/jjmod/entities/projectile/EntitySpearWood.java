@@ -19,7 +19,8 @@ public class EntitySpearWood extends EntityProjectile {
         super(world, damage);
     }
 
-    public EntitySpearWood(World world, EntityLivingBase thrower, int durability) {
+    public EntitySpearWood(World world,
+            EntityLivingBase thrower, int durability) {
 
         super(world, thrower, damage);
         this.durability = durability;

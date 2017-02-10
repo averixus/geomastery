@@ -37,7 +37,7 @@ public class BlockCraftingForge extends BlockComplexAbstract {
 
     public BlockCraftingForge() {
 
-        super("crafting_forge", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_forge", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

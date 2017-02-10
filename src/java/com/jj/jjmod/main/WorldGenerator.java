@@ -53,6 +53,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/** Handler for world generation and related events. */
 public class WorldGenerator implements IWorldGenerator {
 
     @Override
@@ -153,48 +154,57 @@ public class WorldGenerator implements IWorldGenerator {
 
     }
     
+    /** Alters vanilla chunk populating. */
     @SubscribeEvent
     public void populate(PopulateChunkEvent.Populate event) {
         
         Random rand = event.getRand();        
         
+        // Chance of generating rice lake
         if (event.getType() == PopulateChunkEvent.Populate.EventType.LAKE &&
                 rand.nextFloat() <= 0.1) {
             
             event.setResult(Result.DENY);
             new PopulateChunkRicelake(event.getWorld(), rand)
-            .generateChunk(event.getChunkX(), event.getChunkZ());
+                    .generateChunk(event.getChunkX(), event.getChunkZ());
             return;
         }
     }
     
+    /** Intercepts structure generation. */
     @SubscribeEvent
     public void cancelVillage(InitMapGenEvent event) {
         
+        // Cancel any village generation
         if (event.getType() == EventType.VILLAGE) {
-            System.out.println("got village gen event");
+
             event.setNewGen(new MapGenVillage() {
                 
                 @Override
-                public void generate(World world, int x, int z, ChunkPrimer primer) {}
+                public void generate(World world, int x,
+                        int z, ChunkPrimer primer) {}
             });
         }
     }
     
+    /** Alters vanilla chunk decorating. */
     @SubscribeEvent
     public void decorateBiome(DecorateBiomeEvent.Decorate event) {
         
+        // Cancel vanilla pumpkin and melon generation
         if (event.getType() == DecorateBiomeEvent.Decorate.EventType.PUMPKIN) {
             
             event.setResult(Result.DENY);
         }
     }
 
+    /* Alters vanilla ore generation. */
     @SubscribeEvent
     public void oreGenMinable(OreGenEvent.GenerateMinable event) {
 
         OreGenEvent.GenerateMinable.EventType type = event.getType();
 
+        // Cancel vanilla ores to be overriden
         if (type == OreGenEvent.GenerateMinable.EventType.COAL ||
                 type == OreGenEvent.GenerateMinable.EventType.DIAMOND ||
                 type == OreGenEvent.GenerateMinable.EventType.EMERALD ||

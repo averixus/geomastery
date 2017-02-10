@@ -6,20 +6,26 @@ import com.jj.jjmod.capabilities.ICapDecay;
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.capabilities.StorageCapDecay;
 import com.jj.jjmod.capabilities.StorageCapPlayer;
+import com.jj.jjmod.main.Main;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class ModCapabilities {
+    
+    @CapabilityInject(ICapPlayer.class)
+    public static final Capability<ICapPlayer> CAP_PLAYER = null;
+    public static final ResourceLocation CAP_PLAYER_ID =
+            new ResourceLocation(Main.MODID, "CapabilityPlayer");
+    
+    @CapabilityInject(ICapDecay.class)
+    public static final Capability<ICapDecay> CAP_DECAY = null;
 
     public static void preInit() {
 
-     //   CapabilityManager.INSTANCE.register(ICapInventory.class,
-     //           new StorageCapInventory(), DefaultCapInventory.class);
-     //   CapabilityManager.INSTANCE.register(ICapTemperature.class,
-     //           new StorageCapTemperature(), DefaultCapTemperature.class);
         CapabilityManager.INSTANCE.register(ICapDecay.class,
                 new StorageCapDecay(), DefaultCapDecay.class);
-     //   CapabilityManager.INSTANCE.register(ICapFoodstats.class,
-     //           new StorageCapFoodinfo(), DefaultCapFoodstats.class);
         CapabilityManager.INSTANCE.register(ICapPlayer.class,
                 new StorageCapPlayer(), DefaultCapPlayer.class);
     }

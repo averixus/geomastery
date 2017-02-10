@@ -28,106 +28,10 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/** Handler for player related events. */
 public class PlayerEventHandler {
 
- /** --------------------------- PLAYER EVENTS -------------------------- */
-    
-  /*  @SubscribeEvent
-    public void playerJoin(EntityJoinWorldEvent event) {
-       
-        
-        if (event.getEntity() instanceof EntityPlayer) {
-
-            EntityPlayer player = (EntityPlayer) event.getEntity();
-            
-            player.getCapability(CapTemperature.CAP_TEMPERATURE, null)
-                    .sendMessage();
-            player.getCapability(CapFoodstats.CAP_FOODSTATS, null)
-                    .sendMessage();
-        }
-    }
-    
-    @SubscribeEvent
-    public void playerCapabilities(AttachCapabilitiesEvent<Entity> event) {
-
-        if (!(event.getObject() instanceof EntityPlayer)) {
-
-            return;
-        }
-
-        EntityPlayer player = (EntityPlayer) event.getObject();
-        
-        if (!(player.hasCapability(CapInventory.CAP_INVENTORY, null))) {
-
-            event.addCapability(CapInventory.ID,
-                    new ProviderCapInventory(new DefaultCapInventory(player)));
-        }
-        
-        if (!(player.hasCapability(CapTemperature.CAP_TEMPERATURE, null))) {
-            
-            event.addCapability(CapTemperature.ID,
-                    new ProviderCapTemperature(new
-                    DefaultCapTemperature(player)));
-        }
-        
-        if (!(player.hasCapability(CapFoodstats.CAP_FOODSTATS, null))) {
-            
-            event.addCapability(CapFoodstats.ID, new ProviderCapFoodstats(new
-                    DefaultCapFoodstats(player)));
-        }
-    }
-
-    @SubscribeEvent
-    public void playerTick(PlayerTickEvent event) {
-        
-        if (event.phase == Phase.START) {
-            
-            return;
-        }
-
-        EntityPlayer player = event.player;        
-        player.getCapability(CapTemperature.CAP_TEMPERATURE, null).update();
-        player.getCapability(CapInventory.CAP_INVENTORY, null).update();
-                
-        if (player.inventoryContainer instanceof ContainerPlayer &&
-                !player.capabilities.isCreativeMode) {
-            
-            player.inventoryContainer =
-                    new ContainerInventory(player, player.world);
-            player.openContainer = player.inventoryContainer;
-            
-        } else if (player.inventoryContainer instanceof ContainerInventory &&
-                player.capabilities.isCreativeMode) {
-            
-            player.inventoryContainer = new ContainerPlayer(player.inventory,
-                    !player.world.isRemote, player);
-            player.openContainer = player.inventoryContainer;
-
-        }
-        
-        if (player.inventoryContainer instanceof ContainerInventory) {
-            
-            for (Slot slot : player.inventoryContainer.inventorySlots) {
-                
-                ItemStack stack = slot.getStack();
-                
-                if (stack.getItem() instanceof ItemEdibleDecayable) {
-                    
-                    if (stack.getCapability(CapDecay.CAP_DECAY, null).updateAndRot()) {
-                        
-                        slot.putStack(new ItemStack(ModItems.rot));
-                    }
-                }
-            }
-        }
-
-        if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
-            
-            ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
-                    new FoodStatsWrapper(player), "foodStats");
-        }
-    }*/
-    
+    /** Alters behaviour when player picks up an item. */
     @SubscribeEvent
     public void playerItemPickup(EntityItemPickupEvent event) {
         
@@ -139,10 +43,10 @@ public class PlayerEventHandler {
         }
         
         ItemStack stack = event.getItem().getEntityItem();
-        Item item = stack.getItem();
         ItemStack remaining = stack;
         
-        remaining = ((ContainerInventory) player.inventoryContainer).add(remaining);
+        remaining = ((ContainerInventory) player.inventoryContainer)
+                .add(remaining);
 
         if (remaining.isEmpty()) {
 
@@ -156,6 +60,7 @@ public class PlayerEventHandler {
         event.setCanceled(true);
     }
 
+    /** Alters behaviour when player drops an item. */
     @SubscribeEvent
     public void itemToss(ItemTossEvent event) {
         
@@ -166,6 +71,7 @@ public class PlayerEventHandler {
         }
     }
 
+    /** Adds behaviour when player wakes up from a bed. */
     @SubscribeEvent
     public void playerWakeUp(PlayerWakeUpEvent event) {
 
@@ -196,12 +102,14 @@ public class PlayerEventHandler {
             posFoot = pos.offset(facing.getOpposite());
         }
 
+        // Leaf nest breaks after one use
         if (block == ModBlocks.bedLeaf) {
 
             world.setBlockToAir(posFoot);
             world.setBlockToAir(posHead);
         }
 
+        // Breakable beds take damage
         if (block instanceof BlockBedBreakable) {
 
             TileEntity tileEntity = world.getTileEntity(posFoot);
@@ -221,6 +129,7 @@ public class PlayerEventHandler {
         }
     }
     
+    /** Alters behaviour when the player takes damage. */
     @SubscribeEvent
     public void playerAttacked(LivingAttackEvent event) {
         
@@ -232,9 +141,9 @@ public class PlayerEventHandler {
         EntityPlayer player = (EntityPlayer) event.getEntity();
         DamageSource source = event.getSource();
         
+        // Copy vanilla shield functionality to allow for custom shields
         if (!source.isUnblockable() && player.isActiveItemStackBlocking()) {
             
-            System.out.println("can block");
             Vec3d sourceVec = source.getDamageLocation();
 
             if (sourceVec != null) {
@@ -256,30 +165,17 @@ public class PlayerEventHandler {
                             MathHelper.floor(event.getAmount()), player);
                     
                     if (player.getActiveItemStack().isEmpty()) {
-                        
+                    
                         if (hand == EnumHand.MAIN_HAND) {
                             
-                            player.setItemStackToSlot(
-                                    EntityEquipmentSlot.MAINHAND,
-                                    ItemStack.EMPTY);
-                            
+                            ((ContainerInventory) player.inventoryContainer)
+                                    .sendUpdateHighlight();
+                        
                         } else {
                             
-                            player.setItemStackToSlot(
-                                    EntityEquipmentSlot.OFFHAND,
-                                    ItemStack.EMPTY);
+                            ((ContainerInventory) player.inventoryContainer)
+                                .sendUpdateOffhand();
                         }
-                    }
-                    
-                    if (hand == EnumHand.MAIN_HAND) {
-                        
-                        ((ContainerInventory) player.inventoryContainer)
-                                .sendUpdateHighlight();
-                    
-                    } else {
-                        
-                        ((ContainerInventory) player.inventoryContainer)
-                            .sendUpdateOffhand();
                     }
                 }
             }

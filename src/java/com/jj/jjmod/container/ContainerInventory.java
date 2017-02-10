@@ -27,43 +27,43 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+/** Container for player inventory. */
 public class ContainerInventory extends ContainerAbstract {
 
-    public static final int CRAFT_COLS = 3;
-    public static final int CRAFT_ROWS = 2;
+    private static final int CRAFT_COLS = 3;
+    private static final int CRAFT_ROWS = 2;
 
-    public static final int OUTPUT_X = 154;
-    public static final int OUTPUT_Y = 28;
-    public static final int CRAFT_X = 80;
-    public static final int CRAFT_Y = 18;
-    public static final int ARMOUR_X = 8;
-    public static final int HEAD_Y = 8;
-    public static final int CHEST_Y = 26;
-    public static final int LEGS_Y = 44;
-    public static final int FEET_Y = 62;
-    public static final int EQUIP_Y = 62;
-    public static final int SHIELD_X = 77;
-    public static final int BACKPACK_X = 95;
-    public static final int YOKE_X = 113;
+    private static final int OUTPUT_X = 154;
+    private static final int OUTPUT_Y = 28;
+    private static final int CRAFT_X = 80;
+    private static final int CRAFT_Y = 18;
+    private static final int ARMOUR_X = 8;
+    private static final int HEAD_Y = 8;
+    private static final int CHEST_Y = 26;
+    private static final int LEGS_Y = 44;
+    private static final int FEET_Y = 62;
+    private static final int EQUIP_Y = 62;
+    private static final int SHIELD_X = 77;
+    private static final int BACKPACK_X = 95;
+    private static final int YOKE_X = 113;
 
-    public static final int FEET_I = 0;
-    public static final int LEGS_I = 1;
-    public static final int CHEST_I = 2;
-    public static final int HEAD_I = 3;
-    public static final int OFFHAND_I = 4;
-    public static final int BACKPACK_I = 5;
-    public static final int YOKE_I = 6;
-    public final int CRAFT_START = 7;
+    private static final int FEET_I = 0;
+    private static final int LEGS_I = 1;
+    private static final int CHEST_I = 2;
+    private static final int HEAD_I = 3;
+    private static final int OFFHAND_I = 4;
+    private static final int BACKPACK_I = 5;
+    private static final int YOKE_I = 6;
     
-    public final int CRAFT_END;
-    public final int OUTPUT_I;
-    public final int HOT_START;
-    public final int HOT_END;
-    public final int INV_START;
-    public int INV_END;
+    private final int craftStart = 7;
+    private final int craftEnd;
+    private final int outputI;
+    private final int hotStart;
+    private final int hotEnd;
+    private final int invStart;
+    private int invEnd;
 
-    protected ResourceLocation background;
-
+    private ResourceLocation background;
     public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
 
@@ -88,32 +88,37 @@ public class ContainerInventory extends ContainerAbstract {
         this.addSlotToContainer(new SlotYoke(this.player,
                 YOKE_X, EQUIP_Y));
 
-        // Inventory and craft grid slots
+        // Craft grid 
         this.craftMatrix = this.buildCraftMatrix(CRAFT_COLS, CRAFT_ROWS,
                 CRAFT_X, CRAFT_Y);
         
-        this.CRAFT_END = YOKE_I + this.craftMatrix.getSizeInventory();
-        this.OUTPUT_I = this.CRAFT_END + 1;
-        
+        // Craft output
         this.addSlotToContainer(new SlotCrafting(player,
-                this.craftMatrix, this.craftResult, this.OUTPUT_I, OUTPUT_X,
+                this.craftMatrix, this.craftResult, OUTPUT_X,
                 OUTPUT_Y, ModRecipes.INVENTORY));
-        
+
+        // Hotbar and inventory slots
         this.buildHotbar();
-        this.HOT_START = this.OUTPUT_I + 1;
-        this.HOT_END = this.OUTPUT_I + ROW_LENGTH;
-        this.INV_START = this.HOT_END + 1;
-        this.INV_END = this.INV_START + this.buildInvgrid();
+        int invIndex = this.buildInvgrid();
+        
+        // Container indices
+        this.craftEnd = YOKE_I + this.craftMatrix.getSizeInventory();
+        this.outputI = this.craftEnd + 1;
+        this.hotStart = this.outputI + 1;
+        this.hotEnd = this.outputI + ROW_LENGTH;
+        this.invStart = this.hotEnd + 1;
+        this.invEnd = this.invStart + invIndex;
         
         this.setBackground();
         this.onCraftMatrixChanged(this.craftMatrix);
     }
     
+    /** Rebuilds the correct number of main inventory slots. */
     public void refresh() {
         
-        // Kill old slots
+        // Remove old slots
         int j = this.inventorySlots.size() - 1;
-        while (j >= this.INV_START) {
+        while (j >= this.invStart) {
 
             this.inventorySlots.remove(j);
             this.inventoryItemStacks.remove(j);
@@ -121,7 +126,7 @@ public class ContainerInventory extends ContainerAbstract {
         }
         
         // Build new slots
-        this.INV_END = this.INV_START + this.buildInvgrid();
+        this.invEnd = this.invStart + this.buildInvgrid();
 
         // Move or drop excess items
         for (int i = this.capability.getInventorySize();
@@ -131,8 +136,8 @@ public class ContainerInventory extends ContainerAbstract {
             
             if (!drop.isEmpty()) {
             
-                if (this.mergeItemStack(drop, this.HOT_START,
-                        this.INV_END + 1, true)) {
+                if (this.mergeItemStack(drop, this.hotStart,
+                        this.invEnd + 1, true)) {
                     
                     this.player.dropItem(drop, false);
                 }
@@ -142,17 +147,21 @@ public class ContainerInventory extends ContainerAbstract {
         this.setBackground();
     }
     
+    /** Sets the ResourceLocation for the GUI with current inventory size. */
     private void setBackground() {
         
         this.background = new ResourceLocation("jjmod:textures/gui/inventory_"
                 + this.capability.getInventoryRows() + ".png");
     }
     
+    /** @return The ResourceLocation for the GUI backgound. */
     public ResourceLocation getBackground() {
         
         return this.background;
     }
     
+    /** Attempts to put the ItemStack into this container.
+     * @return The ItemStack left over. */
     public ItemStack add(ItemStack stack) {
         
         ItemStack remaining = stack;
@@ -175,6 +184,9 @@ public class ContainerInventory extends ContainerAbstract {
         return remaining;
     }
     
+    /** Attempts to put the ItemStack into a non-full
+     * slot containing the same item.
+     * @return The ItemStack left over. */
     private ItemStack putInMatchingSlot(ItemStack stack) {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
@@ -192,6 +204,8 @@ public class ContainerInventory extends ContainerAbstract {
         return remaining;
     }
     
+    /** Attempts to put the stack into an empty slot.
+     * @return The ItemStack left over. */
     private ItemStack putInEmptySlot(ItemStack stack) {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
@@ -209,6 +223,8 @@ public class ContainerInventory extends ContainerAbstract {
         return remaining;
     }
     
+    /** Attempts to put the ItemStack into the offhand slot.
+     * @return The ItemStack left over. */
     private ItemStack addToOffhand(ItemStack stack) {
         
         if (this.playerInv.offHandInventory.get(0).isEmpty()) {
@@ -221,6 +237,8 @@ public class ContainerInventory extends ContainerAbstract {
         return stack;
     }
     
+    /** Attempts to put the ItemStack into the index slot.
+     * @return The ItemStack left over. */
     private ItemStack addToSlot(int slot, ItemStack stack) {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
@@ -232,7 +250,7 @@ public class ContainerInventory extends ContainerAbstract {
             inv.set(slot, stack);
             result = ItemStack.EMPTY;
             
-        } else if (ItemStack.areItemStacksEqual(stack, inSlot)) {
+        } else if (ItemStack.areItemsEqual(stack, inSlot)) {
             
             ItemStack added = inSlot.copy();
             int total = inSlot.getCount() + stack.getCount();
@@ -287,8 +305,8 @@ public class ContainerInventory extends ContainerAbstract {
                 if (stack != ItemStack.EMPTY) {
 
                     player.dropItem(stack, false);
-              //      this.sendUpdateInventory(InvType.CRAFTGRID,
-              //              i, ItemStack.EMPTY);
+                    this.sendUpdateInventory(this.craftStart + i,
+                            ItemStack.EMPTY);
                 }
             }
         }
@@ -301,7 +319,6 @@ public class ContainerInventory extends ContainerAbstract {
     }
 
     @Override
-    @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
         ItemStack result = ItemStack.EMPTY;
@@ -332,8 +349,8 @@ public class ContainerInventory extends ContainerAbstract {
             } else if (armourType == EntityEquipmentSlot.CHEST &&
                     !this.inventorySlots.get(CHEST_I).getHasStack()) {
 
-                if (!this.mergeItemStack(slotStack, CHEST_I, CHEST_I + 1,
-                        true)) {
+                if (!this.mergeItemStack(slotStack, CHEST_I,
+                        CHEST_I + 1, true)) {
 
                     result = ItemStack.EMPTY;
                 }
@@ -371,8 +388,8 @@ public class ContainerInventory extends ContainerAbstract {
         if (slotItem == ModItems.backpack && !this.inventorySlots
                 .get(BACKPACK_I).getHasStack()) {
 
-            if (!this.mergeItemStack(slotStack, BACKPACK_I, BACKPACK_I + 1,
-                    true)) {
+            if (!this.mergeItemStack(slotStack, BACKPACK_I,
+                    BACKPACK_I + 1, true)) {
                 
                 result = ItemStack.EMPTY;
             }
@@ -381,16 +398,17 @@ public class ContainerInventory extends ContainerAbstract {
         if (slotItem == ModItems.yoke && !this.inventorySlots.get(YOKE_I)
                 .getHasStack()) {
 
-            if (!this.mergeItemStack(slotStack, YOKE_I, YOKE_I + 1, true)) {
+            if (!this.mergeItemStack(slotStack, YOKE_I,
+                    YOKE_I + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
         }
 
-        if (index == this.OUTPUT_I) {
+        if (index == this.outputI) {
 
-            if (!this.mergeItemStack(slotStack, this.HOT_START,
-                    this.INV_END + 1, true)) {
+            if (!this.mergeItemStack(slotStack, this.hotStart,
+                    this.invEnd + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -398,27 +416,27 @@ public class ContainerInventory extends ContainerAbstract {
             slot.onSlotChange(slotStack, result);
             slot.onTake(player, slotStack);
 
-        } else if ((index >= this.CRAFT_START && index <= this.CRAFT_END) ||
+        } else if ((index >= this.craftStart && index <= this.craftEnd) ||
                 (index >= FEET_I && index <= YOKE_I)) {
 
-            if (!this.mergeItemStack(slotStack, this.HOT_START,
-                    this.INV_END + 1, false)) {
+            if (!this.mergeItemStack(slotStack, this.hotStart,
+                    this.invEnd + 1, false)) {
 
                 result = ItemStack.EMPTY;
             }
 
-        } else if (index >= this.HOT_START && index <= this.HOT_END) {
+        } else if (index >= this.hotStart && index <= this.hotEnd) {
 
-            if (!this.mergeItemStack(slotStack, this.INV_START,
-                    this.INV_END + 1, true)) {
+            if (!this.mergeItemStack(slotStack, this.invStart,
+                    this.invEnd + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
 
-        } else if (index >= this.INV_START && index <= this.INV_END) {
+        } else if (index >= this.invStart && index <= this.invEnd) {
 
-            if (!this.mergeItemStack(slotStack, this.HOT_START,
-                    this.HOT_END + 1, true)) {
+            if (!this.mergeItemStack(slotStack, this.hotStart,
+                    this.hotEnd + 1, true)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -428,6 +446,7 @@ public class ContainerInventory extends ContainerAbstract {
         return result;
     }
 
+    /** Swaps the mainhand and offhand items (as pressing F). */
     public void swapHands() {
 
         ItemStack toMove =
@@ -437,22 +456,24 @@ public class ContainerInventory extends ContainerAbstract {
         this.playerInv.offHandInventory.set(0, toMove);
     }
 
+    /** Sends a packet to update the offhand slot. */
     public void sendUpdateOffhand() {
 
         sendUpdateInventory(OFFHAND_I,
                 this.playerInv.offHandInventory.get(0));
     }
 
+    /** Sends a packet to update the highlighted slot. */
     public void sendUpdateHighlight() {
 
         sendUpdateInventory(this.playerInv.currentItem,
                 this.playerInv.mainInventory.get(this.playerInv.currentItem));
     }
 
+    /** Sends a packet to update the index slot. */
     public void sendUpdateInventory(int slot, ItemStack stack) {
-        System.out.println("sending update for slot " + slot);
-        slot += this.HOT_START;
-        System.out.println("container index " + slot);
+
+        slot += this.hotStart;
 
         if (this.player instanceof EntityPlayerMP) {
 
@@ -462,7 +483,8 @@ public class ContainerInventory extends ContainerAbstract {
 
         } else {
 
-            ModPackets.INSTANCE.sendToServer(new ContainerPacketServer(slot, stack));
+            ModPackets.INSTANCE
+                    .sendToServer(new ContainerPacketServer(slot, stack));
         }
     }
 }

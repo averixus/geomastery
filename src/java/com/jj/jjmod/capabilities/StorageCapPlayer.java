@@ -9,13 +9,15 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 public class StorageCapPlayer implements IStorage<ICapPlayer> {
 
     @Override
-    public NBTBase writeNBT(Capability<ICapPlayer> capability, ICapPlayer instance, EnumFacing side) {
+    public NBTBase writeNBT(Capability<ICapPlayer> capability,
+            ICapPlayer instance, EnumFacing side) {
         
         return instance.serializeNBT();
     }
     
     @Override
-    public void readNBT(Capability<ICapPlayer> capability, ICapPlayer instance, EnumFacing side, NBTBase nbt) {
+    public void readNBT(Capability<ICapPlayer> capability,
+            ICapPlayer instance, EnumFacing side, NBTBase nbt) {
         
         instance.deserializeNBT((NBTTagCompound) nbt);
     }

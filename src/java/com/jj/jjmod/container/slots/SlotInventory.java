@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+/** Container inventory slot for main inventory. */
 public class SlotInventory extends Slot {
 
     public SlotInventory(IInventory inventoryIn, int index, int xPosition,

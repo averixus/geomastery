@@ -31,7 +31,7 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
 
     public BlockCraftingClayworks() {
 
-        super("crafting_clayworks", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_clayworks", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/** Packet to update the player's walk speed on the Client. */
 public class SpeedPacketClient implements IMessage {
     
     protected float speed;
@@ -30,10 +31,12 @@ public class SpeedPacketClient implements IMessage {
         buf.writeFloat(this.speed);
     }
     
-    public static class Handler implements IMessageHandler<SpeedPacketClient, IMessage> {
+    public static class Handler
+            implements IMessageHandler<SpeedPacketClient, IMessage> {
         
         @Override
-        public IMessage onMessage(SpeedPacketClient message, MessageContext ctx) {
+        public IMessage onMessage(SpeedPacketClient message,
+                MessageContext ctx) {
             
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 
@@ -53,5 +56,4 @@ public class SpeedPacketClient implements IMessage {
             player.capabilities.setPlayerWalkSpeed(message.speed);
         }
     }
-
 }

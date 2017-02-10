@@ -10,9 +10,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/** Packet to update the ContainerPlayer on the client. */
 public class ContainerPacketClient implements IMessage {
 
-  //  protected InvType type;
     protected int slot;
     protected ItemStack stack;
 
@@ -20,7 +20,6 @@ public class ContainerPacketClient implements IMessage {
 
     public ContainerPacketClient(int slot, ItemStack stack) {
 
-    //    this.type = type;
         this.slot = slot;
         this.stack = stack;
     }
@@ -28,7 +27,6 @@ public class ContainerPacketClient implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
 
-     //   this.type = InvType.values()[buf.readInt()];
         this.slot = buf.readInt();
         this.stack = ByteBufUtils.readItemStack(buf);
     }
@@ -36,7 +34,6 @@ public class ContainerPacketClient implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
 
-     //   buf.writeInt(this.type.ordinal());
         buf.writeInt(this.slot);
         ByteBufUtils.writeItemStack(buf, this.stack);
     }
@@ -63,8 +60,8 @@ public class ContainerPacketClient implements IMessage {
         public void processMessage(ContainerPacketClient message) {
 
             EntityPlayer player = Minecraft.getMinecraft().player;
-            player.inventoryContainer.inventorySlots.get(message.slot).putStack(message.stack);
-           // inv.setStack(message.type, message.slot, message.stack);
+            player.inventoryContainer.inventorySlots.get(message.slot)
+                    .putStack(message.stack);
         }
     }
 }

@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities {
 
-    public static int entityID = 0;
+    private static int entityID = 0;
 
     public static void preInit() {
 

@@ -13,23 +13,24 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Container for Drying Rack. */
 public class ContainerDrying extends ContainerAbstract {
 
-    public static final int INPUT_X = 56;
-    public static final int OUTPUT_X = 116;
-    public static final int SLOTS_Y = 35;
+    private static final int INPUT_X = 56;
+    private static final int OUTPUT_X = 116;
+    private static final int SLOTS_Y = 35;
 
-    public static final int INPUT_I = 0;
-    public static final int OUTPUT_I = 1;
-    public static final int HOT_START = 2;
-    public static final int HOT_END = 10;
-    public static final int INV_START = 11;
+    private static final int INPUT_I = 0;
+    private static final int OUTPUT_I = 1;
+    private static final int HOT_START = 2;
+    private static final int HOT_END = 10;
+    private static final int INV_START = 11;
 
-    public final int INV_END;
+    private final int invEnd;
 
     public final IInventory dryingInv;
-    public int drySpent;
-    public int dryEach;
+    private int drySpent;
+    private int dryEach;
 
     public ContainerDrying(EntityPlayer player, World world,
             IInventory dryingInv) {
@@ -47,7 +48,8 @@ public class ContainerDrying extends ContainerAbstract {
         this.buildHotbar();
         int invIndex = this.buildInvgrid();
 
-        this.INV_END = INV_START + invIndex;
+        // Container indices
+        this.invEnd = INV_START + invIndex;
     }
 
     @Override
@@ -111,8 +113,8 @@ public class ContainerDrying extends ContainerAbstract {
 
             if (index == OUTPUT_I) {
 
-                if (!this.mergeItemStack(stack1, HOT_START, this.INV_END + 1,
-                        true)) {
+                if (!this.mergeItemStack(stack1, HOT_START,
+                        this.invEnd + 1, true)) {
 
                     return ItemStack.EMPTY;
                 }
@@ -124,30 +126,30 @@ public class ContainerDrying extends ContainerAbstract {
                 if (((TEDrying) this.dryingInv).recipes
                         .getSmeltingResult(stack1) != null) {
 
-                    if (!this.mergeItemStack(stack1, INPUT_I, INPUT_I + 1,
-                            false)) {
+                    if (!this.mergeItemStack(stack1, INPUT_I,
+                            INPUT_I + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }
 
-                } else if (index >= INV_START && index <= this.INV_END) {
+                } else if (index >= INV_START && index <= this.invEnd) {
 
-                    if (!this.mergeItemStack(stack1, HOT_START, HOT_END + 1,
-                            false)) {
+                    if (!this.mergeItemStack(stack1, HOT_START,
+                            HOT_END + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }
 
                 } else if (index >= HOT_START && index <= HOT_END)
 
-                    if (!this.mergeItemStack(stack1, INV_START, this.INV_END + 1,
-                            false)) {
+                    if (!this.mergeItemStack(stack1, INV_START,
+                            this.invEnd + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }
 
-            } else if (!this.mergeItemStack(stack1, HOT_START, this.INV_END + 1,
-                    false)) {
+            } else if (!this.mergeItemStack(stack1, HOT_START,
+                    this.invEnd + 1, false)) {
 
                 return ItemStack.EMPTY;
             }

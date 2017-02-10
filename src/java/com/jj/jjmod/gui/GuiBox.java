@@ -5,17 +5,18 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
+/** Gui for Box */
 public class GuiBox extends GuiContainer {
     
-    public static final int FOREGROUND = 4210752;
-    
-    public static final String NAME = "Box";
-    public final String TEXTURE;
+    /** Text colour */
+    private static final int FOREGROUND = 4210752;
+    private static final String NAME = "Box";
+    private final String texture;
     
     public GuiBox(ContainerBox container) {
         
         super(container);
-        this.TEXTURE = "jjmod:textures/gui/box_" +
+        this.texture = "jjmod:textures/gui/box_" +
                 container.capability.getInventoryRows() + ".png";
     }
     
@@ -34,7 +35,7 @@ public class GuiBox extends GuiContainer {
         
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager()
-                .bindTexture(new ResourceLocation(this.TEXTURE));
+                .bindTexture(new ResourceLocation(this.texture));
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);

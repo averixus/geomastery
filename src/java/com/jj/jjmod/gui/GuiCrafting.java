@@ -10,29 +10,30 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Gui for Crafting devices */
 public class GuiCrafting extends GuiContainer {
 
-    public static final int FOREGROUND = 4210752;
-
-    public final String NAME;
-    public final String TEXTURE;
+    /** Text colour */
+    private static final int FOREGROUND = 4210752;
+    private final String name;
+    private final String texture;
 
     public GuiCrafting(EntityPlayer player, World world, BlockPos pos,
             CraftingManager craftManager, String name) {
 
         super(new ContainerCrafting(player, world, pos, craftManager));
-        this.TEXTURE = "jjmod:textures/gui/crafting_" + 
+        this.texture = "jjmod:textures/gui/crafting_" + 
                     ((ContainerCrafting) this.inventorySlots)
                     .capability.getInventoryRows() + ".png";
-        this.NAME = name;
+        this.name = name;
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
 
-        int stringWidth = this.fontRendererObj.getStringWidth(this.NAME);
+        int stringWidth = this.fontRendererObj.getStringWidth(this.name);
         int start = this.xSize / 2 - stringWidth / 2;
-        this.fontRendererObj.drawString(this.NAME, start, 6, FOREGROUND);
+        this.fontRendererObj.drawString(this.name, start, 6, FOREGROUND);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class GuiCrafting extends GuiContainer {
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager()
-                .bindTexture(new ResourceLocation(this.TEXTURE));
+                .bindTexture(new ResourceLocation(this.texture));
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);

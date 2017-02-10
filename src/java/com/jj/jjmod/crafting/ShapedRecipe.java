@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 
+/** ShapedRecipe for variable sized crafting grids. */
 public class ShapedRecipe extends ShapedRecipes {
 
     public ShapedRecipe(int width, int height, ItemStack[] inputs,
@@ -33,7 +34,10 @@ public class ShapedRecipe extends ShapedRecipes {
         return false;
     }
     
-    protected int[] getMatchPosition(InventoryCrafting inv) {
+    /** Gets the position in the crafting grid where this recipe starts.
+     * @return An array of 3 ints, {x, y, flipped}: flipped is a 0/1 boolean
+     * representing whether the recipe is mirrored. */
+    private int[] getMatchPosition(InventoryCrafting inv) {
         
         for (int i = 0; i <= inv.getWidth() - this.recipeWidth; i++) {
 
@@ -54,6 +58,9 @@ public class ShapedRecipe extends ShapedRecipes {
         return null;
     }
     
+    /** Gets the number of items used from each input in the InventoryCrafting.
+     * @return An array of ints corersponding to
+     * number of items used from each ItemStack. */
     public int[] getAmountsUsed(InventoryCrafting inv) {
         
         int[] match = getMatchPosition(inv);
@@ -92,6 +99,9 @@ public class ShapedRecipe extends ShapedRecipes {
         return amounts;
     }
 
+    /** Check whether this recipe matches the InventoryCrafting in the given
+     * position and flipped according to flag.
+     * @return Whether or not this recipe matches. */
     protected boolean checkMatch(InventoryCrafting inv, int a, int b,
             boolean flag) {
 
@@ -121,8 +131,8 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 if (inInv != ItemStack.EMPTY || required != ItemStack.EMPTY) {
 
-                    if (inInv == ItemStack.EMPTY && required != ItemStack.EMPTY ||
-                            inInv != ItemStack.EMPTY && required == ItemStack.EMPTY) {
+                    if (inInv.isEmpty() && !required.isEmpty() ||
+                            !inInv.isEmpty() && required.isEmpty()) {
 
                         return false;
                     }

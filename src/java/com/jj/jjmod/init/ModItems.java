@@ -66,11 +66,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
     
+    /** All new items, for ease of modelling. */
     public static final Set<Item> MOD_ITEMS = Sets.newHashSet();
-    
-    public static final Set<Item> FRUITVEG = Sets.newHashSet();
-    public static final Set<Item> PROTEIN = Sets.newHashSet();
-    public static final Set<Item> CARBS = Sets.newHashSet();
     
     public static ItemEdible banana;
     public static ItemEdible pear;
@@ -350,44 +347,77 @@ public class ModItems {
 
     public static void preInit() {
 
-        register(banana = new ItemEdibleDecayable("banana", 4, 6F, 5, FoodType.FRUITVEG, 4));
-        register(pear = new ItemEdibleDecayable("pear", 4, 4F, 5, FoodType.FRUITVEG, 4));
-        register(orange = new ItemEdibleDecayable("orange", 3, 3F, 6, FoodType.FRUITVEG, 8));
-        register(honey = new ItemEdible("honey", 4, 1F, 8, FoodType.CARBS));
-        register(wheatBoiled = new ItemEdibleDecayable("wheat_boiled", 4, 2F, 10, FoodType.CARBS, 2));
-        register(riceBoiled = new ItemEdibleDecayable("rice_boiled", 4, 2, 12, FoodType.CARBS, 1));
-        register(chickpeasBoiled = new ItemEdibleDecayable("chickpeas_boiled", 3, 3, 10, FoodType.PROTEIN, 1));
-        register(pumpkin = new ItemEdibleDecayable("pumpkin", 10, 10, 2, FoodType.FRUITVEG, 8));
-        register(melon = new ItemEdibleDecayable("melon", 12, 12, 2, FoodType.FRUITVEG, 4));
+        register(banana = new ItemEdibleDecayable("banana",
+                4, 6F, 5, FoodType.FRUITVEG, 4));
+        register(pear = new ItemEdibleDecayable("pear",
+                4, 4F, 5, FoodType.FRUITVEG, 4));
+        register(orange = new ItemEdibleDecayable("orange",
+                3, 3F, 6, FoodType.FRUITVEG, 8));
+        register(honey = new ItemEdible("honey",
+                4, 1F, 8, FoodType.CARBS));
+        register(wheatBoiled = new ItemEdibleDecayable("wheat_boiled",
+                4, 2F, 10, FoodType.CARBS, 2));
+        register(riceBoiled = new ItemEdibleDecayable("rice_boiled",
+                4, 2, 12, FoodType.CARBS, 1));
+        register(chickpeasBoiled = new ItemEdibleDecayable("chickpeas_boiled",
+                3, 3, 10, FoodType.PROTEIN, 1));
+        register(pumpkin = new ItemEdibleDecayable("pumpkin",
+                10, 10, 2, FoodType.FRUITVEG, 8));
+        register(melon = new ItemEdibleDecayable("melon",
+                12, 12, 2, FoodType.FRUITVEG, 4));
         
-        register(apple = new ItemEdibleDecayable("apple", 4, 4, 5, FoodType.FRUITVEG, 8));
-        register(sugar = new ItemEdible("sugar", 5, 0, 10, FoodType.CARBS));
-        register(potatoCooked = new ItemEdibleDecayable("potato_cooked", 8, 6, 5, FoodType.CARBS, 4));
-        register(egg = new ItemEdibleDecayable("egg", 5, 5, 6, FoodType.PROTEIN, 8));
+        register(apple = new ItemEdibleDecayable("apple",
+                4, 4, 5, FoodType.FRUITVEG, 8));
+        register(sugar = new ItemEdible("sugar",
+                5, 0, 10, FoodType.CARBS));
+        register(potatoCooked = new ItemEdibleDecayable("potato_cooked",
+                8, 6, 5, FoodType.CARBS, 4));
+        register(egg = new ItemEdibleDecayable("egg",
+                5, 5, 6, FoodType.PROTEIN, 8));
         
-        register(beefRaw = new ItemEdibleDecayablePoison("beef_raw", 3, 6, 5, FoodType.PROTEIN, 2));
-        register(porkRaw = new ItemEdibleDecayablePoison("pork_raw", 2, 5, 6, FoodType.PROTEIN, 2));
-        register(chickenRaw = new ItemEdibleDecayablePoison("chicken_raw", 1, 3, 10, FoodType.PROTEIN, 1));
-        register(muttonRaw = new ItemEdibleDecayablePoison("mutton_raw", 2, 4, 7, FoodType.PROTEIN, 2));
-        register(rabbitRaw = new ItemEdibleDecayablePoison("rabbit_raw", 1, 2, 15, FoodType.PROTEIN, 2));
-        register(fishRaw = new ItemEdibleDecayablePoison("fish_raw", 1, 3, 10, FoodType.PROTEIN, 1));
+        register(beefRaw = new ItemEdibleDecayablePoison("beef_raw",
+                3, 6, 5, FoodType.PROTEIN, 2));
+        register(porkRaw = new ItemEdibleDecayablePoison("pork_raw",
+                2, 5, 6, FoodType.PROTEIN, 2));
+        register(chickenRaw = new ItemEdibleDecayablePoison("chicken_raw",
+                1, 3, 10, FoodType.PROTEIN, 1));
+        register(muttonRaw = new ItemEdibleDecayablePoison("mutton_raw",
+                2, 4, 7, FoodType.PROTEIN, 2));
+        register(rabbitRaw = new ItemEdibleDecayablePoison("rabbit_raw",
+                1, 2, 15, FoodType.PROTEIN, 2));
+        register(fishRaw = new ItemEdibleDecayablePoison("fish_raw",
+                1, 3, 10, FoodType.PROTEIN, 1));
         
-        register(beefCooked = new ItemEdibleDecayable("beef_cooked", 6, 6, 5, FoodType.PROTEIN, 2));
-        register(porkCooked = new ItemEdibleDecayable("pork_cooked", 5, 5, 6, FoodType.PROTEIN, 2));
-        register(muttonCooked = new ItemEdibleDecayable("mutton_cooked", 4, 4, 7, FoodType.PROTEIN, 2));
-        register(rabbitCooked = new ItemEdibleDecayable("rabbit_cooked", 2, 2, 15, FoodType.PROTEIN, 2));
-        register(chickenCooked = new ItemEdibleDecayable("chicken_cooked", 3, 3, 10, FoodType.PROTEIN, 1));
-        register(fishCooked = new ItemEdibleDecayable("fish_cooked", 3, 3, 10, FoodType.PROTEIN, 1));
+        register(beefCooked = new ItemEdibleDecayable("beef_cooked",
+                6, 6, 5, FoodType.PROTEIN, 2));
+        register(porkCooked = new ItemEdibleDecayable("pork_cooked",
+                5, 5, 6, FoodType.PROTEIN, 2));
+        register(muttonCooked = new ItemEdibleDecayable("mutton_cooked",
+                4, 4, 7, FoodType.PROTEIN, 2));
+        register(rabbitCooked = new ItemEdibleDecayable("rabbit_cooked",
+                2, 2, 15, FoodType.PROTEIN, 2));
+        register(chickenCooked = new ItemEdibleDecayable("chicken_cooked",
+                3, 3, 10, FoodType.PROTEIN, 1));
+        register(fishCooked = new ItemEdibleDecayable("fish_cooked",
+                3, 3, 10, FoodType.PROTEIN, 1));
         
-        register(bean = new ItemEdibleDecayableSeed("bean", 2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG, 4));
-        register(pepper = new ItemEdibleDecayableSeed("pepper", 3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG, 4));
-        register(tomato = new ItemEdibleDecayableSeed("tomato", 3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG, 4));
-        register(berry = new ItemEdibleDecayableSeed("berry", 1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG, 4));
+        register(bean = new ItemEdibleDecayableSeed("bean",
+                2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG, 4));
+        register(pepper = new ItemEdibleDecayableSeed("pepper",
+                3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG, 4));
+        register(tomato = new ItemEdibleDecayableSeed("tomato",
+                3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG, 4));
+        register(berry = new ItemEdibleDecayableSeed("berry",
+                1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG, 4));
         
-        register(potato = new ItemEdibleDecayableSeed("potato", 1, 1F, 1, ModBlocks.potato, FoodType.CARBS, 8));
-        register(carrot = new ItemEdibleDecayableSeed("carrot", 3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 8));
-        register(beetroot = new ItemEdibleDecayableSeed("beetroot", 3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG, 8));
-        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, ModBlocks.pumpkinCrop, FoodType.PROTEIN));
+        register(potato = new ItemEdibleDecayableSeed("potato",
+                1, 1F, 1, ModBlocks.potato, FoodType.CARBS, 8));
+        register(carrot = new ItemEdibleDecayableSeed("carrot",
+                3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 8));
+        register(beetroot = new ItemEdibleDecayableSeed("beetroot",
+                3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG, 8));
+        register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin",
+                1, 1, 15, ModBlocks.pumpkinCrop, FoodType.PROTEIN));
         
         register(rice = new ItemRice());
         
@@ -395,12 +425,16 @@ public class ModItems {
         register(twineHemp = new ItemNew("twine_hemp", 3));
         register(wool = new ItemNew("wool", 4));
         
-        register(chickpeas = new ItemSeed("chickpeas", 1, ModBlocks.chickpea));
-        register(cuttingCotton = new ItemSeed("cutting_cotton", 1, ModBlocks.cotton));
-        register(cuttingHemp = new ItemSeed("cutting_hemp", 1, ModBlocks.hemp));
+        register(chickpeas = new ItemSeed("chickpeas",
+                1, ModBlocks.chickpea));
+        register(cuttingCotton = new ItemSeed("cutting_cotton",
+                1, ModBlocks.cotton));
+        register(cuttingHemp = new ItemSeed("cutting_hemp",
+                1, ModBlocks.hemp));
 
         register(wheat = new ItemSeed("wheat", 10, ModBlocks.wheat));
-        register(seedMelon = new ItemSeed("seeds_melon", 15, ModBlocks.melonCrop));
+        register(seedMelon = new ItemSeed("seeds_melon",
+                15, ModBlocks.melonCrop));
         
         register(bedLeaf = new ItemBedPlainAbstract("bed_leaf",
                 ModBlocks.bedLeaf), true);
@@ -420,10 +454,13 @@ public class ModItems {
         register(bucketTar = new ItemBucket("bucket_tar",
                 ModLiquids.tarBlock, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);
-        register(bucketMilk = new ItemNew("bucket_milk", 1, CreativeTabs.MISC));
+        register(bucketMilk = new ItemNew("bucket_milk",
+                1, CreativeTabs.MISC));
         
-        register(backpack = new ItemNew("backpack", 1, CreativeTabs.TRANSPORTATION));
-        register(yoke = new ItemNew("yoke", 1, CreativeTabs.TRANSPORTATION));
+        register(backpack = new ItemNew("backpack",
+                1, CreativeTabs.TRANSPORTATION));
+        register(yoke = new ItemNew("yoke",
+                1, CreativeTabs.TRANSPORTATION));
 
         register(amethyst = new ItemNew("amethyst", 64));
         register(fireopal = new ItemNew("fireopal", 64));
@@ -535,10 +572,14 @@ public class ModItems {
         register(arrowSteel = new ItemArrowSteel());
         register(arrowWood = new ItemArrowWood());
 
-        register(hoeBronze = new ItemHoe("hoe_bronze", EquipMaterial.BRONZE_TOOL));
-        register(hoeCopper = new ItemHoe("hoe_copper", EquipMaterial.COPPER_TOOL));
-        register(hoeSteel = new ItemHoe("hoe_steel", EquipMaterial.STEEL_TOOL));
-        register(hoeAntler = new ItemHoe("hoe_antler", EquipMaterial.ANTLER_TOOL));
+        register(hoeBronze = new ItemHoe("hoe_bronze",
+                EquipMaterial.BRONZE_TOOL));
+        register(hoeCopper = new ItemHoe("hoe_copper",
+                EquipMaterial.COPPER_TOOL));
+        register(hoeSteel = new ItemHoe("hoe_steel",
+                EquipMaterial.STEEL_TOOL));
+        register(hoeAntler = new ItemHoe("hoe_antler",
+                EquipMaterial.ANTLER_TOOL));
 
         register(sickleBronze = new ItemSickle("sickle_bronze",
                 EquipMaterial.BRONZE_TOOL));
@@ -555,16 +596,23 @@ public class ModItems {
                 EquipMaterial.COPPER_TOOL));
         register(shovelSteel = new ItemShovel("shovel_steel",
                 EquipMaterial.STEEL_TOOL));
-        register(shovelWood = new ItemShovel("shovel_wood", EquipMaterial.WOOD_TOOL));
+        register(shovelWood = new ItemShovel("shovel_wood",
+                EquipMaterial.WOOD_TOOL));
 
-        register(axeBronze = new ItemAxe("axe_bronze", EquipMaterial.BRONZE_TOOL));
-        register(axeCopper = new ItemAxe("axe_copper", EquipMaterial.COPPER_TOOL));
-        register(axeFlint = new ItemAxe("axe_flint", EquipMaterial.FLINT_TOOL));
-        register(axeSteel = new ItemAxe("axe_steel", EquipMaterial.STEEL_TOOL));
-
-        register(huntingknifeBronze = new ItemHuntingknife("huntingknife_bronze",
+        register(axeBronze = new ItemAxe("axe_bronze",
                 EquipMaterial.BRONZE_TOOL));
-        register(huntingknifeCopper = new ItemHuntingknife("huntingknife_copper",
+        register(axeCopper = new ItemAxe("axe_copper",
+                EquipMaterial.COPPER_TOOL));
+        register(axeFlint = new ItemAxe("axe_flint",
+                EquipMaterial.FLINT_TOOL));
+        register(axeSteel = new ItemAxe("axe_steel",
+                EquipMaterial.STEEL_TOOL));
+
+        register(huntingknifeBronze = new
+                ItemHuntingknife("huntingknife_bronze",
+                EquipMaterial.BRONZE_TOOL));
+        register(huntingknifeCopper =
+                new ItemHuntingknife("huntingknife_copper",
                 EquipMaterial.COPPER_TOOL));
         register(huntingknifeFlint = new ItemHuntingknife("huntingknife_flint",
                 EquipMaterial.FLINT_TOOL));
@@ -614,27 +662,43 @@ public class ModItems {
         register(shieldSteel = new ItemShield("shield_steel", 200));
         
         register(cottonHead = new ItemApparel("cotton_head",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
+                EquipMaterial.COTTON_APPAREL,
+                EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
         register(cottonChest = new ItemApparel("cotton_chest",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
+                EquipMaterial.COTTON_APPAREL,
+                EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
         register(cottonLegs = new ItemApparel("cotton_legs",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
+                EquipMaterial.COTTON_APPAREL,
+                EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
         register(cottonFeet = new ItemApparel("cotton_feet",
-                EquipMaterial.COTTON_APPAREL, EntityEquipmentSlot.FEET, CreativeTabs.MISC));
+                EquipMaterial.COTTON_APPAREL,
+                EntityEquipmentSlot.FEET, CreativeTabs.MISC));
         
         register(woolHead = new ItemApparel("wool_head",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
+                EquipMaterial.WOOL_APPAREL,
+                EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
         register(woolChest = new ItemApparel("wool_chest",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
+                EquipMaterial.WOOL_APPAREL,
+                EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
         register(woolLegs = new ItemApparel("wool_legs",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
+                EquipMaterial.WOOL_APPAREL,
+                EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
         register(woolFeet = new ItemApparel("wool_feet",
-                EquipMaterial.WOOL_APPAREL, EntityEquipmentSlot.FEET, CreativeTabs.MISC));
+                EquipMaterial.WOOL_APPAREL,
+                EntityEquipmentSlot.FEET, CreativeTabs.MISC));
         
-        register(furHead = new ItemApparel("fur_head", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.HEAD, CreativeTabs.MISC));
-        register(furChest = new ItemApparel("fur_chest", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.CHEST, CreativeTabs.MISC));
-        register(furLegs = new ItemApparel("fur_legs", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.LEGS, CreativeTabs.MISC));
-        register(furFeet = new ItemApparel("fur_feet", EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.FEET, CreativeTabs.MISC));
+        register(furHead = new ItemApparel("fur_head",
+                EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.HEAD,
+                CreativeTabs.MISC));
+        register(furChest = new ItemApparel("fur_chest",
+                EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.CHEST,
+                CreativeTabs.MISC));
+        register(furLegs = new ItemApparel("fur_legs",
+                EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.LEGS,
+                CreativeTabs.MISC));
+        register(furFeet = new ItemApparel("fur_feet",
+                EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.FEET,
+                CreativeTabs.MISC));
         
         register(steelmailHead = new ItemApparel("mail_head",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD));
@@ -654,8 +718,10 @@ public class ModItems {
         register(steelplateFeet = new ItemApparel("plate_feet",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET));
 
-        register(bowCrude = new ItemBow("bow_crude", 200, EntityProjectile.CRUDE_MOD));
-        register(bowNormal = new ItemBow("bow_normal", 384, EntityProjectile.BOW_MOD));
+        register(bowCrude = new ItemBow("bow_crude",
+                200, EntityProjectile.CRUDE_MOD));
+        register(bowNormal = new ItemBow("bow_normal",
+                384, EntityProjectile.BOW_MOD));
         
         register(wallBrick = new ItemWall("wall_brick", 1,
                 ModBlocks.wallBrickSingle, ModBlocks.wallBrickDouble));
@@ -668,8 +734,10 @@ public class ModItems {
         register(wallLog = new ItemWall("wall_log", 1,
                 ModBlocks.wallLogSingle, ModBlocks.wallLogDouble));
         
-        register(doorPole = new ItemDoor(ModBlocks.doorPole, "door_pole"), true);
-        register(doorWood = new ItemDoor(ModBlocks.doorWood, "door_wood"), true);
+        register(doorPole = new ItemDoor(ModBlocks.doorPole, "door_pole"),
+                true);
+        register(doorWood = new ItemDoor(ModBlocks.doorWood, "door_wood"),
+                true);
         
         register(beamLong = new ItemBeam("beam_long", 4, 8));
         register(beamShort = new ItemBeam("beam_short", 2, 4));

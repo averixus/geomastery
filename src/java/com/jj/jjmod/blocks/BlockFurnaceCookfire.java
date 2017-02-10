@@ -25,7 +25,7 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract
 
     public BlockFurnaceCookfire() {
 
-        super("furnace_cookfire", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("furnace_cookfire", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
         this.lightValue = 14;
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }

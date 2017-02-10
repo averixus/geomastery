@@ -1,8 +1,8 @@
 package com.jj.jjmod.items;
 
-import com.jj.jjmod.capabilities.CapDecay;
 import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.entity.item.EntityItem;
@@ -33,7 +33,7 @@ public class ItemEdibleDecayable extends ItemEdible {
     public boolean onEntityItemUpdate(EntityItem entity) {
         
         if (!entity.world.isRemote && entity.getEntityItem()
-                .getCapability(CapDecay.CAP_DECAY, null).updateAndRot()) {
+                .getCapability(ModCapabilities.CAP_DECAY, null).updateAndRot()) {
             
             entity.setEntityItemStack(new ItemStack(ModItems.rot));
         }
@@ -56,7 +56,7 @@ public class ItemEdibleDecayable extends ItemEdible {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
-        float fraction = stack.getCapability(CapDecay.CAP_DECAY, null)
+        float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null)
                 .getRenderFraction();
         return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
     }

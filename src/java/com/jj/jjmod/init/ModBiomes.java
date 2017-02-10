@@ -2,6 +2,7 @@ package com.jj.jjmod.init;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.google.common.collect.Maps;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -22,7 +23,8 @@ import net.minecraft.world.biome.BiomeTaiga;
 
 public class ModBiomes {
     
-    public static final Map<Biome, Integer> BIOMES = new HashMap<Biome, Integer>();
+    /** Map of biome base temperatures */
+    private static final Map<Biome, Integer> BIOMES = Maps.newHashMap();
     
     public static void init() {
         
@@ -33,11 +35,14 @@ public class ModBiomes {
         }
     }
     
+    /** @return The base temp for the biome */
     public static int getTemp(Biome biome) {
         
         return BIOMES.get(biome);
     }
     
+    /** Assigns a temperature to the biome.
+     * @return The base temperature for the biome */
     private static int chooseTemp(Biome biome) {
         
         if (biome == Biomes.MUTATED_ICE_FLATS) {

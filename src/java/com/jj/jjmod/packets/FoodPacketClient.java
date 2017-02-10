@@ -1,6 +1,7 @@
 package com.jj.jjmod.packets;
 
-import com.jj.jjmod.capabilities.CapPlayer;
+import com.jj.jjmod.capabilities.DefaultCapPlayer;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.utilities.FoodType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -9,6 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/** Packet to update the player's Food levels on the Client. */
 public class FoodPacketClient implements IMessage {
     
     protected int type;
@@ -58,10 +60,10 @@ public class FoodPacketClient implements IMessage {
         public void processMessage(FoodPacketClient message) {
             
             EntityPlayer player = Minecraft.getMinecraft().player;
-            player.getCapability(CapPlayer.CAP_PLAYER, null)
+            ((DefaultCapPlayer) player.getCapability(ModCapabilities
+                    .CAP_PLAYER, null))
                     .processFoodMessage(FoodType.values()[message.type],
                     message.hunger);
         }
     }
-
 }

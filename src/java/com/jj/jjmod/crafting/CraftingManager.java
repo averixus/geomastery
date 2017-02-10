@@ -16,6 +16,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
+/** Crafting recipe manager for variable sized crafting grids. */
 public class CraftingManager {
 
     private final List<IRecipe> recipes;
@@ -25,6 +26,7 @@ public class CraftingManager {
         this.recipes = Lists.<IRecipe>newArrayList();
     }
 
+    /** Adds a grid shaped recipe. */
     public ShapedRecipe addShapedRecipe(ItemStack stack,
             Object... recipeComponents) {
 
@@ -39,7 +41,7 @@ public class CraftingManager {
             String[] stringArray =
                     ((String[]) recipeComponents[i++]);
 
-            for (String string: stringArray) {
+            for (String string : stringArray) {
                 
                 k++;
                 j = string.length();
@@ -64,7 +66,7 @@ public class CraftingManager {
                 i < recipeComponents.length; i += 2) {
 
             Character character = (Character) recipeComponents[i];
-            ItemStack itemstack = null;
+            ItemStack itemstack = ItemStack.EMPTY;
 
             if (recipeComponents[i + 1] instanceof Item) {
 
@@ -97,7 +99,7 @@ public class CraftingManager {
 
             } else {
 
-                stackArray[l] = null;
+                stackArray[l] = ItemStack.EMPTY;
             }
         }
 
@@ -108,12 +110,13 @@ public class CraftingManager {
         return recipe;
     }
 
+    /** Adds a shapeless recipes. */
     public void addShapelessRecipe(ItemStack stack,
             Object... recipeComponents) {
 
         List<ItemStack> list = Lists.<ItemStack>newArrayList();
 
-        for (Object object: recipeComponents) {
+        for (Object object : recipeComponents) {
 
             if (object instanceof ItemStack) {
 
@@ -139,10 +142,12 @@ public class CraftingManager {
         this.recipes.add(new ShapelessRecipes(stack, list));
     }
 
+    /** Gets the output recipe for the InventoryCrafting. 
+     * @return The ItemStack result of the recipe. */
     public ItemStack findMatchingRecipe(InventoryCrafting craftMatrix,
             World world) {
 
-        for (IRecipe recipe: this.recipes) {
+        for (IRecipe recipe : this.recipes) {
 
             if (recipe.matches(craftMatrix, world)) {
 
@@ -153,10 +158,13 @@ public class CraftingManager {
         return ItemStack.EMPTY;
     }
 
-    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting craftMatrix,
-            World world) {
+    /** Gets the items left after the InventoryCrafting
+     * inputs are used in the recipe.
+     * @return A list of ItemStacks to be put back in the InventoryCrafting. */
+    public NonNullList<ItemStack> getRemainingItems(
+            InventoryCrafting craftMatrix, World world) {
 
-        for (IRecipe recipe: this.recipes) {
+        for (IRecipe recipe : this.recipes) {
 
             if (recipe.matches(craftMatrix, world)) {
 
@@ -164,7 +172,8 @@ public class CraftingManager {
             }
         }
 
-        NonNullList<ItemStack> result = NonNullList.withSize(craftMatrix.getSizeInventory(), ItemStack.EMPTY);
+        NonNullList<ItemStack> result = NonNullList
+                .withSize(craftMatrix.getSizeInventory(), ItemStack.EMPTY);
 
         for (int i = 0; i < result.size(); ++i) {
 
@@ -174,9 +183,12 @@ public class CraftingManager {
         return result;
     }
     
+    /** Gets the number of items from each input
+     * ItemStack used in a single recipe.
+     * @return An array of ints representing the amounts of items used. */
     public int[] getAmountsUsed(InventoryCrafting craftMatrix, World world) {
         
-        for (IRecipe recipe: this.recipes) {
+        for (IRecipe recipe : this.recipes) {
 
             if (recipe.matches(craftMatrix, world) &&
                     recipe instanceof ShapedRecipe) {

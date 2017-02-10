@@ -10,6 +10,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
+/** Container slot for crafting recipe output. */
 public class SlotCrafting extends Slot {
 
     private final CraftingManager craftingManager;
@@ -19,10 +20,10 @@ public class SlotCrafting extends Slot {
 
     public SlotCrafting(EntityPlayer player,
             InventoryCrafting craftingInv, IInventory inventory,
-            int slotIndex, int xPosition, int yPosition,
+            int xPosition, int yPosition,
             CraftingManager craftingManager) {
 
-        super(inventory, slotIndex, xPosition, yPosition);
+        super(inventory, 0, xPosition, yPosition);
         this.player = player;
         this.craftInv = craftingInv;
         this.craftingManager = craftingManager;
@@ -65,51 +66,47 @@ public class SlotCrafting extends Slot {
         this.amountCrafted = 0;
     }
 
-    @Override // onPickupFromSlot
+    @Override 
     public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 
-        System.out.println("on pickup from craft slot");
-        net.minecraftforge.fml.common.FMLCommonHandler.instance()
-                .firePlayerCraftingEvent(player, stack, this.craftInv);
         this.onCrafting(stack);
-        net.minecraftforge.common.ForgeHooks.setCraftingPlayer(player);
         NonNullList<ItemStack> stacks = this.craftingManager
                 .getRemainingItems(this.craftInv, player.world);
         int[] amountsUsed = this.craftingManager
                 .getAmountsUsed(this.craftInv, player.world);
-        net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
-        for (int i = 0; i < stacks.size(); ++i) {
 
-            ItemStack itemstack1 = this.craftInv.getStackInSlot(i);
-            ItemStack itemstack2 = stacks.get(i);
+        for (int i = 0; i < stacks.size(); i++) {
+
+            ItemStack inSlot = this.craftInv.getStackInSlot(i);
+            ItemStack recipeRemaining = stacks.get(i);
 
             // Use up correct amount of all the input items
-            if (itemstack1 != ItemStack.EMPTY) {
-                System.out.println("using up input items");
+            if (!inSlot.isEmpty()) {
+
                 this.craftInv.decrStackSize(i, amountsUsed[i]);
-                itemstack1 = this.craftInv.getStackInSlot(i);
+                inSlot = this.craftInv.getStackInSlot(i);
             }
 
             // Add any extra remaining items from recipe
-            if (itemstack2 != ItemStack.EMPTY) {
+            if (!recipeRemaining.isEmpty()) {
 
-                if (itemstack1 == ItemStack.EMPTY) {
+                if (!inSlot.isEmpty()) {
 
                     this.craftInv.setInventorySlotContents(i,
-                            itemstack2);
+                            recipeRemaining);
 
-                } else if (ItemStack.areItemsEqual(itemstack1, itemstack2) &&
-                        ItemStack.areItemStackTagsEqual(itemstack1,
-                        itemstack2)) {
+                } else if (ItemStack.areItemsEqual(inSlot, recipeRemaining) &&
+                        ItemStack.areItemStackTagsEqual(inSlot,
+                        recipeRemaining)) {
 
-                    itemstack2.grow(itemstack1.getCount());
+                    recipeRemaining.grow(inSlot.getCount());
                     this.craftInv.setInventorySlotContents(i,
-                            itemstack2);
+                            recipeRemaining);
 
                 } else if (!this.player.inventory
-                        .addItemStackToInventory(itemstack2)) {
+                        .addItemStackToInventory(recipeRemaining)) {
 
-                    this.player.dropItem(itemstack2, false);
+                    this.player.dropItem(recipeRemaining, false);
                 }
             }
         }

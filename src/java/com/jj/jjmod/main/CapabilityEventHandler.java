@@ -1,16 +1,14 @@
 package com.jj.jjmod.main;
 
-import com.jj.jjmod.capabilities.CapDecay;
-import com.jj.jjmod.capabilities.CapPlayer;
 import com.jj.jjmod.capabilities.DefaultCapPlayer;
 import com.jj.jjmod.capabilities.ProviderCapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.items.ItemEdibleDecayable;
 import com.jj.jjmod.utilities.FoodStatsWrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -21,18 +19,21 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+/** Handler for capability related events. */
 public class CapabilityEventHandler {
     
+    /** Initial sync of ICapPlayer. */
     @SubscribeEvent
     public void playerJoin(EntityJoinWorldEvent event) {
        
         if (event.getEntity() instanceof EntityPlayer) {
 
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            player.getCapability(CapPlayer.CAP_PLAYER, null).syncAll();
+            player.getCapability(ModCapabilities.CAP_PLAYER, null).syncAll();
         }
     }
     
+    /** Attaches ICapPlayer to the Player. */
     @SubscribeEvent
     public void playerCapabilities(AttachCapabilitiesEvent<Entity> event) {
 
@@ -43,13 +44,14 @@ public class CapabilityEventHandler {
 
         EntityPlayer player = (EntityPlayer) event.getObject();
         
-        if (!(player.hasCapability(CapPlayer.CAP_PLAYER, null))) {
+        if (!(player.hasCapability(ModCapabilities.CAP_PLAYER, null))) {
 
-            event.addCapability(CapPlayer.ID,
+            event.addCapability(ModCapabilities.CAP_PLAYER_ID,
                     new ProviderCapPlayer(new DefaultCapPlayer(player)));
         }
     }
     
+    /** Tick Capabilities and check additional player settings. */
     @SubscribeEvent
     public void playerTick(PlayerTickEvent event) {
         
@@ -58,13 +60,14 @@ public class CapabilityEventHandler {
             return;
         }
         
-        event.player.getCapability(CapPlayer.CAP_PLAYER, null).tick();
+        event.player.getCapability(ModCapabilities.CAP_PLAYER, null).tick();
         
         checkContainer(event.player);
         checkFoodstats(event.player);
         inventoryDecay(event.player);
     }
     
+    /** Sets the player container to correct for the gamemode. */
     private static void checkContainer(EntityPlayer player) {
         
         if (player.inventoryContainer instanceof ContainerPlayer &&
@@ -84,6 +87,7 @@ public class CapabilityEventHandler {
         }
     }
     
+    /** Sets the player's FoodStats to FoodStatsWrapper. */
     private static void checkFoodstats(EntityPlayer player) {
         
         if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
@@ -93,6 +97,7 @@ public class CapabilityEventHandler {
         }
     }
     
+    /** Ticks all ICapDecay items in the player inventory. */
     private static void inventoryDecay(EntityPlayer player) {
         
         if (player.inventoryContainer instanceof ContainerInventory) {
@@ -103,7 +108,8 @@ public class CapabilityEventHandler {
                 
                 if (stack.getItem() instanceof ItemEdibleDecayable) {
                     
-                    if (stack.getCapability(CapDecay.CAP_DECAY, null).updateAndRot()) {
+                    if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                            .updateAndRot()) {
                         
                         slot.putStack(new ItemStack(ModItems.rot));
                     }

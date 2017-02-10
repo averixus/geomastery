@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Container slot for EntityEquipmentSlots. */
 public class SlotArmour extends Slot {
 
     public EntityEquipmentSlot type;
@@ -183,41 +184,37 @@ public class SlotArmour extends Slot {
             case HEAD: {
 
                 return this.playerInv.armorInventory.get(3) ==
-                        ItemStack.EMPTY ? ItemStack.EMPTY :
-                        ItemStackHelper
+                        ItemStack.EMPTY ? ItemStack.EMPTY : ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 3, amount);
             }
 
             case CHEST: {
 
                 return this.playerInv.armorInventory.get(2) ==
-                        ItemStack.EMPTY ? ItemStack.EMPTY :
-                        ItemStackHelper
+                        ItemStack.EMPTY ? ItemStack.EMPTY : ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 2, amount);
             }
 
             case LEGS: {
 
                 return this.playerInv.armorInventory.get(1) ==
-                        ItemStack.EMPTY ? ItemStack.EMPTY :
-                        ItemStackHelper
+                        ItemStack.EMPTY ? ItemStack.EMPTY : ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 1, amount);
             }
 
             case FEET: {
 
                 return this.playerInv.armorInventory.get(0) ==
-                        ItemStack.EMPTY ? ItemStack.EMPTY :
-                        ItemStackHelper
+                        ItemStack.EMPTY ? ItemStack.EMPTY : ItemStackHelper
                         .getAndSplit(this.playerInv.armorInventory, 0, amount);
             }
 
             case OFFHAND: {
 
                 return this.playerInv.offHandInventory.get(0) ==
-                        ItemStack.EMPTY ? ItemStack.EMPTY :
-                        ItemStackHelper
-                        .getAndSplit(this.playerInv.offHandInventory, 0, amount);
+                        ItemStack.EMPTY ? ItemStack.EMPTY : ItemStackHelper
+                        .getAndSplit(this.playerInv
+                        .offHandInventory, 0, amount);
             }
 
             default: {

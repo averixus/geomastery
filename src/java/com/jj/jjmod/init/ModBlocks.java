@@ -88,11 +88,28 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
     
-    public static final Map<Block, Item> MOD_BLOCKS = Maps.newHashMap();
-    
+    /** Items which are restricted to the offhand slot. */
     public static final Set<Item> OFFHAND_ONLY = Sets.newHashSet();
     
+    /** All new blocks, for ease of modelling. */
+    private static final Map<Block, Item> MOD_BLOCKS = Maps.newHashMap();
+    
+    /** Array ready to build into Set. */
+    private static final Block[] HEAVY_ARRAY = {Blocks.BEDROCK,
+            Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.SANDSTONE,
+            Blocks.RED_SANDSTONE, Blocks.OBSIDIAN, Blocks.STONE,
+            Blocks.STONEBRICK, Blocks.PRISMARINE, Blocks.QUARTZ_BLOCK,
+            Blocks.BRICK_BLOCK, Blocks.COAL_ORE, Blocks.DIAMOND_ORE,
+            Blocks.EMERALD_ORE, Blocks.GOLD_ORE, Blocks.IRON_ORE,
+            Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE};
+    /** Array ready to build into Set. */
+    private static final Block[] LIGHT_ARRAY = {Blocks.CLAY, Blocks.DIRT,
+            Blocks.GRASS, Blocks.GRAVEL, Blocks.ICE, Blocks.PACKED_ICE,
+            Blocks.SAND, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
+
+    /** Vanilla blocks classed as Heavy. */
     public static final Set<Block> HEAVY = Sets.newHashSet();
+    /** Vanilla blocks classed as Light. */
     public static final Set<Block> LIGHT = Sets.newHashSet();
     
     public static BlockBedPlain bedLeaf;
@@ -228,11 +245,11 @@ public class ModBlocks {
         registerItemless(bedLeaf = new BlockBedPlain("bed_leaf", 0.2F, 
                 () -> null, true, null));
         registerItemless(bedCotton = new BlockBedBreakable("bed_cotton", 2.0F,
-                () -> ModItems.bedCotton, true, ToolType.NONE));
+                () -> ModItems.bedCotton, true, null));
         registerItemless(bedWool = new BlockBedBreakable("bed_wool", 2.0F,
-                () -> ModItems.bedWool, true, ToolType.NONE));
+                () -> ModItems.bedWool, true, null));
         registerItemless(bedSimple = new BlockBedPlain("bed_simple", 2.0F,
-                () -> ModItems.bedSimple, false, ToolType.NONE));
+                () -> ModItems.bedSimple, false, null));
         
         registerItemless(antler = new BlockAntler());
         
@@ -321,45 +338,58 @@ public class ModBlocks {
         registerItemless(melonCrop = new BlockCropBlockfruitMelon());
         registerItemless(pumpkinCrop = new BlockCropBlockfruitPumpkin());
         
-        register(melonFruit = new BlockFruit("melon_fruit", () -> ModItems.melon));
-        register(pumpkinFruit = new BlockFruit("pumpkin_fruit", () -> ModItems.pumpkin));
+        register(melonFruit = new BlockFruit("melon_fruit",
+                () -> ModItems.melon));
+        register(pumpkinFruit = new BlockFruit("pumpkin_fruit",
+                () -> ModItems.pumpkin));
         
         register(seedlingApple = new BlockSeedlingApple());
         register(seedlingPear = new BlockSeedlingPear());
         register(seedlingOrange = new BlockSeedlingOrange());
         register(seedlingBanana = new BlockSeedlingBanana());
         
-        registerItemless(wallBrickSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallBrickSingle =
+                new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_brick_single", 2F, ToolType.PICKAXE, false,
                 () -> ModItems.wallBrick, true, 6, true));
-        registerItemless(wallBrickDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallBrickDouble =
+                new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_brick_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallBrick, true, 6, true));
-        registerItemless(wallMudSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallMudSingle =
+                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_single", 1F, ToolType.PICKAXE, false,
                 () -> ModItems.wallMud, false, 1, false));
-        registerItemless(wallMudDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallMudDouble =
+                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallMud, false, 1, false));
-        registerItemless(wallRoughSingle = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallRoughSingle =
+                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_single", 1.5F, ToolType.PICKAXE, false,
                 () -> ModItems.wallRough, false, 1, false));
-        registerItemless(wallRoughDouble = new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallRoughDouble =
+                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallRough, false, 1, false));
-        registerItemless(wallStoneSingle = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallStoneSingle =
+                new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_single", 2F, ToolType.PICKAXE, false,
                 () -> ModItems.wallStone, true, 6, true));
-        registerItemless(wallStoneDouble = new BlockWall(BlockMaterial.STONE_FURNITURE,
+        registerItemless(wallStoneDouble =
+                new BlockWall(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallStone, true, 6, true));
-        registerItemless(wallLogSingle = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
+        registerItemless(wallLogSingle =
+                new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_single", 1F, ToolType.AXE, false,
                 () -> ModItems.wallLog, false, 4, true));
-        registerItemless(wallLogDouble = new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
+        registerItemless(wallLogDouble =
+                new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_double", 3F, ToolType.AXE, true,
                 () -> ModItems.wallLog, false, 4, true));
-        registerItemless(wallPole = new BlockWallSingle(BlockMaterial.WOOD_FURNITURE,
+        registerItemless(wallPole =
+                new BlockWallSingle(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE, false, 4, false));
         
         register(stairsBrick = new BlockStairs("stairs_brick",
@@ -417,8 +447,10 @@ public class ModBlocks {
         Blocks.LIT_REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.LEAVES.setHardness(0.2F).setHarvestLevel(ToolType.MACHETE.name(), 1);
-        Blocks.REEDS.setHardness(0.2F).setHarvestLevel(ToolType.SICKLE.name(), 1);
+        Blocks.LEAVES.setHardness(0.2F)
+                .setHarvestLevel(ToolType.MACHETE.name(), 1);
+        Blocks.REEDS.setHardness(0.2F)
+                .setHarvestLevel(ToolType.SICKLE.name(), 1);
         Blocks.PUMPKIN.setHardness(0.2F);
         Blocks.MELON_BLOCK.setHardness(0.2F);
         
@@ -463,10 +495,6 @@ public class ModBlocks {
                 .setRegistryName(block.getRegistryName()));
 
         MOD_BLOCKS.put(block, item);
-        
-      //  ModelLoader.setCustomModelResourceLocation(item, 0,
-      //          new ModelResourceLocation(block.getRegistryName(),
-      //          "inventory"));
     }
     
     private static void registerItemless(Block block) {
@@ -478,21 +506,18 @@ public class ModBlocks {
     private static void model(Block block, Item item) {
         
         ModelLoader.setCustomModelResourceLocation(item, 0,
-                new ModelResourceLocation(block.getRegistryName(), "inventory"));
+                new ModelResourceLocation(block.getRegistryName(),
+                "inventory"));
     }
     
     private static void buildSets() {
         
-        Block[] heavy = {Blocks.BEDROCK, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.OBSIDIAN, Blocks.STONE, Blocks.STONEBRICK, Blocks.PRISMARINE, Blocks.QUARTZ_BLOCK, Blocks.BRICK_BLOCK, Blocks.COAL_ORE, Blocks.DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.GOLD_ORE, Blocks.IRON_ORE, Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE};
-        
-        for (Block block : heavy) {
+        for (Block block : HEAVY_ARRAY) {
             
             HEAVY.add(block);
         }
-        
-        Block[] light = {Blocks.CLAY, Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL, Blocks.ICE, Blocks.PACKED_ICE, Blocks.SAND, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
-        
-        for (Block block : light) {
+                
+        for (Block block : LIGHT_ARRAY) {
             
             LIGHT.add(block);
         }

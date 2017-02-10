@@ -12,12 +12,9 @@ import net.minecraft.world.World;
 
 public class BlockAntler extends BlockBush {
 
-    private static final String NAME = "antler";
-
     public BlockAntler() {
 
-        super();
-        BlockNew.setupBlock(this, NAME, null, 0, null);
+        BlockNew.setupBlock(this, "antler", null, 0, null);
     }
     
     @Override

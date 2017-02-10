@@ -8,19 +8,19 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+/** Container for Box. Mostly duplicate of Chest with 9 slots. */
 public class ContainerBox extends ContainerAbstract {
-
+    
+    private static final int CHEST_Y = 36;
+    private static final int HOT_START = 0;
+    private static final int HOT_END = 8;
+    private static final int INV_START = 9;
+    
+    private final int invEnd;
+    private final int chestStart;
+    private final int chestEnd;
+    
     public IInventory boxInv;
-    
-    public static final int CHEST_Y = 36;
-    
-    public static final int HOT_START = 0;
-    public static final int HOT_END = 8;
-    public static final int INV_START = 9;
-    
-    public final int INV_END;
-    public final int CHEST_START;
-    public final int CHEST_END;
     
     public ContainerBox(EntityPlayer player, World world, IInventory boxInv) {
         
@@ -39,9 +39,10 @@ public class ContainerBox extends ContainerAbstract {
                     i, getInvX(i), CHEST_Y));
         }
         
-        this.INV_END = INV_START + invIndex;
-        this.CHEST_START = this.INV_END + 1;
-        this.CHEST_END = this.INV_END + this.boxInv.getSizeInventory();
+        // Container indices
+        this.invEnd = INV_START + invIndex;
+        this.chestStart = this.invEnd + 1;
+        this.chestEnd = this.invEnd + this.boxInv.getSizeInventory();
     }
     
     @Override
@@ -55,18 +56,18 @@ public class ContainerBox extends ContainerAbstract {
             ItemStack slotStack = slot.getStack();
             result = slotStack.copy();
             
-            if (index >= HOT_START && index <= this.INV_END) {
+            if (index >= HOT_START && index <= this.invEnd) {
                 
                 if (!this.mergeItemStack(slotStack,
-                        this.CHEST_START, this.CHEST_END + 1, true)) {
+                        this.chestStart, this.chestEnd + 1, true)) {
                     
                     return ItemStack.EMPTY;
                 }
                 
-            } else if (index >= this.CHEST_START && index <= this.CHEST_END) {
+            } else if (index >= this.chestStart && index <= this.chestEnd) {
                 
                 if (!this.mergeItemStack(slotStack,
-                        HOT_START, this.INV_END + 1, true)) {
+                        HOT_START, this.invEnd + 1, true)) {
                     
                     return ItemStack.EMPTY;
                 }

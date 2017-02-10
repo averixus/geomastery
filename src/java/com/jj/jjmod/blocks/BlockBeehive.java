@@ -58,7 +58,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
     
     public BlockBeehive() {
         
-        super(Material.PLANTS, NAME, null, 5.0F, ToolType.NONE);
+        super(Material.PLANTS, NAME, null, 5.0F, null);
         this.setTickRandomly(true);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(AGE, 0).withProperty(FACING, EnumFacing.NORTH));

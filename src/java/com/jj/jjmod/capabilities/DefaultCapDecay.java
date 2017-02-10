@@ -8,11 +8,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DefaultCapDecay implements ICapDecay {
     
-    public static final int DAY_TICKS = 24000;
-    public static final int MAX_STAGE = 10;
-    protected int maxAge;
-    protected int stage = 0;
-    protected int ageTimer = 0;
+    private static final int DAY_TICKS = 24000;
+    private static final int MAX_STAGE = 10;
+    
+    private int maxAge;
+    private int stage = 0;
+    private int ageTimer = 0;
     
     public DefaultCapDecay(int maxDays) {
         

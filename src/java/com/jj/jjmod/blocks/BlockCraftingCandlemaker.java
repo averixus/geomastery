@@ -31,7 +31,7 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
 
     public BlockCraftingCandlemaker() {
 
-        super("crafting_candlemaker", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_candlemaker", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

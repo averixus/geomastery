@@ -1,39 +1,42 @@
 package com.jj.jjmod.container;
 
-import com.jj.jjmod.capabilities.CapPlayer;
-import com.jj.jjmod.capabilities.DefaultCapPlayer;
+import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.slots.SlotInventory;
+import com.jj.jjmod.init.ModCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+/** Abstract superclass of Containers, with utilities for ICapPlayer. */ 
 public abstract class ContainerAbstract extends Container {
 
-    public static final int SLOT_SIZE = 18;
-    public static final int HOT_Y = 142;
-    public static final int ROW_LENGTH = 9;
-    public static final int INV_Y = 84;
-    public static final int INV_X = 8;
+    protected static final int SLOT_SIZE = 18;
+    protected static final int HOT_Y = 142;
+    protected static final int ROW_LENGTH = 9;
+    protected static final int INV_Y = 84;
+    protected static final int INV_X = 8;
 
-    public EntityPlayer player;
-    public DefaultCapPlayer capability;
-    public InventoryPlayer playerInv;
-    public World world;
+    protected EntityPlayer player;
+    public ICapPlayer capability;
+    protected InventoryPlayer playerInv;
+    protected World world;
 
     public ContainerAbstract(EntityPlayer player, World world) {
 
         this.player = player;
-        this.capability = (DefaultCapPlayer) player
-                .getCapability(CapPlayer.CAP_PLAYER, null);
+        this.capability = player
+                .getCapability(ModCapabilities.CAP_PLAYER, null);
         this.playerInv = player.inventory;
         this.world = world;
 
     }
 
+    /** Makes an InventoryCrafting of the given size, and builds grid of slots
+     * starting at the given co-ordinates.
+     * @return The new InventoryCrafting. */
     protected InventoryCrafting buildCraftMatrix(int columns, int rows,
             int startX, int startY) {
 
@@ -53,8 +56,8 @@ public abstract class ContainerAbstract extends Container {
         return craftMatrix;
     }
 
+    /** Builds a row of inventory slots for the hotbar. */
     protected void buildHotbar() {
-
 
         for (int m = 0; m < ROW_LENGTH; m++) {
 
@@ -63,6 +66,11 @@ public abstract class ContainerAbstract extends Container {
         }
     }
     
+    /** Builds a grid of inventory slots of size defined by
+     * the player capability.
+     * @return The difference between the index of the first main inventory
+     * slot, and the last total inventory slot:
+     * this is -1 if there are 0 inventory rows. */
     protected int buildInvgrid() { 
         
         int invIndex = -1;
@@ -85,44 +93,22 @@ public abstract class ContainerAbstract extends Container {
         return invIndex;
     }
 
+    /** @return The x co-ordinate for an inventory slot of this index (0-8). */
     protected static int getInvX(int index) {
 
         return INV_X + index * SLOT_SIZE;
     }
 
+    /** @return The y co-ordinate for an inventory slot of this row (0-2). */
     protected static int getInvY(int index) {
         System.out.println("inventory slot y " + (INV_Y + index * SLOT_SIZE));
         return INV_Y + index * SLOT_SIZE;
     }
     
+    /** Inverts the given row index so that rows are built from bottom to top.
+     * @return The inverted row index (0-2). */
     protected static int invertRowIndex(int index) {
         
-        if (index == 0) {
-            
-            return 2;
-        }
-        
-        if (index == 2) {
-            
-            return 0;
-        }
-        
-        return index;
-    }
-
-    protected static int getInvIndex(int rowPos, int row) {
-
-        return rowPos + (row + 1) * ROW_LENGTH;
-    }
-
-    protected boolean areItemStacksEqual(ItemStack stackA,
-            ItemStack stackB) {
-
-        boolean sameItem = stackA.getItem() == stackB.getItem();
-        boolean sameMeta = !stackA.getHasSubtypes() || stackA
-                .getMetadata() == stackB.getMetadata();
-        boolean sameTags = ItemStack.areItemStackTagsEqual(stackA, stackB);
-
-        return sameItem && sameMeta && sameTags;
+        return index == 0 ? 2 : index == 2 ? 0 : index;
     }
 }

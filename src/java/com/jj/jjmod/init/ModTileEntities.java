@@ -20,8 +20,6 @@ public class ModTileEntities {
 
     public static void init() {
         
-        // CONFIG tile entities register
-
         GameRegistry.registerTileEntity(TEFurnaceCampfire.class,
                 "furnace_campfire");
         GameRegistry.registerTileEntity(TEFurnaceCookfire.class,
@@ -52,6 +50,5 @@ public class ModTileEntities {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TEBox.class,
                 new TileEntityBoxRenderer());
-
     }
 }

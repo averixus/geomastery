@@ -40,7 +40,7 @@ public class BlockCraftingMason extends BlockComplexAbstract
 
     public BlockCraftingMason() {
 
-        super("crafting_mason", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_mason", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

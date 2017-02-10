@@ -31,11 +31,16 @@ public class ModRecipes {
     private static final Item[] METALS =
             {ModItems.ingotCopper, ModItems.ingotTin, ModItems.ingotSteel};
     private static final Item[] POTS = {ModItems.potClay, ModItems.potMetal};
-    private static final Item[] SKINS_FUR = {ModItems.skinBear, ModItems.skinWolf, ModItems.skinSheep};
-    private static final Item[] SKINS_ALL = {ModItems.skinBear, ModItems.skinCow, ModItems.skinPig, ModItems.skinSheep, ModItems.skinWolf};
+    private static final Item[] SKINS_FUR = {ModItems.skinBear,
+            ModItems.skinWolf, ModItems.skinSheep};
+    private static final Item[] SKINS_ALL = {ModItems.skinBear,
+            ModItems.skinCow, ModItems.skinPig,
+            ModItems.skinSheep, ModItems.skinWolf};
     
-    private static final CookingManager[] CAMPFIRE_PLUS = {CAMPFIRE, COOKFIRE, CLAY, STONE};
-    private static final CookingManager[] COOKFIRE_PLUS = {COOKFIRE, CLAY, STONE};
+    private static final CookingManager[] CAMPFIRE_PLUS =
+            {CAMPFIRE, COOKFIRE, CLAY, STONE};
+    private static final CookingManager[] COOKFIRE_PLUS =
+            {COOKFIRE, CLAY, STONE};
     private static final CookingManager[] CLAY_PLUS = {CLAY, STONE};
     
     public static void init() {
@@ -56,67 +61,106 @@ public class ModRecipes {
         setupStone();
         setupDrying();
     }
-
-    // CONFIG crafting recipes
-
+    
     public static void setupInventory() {
         
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.hoeAntler), "A", 'A', ModItems.shovelAntler);
-        INVENTORY.addShapedRecipe(new ItemStack(Items.FISHING_ROD), "SS ", " TT", 'S', Items.STICK, 'T', ModItems.twineHemp);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.spearWood), "SSS", 'S', Items.STICK);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.bowCrude), "STS", " S ", 'S', Items.STICK, 'T', ModItems.twineHemp);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5), "SF", 'S', Items.STICK, 'F', Items.FEATHER);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.backpack), "L L", "LLL", 'L', Items.LEATHER);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.yoke), "LPL", "LLL", 'L', Items.LEATHER, 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.potClay), "C C", " C ", 'C', Items.CLAY_BALL);
-        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.craftingKnapping), "FFF", 'F', Items.FLINT);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingCandlemaker), "PPP", "PPP", 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingTextiles), "BPP", "PPP",'B', Items.BONE, 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingClayworks), "PCP", "PPP", 'P', ModItems.pole, 'C', Items.CLAY_BALL);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer), "SRP", "LBP", 'S', ModItems.ingotSteel, 'R', ModItems.stoneRough, 'P', ModItems.pole, 'L', Items.LEATHER, 'B', ModItems.beeswax);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingSawpit), "PSP", " S ", 'P', ModItems.pole, 'S', ModItems.ingotSteel);
-        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire), "S S", "SSS", 'S', Items.STICK);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceClay), "C C", "CCC", 'C', Items.CLAY_BALL);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceStone), "S S", "SSS", 'S', ModItems.stoneRough);
-        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.drying), "PPP", 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf), "LLL", 'L', ModItems.leaves);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud), "MMM", "MMM", 'M', ModItems.mudbricks);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.hoeAntler),
+                "A", 'A', ModItems.shovelAntler);
+        INVENTORY.addShapedRecipe(new ItemStack(Items.FISHING_ROD),
+                "SS ", " TT", 'S', Items.STICK, 'T', ModItems.twineHemp);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.spearWood),
+                "SSS", 'S', Items.STICK);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.bowCrude),
+                "STS", " S ", 'S', Items.STICK, 'T', ModItems.twineHemp);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5),
+                "SF", 'S', Items.STICK, 'F', Items.FEATHER);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.backpack),
+                "L L", "LLL", 'L', Items.LEATHER);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.yoke),
+                "LPL", "LLL", 'L', Items.LEATHER, 'P', ModItems.pole);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.potClay),
+                "C C", " C ", 'C', Items.CLAY_BALL);
+        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.craftingKnapping),
+                "FFF", 'F', Items.FLINT);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingCandlemaker),
+                "PPP", "PPP", 'P', ModItems.pole);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingTextiles),
+                "BPP", "PPP",'B', Items.BONE, 'P', ModItems.pole);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingClayworks),
+                "PCP", "PPP", 'P', ModItems.pole, 'C', Items.CLAY_BALL);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
+                "SRP", "LBP", 'S', ModItems.ingotSteel, 'R',
+                ModItems.stoneRough, 'P', ModItems.pole, 'L',
+                Items.LEATHER, 'B', ModItems.beeswax);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingSawpit),
+                "PSP", " S ", 'P', ModItems.pole, 'S', ModItems.ingotSteel);
+        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire),
+                "S S", "SSS", 'S', Items.STICK);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceClay),
+                "C C", "CCC", 'C', Items.CLAY_BALL);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceStone),
+                "S S", "SSS", 'S', ModItems.stoneRough);
+        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.drying),
+                "PPP", 'P', ModItems.pole);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf),
+                "LLL", 'L', ModItems.leaves);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud),
+                "MMM", "MMM", 'M', ModItems.mudbricks);
         
         for (Item metal : METALS) {
         
-            INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingTextiles), "MPP", "PPP", 'M', metal, 'P', ModItems.pole);
-            INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingWoodworking), "PPM", "PPP", 'P', ModItems.pole, 'M', metal);
-            INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingMason), "MSS", "PPP", 'M', metal, 'S', ModItems.stoneRough, 'P', ModItems.pole);
+            INVENTORY.addShapedRecipe(new
+                    ItemStack(ModItems.craftingTextiles), "MPP", "PPP",
+                    'M', metal, 'P', ModItems.pole);
+            INVENTORY.addShapedRecipe(new
+                    ItemStack(ModItems.craftingWoodworking), "PPM", "PPP",
+                    'P', ModItems.pole, 'M', metal);
+            INVENTORY.addShapedRecipe(new
+                    ItemStack(ModItems.craftingMason), "MSS", "PPP",
+                    'M', metal, 'S', ModItems.stoneRough, 'P', ModItems.pole);
 
             for (Item metal2 : METALS) {
                 
-                INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingForge), "MNS", "PPP", 'M', metal, 'N', metal2, 'S', ModItems.stoneRough, 'P', ModItems.pole);
+                INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingForge),
+                        "MNS", "PPP", 'M', metal, 'N', metal2,
+                        'S', ModItems.stoneRough, 'P', ModItems.pole);
             }
         }
         
         for (Item pot : POTS) {
             
-            INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCookfire), "SPS", "SSS", 'S', Items.STICK, 'P', pot);
+            INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCookfire),
+                    "SPS", "SSS", 'S', Items.STICK, 'P', pot);
         }
     }
 
     public static void setupKnapping() {
 
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.huntingknifeFlint), "FF", 'F', Items.FLINT);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeFlint), "FSS", 'F', ModItems.axeheadFlint, 'S', Items.STICK);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.pickaxeFlint), "FSS", 'F', ModItems.pickheadFlint, 'S', Items.STICK);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.woolknifeFlint), "F ", "FF", 'F', Items.FLINT);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearFlint), "FSS", 'F', ModItems.spearheadFlint, 'S', Items.STICK);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowFlint, 5), "FSE", 'F', ModItems.arrowheadFlint, 'S', Items.STICK, 'E', Items.FEATHER);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 4), "RRR", "RRR", 'R', ModItems.stoneRough);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowheadFlint), "F", 'F', Items.FLINT);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeheadFlint), "F ", "FF", "F ", 'F', Items.FLINT);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.pickheadFlint), " F ", "FFF", " F ", 'F', Items.FLINT);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearheadFlint), " F ", " F ", "F F", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.huntingknifeFlint),
+                "FF", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeFlint),
+                "FSS", 'F', ModItems.axeheadFlint, 'S', Items.STICK);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.pickaxeFlint),
+                "FSS", 'F', ModItems.pickheadFlint, 'S', Items.STICK);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.woolknifeFlint),
+                "F ", "FF", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearFlint),
+                "FSS", 'F', ModItems.spearheadFlint, 'S', Items.STICK);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowFlint, 5),
+                "FSE", 'F', ModItems.arrowheadFlint, 'S', Items.STICK, 'E', Items.FEATHER);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 4),
+                "RRR", "RRR", 'R', ModItems.stoneRough);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowheadFlint),
+                "F", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeheadFlint),
+                "F ", "FF", "F ", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.pickheadFlint),
+                " F ", "FFF", " F ", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearheadFlint),
+                " F ", " F ", "F F", 'F', Items.FLINT);
     }
 
     public static void setupWoodworking() {
-
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelWood),
                 "PPP", 'P', ModItems.pole);
@@ -188,14 +232,22 @@ public class ModRecipes {
                 "ASF", 'A', ModItems.arrowheadSteel, 'S', Items.STICK,
                 'F', Items.FEATHER);
         
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood), " P ", "PPP", " P ", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 4), "PPP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.wallLog, 4), "LLL", "LLL", 'L', ModItems.log);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 4), "  P", " PP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 4), "  T", " TT", "TTT", 'T', ModItems.timber);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 4), "PPP", " P ", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole), "P", "P", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box), "PP", "PP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood),
+                " P ", "PPP", " P ", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 4),
+                "PPP", "PPP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
+                "LLL", "LLL", 'L', ModItems.log);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 4),
+                "  P", " PP", "PPP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 4),
+                "  T", " TT", "TTT", 'T', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 4),
+                "PPP", " P ", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole),
+                "P", "P", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box),
+                "PP", "PP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 6),
                 "P P", "PPP", "P P", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bedSimple), "WWW",
@@ -204,25 +256,37 @@ public class ModRecipes {
 
     public static void setupTextiles() {
 
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedCotton), "CCC", "CCC", 'C',
-                ModItems.cotton);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedWool), "WWW", "WWW", 'W',
-                Blocks.WOOL);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonChest), "C C", "CCC", "CCC", 'C', ModItems.cotton);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonLegs), "CCC", "C C", "C C", 'C', ModItems.cotton);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonHead), "CCC", "C C", 'C', ModItems.cotton);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonFeet), "C C", "C C", 'C', ModItems.cotton);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolChest), "W W", "WWW", "WWW", 'W', ModItems.wool);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolLegs), "WWW", "W W", "W W", 'W', ModItems.wool);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolHead), "WWW", "W W", 'W', ModItems.wool);
-        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolFeet), "W W", "W W", 'W', ModItems.wool);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedCotton),
+                "CCC", "CCC", 'C', ModItems.cotton);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedWool),
+                "WWW", "WWW", 'W', Blocks.WOOL);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonChest),
+                "C C", "CCC", "CCC", 'C', ModItems.cotton);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonLegs),
+                "CCC", "C C", "C C", 'C', ModItems.cotton);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonHead),
+                "CCC", "C C", 'C', ModItems.cotton);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonFeet),
+                "C C", "C C", 'C', ModItems.cotton);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolChest),
+                "W W", "WWW", "WWW", 'W', ModItems.wool);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolLegs),
+                "WWW", "W W", "W W", 'W', ModItems.wool);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolHead),
+                "WWW", "W W", 'W', ModItems.wool);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolFeet),
+                "W W", "W W", 'W', ModItems.wool);
         
         for (Item skin : SKINS_FUR) {
             
-            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furHead), "SSS", "S S", 'S', skin);
-            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furChest), "S S", "SSS", "SSS", 'S', skin);
-            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furLegs), "SSS", "S S", "S S", 'S', skin);
-            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furFeet), "S S", "S S", 'S', skin);
+            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furHead),
+                    "SSS", "S S", 'S', skin);
+            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furChest),
+                    "S S", "SSS", "SSS", 'S', skin);
+            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furLegs),
+                    "SSS", "S S", "S S", 'S', skin);
+            TEXTILES.addShapedRecipe(new ItemStack(ModItems.furFeet),
+                    "S S", "S S", 'S', skin);
         }
     }
 
@@ -232,9 +296,13 @@ public class ModRecipes {
 
     public static void setupCandlemaker() {
 
-        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 15), "H", "T", "T", 'H', ModItems.twineHemp, 'T', ModItems.tallow);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleBeeswax, 15), "H", "B", "B", 'H', ModItems.twineHemp, 'B', ModItems.beeswax);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4), "T", "C", "S", 'T', ModItems.tallow, 'C', ModItems.cotton, 'S', Items.STICK);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 15),
+                "H", "T", "T", 'H', ModItems.twineHemp, 'T', ModItems.tallow);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleBeeswax, 15),
+                "H", "B", "B", 'H', ModItems.twineHemp, 'B', ModItems.beeswax);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4),
+                "T", "C", "S", 'T', ModItems.tallow, 'C',
+                ModItems.cotton, 'S', Items.STICK);
     }
 
     public static void setupForge() {
@@ -325,10 +393,14 @@ public class ModRecipes {
 
     public static void setupMason() {
         
-        MASON.addShapedRecipe(new ItemStack(ModItems.wallBrick, 4), "BBB", "BBB", 'B', ModItems.claybricks);
-        MASON.addShapedRecipe(new ItemStack(ModItems.wallStone, 4), "SSS", "SSS", 'S', ModItems.stoneDressed);
-        MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsStone, 4), "  S", " SS", "SSS", 'S', ModItems.stoneDressed);
-        MASON.addShapedRecipe(new ItemStack(ModItems.slabStone, 2), "SSS", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModItems.wallBrick, 4),
+                "BBB", "BBB", 'B', ModItems.claybricks);
+        MASON.addShapedRecipe(new ItemStack(ModItems.wallStone, 4),
+                "SSS", "SSS", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsStone, 4),
+                "  S", " SS", "SSS", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModItems.slabStone, 2),
+                "SSS", 'S', ModItems.stoneDressed);
 
     }
 
@@ -346,14 +418,22 @@ public class ModRecipes {
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.shieldSteel), "SP ",
                 "PPP", " PS", 'S', ModItems.ingotSteel, 'P',
                 ModItems.pole);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailChest), "S S", "SSS", "SSS", 'S', ModItems.ingotSteel);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailLegs), "SSS", "S S", "S S", 'S', ModItems.ingotSteel);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailFeet), "S S", "S S", 'S', ModItems.ingotSteel);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailHead), "SSS", "S S", 'S', ModItems.ingotSteel);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateChest), "SLS", "SSS", "SSS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateLegs), "SSS", "SLS", "S S", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateFeet), "S S", "SLS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
-        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateHead), "SSS", "SLS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailChest),
+                "S S", "SSS", "SSS", 'S', ModItems.ingotSteel);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailLegs),
+                "SSS", "S S", "S S", 'S', ModItems.ingotSteel);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailFeet),
+                "S S", "S S", 'S', ModItems.ingotSteel);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailHead),
+                "SSS", "S S", 'S', ModItems.ingotSteel);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateChest),
+                "SLS", "SSS", "SSS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateLegs),
+                "SSS", "SLS", "S S", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateFeet),
+                "S S", "SLS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
+        ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateHead),
+                "SSS", "SLS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
     }
     
     public static void setupSawpit() {
@@ -361,19 +441,24 @@ public class ModRecipes {
         
     }
 
-    // CONFIG furnace recipes
-
     public static void setupCampfire() {
 
         for (CookingManager recipes : CAMPFIRE_PLUS) {
             
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.beefRaw), new ItemStack(ModItems.beefCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.porkRaw), new ItemStack(ModItems.porkCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.muttonRaw), new ItemStack(ModItems.muttonCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.rabbitRaw), new ItemStack(ModItems.rabbitCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.chickenRaw), new ItemStack(ModItems.chickenCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.fishRaw), new ItemStack(ModItems.fishCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.potato), new ItemStack(ModItems.potatoCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.beefRaw),
+                    new ItemStack(ModItems.beefCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.porkRaw),
+                    new ItemStack(ModItems.porkCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.muttonRaw),
+                    new ItemStack(ModItems.muttonCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.rabbitRaw),
+                    new ItemStack(ModItems.rabbitCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.chickenRaw),
+                    new ItemStack(ModItems.chickenCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.fishRaw),
+                    new ItemStack(ModItems.fishCooked));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.potato),
+                    new ItemStack(ModItems.potatoCooked));
             recipes.addFuel(new ItemStack(Items.STICK), 200);
             recipes.addFuel(new ItemStack(ModItems.pole), 500);
             recipes.addFuel(new ItemStack(ModItems.log), 1000);
@@ -385,10 +470,14 @@ public class ModRecipes {
 
         for (CookingManager recipes : COOKFIRE_PLUS) {
             
-            recipes.addSmeltingRecipe(new ItemStack(Blocks.REEDS), new ItemStack(ModItems.sugar));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.chickpeas), new ItemStack(ModItems.chickpeasBoiled));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat), new ItemStack(ModItems.wheatBoiled));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.rice), new ItemStack(ModItems.riceBoiled));
+            recipes.addSmeltingRecipe(new ItemStack(Blocks.REEDS),
+                    new ItemStack(ModItems.sugar));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.chickpeas),
+                    new ItemStack(ModItems.chickpeasBoiled));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat),
+                    new ItemStack(ModItems.wheatBoiled));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.rice),
+                    new ItemStack(ModItems.riceBoiled));
         }
     }
 
@@ -396,8 +485,10 @@ public class ModRecipes {
 
         for (CookingManager recipes : CLAY_PLUS) {
             
-            recipes.addSmeltingRecipe(new ItemStack(Blocks.LOG), new ItemStack(Items.COAL, 1, 1));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat), new ItemStack(Items.BREAD));
+            recipes.addSmeltingRecipe(new ItemStack(Blocks.LOG),
+                    new ItemStack(Items.COAL, 1, 1));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat),
+                    new ItemStack(Items.BREAD));
             recipes.addFuel(new ItemStack(ModItems.peatDry), 2400);
             recipes.addFuel(new ItemStack(Items.COAL, 1, 1), 3000);
         }
@@ -405,22 +496,30 @@ public class ModRecipes {
 
     public static void setupStone() {
 
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreIron), new ItemStack(ModItems.ingotSteel));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreCopper), new ItemStack(ModItems.ingotCopper));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreSilver), new ItemStack(ModItems.ingotSilver));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreGold), new ItemStack(Items.GOLD_INGOT));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreTin), new ItemStack(ModItems.ingotTin));
+        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreIron),
+                new ItemStack(ModItems.ingotSteel));
+        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreCopper),
+                new ItemStack(ModItems.ingotCopper));
+        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreSilver),
+                new ItemStack(ModItems.ingotSilver));
+        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreGold),
+                new ItemStack(Items.GOLD_INGOT));
+        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreTin),
+                new ItemStack(ModItems.ingotTin));
         STONE.addFuel(new ItemStack(Items.COAL), 4000);
     }
 
     public static void setupDrying() {
 
-        DRYING.addSmeltingRecipe(new ItemStack(ModItems.dirt), new ItemStack(ModItems.mudbricks));
-        DRYING.addSmeltingRecipe(new ItemStack(ModItems.peatWet), new ItemStack(ModItems.peatDry));
+        DRYING.addSmeltingRecipe(new ItemStack(ModItems.dirt),
+                new ItemStack(ModItems.mudbricks));
+        DRYING.addSmeltingRecipe(new ItemStack(ModItems.peatWet),
+                new ItemStack(ModItems.peatDry));
         
         for (Item skin : SKINS_ALL) {
             
-            DRYING.addSmeltingRecipe(new ItemStack(skin), new ItemStack(Items.LEATHER));
+            DRYING.addSmeltingRecipe(new ItemStack(skin),
+                    new ItemStack(Items.LEATHER));
         }
     }
 }

@@ -7,17 +7,18 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
+/** Gui for Drying Rack */
 public class GuiDrying extends GuiContainer {
 
-    public static final int FOREGROUND = 4210752;
-    public static final String NAME = "Drying Rack";
-    
-    public final String TEXTURE;
+    /** Text colour */
+    private static final int FOREGROUND = 4210752;
+    private static final String NAME = "Drying Rack";
+    private final String texture;
 
     public GuiDrying(ContainerDrying container) {
 
         super(container);
-        this.TEXTURE = "jjmod:textures/gui/drying_" +
+        this.texture = "jjmod:textures/gui/drying_" +
                 container.capability.getInventoryRows() + ".png";
     }
 
@@ -36,7 +37,7 @@ public class GuiDrying extends GuiContainer {
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager()
-                .bindTexture(new ResourceLocation(this.TEXTURE));
+                .bindTexture(new ResourceLocation(this.texture));
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
@@ -45,6 +46,8 @@ public class GuiDrying extends GuiContainer {
         this.drawTexturedModalRect(i + 79, j + 34, 176, 14, l + 1, 16);
     }
 
+    /** Gets the scaled size of the drying progress rectangle.
+     * @return Pixel length of drying progress rectangle. */
     private int getDryProgress(int pixels) {
 
         int i = ((TEDrying) ((ContainerDrying) this.inventorySlots).dryingInv)

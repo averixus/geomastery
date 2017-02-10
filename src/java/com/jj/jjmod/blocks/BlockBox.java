@@ -28,7 +28,7 @@ public class BlockBox extends BlockNew implements ITileEntityProvider {
     public BlockBox() {
         
         super(BlockMaterial.WOOD_FURNITURE, "box",
-                CreativeTabs.BUILDING_BLOCKS, 5, ToolType.NONE);
+                CreativeTabs.BUILDING_BLOCKS, 5, null);
     }
     
     @Override

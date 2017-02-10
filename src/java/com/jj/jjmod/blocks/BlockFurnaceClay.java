@@ -40,7 +40,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract
 
     public BlockFurnaceClay() {
 
-        super("furnace_clay", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("furnace_clay", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

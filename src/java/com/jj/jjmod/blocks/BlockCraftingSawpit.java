@@ -38,7 +38,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     
     public BlockCraftingSawpit() {
         
-        super("crafting_sawpit", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_sawpit", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

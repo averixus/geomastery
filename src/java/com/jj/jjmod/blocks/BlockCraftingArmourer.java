@@ -35,7 +35,7 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
 
     public BlockCraftingArmourer() {
         
-        super("crafting_armourer", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_armourer", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
     @Override

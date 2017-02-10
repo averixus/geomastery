@@ -1,7 +1,7 @@
 package com.jj.jjmod.items;
 
-import com.jj.jjmod.capabilities.CapPlayer;
 import com.jj.jjmod.capabilities.ICapPlayer;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +30,7 @@ public class ItemEdible extends ItemFood {
         
         ItemStack stack = player.getHeldItem(hand);
         ICapPlayer capability = player
-                .getCapability(CapPlayer.CAP_PLAYER, null);
+                .getCapability(ModCapabilities.CAP_PLAYER, null);
         System.out.println("on item right click " + this);
         if (capability.canEat(this.type)) {
             System.out.println("can eat, eating");

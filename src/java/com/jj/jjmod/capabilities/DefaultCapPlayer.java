@@ -44,6 +44,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     private static final int YOKE_I = 1;
     private static final int ROW_LENGTH = 9;
     
+    // Player
     public EntityPlayer player;
     
     // Temperature
@@ -52,12 +53,14 @@ public class DefaultCapPlayer implements ICapPlayer {
     private TempStage tempStage = TempStage.OK;
     
     // Inventory
-    private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
+    private ItemStack backpack = ItemStack.EMPTY;
+    private ItemStack yoke = ItemStack.EMPTY;
     
     // Food
     private FoodStatsPartial carbs;
     private FoodStatsPartial protein;
     private FoodStatsPartial fruitveg;
+    // Convenience map
     private final Map<FoodType, FoodStatsPartial> typesMap = Maps.newHashMap();
     
     public DefaultCapPlayer(EntityPlayer player) {
@@ -76,12 +79,12 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         int rows = 0;
 
-        if (this.stacks.get(BACKPACK_I).getItem() == ModItems.backpack) {
+        if (this.backpack.getItem() == ModItems.backpack) {
 
             rows += 1;
         }
 
-        if (this.stacks.get(YOKE_I).getItem() == ModItems.yoke) {
+        if (this.yoke.getItem() == ModItems.yoke) {
 
             rows += 2;
         }
@@ -98,13 +101,13 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public ItemStack getBackpack() {
         
-        return this.stacks.get(BACKPACK_I);
+        return this.backpack;
     }
     
     @Override
     public ItemStack getYoke() {
         
-        return this.stacks.get(YOKE_I);
+        return this.yoke;
     }
     
     @Override
@@ -126,19 +129,21 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public void putBackpack(ItemStack stack) {
         
-        this.stacks.set(BACKPACK_I, stack);
+        this.backpack = stack;
     }
     
     @Override
     public void putYoke(ItemStack stack) {
         
-        this.stacks.set(YOKE_I, stack);
+        this.yoke = stack;
     }
     
     @Override
     public boolean canSprint() {
         
-        return !ModBlocks.OFFHAND_ONLY.contains(this.player.getHeldItemOffhand().getItem()) && this.stacks.get(YOKE_I).getItem() != ModItems.yoke;
+        return !ModBlocks.OFFHAND_ONLY.contains(this.player
+                .getHeldItemOffhand().getItem()) &&
+                this.yoke.getItem() != ModItems.yoke;
     }
     
     @Override
@@ -180,7 +185,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         FoodType type = item instanceof ItemEdible ?
                 ((ItemEdible) item).getType() : FoodType.CARBS;
-                
         this.typesMap.get(type).addStats(item, stack);
     }
     
@@ -189,30 +193,35 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         if (this.player.world.isRemote) {
             
+            // All action done on the server
             return;
         }
 
-        for (Entry<FoodType, FoodStatsPartial> entry : this.typesMap.entrySet()) {
+        for (Entry<FoodType, FoodStatsPartial> entry :
+                this.typesMap.entrySet()) {
             
             if (entry.getValue().tickHunger()) {
-                System.out.println("sending tick packet for " + entry.getKey() + " hunger is " + entry.getValue().getFoodLevel());
-                this.sendFoodPacket(entry.getKey(), entry.getValue().getFoodLevel());
+
+                this.sendFoodPacket(entry.getKey(),
+                        entry.getValue().getFoodLevel());
             }
         }
         
         this.tickHeal();
 
         if (this.tickTemperature()) {
-            System.out.println("sending temp tick packet " + this.tempStage);
+
             this.sendTempPacket(this.tempStage);
         }
         
         if (this.tickSpeed()) {
-            System.out.println("sending speed tick packet " + this.player.capabilities.getWalkSpeed());
+
             this.sendSpeedPacket(this.player.capabilities.getWalkSpeed());
         }
     }
     
+    /** Calculate the player's temperature based on all factors.
+     * @return Whether the TempStage has changed. */
     private boolean tickTemperature() {
         
         TempStage oldStage = this.tempStage;
@@ -221,12 +230,13 @@ public class DefaultCapPlayer implements ICapPlayer {
                 this.player.posY, this.player.posZ);
         World world = this.player.world;
         
-        
+        // Biome
         Biome biome = world.getBiomeForCoordsBody(playerPos);
         float biomeVar = ModBiomes.getTemp(biome);
         
         temp += biomeVar;
 
+        // Altitude
         float heightVar = 0;
         float belowSea = (float) (64 - this.player.posY);
         
@@ -237,6 +247,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         temp += heightVar;
 
+        // Time of day
         float timeVar;
         long time = world.getWorldTime();
         
@@ -257,11 +268,13 @@ public class DefaultCapPlayer implements ICapPlayer {
         if (biomeVar > 3 && time > 4000 && time <= 8000 &&
                 !world.canSeeSky(playerPos)) {
 
+            // Shade when in hottest biomes
             timeVar += -1;
         }
         
         temp += timeVar;
         
+        // Cave climate
         boolean isCave = true;
         
         outer: 
@@ -291,6 +304,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             temp = 0;
         }
 
+        // Wetness
         float waterVar = 0;
         
         if (this.player.isInWater() || this.player.isWet()) {
@@ -306,6 +320,7 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         temp += waterVar;  
 
+        // Clothing
         float clothesVar = 0;
 
         if (this.wetTimer == 0) {
@@ -332,6 +347,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         temp += clothesVar;
 
+        // Heating blocks
         double fireVar = 0;
         
         for (int x = -10; x <= 10; x++) {
@@ -398,6 +414,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         temp += fireVar;
 
+        // Define stage
         if (temp < 0) {
             
             this.tempStage = TempStage.COLD;
@@ -433,6 +450,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         return oldStage != this.tempStage;
     }
     
+    /** Heal the player if possible, using up fullest FoodTypes first. */
     private void tickHeal() {
    
         if (!this.player.shouldHeal()) {
@@ -441,9 +459,15 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
             
         Map<Float, FoodStatsPartial> typesMap = Maps.newTreeMap();
-        typesMap.put(-this.carbs.getFoodLevel() - this.carbs.getSaturationLevel() - this.carbs.getExhaustion(), this.carbs);
-        typesMap.put(-this.protein.getFoodLevel() - this.protein.getSaturationLevel() - this.protein.getExhaustion(), this.protein);
-        typesMap.put(-this.fruitveg.getFoodLevel() - this.fruitveg.getSaturationLevel() - this.fruitveg.getExhaustion(), this.fruitveg);
+        typesMap.put(-this.carbs.getFoodLevel() -
+                this.carbs.getSaturationLevel() -
+                this.carbs.getExhaustion(), this.carbs);
+        typesMap.put(-this.protein.getFoodLevel() -
+                this.protein.getSaturationLevel() -
+                this.protein.getExhaustion(), this.protein);
+        typesMap.put(-this.fruitveg.getFoodLevel() -
+                this.fruitveg.getSaturationLevel() -
+                this.fruitveg.getExhaustion(), this.fruitveg);
 
         for (Entry<Float, FoodStatsPartial> entry : typesMap.entrySet()) {
             
@@ -451,6 +475,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
     }
     
+    /** Calculate the player's walk speed based on inventory.
+     * @return Whether the walk speed has changed. */
     private boolean tickSpeed() {
         
         double speed = DEFAULT_SPEED;
@@ -462,32 +488,36 @@ public class DefaultCapPlayer implements ICapPlayer {
                 
                 ItemArmor armor = (ItemArmor) stack.getItem();
                 
-                if (armor.getArmorMaterial() == EquipMaterial.LEATHER_APPAREL) {
+                if (armor.getArmorMaterial() ==
+                        EquipMaterial.LEATHER_APPAREL) {
 
                     speed -= 0.2;
                     
-                } else if (armor.getArmorMaterial() == EquipMaterial.STEELMAIL_APPAREL) {
+                } else if (armor.getArmorMaterial() ==
+                        EquipMaterial.STEELMAIL_APPAREL) {
 
                     speed -= 0.4;
                     
-                } else if (armor.getArmorMaterial() == EquipMaterial.STEELPLATE_APPAREL) {
+                } else if (armor.getArmorMaterial() ==
+                        EquipMaterial.STEELPLATE_APPAREL) {
                     
                     speed -= 0.5;
                 }
             }
         }
         
-        if (ModBlocks.OFFHAND_ONLY.contains(this.player.getHeldItemOffhand().getItem())) {
+        if (ModBlocks.OFFHAND_ONLY.contains(this.player
+                .getHeldItemOffhand().getItem())) {
             
             speed -= 2.0;
         }
         
-        if (this.getBackpack().getItem() == ModItems.backpack) {
+        if (this.backpack.getItem() == ModItems.backpack) {
             
             speed -= 0.5;
         }
         
-        if (this.getYoke().getItem() == ModItems.yoke) {
+        if (this.yoke.getItem() == ModItems.yoke) {
             
             speed -= 1.5;
         }
@@ -510,40 +540,45 @@ public class DefaultCapPlayer implements ICapPlayer {
             return;
         }
         
-        for (Entry<FoodType, FoodStatsPartial> entry : this.typesMap.entrySet()) {
+        for (Entry<FoodType, FoodStatsPartial> entry :
+                this.typesMap.entrySet()) {
             
-            this.sendFoodPacket(entry.getKey(), entry.getValue().getFoodLevel());
+            this.sendFoodPacket(entry.getKey(),
+                    entry.getValue().getFoodLevel());
         }
         
         this.sendTempPacket(this.tempStage);
         this.sendSpeedPacket(this.player.capabilities.getWalkSpeed());
     }
     
-    @Override
-    public void sendFoodPacket(FoodType type, int hunger) {
+    /** Send a packet to the client to update the FoodType hunger level. */
+    private void sendFoodPacket(FoodType type, int hunger) {
         
-        ModPackets.INSTANCE.sendTo(new FoodPacketClient(type, hunger), (EntityPlayerMP) this.player);
+        ModPackets.INSTANCE.sendTo(new FoodPacketClient(type, hunger),
+                (EntityPlayerMP) this.player);
     }
     
-    @Override
-    public void sendTempPacket(TempStage stage) {
+    /** Send a packet to the client to update the TempStage. */
+    private void sendTempPacket(TempStage stage) {
         
-        ModPackets.INSTANCE.sendTo(new TempPacketClient(stage), (EntityPlayerMP) this.player);
+        ModPackets.INSTANCE.sendTo(new TempPacketClient(stage),
+                (EntityPlayerMP) this.player);
     }
     
-    @Override
-    public void sendSpeedPacket(float speed) {
+    /** Send a packet to the client to update the walk speed. */
+    private void sendSpeedPacket(float speed) {
         
-        ModPackets.INSTANCE.sendTo(new SpeedPacketClient(speed), (EntityPlayerMP) this.player);
+        ModPackets.INSTANCE.sendTo(new SpeedPacketClient(speed),
+                (EntityPlayerMP) this.player);
     }
     
-    @Override
+    /** Receive a packet on the client to update the FoodType hunger level. */
     public void processFoodMessage(FoodType type, int hunger) {
         
         this.typesMap.get(type).setFoodLevel(hunger);
     }
     
-    @Override
+    /** Receive a packet on the client to update the TempStage. */
     public void processTempMessage(TempStage stage) {
         
         this.tempStage = stage;
@@ -553,13 +588,9 @@ public class DefaultCapPlayer implements ICapPlayer {
     public NBTTagCompound serializeNBT() {
 
         NBTTagCompound nbt = new NBTTagCompound();
-        
-        for (int i = 0; i < this.stacks.size(); i++) {
-            
-            NBTTagCompound tag = new NBTTagCompound();
-            this.stacks.get(i).writeToNBT(tag);
-            nbt.setTag(Integer.toString(i), tag);
-        }
+
+        nbt.setTag("backpack", this.backpack.writeToNBT(new NBTTagCompound()));
+        nbt.setTag("yoke", this.yoke.writeToNBT(new NBTTagCompound()));
         
         nbt.setInteger("damageTimer", this.damageTimer);
         nbt.setInteger("wetTimer", this.wetTimer);
@@ -581,11 +612,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
 
-        for (int i = 0; i < this.stacks.size(); i++) {
-            
-            NBTTagCompound tag = nbt.getCompoundTag(Integer.toString(i));
-            this.stacks.set(i, new ItemStack(tag));
-        }
+        this.backpack = new ItemStack(nbt.getCompoundTag("backpack"));
+        this.yoke = new ItemStack(nbt.getCompoundTag("yoke"));
         
         this.damageTimer = nbt.getInteger("damageTimer");
         this.wetTimer = nbt.getInteger("wetTimer");

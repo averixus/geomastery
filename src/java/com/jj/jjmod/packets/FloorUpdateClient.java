@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/** Packet to update changed Beam floors on the Client. */
 public class FloorUpdateClient implements IMessage {
     
     protected EnumFloor floor;
@@ -46,10 +47,12 @@ public class FloorUpdateClient implements IMessage {
         buf.writeInt(this.z);
     }
     
-    public static class Handler implements IMessageHandler<FloorUpdateClient, IMessage> {
+    public static class Handler
+            implements IMessageHandler<FloorUpdateClient, IMessage> {
         
         @Override
-        public IMessage onMessage(FloorUpdateClient message, MessageContext ctx) {
+        public IMessage onMessage(FloorUpdateClient message,
+                MessageContext ctx) {
             
             Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 
@@ -73,8 +76,7 @@ public class FloorUpdateClient implements IMessage {
                 
                 TEBeam tileBeam = (TEBeam) tileEntity;
                 tileBeam.applyFloor(message.floor);
-                Minecraft.getMinecraft().world
-                        .markBlockRangeForRenderUpdate(message.x, message.y,
+                world.markBlockRangeForRenderUpdate(message.x, message.y,
                         message.z, message.x + 1,
                         message.y + 1, message.z + 1);
             }

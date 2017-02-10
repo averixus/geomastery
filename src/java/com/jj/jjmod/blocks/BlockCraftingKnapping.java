@@ -21,7 +21,7 @@ public class BlockCraftingKnapping extends BlockComplexAbstract {
 
     public BlockCraftingKnapping() {
 
-        super("crafting_knapping", BlockMaterial.STONE_HANDHARVESTABLE, 5F, ToolType.NONE);
+        super("crafting_knapping", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
     

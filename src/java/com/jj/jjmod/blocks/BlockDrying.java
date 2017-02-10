@@ -25,7 +25,7 @@ public class BlockDrying extends BlockComplexAbstract
 
     public BlockDrying() {
 
-        super("drying", BlockMaterial.WOOD_FURNITURE, 5F, ToolType.NONE);
+        super("drying", BlockMaterial.WOOD_FURNITURE, 5F, null);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
     

@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
+/** Handler for Gui and Container opening. */
 public class GuiHandler implements IGuiHandler {
 
     @Override
@@ -230,6 +231,7 @@ public class GuiHandler implements IGuiHandler {
         return null;
     }
 
+    /** Gui types for fixed index and name. */
     public static enum GuiList {
 
         KNAPPING("Knapping Block"),

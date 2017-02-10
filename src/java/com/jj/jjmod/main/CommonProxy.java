@@ -20,11 +20,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
-    public static final GuiEventHandler GUI = new GuiEventHandler();
-    public static final BlockEventHandler BLOCK = new BlockEventHandler();
-    public static final EntityEventHandler ENTITY = new EntityEventHandler();
-    public static final PlayerEventHandler PLAYER = new PlayerEventHandler();
-    public static final CapabilityEventHandler CAPABILITY = new CapabilityEventHandler();
+    public static final GuiEventHandler GUI =
+            new GuiEventHandler();
+    public static final BlockEventHandler BLOCK =
+            new BlockEventHandler();
+    public static final EntityEventHandler ENTITY =
+            new EntityEventHandler();
+    public static final PlayerEventHandler PLAYER =
+            new PlayerEventHandler();
+    public static final CapabilityEventHandler CAPABILITY =
+            new CapabilityEventHandler();
     public static final IWorldGenerator WORLDGEN = new WorldGenerator();
 
     public void preInit(FMLPreInitializationEvent e) {

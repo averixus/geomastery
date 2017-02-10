@@ -36,10 +36,11 @@ import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
+/** Handler for block related events. */
 public class BlockEventHandler {
 
-/** -------------------------- BLOCK EVENTS ---------------------------- */
-    
+    /** Alters equivalent to Block#neighborChanged behaviour
+     * for vanilla blocks. */
     @SubscribeEvent
     public void notifyNeighbor(NeighborNotifyEvent event) {
         
@@ -47,11 +48,13 @@ public class BlockEventHandler {
         World world = event.getWorld();
         BlockPos sourcePos = event.getPos();
         
+        // Prevent Nether Portals from generating
         if (sourceBlock == Blocks.PORTAL) {
 
             world.setBlockToAir(sourcePos);
         }
 
+        // Make dirt and stone fall
         for (EnumFacing facing : EnumFacing.VALUES) {
         
             BlockPos pos = sourcePos.offset(facing);
@@ -60,7 +63,6 @@ public class BlockEventHandler {
             
             boolean shouldFall = false;
             IBlockState fallState = state;
-            
             boolean airBelow = world.isAirBlock(pos.down());
             
             if (block instanceof BlockStone || block instanceof BlockRock ||
@@ -129,9 +131,9 @@ public class BlockEventHandler {
 
                         world.setBlockState(pos, fallState);
                         EntityFallingBlock falling =
-                                new EntityFallingBlock(world, pos.getX() + 0.5D,
-                                pos.getY(), pos.getZ() + 0.5D,
-                                fallState);
+                                new EntityFallingBlock(world,
+                                pos.getX() + 0.5D, pos.getY(),
+                                pos.getZ() + 0.5D, fallState);
                         world.spawnEntity(falling);
                     }
                     
@@ -142,7 +144,6 @@ public class BlockEventHandler {
 
                     for (checkPos = pos.down(); world.isAirBlock(checkPos) &&
                             checkPos.getY() > 0; checkPos = checkPos.down()) {
-                        
                         ;
                     }
 
@@ -155,15 +156,49 @@ public class BlockEventHandler {
         }
     }
     
+    /** Adjusts equivalent to Block#updateTick for vanilla blocks. */
+    @SubscribeEvent
+    public void cropGrow(CropGrowEvent.Pre event) {
+        
+        // Sugarcane -> adjust odds
+        if (event.getState().getBlock() == Blocks.REEDS) {
+            
+            if (event.getWorld().rand.nextFloat() > 0.4) {
+                
+                event.setResult(Result.DENY);
+            }
+        }
+    }
+    
+    /** Adjusts block breaking speed. */
+    @SubscribeEvent
+    public void playerBreakSpeed(PlayerEvent.BreakSpeed event) {
+
+        Block block = event.getState().getBlock();
+        ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
+        String toolRequired = block.getHarvestTool(event.getState());
+        
+        // Make axe and pickaxe blocks unbrekable without tool
+        if (("axe".equals(toolRequired) &&
+                !(stack.getItem() instanceof ItemAxe) ||
+                "pickaxe".equals(toolRequired) ||
+                !(stack.getItem() instanceof ItemPickaxe))) {
+            
+            event.setCanceled(true);
+        }
+    }
+    
+    /** Changes behaviour of blocks when broken by player. */
     @SubscribeEvent
     public void breakBlock(BlockEvent.BreakEvent event) {
         
         Block block = event.getState().getBlock();
         EntityPlayer player = event.getPlayer();
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getHeldItem(player.getActiveHand());
         
+        // Dirt broken with hoe turns to farmland
         if ((block == Blocks.DIRT || block == Blocks.GRASS) &&
-                stack != null && stack.getItem() instanceof ItemHoe) {
+                stack.getItem() instanceof ItemHoe) {
             
             event.getWorld().setBlockState(event.getPos(),
                     Blocks.FARMLAND.getDefaultState());
@@ -171,32 +206,12 @@ public class BlockEventHandler {
         }
     }
 
+    /** Alters equivalent to Block#getDrops for vanilla blocks. */
     @SubscribeEvent
     public void harvestDrops(HarvestDropsEvent event) {
 
         World world = event.getWorld();
         Block block = event.getState().getBlock();
-        ItemStack stack = event.getHarvester() == null ? ItemStack.EMPTY :
-                event.getHarvester().getHeldItemMainhand();
-                
-        if (block instanceof BlockCarcass) {
-
-            BlockCarcass carcass = (BlockCarcass) block;
-
-            if (!(stack.getItem() instanceof ItemHuntingknife)) {
-
-                // No change to drops
-
-            } else {
-
-                event.getDrops().clear();
-                event.getDrops().addAll(Arrays.asList(carcass.drops));
-            }
-
-            return;
-        }   
-
-        // CONFIG vanilla block harvest drops
 
         if (block instanceof BlockLeaves) {
 
@@ -217,27 +232,9 @@ public class BlockEventHandler {
 
             event.getDrops().clear();
             int rand = world.rand.nextInt(3);
-
-            switch (rand) {
-
-                case 0: {
-                    
-                    event.getDrops().add(new ItemStack(ModItems.log));
-                    break;
-                }
-                
-                case 1: {
-                    
-                    event.getDrops().add(new ItemStack(ModItems.pole));
-                    break;
-                }
-                
-                case 2: {
-                    
-                    event.getDrops().add(new ItemStack(ModItems.thicklog));
-                    break;
-                }
-            }
+            event.getDrops().add(new ItemStack(rand == 0 ?
+                    ModItems.log : rand == 1 ?
+                    ModItems.pole : ModItems.thicklog));
         }
 
         if (block instanceof BlockDirt || block instanceof BlockGrass) {
@@ -255,13 +252,16 @@ public class BlockEventHandler {
         if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(Items.REDSTONE, world.rand.nextInt(4) + 1));
+            event.getDrops().add(new ItemStack(Items.REDSTONE,
+                    world.rand.nextInt(4) + 1));
         }
         
         if (block == Blocks.LAPIS_ORE) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(Items.DYE, world.rand.nextInt(5) + 1, EnumDyeColor.BLUE.getMetadata()));
+            event.getDrops().add(new ItemStack(Items.DYE,
+                    world.rand.nextInt(5) + 1,
+                    EnumDyeColor.BLUE.getMetadata()));
         }
         
         if (block == Blocks.DIAMOND_ORE) {
@@ -304,34 +304,6 @@ public class BlockEventHandler {
             
             event.getDrops().clear();
             event.getDrops().add(new ItemStack(Items.FLINT));
-        }
-    }
-    
-    @SubscribeEvent
-    public void cropGrow(CropGrowEvent.Pre event) {
-        
-        if (event.getState().getBlock() == Blocks.REEDS) {
-            
-            if (event.getWorld().rand.nextFloat() > 0.4) {
-                
-                event.setResult(Result.DENY);
-            }
-        }
-    }
-    
-    @SubscribeEvent
-    public void playerBreakSpeed(PlayerEvent.BreakSpeed event) {
-
-        Block block = event.getState().getBlock();
-        ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
-        String toolRequired = block.getHarvestTool(event.getState());
-        
-        if (((toolRequired != null && toolRequired.equals("axe") &&
-                (stack == null || !(stack.getItem() instanceof ItemAxe))) ||
-                (toolRequired != null && toolRequired.equals("pickaxe") &&
-                (stack == null || !(stack.getItem() instanceof ItemPickaxe))))) {
-            
-            event.setCanceled(true);
         }
     }
 }
