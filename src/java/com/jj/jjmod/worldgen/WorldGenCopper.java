@@ -2,15 +2,16 @@ package com.jj.jjmod.worldgen;
 
 import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.worldgen.abstracts.WorldGenStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
+/** WorldGenerator for Copper Ore. */
 public class WorldGenCopper extends WorldGenStone {
 
     public WorldGenCopper(World world, Random rand) {
 
-        super(world, rand, ModBlocks.oreCopper.getDefaultState(), 40, 120, 20, 1);
+        super(world, rand, ModBlocks.oreCopper.getDefaultState(),
+                40, 120, 20, 1);
     }
 
     @Override

@@ -13,33 +13,37 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
+/** TileEntity for Mason crafting block. */
 public class TECraftingMason extends TileEntity {
 
-    private int facing;
-    private int part;
+    private EnumFacing facing;
+    private EnumPartMason part;
 
-    public void setState(int facing, EnumPartMason part) {
+    /** Sets the given state information. */
+    public void setState(EnumFacing facing, EnumPartMason part) {
 
         this.facing = facing;
-        this.part = part.ordinal();
+        this.part = part;
     }
 
+    /** @return The EnumFacing state of this Mason block. */
     public EnumFacing getFacing() {
 
-        return EnumFacing.getHorizontal(this.facing);
+        return this.facing;
     }
 
+    /** @return The EnumPartMason state of this Mason block. */
     public EnumPartMason getPart() {
 
-        return EnumPartMason.values()[this.part];
+        return this.part;
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing);
-        compound.setInteger("part", this.part);
+        compound.setInteger("facing", this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part.ordinal());
         return compound;
     }
 
@@ -47,8 +51,8 @@ public class TECraftingMason extends TileEntity {
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
-        this.facing = compound.getInteger("facing");
-        this.part = compound.getInteger("part");
+        this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
+        this.part = EnumPartMason.values()[compound.getInteger("part")];
     }
 
     @Override
@@ -72,6 +76,7 @@ public class TECraftingMason extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
 
+    /** Enum defining parts of the whole Mason structure. */
     public enum EnumPartMason implements IStringSerializable {
 
         FM("fm", false),
@@ -80,27 +85,28 @@ public class TECraftingMason extends TileEntity {
         BR("br", false),
         FR("fr", false);
 
-        private final String NAME;
+        private final String name;
         private final boolean isFlat;
 
         private EnumPartMason(String name, boolean isFlat) {
 
-            this.NAME = name;
+            this.name = name;
             this.isFlat = isFlat;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
         
+        /** @return Whether this Part has the flat bounding box. */
         public boolean isFlat() {
             
             return this.isFlat;

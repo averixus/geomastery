@@ -1,18 +1,17 @@
 package com.jj.jjmod.container;
 
 import javax.annotation.Nullable;
-import com.jj.jjmod.container.slots.SlotCrafting;
+import com.jj.jjmod.blocks.BlockComplexAbstract;
+import com.jj.jjmod.container.slots.SlotFurnaceFuel;
+import com.jj.jjmod.container.slots.SlotFurnaceInput;
+import com.jj.jjmod.container.slots.SlotFurnaceOutput;
 import com.jj.jjmod.tileentities.TEFurnaceAbstract;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
-import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Container for Furnace devices. */
 public class ContainerFurnace extends ContainerAbstract {
@@ -32,33 +31,27 @@ public class ContainerFurnace extends ContainerAbstract {
 
     private final int invEnd;
 
-    public final IInventory furnaceInv;
+    public final TEFurnaceAbstract furnace;
+    private BlockPos pos;
     private int fuelLeft;
     private int fuelEach;
     private int cookSpent;
     private int cookEach;
 
     public ContainerFurnace(EntityPlayer player, World world,
-            IInventory furnaceInv) {
+            TEFurnaceAbstract furnace, BlockPos pos) {
 
         super(player, world);
-        this.furnaceInv = furnaceInv;
+        this.furnace = furnace;
+        this.pos = pos;
 
         // Furnace slots
-        this.addSlotToContainer(new Slot(this.furnaceInv,
-                INPUT_I, INPUTS_X, INPUT_Y));
-        this.addSlotToContainer(new SlotFurnaceFuel(this.furnaceInv,
-                FUEL_I, INPUTS_X, FUEL_Y) {
-            
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-
-                return ((TEFurnaceAbstract) ContainerFurnace.this.furnaceInv)
-                        .isItemFuel(stack);
-            }
-        });
-        this.addSlotToContainer(new SlotFurnaceOutput(player,
-                this.furnaceInv, OUTPUT_I, OUTPUT_X, OUTPUT_Y));
+        this.addSlotToContainer(new SlotFurnaceInput(this.furnace,
+                INPUTS_X, INPUT_Y));
+        this.addSlotToContainer(new SlotFurnaceFuel(this.furnace,
+                INPUTS_X, FUEL_Y));
+        this.addSlotToContainer(new SlotFurnaceOutput(this.furnace,
+                OUTPUT_X, OUTPUT_Y));
 
         // Inventory grid
         this.buildHotbar();
@@ -69,64 +62,18 @@ public class ContainerFurnace extends ContainerAbstract {
     }
 
     @Override
-    public void addListener(IContainerListener listener) {
-
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.furnaceInv);
-    }
-
-    @Override
-    public void detectAndSendChanges() {
-
-        super.detectAndSendChanges();
-
-        for (int i = 0; i < this.listeners.size(); ++i) {
-            
-            IContainerListener icontainerlistener =
-                    this.listeners.get(i);
-
-            if (this.fuelLeft != this.furnaceInv.getField(0)) {
-
-                icontainerlistener.sendProgressBarUpdate(this, 0,
-                        this.furnaceInv.getField(0));
-            }
-
-            if (this.fuelEach != this.furnaceInv.getField(1)) {
-
-                icontainerlistener.sendProgressBarUpdate(this, 1,
-                        this.furnaceInv.getField(1));
-            }
-
-            if (this.cookSpent != this.furnaceInv.getField(2)) {
-
-                icontainerlistener.sendProgressBarUpdate(this, 2,
-                        this.furnaceInv.getField(2));
-            }
-
-            if (this.cookEach != this.furnaceInv.getField(3)) {
-
-                icontainerlistener.sendProgressBarUpdate(this, 3,
-                        this.furnaceInv.getField(3));
-            }
-        }
-
-        this.fuelLeft = this.furnaceInv.getField(0);
-        this.fuelEach = this.furnaceInv.getField(1);
-        this.cookSpent = this.furnaceInv.getField(2);
-        this.cookEach = this.furnaceInv.getField(3);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data) {
-
-        this.furnaceInv.setField(id, data);
-    }
-
-    @Override
     public boolean canInteractWith(EntityPlayer player) {
 
-        return this.furnaceInv.isUsableByPlayer(player);
+        boolean correctBlock = this.world.getBlockState(this.pos)
+                .getBlock() instanceof BlockComplexAbstract;
+
+        if (correctBlock) {
+
+            return player.getDistanceSq(this.pos.getX() + 0.5,
+                    this.pos.getY() + 0.5, this.pos.getZ() + 0.5) <= 64;
+        }
+
+        return false;
     }
 
     @Override
@@ -153,8 +100,8 @@ public class ContainerFurnace extends ContainerAbstract {
 
             } else if (index != INPUT_I && index != FUEL_I) {
 
-                if (((TEFurnaceAbstract) this.furnaceInv).recipes
-                        .getSmeltingResult(stack1) != null) {
+                if (!this.furnace.recipes
+                        .getCookingResult(stack1).isEmpty()) {
 
                     if (!this.mergeItemStack(stack1, INPUT_I,
                             INPUT_I + 1, false)) {
@@ -162,7 +109,7 @@ public class ContainerFurnace extends ContainerAbstract {
                         return ItemStack.EMPTY;
                     }
 
-                } else if (((TEFurnaceAbstract) this.furnaceInv)
+                } else if (this.furnace
                         .isItemFuel(stack1)) {
 
                     if (!this.mergeItemStack(stack1, FUEL_I,

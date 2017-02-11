@@ -19,62 +19,72 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 
+/** TileEntity for Clay Furnace blocks. */
 public class TEFurnaceClay extends TEFurnaceAbstract {
 
-    private int facing;
-    private int part;
+    private EnumFacing facing;
+    private EnumPartClay part;
 
     public TEFurnaceClay() {
 
         super(ModRecipes.CLAY);
     }
+    
+    @Override
+    public int getCookTime(ItemStack stack) {
 
-    public void setState(int facing, int part) {
+        return 300;
+    }
+    
+    /** Sets this Clay Furnace to the given state information. */
+    public void setState(EnumFacing facing, EnumPartClay part) {
 
         this.facing = facing;
         this.part = part;
     }
 
+    /** @return The EnumFacing state of this Clay Furnace block. */
     public EnumFacing getFacing() {
 
-        return EnumFacing.getHorizontal(this.facing);
+        return this.facing;
     }
 
+    /** @return The EnumPartClay state of this Clay Furnace block. */
     public EnumPartClay getPart() {
 
-        return EnumPartClay.values()[this.part];
+        return this.part;
     }
 
+    /** @return The position of the master block
+     * of this Clay Furnace structure. */
     public BlockPos getMaster() {
-
-        EnumFacing enumFacing = EnumFacing.getHorizontal(this.facing);
-
+        
         switch (this.part) {
 
-            case 0: {
+            case BL: {
 
                 return this.pos;
             }
             
-            case 1: {
+            case BR: {
 
-                return this.pos.offset(enumFacing.rotateY().getOpposite());
+                return this.pos.offset(this.facing.rotateY().getOpposite());
             }
             
-            case 2: {
+            case TL: {
 
                 return this.pos.down();
             }
             
-            case 3: {
+            case TR: {
 
-                return this.pos.offset(enumFacing.rotateY()
+                return this.pos.offset(this.facing.rotateY()
                         .getOpposite()).down();
             }
             
             default: {
 
-                return null;
+                return this.pos;
             }
         }
     }
@@ -83,8 +93,8 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing);
-        compound.setInteger("part", this.part);
+        compound.setInteger("facing", this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part.ordinal());
         return compound;
     }
 
@@ -92,46 +102,11 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
-        this.facing = compound.getInteger("facing");
-        this.part = compound.getInteger("part");
+        this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
+        this.part = EnumPartClay.values()[compound.getInteger("part")];
     }
 
-    @Override
-    public NBTTagCompound getUpdateTag() {
-
-        return this.writeToNBT(new NBTTagCompound());
-    }
-
-    @Nullable
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-
-        return new SPacketUpdateTileEntity(this.getPos(), 0,
-                this.writeToNBT(new NBTTagCompound()));
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net,
-            SPacketUpdateTileEntity packet) {
-
-        this.readFromNBT(packet.getNbtCompound());
-    }    
-
-    @Override
-    public int getCookTime(ItemStack stack) {
-
-        // CONFIG furnaceClay item cook times
-
-        return 300;
-    }
-
-    @Override
-    public Container createContainer(InventoryPlayer playerInv,
-            EntityPlayer player) {
-
-        return new ContainerFurnace(player, this.world, this);
-    }
-
+    /** Enum defining parts of the Clay Furnace structure. */
     public enum EnumPartClay implements IStringSerializable {
 
         BL("bl"),
@@ -139,23 +114,23 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         TL("tl"),
         TR("tr");
 
-        private final String NAME;
+        private final String name;
 
         private EnumPartClay(String name) {
 
-            this.NAME = name;
+            this.name = name;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
     }
 }

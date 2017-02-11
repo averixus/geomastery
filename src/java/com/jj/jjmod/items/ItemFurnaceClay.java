@@ -78,14 +78,14 @@ public class ItemFurnaceClay extends ItemNew {
         world.setBlockState(posTL, placeState);
 
         // Set up tileentities
-        ((TEFurnaceClay) world.getTileEntity(posBL)).setState(facing,
-                EnumPartClay.BL.ordinal());
-        ((TEFurnaceClay) world.getTileEntity(posBR)).setState(facing,
-                EnumPartClay.BR.ordinal());
-        ((TEFurnaceClay) world.getTileEntity(posTL)).setState(facing,
-                EnumPartClay.TL.ordinal());
-        ((TEFurnaceClay) world.getTileEntity(posTR)).setState(facing,
-                EnumPartClay.TR.ordinal());
+        ((TEFurnaceClay) world.getTileEntity(posBL)).setState(enumFacing,
+                EnumPartClay.BL);
+        ((TEFurnaceClay) world.getTileEntity(posBR)).setState(enumFacing,
+                EnumPartClay.BR);
+        ((TEFurnaceClay) world.getTileEntity(posTL)).setState(enumFacing,
+                EnumPartClay.TL);
+        ((TEFurnaceClay) world.getTileEntity(posTR)).setState(enumFacing,
+                EnumPartClay.TR);
 
         // Use item
         world.playSound(null, posBL, SoundType.STONE.getPlaceSound(),

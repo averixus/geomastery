@@ -2,10 +2,10 @@ package com.jj.jjmod.worldgen;
 
 import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.worldgen.abstracts.WorldGenStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
+/** WorldGenerator for Chalk blocks. */
 public class WorldGenChalk extends WorldGenStone {
 
     public WorldGenChalk(World world, Random rand) {

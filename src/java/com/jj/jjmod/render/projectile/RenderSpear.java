@@ -12,20 +12,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Render class for spear entities. */
 @SideOnly(Side.CLIENT)
 public class RenderSpear extends Render<EntityArrow> {
 
-    public final ResourceLocation texture;
+    private final ResourceLocation texture;
 
-    public RenderSpear(RenderManager renderManager, ResourceLocation resourceLocation) {
+    RenderSpear(RenderManager renderManager, ResourceLocation texture) {
 
         super(renderManager);
-        this.texture = resourceLocation;
+        this.texture = texture;
     }
 
     @Override
-    protected ResourceLocation
-            getEntityTexture(EntityArrow entity) {
+    protected ResourceLocation getEntityTexture(EntityArrow entity) {
 
         return this.texture;
     }

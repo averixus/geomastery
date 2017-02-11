@@ -1,4 +1,4 @@
-package com.jj.jjmod.worldgen.abstracts;
+package com.jj.jjmod.worldgen;
 
 import java.util.Random;
 
@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** Abstract superclass for WorldGenerators replacing Stone blocks. */
 public abstract class WorldGenStone extends WorldGenAbstract {
 
     protected static final BlockMatcher PREDICATE =
@@ -59,7 +60,8 @@ public abstract class WorldGenStone extends WorldGenAbstract {
             this.generateVein(x, y, z);
         }
     }
-
+    
+    /** Generates a single vein centred at the given position. */
     protected void generateVein(int x, int y, int z) {
 
         int veinSize = this.getVeinSize();
@@ -137,8 +139,9 @@ public abstract class WorldGenStone extends WorldGenAbstract {
         }
     }
 
+    /** @return The size of a single vein of this block. */
     protected abstract int getVeinSize();
 
+    /** @return Whether a single block in a vein should be generated or not. */
     protected abstract boolean shouldGenBlock();
-
 }

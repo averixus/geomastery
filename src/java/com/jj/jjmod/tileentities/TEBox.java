@@ -1,18 +1,22 @@
 package com.jj.jjmod.tileentities;
 
+import java.util.List;
 import com.jj.jjmod.blocks.BlockBox;
 import com.jj.jjmod.container.ContainerBox;
+import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.items.ItemEdibleDecayable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 
+/** TileEntity for Box block. Closely adapted from vanilla. */
 public class TEBox extends TileEntityChest {
     
     @Override
@@ -22,7 +26,8 @@ public class TEBox extends TileEntityChest {
     }
     
     @Override
-    public Container createContainer(InventoryPlayer playerInv, EntityPlayer player) {
+    public Container createContainer(InventoryPlayer playerInv,
+            EntityPlayer player) {
         
         return new ContainerBox(player, this.world, this);
     }
@@ -105,6 +110,23 @@ public class TEBox extends TileEntityChest {
             if (this.lidAngle < 0.0F) {
                 
                 this.lidAngle = 0.0F;
+            }
+        }
+        
+        List<ItemStack> inventory = this.getItems();
+        
+        for (int l = 0; l < this.getSizeInventory(); l++) {
+            
+            ItemStack stack = inventory.get(l);
+            
+            if (stack.getItem() instanceof ItemEdibleDecayable) {
+                
+                if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                        .updateAndRot()) {
+                    
+                    this.setInventorySlotContents(l,
+                            new ItemStack(ModItems.rot));
+                }
             }
         }
     }

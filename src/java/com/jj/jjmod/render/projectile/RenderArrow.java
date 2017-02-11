@@ -12,20 +12,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Render class for custom arrow entities. */
 @SideOnly(Side.CLIENT)
 public class RenderArrow extends Render<EntityArrow> {
 
-    public final ResourceLocation texture;
+    private final ResourceLocation texture;
 
-    public RenderArrow(RenderManager renderManager, ResourceLocation resourceLocation) {
+    RenderArrow(RenderManager renderManager, ResourceLocation texture) {
 
         super(renderManager);
-        this.texture = resourceLocation;
+        this.texture = texture;
     }
 
     @Override
-    protected ResourceLocation
-            getEntityTexture(EntityArrow entity) {
+    protected ResourceLocation getEntityTexture(EntityArrow entity) {
 
         return this.texture;
     }

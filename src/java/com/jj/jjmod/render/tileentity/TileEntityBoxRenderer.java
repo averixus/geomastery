@@ -5,9 +5,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
+/** Render class for Box block. */
 public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
 
-    private static final ResourceLocation BOX = new
+    private static final ResourceLocation TEXTURE = new
             ResourceLocation("jjmod:textures/blocks/crafters/woodwork1.png");
     
     private ModelBox model = new ModelBox();
@@ -15,9 +16,7 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
     @Override
     public void renderTileEntityAt(TEBox te, double x, double y,
             double z, float ticks, int destroyStage) {
-        
-        System.out.println("ticks " + ticks + " destroy stage " + destroyStage);
-        
+                
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
@@ -28,12 +27,11 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
             GlStateManager.scale(1.0F, 1.0F, 1.0F);
-            //GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
             GlStateManager.matrixMode(5888);
             
         } else {
             
-            this.bindTexture(BOX);
+            this.bindTexture(TEXTURE);
         }
         
         GlStateManager.pushMatrix();

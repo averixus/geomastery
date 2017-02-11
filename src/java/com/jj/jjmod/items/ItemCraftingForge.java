@@ -100,17 +100,17 @@ public class ItemCraftingForge extends ItemNew {
         world.setBlockState(posFR, placeState);
 
         // Set up tileentities
-        ((TECraftingForge) world.getTileEntity(posFM)).setState(intFacing,
+        ((TECraftingForge) world.getTileEntity(posFM)).setState(enumFacing,
                 EnumPartForge.FM);
-        ((TECraftingForge) world.getTileEntity(posFL)).setState(intFacing,
+        ((TECraftingForge) world.getTileEntity(posFL)).setState(enumFacing,
                 EnumPartForge.FL);
-        ((TECraftingForge) world.getTileEntity(posBL)).setState(intFacing,
+        ((TECraftingForge) world.getTileEntity(posBL)).setState(enumFacing,
                 EnumPartForge.BL);
-        ((TECraftingForge) world.getTileEntity(posBM)).setState(intFacing,
+        ((TECraftingForge) world.getTileEntity(posBM)).setState(enumFacing,
                 EnumPartForge.BM);
-        ((TECraftingForge) world.getTileEntity(posBR)).setState(intFacing,
+        ((TECraftingForge) world.getTileEntity(posBR)).setState(enumFacing,
                 EnumPartForge.BR);
-        ((TECraftingForge) world.getTileEntity(posFR)).setState(intFacing,
+        ((TECraftingForge) world.getTileEntity(posFR)).setState(enumFacing,
                 EnumPartForge.FR);
 
         // Use item

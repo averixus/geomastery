@@ -18,16 +18,7 @@ public class TEFurnaceCampfire extends TEFurnaceConstantAbstract {
     }
 
     @Override
-    public Container createContainer(InventoryPlayer playerInv,
-            EntityPlayer player) {
-
-        return new ContainerFurnace(player, this.world, this);
-    }
-
-    @Override
     public int getCookTime(ItemStack stack) {
-
-        // CONFIG furnaceCampfire item cook times
 
         return 400;
     }

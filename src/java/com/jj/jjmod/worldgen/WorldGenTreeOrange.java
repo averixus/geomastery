@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.worldgen.abstracts.WorldGenTree;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** WorldGenerator for Orange trees. */
 public class WorldGenTreeOrange extends WorldGenTree {
     
     public WorldGenTreeOrange(World world, Random rand, boolean isSapling) {
@@ -28,7 +27,8 @@ public class WorldGenTreeOrange extends WorldGenTree {
         
         for (BlockPos trunk : trunks) {
             
-            if (!this.world.getBlockState(trunk).getBlock().isReplaceable(this.world, trunk)) {
+            if (!this.world.getBlockState(trunk).getBlock()
+                    .isReplaceable(this.world, trunk)) {
                 
                 return false;
             }
@@ -80,7 +80,8 @@ public class WorldGenTreeOrange extends WorldGenTree {
         
         for (BlockPos leaf : leaves) {
             
-            if (this.world.getBlockState(leaf).getBlock().isReplaceable(this.world, leaf)) {
+            if (this.world.getBlockState(leaf).getBlock()
+                    .isReplaceable(this.world, leaf)) {
             
                 this.setBlock(leaf, ModBlocks.leafOrange.getDefaultState());
             }

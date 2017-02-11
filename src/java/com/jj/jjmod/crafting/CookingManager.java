@@ -29,7 +29,7 @@ public class CookingManager {
 
     /** Gets the smelting result for the input.
      * @return The output ItemStack smelted from the input. */
-    public ItemStack getSmeltingResult(ItemStack stack) {
+    public ItemStack getCookingResult(ItemStack stack) {
 
         for (Entry<ItemStack, ItemStack> entry: this.recipes.entrySet()) {
 

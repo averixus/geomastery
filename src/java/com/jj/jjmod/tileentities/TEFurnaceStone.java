@@ -19,73 +19,83 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 
+/** TileEntity for Stone Furnace blocks. */
 public class TEFurnaceStone extends TEFurnaceAbstract {
 
-    private int facing;
-    private int part;
+    private EnumFacing facing;
+    private EnumPartStone part;
 
     public TEFurnaceStone() {
 
         super(ModRecipes.STONE);
     }
+    
+    @Override
+    public int getCookTime(ItemStack stack) {
 
-    public void setState(int facing, int part) {
+        return 300;
+    }
+
+    /** Sets this Stone Furnace block to the given information. */
+    public void setState(EnumFacing facing, EnumPartStone part) {
 
         this.facing = facing;
         this.part = part;
     }
 
+    /** @return The EnumFacing state of this Stone Furnace block. */
     public EnumFacing getFacing() {
 
-        return EnumFacing.getHorizontal(this.facing);
+        return this.facing;
     }
 
+    /** @return The EnumPartStone state of this Stone Furnace block. */
     public EnumPartStone getPart() {
 
-        return EnumPartStone.values()[this.part];
+        return this.part;
     }
 
+    /** @return The position of the master
+     * block for this Stone Furnace structure. */
     public BlockPos getMaster() {
-
-        EnumFacing enumFacing = EnumFacing.getHorizontal(this.facing);
 
         switch (this.part) {
 
-            case 0: {
+            case BL: {
 
                 return this.pos;
             }
             
-            case 1: {
+            case BM: {
 
-                return this.pos.offset(enumFacing.rotateY().getOpposite());
+                return this.pos.offset(this.facing.rotateY().getOpposite());
             }
             
-            case 2: {
+            case BR: {
 
-                return this.pos.offset(enumFacing.rotateY().getOpposite(), 2);
+                return this.pos.offset(this.facing.rotateY().getOpposite(), 2);
             }
             
-            case 3: {
+            case TL: {
 
                 return this.pos.down();
             }
             
-            case 4: {
+            case TM: {
 
-                return this.pos.offset(enumFacing.rotateY()
+                return this.pos.offset(this.facing.rotateY()
                         .getOpposite()).down();
             }
             
-            case 5: {
+            case TR: {
 
-                return this.pos.offset(enumFacing.rotateY()
+                return this.pos.offset(this.facing.rotateY()
                         .getOpposite(), 2).down();
             }
             
             default: {
 
-                return null;
+                return this.pos;
             }
         }
     }
@@ -94,8 +104,8 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing);
-        compound.setInteger("part", this.part);
+        compound.setInteger("facing", this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part.ordinal());
         return compound;
     }
 
@@ -103,46 +113,11 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
-        this.facing = compound.getInteger("facing");
-        this.part = compound.getInteger("part");
+        this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
+        this.part = EnumPartStone.values()[compound.getInteger("part")];
     }
 
-    @Override
-    public NBTTagCompound getUpdateTag() {
-
-        return this.writeToNBT(new NBTTagCompound());
-    }
-
-    @Nullable
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-
-        return new SPacketUpdateTileEntity(this.getPos(), 0,
-                this.writeToNBT(new NBTTagCompound()));
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net,
-            SPacketUpdateTileEntity packet) {
-
-        this.readFromNBT(packet.getNbtCompound());
-    }
-
-    @Override
-    public int getCookTime(ItemStack stack) {
-
-        // CONFIG furnaceStone item cook times
-
-        return 300;
-    }
-
-    @Override
-    public Container createContainer(InventoryPlayer playerInv,
-            EntityPlayer player) {
-
-        return new ContainerFurnace(player, this.world, this);
-    }
-
+    /** Enum defining parts of the whole Stone Furnace structure. */
     public enum EnumPartStone implements IStringSerializable {
 
         BL("bl"),
@@ -152,23 +127,23 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         TM("tm"),
         TR("tr");
 
-        private final String NAME;
+        private final String name;
 
         private EnumPartStone(String name) {
 
-            this.NAME = name;
+            this.name = name;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
     }
 }

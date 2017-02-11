@@ -40,8 +40,6 @@ public class DefaultCapPlayer implements ICapPlayer {
     private static final float SPEED_MODIFIER = 43F;
     private static final float DEFAULT_SPEED = 4.3F;
     
-    private static final int BACKPACK_I = 0;
-    private static final int YOKE_I = 1;
     private static final int ROW_LENGTH = 9;
     
     // Player
@@ -376,7 +374,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                                 (TEFurnaceAbstract) world
                                 .getTileEntity(pos);
                         
-                        fireLit = furnace.isHeating();
+                        fireLit = furnace.isBurning();
                     }
                     
                     if (fireLit || block == Blocks.FIRE) {
@@ -554,21 +552,21 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Send a packet to the client to update the FoodType hunger level. */
     private void sendFoodPacket(FoodType type, int hunger) {
         
-        ModPackets.INSTANCE.sendTo(new FoodPacketClient(type, hunger),
+        ModPackets.NETWORK.sendTo(new FoodPacketClient(type, hunger),
                 (EntityPlayerMP) this.player);
     }
     
     /** Send a packet to the client to update the TempStage. */
     private void sendTempPacket(TempStage stage) {
         
-        ModPackets.INSTANCE.sendTo(new TempPacketClient(stage),
+        ModPackets.NETWORK.sendTo(new TempPacketClient(stage),
                 (EntityPlayerMP) this.player);
     }
     
     /** Send a packet to the client to update the walk speed. */
     private void sendSpeedPacket(float speed) {
         
-        ModPackets.INSTANCE.sendTo(new SpeedPacketClient(speed),
+        ModPackets.NETWORK.sendTo(new SpeedPacketClient(speed),
                 (EntityPlayerMP) this.player);
     }
     

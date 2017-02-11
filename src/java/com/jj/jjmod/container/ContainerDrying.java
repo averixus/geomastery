@@ -1,17 +1,16 @@
 package com.jj.jjmod.container;
 
 import javax.annotation.Nullable;
-import com.jj.jjmod.container.slots.SlotCrafting;
+import com.jj.jjmod.blocks.BlockComplexAbstract;
+import com.jj.jjmod.container.slots.SlotDryingInput;
+import com.jj.jjmod.container.slots.SlotDryingOutput;
 import com.jj.jjmod.tileentities.TEDrying;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Container for Drying Rack. */
 public class ContainerDrying extends ContainerAbstract {
@@ -28,21 +27,21 @@ public class ContainerDrying extends ContainerAbstract {
 
     private final int invEnd;
 
-    public final IInventory dryingInv;
-    private int drySpent;
-    private int dryEach;
+    public final TEDrying drying;
+    private BlockPos pos;
 
     public ContainerDrying(EntityPlayer player, World world,
-            IInventory dryingInv) {
+            TEDrying drying, BlockPos pos) {
 
         super(player, world);
-        this.dryingInv = dryingInv;
+        this.drying = drying;
+        this.pos = pos;
 
         // Drying slots
-        this.addSlotToContainer(new Slot(this.dryingInv,
-                INPUT_I, INPUT_X, SLOTS_Y));
-        this.addSlotToContainer(new SlotFurnaceOutput(player,
-                this.dryingInv, OUTPUT_I, OUTPUT_X, SLOTS_Y));
+        this.addSlotToContainer(new SlotDryingInput(drying,
+                INPUT_X, SLOTS_Y));
+        this.addSlotToContainer(new SlotDryingOutput(drying,
+                OUTPUT_X, SLOTS_Y));
 
         // Inventory grid
         this.buildHotbar();
@@ -53,50 +52,18 @@ public class ContainerDrying extends ContainerAbstract {
     }
 
     @Override
-    public void addListener(IContainerListener listener) {
-
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.dryingInv);
-    }
-
-    @Override
-    public void detectAndSendChanges() {
-
-        super.detectAndSendChanges();
-
-        for (int i = 0; i < this.listeners.size(); ++i) {
-            
-            IContainerListener icontainerlistener =
-                    this.listeners.get(i);
-
-            if (this.drySpent != this.dryingInv.getField(0)) {
-
-                icontainerlistener.sendProgressBarUpdate(this, 0,
-                        this.dryingInv.getField(0));
-            }
-
-            if (this.dryEach != this.dryingInv.getField(1)) {
-
-                icontainerlistener.sendProgressBarUpdate(this, 1,
-                        this.dryingInv.getField(1));
-            }
-        }
-
-        this.drySpent = this.dryingInv.getField(0);
-        this.dryEach = this.dryingInv.getField(1);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data) {
-
-        this.dryingInv.setField(id, data);
-    }
-
-    @Override
     public boolean canInteractWith(EntityPlayer player) {
 
-        return this.dryingInv.isUsableByPlayer(player);
+        boolean correctBlock = this.world.getBlockState(this.pos)
+                .getBlock() instanceof BlockComplexAbstract;
+
+        if (correctBlock) {
+
+            return player.getDistanceSq(this.pos.getX() + 0.5,
+                    this.pos.getY() + 0.5, this.pos.getZ() + 0.5) <= 64;
+        }
+
+        return false;
     }
 
     @Override
@@ -123,8 +90,8 @@ public class ContainerDrying extends ContainerAbstract {
 
             } else if (index != INPUT_I) {
 
-                if (((TEDrying) this.dryingInv).recipes
-                        .getSmeltingResult(stack1) != null) {
+                if (!this.drying.recipes
+                        .getCookingResult(stack1).isEmpty()) {
 
                     if (!this.mergeItemStack(stack1, INPUT_I,
                             INPUT_I + 1, false)) {
@@ -168,7 +135,7 @@ public class ContainerDrying extends ContainerAbstract {
                 return ItemStack.EMPTY;
             }
 
-            ((SlotCrafting) slot).onTake(player, stack1);
+            slot.onTake(player, stack1);
         }
 
         return itemstack;

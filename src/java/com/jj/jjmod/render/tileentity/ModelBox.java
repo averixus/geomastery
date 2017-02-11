@@ -5,15 +5,16 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Model for Box block. */
 @SideOnly(Side.CLIENT)
 public class ModelBox extends ModelBase {
 
-    public ModelRenderer lid1 = new ModelRenderer(this, 0, 0);
-    public ModelRenderer lid2 = new ModelRenderer(this, 0, 0);
-    public ModelRenderer bottom = new ModelRenderer(this, 0, 0);
-    public ModelRenderer knob = new ModelRenderer(this, 0, 0);
+    ModelRenderer lid1 = new ModelRenderer(this, 0, 0);
+    ModelRenderer lid2 = new ModelRenderer(this, 0, 0);
+    ModelRenderer bottom = new ModelRenderer(this, 0, 0);
+    ModelRenderer knob = new ModelRenderer(this, 0, 0);
     
-    public ModelBox() {
+    ModelBox() {
         
         this.bottom.addBox(3, 10, 3, 11, 6, 11);
         
@@ -33,7 +34,7 @@ public class ModelBox extends ModelBase {
         this.lid2.rotationPointZ = 3F;
     }
     
-    public void renderAll() {
+    void renderAll() {
         
         this.bottom.render(0.0625F);
         this.lid1.render(0.0625F);

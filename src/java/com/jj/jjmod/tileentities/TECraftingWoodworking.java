@@ -16,33 +16,37 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** TileEntity for Woodworking crafting block. */
 public class TECraftingWoodworking extends TileEntity {
 
-    private int facing;
-    private int part;
+    private EnumFacing facing;
+    private EnumPartWoodworking part;
 
-    public void setState(int facing, EnumPartWoodworking part) {
+    /** Sets the given state information. */
+    public void setState(EnumFacing facing, EnumPartWoodworking part) {
 
         this.facing = facing;
-        this.part = part.ordinal();
+        this.part = part;
     }
 
+    /** @return The EnumFacing state of this Woodworking block. */
     public EnumFacing getFacing() {
 
-        return EnumFacing.getHorizontal(this.facing);
+        return this.facing;
     }
 
+    /** @return The EnumPartWoodworking state of this Woodworking block. */
     public EnumPartWoodworking getPart() {
 
-        return EnumPartWoodworking.values()[this.part];
+        return this.part;
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing);
-        compound.setInteger("part", this.part);
+        compound.setInteger("facing", this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part.ordinal());
         return compound;
     }
 
@@ -50,8 +54,8 @@ public class TECraftingWoodworking extends TileEntity {
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
-        this.facing = compound.getInteger("facing");
-        this.part = compound.getInteger("part");
+        this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
+        this.part = EnumPartWoodworking.values()[compound.getInteger("part")];
     }
 
     @Override
@@ -75,6 +79,7 @@ public class TECraftingWoodworking extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
 
+    /** Enum defining parts of the whole Woodworking structure. */
     public enum EnumPartWoodworking implements IStringSerializable {
 
         FM("fm", true),
@@ -84,27 +89,28 @@ public class TECraftingWoodworking extends TileEntity {
         BR("br", false),
         FR("fr", true);
 
-        private final String NAME;
+        private final String name;
         private final boolean isFlat;
 
         private EnumPartWoodworking(String name, boolean isFlat) {
 
-            this.NAME = name;
+            this.name = name;
             this.isFlat = isFlat;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
         
+        /** @return Whether this Part has the flat bounding box. */
         public boolean isFlat() {
             
             return this.isFlat;

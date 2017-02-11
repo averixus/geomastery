@@ -41,14 +41,14 @@ public class ItemCraftingSawpit extends ItemNew {
         // Calculate positions
         BlockPos posB3 = pos.up();
         int intFacing = MathHelper.floor(player.rotationYaw * 4F / 360F + 0.5D) & 3;
-        EnumFacing facing = EnumFacing.getHorizontal(intFacing);
+        EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         
-        System.out.println("centre pos " + posB3 + ", facing " + facing);
+        System.out.println("centre pos " + posB3 + ", facing " + enumFacing);
         
-        BlockPos posB1 = posB3.offset(facing.rotateYCCW(), 2);
-        BlockPos posB2 = posB1.offset(facing.rotateY());
-        BlockPos posB4 = posB3.offset(facing.rotateY());
-        BlockPos posB5 = posB4.offset(facing.rotateY());
+        BlockPos posB1 = posB3.offset(enumFacing.rotateYCCW(), 2);
+        BlockPos posB2 = posB1.offset(enumFacing.rotateY());
+        BlockPos posB4 = posB3.offset(enumFacing.rotateY());
+        BlockPos posB5 = posB4.offset(enumFacing.rotateY());
         BlockPos posM1 = posB1.up();
         BlockPos posM2 = posB2.up();
         BlockPos posM3 = posB3.up();
@@ -61,10 +61,10 @@ public class ItemCraftingSawpit extends ItemNew {
         BlockPos posT5 = posM5.up();
         BlockPos[] allPositions = {posB1, posB2, posB3, posB4, posB5, posM1, posM2, posM3, posM4, posM5, posT1, posT2, posT3, posT4, posT5};
         
-        BlockPos supportFL = posT1.offset(facing.getOpposite());
-        BlockPos supportBL = posT1.offset(facing);
-        BlockPos supportFR = posT5.offset(facing.getOpposite());
-        BlockPos supportBR = posT5.offset(facing);
+        BlockPos supportFL = posT1.offset(enumFacing.getOpposite());
+        BlockPos supportBL = posT1.offset(enumFacing);
+        BlockPos supportFR = posT5.offset(enumFacing.getOpposite());
+        BlockPos supportBR = posT5.offset(enumFacing);
         BlockPos[] allSupports = {supportFL, supportBL, supportFR, supportBR};
         
         // Check supports
@@ -121,21 +121,21 @@ public class ItemCraftingSawpit extends ItemNew {
         world.setBlockState(posT5, placeState);
         
         // Set up tileentities
-        ((TECraftingSawpit) world.getTileEntity(posB1)).setState(intFacing, EnumPartSawpit.B1);
-        ((TECraftingSawpit) world.getTileEntity(posB2)).setState(intFacing, EnumPartSawpit.B2);
-        ((TECraftingSawpit) world.getTileEntity(posB3)).setState(intFacing, EnumPartSawpit.B3);
-        ((TECraftingSawpit) world.getTileEntity(posB4)).setState(intFacing, EnumPartSawpit.B4);
-        ((TECraftingSawpit) world.getTileEntity(posB5)).setState(intFacing, EnumPartSawpit.B5);
-        ((TECraftingSawpit) world.getTileEntity(posM5)).setState(intFacing, EnumPartSawpit.M5);
-        ((TECraftingSawpit) world.getTileEntity(posM4)).setState(intFacing, EnumPartSawpit.M4);
-        ((TECraftingSawpit) world.getTileEntity(posM3)).setState(intFacing, EnumPartSawpit.M3);
-        ((TECraftingSawpit) world.getTileEntity(posM2)).setState(intFacing, EnumPartSawpit.M2);
-        ((TECraftingSawpit) world.getTileEntity(posM1)).setState(intFacing, EnumPartSawpit.M1);
-        ((TECraftingSawpit) world.getTileEntity(posT1)).setState(intFacing, EnumPartSawpit.T1);
-        ((TECraftingSawpit) world.getTileEntity(posT2)).setState(intFacing, EnumPartSawpit.T2);
-        ((TECraftingSawpit) world.getTileEntity(posT3)).setState(intFacing, EnumPartSawpit.T3);
-        ((TECraftingSawpit) world.getTileEntity(posT4)).setState(intFacing, EnumPartSawpit.T4);
-        ((TECraftingSawpit) world.getTileEntity(posT5)).setState(intFacing, EnumPartSawpit.T5);
+        ((TECraftingSawpit) world.getTileEntity(posB1)).setState(enumFacing, EnumPartSawpit.B1);
+        ((TECraftingSawpit) world.getTileEntity(posB2)).setState(enumFacing, EnumPartSawpit.B2);
+        ((TECraftingSawpit) world.getTileEntity(posB3)).setState(enumFacing, EnumPartSawpit.B3);
+        ((TECraftingSawpit) world.getTileEntity(posB4)).setState(enumFacing, EnumPartSawpit.B4);
+        ((TECraftingSawpit) world.getTileEntity(posB5)).setState(enumFacing, EnumPartSawpit.B5);
+        ((TECraftingSawpit) world.getTileEntity(posM5)).setState(enumFacing, EnumPartSawpit.M5);
+        ((TECraftingSawpit) world.getTileEntity(posM4)).setState(enumFacing, EnumPartSawpit.M4);
+        ((TECraftingSawpit) world.getTileEntity(posM3)).setState(enumFacing, EnumPartSawpit.M3);
+        ((TECraftingSawpit) world.getTileEntity(posM2)).setState(enumFacing, EnumPartSawpit.M2);
+        ((TECraftingSawpit) world.getTileEntity(posM1)).setState(enumFacing, EnumPartSawpit.M1);
+        ((TECraftingSawpit) world.getTileEntity(posT1)).setState(enumFacing, EnumPartSawpit.T1);
+        ((TECraftingSawpit) world.getTileEntity(posT2)).setState(enumFacing, EnumPartSawpit.T2);
+        ((TECraftingSawpit) world.getTileEntity(posT3)).setState(enumFacing, EnumPartSawpit.T3);
+        ((TECraftingSawpit) world.getTileEntity(posT4)).setState(enumFacing, EnumPartSawpit.T4);
+        ((TECraftingSawpit) world.getTileEntity(posT5)).setState(enumFacing, EnumPartSawpit.T5);
    
         // Use item
         world.playSound(null, posB3, SoundType.WOOD.getPlaceSound(), SoundCategory.BLOCKS, SoundType.WOOD.getVolume() + 1F / 2F, SoundType.WOOD.getPitch() * 0.8F);

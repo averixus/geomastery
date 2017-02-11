@@ -13,33 +13,37 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
+/** TileEntity for Forge crafting block. */
 public class TECraftingForge extends TileEntity {
 
-    protected int facing;
-    protected int part;
+    private EnumFacing facing;
+    private EnumPartForge part;
 
-    public void setState(int facing, EnumPartForge part) {
+    /** Sets the given state information. */
+    public void setState(EnumFacing facing, EnumPartForge part) {
 
         this.facing = facing;
-        this.part = part.ordinal();
+        this.part = part;
     }
 
+    /** @return The EnumFacing state of this Forge block. */
     public EnumFacing getFacing() {
 
-        return EnumFacing.getHorizontal(this.facing);
+        return this.facing;
     }
 
+    /** @return The EnumPartForge state of this Forge block. */
     public EnumPartForge getPart() {
 
-        return EnumPartForge.values()[this.part];
+        return this.part;
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing);
-        compound.setInteger("part", this.part);
+        compound.setInteger("facing", this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part.ordinal());
         return compound;
     }
 
@@ -47,8 +51,8 @@ public class TECraftingForge extends TileEntity {
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
-        this.facing = compound.getInteger("facing");
-        this.part = compound.getInteger("part");
+        this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
+        this.part = EnumPartForge.values()[compound.getInteger("part")];
     }
 
     @Override
@@ -72,6 +76,7 @@ public class TECraftingForge extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
 
+    /** Enum defining parts of the whole Forge structure. */
     public enum EnumPartForge implements IStringSerializable {
 
         FM("fm", true),
@@ -81,8 +86,8 @@ public class TECraftingForge extends TileEntity {
         BR("br", false),
         FR("fr", true);
 
-        private final String name;
-        private final boolean isFlat;
+        private String name;
+        private boolean isFlat;
 
         private EnumPartForge(String name, boolean isFlat) {
 
@@ -102,6 +107,7 @@ public class TECraftingForge extends TileEntity {
             return this.name;
         }
         
+        /** @return Whether this Part has the flat bounding box. */
         public boolean isFlat() {
             
             return this.isFlat;

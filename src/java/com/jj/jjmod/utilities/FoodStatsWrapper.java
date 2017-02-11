@@ -9,9 +9,11 @@ import net.minecraft.util.FoodStats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Wrapper for the player FoodStats object,
+ * to add functions from ICapPlayer. */
 public class FoodStatsWrapper extends FoodStats {
     
-    protected EntityPlayer player;
+    private EntityPlayer player;
     
     public FoodStatsWrapper(EntityPlayer player) {
         
@@ -26,19 +28,6 @@ public class FoodStatsWrapper extends FoodStats {
                 .addStats(item, stack);
     }
     
-    /** Update is all executed in event */
-    @Override
-    public void onUpdate(EntityPlayer player) {}
-    
-    /** All data is stored in the capability */
-    @Override
-    public void readNBT(NBTTagCompound nbt) {}
-    
-    /** All data is stored in the capability */
-    @Override
-    public void writeNBT(NBTTagCompound nbt) {}
-    
-    
     /** Used to wear down hunger from actions */
     @Override
     public void addExhaustion(float exhaustion) {
@@ -51,7 +40,8 @@ public class FoodStatsWrapper extends FoodStats {
     @Override
     public int getFoodLevel() {
         
-        if (!this.player.getCapability(ModCapabilities.CAP_PLAYER, null).canSprint()) {
+        if (!this.player.getCapability(ModCapabilities.CAP_PLAYER, null)
+                .canSprint()) {
             
             return 0;
             
@@ -69,16 +59,28 @@ public class FoodStatsWrapper extends FoodStats {
         return false;
     }
     
-    /** Only used for eating vanilla cake */
-    @Override
-    public void addStats(int hunger, float saturation) {}
-    
     /** Only used to check whether updates need to be sent */
     @Override
     public float getSaturationLevel() {
         
         return 5.0F;
     }
+    
+    /** Only used for eating vanilla cake */
+    @Override
+    public void addStats(int hunger, float saturation) {}
+    
+    /** Update is all executed in event */
+    @Override
+    public void onUpdate(EntityPlayer player) {}
+    
+    /** All data is stored in the capability */
+    @Override
+    public void readNBT(NBTTagCompound nbt) {}
+    
+    /** All data is stored in the capability */
+    @Override
+    public void writeNBT(NBTTagCompound nbt) {}
     
     /** Only used to process updates */
     @Override

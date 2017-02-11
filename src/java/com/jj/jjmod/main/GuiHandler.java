@@ -11,6 +11,10 @@ import com.jj.jjmod.gui.GuiDrying;
 import com.jj.jjmod.gui.GuiFurnace;
 import com.jj.jjmod.gui.GuiInventory;
 import com.jj.jjmod.init.ModRecipes;
+import com.jj.jjmod.tileentities.TEDrying;
+import com.jj.jjmod.tileentities.TEFurnaceAbstract;
+import com.jj.jjmod.tileentities.TEFurnaceClay;
+import com.jj.jjmod.tileentities.TEFurnaceStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -25,85 +29,92 @@ public class GuiHandler implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player,
             World world, int x, int y, int z) {
 
-        TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+        BlockPos pos = new BlockPos(x, y, z);
+        TileEntity te = world.getTileEntity(pos);
 
         if (ID == GuiList.KNAPPING.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.KNAPPING);
+                    pos, ModRecipes.KNAPPING);
         }
 
         if (ID == GuiList.WOODWORKING.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.WOODWORKING);
+                    pos, ModRecipes.WOODWORKING);
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.TEXTILES);
+                    pos, ModRecipes.TEXTILES);
         }
 
         if (ID == GuiList.CLAYWORKS.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.CLAYWORKS);
+                    pos, ModRecipes.CLAYWORKS);
         }
 
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.CANDLEMAKER);
+                    pos, ModRecipes.CANDLEMAKER);
         }
 
         if (ID == GuiList.FORGE.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.FORGE);
+                    pos, ModRecipes.FORGE);
         }
 
         if (ID == GuiList.MASON.ordinal()) {
 
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.MASON);
+                    pos, ModRecipes.MASON);
         }
         
         if (ID == GuiList.SAWPIT.ordinal()) {
             
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.SAWPIT);
+                    pos, ModRecipes.SAWPIT);
         }
         
         if (ID == GuiList.ARMOURER.ordinal()) {
             
             return new ContainerCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.ARMOURER);
+                    pos, ModRecipes.ARMOURER);
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
-            return new ContainerFurnace(player, world, (IInventory) te);
+            return new ContainerFurnace(player, world, (TEFurnaceAbstract) te, pos);
         }
 
         if (ID == GuiList.POTFIRE.ordinal()) {
 
-            return new ContainerFurnace(player, world, (IInventory) te);
+            return new ContainerFurnace(player, world, (TEFurnaceAbstract) te, pos);
         }
 
         if (ID == GuiList.CLAY.ordinal()) {
 
-            return new ContainerFurnace(player, world, (IInventory) te);
+            TEFurnaceClay furnace = (TEFurnaceClay) te;
+            BlockPos master = furnace.getMaster();
+            furnace = (TEFurnaceClay) world.getTileEntity(master);
+            return new ContainerFurnace(player, world, furnace, master);
         }
 
         if (ID == GuiList.STONE.ordinal()) {
 
-            return new ContainerFurnace(player, world, (IInventory) te);
+            TEFurnaceStone furnace = (TEFurnaceStone) te;
+            BlockPos master = furnace.getMaster();
+            furnace = (TEFurnaceStone) world.getTileEntity(master);
+            return new ContainerFurnace(player, world, furnace, master);
         }
 
         if (ID == GuiList.DRYING.ordinal()) {
 
-            return new ContainerDrying(player, world, (IInventory) te);
+            return new ContainerDrying(player, world, (TEDrying) te, pos);
         }
 
         if (ID == GuiList.INVENTORY.ordinal()) {
@@ -123,99 +134,106 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player,
             World world, int x, int y, int z) {
 
-        TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+        BlockPos pos = new BlockPos(x, y, z);
+        TileEntity te = world.getTileEntity(pos);
 
         if (ID == GuiList.KNAPPING.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.KNAPPING,
+                    pos, ModRecipes.KNAPPING,
                     GuiList.KNAPPING.NAME);
         }
 
         if (ID == GuiList.WOODWORKING.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.WOODWORKING,
+                    pos, ModRecipes.WOODWORKING,
                     GuiList.WOODWORKING.NAME);
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.TEXTILES,
+                    pos, ModRecipes.TEXTILES,
                     GuiList.TEXTILES.NAME);
         }
 
         if (ID == GuiList.CLAYWORKS.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.CLAYWORKS,
+                    pos, ModRecipes.CLAYWORKS,
                     GuiList.CLAYWORKS.NAME);
         }
 
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.CANDLEMAKER,
+                    pos, ModRecipes.CANDLEMAKER,
                     GuiList.CANDLEMAKER.NAME);
         }
 
         if (ID == GuiList.FORGE.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.FORGE,
+                    pos, ModRecipes.FORGE,
                     GuiList.FORGE.NAME);
         }
 
         if (ID == GuiList.MASON.ordinal()) {
 
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.MASON,
+                    pos, ModRecipes.MASON,
                     GuiList.MASON.NAME);
         }
         
         if (ID == GuiList.ARMOURER.ordinal()) {
             
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.ARMOURER,
+                    pos, ModRecipes.ARMOURER,
                     GuiList.ARMOURER.NAME);
         }
         
         if (ID == GuiList.SAWPIT.ordinal()) {
             
             return new GuiCrafting(player, world,
-                    new BlockPos(x, y, z), ModRecipes.SAWPIT,
+                    pos, ModRecipes.SAWPIT,
                     GuiList.SAWPIT.NAME);
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
             return new GuiFurnace(player, world,
-                    (IInventory) te, GuiList.CAMPFIRE.NAME);
+                    (TEFurnaceAbstract) te, pos, GuiList.CAMPFIRE.NAME);
         }
 
         if (ID == GuiList.POTFIRE.ordinal()) {
 
-            return new GuiFurnace(player, world, (IInventory) te,
-                    GuiList.POTFIRE.NAME);
+            return new GuiFurnace(player, world, (TEFurnaceAbstract) te,
+                    pos, GuiList.POTFIRE.NAME);
         }
 
         if (ID == GuiList.CLAY.ordinal()) {
 
-            return new GuiFurnace(player, world,
-                    (IInventory) te, GuiList.CLAY.NAME);
+            TEFurnaceClay furnace = (TEFurnaceClay) te;
+            BlockPos master = furnace.getMaster();
+            furnace = (TEFurnaceClay) world.getTileEntity(master);
+            return new GuiFurnace(player, world, furnace,
+                    master, GuiList.CLAY.NAME);
         }
 
         if (ID == GuiList.STONE.ordinal()) {
 
-            return new GuiFurnace(player, world, (IInventory) te,
-                    GuiList.STONE.NAME);
+            TEFurnaceStone furnace = (TEFurnaceStone) te;
+            BlockPos master = furnace.getMaster();
+            furnace = (TEFurnaceStone) world.getTileEntity(master);
+            return new GuiFurnace(player, world, furnace,
+                    master, GuiList.STONE.NAME);
         }
 
         if (ID == GuiList.DRYING.ordinal()) {
 
             return new GuiDrying(
-                    new ContainerDrying(player, world, (IInventory) te));
+                    new ContainerDrying(player, world, (TEDrying) te, pos));
         }
 
         if (ID == GuiList.INVENTORY.ordinal()) {

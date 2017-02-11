@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+/** Object to store and interact with a particular InventoryPlayer slot. */
 public class InvLocation {
     
     private InvType type;
@@ -18,17 +19,20 @@ public class InvLocation {
         this.index = index;
     }
     
+    /** @return The InvType of this InvLocation. */
     public InvType getType() {
         
         return this.type;
     }
     
+    /** @return The index of this InvLocation. */
     public int getIndex() {
         
         return this.index;
     }
     
-    public void setStack(ItemStack stack) {
+    /** Puts the given stack in this InvLocation. */
+    public void putStack(ItemStack stack) {
         
         List<ItemStack> inv = new ArrayList<ItemStack>();
         
@@ -63,6 +67,7 @@ public class InvLocation {
         }
     }
     
+    /** @return The ItemStack in this InvLocation. */
     public ItemStack getStack() {
         
         List<ItemStack> inv = new ArrayList<ItemStack>();
@@ -98,6 +103,8 @@ public class InvLocation {
         }
     }
     
+    /** Check for invalid slots.
+     *  @return Whether this object refers to a valid InvLocation. */
     public boolean isValid() {
         
         List<ItemStack> inv = new ArrayList<ItemStack>();
@@ -133,6 +140,7 @@ public class InvLocation {
         }
     }
 
+    /** Enum defining the possible inventory stypes. */
     public enum InvType {
 
         MAIN,

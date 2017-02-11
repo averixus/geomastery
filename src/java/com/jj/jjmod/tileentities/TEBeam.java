@@ -17,13 +17,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
+/** TileEntity for Beam block. */
 public class TEBeam extends TileEntity {
     
-    protected EnumFacing facing;
-    protected EnumPartBeam part;
-    protected EnumFloor floor;
-    protected Item item;
+    private EnumFacing facing;
+    private EnumPartBeam part;
+    private EnumFloor floor;
+    private Item item;
     
+    /** Sets the given state information. */
     public void setState(EnumFacing facing, EnumPartBeam part, Item item) {
         
         this.facing = facing;
@@ -32,6 +34,8 @@ public class TEBeam extends TileEntity {
         this.floor = EnumFloor.NONE;
     }
     
+    /** Attempts to apply the given floor to this Beam block.
+     * @return Whether the floor is successfully applied. */
     public boolean applyFloor(EnumFloor floor) {
         
         if (this.floor == EnumFloor.NONE && floor != EnumFloor.NONE) {
@@ -44,47 +48,60 @@ public class TEBeam extends TileEntity {
         return false;
     }
     
+    /** Sets the floor of this Beam block to NONE. */
     public void removeFloor() {
         
         this.floor = EnumFloor.NONE;
         this.sendFloorUpdate();
     }
     
-    protected void sendFloorUpdate() {
+    /** Sends a packet to update the floor of this Beam block on the Client. */
+    private void sendFloorUpdate() {
         
         if (!this.world.isRemote) {
             
-            ModPackets.INSTANCE
+            ModPackets.NETWORK
                     .sendToAll(new FloorUpdateClient(this.floor,this.pos));
         }
     }
     
+    /** @return The EnumFacing state of this Beam block. */
     public EnumFacing getFacing() {
         
         return this.facing;
     }
     
+    /** @return the EnumPartBeam state of this Beam block. */
     public EnumPartBeam getPart() {
         
         return this.part;
     }
     
+    /** @return The EnumFloor state of this Beam block. */
     public EnumFloor getFloor() {
         
         return this.floor;
     }
     
+    /** Checks whether the floor on this Beam block needs to
+      * extend sideways in the given direction.
+      * @return Whether or not the floor extends sideways. */
     public boolean hasSideConnection(EnumFacing facing) {
                 
-        if (facing == this.facing || facing == this.facing.getOpposite() || facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
+        if (facing == this.facing || facing == this.facing.getOpposite() ||
+                facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
             
             return false;
         }
         
-        Block block = this.world.getBlockState(this.pos.offset(facing)).getBlock();
+        Block block = this.world.getBlockState(this.pos.offset(facing))
+                .getBlock();
         return block instanceof BlockWall;
     }
     
+    /** Checks whether the floor on this Beam block needs to
+     * extend forwards/backwards in the given direction.
+     * @return Whether or not the floor extends end-ways. */
     public boolean hasEndConnection(EnumFacing facing) {
         
         if (facing != this.facing && facing != this.facing.getOpposite()) {
@@ -92,7 +109,8 @@ public class TEBeam extends TileEntity {
             return false;
         }
         
-        Block block = this.world.getBlockState(this.pos.offset(facing)).getBlock();
+        Block block = this.world.getBlockState(this.pos.offset(facing))
+                .getBlock();
         return block instanceof BlockWall;
     }
     
@@ -126,7 +144,6 @@ public class TEBeam extends TileEntity {
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -141,6 +158,7 @@ public class TEBeam extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
     
+    /** Enum defining parts of the whole Beam structure. */
     public enum EnumPartBeam implements IStringSerializable {
         
         BACK("start"), MIDDLE("middle"), FRONT("end");
@@ -158,15 +176,19 @@ public class TEBeam extends TileEntity {
             return this.name;
         }
         
+        /** @return Whether this part drops a Beam Item. */
         public boolean shouldDrop() {
-            System.out.println("should drop? " + this + " " + (this==BACK));
+
             return this == BACK;
         }
     }
     
+    /** Enum defining types of floor a Beam block can have. */
     public enum EnumFloor implements IStringSerializable {
         
-        NONE("none", () -> Items.AIR), POLE("pole", () -> ModItems.floorPole), WOOD("wood", () -> ModItems.floorWood);
+        NONE("none", () -> Items.AIR),
+        POLE("pole", () -> ModItems.floorPole),
+        WOOD("wood", () -> ModItems.floorWood);
         
         private String name;
         private Supplier<Item> item;
@@ -183,6 +205,7 @@ public class TEBeam extends TileEntity {
             return this.name;
         }
         
+        /** @return The Ttem form of this Floor. */
         public Item getItem() {
             
             return this.item.get();

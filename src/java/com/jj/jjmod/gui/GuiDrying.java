@@ -50,10 +50,10 @@ public class GuiDrying extends GuiContainer {
      * @return Pixel length of drying progress rectangle. */
     private int getDryProgress(int pixels) {
 
-        int i = ((TEDrying) ((ContainerDrying) this.inventorySlots).dryingInv)
-                .getField(0);
-        int j = ((TEDrying) ((ContainerDrying) this.inventorySlots).dryingInv)
-                .getField(1);
+        int i = ((ContainerDrying) this.inventorySlots).drying
+                .getDrySpent();
+        int j = ((ContainerDrying) this.inventorySlots).drying
+                .getDryEach();
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 }

@@ -92,17 +92,17 @@ public class ItemCraftingWoodworking extends ItemNew {
 
         // Set up tileentities
         ((TECraftingWoodworking) world.getTileEntity(posFM))
-                .setState(intFacing, EnumPartWoodworking.FM);
+                .setState(enumFacing, EnumPartWoodworking.FM);
         ((TECraftingWoodworking) world.getTileEntity(posFL))
-                .setState(intFacing, EnumPartWoodworking.FL);
+                .setState(enumFacing, EnumPartWoodworking.FL);
         ((TECraftingWoodworking) world.getTileEntity(posBL))
-                .setState(intFacing, EnumPartWoodworking.BL);
+                .setState(enumFacing, EnumPartWoodworking.BL);
         ((TECraftingWoodworking) world.getTileEntity(posBM))
-                .setState(intFacing, EnumPartWoodworking.BM);
+                .setState(enumFacing, EnumPartWoodworking.BM);
         ((TECraftingWoodworking) world.getTileEntity(posBR))
-                .setState(intFacing, EnumPartWoodworking.BR);
+                .setState(enumFacing, EnumPartWoodworking.BR);
         ((TECraftingWoodworking) world.getTileEntity(posFR))
-                .setState(intFacing, EnumPartWoodworking.FR);
+                .setState(enumFacing, EnumPartWoodworking.FR);
 
         // Use item
         world.playSound(null, posFM, SoundType.METAL.getPlaceSound(),

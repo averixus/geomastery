@@ -85,15 +85,15 @@ public class ItemCraftingMason extends ItemNew {
         world.setBlockState(posFR, placeState);
 
         // Set up tileentities
-        ((TECraftingMason) world.getTileEntity(posFM)).setState(intFacing,
+        ((TECraftingMason) world.getTileEntity(posFM)).setState(enumFacing,
                 EnumPartMason.FM);
-        ((TECraftingMason) world.getTileEntity(posFL)).setState(intFacing,
+        ((TECraftingMason) world.getTileEntity(posFL)).setState(enumFacing,
                 EnumPartMason.FL);
-        ((TECraftingMason) world.getTileEntity(posBM)).setState(intFacing,
+        ((TECraftingMason) world.getTileEntity(posBM)).setState(enumFacing,
                 EnumPartMason.BM);
-        ((TECraftingMason) world.getTileEntity(posBR)).setState(intFacing,
+        ((TECraftingMason) world.getTileEntity(posBR)).setState(enumFacing,
                 EnumPartMason.BR);
-        ((TECraftingMason) world.getTileEntity(posFR)).setState(intFacing,
+        ((TECraftingMason) world.getTileEntity(posFR)).setState(enumFacing,
                 EnumPartMason.FR);
 
         // Use item

@@ -1,74 +1,166 @@
 package com.jj.jjmod.tileentities;
 
-import java.util.List;
-import javax.annotation.Nullable;
-import com.jj.jjmod.container.ContainerDrying;
 import com.jj.jjmod.crafting.CookingManager;
+import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
+import com.jj.jjmod.packets.DryingPacketClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntityLockable;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 
-public class TEDrying extends TileEntityLockable
-        implements ITickable, IInventory {
+/** TileEntity for Drying Rack block. */
+public class TEDrying extends TileEntity implements ITickable {
 
     public final CookingManager recipes = ModRecipes.DRYING;
+    private ItemStack input = ItemStack.EMPTY;
+    private ItemStack output = ItemStack.EMPTY;
+    private int drySpent;
+    private int dryEach;
 
-    public List<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
-    public int drySpent;
-    public int dryEach;
-
-    @Override
-    @Nullable
-    public ItemStack getStackInSlot(int index) {
-
-        return this.stacks.get(index);
+    /** @return The ItemStack in the input slot. */
+    public ItemStack getInput() {
+        
+        return this.input;
+    }
+    
+    /** @return The ItemStack in the output slot. */
+    public ItemStack getOutput() {
+        
+        return this.output;
     }
 
-    @Override
-    @Nullable
-    public ItemStack decrStackSize(int index, int count) {
-
-        return ItemStackHelper.getAndSplit(this.stacks, index, count);
-    }
-
-    @Override
-    @Nullable
-    public ItemStack removeStackFromSlot(int index) {
-
-        return ItemStackHelper.getAndRemove(this.stacks, index);
-    }
-
-    @Override
-    public void setInventorySlotContents(int index,
-            @Nullable ItemStack stack) {
-
-        boolean same = stack != null &&
-                stack.isItemEqual(this.stacks.get(index)) &&
-                ItemStack.areItemStackTagsEqual(stack, this.stacks.get(index));
-        this.stacks.set(index, stack);
-
-        if (stack != null && stack.getCount() > this
-                .getInventoryStackLimit()) {
-
-            stack.setCount(this.getInventoryStackLimit());
-        }
-
-        if (index == 0 && !same) {
-
-            this.dryEach = getDryTime(stack);
+    /** Sets the given stack to the input slot. */
+    public void setInput(ItemStack stack) {
+        
+        if (ItemStack.areItemsEqual(stack, this.input)) {
+            
+            this.dryEach = this.getDryTime(stack);
             this.drySpent = 0;
             this.markDirty();
         }
+        
+        this.input = stack;
+    }
+    
+    /** Sets the given stack to the output slot. */
+    public void setOutput(ItemStack stack) {
+        
+        this.output = stack;
+    }
+    
+    /** @return The ticks spent drying the current item. */
+    public int getDrySpent() {
+        
+        return this.drySpent;
+    }
+    
+    /** @return The ticks needed to dry the current item. */
+    public int getDryEach() {
+        
+        return this.dryEach;
+    }
+    
+    /** Sets the given progress values. */
+    public void setProgressBars(int drySpent, int dryEach) {
+        
+        this.drySpent = drySpent;
+        this.dryEach = dryEach;
+    }
+    
+    /** @return The ticks needed to dry the given item. */
+    public int getDryTime(ItemStack stack) {
+
+        return 200;
+    }
+
+    @Override
+    public void update() {
+        
+        if (this.world.isRemote) {
+
+            return;
+        }
+        
+        if (this.canDry()) {
+
+            if (this.drySpent < this.dryEach) {
+
+                this.drySpent++;
+                
+            } else if (this.drySpent == this.dryEach) {
+
+                this.drySpent = 0;
+                this.dryEach = getDryTime(this.input);
+                this.dryItem();
+                this.markDirty();
+            }
+                
+        } else if (this.drySpent > 0) {
+
+            this.drySpent = 0;
+        }
+        
+        this.sendProgressPacket();
+    }
+
+    /** @return Whether the current input
+     * can be dried to the current output. */
+    private boolean canDry() {
+
+        if (this.input.isEmpty()) {
+
+            return false;
+        }
+
+        ItemStack result = this.recipes.getCookingResult(this.input);
+
+        if (result.isEmpty()) {
+
+            return false;
+        }
+
+        if (this.output.isEmpty()) {
+
+            return true;
+        }
+
+        boolean outputCorrect = this.output.isItemEqual(result);
+        int output = this.output.getCount() + result.getCount();
+        boolean hasRoom = output < this.output.getMaxStackSize();
+
+        return outputCorrect && hasRoom;
+    }
+
+    /** Turns an input into an output. */
+    private void dryItem() {
+
+        ItemStack result = this.recipes.getCookingResult(this.input);
+
+        if (this.output.isEmpty()) {
+
+            this.output = result.copy();
+
+        } else if (ItemStack.areItemsEqual(this.input, result)) {
+
+            this.output.grow(result.getCount());
+        }
+
+        this.input.shrink(1);
+    }
+    
+    /** Sends an packet to update the progress bars on the Client. */
+    private void sendProgressPacket() {
+        
+        if (this.world.isRemote) {
+            
+            return;
+        }
+        
+        ModPackets.NETWORK.sendToAll(new DryingPacketClient(this.drySpent,
+                this.dryEach, this.pos));
+        
     }
 
     @Override
@@ -76,20 +168,8 @@ public class TEDrying extends TileEntityLockable
 
         super.readFromNBT(compound);
 
-        NBTTagList taglist = compound.getTagList("stacks", 10);
-        this.stacks =  NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);;
-
-        for (int i = 0; i < taglist.tagCount(); ++i) {
-
-            NBTTagCompound tagcompound = taglist.getCompoundTagAt(i);
-            int j = tagcompound.getByte("slot");
-
-            if (j >= 0 && j < this.stacks.size()) {
-
-                this.stacks.set(j, new ItemStack(tagcompound));
-            }
-        }
-
+        this.input = new ItemStack(compound.getCompoundTag("input"));
+        this.output = new ItemStack(compound.getCompoundTag("output"));
         this.drySpent = compound.getInteger("drySpent");
         this.dryEach = compound.getInteger("dryEach");
     }
@@ -101,270 +181,9 @@ public class TEDrying extends TileEntityLockable
 
         compound.setInteger("drySpent", this.drySpent);
         compound.setInteger("dryEach", this.dryEach);
+        compound.setTag("input", this.input.writeToNBT(new NBTTagCompound()));
+        compound.setTag("output", this.output.writeToNBT(new NBTTagCompound()));
 
-        NBTTagList taglist = new NBTTagList();
-
-        for (int i = 0; i < this.stacks.size(); ++i) {
-            
-            if (this.stacks.get(i) != null) {
-                
-                NBTTagCompound tagcompound = new NBTTagCompound();
-                tagcompound.setByte("slot", (byte) i);
-                this.stacks.get(i).writeToNBT(tagcompound);
-                taglist.appendTag(tagcompound);
-            }
-        }
-
-        compound.setTag("stacks", taglist);
         return compound;
-    }
-
-    @Override
-    public void update() {
-
-        boolean isDirty = false;
-
-        if (this.world.isRemote) {
-
-            return;
-        }
-
-        // If ready to dry
-        if (this.canDry() && this.stacks.get(0) != null) {
-
-            // If already drying
-            if (this.isDrying()) {
-
-                this.drySpent++;
-
-                // If finished drying
-                if (this.drySpent == this.dryEach) {
-
-                    this.drySpent = 0;
-                    this.dryEach = getDryTime(this.stacks.get(0));
-                    this.dryItem();
-                    isDirty = true;
-                }
-                
-            // If not already drying
-            } else {
-
-                // Start new dry
-                this.drySpent = 1;
-
-                // If used last item
-                if (this.stacks.get(0).getCount() == 0) {
-
-                    this.stacks.set(0, this.stacks.get(0)
-                            .getItem().getContainerItem(this.stacks.get(1)));
-                }
-
-                isDirty = true;
-            }
-        }
-
-        // If dirty
-        if (isDirty) {
-
-            this.markDirty();
-        }
-    }
-
-    private boolean isDrying() {
-
-        return this.drySpent != 0;
-    }
-
-    private boolean canDry() {
-
-        // If no input
-        if (this.stacks.get(0) == null) {
-
-            return false;
-        }
-
-        ItemStack result = recipes.getSmeltingResult(this.stacks.get(0));
-
-        // Check recipe and space
-        if (result == null) {
-
-            return false;
-        }
-
-        if (this.stacks.get(1) == null) {
-
-            return true;
-        }
-
-        boolean outputCorrect = this.stacks.get(1).isItemEqual(result);
-        int output = this.stacks.get(1).getCount() + result.getCount();
-        boolean hasRoom = output < getInventoryStackLimit() &&
-                output < this.stacks.get(1).getMaxStackSize();
-
-        return outputCorrect && hasRoom;
-    }
-
-    public void dryItem() {
-
-        // If can't dry
-        if (!this.canDry()) {
-
-            return;
-        }
-
-        ItemStack result = recipes.getSmeltingResult(this.stacks.get(0));
-
-        // If output empty
-        if (this.stacks.get(1) == null) {
-
-            this.stacks.set(1, result.copy());
-
-        // If output contains same as result
-        } else if (this.stacks.get(1).getItem() == result.getItem()) {
-
-            this.stacks.get(1).grow(result.getCount());
-        }
-
-        this.stacks.get(0).shrink(1);
-        
-        if (this.stacks.get(0).getCount() <= 0) {
-
-            this.stacks.set(0, ItemStack.EMPTY);
-        }
-    }
-
-    public int getDryTime(ItemStack stack) {
-
-        // CONFIG drying rack dry times
-
-        Item item = stack.getItem();
-
-        if (item == null) {
-
-            return 0;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public Container createContainer(InventoryPlayer playerInv,
-            EntityPlayer player) {
-
-        return new ContainerDrying(player, this.world, this);
-    }
-
-    @Override
-    public int getField(int id) {
-
-        switch (id) {
-
-            case 0: {
-                
-                return this.drySpent;
-            }
-                
-            case 1: {
-
-                return this.dryEach;
-            }
-            
-            default: {
-                
-                return 0;
-            }
-        }
-    }
-
-    @Override
-    public void setField(int id, int value) {
-
-        switch (id) {
-
-            case 0: {
-                
-                this.drySpent = value;
-                break;
-            }
-            
-            case 1: {
-                
-                this.dryEach = value;
-                break;
-            }
-        }
-    }
-
-    @Override
-    public int getSizeInventory() {
-
-        return this.stacks.size();
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-
-        return 64;
-    }
-
-    @Override
-    public void clear() {
-
-        for (int i = 0; i < this.stacks.size(); i++) {
-
-            this.stacks.set(i, ItemStack.EMPTY);
-        }
-    }
-
-    @Override
-    public int getFieldCount() {
-
-        return 2;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-
-        return true;
-    }
-
-    @Override
-    public String getName() {
-
-        return null;
-    }
-
-    @Override
-    public boolean hasCustomName() {
-
-        return false;
-    }
-
-    @Override
-    public String getGuiID() {
-
-        return null;
-    }
-
-    @Override
-    public void openInventory(EntityPlayer player) {}
-
-    @Override
-    public void closeInventory(EntityPlayer player) {}
-
-    @Override
-    public boolean isEmpty() {
-
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
-
-        return this.world.getTileEntity(this.pos) != this ? false
-                : player.getDistanceSq(this.pos.getX() + 0.5D,
-                        this.pos.getY() + 0.5D,
-                        this.pos.getZ() + 0.5D) <= 64.0D;
     }
 }

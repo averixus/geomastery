@@ -6,15 +6,26 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
+/** Factories for custom arrow rendering. */
 public class RenderArrowFactory implements IRenderFactory<EntityArrow> {
     
-    public static final RenderArrowFactory ARROW_COPPER = new RenderArrowFactory(new ResourceLocation("jjmod:textures/entity/projectiles/arrow_copper.png"));
-    public static final RenderArrowFactory ARROW_BRONZE = new RenderArrowFactory(new ResourceLocation("jjmod:textures/entity/projectiles/arrow_bronze.png"));
-    public static final RenderArrowFactory ARROW_FLINT = new RenderArrowFactory(new ResourceLocation("jjmod:textures/entity/projectiles/arrow_flint.png"));
-    public static final RenderArrowFactory ARROW_STEEL = new RenderArrowFactory(new ResourceLocation("jjmod:textures/entity/projectiles/arrow_steel.png"));
-    public static final RenderArrowFactory ARROW_WOOD = new RenderArrowFactory(new ResourceLocation("jjmod:textures/entity/projectiles/arrow_wood.png"));
+    public static final RenderArrowFactory ARROW_COPPER = new
+            RenderArrowFactory(new ResourceLocation(
+            "jjmod:textures/entity/projectiles/arrow_copper.png"));
+    public static final RenderArrowFactory ARROW_BRONZE = new
+            RenderArrowFactory(new ResourceLocation(
+            "jjmod:textures/entity/projectiles/arrow_bronze.png"));
+    public static final RenderArrowFactory ARROW_FLINT = new
+            RenderArrowFactory(new ResourceLocation(
+            "jjmod:textures/entity/projectiles/arrow_flint.png"));
+    public static final RenderArrowFactory ARROW_STEEL = new
+            RenderArrowFactory(new ResourceLocation(
+            "jjmod:textures/entity/projectiles/arrow_steel.png"));
+    public static final RenderArrowFactory ARROW_WOOD = new
+            RenderArrowFactory(new ResourceLocation(
+            "jjmod:textures/entity/projectiles/arrow_wood.png"));
 
-    protected ResourceLocation texture;
+    private ResourceLocation texture;
     
     private RenderArrowFactory(ResourceLocation texture) {
         

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import com.jj.jjmod.blocks.BlockSeedling;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.worldgen.abstracts.WorldGenTree;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** WorldGenerator for Apple trees. */
 public class WorldGenTreeApple extends WorldGenTree {
 
     public WorldGenTreeApple(World world, Random rand, boolean isSapling) {
@@ -30,7 +30,8 @@ public class WorldGenTreeApple extends WorldGenTree {
             
             Block check = this.world.getBlockState(trunk).getBlock();
             
-            if (!check.isReplaceable(this.world, trunk) && !(check instanceof BlockSeedling)) {
+            if (!check.isReplaceable(this.world, trunk) &&
+                    !(check instanceof BlockSeedling)) {
 
                 return false;
             }
@@ -70,7 +71,8 @@ public class WorldGenTreeApple extends WorldGenTree {
 
         for (BlockPos leaf : leaves) {
             
-            if (this.world.getBlockState(leaf).getBlock().isReplaceable(this.world, leaf)) {
+            if (this.world.getBlockState(leaf).getBlock()
+                    .isReplaceable(this.world, leaf)) {
                 
                 this.setBlock(leaf, ModBlocks.leafApple.getDefaultState());
             }

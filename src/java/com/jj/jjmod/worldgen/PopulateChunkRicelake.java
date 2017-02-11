@@ -3,7 +3,6 @@ package com.jj.jjmod.worldgen;
 import java.util.ArrayList;
 import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.worldgen.abstracts.WorldGenAbstract;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,10 +12,9 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
+/** Class to populate a chunk with a Rice lake. */
 public class PopulateChunkRicelake extends WorldGenAbstract {
-    
-    // Mostly copy from vanilla WorldGenLakes
-    
+        
     private final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
     private final IBlockState base = ModBlocks.riceBase.getDefaultState();
     private final IBlockState top = ModBlocks.riceTop.getDefaultState();
@@ -29,7 +27,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
     @Override
     public void generateChunk(int xChunk, int zChunk) {
         
-        // My setup
+        // RiceLake setup
         BlockPos start = new BlockPos((xChunk * 16) + this.rand.nextInt(16),
                 256, (zChunk * 16) + this.rand.nextInt(16));        
         BlockPos position;
@@ -37,8 +35,8 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
         for (position = start;
                 position.getY() > 5 && this.world.isAirBlock(position);
                 position = position.down()) {}
-        // End mine
 
+        // Vanilla generation
         if (position.getY() <= 4) {
             
             return;
@@ -67,9 +65,9 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                         
                         for (int j1 = 1; j1 < 7; ++j1) {
                             
-                            double d6 = ((double)l - d3) / (d0 / 2.0D);
-                            double d7 = ((double)j1 - d4) / (d1 / 2.0D);
-                            double d8 = ((double)i1 - d5) / (d2 / 2.0D);
+                            double d6 = (l - d3) / (d0 / 2.0D);
+                            double d7 = (j1 - d4) / (d1 / 2.0D);
+                            double d8 = (i1 - d5) / (d2 / 2.0D);
                             double d9 = d6 * d6 + d7 * d7 + d8 * d8;
 
                             if (d9 < 1.0D) {
@@ -120,7 +118,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 }
             }
             
-            // My lake generation using vanilla loops
+            // RiceLake generation using vanilla loops
             ArrayList<BlockPos> possibles = new ArrayList<BlockPos>();
 
             for (int l1 = 0; l1 < 16; ++l1) {
@@ -135,8 +133,10 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                             
                             if (i4 >= 4) {
                                 
-                                if (this.world.getBlockState(target) != this.top &&
-                                        this.world.getBlockState(target) != this.base) {
+                                if (this.world.getBlockState(target) !=
+                                        this.top &&
+                                        this.world.getBlockState(target) !=
+                                        this.base) {
                                     
                                     this.world.setBlockState(target,
                                             Blocks.AIR.getDefaultState(), 2);
@@ -145,9 +145,12 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                             } else {
                                     
                                 this.world.setBlockState(target, this.water, 2);
-                                Block below = this.world.getBlockState(target.down()).getBlock();
+                                Block below = this.world
+                                        .getBlockState(target.down())
+                                        .getBlock();
                                 
-                                if (below == Blocks.DIRT || below == Blocks.GRASS) {
+                                if (below == Blocks.DIRT ||
+                                        below == Blocks.GRASS) {
                                     
                                     possibles.add(target);
                                 }
@@ -162,17 +165,19 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
             
             while (riceCount <= riceMax && possibles.size() > 0) {
                 
-                BlockPos rice = possibles.remove(this.rand.nextInt(possibles.size()));
+                BlockPos rice = possibles.remove(this.rand
+                        .nextInt(possibles.size()));
                 
-                if (this.world.canSeeSky(rice.up()) && this.world.isAirBlock(rice.up())) {
+                if (this.world.canSeeSky(rice.up()) &&
+                        this.world.isAirBlock(rice.up())) {
                     
                     this.world.setBlockState(rice, this.base, 2);
                     this.world.setBlockState(rice.up(), this.top, 2);
                     riceCount++;
                 }
             }
-            // End mine
 
+            // Vanilla generation
             for (int i2 = 0; i2 < 16; ++i2) {
                 
                 for (int j3 = 0; j3 < 16; ++j3) {
@@ -183,18 +188,24 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                             
                             BlockPos blockpos = position.add(i2, j4 - 1, j3);
 
-                            if (this.world.getBlockState(blockpos).getBlock() == Blocks.DIRT &&
-                                    this.world.getLightFor(EnumSkyBlock.SKY, position.add(i2, j4, j3)) > 0) {
+                            if (this.world.getBlockState(blockpos)
+                                    .getBlock() == Blocks.DIRT &&
+                                    this.world.getLightFor(EnumSkyBlock.SKY,
+                                    position.add(i2, j4, j3)) > 0) {
                                 
                                 Biome biome = this.world.getBiome(blockpos);
 
-                                if (biome.topBlock.getBlock() == Blocks.MYCELIUM) {
+                                if (biome.topBlock.getBlock() ==
+                                        Blocks.MYCELIUM) {
                                     
-                                    this.world.setBlockState(blockpos, Blocks.MYCELIUM.getDefaultState(), 2);
+                                    this.world.setBlockState(blockpos,
+                                            Blocks.MYCELIUM.getDefaultState(),
+                                            2);
                                     
                                 } else {
                                     
-                                    this.world.setBlockState(blockpos, Blocks.GRASS.getDefaultState(), 2);
+                                    this.world.setBlockState(blockpos,
+                                            Blocks.GRASS.getDefaultState(), 2);
                                 }
                             }
                         }
@@ -206,9 +217,11 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 
                 for (int l3 = 0; l3 < 16; ++l3) {
                     
-                    if (this.world.canBlockFreezeWater(position.add(k2, 4, l3))) {
+                    if (this.world.canBlockFreezeWater(position
+                            .add(k2, 4, l3))) {
                         
-                        this.world.setBlockState(position.add(k2, 4, l3), Blocks.ICE.getDefaultState(), 2);
+                        this.world.setBlockState(position.add(k2, 4, l3),
+                                Blocks.ICE.getDefaultState(), 2);
                     }
                 }
             }

@@ -2,8 +2,8 @@ package com.jj.jjmod.blocks;
 
 import java.util.Random;
 import com.jj.jjmod.utilities.IBiomeCheck;
+import com.jj.jjmod.utilities.ITreeGenRef;
 import com.jj.jjmod.utilities.ToolType;
-import com.jj.jjmod.worldgen.ITreeGenRef;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;

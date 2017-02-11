@@ -5,8 +5,8 @@ import com.jj.jjmod.tileentities.TEFurnaceAbstract;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Gui for Furnace devices */
@@ -17,10 +17,10 @@ public class GuiFurnace extends GuiContainer {
     private final String name;
     private final String texture;
 
-    public GuiFurnace(EntityPlayer player, World world, IInventory furnaceInv,
-            String name) {
+    public GuiFurnace(EntityPlayer player, World world,
+            TEFurnaceAbstract furnace, BlockPos pos, String name) {
 
-        super(new ContainerFurnace(player, world, furnaceInv));
+        super(new ContainerFurnace(player, world, furnace, pos));
         this.texture = "jjmod:textures/gui/furnace_" +
                 ((ContainerFurnace) this.inventorySlots).capability
                 .getInventoryRows() + ".png";
@@ -47,8 +47,8 @@ public class GuiFurnace extends GuiContainer {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        if (((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)
-                .furnaceInv).isBurning()) {
+        if (((ContainerFurnace) this.inventorySlots)
+                .furnace.isBurning()) {
             
             int k = this.getBurnLeft(13);
             this.drawTexturedModalRect(i + 56, j + 36 + 12 - k, 176,
@@ -63,10 +63,11 @@ public class GuiFurnace extends GuiContainer {
      * @return Pixel length of the cook progress rectangle. */
     private int getCookProgress(int pixels) {
 
-        int i = ((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)
-                .furnaceInv).getField(2);
-        int j = ((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)
-                .furnaceInv).getField(3);
+        int i = ((ContainerFurnace) this.inventorySlots)
+                .furnace.getCookSpent();
+        int j = ((ContainerFurnace) this.inventorySlots)
+                .furnace.getCookEach();
+        System.out.println("GUI getting cook spent " + i + ", cookeach " + j);
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 
@@ -74,15 +75,17 @@ public class GuiFurnace extends GuiContainer {
      * @return Pixel height of the flame progress rectangle. */
     private int getBurnLeft(int pixels) {
 
-        int i = ((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)
-                .furnaceInv).getField(1);
+        int i = ((ContainerFurnace) this.inventorySlots)
+                .furnace.getFuelEach();
 
         if (i == 0) {
             
             i = 200;
         }
 
-        return ((TEFurnaceAbstract) ((ContainerFurnace) this.inventorySlots)
-                .furnaceInv).getField(0) * pixels / i;
+        int j = ((ContainerFurnace) this.inventorySlots)
+                .furnace.getFuelLeft();
+        System.out.println("GUI getting fueleach " + i + ", fuelspent " + j);
+        return j * pixels / i;
     }
 }

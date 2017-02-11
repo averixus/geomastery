@@ -1,6 +1,6 @@
 package com.jj.jjmod.utilities;
 
-
+/** Enum defining all Tool Types. */
 public enum ToolType {
     
     PICKAXE("pickaxe"),
@@ -10,16 +10,16 @@ public enum ToolType {
     MACHETE("machete"),
     SHOVEL("shovel");
     
-    private String NAME;
+    private String name;
     
     private ToolType(String name) {
         
-        this.NAME = name;
+        this.name = name;
     }
     
     @Override
     public String toString() {
         
-        return this.NAME;
+        return this.name;
     }
 }

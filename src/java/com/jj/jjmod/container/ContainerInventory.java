@@ -477,13 +477,13 @@ public class ContainerInventory extends ContainerAbstract {
 
         if (this.player instanceof EntityPlayerMP) {
 
-            ModPackets.INSTANCE
+            ModPackets.NETWORK
                     .sendTo(new ContainerPacketClient(slot, stack),
                     (EntityPlayerMP) this.player);
 
         } else {
 
-            ModPackets.INSTANCE
+            ModPackets.NETWORK
                     .sendToServer(new ContainerPacketServer(slot, stack));
         }
     }

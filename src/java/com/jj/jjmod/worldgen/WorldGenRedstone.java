@@ -1,11 +1,11 @@
 package com.jj.jjmod.worldgen;
 
 import java.util.Random;
-import com.jj.jjmod.worldgen.abstracts.WorldGenStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
+/** WorldGenerator for Redstone Lode. */
 public class WorldGenRedstone extends WorldGenStone {
 
     public WorldGenRedstone(World world, Random rand) {

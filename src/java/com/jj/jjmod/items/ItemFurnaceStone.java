@@ -90,18 +90,18 @@ public class ItemFurnaceStone extends ItemNew {
         world.setBlockState(posBL, placeState);
 
         // Set up tileentities with data
-        ((TEFurnaceStone) world.getTileEntity(posBL)).setState(facing,
-                EnumPartStone.BL.ordinal());
-        ((TEFurnaceStone) world.getTileEntity(posBM)).setState(facing,
-                EnumPartStone.BM.ordinal());
-        ((TEFurnaceStone) world.getTileEntity(posBR)).setState(facing,
-                EnumPartStone.BR.ordinal());
-        ((TEFurnaceStone) world.getTileEntity(posTR)).setState(facing,
-                EnumPartStone.TR.ordinal());
-        ((TEFurnaceStone) world.getTileEntity(posTM)).setState(facing,
-                EnumPartStone.TM.ordinal());
-        ((TEFurnaceStone) world.getTileEntity(posTL)).setState(facing,
-                EnumPartStone.TL.ordinal());
+        ((TEFurnaceStone) world.getTileEntity(posBL)).setState(enumFacing,
+                EnumPartStone.BL);
+        ((TEFurnaceStone) world.getTileEntity(posBM)).setState(enumFacing,
+                EnumPartStone.BM);
+        ((TEFurnaceStone) world.getTileEntity(posBR)).setState(enumFacing,
+                EnumPartStone.BR);
+        ((TEFurnaceStone) world.getTileEntity(posTR)).setState(enumFacing,
+                EnumPartStone.TR);
+        ((TEFurnaceStone) world.getTileEntity(posTM)).setState(enumFacing,
+                EnumPartStone.TM);
+        ((TEFurnaceStone) world.getTileEntity(posTL)).setState(enumFacing,
+                EnumPartStone.TL);
 
         // Use item
         world.playSound(null, posBL, SoundType.STONE.getPlaceSound(),

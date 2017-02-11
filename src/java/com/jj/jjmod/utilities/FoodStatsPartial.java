@@ -10,6 +10,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** FoodStats class for single food type. */
 public class FoodStatsPartial extends FoodStats {
     
     private int hunger = 20;
@@ -24,6 +25,8 @@ public class FoodStatsPartial extends FoodStats {
         this.player = player;
     }
     
+    /** Ticks all values.
+     * @return Whether the displayed food level needs to change. */
     public boolean tickHunger() {
         
         boolean hasChanged = false;
@@ -65,6 +68,7 @@ public class FoodStatsPartial extends FoodStats {
         return hasChanged;
     }
     
+    /** Attempts to heal the player using this food type. */
     public void heal() {
         
         if (this.saturation > 0.0F && this.hunger >= 20) {
@@ -100,13 +104,15 @@ public class FoodStatsPartial extends FoodStats {
     public void addStats(int hunger, float saturation) {
 
         this.hunger = Math.min(hunger + this.hunger, 20);
-        this.saturation = Math.min(this.saturation + (saturation * hunger * 2.0F), this.hunger);
+        this.saturation = Math.min(this.saturation +
+                (saturation * hunger * 2.0F), this.hunger);
     }
     
     @Override
     public void addStats(ItemFood item, ItemStack stack) {
         
-        this.addStats(item.getHealAmount(stack), item.getSaturationModifier(stack));
+        this.addStats(item.getHealAmount(stack),
+                item.getSaturationModifier(stack));
     }
     
     @Override

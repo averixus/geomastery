@@ -178,10 +178,10 @@ public class BlockEventHandler {
         ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
         String toolRequired = block.getHarvestTool(event.getState());
         
-        // Make axe and pickaxe blocks unbrekable without tool
+        // Make axe and pickaxe blocks unbreakable without tool
         if (("axe".equals(toolRequired) &&
-                !(stack.getItem() instanceof ItemAxe) ||
-                "pickaxe".equals(toolRequired) ||
+                !(stack.getItem() instanceof ItemAxe)) ||
+                ("pickaxe".equals(toolRequired) &&
                 !(stack.getItem() instanceof ItemPickaxe))) {
             
             event.setCanceled(true);
