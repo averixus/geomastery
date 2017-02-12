@@ -28,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Textiles crafting block. */
 public class BlockCraftingTextiles extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartTextiles> PART = PropertyEnum
@@ -37,11 +38,13 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
 
     public BlockCraftingTextiles() {
 
-        super("crafting_textiles", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
+        super("crafting_textiles", BlockMaterial.WOOD_HANDHARVESTABLE,
+                5F, null);
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
@@ -51,17 +54,12 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
         }
     }
     
-  /*  @Override
-    public Item getItemDropped(IBlockState state, Random rand,
-            int fortune) {
-        
-        return state.getValue(PART) == EnumPartTextiles.FRONT ? ModItems.craftingTextiles : Items.AIR;
-    }*/
-    
     @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+    public void dropBlockAsItemWithChance(World world, BlockPos pos,
+            IBlockState state, float chance, int fortune) {
         
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartTextiles.FRONT) {
+        if (this.getActualState(state, world, pos).getValue(PART) ==
+                EnumPartTextiles.FRONT) {
         
             spawnItem(world, pos, ModItems.craftingTextiles);
         }
@@ -167,32 +165,34 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
                 world, x, y, z);
     }
 
-    public static enum EnumPartTextiles implements IStringSerializable {
+    /** Enum defining parts of the whole Textiles structure. */
+    public enum EnumPartTextiles implements IStringSerializable {
 
         FRONT("front", true),
         BACK("back", false);
 
-        private final String NAME;
+        private final String name;
         private final boolean isFlat;
 
         private EnumPartTextiles(String name, boolean isFlat) {
 
-            this.NAME = name;
+            this.name = name;
             this.isFlat = isFlat;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
         
+        /** @return Whether this part has the flat bounding box. */
         public boolean isFlat() {
             
             return this.isFlat;

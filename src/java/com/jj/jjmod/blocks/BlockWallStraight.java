@@ -13,13 +13,16 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+/** Wall block which is always straight or crossed. */
 public class BlockWallStraight extends BlockWall {
     
     public BlockWallStraight(BlockMaterial material, String name,
             float hardness, ToolType toolType, boolean isDouble,
-            Supplier<Item> wall, boolean isHeavy, int selfHeight, boolean supportsBeam) {
+            Supplier<Item> wall, boolean isHeavy,
+            int selfHeight, boolean supportsBeam) {
         
-        super(material, name, hardness, toolType, isDouble, wall, isHeavy, selfHeight, supportsBeam);
+        super(material, name, hardness, toolType, isDouble,
+                wall, isHeavy, selfHeight, supportsBeam);
     }
     
     @Override

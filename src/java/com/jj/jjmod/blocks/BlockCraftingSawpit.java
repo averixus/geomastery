@@ -31,10 +31,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Sawpit crafting block. */
 public class BlockCraftingSawpit extends BlockComplexAbstract {
 
-    public static final PropertyEnum<EnumPartSawpit> PART = PropertyEnum.<EnumPartSawpit>create("part", EnumPartSawpit.class);
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyEnum<EnumPartSawpit> PART =
+            PropertyEnum.<EnumPartSawpit>create("part", EnumPartSawpit.class);
+    public static final PropertyDirection FACING =
+            PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     public BlockCraftingSawpit() {
         
@@ -42,28 +45,13 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
         if (((TECraftingSawpit) te).getPart() == EnumPartSawpit.B1) {
 
-            spawnItem(world, pos, ModItems.craftingSawpit);
-        }
-    }
-    
-   /* @Override
-    public Item getItemDropped(IBlockState state, Random rand,
-            int fortune) {
-        
-        return state.getValue(PART) == EnumPartSawpit.B1 ? ModItems.craftingSawpit : Items.AIR;
-    }*/
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartSawpit.B1) {
-        
             spawnItem(world, pos, ModItems.craftingSawpit);
         }
     }
@@ -81,10 +69,9 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos unused) {
-        
-        //TODO
-        System.out.println("neighbor changed at " + pos + " from " + unused);
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+
         TileEntity tileEntity = world.getTileEntity(pos);
         
         if (!(tileEntity instanceof TECraftingSawpit)) {
@@ -95,9 +82,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
         TECraftingSawpit tileSawpit = (TECraftingSawpit) tileEntity;
         EnumPartSawpit part = tileSawpit.getPart();
         EnumFacing facing = tileSawpit.getFacing();
-        
-        System.out.println("neighbour changed, pos " + pos + ", part " + part);
-        
+                
         switch (part) {
             
             case B1: {
@@ -109,7 +94,6 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                     
                     world.setBlockToAir(pos);
                     spawnItem(world, pos, ModItems.craftingSawpit);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -119,12 +103,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                 
                 boolean brokenB3 = world.getBlockState(pos
                         .offset(facing.rotateY())).getBlock() != this;
-                boolean brokenB1 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenB1 = world.getBlockState(pos
+                        .offset(facing.rotateYCCW())).getBlock() != this;
                 
                 if (brokenB3 || brokenB1) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -138,7 +122,6 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                 if (brokenB4) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -152,7 +135,6 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                 if (brokenB5) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -160,12 +142,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case B5: {
                 
-                boolean brokenM5 = world.getBlockState(pos.up()).getBlock() != this;
+                boolean brokenM5 = world.getBlockState(pos.up())
+                        .getBlock() != this;
                 
                 if (brokenM5) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -173,13 +155,14 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case M5: {
                 
-                boolean brokenM4 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
-                boolean brokenB5 = world.getBlockState(pos.down()).getBlock() != this;
+                boolean brokenM4 = world.getBlockState(pos
+                        .offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenB5 = world.getBlockState(pos
+                        .down()).getBlock() != this;
                 
                 if (brokenM4 || brokenB5) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -187,12 +170,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case M4: {
                 
-                boolean brokenM3 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenM3 = world.getBlockState(pos
+                        .offset(facing.rotateYCCW())).getBlock() != this;
                 
                 if (brokenM3) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -200,12 +183,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case M3: {
                 
-                boolean brokenM2 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenM2 = world.getBlockState(pos
+                        .offset(facing.rotateYCCW())).getBlock() != this;
             
                 if (brokenM2) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -213,12 +196,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case M2: {
                 
-                boolean brokenM1 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenM1 = world.getBlockState(pos
+                        .offset(facing.rotateYCCW())).getBlock() != this;
                 
                 if (brokenM1) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -226,13 +209,14 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case M1: {
                 
-                boolean brokenT1 = world.getBlockState(pos.up()).getBlock() != this;
-                boolean brokenB1 = world.getBlockState(pos.down()).getBlock() != this;
+                boolean brokenT1 = world.getBlockState(pos.up())
+                        .getBlock() != this;
+                boolean brokenB1 = world.getBlockState(pos.down())
+                        .getBlock() != this;
                 
                 if (brokenT1 || brokenB1) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -240,10 +224,13 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case T1: {
                 
-                boolean brokenT2 = world.getBlockState(pos.offset(facing.rotateY())).getBlock() != this;
-                boolean brokenM1 = world.getBlockState(pos.down()).getBlock() != this;
+                boolean brokenT2 = world.getBlockState(pos
+                        .offset(facing.rotateY())).getBlock() != this;
+                boolean brokenM1 = world.getBlockState(pos
+                        .down()).getBlock() != this;
                 
-                IBlockState frontSupport = world.getBlockState(pos.offset(facing.getOpposite()));
+                IBlockState frontSupport = world.getBlockState(pos
+                        .offset(facing.getOpposite()));
                 Block fsBlock = frontSupport.getBlock();
                 boolean fsValid = false;
                 
@@ -258,7 +245,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                     fsValid = true;
                 }
                 
-                IBlockState backSupport = world.getBlockState(pos.offset(facing));
+                IBlockState backSupport = world.getBlockState(pos
+                        .offset(facing));
                 Block bsBlock = backSupport.getBlock();
                 boolean bsValid = false;
                 
@@ -275,7 +263,6 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                 if (brokenT2 || brokenM1 || !fsValid || !bsValid) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -283,12 +270,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case T2: {
                 
-                boolean brokenT3 = world.getBlockState(pos.offset(facing.rotateY())).getBlock() != this;
+                boolean brokenT3 = world.getBlockState(pos
+                        .offset(facing.rotateY())).getBlock() != this;
                 
                 if (brokenT3) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -296,12 +283,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case T3: {
                 
-                boolean brokenT4 = world.getBlockState(pos.offset(facing.rotateY())).getBlock() != this;
+                boolean brokenT4 = world.getBlockState(pos
+                        .offset(facing.rotateY())).getBlock() != this;
                 
                 if (brokenT4) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -309,12 +296,12 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case T4: {
                 
-                boolean brokenT5 = world.getBlockState(pos.offset(facing.rotateY())).getBlock() != this;
+                boolean brokenT5 = world.getBlockState(pos
+                        .offset(facing.rotateY())).getBlock() != this;
                 
                 if (brokenT5) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -322,10 +309,13 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             case T5: {
                 
-                boolean brokenT4 = world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this;
-                boolean brokenM5 = world.getBlockState(pos.down()).getBlock() != this;
+                boolean brokenT4 = world.getBlockState(pos
+                        .offset(facing.rotateYCCW())).getBlock() != this;
+                boolean brokenM5 = world.getBlockState(pos
+                        .down()).getBlock() != this;
                 
-                IBlockState frontSupport = world.getBlockState(pos.offset(facing.getOpposite()));
+                IBlockState frontSupport = world.getBlockState(pos
+                        .offset(facing.getOpposite()));
                 Block fsBlock = frontSupport.getBlock();
                 boolean fsValid = false;
                 
@@ -340,7 +330,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                     fsValid = true;
                 }
                 
-                IBlockState backSupport = world.getBlockState(pos.offset(facing));
+                IBlockState backSupport = world.getBlockState(pos
+                        .offset(facing));
                 Block bsBlock = backSupport.getBlock();
                 boolean bsValid = false;
                 
@@ -357,7 +348,6 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                 if (brokenT4 || brokenM5 || !fsValid || !bsValid) {
                     
                     world.setBlockToAir(pos);
-                    System.out.println("breaking on update at " + pos);
                 }
                 
                 break;
@@ -366,15 +356,26 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
 
         return FULL_BLOCK_AABB;
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
-        return this.getActualState(state, world, pos).getValue(PART).isPassable() ? NULL_AABB : FULL_BLOCK_AABB;
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (!(tileEntity instanceof TECraftingSawpit)) {
+            
+            return FULL_BLOCK_AABB;
+        }
+        
+        EnumPartSawpit part = ((TECraftingSawpit) tileEntity).getPart();
+        return part != null && part.isPassable() ? NULL_AABB : FULL_BLOCK_AABB;
+
     }
     
     @Override
@@ -384,7 +385,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     }
     
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         TileEntity tileEntity = world.getTileEntity(pos);
         
@@ -412,7 +414,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     }
     
     @Override
-    public void activate(EntityPlayer player, World world, int x, int y, int z) {
+    public void activate(EntityPlayer player, World world,
+            int x, int y, int z) {
         
         player.openGui(Main.instance, GuiList.SAWPIT.ordinal(), world, x, y, z);
     }

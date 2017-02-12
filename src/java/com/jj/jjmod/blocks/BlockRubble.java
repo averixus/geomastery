@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
+/** Rubble block. */
 public class BlockRubble extends BlockFalling {
 
     public BlockRubble() {

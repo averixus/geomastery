@@ -1,5 +1,6 @@
 package com.jj.jjmod.blocks;
 
+import com.jj.jjmod.blocks.BlockBeam.EnumAxis;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
@@ -24,17 +25,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvider {
+/** Beam block. */
+public class BlockBeam extends BlockComplexAbstract {
 
-    public static final PropertyEnum AXIS = PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
-    public static final PropertyEnum FLOOR = PropertyEnum.<TEBeam.EnumFloor>create("floor", TEBeam.EnumFloor.class);
-    public static final PropertyBool NORTH_SIDE = PropertyBool.create("northside");
-    public static final PropertyBool EAST_SIDE = PropertyBool.create("eastside");
-    public static final PropertyBool SOUTH_SIDE = PropertyBool.create("southside");
-    public static final PropertyBool WEST_SIDE = PropertyBool.create("westside");
-    public static final PropertyBool NORTH_END = PropertyBool.create("northend");
+    public static final PropertyEnum<EnumAxis> AXIS =
+            PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
+    public static final PropertyEnum<EnumFloor> FLOOR =
+            PropertyEnum.<TEBeam.EnumFloor>
+            create("floor", TEBeam.EnumFloor.class);
+    public static final PropertyBool NORTH_SIDE =
+            PropertyBool.create("northside");
+    public static final PropertyBool EAST_SIDE =
+            PropertyBool.create("eastside");
+    public static final PropertyBool SOUTH_SIDE =
+            PropertyBool.create("southside");
+    public static final PropertyBool WEST_SIDE =
+            PropertyBool.create("westside");
+    public static final PropertyBool NORTH_END =
+            PropertyBool.create("northend");
     public static final PropertyBool EAST_END = PropertyBool.create("eastend");
-    public static final PropertyBool SOUTH_END = PropertyBool.create("southend");
+    public static final PropertyBool SOUTH_END =
+            PropertyBool.create("southend");
     public static final PropertyBool WEST_END = PropertyBool.create("westend");
         
     public BlockBeam() {
@@ -57,8 +68,6 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos,
             Block block, BlockPos unused) {
-
-        System.out.println("neighbour changed");
         
         TileEntity tileEntity = world.getTileEntity(pos);
         
@@ -75,7 +84,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
         
         switch (part) {
             
-            case FRONT : {
+            case FRONT: {
                 
                 BlockPos posFront = pos.offset(facing);
                 IBlockState stateFront = world.getBlockState(posFront);
@@ -104,7 +113,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
                 break;
             }
             
-            case MIDDLE : {
+            case MIDDLE: {
                 
                 BlockPos posFront = pos.offset(facing);
                 IBlockState stateFront = world.getBlockState(posFront);
@@ -130,7 +139,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
                 break;
             }
             
-            case BACK : {
+            case BACK: {
                 
                 BlockPos posFront = pos.offset(facing);
                 IBlockState stateFront = world.getBlockState(posFront);
@@ -171,7 +180,6 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
         }
     }
     
-    // When harvested by player
     @Override
     public boolean removedByPlayer(IBlockState state, World world,
             BlockPos pos, EntityPlayer player, boolean willHarvest) {
@@ -187,6 +195,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
         TEBeam tileBeam = (TEBeam) tileEntity;
         EnumFloor floor = tileBeam.getFloor();
         
+        // Drops floor and leaves beam behind
         switch (floor) {
             
             case NONE : {
@@ -218,65 +227,21 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
         
         return false;
     }
-    
-    // When the whole block is broken
-    @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-                
-        TileEntity tileEntity = world.getTileEntity(pos);
-        
-        if (!(tileEntity instanceof TEBeam)) {
-            
-            world.setBlockToAir(pos);
-            return;
-        }
-        
-        TEBeam tileBeam = (TEBeam) tileEntity;
-        EnumFloor floor = tileBeam.getFloor();
-        
-        switch (floor) {
-            
-            case NONE : {
-             
-                world.setBlockToAir(pos);
-                return;
-            }
-            
-            case POLE : {
-
-                spawnItem(world, pos, EnumFloor.POLE.getItem());   
-                world.setBlockToAir(pos);
-                return;
-            }
-            
-            case WOOD : {
-
-                spawnItem(world, pos, EnumFloor.WOOD.getItem());
-                world.setBlockToAir(pos);
-                return;
-            }
-        }
-        
-        if (tileBeam.getPart().shouldDrop()) {
-
-            spawnItem(world, pos, tileBeam.getItem());
-        }
-        
-        super.breakBlock(world, pos, state);
-    }
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
             BlockPos pos) {
 
-        // TODO Auto-generated method stub
+        // TODO 
         return FULL_BLOCK_AABB;
     }
 
     @Override
     public BlockStateContainer createBlockState() {
 
-        return new BlockStateContainer(this, new IProperty[] {AXIS, FLOOR, NORTH_SIDE, EAST_SIDE, SOUTH_SIDE, WEST_SIDE, NORTH_END, EAST_END, SOUTH_END, WEST_END});
+        return new BlockStateContainer(this, new IProperty[] {AXIS, FLOOR,
+                NORTH_SIDE, EAST_SIDE, SOUTH_SIDE, WEST_SIDE, NORTH_END,
+                EAST_END, SOUTH_END, WEST_END});
     }
 
     @Override
@@ -290,15 +255,24 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
             TEBeam tileBeam = (TEBeam) tileEntity;
             
             state = state.withProperty(FLOOR, tileBeam.getFloor());
-            state = state.withProperty(AXIS, EnumAxis.get(tileBeam.getFacing()));
-            state = state.withProperty(NORTH_SIDE, tileBeam.hasSideConnection(EnumFacing.NORTH)); 
-            state = state.withProperty(EAST_SIDE, tileBeam.hasSideConnection(EnumFacing.EAST));
-            state = state.withProperty(SOUTH_SIDE, tileBeam.hasSideConnection(EnumFacing.SOUTH));
-            state = state.withProperty(WEST_SIDE, tileBeam.hasSideConnection(EnumFacing.WEST));
-            state = state.withProperty(NORTH_END, tileBeam.hasEndConnection(EnumFacing.NORTH));
-            state = state.withProperty(EAST_END, tileBeam.hasEndConnection(EnumFacing.EAST));
-            state = state.withProperty(SOUTH_END, tileBeam.hasEndConnection(EnumFacing.SOUTH));
-            state = state.withProperty(WEST_END, tileBeam.hasEndConnection(EnumFacing.WEST));
+            state = state.withProperty(AXIS,
+                    EnumAxis.get(tileBeam.getFacing()));
+            state = state.withProperty(NORTH_SIDE,
+                    tileBeam.hasSideConnection(EnumFacing.NORTH)); 
+            state = state.withProperty(EAST_SIDE,
+                    tileBeam.hasSideConnection(EnumFacing.EAST));
+            state = state.withProperty(SOUTH_SIDE,
+                    tileBeam.hasSideConnection(EnumFacing.SOUTH));
+            state = state.withProperty(WEST_SIDE,
+                    tileBeam.hasSideConnection(EnumFacing.WEST));
+            state = state.withProperty(NORTH_END,
+                    tileBeam.hasEndConnection(EnumFacing.NORTH));
+            state = state.withProperty(EAST_END,
+                    tileBeam.hasEndConnection(EnumFacing.EAST));
+            state = state.withProperty(SOUTH_END,
+                    tileBeam.hasEndConnection(EnumFacing.SOUTH));
+            state = state.withProperty(WEST_END,
+                    tileBeam.hasEndConnection(EnumFacing.WEST));
         }
         
         return state;
@@ -328,6 +302,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
     public void activate(EntityPlayer player, World world, int x, int y,
             int z) {}
     
+    /** Enum defining which axis the Beam structure is aligned on. */
     public enum EnumAxis implements IStringSerializable {
         
         NS("ns"), EW("ew");
@@ -345,6 +320,7 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
             return this.name;
         }
         
+        /** @return The EnumAxis associated with the given direction. */
         public static EnumAxis get(EnumFacing facing) {
             
             if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
@@ -357,18 +333,22 @@ public class BlockBeam extends BlockComplexAbstract implements ITileEntityProvid
             }
         }
         
+        /** @return Whether the given direction is
+         * aligned with this EnumAxis. */
         public boolean matches(EnumFacing facing) {
             
             switch (this) {
                 
                 case NS: {
                     
-                    return facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH;
+                    return facing == EnumFacing.NORTH ||
+                            facing == EnumFacing.SOUTH;
                 }
                 
                 case EW: {
                     
-                    return facing == EnumFacing.EAST || facing == EnumFacing.WEST;
+                    return facing == EnumFacing.EAST ||
+                            facing == EnumFacing.WEST;
                 }
                 
                 default: {

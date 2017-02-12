@@ -6,12 +6,12 @@ import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomeMushroomIsland;
 import net.minecraft.world.biome.BiomeSwamp;
 
+/** Banana seedling block. */
 public class BlockSeedlingBanana extends BlockSeedling {
     
     public BlockSeedlingBanana() {
         
-        super("seedling_banana",
-                WorldGenTreeBanana::new, 0.2F);
+        super("seedling_banana", WorldGenTreeBanana::new, 0.2F);
     }
 
     @Override
@@ -21,5 +21,4 @@ public class BlockSeedlingBanana extends BlockSeedling {
                 biome instanceof BiomeMushroomIsland ||
                 biome instanceof BiomeJungle;
     }
-
 }

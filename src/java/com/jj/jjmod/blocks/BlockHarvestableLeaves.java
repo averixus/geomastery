@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -23,13 +24,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Harvestable fruit leaf block. */
 public class BlockHarvestableLeaves extends BlockLeaves {
     
     public static final PropertyInteger AGE =
             PropertyInteger.create("age", 0, 7);
     
-    public Supplier<Item> itemRef;
-    protected float growthChance;
+    /** Supplier for fruit item. */
+    private Supplier<Item> itemRef;
+    /** Chance of growth per update tick. */
+    private float growthChance;
     
     public BlockHarvestableLeaves(String name, Supplier<Item> itemRef,
             float growthChance) {
@@ -49,7 +53,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         
-        return null;        
+        return Items.AIR;        
     }
     
     @Override

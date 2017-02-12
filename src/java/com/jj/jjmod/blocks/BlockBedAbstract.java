@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Abstract superclass for Bed blocks. */
 public abstract class BlockBedAbstract extends BlockHorizontal {
 
     public static final PropertyEnum<EnumPartBed> PART =
@@ -60,27 +61,11 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         this.isFlat = isFlat;
     }
 
-    public Item getBedItem() {
-
-        return this.itemRef.get();
-    }
-
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
             EnumFacing side, float x, float y,
             float z) {
-
-        // *** TEST pathfinding enclosure checks ***
-
-        EntityZombie testZombie = new EntityZombie(world);
-        world.spawnEntity(testZombie);
-        testZombie.setPosition(pos.getX() + 20, pos.getY(), pos.getZ());
-        PathNavigateClimber pathfinder =
-                new PathNavigateClimber(testZombie, world);
-        Path path = pathfinder.getPathToPos(pos);
-
-        // *** End testing pathfinding enclosure checks ***
 
         if (world.isRemote) {
             
@@ -96,23 +81,6 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
 
                 return true;
             }
-        }
-
-        if (!world.provider.canRespawnHere()) {
-
-            world.setBlockToAir(pos);
-            BlockPos pos2 = pos.offset(state
-                    .getValue(FACING).getOpposite());
-
-            if (world.getBlockState(pos2).getBlock() == this) {
-
-                world.setBlockToAir(pos2);
-            }
-
-            world.newExplosion(null, pos.getX() + 0.5D, pos.getY() + 0.5D,
-                    pos.getZ() + 0.5D, 5.0F, true, true);
-
-            return true;
         }
 
         if (state.getValue(OCCUPIED)) {
@@ -156,7 +124,7 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return false;
     }
 
-    @Nullable
+    /** @return The Player currently in this Bed block, null if none. */
     private EntityPlayer getPlayerInBed(World world, BlockPos pos) {
 
         for (EntityPlayer player: world.playerEntities) {
@@ -208,11 +176,12 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
     }
     
     @Override
-    public abstract List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune);
+    public abstract List<ItemStack> getDrops(IBlockAccess world,
+            BlockPos pos, IBlockState state, int fortune);
 
     @Nullable
-    public static BlockPos getSafeExitLocation(World world, BlockPos pos,
-            int tries) {
+    public static BlockPos getSafeExitLocation(World world,
+            BlockPos pos, int tries) {
 
         EnumFacing facing = world.getBlockState(pos).getValue(FACING);
         int x = pos.getX();
@@ -248,9 +217,10 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return null;
     }
 
-    protected static boolean hasRoomForPlayer(World world, BlockPos pos) {
+    /** @return Whether the given pos has space around it for a player. */
+    private static boolean hasRoomForPlayer(World world, BlockPos pos) {
 
-        boolean hasFloorSpace =world.getBlockState(pos.down())
+        boolean hasFloorSpace = world.getBlockState(pos.down())
                 .isSideSolid(world, pos, EnumFacing.UP);
         boolean hasFeetSpace = !world.getBlockState(pos)
                 .getMaterial().isSolid();
@@ -258,35 +228,6 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
                 .getMaterial().isSolid();
 
         return hasFloorSpace && hasFeetSpace && hasHeadSpace;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
-
-        return BlockRenderLayer.CUTOUT;
-    }
-    
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        
-        return (!this.blockMaterial.isSolid() ||
-                !this.blockMaterial.blocksLight() ||
-                !this.blockMaterial.isOpaque()) ? false : true;
-    }
-    
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        
-        return this.isFullCube(state);
-    }
-    
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return this.blockMaterial.isSolid() ?
-                this.getBoundingBox(state, world, pos) : NULL_AABB;
     }
 
     @Override
@@ -417,6 +358,7 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return part == EnumPartBed.FOOT;
     }
     
+    /** Enum defining parts of the whole Bed structure. */
     public static enum EnumPartBed implements IStringSerializable {
 
         HEAD("head"),

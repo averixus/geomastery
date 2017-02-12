@@ -10,20 +10,13 @@ import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
+/** Wheat Crop block. */
 public class BlockCropWheat extends BlockCrop {
     
     public BlockCropWheat() {
         
-        super("wheat", () -> Items.WHEAT, new Supplier<Integer>() {
-            
-            private final Random rand = new Random();
-            
-            @Override
-            public Integer get() {
-                
-                return this.rand.nextInt(2) + 1;
-            }
-        }, 0.4F, 0.2F, ToolType.SICKLE);
+        super("wheat", () -> Items.WHEAT, (rand) -> rand.nextInt(2) + 1,
+                0.4F, 0.2F, ToolType.SICKLE);
     }
 
     @Override
@@ -35,5 +28,4 @@ public class BlockCropWheat extends BlockCrop {
                 biome instanceof BiomeForest || biome instanceof BiomePlains ||
                 biome == Biomes.BEACH;
     }
-
 }

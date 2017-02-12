@@ -75,7 +75,7 @@ public abstract class ItemSpearAbstract extends ItemTool {
 
                 if (!world.isRemote) {
 
-                    throwSpear(world, player, velocity * EntityProjectile.SPEAR_MOD, stack.getItemDamage() + 1);
+                    this.throwSpear(world, player, velocity * EntityProjectile.SPEAR_MOD, stack.getItemDamage() + 1);
                     
                     if (!player.capabilities.isCreativeMode) {
                         
@@ -136,5 +136,4 @@ public abstract class ItemSpearAbstract extends ItemTool {
 
     public abstract void throwSpear(World world, EntityPlayer player,
             float velocity, int damage);
-
 }

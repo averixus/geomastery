@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+/** Bed block with no durablity limit. */
 public class BlockBedPlain extends BlockBedAbstract {
 
     public BlockBedPlain(String name, float hardness,
@@ -26,7 +27,7 @@ public class BlockBedPlain extends BlockBedAbstract {
         
         if (state.getValue(PART) == EnumPartBed.FOOT) {
             
-            drops.add(new ItemStack(this.getBedItem()));
+            drops.add(new ItemStack(this.itemRef.get()));
         }
         
         return drops;

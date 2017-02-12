@@ -12,6 +12,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -25,11 +26,13 @@ import net.minecraft.world.biome.BiomeMushroomIsland;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSwamp;
 
+/** Rice crop top block. */
 public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     
     public static final PropertyInteger AGE =
             PropertyInteger.create("age", 0, 7);
     
+    /** Bounding boxes indexed by crop age. */
     protected static final AxisAlignedBB[] CROP_BOUNDS = new AxisAlignedBB[]
             {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D),
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D),
@@ -61,6 +64,9 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
         this.checkStay(world, state, pos);
     }
     
+    /** Checks whether this block can stay in the
+     * given position, drops it if not.
+     * @return Whether this block stayed. */
     protected boolean checkStay(World world, IBlockState state, BlockPos pos) {
         
         if (world.getBlockState(pos.down()).getBlock() != ModBlocks.riceBase) {
@@ -89,7 +95,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
             return ModItems.rice;
         }
 
-        return null;
+        return Items.AIR;
     }
     
     @Override
@@ -118,6 +124,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
         }
     }
     
+    /** @return Whether this crop can grow at the given position. */
     protected boolean canGrow(World world, BlockPos pos) {
         
         return world.getLightFor(EnumSkyBlock.SKY, pos) >= 8 &&

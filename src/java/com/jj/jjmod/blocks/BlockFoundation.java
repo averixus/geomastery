@@ -11,11 +11,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Foundation block. */
 public class BlockFoundation extends BlockNew implements IBuildingBlock {
 
     public BlockFoundation() {
         
-        super(BlockMaterial.SOIL, "foundation", CreativeTabs.BUILDING_BLOCKS, 1.5F, ToolType.PICKAXE);
+        super(BlockMaterial.SOIL, "foundation", CreativeTabs.BUILDING_BLOCKS,
+                1.5F, ToolType.PICKAXE);
     }
     
     @Override
@@ -51,7 +53,8 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
             
             Block block = world.getBlockState(pos.offset(facing)).getBlock();
             
-            if (ModBlocks.LIGHT.contains(block) || ModBlocks.HEAVY.contains(block)) {
+            if (ModBlocks.LIGHT.contains(block) ||
+                    ModBlocks.HEAVY.contains(block)) {
                 
                 count++;
             }
@@ -69,5 +72,4 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
             world.destroyBlock(pos, true);
         }
     }
-
 }

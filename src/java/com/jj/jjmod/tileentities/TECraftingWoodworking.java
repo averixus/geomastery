@@ -37,7 +37,7 @@ public class TECraftingWoodworking extends TileEntity {
 
     /** @return The EnumPartWoodworking state of this Woodworking block. */
     public EnumPartWoodworking getPart() {
-
+        System.out.println("getting part " + this.part);
         return this.part;
     }
 
@@ -56,18 +56,24 @@ public class TECraftingWoodworking extends TileEntity {
         super.readFromNBT(compound);
         this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
         this.part = EnumPartWoodworking.values()[compound.getInteger("part")];
-    }
 
+    }
+    
     @Override
     public NBTTagCompound getUpdateTag() {
-
+        System.out.println("get update tag");
         return this.writeToNBT(new NBTTagCompound());
     }
+    
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+        System.out.println("handling update tag");
+        this.readFromNBT(tag);
+    }
 
-    @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-
+        System.out.println("get update packet");
         return new SPacketUpdateTileEntity(this.getPos(), 0,
                 this.writeToNBT(new NBTTagCompound()));
     }
@@ -75,9 +81,10 @@ public class TECraftingWoodworking extends TileEntity {
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
-
+        System.out.println("on data packet");
         this.readFromNBT(packet.getNbtCompound());
     }
+
 
     /** Enum defining parts of the whole Woodworking structure. */
     public enum EnumPartWoodworking implements IStringSerializable {

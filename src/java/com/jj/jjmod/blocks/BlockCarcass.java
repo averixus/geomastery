@@ -1,5 +1,6 @@
 package com.jj.jjmod.blocks;
 
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.jj.jjmod.items.ItemHuntingknife;
 import com.jj.jjmod.utilities.BlockMaterial;
@@ -15,19 +16,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Abstract superclass for Carcass blocks. */
 public abstract class BlockCarcass extends BlockNew {
     
     protected static final AxisAlignedBB HALF_BOUNDS =
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
 
-    public final ItemStack[] drops;
-
-    public BlockCarcass(String name, ItemStack[] drops, float hardness) {
+    public BlockCarcass(String name, float hardness) {
 
         super(BlockMaterial.CARCASS, name, CreativeTabs.FOOD,
                 hardness, ToolType.KNIFE);
-        
-        this.drops = drops;
     }
     
     @Override
@@ -45,14 +43,14 @@ public abstract class BlockCarcass extends BlockNew {
         
         if (stack.getItem() instanceof ItemHuntingknife) {
             
-            for (ItemStack drop : this.drops) {
-                
-                spawnAsEntity(world, pos, drop);
-            }
+            this.spawnDrops(world, pos);
             
         } else {
             
             spawnItem(world, pos, Item.getItemFromBlock(this));
         }
     }
+    
+    /** Spawns the knife harvest drops for this Carcass. */
+    protected abstract void spawnDrops(World world, BlockPos pos);
 }

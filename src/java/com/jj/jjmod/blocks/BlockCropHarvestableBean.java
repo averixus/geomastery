@@ -7,12 +7,12 @@ import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 
+/** Bean Crop block. */
 public class BlockCropHarvestableBean extends BlockCropHarvestable {
     
     public BlockCropHarvestableBean() {
         
-        super("bean", 3,
-                () -> ModItems.bean, () -> 4, 0.4F, 0.2F);
+        super("bean", 3, () -> ModItems.bean, (rand) -> 4, 0.4F, 0.2F);
     }
 
     @Override
@@ -22,5 +22,4 @@ public class BlockCropHarvestableBean extends BlockCropHarvestable {
                 biome instanceof BiomePlains || biome == Biomes.BEACH ||
                 biome instanceof BiomeJungle;
     }
-
 }

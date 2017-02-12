@@ -8,13 +8,11 @@ import java.util.function.Supplier;
 import com.jj.jjmod.utilities.IBiomeCheck;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,11 +24,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 
-public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCheck {
+/** Abstract superclass for Crop blocks. */
+public abstract class BlockCrop extends BlockNew
+        implements IPlantable, IBiomeCheck {
     
     public static final PropertyInteger AGE =
             PropertyInteger.create("age", 0, 7);
     
+    /** Bounding boxes indexed by crop age. */
     protected static final AxisAlignedBB[] CROP_BOUNDS = new AxisAlignedBB[]
             {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), 
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D),
@@ -41,19 +42,27 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D),
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
     
+    /** Supplier for the harvested crop Item. */
     protected Supplier<Item> cropRef;
+    /** Supplier for the planted seed Item. */
     protected Supplier<Item> seedRef;
-    protected Supplier<Integer> yieldRef;
+    /** Random function for the crop yield. */
+    protected Function<Random, Integer> yieldRef;
+    /** Chance of growth per update tick. */
     protected float growthChance;
+    /** Chance of death per update tick when in the wrong conditions. */
+    protected float deathChance = 0.5F;
 
-    public BlockCrop(String name, Supplier<Item> cropRef, Supplier<Integer> yieldRef, float growthChance,
+    public BlockCrop(String name, Supplier<Item> cropRef,
+            Function<Random, Integer> function, float growthChance,
             float hardness, ToolType tool) {
 
-        this(name, cropRef, cropRef, yieldRef, growthChance, hardness, tool);
+        this(name, cropRef, cropRef, function, growthChance, hardness, tool);
     }
 
     public BlockCrop(String name, Supplier<Item> cropRef,
-            Supplier<Item> seedRef, Supplier<Integer> yieldRef, float growthChance, float hardness, ToolType tool) {
+            Supplier<Item> seedRef, Function<Random, Integer> yieldRef,
+            float growthChance, float hardness, ToolType tool) {
 
         super(Material.PLANTS, name, null, hardness, tool);
         this.cropRef = cropRef;
@@ -69,12 +78,13 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
                 
-        if (!this.checkStay(world, pos, state)) {
+        if (!this.canStay(world, pos, state)) {
             
-            return;
+            world.setBlockToAir(pos);
         }
         
-        if (!this.canGrow(world, pos, state) && rand.nextFloat() <= 0.5) {
+        if (!this.canGrow(world, pos, state) &&
+                rand.nextFloat() <= this.deathChance) {
             
             Block below = world.getBlockState(pos.down()).getBlock();
             
@@ -97,6 +107,7 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
         }
     }
     
+    /** Ages up this Crop if it is less than full grown. */
     protected void grow(World world, BlockPos pos,
             IBlockState state, Random rand) {
         
@@ -106,26 +117,94 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
         world.setBlockState(pos, newState, 2);
     }
     
+    /** @return The chance of growth per update tick. */
     protected float getGrowthChance() {
         
         return this.growthChance;
     }
     
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        
-        return this.canPlant(world, pos) && super.canPlaceBlockAt(world, pos);
-    }
-    
-    @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
         
-        this.checkStay(world, pos, state);
+        if (!this.canStay(world, pos, state)) {
+            
+            world.setBlockToAir(pos);
+        }
     }
     
     @Override
-    protected BlockStateContainer createBlockState() {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
+        
+        List<ItemStack> items = new ArrayList<ItemStack>();
+        
+        if (state.getValue(AGE) == 7) {
+            
+            items.add(new ItemStack(this.seedRef.get()));
+            items.add(new ItemStack(this.cropRef.get(), this.yieldRef.apply(((World) world).rand)));
+        }
+        
+        return items;
+    }
+    
+    /** @return The IBlockState for this Crop when full grown. */
+    public IBlockState getFullgrown() {
+        
+        return this.getDefaultState().withProperty(AGE, 7);
+    }
+    
+    /** @return Whether this Crop can stay at this position. */
+    protected boolean canStay(World world, BlockPos pos, IBlockState state) {
+        
+        BlockPos downPos = pos.down();
+        Block downBlock = world.getBlockState(downPos).getBlock();
+        return (downBlock == Blocks.DIRT ||
+                downBlock == Blocks.GRASS || downBlock == Blocks.FARMLAND);
+    }
+    
+    /** @return Whether this Crop can be planted at this position. */
+    protected boolean canPlant(World world, BlockPos pos) {
+        
+        BlockPos downPos = pos.down();
+        Block downBlock = world.getBlockState(downPos).getBlock();
+        return downBlock == Blocks.FARMLAND;
+    }
+    
+    /** @return Whether this Crop can grow at this posiiton. */
+    protected boolean canGrow(World world, BlockPos pos, IBlockState state) {
+        
+        return this.canStay(world, pos, state) && world.canSeeSky(pos) &&
+                this.isPermitted(world.getBiome(pos));
+    }
+    
+    @Override
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        
+        IBlockState state = world.getBlockState(pos);
+        
+        if (state.getBlock() != this) {
+            
+            return getDefaultState();
+        }
+        
+        return state;
+    }
+    
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        
+        return EnumPlantType.Crop;
+    }
+    
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        
+        return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+    
+    @Override
+    public BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, new IProperty[] {AGE});
     }
@@ -150,80 +229,9 @@ public abstract class BlockCrop extends BlockNew implements IPlantable, IBiomeCh
     }
     
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
         
-        return BlockRenderLayer.CUTOUT_MIPPED;
+        return this.canPlant(world, pos) && super.canPlaceBlockAt(world, pos);
     }
     
-    public IBlockState getFullgrown() {
-        
-        return this.getDefaultState().withProperty(AGE, 7);
-    }
-    
-    protected boolean checkStay(World world, BlockPos pos, IBlockState state) {
-        
-        if (!this.canStay(world, pos, state)) {
-            
-            world.setBlockToAir(pos);
-            this.dropBlockAsItem(world, pos, state, 0);
-            return false;
-        }
-        
-        return true;
-    }
-    
-    protected boolean canStay(World world, BlockPos pos, IBlockState state) {
-        
-        BlockPos downPos = pos.down();
-        Block downBlock = world.getBlockState(downPos).getBlock();
-        return (downBlock == Blocks.DIRT ||
-                downBlock == Blocks.GRASS || downBlock == Blocks.FARMLAND);
-    }
-    
-    protected boolean canPlant(World world, BlockPos pos) {
-        
-        BlockPos downPos = pos.down();
-        Block downBlock = world.getBlockState(downPos).getBlock();
-        return downBlock == Blocks.FARMLAND;
-    }
-    
-    protected boolean canGrow(World world, BlockPos pos, IBlockState state) {
-        
-        return this.canStay(world, pos, state) && world.canSeeSky(pos) &&
-                this.isPermitted(world.getBiome(pos));
-    }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        List<ItemStack> items = new ArrayList<ItemStack>();
-        
-        if (state.getValue(AGE) == 7) {
-            
-            items.add(new ItemStack(this.seedRef.get()));
-            items.add(new ItemStack(this.cropRef.get(), this.yieldRef.get()));
-        }
-        
-        return items;
-    }
-    
-    @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        
-        IBlockState state = world.getBlockState(pos);
-        
-        if (state.getBlock() != this) {
-            
-            return getDefaultState();
-        }
-        
-        return state;
-    }
-    
-    @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
-        
-        return EnumPlantType.Crop;
-    }
 }

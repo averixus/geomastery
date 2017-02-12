@@ -33,7 +33,7 @@ public abstract class ItemBedAbstract extends ItemNew {
             World world, BlockPos posFoot, EnumHand hand, EnumFacing facing,
             float x, float y, float z) {
         
-        ItemStack stack = player.getActiveItemStack();
+        ItemStack stack = player.getHeldItem(hand);
 
         if (world.isRemote) {
 
@@ -93,13 +93,10 @@ public abstract class ItemBedAbstract extends ItemNew {
 
             stack.shrink(1);
 
-            if (stack.getCount() == 0) {
-
-                stack = null;
-            }
-
             ((ContainerInventory) player.inventoryContainer)
                     .sendUpdateHighlight();
+            ((ContainerInventory) player.inventoryContainer)
+            .sendUpdateOffhand();
             return EnumActionResult.SUCCESS;
         }
     }

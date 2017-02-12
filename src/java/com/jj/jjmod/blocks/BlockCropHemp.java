@@ -10,12 +10,13 @@ import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
+/** Hemp Crop block. */
 public class BlockCropHemp extends BlockCrop {
     
     public BlockCropHemp() {
         
-        super("hemp", () -> ModItems.twineHemp,
-                () -> ModItems.cuttingHemp, () -> 1, 0.4F, 0.2F, ToolType.SICKLE);
+        super("hemp", () -> ModItems.twineHemp, () -> ModItems.cuttingHemp,
+                (rand) -> 1, 0.4F, 0.2F, ToolType.SICKLE);
     }
 
     @Override
@@ -27,5 +28,4 @@ public class BlockCropHemp extends BlockCrop {
                 biome instanceof BiomeJungle ||
                 biome instanceof BiomeSavanna;
     }
-
 }

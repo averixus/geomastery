@@ -22,12 +22,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public abstract class BlockComplexAbstract extends BlockNew implements ITileEntityProvider {
+/** Abstract superclass for complex blocks with TileEntities,
+ * GUIs, non-solid models, complex drops. */
+public abstract class BlockComplexAbstract extends BlockNew
+        implements ITileEntityProvider {
 
     protected static final AxisAlignedBB FLAT_BOUNDS
             = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
 
-    public BlockComplexAbstract(String name, Material material, float hardness, ToolType harvestTool) {
+    public BlockComplexAbstract(String name, Material material,
+            float hardness, ToolType harvestTool) {
 
         super(material, name, null, hardness, harvestTool);
     }
@@ -60,6 +64,7 @@ public abstract class BlockComplexAbstract extends BlockNew implements ITileEnti
     @Override
     public abstract IBlockState getStateFromMeta(int meta);
 
+    /** Activates TileEntitiy/GUI. */
     public abstract void activate(EntityPlayer player, World world, int x,
             int y, int z);
 
@@ -89,6 +94,14 @@ public abstract class BlockComplexAbstract extends BlockNew implements ITileEnti
 
         super.breakBlock(world, pos, state);
         world.removeTileEntity(pos);
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return this.blockMaterial.isSolid() ?
+                this.getBoundingBox(state, world, pos) : NULL_AABB;
     }
 
     @Override

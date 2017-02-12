@@ -33,7 +33,8 @@ public class EntityEventHandler {
         } else if (entity instanceof EntityCow) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModBlocks.carcassCowpart), 0);
+            entity.entityDropItem(new
+                    ItemStack(ModBlocks.carcassCowpart, 2), 0);
             
         } else if (entity instanceof EntitySheep) {
 

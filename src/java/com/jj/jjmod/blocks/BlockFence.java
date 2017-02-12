@@ -13,12 +13,15 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockFence extends net.minecraft.block.BlockFence implements IBuildingBlock {
+/** Fence block. */
+public class BlockFence extends net.minecraft.block.BlockFence
+        implements IBuildingBlock {
     
     public BlockFence() {
         
         super(BlockMaterial.WOOD_FURNITURE, MapColor.WOOD);
-        BlockNew.setupBlock(this, "fence", CreativeTabs.BUILDING_BLOCKS, 2, ToolType.AXE);
+        BlockNew.setupBlock(this, "fence",CreativeTabs.BUILDING_BLOCKS,
+                2, ToolType.AXE);
     }
 
     @Override

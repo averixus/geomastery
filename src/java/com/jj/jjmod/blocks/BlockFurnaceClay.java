@@ -30,8 +30,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFurnaceClay extends BlockComplexAbstract
-        implements ITileEntityProvider {
+/** Clay Furnace block. */
+public class BlockFurnaceClay extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartClay> PART = PropertyEnum
             .<EnumPartClay>create("part", EnumPartClay.class);
@@ -44,7 +44,8 @@ public class BlockFurnaceClay extends BlockComplexAbstract
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
@@ -55,9 +56,11 @@ public class BlockFurnaceClay extends BlockComplexAbstract
     }
     
     @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+    public void dropBlockAsItemWithChance(World world, BlockPos pos,
+            IBlockState state, float chance, int fortune) {
         
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartClay.BL) {
+        if (this.getActualState(state, world, pos).getValue(PART) ==
+                EnumPartClay.BL) {
         
             spawnItem(world, pos, ModItems.furnaceClay);
         }

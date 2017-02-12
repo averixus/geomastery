@@ -20,8 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockDrying extends BlockComplexAbstract
-        implements ITileEntityProvider {
+/** Drying rack block. */
+public class BlockDrying extends BlockComplexAbstract {
 
     public BlockDrying() {
 

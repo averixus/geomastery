@@ -19,12 +19,7 @@ public class ItemPickaxe extends ItemTool {
             Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE,
             Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE,
             Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB,
-            Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE,
-            ModBlocks.furnaceClay, ModBlocks.furnaceStone,
-            ModBlocks.craftingKnapping, ModBlocks.craftingMason,
-            ModBlocks.craftingForge, ModBlocks.lodeAmethyst,
-            ModBlocks.lodeFireopal, ModBlocks.lodeRuby, ModBlocks.lodeSapphire,
-            ModBlocks.oreCopper, ModBlocks.oreSilver, ModBlocks.oreTin});
+            Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE});
 
     public ItemPickaxe(String name, ToolMaterial material) {
 

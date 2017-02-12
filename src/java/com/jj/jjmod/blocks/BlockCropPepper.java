@@ -18,11 +18,13 @@ import net.minecraft.world.biome.BiomeSnow;
 import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.biome.BiomeTaiga;
 
+/** Pepper Crop block. */
 public class BlockCropPepper extends BlockCrop {
     
     public BlockCropPepper() {
         
-        super("pepper", () -> ModItems.pepper, () -> 3, 0.3F, 0.2F, ToolType.SICKLE);
+        super("pepper", () -> ModItems.pepper, (rand) -> 3,
+                0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override
@@ -33,5 +35,4 @@ public class BlockCropPepper extends BlockCrop {
                 biome instanceof BiomePlains ||
                 biome instanceof BiomeJungle;
     }
-
 }

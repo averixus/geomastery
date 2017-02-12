@@ -153,7 +153,7 @@ public class GuiEventHandler {
             ContainerInventory inv =
                     (ContainerInventory) mc.player.inventoryContainer;
             
-            if (mc.player.inventory.offHandInventory.get(0) != null &&
+            if (!mc.player.inventory.offHandInventory.get(0).isEmpty() &&
                     ModBlocks.OFFHAND_ONLY.contains(mc.player.inventory
                     .offHandInventory.get(0).getItem())) {
                 
@@ -161,7 +161,6 @@ public class GuiEventHandler {
             }
 
             inv.swapHands();
-            inv.sendUpdateOffhand();
         }
     }
 }

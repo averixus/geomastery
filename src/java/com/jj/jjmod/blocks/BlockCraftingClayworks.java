@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Clayworks crafting block. */
 public class BlockCraftingClayworks extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartClayworks> PART = PropertyEnum
@@ -31,32 +32,18 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
 
     public BlockCraftingClayworks() {
 
-        super("crafting_clayworks", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
+        super("crafting_clayworks", BlockMaterial.WOOD_HANDHARVESTABLE,
+                5F, null);
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
         if (state.getValue(PART) == EnumPartClayworks.FR) {
 
-            spawnItem(world, pos, ModItems.craftingClayworks);
-        }
-    }
-    
-  /*  @Override
-    public Item getItemDropped(IBlockState state, Random rand,
-            int fortune) {
-        
-        return state.getValue(PART) == EnumPartClayworks.FR ? ModItems.craftingClayworks : Items.AIR;
-    }*/
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartClayworks.FR) {
-        
             spawnItem(world, pos, ModItems.craftingClayworks);
         }
     }
@@ -185,34 +172,36 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
                 world, x, y, z);
     }
 
-    public static enum EnumPartClayworks implements IStringSerializable {
+    /** Enum defining parts of the whole Clayworks structure. */
+    public enum EnumPartClayworks implements IStringSerializable {
 
         FR("fr", true),
         FL("fl", false),
         BL("bl", false),
         BR("br", false);
 
-        private final String NAME;
+        private final String name;
         private final boolean isFlat;
 
         private EnumPartClayworks(String name, boolean isFlat) {
 
-            this.NAME = name;
+            this.name = name;
             this.isFlat = isFlat;
         }
 
         @Override
         public String toString() {
 
-            return this.NAME;
+            return this.name;
         }
 
         @Override
         public String getName() {
 
-            return this.NAME;
+            return this.name;
         }
         
+        /** @return Whether this Part has the flat bounding box. */
         public boolean isFlat() {
             
             return this.isFlat;

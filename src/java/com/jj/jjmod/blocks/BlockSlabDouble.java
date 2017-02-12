@@ -7,9 +7,11 @@ import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
+/** Double form of slab block. */
 public class BlockSlabDouble extends BlockSlabSingle implements IBuildingBlock {
         
-    public BlockSlabDouble(Material material, String name, float hardness, ToolType harvestTool, Supplier<Item> item) {
+    public BlockSlabDouble(Material material, String name, float hardness,
+            ToolType harvestTool, Supplier<Item> item) {
         
         super(material, name, hardness, harvestTool, item);
     }

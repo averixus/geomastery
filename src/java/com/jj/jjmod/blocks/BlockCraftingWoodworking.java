@@ -31,8 +31,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCraftingWoodworking extends BlockComplexAbstract
-        implements ITileEntityProvider {
+/** Woodworking crafting block. */
+public class BlockCraftingWoodworking extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartWoodworking> PART = PropertyEnum
             .<EnumPartWoodworking>create("part", EnumPartWoodworking.class);
@@ -41,25 +41,18 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract
 
     public BlockCraftingWoodworking() {
 
-        super("crafting_woodworking", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
+        super("crafting_woodworking", BlockMaterial.WOOD_HANDHARVESTABLE,
+                5F, null);
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
         if (((TECraftingWoodworking) te).getPart() == EnumPartWoodworking.FM) {
 
-            spawnItem(world, pos, ModItems.craftingWoodworking);
-        }
-    }
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartWoodworking.FM) {
-        
             spawnItem(world, pos, ModItems.craftingWoodworking);
         }
     }
@@ -184,11 +177,11 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract
 
             return FULL_BLOCK_AABB;
         }
-
-        TECraftingWoodworking tileWoodworking =
-                (TECraftingWoodworking) tileEntity;
-        return tileWoodworking.getPart().isFlat() ? FLAT_BOUNDS
-                : FULL_BLOCK_AABB;
+        
+        EnumPartWoodworking enumPart =
+                ((TECraftingWoodworking) tileEntity).getPart();
+        return enumPart != null && enumPart.isFlat() ?
+                FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override

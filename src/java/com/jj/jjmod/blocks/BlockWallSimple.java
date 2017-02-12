@@ -10,13 +10,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+/** Simple wall block with no height variation. */
 public class BlockWallSimple extends BlockWall {
 
     public BlockWallSimple(BlockMaterial material, String name, float hardness,
             ToolType toolType, boolean isDouble, Supplier<Item> wall,
             boolean isHeavy, int selfHeight, boolean supportsBeam) {
         
-        super(material, name, hardness, toolType, isDouble, wall, isHeavy, selfHeight, supportsBeam);
+        super(material, name, hardness, toolType, isDouble,
+                wall, isHeavy, selfHeight, supportsBeam);
     }
     
     @Override
@@ -33,7 +35,8 @@ public class BlockWallSimple extends BlockWall {
         state = state.withProperty(SOUTH, south);
         state = state.withProperty(WEST, west);
         state = state.withProperty(POSITION, EnumPosition.LONE);
-        state = state.withProperty(STRAIGHT, EnumStraight.get(north, east, south, west));      
+        state = state.withProperty(STRAIGHT,
+                EnumStraight.get(north, east, south, west));      
         
         return state;
     }

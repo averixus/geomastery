@@ -269,8 +269,8 @@ public class ContainerInventory extends ContainerAbstract {
                 result.setCount(total - max);
             }
         }
-        
-        this.sendUpdateInventory(slot, inv.get(slot));
+        System.out.println("update packet from addtoslot");
+        this.sendUpdateInventory(slot + this.hotStart, inv.get(slot));
         return result;
     }
 
@@ -302,9 +302,10 @@ public class ContainerInventory extends ContainerAbstract {
 
                 ItemStack stack = this.craftMatrix.removeStackFromSlot(i);
 
-                if (stack != ItemStack.EMPTY) {
+                if (!stack.isEmpty()) {
 
                     player.dropItem(stack, false);
+                    System.out.println("update packet from container closed");
                     this.sendUpdateInventory(this.craftStart + i,
                             ItemStack.EMPTY);
                 }
@@ -454,6 +455,8 @@ public class ContainerInventory extends ContainerAbstract {
         this.playerInv.mainInventory.set(this.playerInv.currentItem,
                 this.playerInv.offHandInventory.get(0));
         this.playerInv.offHandInventory.set(0, toMove);
+        this.sendUpdateOffhand();
+        this.sendUpdateHighlight();
     }
 
     /** Sends a packet to update the offhand slot. */
@@ -466,14 +469,12 @@ public class ContainerInventory extends ContainerAbstract {
     /** Sends a packet to update the highlighted slot. */
     public void sendUpdateHighlight() {
 
-        sendUpdateInventory(this.playerInv.currentItem,
+        sendUpdateInventory(this.playerInv.currentItem + this.hotStart,
                 this.playerInv.mainInventory.get(this.playerInv.currentItem));
     }
 
     /** Sends a packet to update the index slot. */
     public void sendUpdateInventory(int slot, ItemStack stack) {
-
-        slot += this.hotStart;
 
         if (this.player instanceof EntityPlayerMP) {
 

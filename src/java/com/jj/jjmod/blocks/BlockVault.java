@@ -18,10 +18,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Vault block. */
 public class BlockVault extends BlockNew implements IBuildingBlock {
     
-    public static final PropertyEnum SHAPE = PropertyEnum.<EnumShape>create("shape", EnumShape.class);
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyEnum SHAPE =
+            PropertyEnum.<EnumShape>create("shape", EnumShape.class);
+    public static final PropertyDirection FACING =
+            PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     public BlockVault() {
         
@@ -53,7 +56,11 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return true;
     }
     
-    protected boolean hasValidSide(IBlockAccess world, BlockPos pos, EnumFacing direction) {
+    /** Checks whether there is a valid support at the
+     * given direction from this position.
+     * @return Whether there is a valid support in the given direction. */
+    private boolean hasValidSide(IBlockAccess world,
+            BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
         
@@ -70,11 +77,15 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return false;
     }
     
-    protected boolean isExternalCorner(IBlockAccess world, BlockPos pos, EnumFacing direction) {
+    /** @return Whether the vault at the given pos is an external corner. */
+    protected boolean isExternalCorner(IBlockAccess world,
+            BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
-        Block cornerA = world.getBlockState(pos.offset(direction.rotateY())).getBlock();
-        Block cornerB = world.getBlockState(pos.offset(direction.rotateYCCW())).getBlock();
+        Block cornerA = world.getBlockState(pos.offset(direction.rotateY()))
+                .getBlock();
+        Block cornerB = world.getBlockState(pos.offset(direction.rotateYCCW()))
+                .getBlock();
         
         if ((block == this) && ((cornerA == this) || (cornerB == this))) {
             
@@ -84,19 +95,32 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return false;
     }
     
-    protected boolean isInternalCorner(IBlockAccess world, BlockPos pos, EnumFacing direction) {
+    /** Checks whether the vault at the given pos is an internal corner,
+     * clockwise from the given direction.
+     * @return Whether this is an internal corner. */
+    private boolean isInternalCorner(IBlockAccess world,
+            BlockPos pos, EnumFacing direction) {
         
-        return this.hasValidSide(world, pos, direction) && this.hasValidSide(world, pos, direction.rotateY());
+        return this.hasValidSide(world, pos, direction) &&
+                this.hasValidSide(world, pos, direction.rotateY());
     }
     
-    protected boolean isCentreCorner(IBlockAccess world, BlockPos pos, EnumFacing direction) {
+    /** Checks whether the vault at the given pos is the centre
+     * corner from three sides, centred on the given direction.
+     * @return Whether this is a centre corner. */
+    protected boolean isCentreCorner(IBlockAccess world,
+            BlockPos pos, EnumFacing direction) {
         
         return this.hasValidSide(world, pos, direction.rotateY()) &&
                 this.hasValidSide(world, pos, direction) &&
                 this.hasValidSide(world, pos, direction.rotateYCCW());
     }
     
-    protected boolean hasLintel(IBlockAccess world, BlockPos pos, EnumFacing direction) {
+    /** Checks whether the vault at the given pos is a lintel
+     * in the axis of the given direction.
+     * @return Whether this is a lintel. */
+    protected boolean hasLintel(IBlockAccess world,
+            BlockPos pos, EnumFacing direction) {
         
         return this.hasValidSide(world, pos, direction) &&
                 this.hasValidSide(world, pos, direction.getOpposite()) &&
@@ -111,7 +135,8 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         
         for (EnumFacing direction : EnumFacing.HORIZONTALS) {
             
-            result = result ? result : (this.hasValidSide(world, pos, direction) ||
+            result = result ? result :
+                    (this.hasValidSide(world, pos, direction) ||
                     this.isExternalCorner(world, pos, direction));
         }
         
@@ -209,9 +234,11 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
     
+    /** Enum defining possible shapes for the vault. */
     public enum EnumShape implements IStringSerializable {
         
-        SINGLE("single"), INTERNAL("internal"), EXTERNAL("external"), LINTEL("lintel");
+        SINGLE("single"), INTERNAL("internal"),
+        EXTERNAL("external"), LINTEL("lintel");
         
         private String name;
         

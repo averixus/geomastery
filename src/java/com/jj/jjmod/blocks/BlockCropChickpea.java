@@ -17,11 +17,13 @@ import net.minecraft.world.biome.BiomeSnow;
 import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.biome.BiomeTaiga;
 
+/** Chickpea Crop block. */
 public class BlockCropChickpea extends BlockCrop {
     
     public BlockCropChickpea() {
         
-        super("chickpea", () -> ModItems.chickpeas, () -> 2, 0.3F, 0.2F, ToolType.SICKLE);
+        super("chickpea", () -> ModItems.chickpeas, (rand) -> 2,
+                0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

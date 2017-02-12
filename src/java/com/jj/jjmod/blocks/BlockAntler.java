@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Antler block. */
 public class BlockAntler extends BlockBush {
 
     public BlockAntler() {

@@ -11,11 +11,14 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 
+/** Fruit block. */
 public class BlockFruit extends BlockNew {
     
-    public static final PropertyDirection STEM = PropertyDirection.create("stem", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyDirection STEM =
+            PropertyDirection.create("stem", EnumFacing.Plane.HORIZONTAL);
     
-    protected Supplier<Item> item;
+    /** Supplier for the fruit item. */
+    private Supplier<Item> item;
     
     public BlockFruit(String name, Supplier<Item> item) {
         
@@ -45,6 +48,7 @@ public class BlockFruit extends BlockNew {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
-        return this.getDefaultState().withProperty(STEM, EnumFacing.getHorizontal(meta));
+        return this.getDefaultState().withProperty(STEM,
+                EnumFacing.getHorizontal(meta));
     }
 }

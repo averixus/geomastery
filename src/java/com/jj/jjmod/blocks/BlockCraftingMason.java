@@ -30,8 +30,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCraftingMason extends BlockComplexAbstract
-        implements ITileEntityProvider {
+/** Mason crafting block. */
+public class BlockCraftingMason extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartMason> PART =
             PropertyEnum.<EnumPartMason>create("part", EnumPartMason.class);
@@ -44,28 +44,13 @@ public class BlockCraftingMason extends BlockComplexAbstract
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
         if (((TECraftingMason) te).getPart() == EnumPartMason.FM) {
 
-            spawnItem(world, pos, ModItems.craftingMason);
-        }
-    }
-    
-   /* @Override
-    public Item getItemDropped(IBlockState state, Random rand,
-            int fortune) {
-        
-        return state.getValue(PART) == EnumPartMason.FM ? ModItems.craftingMason : Items.AIR;
-    }*/
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartMason.FM) {
-        
             spawnItem(world, pos, ModItems.craftingMason);
         }
     }
@@ -174,11 +159,11 @@ public class BlockCraftingMason extends BlockComplexAbstract
 
         if (!(tileEntity instanceof TECraftingMason)) {
 
-            return null;
+            return FULL_BLOCK_AABB;
         }
 
-        TECraftingMason tileMason = (TECraftingMason) tileEntity;
-        return tileMason.getPart().isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        EnumPartMason part = ((TECraftingMason) tileEntity).getPart();
+        return part != null && part.isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override

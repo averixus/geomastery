@@ -314,17 +314,20 @@ public class ModBlocks {
         register(woodOrange = new BlockWood("wood_orange", 2F));
         
         register(lodeAmethyst = new BlockLode("lode_amethyst",
-                () -> ModItems.amethyst, 2));
+                4F, () -> ModItems.amethyst, 2));
         register(lodeFireopal = new BlockLode("lode_fireopal",
-                () -> ModItems.fireopal, 5));
+                4F, () -> ModItems.fireopal, 5));
         register(lodeRuby = new BlockLode("lode_ruby",
-                () -> ModItems.ruby, 3));
+                4F, () -> ModItems.ruby, 3));
         register(lodeSapphire = new BlockLode("lode_sapphire",
-                () -> ModItems.sapphire, 8));
+                4F, () -> ModItems.sapphire, 8));
 
-        register(oreCopper = new BlockRock("ore_copper", 3F));
-        register(oreSilver = new BlockRock("ore_silver", 3F));
-        register(oreTin = new BlockRock("ore_tin", 3F));
+        register(oreCopper = new BlockLode("ore_copper",
+                3F, () -> ModItems.oreCopper, 1));
+        register(oreSilver = new BlockLode("ore_silver",
+                3F, () -> ModItems.oreSilver, 1));
+        register(oreTin = new BlockLode("ore_tin",
+                3F, () -> ModItems.oreTin, 1));
         
         register(salt = new BlockRock("salt", 1F));
         register(chalk = new BlockRock("chalk", 3F));

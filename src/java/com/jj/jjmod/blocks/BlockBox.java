@@ -1,48 +1,48 @@
 package com.jj.jjmod.blocks;
 
+import java.util.Random;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TEBox;
 import com.jj.jjmod.utilities.BlockMaterial;
-import com.jj.jjmod.utilities.ToolType;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBox extends BlockNew implements ITileEntityProvider {
+/** Box block. */
+public class BlockBox extends BlockComplexAbstract {
     
-    public static final AxisAlignedBB BOUNDS = new
+    private static final AxisAlignedBB BOUNDS = new
             AxisAlignedBB(0.1875, 0, 0.125, 0.875, 0.4375, 0.8125);
     
     public BlockBox() {
         
-        super(BlockMaterial.WOOD_FURNITURE, "box",
-                CreativeTabs.BUILDING_BLOCKS, 5, null);
+        super("box", BlockMaterial.WOOD_FURNITURE, 5, null);
+        this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
     
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos,
-            IBlockState state, EntityPlayer player, EnumHand hand,
-            EnumFacing side, float x, float y, float z) {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         
-        if (!world.isRemote) {
-            System.out.println("activating block");
-            player.openGui(Main.instance, GuiList.BOX.ordinal(), world,
-                    pos.getX(), pos.getY(), pos.getZ());
-        }
+        return Item.getItemFromBlock(this);
+    }
+    
+    @Override
+    public void activate(EntityPlayer player, World world,
+            int x, int y, int z) {
         
-        return true;
+        player.openGui(Main.instance, GuiList.BOX.ordinal(), world, x, y, z);
     }
 
     @Override
@@ -52,40 +52,44 @@ public class BlockBox extends BlockNew implements ITileEntityProvider {
     }
     
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        
-        TileEntity tileEntity = world.getTileEntity(pos);
-        
-        if (tileEntity instanceof TEBox) {
-            
-            InventoryHelper.dropInventoryItems(world,
-                    pos, (IInventory) tileEntity);
-        }
-    }
-    
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        
-        return false;
-    }
-    
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        
-        return false;
-    }
-    
-    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess source, BlockPos pos) {
         
         return BOUNDS;
     }
-
     
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
+    
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        return 0;
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        
+        return this.getDefaultState();
+    }
+    
+    @Override
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return state;
+    }
+    
+    @Override
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, new IProperty[0]);
+    }
+    
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {}
 }

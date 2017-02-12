@@ -9,12 +9,12 @@ import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
+/** Berry Crop block. */
 public class BlockCropHarvestableBerry extends BlockCropHarvestable {
     
     public BlockCropHarvestableBerry() {
         
-        super("berry", 2,
-                () -> ModItems.berry, () -> 9, 0.4F, 0.2F);
+        super("berry", 2, () -> ModItems.berry, (rand) -> 9, 0.4F, 0.2F);
     }
 
     @Override
@@ -24,5 +24,4 @@ public class BlockCropHarvestableBerry extends BlockCropHarvestable {
                 biome instanceof BiomeOcean || biome instanceof BiomePlains ||
                 biome instanceof BiomeJungle || biome instanceof BiomeSavanna;
     }
-
 }

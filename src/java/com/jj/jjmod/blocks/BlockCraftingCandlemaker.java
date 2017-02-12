@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Candlemaker crafting block. */
 public class BlockCraftingCandlemaker extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartCandlemaker> PART = PropertyEnum
@@ -31,25 +32,18 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
 
     public BlockCraftingCandlemaker() {
 
-        super("crafting_candlemaker", BlockMaterial.WOOD_HANDHARVESTABLE, 5F, null);
+        super("crafting_candlemaker", BlockMaterial.WOOD_HANDHARVESTABLE,
+                5F, null);
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
         if (state.getValue(PART) == EnumPartCandlemaker.FRONT) {
 
-            spawnItem(world, pos, ModItems.craftingCandlemaker);
-        }
-    }
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) == EnumPartCandlemaker.FRONT) {
-        
             spawnItem(world, pos, ModItems.craftingCandlemaker);
         }
     }
@@ -153,7 +147,8 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
                 world, x, y, z);
     }
 
-    public static enum EnumPartCandlemaker implements IStringSerializable {
+    /** Enum defining parts of the whole Candlemaker structure. */
+    public enum EnumPartCandlemaker implements IStringSerializable {
 
         FRONT("front", true),
         BACK("back", false);
@@ -179,6 +174,7 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
             return this.name;
         }
         
+        /** @return Whether this Part has the flat bounding box. */
         public boolean isFlat() {
             
             return this.isFlat;

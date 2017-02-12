@@ -34,7 +34,7 @@ public class TEDrying extends TileEntity implements ITickable {
     /** Sets the given stack to the input slot. */
     public void setInput(ItemStack stack) {
         
-        if (ItemStack.areItemsEqual(stack, this.input)) {
+        if (!ItemStack.areItemsEqual(stack, this.input)) {
             
             this.dryEach = this.getDryTime(stack);
             this.drySpent = 0;
@@ -128,7 +128,7 @@ public class TEDrying extends TileEntity implements ITickable {
 
         boolean outputCorrect = this.output.isItemEqual(result);
         int output = this.output.getCount() + result.getCount();
-        boolean hasRoom = output < this.output.getMaxStackSize();
+        boolean hasRoom = output <= this.output.getMaxStackSize();
 
         return outputCorrect && hasRoom;
     }
@@ -141,13 +141,13 @@ public class TEDrying extends TileEntity implements ITickable {
         if (this.output.isEmpty()) {
 
             this.output = result.copy();
+            this.input.shrink(1);
 
-        } else if (ItemStack.areItemsEqual(this.input, result)) {
+        } else if (ItemStack.areItemsEqual(this.output, result)) {
 
             this.output.grow(result.getCount());
+            this.input.shrink(1);
         }
-
-        this.input.shrink(1);
     }
     
     /** Sends an packet to update the progress bars on the Client. */

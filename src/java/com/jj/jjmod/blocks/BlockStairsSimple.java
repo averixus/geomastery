@@ -21,19 +21,27 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Simple stairs block, with no connections or corners. */
 public class BlockStairsSimple extends BlockNew {
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-    protected static final AxisAlignedBB BOTTOM = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
-    protected static final AxisAlignedBB WEST = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB EAST = new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB NORTH = new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
-    protected static final AxisAlignedBB SOUTH = new AxisAlignedBB(0.0D, 0.5D, 0.5D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB BOTTOM =
+            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    protected static final AxisAlignedBB WEST =
+            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB EAST =
+            new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB NORTH =
+            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
+    protected static final AxisAlignedBB SOUTH =
+            new AxisAlignedBB(0.0D, 0.5D, 0.5D, 1.0D, 1.0D, 1.0D);
 
-    public BlockStairsSimple(String name, float hardness, ToolType harvestTool) {
+    public BlockStairsSimple(String name, float hardness,
+            ToolType harvestTool) {
         
-        super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
+        super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.BUILDING_BLOCKS,
+                hardness, harvestTool);
     }
     
     @Override
@@ -43,6 +51,8 @@ public class BlockStairsSimple extends BlockNew {
                 this.hasFoundation(world, pos);
     }
     
+    /** @return Whether this block has a valid
+     * foundation below the given position. */
     private boolean hasFoundation(World world, BlockPos pos) {
         
         Block block = world.getBlockState(pos.down()).getBlock();
@@ -62,11 +72,15 @@ public class BlockStairsSimple extends BlockNew {
         return natural || built;
     }
     
+    /** Checks whether this block has no adjacent
+     * same blocks at the given position.
+     * @return Whether the given position is valid. */
     private boolean hasValidConnections(World world, BlockPos pos) {
         
         for (EnumFacing direction : EnumFacing.HORIZONTALS) {
             
-            Block connect = world.getBlockState(pos.offset(direction)).getBlock();
+            Block connect = world.getBlockState(pos
+                    .offset(direction)).getBlock();
             
             if (connect == this) {
                 
@@ -78,14 +92,18 @@ public class BlockStairsSimple extends BlockNew {
     }
     
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing side, float x, float y, float z, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos,
+            EnumFacing side, float x, float y, float z,
+            int meta, EntityLivingBase placer) {
         
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+        return this.getDefaultState().withProperty(FACING,
+                placer.getHorizontalFacing());
     }
     
-    @SuppressWarnings("incomplete-switch")
     @Override
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, Entity entity) {
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox,
+            List<AxisAlignedBB> list, Entity entity) {
                 
         addCollisionBoxToList(pos, entityBox, list, BOTTOM);
         

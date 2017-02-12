@@ -11,21 +11,13 @@ import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
+/** Potato Crop block. */
 public class BlockCropPotato extends BlockCrop {
     
     public BlockCropPotato() {
         
-        super("potato", () -> Items.POTATO, new Supplier<Integer>() {
-            
-            private final Random rand = new Random();
-            
-            @Override
-            public Integer get() {
-                
-                return this.rand.nextInt(3) + 1;
-            }
-            
-        }, 0.3F, 0.2F, ToolType.SICKLE);
+        super("potato", () -> Items.POTATO, (rand) -> rand.nextInt(3) + 1,
+                0.3F, 0.2F, ToolType.SICKLE);
     }
     
     @Override
@@ -35,5 +27,4 @@ public class BlockCropPotato extends BlockCrop {
                 biome == Biomes.STONE_BEACH || biome instanceof BiomeForest ||
                 biome == Biomes.RIVER || biome instanceof BiomePlains;
     }
-
 }

@@ -7,12 +7,12 @@ import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomeMesa;
 import net.minecraft.world.biome.BiomeSavanna;
 
+/** Orange seedling block. */
 public class BlockSeedlingOrange extends BlockSeedling {
     
     public BlockSeedlingOrange() {
         
-        super("seedling_orange",
-                WorldGenTreeOrange::new, 0.15F);
+        super("seedling_orange",  WorldGenTreeOrange::new, 0.15F);
     }
 
     @Override
@@ -21,5 +21,4 @@ public class BlockSeedlingOrange extends BlockSeedling {
         return biome instanceof BiomeJungle || biome instanceof BiomeSavanna ||
                 biome instanceof BiomeDesert || biome instanceof BiomeMesa;
     }
-
 }

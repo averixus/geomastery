@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Wall block. */
 public class BlockWall extends BlockNew implements IBuildingBlock {
     
     public static final PropertyBool NORTH = PropertyBool.create("north");
@@ -33,11 +34,16 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     public static final PropertyEnum STRAIGHT =
             PropertyEnum.create("straight", EnumStraight.class);
     
-    public final boolean isDouble;
-    public final boolean isHeavy;
-    public final int selfHeight;
-    public final boolean supportsBeam;
+    /** Whether this wall is the double form. */
+    protected final boolean isDouble;
+    /** Whether this wall is classed as heavy. */
+    protected final boolean isHeavy;
+    /** The maximum height of this wall. */
+    protected final int selfHeight;
+    /** Whether this wall supports Beams. */
+    protected final boolean supportsBeam;
     
+    /** Supplier for the wall item. */
     protected Supplier<Item> item;
 
     public BlockWall(BlockMaterial material, String name, float hardness,
@@ -49,15 +55,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         this.isHeavy = isHeavy;
         this.selfHeight = selfHeight;
         this.supportsBeam = supportsBeam;
-        
-        if (this.item != null) {
-        
-            this.item = item;
-            
-        } else {
-            
-            this.item = () -> Item.getItemFromBlock(this);
-        }
+        this.item = item != null ? item : () -> Item.getItemFromBlock(this);
     }
     
 
@@ -97,6 +95,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         return this.item.get();
     }
     
+    /** @return Whether this wall should connect to the given direction. */
     protected boolean isValidHorizontal(IBlockAccess world,
             BlockPos pos, EnumFacing direction) {
         
@@ -138,16 +137,15 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         return sameType || sameWall || door;
     }
 
+    /** @return Whether this has a valid foundation at the given pos. */
     protected boolean hasValidFoundation(IBlockAccess world, BlockPos pos) {
 
-        System.out.println("checking for foundation");
         Block block = world.getBlockState(pos.down()).getBlock();
-        System.out.println("checking block" + block);
                 
         if (this.isHeavy) {
             
             boolean natural = ModBlocks.HEAVY.contains(block);
-            System.out.println("natural heavy? " + natural);
+
             if (this.isDouble || this.selfHeight == 1) {
                 
                 boolean built = false;
@@ -202,6 +200,44 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         }
     }
     
+    /** @return Whether this is within the allowed height for its type. */
+    protected boolean isBelowTypeHeight(World world, BlockPos pos) {
+
+        int height = 0;
+        Block block = world.getBlockState(pos.down()).getBlock();
+        boolean sameType = block instanceof IBuildingBlock &&
+                ((IBuildingBlock) block).isDouble() == this.isDouble;
+        
+        while (sameType && height <= 6 + 1) {
+            
+            height++;
+            pos = pos.down();
+            block = world.getBlockState(pos).getBlock();
+            sameType = block instanceof IBuildingBlock &&
+                    ((IBuildingBlock) block).isDouble() == this.isDouble;
+        }
+        
+        return height <= 6;
+    }
+    
+    /** @return Whether this is within its own allowed height. */
+    protected boolean isBelowSelfHeight(World world, BlockPos pos) {
+                
+        int height = 0;
+        Block block = world.getBlockState(pos.down()).getBlock();
+        boolean same = block == this;
+        
+        while (same && height <= this.selfHeight + 1) {
+            
+            height++;
+            pos = pos.down();
+            block = world.getBlockState(pos).getBlock();
+            same = block == this;
+        }
+        
+        return height <= this.selfHeight;
+    }
+    
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
         
@@ -220,42 +256,6 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
             
             world.destroyBlock(pos, true);
         }
-    }
-    
-    protected boolean isBelowSelfHeight(World world, BlockPos pos) {
-                
-        int height = 0;
-        Block block = world.getBlockState(pos.down()).getBlock();
-        boolean same = block == this;
-        
-        while (same && height <= this.selfHeight + 1) {
-            
-            height++;
-            pos = pos.down();
-            block = world.getBlockState(pos).getBlock();
-            same = block == this;
-        }
-        
-        return height <= this.selfHeight;
-    }
-    
-    protected boolean isBelowTypeHeight(World world, BlockPos pos) {
-
-        int height = 0;
-        Block block = world.getBlockState(pos.down()).getBlock();
-        boolean sameType = block instanceof IBuildingBlock &&
-                ((IBuildingBlock) block).isDouble() == this.isDouble;
-        
-        while (sameType && height <= 6 + 1) {
-            
-            height++;
-            pos = pos.down();
-            block = world.getBlockState(pos).getBlock();
-            sameType = block instanceof IBuildingBlock &&
-                    ((IBuildingBlock) block).isDouble() == this.isDouble;
-        }
-        
-        return height <= 6;
     }
     
     @Override
@@ -314,6 +314,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
     
+    /** Enum defining possible positions for wall blocks. */
     public enum EnumPosition implements IStringSerializable {
         
         LONE("lone"), BOTTOM("bottom"), TOP("top"), MIDDLE("middle");
@@ -331,6 +332,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
             return this.name;
         }
 
+        /** @return The EnumPosition according to the given properties. */
         public static EnumPosition get(boolean isBottom, boolean isTop) {
 
             if (isBottom) {
@@ -358,6 +360,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         }
     }
     
+    /** Enum defining possible straight directions of walls. */
     public enum EnumStraight implements IStringSerializable {
         
         NO("no"), NS("ns"), EW("ew");
@@ -375,6 +378,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
             return this.name;
         }
 
+        /** @return The EnumStraight according to the given properties. */
         public static EnumStraight get(boolean north, boolean east,
                 boolean south, boolean west) {
 
@@ -392,6 +396,8 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
             }
         }
         
+        /** @return The EnumStraight for walls which are always
+         * straight or crossed, according to the given properties. */
         public static EnumStraight getStraight(boolean north, boolean east,
                 boolean south, boolean west) {
             

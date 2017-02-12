@@ -1,13 +1,11 @@
 package com.jj.jjmod.main;
 
-import java.util.Arrays;
-import com.jj.jjmod.blocks.BlockCarcass;
 import com.jj.jjmod.blocks.BlockRock;
+import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.items.ItemAxe;
 import com.jj.jjmod.items.ItemHoe;
-import com.jj.jjmod.items.ItemHuntingknife;
 import com.jj.jjmod.items.ItemPickaxe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -33,8 +31,8 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** Handler for block related events. */
 public class BlockEventHandler {
@@ -204,6 +202,9 @@ public class BlockEventHandler {
                     Blocks.FARMLAND.getDefaultState());
             event.setCanceled(true);
         }
+        
+        // Updates for tool durability
+        ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
     }
 
     /** Alters equivalent to Block#getDrops for vanilla blocks. */

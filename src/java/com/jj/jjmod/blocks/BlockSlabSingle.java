@@ -14,10 +14,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Single form of slab block. */
 public class BlockSlabSingle extends BlockNew {
     
-    public Supplier<Item> item;
-    protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    protected static final AxisAlignedBB BOUNDS =
+            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+
+    /** Supplier for slab item. */
+    private Supplier<Item> item;
 
     public BlockSlabSingle(Material material, String name,
             float hardness, ToolType harvestTool, Supplier<Item> item) {
@@ -37,7 +41,8 @@ public class BlockSlabSingle extends BlockNew {
         
         Block block = world.getBlockState(pos.down()).getBlock();
         
-        boolean natural = ModBlocks.HEAVY.contains(block) || ModBlocks.LIGHT.contains(block);
+        boolean natural = ModBlocks.HEAVY.contains(block) ||
+                ModBlocks.LIGHT.contains(block);
         boolean built = false;
         
         if (block instanceof IBuildingBlock) {
@@ -50,16 +55,18 @@ public class BlockSlabSingle extends BlockNew {
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos unused) {
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
         
         if (!this.canPlaceBlockAt(world, pos)) {
             
-            world.destroyBlock(pos, true);
+            world.setBlockToAir(pos);
         }
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return BOUNDS;
     }

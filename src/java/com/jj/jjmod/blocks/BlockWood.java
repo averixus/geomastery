@@ -7,13 +7,16 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 
+/** Custom log block. */
 public class BlockWood extends BlockLog {
     
     public BlockWood(String name, float hardness) {
         
         super();
-        BlockNew.setupBlock(this, name, CreativeTabs.BUILDING_BLOCKS, hardness, ToolType.AXE);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+        BlockNew.setupBlock(this, name, CreativeTabs.BUILDING_BLOCKS,
+                hardness, ToolType.AXE);
+        this.setDefaultState(this.blockState.getBaseState()
+                .withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
     
     @Override
@@ -58,26 +61,25 @@ public class BlockWood extends BlockLog {
     }
     
     @Override
-    @SuppressWarnings("incomplete-switch")
     public int getMetaFromState(IBlockState state) {
         
         int meta = 0;
         
         switch (state.getValue(LOG_AXIS)) {
             
-            case X : {
+            case X: {
                 
                 meta |= 4;
                 break;
             }
             
-            case Z : {
+            case Z: {
                 
                 meta |= 8;
                 break;
             }
             
-            case NONE : {
+            case NONE: {
                 
                 meta |= 12;
                 break;

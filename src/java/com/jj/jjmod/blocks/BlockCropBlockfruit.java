@@ -20,44 +20,29 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Abstract superclass for block-fruiting Crop blocks. */
 public abstract class BlockCropBlockfruit extends BlockCrop {
 
     public static final PropertyDirection FACING = BlockTorch.FACING;
 
+    /** Bounding boxes indexed by stem age. */
+    protected static final AxisAlignedBB[] STEM_BOUNDS = new AxisAlignedBB[]
+            {new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D),
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D),
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.5D, 0.625D),
+            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.625D, 0.625D),
+            new AxisAlignedBB( 0.375D, 0.0D, 0.375D, 0.625D, 0.75D,  0.625D),
+            new AxisAlignedBB( 0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D),
+            new AxisAlignedBB( 0.375D, 0.0D, 0.375D, 0.625D, 1.0D, 0.625D)};
+    
+    /** Supplier for fruit block. */
     protected Supplier<BlockFruit> fruit;
-
-    protected static final AxisAlignedBB[] STEM_BOUNDS =
-            new AxisAlignedBB[] {new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D,
-                    0.125D, 0.625D), new AxisAlignedBB(0.375D, 0.0D, 0.375D,
-                            0.625D, 0.25D, 0.625D), new AxisAlignedBB(0.375D,
-                                    0.0D, 0.375D, 0.625D, 0.375D,
-                                    0.625D), new AxisAlignedBB(0.375D, 0.0D,
-                                            0.375D, 0.625D, 0.5D,
-                                            0.625D), new AxisAlignedBB(0.375D,
-                                                    0.0D, 0.375D, 0.625D,
-                                                    0.625D,
-                                                    0.625D), new AxisAlignedBB(
-                                                            0.375D, 0.0D,
-                                                            0.375D, 0.625D,
-                                                            0.75D,
-                                                            0.625D), new AxisAlignedBB(
-                                                                    0.375D,
-                                                                    0.0D,
-                                                                    0.375D,
-                                                                    0.625D,
-                                                                    0.875D,
-                                                                    0.625D), new AxisAlignedBB(
-                                                                            0.375D,
-                                                                            0.0D,
-                                                                            0.375D,
-                                                                            0.625D,
-                                                                            1.0D,
-                                                                            0.625D)};
 
     public BlockCropBlockfruit(String name, float growthChance,
             float hardness, ToolType tool, Supplier<BlockFruit> fruit) {
 
-        super(name, () -> Items.AIR, () -> new Integer(0),
+        super(name, () -> Items.AIR, (rand) -> 0,
                 growthChance, hardness, tool);
         this.fruit = fruit;
     }
@@ -91,7 +76,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
                 break;
             }
         }
-        System.out.println("actual state is " + state);
+
         return state;
     }
 
@@ -107,6 +92,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         super.grow(world, pos, state, rand);
     }
 
+    /** Attempts to grow a fruit in an adjacent block. */
     protected void growFruit(World world, BlockPos pos, Random rand) {
 
         for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
@@ -124,8 +110,8 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         Block soilBlock = soilState.getBlock();
 
         if (world.isAirBlock(fruitPos) && (soilBlock.canSustainPlant(soilState,
-                world, pos.down(), EnumFacing.UP,
-                this) || soilBlock == Blocks.DIRT || soilBlock == Blocks.GRASS)) {
+                world, pos.down(), EnumFacing.UP, this) ||
+                soilBlock == Blocks.DIRT || soilBlock == Blocks.GRASS)) {
 
             world.setBlockState(fruitPos, this.fruit.get().getDefaultState()
                     .withProperty(BlockFruit.STEM, side.getOpposite()));

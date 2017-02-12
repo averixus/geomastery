@@ -7,6 +7,7 @@ import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 
+/** Peat block. */
 public class BlockPeat extends BlockNew {
 
     public BlockPeat() {

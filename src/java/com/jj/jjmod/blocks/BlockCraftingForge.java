@@ -28,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Forge crafting block. */
 public class BlockCraftingForge extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartForge> PART =
@@ -41,7 +42,8 @@ public class BlockCraftingForge extends BlockComplexAbstract {
     }
     
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
@@ -66,7 +68,7 @@ public class BlockCraftingForge extends BlockComplexAbstract {
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
-        System.out.println("neighbour changed, state " + state + ", actual state " + this.getActualState(state, world, pos) + " at " + pos);
+
         TileEntity tileEntity = world.getTileEntity(pos);
         state = this.getActualState(state, world, pos);
         if (!(tileEntity instanceof TECraftingForge)) {
@@ -87,7 +89,7 @@ public class BlockCraftingForge extends BlockComplexAbstract {
                         .getOpposite())).getBlock() != this;
 
                 if (brokenFL) {
-                    System.out.println(" is FM with broken FL, dropping");
+
                     world.setBlockToAir(pos);
                     spawnItem(world, pos, ModItems.craftingForge);
                 }
@@ -174,8 +176,8 @@ public class BlockCraftingForge extends BlockComplexAbstract {
             return FULL_BLOCK_AABB;
         }
 
-        TECraftingForge tileForge = (TECraftingForge) tileEntity;
-        return tileForge.getPart().isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        EnumPartForge part = ((TECraftingForge) tileEntity).getPart();
+        return part != null && part.isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override

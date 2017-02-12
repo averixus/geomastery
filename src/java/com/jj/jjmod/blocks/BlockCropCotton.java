@@ -7,12 +7,13 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 
+/** Cotton Crop block. */
 public class BlockCropCotton extends BlockCrop {
     
     public BlockCropCotton() {
         
-        super("cotton", () -> ModItems.cotton,
-        () -> ModItems.cuttingCotton, () -> 1, 0.3F, 0.2F, ToolType.SICKLE);
+        super("cotton", () -> ModItems.cotton, () -> ModItems.cuttingCotton,
+                (rand) -> 1, 0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

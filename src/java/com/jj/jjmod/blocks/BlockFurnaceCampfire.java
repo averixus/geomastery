@@ -23,12 +23,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFurnaceCampfire extends BlockComplexAbstract
-        implements ITileEntityProvider {
+/** Campfire Furnace block. */
+public class BlockFurnaceCampfire extends BlockComplexAbstract {
 
     public BlockFurnaceCampfire() {
 
-        super("furnace_campfire", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
+        super("furnace_campfire", BlockMaterial.STONE_HANDHARVESTABLE,
+                5F, null);
         this.lightValue = 14;
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }

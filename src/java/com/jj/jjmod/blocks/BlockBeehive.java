@@ -43,18 +43,19 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
     public static final PropertyDirection FACING =
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
-    protected static final String NAME = "beehive";
+    private static final String NAME = "beehive";
     
-    protected static final AxisAlignedBB EAST = new AxisAlignedBB(0.5625D,
+    private static final AxisAlignedBB EAST = new AxisAlignedBB(0.5625D,
             0.3125D, 0.3125D, 0.9375D, 0.75D, 0.6875D);
-    protected static final AxisAlignedBB WEST = new AxisAlignedBB(0.0625D,
+    private static final AxisAlignedBB WEST = new AxisAlignedBB(0.0625D,
             0.3125D, 0.3125D, 0.4375D, 0.75D, 0.6875D);
-    protected static final AxisAlignedBB NORTH = new AxisAlignedBB(0.3125D,
+    private static final AxisAlignedBB NORTH = new AxisAlignedBB(0.3125D,
             0.3125D, 0.0625D, 0.6875D, 0.75D, 0.4375D);
-    protected static final AxisAlignedBB SOUTH = new AxisAlignedBB(0.3125D,
+    private static final AxisAlignedBB SOUTH = new AxisAlignedBB(0.3125D,
             0.3125D, 0.5625D, 0.6875D, 0.75D, 0.9375D);
 
-    protected float chance = 0.2F;
+    /** Chance of growth per update tick. */
+    private float chance = 0.2F;
     
     public BlockBeehive() {
         
@@ -65,59 +66,8 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         
     }
     
-    @Override
-    public void updateTick(World world, BlockPos pos,
-            IBlockState state, Random rand) {
-        
-        if (!this.checkStay(world, pos, state)) {
-            
-            return;
-        }
-        
-        if (rand.nextFloat() <= this.chance) {
-            
-            this.grow(world, pos, state, rand);
-        }
-    }
-    
-    protected void grow(World world, BlockPos pos,
-            IBlockState state, Random rand) {
-        
-        int oldAge = state.getValue(AGE);
-        int newAge = (oldAge + 1) > 3 ? 3 : (oldAge + 1);
-        IBlockState newState = state.withProperty(AGE, newAge);
-        world.setBlockState(pos, newState);
-    }
-    
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-        
-        this.checkStay(world, pos, state);
-    }
-    
-    protected boolean checkStay(World world, BlockPos pos, IBlockState state) {
-        
-        if (!this.canStay(world, pos, state)) {
-            
-            world.setBlockToAir(pos);
-            return false;
-        }
-        
-        return true;
-    }
-    
-    public boolean canStay(World world,
-            BlockPos pos, IBlockState state) {
-        
-        Block side = world.getBlockState(pos.offset(state.getValue(FACING)))
-                .getBlock();
-        Biome biome = world.getBiome(pos);
-        return (side instanceof BlockLog || side instanceof BlockWood) &&
-                this.isPermitted(biome);
-    }
-    
-    protected boolean canPlant(World world, BlockPos pos) {
+    /** @return Whether this Beehive can be planted at this position. */
+    public boolean canPlant(World world, BlockPos pos) {
         
         boolean result = false;
         
@@ -129,6 +79,46 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         }
         
         return result;
+    }
+    
+    @Override
+    public void updateTick(World world, BlockPos pos,
+            IBlockState state, Random rand) {
+        
+        if (!this.canStay(world, pos, state)) {
+            
+            world.setBlockToAir(pos);
+            return;
+        }
+        
+        if (rand.nextFloat() <= this.chance) {
+            
+            int oldAge = state.getValue(AGE);
+            int newAge = (oldAge + 1) > 3 ? 3 : (oldAge + 1);
+            IBlockState newState = state.withProperty(AGE, newAge);
+            world.setBlockState(pos, newState);
+        }
+    }
+    
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+        
+        if (!this.canStay(world, pos, state)) {
+            
+            world.setBlockToAir(pos);
+        }
+    }
+    
+    /** @return Whether this Beehive can stay at this position. */
+    public boolean canStay(World world,
+            BlockPos pos, IBlockState state) {
+        
+        Block side = world.getBlockState(pos.offset(state.getValue(FACING)))
+                .getBlock();
+        Biome biome = world.getBiome(pos);
+        return (side instanceof BlockLog || side instanceof BlockWood) &&
+                this.isPermitted(biome);
     }
     
     @Override
@@ -152,7 +142,8 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
 
         if (!placerFacing.getAxis().isHorizontal()) {
             
-            int i = MathHelper.floor(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+            int i = MathHelper.floor(placer.rotationYaw *
+                    4.0F / 360.0F + 0.5D) & 3;
             placerFacing = EnumFacing.getHorizontal(i);
         }
 
@@ -206,8 +197,9 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             IBlockState state, EntityPlayer player, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
         
-        if (!this.checkStay(world, pos, state)) {
+        if (!this.canStay(world, pos, state)) {
             
+            world.setBlockToAir(pos);
             return false;
         }
         
@@ -257,27 +249,27 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         
         switch (state.getValue(FACING)) {
             
-            case EAST : {
+            case EAST: {
                 
                 return EAST;
             }
             
-            case WEST : {
+            case WEST: {
                 
                 return WEST;
             }
             
-            case SOUTH : {
+            case SOUTH: {
                 
                 return SOUTH;
             }
             
-            case NORTH : {
+            case NORTH: {
                 
                 return NORTH;
             }
             
-            default : {
+            default: {
                 
                 return NORTH;
             }

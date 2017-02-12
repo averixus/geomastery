@@ -13,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** General superclass for all new blocks, with default
+ * implementation for simple blocks. */
 public class BlockNew extends Block {
 
     public BlockNew(Material material, String name,
@@ -22,12 +24,15 @@ public class BlockNew extends Block {
         setupBlock(this, name, tab, hardness, harvestTool);
     }
     
-    public BlockNew(Material material, String name, float hardness, ToolType harvestTool) {
+    public BlockNew(Material material, String name,
+            float hardness, ToolType harvestTool) {
         
-        this(material, name, CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
+        this(material, name, CreativeTabs.BUILDING_BLOCKS,
+                hardness, harvestTool);
     }
     
-    public static void setupBlock(Block block, String name, CreativeTabs tab, float hardness, ToolType harvestTool) {
+    public static void setupBlock(Block block, String name, CreativeTabs tab,
+            float hardness, ToolType harvestTool) {
         
         block.setRegistryName("block_" + name);
         block.setUnlocalizedName(block.getRegistryName().toString());
@@ -44,7 +49,8 @@ public class BlockNew extends Block {
         
         if (!world.isRemote) {
             
-            world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(item)));
+            world.spawnEntity(new EntityItem(world, pos.getX(),
+                    pos.getY(), pos.getZ(), new ItemStack(item)));
         }
     }
     

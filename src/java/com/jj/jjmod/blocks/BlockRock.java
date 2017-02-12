@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class BlockRock extends BlockNew {
 
+    /** Simple Rock block. */
     public BlockRock(String name, float hardness) {
 
         super(Material.ROCK, name, hardness, ToolType.PICKAXE);

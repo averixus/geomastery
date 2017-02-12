@@ -17,11 +17,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Knapping crafting block. */
 public class BlockCraftingKnapping extends BlockComplexAbstract {
 
     public BlockCraftingKnapping() {
 
-        super("crafting_knapping", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
+        super("crafting_knapping", BlockMaterial.STONE_HANDHARVESTABLE,
+                5F, null);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
     

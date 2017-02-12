@@ -27,11 +27,13 @@ import net.minecraft.world.World;
 
 public class BlockDoor extends BlockNew implements IBuildingBlock {
     
-    protected Supplier<Item> item;
+    /** Supplier for the door item. */
+    private Supplier<Item> item;
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
-    public static final PropertyEnum<EnumPart> PART = PropertyEnum.<EnumPart>create("part", EnumPart.class);
+    public static final PropertyEnum<EnumPart> PART =
+            PropertyEnum.<EnumPart>create("part", EnumPart.class);
 
     public BlockDoor(String name, Supplier<Item> item) {
         
@@ -64,20 +66,20 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
-        //if (state.getValue(OPEN)) {
-            
-        //    return NULL_AABB;
-       // } TODO
-        
+        //TODO
         return FULL_BLOCK_AABB;
     }
     
     @Override
-    public boolean onBlockActivated(World world, BlockPos thisPos, IBlockState thisState, EntityPlayer player, EnumHand hand, EnumFacing side, float x, float y, float z) {
+    public boolean onBlockActivated(World world, BlockPos thisPos,
+            IBlockState thisState, EntityPlayer player, EnumHand hand,
+            EnumFacing side, float x, float y, float z) {
         
-        BlockPos otherPos = thisState.getValue(PART).isTop() ? thisPos.down() : thisPos.up();
+        BlockPos otherPos = thisState.getValue(PART).isTop() ?
+                thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
         if (otherState.getBlock() != this) {
@@ -87,18 +89,23 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         
         thisState = thisState.cycleProperty(OPEN);
         world.setBlockState(thisPos, thisState);
-        world.setBlockState(otherPos, otherState.withProperty(OPEN, thisState.getValue(OPEN)));
-        world.playEvent(player, thisState.getValue(OPEN) ? 1006 : 1012, thisPos, 0);
+        world.setBlockState(otherPos,
+                otherState.withProperty(OPEN, thisState.getValue(OPEN)));
+        world.playEvent(player, thisState.getValue(OPEN) ?
+                1006 : 1012, thisPos, 0);
         return true;
     }
     
     @Override
-    public void neighborChanged(IBlockState thisState, World world, BlockPos thisPos, Block block, BlockPos unused) {
+    public void neighborChanged(IBlockState thisState, World world,
+            BlockPos thisPos, Block block, BlockPos unused) {
         
-        BlockPos otherPos = thisState.getValue(PART).isTop() ? thisPos.down() : thisPos.up();
+        BlockPos otherPos = thisState.getValue(PART).isTop() ?
+                thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
-        if (otherState.getBlock() != this || !this.canPlaceBlockAt(world, thisPos)) {
+        if (otherState.getBlock() != this ||
+                !this.canPlaceBlockAt(world, thisPos)) {
             
             world.setBlockToAir(thisPos);
             
@@ -129,34 +136,38 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        
-        System.out.println("can place block at? " + (world.getBlockState(pos.down()).isSideSolid(world, pos.down(), EnumFacing.UP) || world.getBlockState(pos.down()).getBlock() == this));
-        
-        return world.getBlockState(pos.down()).isSideSolid(world, pos.down(), EnumFacing.UP) || world.getBlockState(pos.down()).getBlock() == this;
+                
+        return world.getBlockState(pos.down())
+                .isSideSolid(world, pos.down(), EnumFacing.UP) ||
+                world.getBlockState(pos.down()).getBlock() == this;
     }
     
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        
-        //TODO
-        
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+                
         EnumFacing facing = state.getValue(FACING);
         boolean isTop = state.getValue(PART).isTop();
         
-        IBlockState leftState = world.getBlockState(pos.offset(facing.rotateYCCW()));
-        if (leftState.getBlock() == this && leftState.getValue(FACING) == facing) {
+        IBlockState leftState = world.getBlockState(pos
+                .offset(facing.rotateYCCW()));
+        
+        if (leftState.getBlock() == this &&
+                leftState.getValue(FACING) == facing) {
             
             state = state.withProperty(PART, isTop ? EnumPart.RT : EnumPart.RB);
       
         }
         
-        IBlockState rightState = world.getBlockState(pos.offset(facing.rotateY()));
-        if (rightState.getBlock() == this && rightState.getValue(FACING) == facing) {
+        IBlockState rightState = world.getBlockState(pos
+                .offset(facing.rotateY()));
+        
+        if (rightState.getBlock() == this &&
+                rightState.getValue(FACING) == facing) {
             
             state = state.withProperty(PART, isTop ? EnumPart.LT : EnumPart.LB);
         }
         
-        System.out.println("actual state at " + pos + ": " + state);
         return state;
     }
     
@@ -204,30 +215,15 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {FACING, OPEN, PART});
+        return new BlockStateContainer(this,
+                new IProperty[]{FACING, OPEN, PART});
     }
     
-    
-    /// old
-
-  /*  @Override
-    public BlockStateContainer createBlockState() {
-        //TODO  
-        return new BlockStateContainer(this, new IProperty[] {FACING});
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-        //TODO
-        return state;
-    }*/
-    
-    /// end of old
-    
+    /** Enum defining part and position of Door blocks. */
     public enum EnumPart implements IStringSerializable {
         
-        SB("sb", false), ST("st", true), RB("rb", false), RT("rt", true), LB("lb", false), LT("lt", true);
+        SB("sb", false), ST("st", true), RB("rb", false),
+        RT("rt", true), LB("lb", false), LT("lt", true);
         
         private String name;
         private boolean isTop;
@@ -244,11 +240,13 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             return this.name;
         }
         
+        /** @return Whether or not this Part is the top of the door. */
         public boolean isTop() {
             
             return this.isTop;
         }
         
+        /** @return Whether or not this Part should drop its item. */
         public boolean shouldDrop() {
             
             return this.isTop;

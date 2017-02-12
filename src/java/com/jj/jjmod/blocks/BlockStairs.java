@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Stairs block. */
 public class BlockStairs extends net.minecraft.block.BlockStairs {
 
     public BlockStairs(String name,
@@ -54,17 +55,19 @@ public class BlockStairs extends net.minecraft.block.BlockStairs {
     }
     
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return state.withProperty(HALF, EnumHalf.BOTTOM);
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos unused) {
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
         
         if (!this.canPlaceBlockAt(world, pos)) {
             
-            world.destroyBlock(pos, true);
+            world.setBlockToAir(pos);
         }
     }
 }

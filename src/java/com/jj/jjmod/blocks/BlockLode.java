@@ -5,14 +5,18 @@ import java.util.function.Supplier;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 
+/** Lode block. */
 public class BlockLode extends BlockRock {
 
+    /** Supplier for item. */
     private Supplier<Item> itemRef;
+    /* Maximum number of items dropped. */
     private int maxDropped;
 
-    public BlockLode(String name, Supplier<Item> item, int maxDropped) {
+    public BlockLode(String name, float hardness,
+            Supplier<Item> item, int maxDropped) {
 
-        super(name, 4F);
+        super(name, hardness);
         this.itemRef = item;
         this.maxDropped = maxDropped;
     }

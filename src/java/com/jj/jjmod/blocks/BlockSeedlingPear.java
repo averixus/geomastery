@@ -9,12 +9,12 @@ import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
+/** Pear seedling block. */
 public class BlockSeedlingPear extends BlockSeedling {
     
     public BlockSeedlingPear() {
         
-        super("seedling_pear",
-                WorldGenTreePear::new, 0.1F);
+        super("seedling_pear", WorldGenTreePear::new, 0.1F);
     }
 
     @Override
@@ -24,5 +24,4 @@ public class BlockSeedlingPear extends BlockSeedling {
                 biome instanceof BiomePlains || biome == Biomes.RIVER ||
                 biome instanceof BiomeJungle || biome instanceof BiomeSavanna;
     }
-
 }

@@ -1,9 +1,8 @@
 package com.jj.jjmod.blocks;
 
 import java.util.Random;
+import java.util.function.Function;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
-import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block ;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -17,12 +16,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Abstract superclass for growable harvestable Crop blocks. */
 public abstract class BlockCropHarvestable extends BlockCrop {
     
+    /** Maximum permitted height for this Crop. */
     protected int maxHeight;
 
     public BlockCropHarvestable(String name, int maxHeight,
-            Supplier<Item> cropRef, Supplier<Integer> yieldRef, float growthRate, float hardness) {
+            Supplier<Item> cropRef, Function<Random, Integer> yieldRef,
+            float growthRate, float hardness) {
         
         super(name, cropRef, yieldRef, growthRate, hardness, null);
         this.maxHeight = maxHeight;
@@ -45,8 +47,9 @@ public abstract class BlockCropHarvestable extends BlockCrop {
             IBlockState state, EntityPlayer player, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
         
-        if (!this.checkStay(world, pos, state)) {
+        if (!this.canStay(world, pos, state)) {
             
+            world.setBlockToAir(pos);
             return false;
         }
         
@@ -63,9 +66,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
             
             if (!world.isRemote) {
                 
-                world.spawnEntity(new EntityItem(world,
-                        pos.getX(), pos.getY(), pos.getZ(),
-                        new ItemStack(this.cropRef.get())));
+                spawnItem(world, pos, this.cropRef.get());
             }
             
             return true;
@@ -87,6 +88,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         return super.canStay(world, pos, state) || downBlock == this;
     }
     
+    /** Attempts to grow another block of this Crop above. */
     protected void growUp(World world, BlockPos pos) {
         
         if (!world.isAirBlock(pos.up())) {
@@ -96,9 +98,8 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         int height;
         
-        for (height = 1;
-                world.getBlockState(pos.down(height)).getBlock() == this;
-                height++) {}
+        for (height = 1; world.getBlockState(pos.down(height))
+                .getBlock() == this; height++) {}
         
         if (height < this.maxHeight) {
             

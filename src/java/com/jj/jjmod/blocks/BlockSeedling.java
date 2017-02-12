@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
+/** Abstract superclass for Seedling blocks. */
 public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
 
     protected static final AxisAlignedBB BOUNDS =
@@ -24,8 +25,12 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
                     0.09999999403953552D, 0.8999999761581421D,
                     0.800000011920929D, 0.8999999761581421D);
     
-    public ITreeGenRef treeGen;
-    public float growthChance;
+    /** WorldGenerator factory for this tree. */
+    private ITreeGenRef treeGen;
+    /** Chanc of growth per update tick. */
+    private float growthChance;
+    /** Chance of death per update tick if invalid position. */
+    private float deathChance = 0.5F;
 
     public BlockSeedling(String name, ITreeGenRef treeGen, float growthChance) {
         
@@ -55,7 +60,7 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         super.updateTick(world, pos, state, rand);
         
         if (!this.isPermitted(world.getBiome(pos)) &&
-                rand.nextFloat() <= 0.5) {
+                rand.nextFloat() <= this.deathChance) {
 
             world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState());
             return;

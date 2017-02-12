@@ -26,6 +26,7 @@ import net.minecraft.world.biome.BiomeMushroomIsland;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSwamp;
 
+/** Rice crop base block. */
 public class BlockRiceBase extends BlockNew implements IBiomeCheck {
     
     public BlockRiceBase() {
@@ -83,6 +84,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
                 layer == BlockRenderLayer.TRANSLUCENT);
     }
     
+    /** @return Whether this block can stay in the given position. */
     protected boolean canStay(World world, BlockPos pos) {
         
         BlockPos posBelow = pos.down();

@@ -13,17 +13,21 @@ import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
+/** Pumpkin stem Crop block. */
 public class BlockCropBlockfruitPumpkin extends BlockCropBlockfruit {
     
     public BlockCropBlockfruitPumpkin() {
         
-        super("pumpkin_crop", 0.3F, 0.2F, ToolType.SICKLE, () -> ModBlocks.pumpkinFruit);
+        super("pumpkin_crop", 0.3F, 0.2F, ToolType.SICKLE,
+                () -> ModBlocks.pumpkinFruit);
     }
 
     @Override
     public boolean isPermitted(Biome biome) {
 
-        return biome instanceof BiomeTaiga || biome instanceof BiomeHills || biome instanceof BiomeBeach || biome instanceof BiomeForest || biome instanceof BiomePlains || biome == Biomes.RIVER || biome instanceof BiomeJungle;
+        return biome instanceof BiomeTaiga || biome instanceof BiomeHills ||
+                biome instanceof BiomeBeach || biome instanceof BiomeForest ||
+                biome instanceof BiomePlains || biome == Biomes.RIVER ||
+                biome instanceof BiomeJungle;
     }
-
 }

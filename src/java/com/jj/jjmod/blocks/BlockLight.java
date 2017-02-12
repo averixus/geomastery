@@ -14,12 +14,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Torch or candle block. */
 public class BlockLight extends BlockTorch {
 
     protected static final AxisAlignedBB FLAT_BOUNDS =
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
     
-    protected float extinguish;
+    /** Chance of extinguishing per update tick. */
+    private float extinguish;
 
     public BlockLight(String name, int light, float extinguish) {
 
@@ -36,7 +38,8 @@ public class BlockLight extends BlockTorch {
         if (rand.nextFloat() <= this.extinguish) {
             
             world.playSound(pos.getX(), pos.getY(), pos.getZ(),
-                    SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 1, false);
+                    SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.BLOCKS, 1, 1, false);
             world.setBlockToAir(pos);
         }
     }

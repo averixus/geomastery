@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Bed block which breaks after a fixed number of uses. */
 public class BlockBedBreakable extends BlockBedAbstract
         implements ITileEntityProvider {
 
@@ -24,7 +25,8 @@ public class BlockBedBreakable extends BlockBedAbstract
     }
     
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world,
+            BlockPos pos, IBlockState state, int fortune) {
         
         List<ItemStack> drops = new ArrayList<ItemStack>();
         
@@ -32,7 +34,7 @@ public class BlockBedBreakable extends BlockBedAbstract
             
             TEBed tileBed = (TEBed) world.getTileEntity(pos);
             int damage = tileBed.getDropDamage();
-            ItemStack stack = new ItemStack(this.getBedItem(), 1, damage);
+            ItemStack stack = new ItemStack(this.itemRef.get(), 1, damage);
 
             if (!tileBed.isBroken()) {
 
@@ -48,7 +50,7 @@ public class BlockBedBreakable extends BlockBedAbstract
 
         if (this.getStateFromMeta(meta).getValue(PART) == EnumPartBed.FOOT) {
 
-            return new TEBed(this.getBedItem().getMaxDamage());
+            return new TEBed(this.itemRef.get().getMaxDamage());
 
         } else {
 
