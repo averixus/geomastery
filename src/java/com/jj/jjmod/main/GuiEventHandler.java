@@ -13,12 +13,16 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 /** Handler for Gui and player input related events. */
 public class GuiEventHandler {
+    
+ //   private static final ResourceLocation CARBS = new ResourceLocation("jjmod:textures/gui/carbs");
+ //   private static final ResourceLocation PROTEIN = new ResourceLocation("textures");
     
     /** Alters HUD rendering. */
     @SubscribeEvent
@@ -122,6 +126,16 @@ public class GuiEventHandler {
             
             event.setCanceled(true);
         }
+    }
+    
+    /** Registers icons for container slot backgrounds. */
+    @SubscribeEvent
+    public void textureStich(TextureStitchEvent.Pre event) {
+
+        event.getMap().registerSprite(new
+                ResourceLocation("jjmod:gui/backpack_slot"));
+        event.getMap().registerSprite(new
+                ResourceLocation("jjmod:gui/yoke_slot"));
     }
     
     /** Alters which vanilla Gui is opened. */

@@ -174,7 +174,7 @@ public class ContainerInventory extends ContainerAbstract {
         }
         if (ModBlocks.OFFHAND_ONLY.contains(remaining.getItem())) {
             
-            remaining = this.addToOffhand(remaining);
+            return this.addToOffhand(remaining);
         }
         
         if (!remaining.isEmpty()) {

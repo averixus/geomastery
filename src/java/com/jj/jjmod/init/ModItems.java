@@ -460,7 +460,7 @@ public class ModItems {
 
         register(bucketEmpty = new ItemBucket("bucket_empty",
                 Blocks.AIR, () -> bucketEmpty,
-                () -> bucketWater, () -> bucketTar), true);
+                () -> bucketWater, () -> bucketTar));
         register(bucketWater = new ItemBucket("bucket_water",
                 Blocks.FLOWING_WATER, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);

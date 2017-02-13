@@ -3,9 +3,11 @@ package com.jj.jjmod.container.slots;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EntityEquipmentSlot.Type;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,6 +18,7 @@ public class SlotArmour extends Slot {
     public EntityEquipmentSlot type;
     public EntityPlayer player;
     public InventoryPlayer playerInv;
+    private String texture;
 
     public SlotArmour(InventoryPlayer playerInv, EntityPlayer player, int x,
             int y, EntityEquipmentSlot type) {
@@ -30,7 +33,7 @@ public class SlotArmour extends Slot {
     @SideOnly(Side.CLIENT)
     public String getSlotTexture() {
         
-        switch (this.type) {
+        /*switch (this.type) {
 
             case HEAD: {
                 
@@ -52,16 +55,14 @@ public class SlotArmour extends Slot {
                 return "minecraft:items/empty_armor_slot_boots";
             }
             
-            case OFFHAND: {
-               
-                return "minecraft:items/empty_armor_slot_shield";
-            }
-            
             default: {
                 
                 return null;
             }
-        }
+        }*/
+        
+        return this.type.getSlotType() == Type.ARMOR ?
+                ItemArmor.EMPTY_SLOT_NAMES[this.type.getIndex()] : null;
     }
 
     @Override

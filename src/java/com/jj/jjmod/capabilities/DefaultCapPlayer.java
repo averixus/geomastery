@@ -191,7 +191,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         if (this.player.world.isRemote) {
             
-            // All action done on the server
             return;
         }
 
@@ -486,8 +485,8 @@ public class DefaultCapPlayer implements ICapPlayer {
                 
                 ItemArmor armor = (ItemArmor) stack.getItem();
                 
-                if (armor.getArmorMaterial() ==
-                        EquipMaterial.LEATHER_APPAREL) {
+                if (armor.getArmorMaterial() == EquipMaterial.LEATHER_APPAREL ||
+                        armor.getArmorMaterial() == EquipMaterial.FUR_APPAREL) {
 
                     speed -= 0.2;
                     

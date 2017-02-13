@@ -2,6 +2,7 @@ package com.jj.jjmod.items;
 
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.utilities.BlockMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -48,17 +49,9 @@ public class ItemBucket extends ItemNew {
         boolean empty = this.CONTENTS == Blocks.AIR;
         ItemStack stack = player.getHeldItem(hand);
         RayTraceResult rayTrace = this.rayTrace(world, player, empty);
-        ActionResult<ItemStack> result = net.minecraftforge.event
-                .ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
-
-        if (result != null) {
-            System.out.println("result from event " + result);
-            return result;
-        }
 
         if (rayTrace == null ||
                 rayTrace.typeOfHit != RayTraceResult.Type.BLOCK) {
-            System.out.println("not a block " + rayTrace.typeOfHit);
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
 
@@ -76,26 +69,18 @@ public class ItemBucket extends ItemNew {
             IBlockState state = world.getBlockState(posTarget);
             Material material = state.getMaterial();
 
-            if (material == Material.WATER &&
+            if ((material == Material.WATER || material == BlockMaterial.TAR) &&
                     (state.getValue(BlockLiquid.LEVEL)) == 0) {
-                System.out.println("target material is water");
-                world.setBlockState(posTarget,
-                        Blocks.AIR.getDefaultState(), 11);
-                player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1, 1);
-                System.out.println("filled with water");
-                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,
-                        this.fillBucket(stack, player, this.getWater()));
-            }
-
-            if (material == BlockMaterial.TAR &&
-                    (state.getValue(BlockLiquid.LEVEL)) == 0) {
-                System.out.println("target material is tar");
-                world.setBlockState(posTarget,
-                        Blocks.AIR.getDefaultState(), 11);
-                player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 1, 1);
-                System.out.println("filled with tar");
-                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS,
-                        this.fillBucket(stack, player, this.getTar()));
+                
+                
+                ItemStack full = new ItemStack(material == Material.WATER ? this.getWater() : this.getTar());
+                 if (((ContainerInventory) player.inventoryContainer).add(full).isEmpty()) {
+                     
+                     world.setBlockState(posTarget,
+                             Blocks.AIR.getDefaultState(), 11);
+                     player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1, 1);
+                     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, ItemStack.EMPTY);
+                 }
             }
 
         } else {
@@ -121,10 +106,10 @@ public class ItemBucket extends ItemNew {
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
 
-    private ItemStack fillBucket(ItemStack emptyBuckets,
+    private ItemStack fillBucket(ItemStack empty,
             EntityPlayer player, Item fullBucket) {
 
-        if (emptyBuckets.getCount() <= 1) {
+        if (empty.getCount() <= 1) {
 
             return new ItemStack(fullBucket);
 
@@ -136,14 +121,14 @@ public class ItemBucket extends ItemNew {
                 player.dropItem(new ItemStack(fullBucket), false);
             }
 
-            emptyBuckets.shrink(1);
+            empty.shrink(1);
             
-            if (emptyBuckets.getCount() == 0) {
+            if (empty.getCount() == 0) {
                 
-                emptyBuckets = null;                
+                empty = null;                
             }
             
-            return emptyBuckets;
+            return empty;
         }
     }
 

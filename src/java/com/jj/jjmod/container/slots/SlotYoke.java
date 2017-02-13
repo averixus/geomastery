@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 /** Container slot for Yoke. */
 public class SlotYoke extends Slot {
@@ -21,6 +22,7 @@ public class SlotYoke extends Slot {
         this.player = player;
         this.capability = player.getCapability(ModCapabilities.CAP_PLAYER,
                 null);
+        this.backgroundName = "jjmod:gui/yoke_slot";
     }
     
     @Override
