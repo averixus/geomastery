@@ -22,7 +22,7 @@ public class DefaultCapDecay implements ICapDecay {
     
     @Override
     public boolean updateAndRot() {
-        
+
         this.stage = (int) (((float) this.ageTimer / this.maxAge) * MAX_STAGE);
 
         if (this.stage >= MAX_STAGE) {
@@ -30,7 +30,7 @@ public class DefaultCapDecay implements ICapDecay {
             return true;
             
         } else {
-            
+
             this.ageTimer++;
             return false;
         }
@@ -40,6 +40,18 @@ public class DefaultCapDecay implements ICapDecay {
     public float getRenderFraction() {
 
         return 1F - ((float) this.stage / MAX_STAGE);
+    }
+    
+    @Override
+    public int getAge() {
+        
+        return this.ageTimer;
+    }
+    
+    @Override
+    public void setAge(int age) {
+        
+        this.ageTimer = age;
     }
     
     @Override

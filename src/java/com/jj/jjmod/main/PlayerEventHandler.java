@@ -5,6 +5,7 @@ import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
 import com.jj.jjmod.blocks.BlockBedBreakable;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.items.ItemShield;
 import com.jj.jjmod.tileentities.TEBed;
 import net.minecraft.block.Block;
@@ -44,7 +45,12 @@ public class PlayerEventHandler {
         
         ItemStack stack = event.getItem().getEntityItem();
         ItemStack remaining = stack;
-        
+        System.out.println("playerItemPickup " + stack); 
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            System.out.println(" with cap age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+        } else {
+            System.out.println(" with no capdecay");
+        }
         remaining = ((ContainerInventory) player.inventoryContainer)
                 .add(remaining);
 

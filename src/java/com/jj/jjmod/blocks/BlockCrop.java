@@ -112,7 +112,7 @@ public abstract class BlockCrop extends BlockNew
             IBlockState state, Random rand) {
         
         int oldAge = state.getValue(AGE);
-        int newAge = (oldAge + 1) > 7 ? 7 : (oldAge + 1);
+        int newAge = Math.min(oldAge + 1, 7);
         IBlockState newState = state.withProperty(AGE, newAge);
         world.setBlockState(pos, newState, 2);
     }
@@ -138,11 +138,12 @@ public abstract class BlockCrop extends BlockNew
             IBlockState state, int fortune) {
         
         List<ItemStack> items = new ArrayList<ItemStack>();
+        items.add(new ItemStack(this.seedRef.get()));
         
         if (state.getValue(AGE) == 7) {
             
-            items.add(new ItemStack(this.seedRef.get()));
-            items.add(new ItemStack(this.cropRef.get(), this.yieldRef.apply(((World) world).rand)));
+            items.add(new ItemStack(this.cropRef.get(),
+                    this.yieldRef.apply(((World) world).rand)));
         }
         
         return items;

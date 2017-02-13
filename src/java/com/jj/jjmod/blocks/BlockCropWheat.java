@@ -1,10 +1,8 @@
 package com.jj.jjmod.blocks;
 
-import java.util.Random;
-import java.util.function.Supplier;
+import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
-import net.minecraft.init.Items;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomePlains;
@@ -15,7 +13,7 @@ public class BlockCropWheat extends BlockCrop {
     
     public BlockCropWheat() {
         
-        super("wheat", () -> Items.WHEAT, (rand) -> rand.nextInt(2) + 1,
+        super("wheat", () -> ModItems.wheat, (rand) -> 1,
                 0.4F, 0.2F, ToolType.SICKLE);
     }
 

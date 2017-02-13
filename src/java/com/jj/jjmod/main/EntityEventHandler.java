@@ -34,7 +34,7 @@ public class EntityEventHandler {
 
             event.getDrops().clear();
             entity.entityDropItem(new
-                    ItemStack(ModBlocks.carcassCowpart, 2), 0);
+                    ItemStack(ModBlocks.carcassCowpart, 4), 0);
             
         } else if (entity instanceof EntitySheep) {
 

@@ -358,6 +358,18 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return part == EnumPartBed.FOOT;
     }
     
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        
+        return false;
+    }
+    
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        
+        return false;
+    }
+    
     /** Enum defining parts of the whole Bed structure. */
     public static enum EnumPartBed implements IStringSerializable {
 

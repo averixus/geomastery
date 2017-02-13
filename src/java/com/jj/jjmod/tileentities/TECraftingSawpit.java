@@ -50,6 +50,7 @@ public class TECraftingSawpit extends TileEntity {
         this.part = EnumPartSawpit.values()[compound.getInteger("part")];
     }
     
+    /** Require to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
         
@@ -57,13 +58,14 @@ public class TECraftingSawpit extends TileEntity {
     }
     
     @Override
-    @Nullable
+    /** Require to update rendering on the Client. */
     public SPacketUpdateTileEntity getUpdatePacket() {
         
         return new SPacketUpdateTileEntity(this.getPos(), 0,
                 this.writeToNBT(new NBTTagCompound()));
     }
     
+    /** Require to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

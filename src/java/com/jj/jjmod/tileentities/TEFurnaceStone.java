@@ -116,6 +116,29 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
         this.part = EnumPartStone.values()[compound.getInteger("part")];
     }
+    
+    /** Require to update rendering on the Client. */
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    /** Require to update rendering on the Client. */
+   @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        return new SPacketUpdateTileEntity(this.getPos(), 0,
+                this.writeToNBT(new NBTTagCompound()));
+    }
+
+   /** Require to update rendering on the Client. */
+    @Override
+    public void onDataPacket(NetworkManager net,
+            SPacketUpdateTileEntity packet) {
+
+        this.readFromNBT(packet.getNbtCompound());
+    }
 
     /** Enum defining parts of the whole Stone Furnace structure. */
     public enum EnumPartStone implements IStringSerializable {

@@ -33,7 +33,8 @@ public class ItemEdibleDecayable extends ItemEdible {
     public boolean onEntityItemUpdate(EntityItem entity) {
         
         if (!entity.world.isRemote && entity.getEntityItem()
-                .getCapability(ModCapabilities.CAP_DECAY, null).updateAndRot()) {
+                .getCapability(ModCapabilities.CAP_DECAY, null)
+                .updateAndRot()) {
             
             entity.setEntityItemStack(new ItemStack(ModItems.rot));
         }

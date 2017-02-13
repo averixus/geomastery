@@ -3,6 +3,7 @@ package com.jj.jjmod.blocks;
 import java.util.Random;
 import java.util.function.Supplier;
 import com.jj.jjmod.utilities.BlockMaterial;
+import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,7 +23,8 @@ public class BlockFruit extends BlockNew {
     
     public BlockFruit(String name, Supplier<Item> item) {
         
-        super(BlockMaterial.FRUIT, name, CreativeTabs.DECORATIONS, 0.2F, null);
+        super(BlockMaterial.FRUIT, name, CreativeTabs.DECORATIONS,
+                0.2F, ToolType.SICKLE);
         this.item = item;
     }
     

@@ -59,29 +59,26 @@ public class TECraftingWoodworking extends TileEntity {
 
     }
     
+    /** Require to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
-        System.out.println("get update tag");
+
         return this.writeToNBT(new NBTTagCompound());
     }
-    
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
-        System.out.println("handling update tag");
-        this.readFromNBT(tag);
-    }
 
-    @Override
+    /** Require to update rendering on the Client. */
+   @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        System.out.println("get update packet");
+
         return new SPacketUpdateTileEntity(this.getPos(), 0,
                 this.writeToNBT(new NBTTagCompound()));
     }
 
+   /** Require to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
-        System.out.println("on data packet");
+
         this.readFromNBT(packet.getNbtCompound());
     }
 

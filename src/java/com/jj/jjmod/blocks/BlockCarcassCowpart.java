@@ -1,5 +1,6 @@
 package com.jj.jjmod.blocks;
 
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -11,13 +12,16 @@ public class BlockCarcassCowpart extends BlockCarcass {
 
     public BlockCarcassCowpart() {
         
-        super("carcass_cowpart", 2F);
+        super("carcass_cowpart", 2F, 2, () -> ModItems.carcassCowpart);
     }
     
     @Override
-    protected void spawnDrops(World world, BlockPos pos) {
+    protected void spawnDrops(World world, BlockPos pos, int age) {
         
-        spawnAsEntity(world, pos, new ItemStack(ModItems.beefRaw, 5));
+        ItemStack meat = new ItemStack(ModItems.beefRaw, 5);
+        meat.getCapability(ModCapabilities.CAP_DECAY, null).setAge(age);
+        
+        spawnAsEntity(world, pos, meat);
         spawnAsEntity(world, pos, new ItemStack(ModItems.skinCow, 6));
         spawnAsEntity(world, pos, new ItemStack(Items.BONE, 5));
         spawnAsEntity(world, pos, new ItemStack(ModItems.tallow));

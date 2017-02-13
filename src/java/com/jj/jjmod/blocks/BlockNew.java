@@ -31,6 +31,7 @@ public class BlockNew extends Block {
                 hardness, harvestTool);
     }
     
+    /** Assigns the given values to the block statically. */
     public static void setupBlock(Block block, String name, CreativeTabs tab,
             float hardness, ToolType harvestTool) {
         
@@ -45,6 +46,7 @@ public class BlockNew extends Block {
         }
     }
     
+    /** Spawns a stack of one of the given Item in the server world. */
     protected static void spawnItem(World world, BlockPos pos, Item item) {
         
         if (!world.isRemote) {
@@ -54,7 +56,6 @@ public class BlockNew extends Block {
         }
     }
     
-    // From material
     @Override
     public boolean isFullCube(IBlockState state) {
         

@@ -6,6 +6,7 @@ import com.jj.jjmod.container.slots.SlotBackpack;
 import com.jj.jjmod.container.slots.SlotCrafting;
 import com.jj.jjmod.container.slots.SlotYoke;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
@@ -165,15 +166,20 @@ public class ContainerInventory extends ContainerAbstract {
     public ItemStack add(ItemStack stack) {
         
         ItemStack remaining = stack;
-        
-        if (ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
+        System.out.println("add " + remaining);
+        if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+        } else {
+            System.out.println("has no capdecay");
+        }
+        if (ModBlocks.OFFHAND_ONLY.contains(remaining.getItem())) {
             
             remaining = this.addToOffhand(remaining);
         }
         
         if (!remaining.isEmpty()) {
             
-            remaining = this.putInMatchingSlot(stack);
+            remaining = this.putInMatchingSlot(remaining);
         }
         
         if (!remaining.isEmpty()) {
@@ -190,13 +196,26 @@ public class ContainerInventory extends ContainerAbstract {
     private ItemStack putInMatchingSlot(ItemStack stack) {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
-        ItemStack remaining = stack.copy();
+        ItemStack remaining = stack;
 
+        System.out.println("putInMatchingSlot, \"remaining\" stack: " + remaining);
+        if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+        } else {
+            System.out.println("has no capdecay");
+        }
+        System.out.println("putInMatchingSlot, \"stack\" stack: " + stack);
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+        } else {
+            System.out.println("has no capdecay");
+        }
+        
         for (int slot = 0; slot < this.capability.getInventorySize() &&
                 !remaining.isEmpty(); slot++) {
 
             if (ItemStack.areItemsEqual(remaining, inv.get(slot))) {
-            
+
                 remaining = this.addToSlot(slot, remaining);
             }
         }
@@ -209,13 +228,25 @@ public class ContainerInventory extends ContainerAbstract {
     private ItemStack putInEmptySlot(ItemStack stack) {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
-        ItemStack remaining = stack.copy();
+        ItemStack remaining = stack;
 
         for (int slot = 0; slot < this.capability.getInventorySize() &&
                 !remaining.isEmpty(); slot++) {
 
             if (inv.get(slot).isEmpty()) {
-            
+                System.out.println("putInEmptySlot, \"remaining\" stack: " + remaining);
+                if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                    System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+                } else {
+                    System.out.println("has no capdecay");
+                }
+                
+                System.out.println("putInEmptySlot, \"stack\" stack: " + stack);
+                if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                    System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+                } else {
+                    System.out.println("has no capdecay");
+                }
                 remaining = this.addToSlot(slot, remaining);
             }
         }
@@ -246,7 +277,12 @@ public class ContainerInventory extends ContainerAbstract {
         ItemStack inSlot = inv.get(slot);
         
         if (inSlot.isEmpty()) {
-            
+            System.out.println("addToSlot " + stack);
+            if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+            } else {
+                System.out.println("has no capdecay");
+            }
             inv.set(slot, stack);
             result = ItemStack.EMPTY;
             
@@ -269,7 +305,13 @@ public class ContainerInventory extends ContainerAbstract {
                 result.setCount(total - max);
             }
         }
-        System.out.println("update packet from addtoslot");
+        
+        System.out.println("added stack to slot " + stack);
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+        } else {
+            System.out.println("has no capdecay");
+        }
         this.sendUpdateInventory(slot + this.hotStart, inv.get(slot));
         return result;
     }
@@ -457,6 +499,12 @@ public class ContainerInventory extends ContainerAbstract {
         this.playerInv.offHandInventory.set(0, toMove);
         this.sendUpdateOffhand();
         this.sendUpdateHighlight();
+    }
+    
+    public static void updateOffhand(EntityPlayer player) {
+        
+        //TODO
+        // etc
     }
 
     /** Sends a packet to update the offhand slot. */

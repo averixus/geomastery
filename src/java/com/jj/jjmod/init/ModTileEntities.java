@@ -3,6 +3,7 @@ package com.jj.jjmod.init;
 import com.jj.jjmod.render.tileentity.TileEntityBoxRenderer;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBox;
+import com.jj.jjmod.tileentities.TECarcass;
 import com.jj.jjmod.tileentities.TECraftingArmourer;
 import com.jj.jjmod.tileentities.TECraftingForge;
 import com.jj.jjmod.tileentities.TECraftingMason;
@@ -44,6 +45,8 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(TEBox.class, "box");
         
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
+        
+        GameRegistry.registerTileEntity(TECarcass.class, "carcass");
     }
     
     public static void preInitClient() {

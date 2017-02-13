@@ -489,6 +489,10 @@ public class ModRecipes {
                     new ItemStack(Items.COAL, 1, 1));
             recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat),
                     new ItemStack(Items.BREAD));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.oreCopper),
+                    new ItemStack(ModItems.ingotCopper));
+            recipes.addSmeltingRecipe(new ItemStack(ModItems.oreTin),
+                    new ItemStack(ModItems.ingotTin));
             recipes.addFuel(new ItemStack(ModItems.peatDry), 2400);
             recipes.addFuel(new ItemStack(Items.COAL, 1, 1), 3000);
         }
@@ -498,15 +502,13 @@ public class ModRecipes {
 
         STONE.addSmeltingRecipe(new ItemStack(ModItems.oreIron),
                 new ItemStack(ModItems.ingotSteel));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreCopper),
-                new ItemStack(ModItems.ingotCopper));
         STONE.addSmeltingRecipe(new ItemStack(ModItems.oreSilver),
                 new ItemStack(ModItems.ingotSilver));
         STONE.addSmeltingRecipe(new ItemStack(ModItems.oreGold),
                 new ItemStack(Items.GOLD_INGOT));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreTin),
-                new ItemStack(ModItems.ingotTin));
-        STONE.addFuel(new ItemStack(Items.COAL), 4000);
+        STONE.addSmeltingRecipe(new ItemStack(Items.CLAY_BALL),
+                new ItemStack(ModItems.claybricks));
+        STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
     }
 
     public static void setupDrying() {

@@ -106,7 +106,7 @@ public class CapabilityEventHandler {
                 
                 ItemStack stack = slot.getStack();
                 
-                if (stack.getItem() instanceof ItemEdibleDecayable) {
+                if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
                     
                     if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
                             .updateAndRot()) {

@@ -40,10 +40,10 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
     protected Supplier<BlockFruit> fruit;
 
     public BlockCropBlockfruit(String name, float growthChance,
-            float hardness, ToolType tool, Supplier<BlockFruit> fruit) {
+            float hardness, Supplier<BlockFruit> fruit) {
 
         super(name, () -> Items.AIR, (rand) -> 0,
-                growthChance, hardness, tool);
+                growthChance, hardness, ToolType.SICKLE);
         this.fruit = fruit;
     }
 

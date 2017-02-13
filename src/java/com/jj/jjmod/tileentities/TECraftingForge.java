@@ -55,13 +55,14 @@ public class TECraftingForge extends TileEntity {
         this.part = EnumPartForge.values()[compound.getInteger("part")];
     }
 
+    /** Require to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    @Nullable
+    /** Require to update rendering on the Client. */
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -69,6 +70,7 @@ public class TECraftingForge extends TileEntity {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
+    /** Require to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

@@ -15,6 +15,7 @@ import com.jj.jjmod.items.ItemBedBreakableAbstract;
 import com.jj.jjmod.items.ItemBedPlainAbstract;
 import com.jj.jjmod.items.ItemBow;
 import com.jj.jjmod.items.ItemBucket;
+import com.jj.jjmod.items.ItemCarcassDecayable;
 import com.jj.jjmod.items.ItemCraftingArmourer;
 import com.jj.jjmod.items.ItemCraftingCandlemaker;
 import com.jj.jjmod.items.ItemCraftingClayworks;
@@ -90,6 +91,12 @@ public class ModItems {
     public static ItemEdibleDecayablePoison muttonRaw;
     public static ItemEdibleDecayablePoison rabbitRaw;
     public static ItemEdibleDecayablePoison fishRaw;
+    
+    public static ItemCarcassDecayable carcassCowpart;
+    public static ItemCarcassDecayable carcassPig;
+    public static ItemCarcassDecayable carcassChicken;
+    public static ItemCarcassDecayable carcassSheep;
+    public static ItemCarcassDecayable carcassRabbit;
     
     public static ItemEdible beefCooked;
     public static ItemEdible porkCooked;
@@ -323,7 +330,7 @@ public class ModItems {
     public static ItemApparel steelplateFeet;
 
     public static ItemBow bowCrude;
-    public static ItemBow bowNormal;
+    public static ItemBow bowWar;
     
     public static ItemWall wallBrick;
     public static ItemWall wallMud;
@@ -387,6 +394,12 @@ public class ModItems {
                 1, 2, 15, FoodType.PROTEIN, 2));
         register(fishRaw = new ItemEdibleDecayablePoison("fish_raw",
                 1, 3, 10, FoodType.PROTEIN, 1));
+        
+        register(carcassCowpart = new ItemCarcassDecayable("carcass_cowpart", ModBlocks.carcassCowpart));
+        register(carcassPig = new ItemCarcassDecayable("carcass_pig", ModBlocks.carcassPig));
+        register(carcassChicken = new ItemCarcassDecayable("carcass_chicken", ModBlocks.carcassChicken));
+        register(carcassSheep = new ItemCarcassDecayable("carcass_sheep", ModBlocks.carcassSheep));
+        register(carcassRabbit = new ItemCarcassDecayable("carcass_rabbit", ModBlocks.carcassRabbit));
         
         register(beefCooked = new ItemEdibleDecayable("beef_cooked",
                 6, 6, 5, FoodType.PROTEIN, 2));
@@ -720,7 +733,7 @@ public class ModItems {
 
         register(bowCrude = new ItemBow("bow_crude",
                 200, EntityProjectile.CRUDE_MOD));
-        register(bowNormal = new ItemBow("bow_normal",
+        register(bowWar = new ItemBow("bow_war",
                 384, EntityProjectile.BOW_MOD));
         
         register(wallBrick = new ItemWall("wall_brick", 1,
