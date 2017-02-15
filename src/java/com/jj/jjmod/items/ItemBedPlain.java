@@ -3,26 +3,27 @@ package com.jj.jjmod.items;
 import com.jj.jjmod.blocks.BlockBedAbstract;
 import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemBedPlainAbstract extends ItemBedAbstract {
+/** Bed item for beds with unlimited or single-use durability. */
+public class ItemBedPlain extends ItemBedAbstract {
 
-    public ItemBedPlainAbstract(String name, Block blockRef) {
+    public ItemBedPlain(String name, Block blockRef) {
 
         super(name, blockRef);
-
     }
 
     @Override
-    public void placeBed(World world, BlockPos foot, BlockPos head,
-            EnumFacing facing, int damage) {
+    protected void placeBed(World world, BlockPos foot, BlockPos head,
+            EnumFacing facing, int usesLeft) {
 
         IBlockState stateFoot = this.bedBlock.getDefaultState();
         stateFoot = stateFoot.withProperty(BlockBedAbstract.OCCUPIED, false);
-        stateFoot = stateFoot.withProperty(BlockBedAbstract.FACING, facing);
+        stateFoot = stateFoot.withProperty(BlockHorizontal.FACING, facing);
         stateFoot = stateFoot.withProperty(BlockBedAbstract.PART,
                 BlockBedAbstract.EnumPartBed.FOOT);
 

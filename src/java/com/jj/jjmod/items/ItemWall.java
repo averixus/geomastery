@@ -14,10 +14,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Wall item. */
 public class ItemWall extends ItemNew {
     
-    public Block singleWall;
-    public Block doubleWall;
+    /** Single wall block. */
+    private Block singleWall;
+    /** Double wall block. */
+    private Block doubleWall;
 
     public ItemWall(String name, int stackSize, Block single, Block duble) {
         
@@ -26,6 +29,7 @@ public class ItemWall extends ItemNew {
         this.doubleWall = duble;
     }
     
+    /** Attempts to build this wall. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
             World world, BlockPos pos, EnumHand hand, EnumFacing side,
@@ -40,19 +44,17 @@ public class ItemWall extends ItemNew {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         
-        if (block == this.singleWall && side != EnumFacing.UP && this.doubleWall.canPlaceBlockAt(world, pos)) {
+        if (block == this.singleWall && side != EnumFacing.UP &&
+                this.doubleWall.canPlaceBlockAt(world, pos)) {
             
             world.setBlockState(pos, this.doubleWall.getDefaultState());
-            
-        } else if (block.isReplaceable(world, pos) && this.singleWall.canPlaceBlockAt(world, pos)) {
-            
-            world.setBlockState(pos, this.singleWall.getDefaultState());
             
         } else {
             
             pos = pos.offset(side);
             
-            if (!block.isReplaceable(world, pos) || !this.singleWall.canPlaceBlockAt(world, pos)) {
+            if (!block.isReplaceable(world, pos) ||
+                    !this.singleWall.canPlaceBlockAt(world, pos)) {
                 
                 return EnumActionResult.FAIL;
             }
@@ -60,21 +62,14 @@ public class ItemWall extends ItemNew {
             world.setBlockState(pos, this.singleWall.getDefaultState());
         }
         
-        SoundType sound = this.singleWall.getSoundType();
-        world.playSound(player, pos, sound.getPlaceSound(),
-                SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F,
-                sound.getPitch() * 0.8F);
+        world.playSound(player, pos, SoundType.STONE.getPlaceSound(),
+                SoundCategory.BLOCKS, (SoundType.STONE.getVolume() + 1.0F) /
+                2.0F, SoundType.STONE.getPitch() * 0.8F);
         
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            
-            if (stack.getCount() == 0) {
-                
-                stack = ItemStack.EMPTY;
-            }
-            
-            ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

@@ -122,7 +122,7 @@ public class ItemCraftingForge extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

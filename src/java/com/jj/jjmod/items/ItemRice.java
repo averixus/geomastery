@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+/** Rice seed item. */
 public class ItemRice extends ItemNew {
         
     public ItemRice() {
@@ -22,20 +23,21 @@ public class ItemRice extends ItemNew {
         super("rice", 1);
     }
     
+    /** Attempts to plant a rice crop. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
-            World world, BlockPos pos, EnumHand hand, EnumFacing facing,
+            World world, BlockPos pos, EnumHand hand, EnumFacing side,
             float x, float y, float z) {
-        
-        ItemStack stack = player.getActiveItemStack();
-                
+                        
         if (world.isRemote) {
             
             return EnumActionResult.SUCCESS;
         }
         
+        ItemStack stack = player.getHeldItem(hand);
+        
         // Check positions are allowed
-        BlockPos target = pos.up();
+        BlockPos target = pos.offset(side);
         IBlockState stateTarget = world.getBlockState(target);
         Block blockTarget = stateTarget.getBlock();
         boolean okTarget = (blockTarget == Blocks.WATER ||
@@ -79,14 +81,12 @@ public class ItemRice extends ItemNew {
         world.setBlockState(target, ModBlocks.riceBase.getDefaultState());
         world.setBlockState(above, ModBlocks.riceTop.getDefaultState());
         
-        stack.shrink(1);
-        
-        if (stack.getCount() == 0) {
+        if (!player.capabilities.isCreativeMode) {
             
-            stack = null;
+            stack.shrink(1);
+            ContainerInventory.updateHand(player, hand);
         }
         
-        ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
         return EnumActionResult.SUCCESS;
     }
 }

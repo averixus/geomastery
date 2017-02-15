@@ -26,9 +26,10 @@ public class ItemCraftingClayworks extends ItemNew {
         super("crafting_clayworks", 1, CreativeTabs.DECORATIONS);
     }
 
+    /** Attempts to build clayworks crafting device structure. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
-            World world, BlockPos pos, EnumHand hand, EnumFacing playerFacing,
+            World world, BlockPos pos, EnumHand hand, EnumFacing side,
             float x, float y, float z) {
         
         ItemStack stack = player.getHeldItem(hand);
@@ -39,8 +40,9 @@ public class ItemCraftingClayworks extends ItemNew {
         }
 
         // Calculate positions
-        BlockPos posFR = pos.up();
-        int intFacing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        BlockPos posFR = pos.offset(side);
+        int intFacing = MathHelper.floor(player.rotationYaw * 4.0F /
+                360.0F + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posFL = posFR.offset(enumFacing.rotateY().getOpposite());
         BlockPos posBL = posFL.offset(enumFacing);
@@ -98,7 +100,7 @@ public class ItemCraftingClayworks extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

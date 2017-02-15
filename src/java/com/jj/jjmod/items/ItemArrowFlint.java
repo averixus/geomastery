@@ -8,12 +8,12 @@ import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemArrowFlint extends ItemArrow {
+/** Flint arrow item. */
+public class ItemArrowFlint extends ItemArrowAbstract {
 
     public ItemArrowFlint() {
 
-        super();
-        ItemNew.setupItem(this, "arrow_flint", 10, CreativeTabs.COMBAT);
+        super("arrow_flint");
     }
 
     @Override

@@ -1,7 +1,12 @@
 package com.jj.jjmod.capabilities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jj.jjmod.init.ModBiomes;
 import com.jj.jjmod.init.ModBlocks;
@@ -25,7 +30,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -58,11 +62,14 @@ public class DefaultCapPlayer implements ICapPlayer {
     private FoodStatsPartial carbs;
     private FoodStatsPartial protein;
     private FoodStatsPartial fruitveg;
-    // Convenience map
+    // Convenience collections
     private final Map<FoodType, FoodStatsPartial> typesMap = Maps.newHashMap();
+    private final List<FoodStatsPartial> typesList = Lists.newArrayList();
+    private final Comparator<FoodStatsPartial> comparator =
+            (a, b) -> Math.round(Math.signum(b.getFullness() - a.getFullness()));
     
     public DefaultCapPlayer(EntityPlayer player) {
-        
+
         this.player = player;
         this.carbs = new FoodStatsPartial(this.player);
         this.protein = new FoodStatsPartial(this.player);
@@ -70,6 +77,9 @@ public class DefaultCapPlayer implements ICapPlayer {
         this.typesMap.put(FoodType.CARBS, this.carbs);
         this.typesMap.put(FoodType.PROTEIN, this.protein);
         this.typesMap.put(FoodType.FRUITVEG, this.fruitveg);
+        this.typesList.add(this.carbs);
+        this.typesList.add(this.protein);
+        this.typesList.add(this.fruitveg);
     }
     
     @Override
@@ -164,7 +174,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     
     @Override
     public int getFoodLevel() {
-        
+
         return Math.min(this.carbs.getFoodLevel(),
                 Math.min(this.protein.getFoodLevel(),
                 this.fruitveg.getFoodLevel()));
@@ -173,17 +183,31 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public void addExhaustion(float exhaustion) {
         
-        this.carbs.addExhaustion(exhaustion);
-        this.protein.addExhaustion(exhaustion);
-        this.fruitveg.addExhaustion(exhaustion);
+        for (FoodStatsPartial food : this.typesList) {
+            
+            food.addExhaustion(exhaustion);
+        }
     }
     
     @Override
-    public void addStats(ItemFood item, ItemStack stack) {
+    public void addStats(ItemEdible item, ItemStack stack) {
         
-        FoodType type = item instanceof ItemEdible ?
-                ((ItemEdible) item).getType() : FoodType.CARBS;
+        FoodType type = item.getType();
         this.typesMap.get(type).addStats(item, stack);
+    }
+    
+    @Override
+    public void sleep(float healAmount) {
+
+        for (FoodStatsPartial food : this.typesList) {
+            
+            if (food.getFoodLevel() > 10) {
+                
+                this.player.heal(healAmount);
+            }
+            
+            food.setFoodLevel(Math.max(food.getFoodLevel() - 6, 0));
+        }
     }
     
     @Override
@@ -199,8 +223,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             if (entry.getValue().tickHunger()) {
 
-                this.sendFoodPacket(entry.getKey(),
-                        entry.getValue().getFoodLevel());
+                this.sendFoodPacket(entry.getKey());
             }
         }
         
@@ -454,21 +477,12 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             return;
         }
+        
+        this.typesList.sort(this.comparator);
             
-        Map<Float, FoodStatsPartial> typesMap = Maps.newTreeMap();
-        typesMap.put(-this.carbs.getFoodLevel() -
-                this.carbs.getSaturationLevel() -
-                this.carbs.getExhaustion(), this.carbs);
-        typesMap.put(-this.protein.getFoodLevel() -
-                this.protein.getSaturationLevel() -
-                this.protein.getExhaustion(), this.protein);
-        typesMap.put(-this.fruitveg.getFoodLevel() -
-                this.fruitveg.getSaturationLevel() -
-                this.fruitveg.getExhaustion(), this.fruitveg);
+        for (FoodStatsPartial food : this.typesList) {
 
-        for (Entry<Float, FoodStatsPartial> entry : typesMap.entrySet()) {
-            
-            entry.getValue().heal();
+            food.heal();
         }
     }
     
@@ -537,11 +551,9 @@ public class DefaultCapPlayer implements ICapPlayer {
             return;
         }
         
-        for (Entry<FoodType, FoodStatsPartial> entry :
-                this.typesMap.entrySet()) {
+        for (FoodType type : this.typesMap.keySet()) {
             
-            this.sendFoodPacket(entry.getKey(),
-                    entry.getValue().getFoodLevel());
+            this.sendFoodPacket(type);
         }
         
         this.sendTempPacket(this.tempStage);
@@ -549,9 +561,10 @@ public class DefaultCapPlayer implements ICapPlayer {
     }
     
     /** Send a packet to the client to update the FoodType hunger level. */
-    private void sendFoodPacket(FoodType type, int hunger) {
+    private void sendFoodPacket(FoodType type) {
         
-        ModPackets.NETWORK.sendTo(new FoodPacketClient(type, hunger),
+        ModPackets.NETWORK.sendTo(new FoodPacketClient(type,
+                this.typesMap.get(type).getFoodLevel()),
                 (EntityPlayerMP) this.player);
     }
     

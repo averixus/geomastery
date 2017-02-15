@@ -70,18 +70,15 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public void itemToss(ItemTossEvent event) {
         
-        if (!event.getPlayer().capabilities.isCreativeMode) {
-
-            ((ContainerInventory) event.getPlayer().inventoryContainer)
-                    .sendUpdateHighlight();
-        }
+        ContainerInventory.updateHand(event.getPlayer(), EnumHand.MAIN_HAND);
     }
 
     /** Adds behaviour when player wakes up from a bed. */
     @SubscribeEvent
     public void playerWakeUp(PlayerWakeUpEvent event) {
 
-        BlockPos pos = new BlockPos(event.getEntityPlayer());
+        EntityPlayer player = event.getEntityPlayer();
+        BlockPos pos = new BlockPos(player);
         World world = event.getEntityPlayer().world;
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
@@ -133,6 +130,9 @@ public class PlayerEventHandler {
                 }
             }
         }
+        
+        player.getCapability(ModCapabilities.CAP_PLAYER, null)
+                .sleep(((BlockBedAbstract) block).getHealAmount());
     }
     
     /** Alters behaviour when the player takes damage. */
@@ -170,19 +170,7 @@ public class PlayerEventHandler {
                     player.getActiveItemStack().damageItem(1 +
                             MathHelper.floor(event.getAmount()), player);
                     
-                    if (player.getActiveItemStack().isEmpty()) {
-                    
-                        if (hand == EnumHand.MAIN_HAND) {
-                            
-                            ((ContainerInventory) player.inventoryContainer)
-                                    .sendUpdateHighlight();
-                        
-                        } else {
-                            
-                            ((ContainerInventory) player.inventoryContainer)
-                                .sendUpdateOffhand();
-                        }
-                    }
+                    ContainerInventory.updateHand(player, hand);
                 }
             }
         }

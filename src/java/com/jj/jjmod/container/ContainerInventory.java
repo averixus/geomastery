@@ -1,6 +1,5 @@
 package com.jj.jjmod.container;
 
-import javax.annotation.Nullable;
 import com.jj.jjmod.container.slots.SlotArmour;
 import com.jj.jjmod.container.slots.SlotBackpack;
 import com.jj.jjmod.container.slots.SlotCrafting;
@@ -24,6 +23,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -261,7 +261,7 @@ public class ContainerInventory extends ContainerAbstract {
         if (this.playerInv.offHandInventory.get(0).isEmpty()) {
             
             this.playerInv.offHandInventory.set(0, stack);
-            this.sendUpdateOffhand();
+            updateHand(this.player, EnumHand.OFF_HAND);
             return ItemStack.EMPTY;
         }
         
@@ -312,7 +312,7 @@ public class ContainerInventory extends ContainerAbstract {
         } else {
             System.out.println("has no capdecay");
         }
-        this.sendUpdateInventory(slot + this.hotStart, inv.get(slot));
+        updateInventory(this.player, slot);
         return result;
     }
 
@@ -348,8 +348,7 @@ public class ContainerInventory extends ContainerAbstract {
 
                     player.dropItem(stack, false);
                     System.out.println("update packet from container closed");
-                    this.sendUpdateInventory(this.craftStart + i,
-                            ItemStack.EMPTY);
+                    this.updateContainer(this.craftStart + i);
                 }
             }
         }
@@ -497,33 +496,63 @@ public class ContainerInventory extends ContainerAbstract {
         this.playerInv.mainInventory.set(this.playerInv.currentItem,
                 this.playerInv.offHandInventory.get(0));
         this.playerInv.offHandInventory.set(0, toMove);
-        this.sendUpdateOffhand();
-        this.sendUpdateHighlight();
+        updateHand(this.player, EnumHand.MAIN_HAND);
+        updateHand(this.player, EnumHand.OFF_HAND);
     }
     
-    public static void updateOffhand(EntityPlayer player) {
+    /** Attempts to add the stack to the given player if their
+     * inventory container is an instance of this class.
+     * @return The ItemStack left over. */
+    public static ItemStack add(EntityPlayer player, ItemStack stack) {
         
-        //TODO
-        // etc
+        if (!(player.inventoryContainer instanceof ContainerInventory)) {
+            
+            return stack;
+        }
+        
+        ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
+        return inv.add(stack);
+    }
+    
+    /** Updates the given hand of the player if their inventory container is
+     * an instance of this class. */
+    public static void updateHand(EntityPlayer player, EnumHand hand) {
+        
+        if (!(player.inventoryContainer instanceof ContainerInventory)) {
+            
+            return;
+        }
+            
+        ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
+        
+        if (hand == EnumHand.MAIN_HAND) {
+            
+            inv.updateContainer(player.inventory.currentItem + inv.hotStart);
+            
+        } else {
+            
+            inv.updateContainer(OFFHAND_I);
+        }
+    }
+    
+    /** Updates the given index in the player's main inventory if their
+     * inventory container is an instance of this class. */
+    public static void updateInventory(EntityPlayer player, int index) {
+        
+        if (!(player.inventoryContainer instanceof ContainerInventory)) {
+            
+            return;
+        }
+            
+        ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
+        inv.updateContainer(index + inv.hotStart);
     }
 
-    /** Sends a packet to update the offhand slot. */
-    public void sendUpdateOffhand() {
+    /** Sends a packet to update the index slot of this container. */
+    private void updateContainer(int slot) {
 
-        sendUpdateInventory(OFFHAND_I,
-                this.playerInv.offHandInventory.get(0));
-    }
-
-    /** Sends a packet to update the highlighted slot. */
-    public void sendUpdateHighlight() {
-
-        sendUpdateInventory(this.playerInv.currentItem + this.hotStart,
-                this.playerInv.mainInventory.get(this.playerInv.currentItem));
-    }
-
-    /** Sends a packet to update the index slot. */
-    public void sendUpdateInventory(int slot, ItemStack stack) {
-
+        ItemStack stack = this.inventorySlots.get(slot).getStack();
+        
         if (this.player instanceof EntityPlayerMP) {
 
             ModPackets.NETWORK

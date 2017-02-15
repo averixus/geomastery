@@ -1,8 +1,7 @@
 package com.jj.jjmod.capabilities;
 
-import com.jj.jjmod.utilities.TempStage;
+import com.jj.jjmod.items.ItemEdible;
 import com.jj.jjmod.utilities.FoodType;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +12,9 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
 
     /** Update all ticking features. */
     public void tick();
+    
+    /** Update all stats with given heal amount. */
+    public void sleep(float healAmount);
     
     /** Get the amount of main inventory rows the player has
      * available, excluding the hotbar.
@@ -69,7 +71,7 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
     public void addExhaustion(float exhaustion);
     
     /** Add the item's food value to its food type. */
-    public void addStats(ItemFood item, ItemStack stack);
+    public void addStats(ItemEdible item, ItemStack stack);
 
     /** Send all necessary update packets to the client. */
     public void syncAll();

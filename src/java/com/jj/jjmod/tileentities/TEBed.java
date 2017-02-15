@@ -5,38 +5,32 @@ import net.minecraft.tileentity.TileEntity;
 /** TileEntity for custom Bed blocks. */
 public class TEBed extends TileEntity {
 
-    /** The maximum number of times the player can sleep in
+    /** The remaining number of times the player can sleep in
      * this Bed before its durability runs out. */
-    private int maxUses;
-    private int uses = 0;
-
-    public TEBed(int maxUses) {
-
-        this.maxUses = maxUses;
-    }
+    private int usesLeft;
 
     /** @return The current durability of this Bed. */
-    public int getDropDamage() {
+    public int getUsesLeft() {
 
-        return this.uses;
+        return this.usesLeft;
     }
 
     /** Increments the current durability of this Bed. */
     public void addUse() {
 
-        this.uses++;
+        this.usesLeft--;
     }
 
     /** Sets the current durability of this Bed to the given damage. */
-    public void setDropDamage(int damage) {
+    public void setUsesLeft(int usesLeft) {
 
-        this.uses = damage;
+        this.usesLeft = usesLeft;
     }
 
     /** Checks whether this Bed has reached its maximum durability.
      * @return Whether or not the Bed has run out of uses. */
     public boolean isBroken() {
 
-        return this.uses >= this.maxUses;
+        return this.usesLeft <= 0;
     }
 }

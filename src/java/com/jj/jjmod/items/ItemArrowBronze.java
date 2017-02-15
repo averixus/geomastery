@@ -7,12 +7,12 @@ import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemArrowBronze extends ItemArrow {
+/** Bronze arrow item. */
+public class ItemArrowBronze extends ItemArrowAbstract {
 
     public ItemArrowBronze() {
 
-        super();
-        ItemNew.setupItem(this, "arrow_bronze", 10, CreativeTabs.COMBAT);
+        super("arrow_bronze");
     }
 
     @Override

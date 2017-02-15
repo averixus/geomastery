@@ -1,5 +1,6 @@
 package com.jj.jjmod.items;
 
+import java.util.Collections;
 import java.util.Set;
 import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
@@ -23,14 +24,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class ItemSpearAbstract extends ItemTool {
-
-    public static final Set<Block> EFFECTIVE_ON =
-            Sets.newHashSet(new Block[] {});
+/** Abstract superclass for spear tool items. */
+public abstract class ItemSpearAbstract extends ItemToolAbstract {
 
     public ItemSpearAbstract(String name, ToolMaterial material) {
 
-        super(3F, -3.1F, material, EFFECTIVE_ON);
+        super(3F, -3.1F, material, Collections.emptySet());
         ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
         
         // Check whether spear is being charged for the model
@@ -38,7 +37,6 @@ public abstract class ItemSpearAbstract extends ItemTool {
                 new IItemPropertyGetter() {
 
             @Override
-            @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World world,
                     @Nullable EntityLivingBase entity) {
 
@@ -55,6 +53,7 @@ public abstract class ItemSpearAbstract extends ItemTool {
         });
     }
 
+    /** Throws spear. */
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world,
             EntityLivingBase entity, int timeLeft) {
@@ -71,25 +70,18 @@ public abstract class ItemSpearAbstract extends ItemTool {
 
             float velocity = getVelocity(i);
 
-            if (velocity >= 0.1) {
+            if (velocity >= 0.2) {
 
                 if (!world.isRemote) {
 
-                    this.throwSpear(world, player, velocity * EntityProjectile.SPEAR_MOD, stack.getItemDamage() + 1);
+                    this.throwSpear(world, player, velocity,
+                            stack.getItemDamage() + 1);
                     
                     if (!player.capabilities.isCreativeMode) {
                         
                         stack.shrink(1);
-    
-                        if (stack.getCount() == 0) {
-    
-                            stack = null;
-                        }
-    
-                        ((ContainerInventory) player.inventoryContainer)
-                                .sendUpdateHighlight();
-                        ((ContainerInventory) player.inventoryContainer)
-                                .sendUpdateOffhand();
+                        ContainerInventory.updateHand(player, 
+                                player.getActiveHand());
                     }
                 }
 
@@ -101,15 +93,18 @@ public abstract class ItemSpearAbstract extends ItemTool {
         }
     }
 
+    /** Starts charging throw. */
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world,
+            EntityPlayer player, EnumHand hand) {
 
         ItemStack stack = player.getHeldItem(hand);
         player.setActiveHand(hand);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
-    public static float getVelocity(int charge) {
+    /** @return The velocity of thrown spear. */
+    private static float getVelocity(int charge) {
 
         float velocity = charge / 20F;
         velocity = ((velocity * velocity) + (velocity * 2F)) / 3F;
@@ -119,21 +114,24 @@ public abstract class ItemSpearAbstract extends ItemTool {
             velocity = 1F;
         }
 
-        return velocity;
+        return velocity * EntityProjectile.SPEAR_MOD;
     }
 
+    /** The time taken for the throw to charge. */
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
 
         return 72000;
     }
 
+    /** Makes the player move like pulling a bow. */
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
 
         return EnumAction.BOW;
     }
 
-    public abstract void throwSpear(World world, EntityPlayer player,
+    /** Creates this spear's thrown entity. */
+    protected abstract void throwSpear(World world, EntityPlayer player,
             float velocity, int damage);
 }

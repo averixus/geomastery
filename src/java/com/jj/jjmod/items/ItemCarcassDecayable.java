@@ -25,8 +25,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
+/** Decayable carcass item. */
 public class ItemCarcassDecayable extends ItemNew {
 
+    /** The block for this item. */
     private final BlockCarcass block;
     
     public ItemCarcassDecayable(String name, BlockCarcass block) {
@@ -35,6 +37,7 @@ public class ItemCarcassDecayable extends ItemNew {
         this.block = block;
     }
     
+    /** Gives this item an ICapDecay of its block's shelf life. */
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
@@ -43,6 +46,7 @@ public class ItemCarcassDecayable extends ItemNew {
                 DefaultCapDecay(this.block.getShelfLife()));
     }
     
+    /** Ticks the ICapDecay while this item is an entity. */
     @Override
     public boolean onEntityItemUpdate(EntityItem entity) {
         
@@ -56,29 +60,10 @@ public class ItemCarcassDecayable extends ItemNew {
         return false;
     }
     
-    @Override
-    public boolean showDurabilityBar(ItemStack stack) {
-        
-        return true;
-    }
-    
-    @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
-        
-        return 0;
-    }
-    
-    @Override
-    public int getRGBDurabilityForDisplay(ItemStack stack) {
-        
-        float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null)
-                .getRenderFraction();
-        return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
-    }
-    
+    /** Attempts to place this item's carcass block. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world,
-            BlockPos pos, EnumHand hand, EnumFacing facing,
+            BlockPos pos, EnumHand hand, EnumFacing side,
             float hitX, float hitY, float hitZ) {
         
         if (world.isRemote) {
@@ -86,7 +71,9 @@ public class ItemCarcassDecayable extends ItemNew {
             return EnumActionResult.SUCCESS;
         }
         
-        pos = pos.offset(facing);
+        ItemStack stack = player.getHeldItem(hand);
+        
+        pos = pos.offset(side);
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
             
@@ -94,14 +81,14 @@ public class ItemCarcassDecayable extends ItemNew {
             
             return EnumActionResult.FAIL;
         }
-
-        ItemStack stack = player.getHeldItem(hand);
-        ICapDecay cap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
         
+        // Set up block and TE
         IBlockState placeState = this.block.getDefaultState();
         world.setBlockState(pos, placeState);
-        
+        ICapDecay cap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
         ((TECarcass) world.getTileEntity(pos)).setAge(cap.getAge());
+        
+        // Use item
         world.playSound(null, pos, SoundType.CLOTH.getPlaceSound(),
                 SoundCategory.BLOCKS, (SoundType.CLOTH.getVolume() + 1.0F)
                 / 2.0F,  SoundType.CLOTH.getPitch() * 0.8F);
@@ -109,10 +96,32 @@ public class ItemCarcassDecayable extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;
+    }
+    
+    /** Makes this item always show a durability bar. */
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        
+        return true;
+    }
+    
+    /** Makes this item always show a full durability bar. */
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack) {
+        
+        return 0;
+    }
+    
+    /** Makes this item's durability bar colour represent its decay. */
+    @Override
+    public int getRGBDurabilityForDisplay(ItemStack stack) {
+        
+        float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                .getRenderFraction();
+        return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
     }
 }

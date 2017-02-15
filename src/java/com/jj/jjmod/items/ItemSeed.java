@@ -5,6 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemSeeds;
 
+/** Seed item. */
 public class ItemSeed extends ItemSeeds {
 
     public ItemSeed(String name, int stackSize, Block crop) {

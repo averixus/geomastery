@@ -13,7 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** FoodStats class for single food type. */
 public class FoodStatsPartial extends FoodStats {
     
-    private int hunger = 20;
+    private static final int HEALTH_TIMER = 600;
+    
+    private int food = 20;
     private float saturation = 5.0F;
     private float exhaustion;
     private int damageTimer;
@@ -41,22 +43,18 @@ public class FoodStatsPartial extends FoodStats {
                 
             } else {
                 
-                this.hunger = Math.max(this.hunger - 1, 0);
+                this.food = Math.max(this.food - 1, 0);
                 hasChanged = true;
             }
         }
         
-        if (this.hunger <= 0) {
+        if (this.food <= 0) {
             
             this.damageTimer++;
             
-            if (this.damageTimer >= 240) {
+            if (this.damageTimer >= HEALTH_TIMER) {
                 
-                if (this.player.getHealth() > 1.0F) {
-                    
-                    this.player.attackEntityFrom(DamageSource.STARVE, 1.0F);
-                }
-                
+                this.player.attackEntityFrom(DamageSource.STARVE, 1.0F);
                 this.damageTimer = 0;
             }
             
@@ -68,27 +66,21 @@ public class FoodStatsPartial extends FoodStats {
         return hasChanged;
     }
     
+    /** @return The total fullness for comparisons. */
+    public float getFullness() {
+        
+        return this.food + this.saturation - this.exhaustion;
+    }
+    
     /** Attempts to heal the player using this food type. */
     public void heal() {
         
-        if (this.saturation > 0.0F && this.hunger >= 20) {
-            
+        if (this.food >= 10) {
+            System.out.println("tickingheal, timer " + this.healTimer);
             this.healTimer++;
             
-            if (this.healTimer >= 30) {
-                
-                float f = Math.min(this.saturation, 4.0F);
-                this.player.heal(f / 4.0F);
-                this.addExhaustion(f);
-                this.healTimer = 0;
-            }
-            
-        } else if (this.hunger >= 18) {
-            
-            this.healTimer++;
-            
-            if (this.healTimer >= 240) {
-
+            if (this.healTimer >= HEALTH_TIMER) {
+                System.out.println("adding health");
                 this.player.heal(1.0F);
                 this.addExhaustion(4.0F);
                 this.healTimer = 0;
@@ -103,9 +95,9 @@ public class FoodStatsPartial extends FoodStats {
     @Override
     public void addStats(int hunger, float saturation) {
 
-        this.hunger = Math.min(hunger + this.hunger, 20);
+        this.food = Math.min(hunger + this.food, 20);
         this.saturation = Math.min(this.saturation +
-                (saturation * hunger * 2.0F), this.hunger);
+                (saturation * hunger * 2.0F), this.food);
     }
     
     @Override
@@ -118,13 +110,13 @@ public class FoodStatsPartial extends FoodStats {
     @Override
     public int getFoodLevel() {
 
-        return this.hunger;
+        return this.food;
     }
     
     @Override
     public boolean needFood() {
 
-        return this.hunger < 20;
+        return this.food < 20;
     }
     
     @Override
@@ -139,20 +131,10 @@ public class FoodStatsPartial extends FoodStats {
         return this.saturation;
     }
     
-    public float getExhaustion() {
-        
-        return this.exhaustion;
-    }
-    
-    public void setExhaustion(float exhaustion) {
-        
-        this.exhaustion = exhaustion;
-    }
-    
     @Override
     public void setFoodLevel(int hunger) {
 
-        this.hunger = hunger;
+        this.food = hunger;
     }
 
     @Override
@@ -171,7 +153,7 @@ public class FoodStatsPartial extends FoodStats {
 
         if (nbt.hasKey("hunger", 99)) {
             
-            this.hunger = nbt.getInteger("hunger");
+            this.food = nbt.getInteger("hunger");
             this.damageTimer = nbt.getInteger("damageTimer");
             this.healTimer = nbt.getInteger("healTimer");
             this.saturation = nbt.getFloat("saturation");
@@ -182,7 +164,7 @@ public class FoodStatsPartial extends FoodStats {
     @Override
     public void writeNBT(NBTTagCompound nbt) {
 
-        nbt.setInteger("hunger", this.hunger);
+        nbt.setInteger("hunger", this.food);
         nbt.setInteger("damageTimer", this.damageTimer);
         nbt.setInteger("healTimer", this.healTimer);
         nbt.setFloat("saturation", this.saturation);

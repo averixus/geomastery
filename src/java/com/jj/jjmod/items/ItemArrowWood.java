@@ -8,12 +8,12 @@ import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemArrowWood extends ItemArrow {
+/** Wood arrow item. */
+public class ItemArrowWood extends ItemArrowAbstract {
 
     public ItemArrowWood() {
 
-        super();
-        ItemNew.setupItem(this, "arrow_wood", 10, CreativeTabs.COMBAT);
+        super("arrow_wood");
     }
 
     @Override

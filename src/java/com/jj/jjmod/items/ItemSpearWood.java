@@ -5,6 +5,7 @@ import com.jj.jjmod.utilities.EquipMaterial;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+/** Wood spear tool item. */
 public class ItemSpearWood extends ItemSpearAbstract {
 
     public ItemSpearWood() {
@@ -13,11 +14,10 @@ public class ItemSpearWood extends ItemSpearAbstract {
     }
 
     @Override
-    public void throwSpear(World world, EntityPlayer player, float velocity,
+    protected void throwSpear(World world, EntityPlayer player, float velocity,
             int damage) {
 
-        EntitySpearWood thrown =
-                new EntitySpearWood(world, player, damage);
+        EntitySpearWood thrown = new EntitySpearWood(world, player, damage);
         thrown.setAim(player, player.rotationPitch,
                 player.rotationYaw, 0.0F, velocity, 1.0F);
         world.spawnEntity(thrown);

@@ -2,28 +2,30 @@ package com.jj.jjmod.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
+import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
-public class ItemAxe extends ItemTool {
+/** Axe tool item. */
+public class ItemAxe extends ItemToolAbstract {
 
-    public static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(new Block[]
-            {Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2,
-            Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN,
-            Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON,
-            Blocks.WOODEN_PRESSURE_PLATE, Blocks.LEAVES,
-            ModBlocks.craftingCandlemaker, ModBlocks.craftingClayworks,
-            ModBlocks.craftingTextiles, ModBlocks.craftingWoodworking,
-            ModBlocks.drying, ModBlocks.woodApple, ModBlocks.woodBanana,
-            ModBlocks.woodOrange, ModBlocks.woodPear});
+    /** Set of vanilla blocks to harvest. */
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(new Block[]
+            {Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.LADDER,
+            Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE, Blocks.LEAVES,
+            Blocks.LEAVES2});
 
     public ItemAxe(String name, ToolMaterial material) {
 
         super(3, -3.1F, material, EFFECTIVE_ON);
         ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
-        this.setHarvestLevel("axe", 1);
+        this.setHarvestLevel(ToolType.AXE.toString(), 1);
     }
 }

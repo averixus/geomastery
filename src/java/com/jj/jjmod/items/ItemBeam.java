@@ -20,10 +20,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Beam item. */
 public class ItemBeam extends ItemNew {
     
-    public int minLength;
-    public int maxLength;
+    /** Minimum length this item's beam structure can span. */
+    private int minLength;
+    /** Maximm length this item's beam structure can span. */
+    private int maxLength;
 
     public ItemBeam(String name, int minLength, int maxLength) {
         
@@ -32,10 +35,10 @@ public class ItemBeam extends ItemNew {
         this.maxLength = maxLength;
     }
     
+    /** Builds a beam structure. */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player,
-            World world, BlockPos pos, EnumHand hand,
-            EnumFacing side,
+    public EnumActionResult onItemUse(EntityPlayer player, World world,
+            BlockPos pos, EnumHand hand, EnumFacing side,
             float x, float y, float z) {
         
         ItemStack stack = player.getHeldItem(hand);
@@ -52,9 +55,8 @@ public class ItemBeam extends ItemNew {
       
         // Get positions
         BlockPos posBack = pos.offset(side);
-        System.out.println("pos back is " + posBack);
-        ArrayList<BlockPos> middles = new ArrayList<BlockPos>();
         BlockPos posMiddle = posBack.offset(side);
+        ArrayList<BlockPos> middles = new ArrayList<BlockPos>();
         int length = 2;
         
         while (length <= this.maxLength &&
@@ -62,7 +64,7 @@ public class ItemBeam extends ItemNew {
                 .isReplaceable(world, posMiddle) &&
                 world.getBlockState(posMiddle.offset(side)).getBlock()
                 .isReplaceable(world, posMiddle.offset(side))) {
-            System.out.println("adding middle " + posMiddle);
+
             middles.add(posMiddle);
             posMiddle = posMiddle.offset(side);
             length++;
@@ -72,9 +74,8 @@ public class ItemBeam extends ItemNew {
         
         Block frontEnd = world.getBlockState(posFront.offset(side)).getBlock();
         Block backEnd = world.getBlockState(pos).getBlock();
-        System.out.println("pos front is " + posFront);
         
-        // Check validity
+        // Check validity of supports and length
         boolean frontValid = ModBlocks.HEAVY.contains(frontEnd);
         boolean backValid = ModBlocks.HEAVY.contains(backEnd);
         
@@ -89,10 +90,10 @@ public class ItemBeam extends ItemNew {
             IBuildingBlock backBuilding = (IBuildingBlock) backEnd;
             backValid = backBuilding.supportsBeam();
         }
-        if (length > this.maxLength || !frontValid || !backValid) {
-            
-            System.out.println("length " + length + " too long OR");
-            System.out.println("block " + frontEnd + " at " + posFront.offset(side) + " is not wall or fence");
+        
+        if (length < this.minLength || length > this.maxLength ||
+                !frontValid || !backValid) {
+
             return EnumActionResult.FAIL;
         }
         
@@ -107,7 +108,7 @@ public class ItemBeam extends ItemNew {
         boolean replaceableFront = blockFront.isReplaceable(world, posFront);
         
         if (!replaceableBack || !replaceableFront) {
-            System.out.println("start or end not replaceable");
+
             return EnumActionResult.FAIL;
         }
         
@@ -122,13 +123,16 @@ public class ItemBeam extends ItemNew {
             world.setBlockState(mid, state);
         }
         
-        // Apply TEs
-        ((TEBeam) world.getTileEntity(posBack)).setState(side, EnumPartBeam.BACK, this);
-        ((TEBeam) world.getTileEntity(posFront)).setState(side, EnumPartBeam.FRONT, this);
+        // Apply TE states
+        ((TEBeam) world.getTileEntity(posBack))
+                .setState(side, EnumPartBeam.BACK, this);
+        ((TEBeam) world.getTileEntity(posFront))
+                .setState(side, EnumPartBeam.FRONT, this);
         
         for (BlockPos mid : middles) {
             
-            ((TEBeam) world.getTileEntity(mid)).setState(side, EnumPartBeam.MIDDLE, this);
+            ((TEBeam) world.getTileEntity(mid))
+                    .setState(side, EnumPartBeam.MIDDLE, this);
         }
         
         // Use item
@@ -138,10 +142,9 @@ public class ItemBeam extends ItemNew {
                 SoundType.WOOD.getPitch() * 0.8F);
         
         if (!player.capabilities.isCreativeMode) {
-            System.out.println("using item, before " + stack);
+
             stack.shrink(1);
-            System.out.println("after " + stack);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

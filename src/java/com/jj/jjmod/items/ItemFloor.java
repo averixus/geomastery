@@ -17,9 +17,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Floor item. */
 public class ItemFloor extends ItemNew {
     
-    protected EnumFloor floor;
+    /** This item's floor type. */
+    private EnumFloor floor;
 
     public ItemFloor(int stackSize, EnumFloor floor) {
         
@@ -27,38 +29,36 @@ public class ItemFloor extends ItemNew {
         this.floor = floor;
     }
     
+    /** Attempts to apply this floor to the targested block. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
             World world, BlockPos pos, EnumHand hand,
-            EnumFacing side,
-            float x, float y, float z) {
+            EnumFacing side, float x, float y, float z) {
         
-        ItemStack stack = player.getHeldItem(hand);
-        System.out.println("on item use");
         if (world.isRemote) {
 
             return EnumActionResult.SUCCESS;
         }
         
+        ItemStack stack = player.getHeldItem(hand);
+        
         Block block = world.getBlockState(pos).getBlock();
         TileEntity tileEntity = world.getTileEntity(pos);
         
         if (block != ModBlocks.beam || !(tileEntity instanceof TEBeam)) {
-            System.out.println("not beam or TEBeam");
+
             return EnumActionResult.FAIL;
         }
         
         TEBeam tileBeam = (TEBeam) tileEntity;
         
         if (tileBeam.getFloor() != EnumFloor.NONE) {
-            System.out.println("floor not none");
+
             return EnumActionResult.FAIL;
         }
         
         // Use item
-        System.out.println("about to apply floor to " + tileBeam.getFloor());
         if (tileBeam.applyFloor(this.floor)) {
-            System.out.println("just applied floor to " + tileBeam.getFloor());
             
             world.playSound(null, pos, SoundType.WOOD.getPlaceSound(),
                     SoundCategory.BLOCKS,
@@ -66,9 +66,9 @@ public class ItemFloor extends ItemNew {
                     SoundType.WOOD.getPitch() * 0.8F);
             
             if (!player.capabilities.isCreativeMode) {
-                System.out.println("using item");
+
                 stack.shrink(1);
-                ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
+                ContainerInventory.updateHand(player, hand);
             }
             
             return EnumActionResult.SUCCESS;
@@ -76,5 +76,4 @@ public class ItemFloor extends ItemNew {
         
         return EnumActionResult.FAIL;
     }
-
 }

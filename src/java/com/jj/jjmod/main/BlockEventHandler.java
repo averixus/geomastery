@@ -24,6 +24,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -184,27 +185,6 @@ public class BlockEventHandler {
             
             event.setCanceled(true);
         }
-    }
-    
-    /** Changes behaviour of blocks when broken by player. */
-    @SubscribeEvent
-    public void breakBlock(BlockEvent.BreakEvent event) {
-        
-        Block block = event.getState().getBlock();
-        EntityPlayer player = event.getPlayer();
-        ItemStack stack = player.getHeldItem(player.getActiveHand());
-        
-        // Dirt broken with hoe turns to farmland
-        if ((block == Blocks.DIRT || block == Blocks.GRASS) &&
-                stack.getItem() instanceof ItemHoe) {
-            
-            event.getWorld().setBlockState(event.getPos(),
-                    Blocks.FARMLAND.getDefaultState());
-            event.setCanceled(true);
-        }
-        
-        // Updates for tool durability
-        ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
     }
 
     /** Alters equivalent to Block#getDrops for vanilla blocks. */

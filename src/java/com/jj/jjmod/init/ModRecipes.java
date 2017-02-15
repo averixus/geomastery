@@ -142,7 +142,7 @@ public class ModRecipes {
                 "FSS", 'F', ModItems.axeheadFlint, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.pickaxeFlint),
                 "FSS", 'F', ModItems.pickheadFlint, 'S', Items.STICK);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.woolknifeFlint),
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.shearsFlint),
                 "F ", "FF", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearFlint),
                 "FSS", 'F', ModItems.spearheadFlint, 'S', Items.STICK);

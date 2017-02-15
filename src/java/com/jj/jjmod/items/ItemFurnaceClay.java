@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** Clay furnace item. */
 public class ItemFurnaceClay extends ItemNew {
 
     public ItemFurnaceClay() {
@@ -26,22 +27,24 @@ public class ItemFurnaceClay extends ItemNew {
         super("furnace_clay", 1, CreativeTabs.DECORATIONS);
     }
 
+    /** Attempts to build clay furnace structure. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
             World world, BlockPos pos, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
-
-        ItemStack stack = player.getHeldItem(hand);
         
         if (world.isRemote) {
 
             return EnumActionResult.SUCCESS;
         }
+        
+        ItemStack stack = player.getHeldItem(hand);
 
         // Calculate positions
-        BlockPos posBL = pos.up();
-        int facing = MathHelper.floor((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        EnumFacing enumFacing = EnumFacing.getHorizontal(facing);
+        BlockPos posBL = pos.offset(side);
+        int intFacing = MathHelper.floor((player.rotationYaw * 4.0F /
+                360.0F) + 0.5D) & 3;
+        EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posBR = posBL.offset(enumFacing.rotateY());
         BlockPos posTL = posBL.up();
         BlockPos posTR = posBR.up();
@@ -96,7 +99,7 @@ public class ItemFurnaceClay extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

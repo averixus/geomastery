@@ -2,11 +2,14 @@ package com.jj.jjmod.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
+import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -19,87 +22,41 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemHoe extends ItemTool {
+/** Hoe tool item. */
+public class ItemHoe extends ItemToolAbstract {
 
-    public static final Set<Block> EFFECTIVE_ON = Sets.newHashSet( new Block[]
-            {Blocks.DIRT, Blocks.GRASS});
+    /** Set of vanilla blocks to harvest. */
+    private static final Set<Block> EFFECTIVE_ON =
+            Sets.newHashSet( new Block[] {Blocks.DIRT, Blocks.GRASS});
 
     public ItemHoe(String name, ToolMaterial material) {
 
         super(2, -3.1F, material, EFFECTIVE_ON);
         ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
-        this.setHarvestLevel("hoe", 1);
+        this.setHarvestLevel(ToolType.HOE.toString(), 1);
         this.efficiencyOnProperMaterial = 0.25F;
     }
+    
+    /** Turns broken dirt/grass into farmland. */
+    @Override
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos,
+            EntityPlayer player) {
 
-    @SuppressWarnings("incomplete-switch")
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn,
-            World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing,
-            float hitX, float hitY, float hitZ) {
-
-        if (!playerIn.canPlayerEdit(pos.offset(facing), facing,
-                stack)) {
-
-            return EnumActionResult.FAIL;
-
-        } else {
-
-            int hook = net.minecraftforge.event.ForgeEventFactory
-                    .onHoeUse(stack, playerIn, worldIn, pos);
-
-            if (hook != 0) {
-
-                return hook > 0 ? EnumActionResult.SUCCESS
-                        : EnumActionResult.FAIL;
-            }
-
-            IBlockState iblockstate = worldIn.getBlockState(pos);
-            Block block = iblockstate.getBlock();
-
-            if (facing != EnumFacing.DOWN && worldIn.isAirBlock(pos.up())) {
-
-                if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
-
-                    this.setBlock(stack, playerIn, worldIn, pos,
-                            Blocks.FARMLAND.getDefaultState());
-                    return EnumActionResult.SUCCESS;
-                }
-
-                if (block == Blocks.DIRT) {
-
-                    switch ((BlockDirt.DirtType) iblockstate
-                            .getValue(BlockDirt.VARIANT)) {
-
-                        case DIRT: {
-                            this.setBlock(stack, playerIn, worldIn, pos,
-                                    Blocks.FARMLAND.getDefaultState());
-                            return EnumActionResult.SUCCESS;
-                        }
-                        case COARSE_DIRT: {
-                            this.setBlock(stack, playerIn, worldIn, pos,
-                                    Blocks.DIRT.getDefaultState()
-                                    .withProperty(BlockDirt.VARIANT,
-                                    BlockDirt.DirtType.DIRT));
-                            return EnumActionResult.SUCCESS;
-                        }
-                    }
-                }
-            }
-
-            return EnumActionResult.PASS;
-        }
-    }
-
-    protected void setBlock(ItemStack stack, EntityPlayer player,
-            World worldIn, BlockPos pos, IBlockState state) {
-
-        worldIn.playSound(player, pos, SoundEvents.ITEM_HOE_TILL,
-                SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-        if (!worldIn.isRemote) {
-
-            worldIn.setBlockState(pos, state, 11);
+        if (!player.world.isRemote) {
+            
             stack.damageItem(1, player);
+            ContainerInventory.updateHand(player, player.getActiveHand());
+            
+            Block block = player.world.getBlockState(pos).getBlock();
+            
+            if (block == Blocks.DIRT || block == Blocks.GRASS) {
+                
+                player.world.setBlockState(pos,
+                        Blocks.FARMLAND.getDefaultState());
+                return true;
+            }
         }
+        
+        return false;
     }
 }

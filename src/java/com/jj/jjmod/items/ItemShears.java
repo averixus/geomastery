@@ -1,66 +1,55 @@
 package com.jj.jjmod.items;
 
-import java.util.ArrayList;
-import java.util.Set;
-import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
+import java.util.Collections;
+import java.util.Random;
+import java.util.function.Function;
+import com.jj.jjmod.container.ContainerInventory;
+import com.jj.jjmod.init.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.IShearable;
 
-public class ItemShears extends ItemTool {
+/** Shears tool item. */
+public class ItemShears extends ItemToolAbstract {
+    
+    private Function<Random, Integer> yield;
 
-    public static final Set<Block> EFFECTIVE_ON =
-            Sets.newHashSet(new Block[] {});
+    public ItemShears(String name, ToolMaterial material,
+            Function<Random, Integer> yield) {
 
-    public ItemShears(String name, ToolMaterial material) {
-
-        super(1F, -3.1F, material, EFFECTIVE_ON);
+        super(1F, -3.1F, material, Collections.emptySet());
         ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        this.yield = yield;
     }
 
+    /** Shears sheep. */
     @Override
-    public boolean itemInteractionForEntity(ItemStack itemstack,
-            net.minecraft.entity.player.EntityPlayer player,
-            EntityLivingBase entity, net.minecraft.util.EnumHand hand) {
+    public boolean itemInteractionForEntity(ItemStack stack,
+            EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
 
         if (entity.world.isRemote) {
             
             return false;
         }
         
-        if (entity instanceof net.minecraftforge.common.IShearable) {
+        if (entity instanceof IShearable) {
             
-            net.minecraftforge.common.IShearable target =
-                    (net.minecraftforge.common.IShearable) entity;
+            IShearable target = (IShearable) entity;
             
             BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
             
-            if (target.isShearable(itemstack, entity.world, pos)) {
+            if (target.isShearable(stack, entity.world, pos)) {
                 
-                java.util.List<ItemStack> drops = target
-                        .onSheared(itemstack, entity.world, pos,
-                        net.minecraft.enchantment.EnchantmentHelper
-                        .getEnchantmentLevel(net.minecraft.init
-                        .Enchantments.FORTUNE, itemstack));
-
-                java.util.Random rand = new java.util.Random();
+                target.onSheared(stack, entity.world, pos, 0);
+                entity.dropItem(ModItems.wool,
+                        this.yield.apply(entity.world.rand));
                 
-                for (ItemStack stack: drops) {
-                    
-                    net.minecraft.entity.item.EntityItem ent =
-                            entity.entityDropItem(stack, 1.0F);
-                    ent.motionY += rand.nextFloat() * 0.05F;
-                    ent.motionX += (rand.nextFloat() -
-                            rand.nextFloat()) * 0.1F;
-                    ent.motionZ += (rand.nextFloat() -
-                            rand.nextFloat()) * 0.1F;
-                }
-                
-                itemstack.damageItem(1, entity);
+                stack.damageItem(1, entity);
+                ContainerInventory.updateHand(player, hand);
             }
             
             return true;

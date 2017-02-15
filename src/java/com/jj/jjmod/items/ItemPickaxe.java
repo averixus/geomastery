@@ -2,15 +2,22 @@ package com.jj.jjmod.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
+import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
-public class ItemPickaxe extends ItemTool {
+/** Pickaxe tool item. */
+public class ItemPickaxe extends ItemToolAbstract {
 
-    public static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(new Block[]
+    /** Set of vanilla blocks to harvest. */
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(new Block[]
             {Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE,
             Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE,
             Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK,
@@ -25,6 +32,6 @@ public class ItemPickaxe extends ItemTool {
 
         super(2.5F, -2.8F, material, EFFECTIVE_ON);
         ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
-        this.setHarvestLevel("pickaxe", 1);
+        this.setHarvestLevel(ToolType.PICKAXE.toString(), 1);
     }
 }

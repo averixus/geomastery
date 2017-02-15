@@ -11,8 +11,8 @@ import com.jj.jjmod.items.ItemArrowSteel;
 import com.jj.jjmod.items.ItemArrowWood;
 import com.jj.jjmod.items.ItemAxe;
 import com.jj.jjmod.items.ItemBeam;
-import com.jj.jjmod.items.ItemBedBreakableAbstract;
-import com.jj.jjmod.items.ItemBedPlainAbstract;
+import com.jj.jjmod.items.ItemBedBreakable;
+import com.jj.jjmod.items.ItemBedPlain;
 import com.jj.jjmod.items.ItemBow;
 import com.jj.jjmod.items.ItemBucket;
 import com.jj.jjmod.items.ItemCarcassDecayable;
@@ -52,7 +52,6 @@ import com.jj.jjmod.items.ItemSpearSteel;
 import com.jj.jjmod.items.ItemSpearWood;
 import com.jj.jjmod.items.ItemSword;
 import com.jj.jjmod.items.ItemWall;
-import com.jj.jjmod.items.ItemWoolknife;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.utilities.EquipMaterial;
 import com.jj.jjmod.utilities.FoodType;
@@ -128,10 +127,10 @@ public class ModItems {
     public static ItemSeed wheat;
     public static ItemSeed seedMelon;
 
-    public static ItemBedPlainAbstract bedLeaf;
-    public static ItemBedBreakableAbstract bedCotton;
-    public static ItemBedBreakableAbstract bedWool;
-    public static ItemBedPlainAbstract bedSimple;
+    public static ItemBedPlain bedLeaf;
+    public static ItemBedBreakable bedCotton;
+    public static ItemBedBreakable bedWool;
+    public static ItemBedPlain bedSimple;
 
     public static ItemBucket bucketEmpty;
     public static ItemBucket bucketWater;
@@ -285,11 +284,10 @@ public class ModItems {
     public static ItemPickaxe pickaxeFlint;
     public static ItemPickaxe pickaxeSteel;
 
+    public static ItemShears shearsFlint;
     public static ItemShears shearsBronze;
     public static ItemShears shearsCopper;
     public static ItemShears shearsSteel;
-
-    public static ItemWoolknife woolknifeFlint;
 
     public static ItemSpearBronze spearBronze;
     public static ItemSpearCopper spearCopper;
@@ -449,13 +447,13 @@ public class ModItems {
         register(seedMelon = new ItemSeed("seeds_melon",
                 15, ModBlocks.melonCrop));
         
-        register(bedLeaf = new ItemBedPlainAbstract("bed_leaf",
+        register(bedLeaf = new ItemBedPlain("bed_leaf",
                 ModBlocks.bedLeaf), true);
-        register(bedCotton = new ItemBedBreakableAbstract("bed_cotton",
+        register(bedCotton = new ItemBedBreakable("bed_cotton",
                 ModBlocks.bedCotton, 20), true);
-        register(bedWool = new ItemBedBreakableAbstract("bed_wool",
+        register(bedWool = new ItemBedBreakable("bed_wool",
                 ModBlocks.bedWool, 20), true);
-        register(bedSimple = new ItemBedPlainAbstract("bed_simple",
+        register(bedSimple = new ItemBedPlain("bed_simple",
                 ModBlocks.bedSimple), true);
 
         register(bucketEmpty = new ItemBucket("bucket_empty",
@@ -648,15 +646,14 @@ public class ModItems {
         register(pickaxeSteel = new ItemPickaxe("pickaxe_steel",
                 EquipMaterial.STEEL_TOOL));
 
+        register(shearsFlint = new ItemShears("shears_flint",
+                EquipMaterial.FLINT_TOOL, (r) -> 3 + r.nextInt(3)));
         register(shearsBronze = new ItemShears("shears_bronze",
-                EquipMaterial.BRONZE_TOOL));
+                EquipMaterial.BRONZE_TOOL, (r) -> 6 + r.nextInt(3)));
         register(shearsCopper = new ItemShears("shears_copper",
-                EquipMaterial.COPPER_TOOL));
+                EquipMaterial.COPPER_TOOL, (r) -> 5 + r.nextInt(3)));
         register(shearsSteel = new ItemShears("shears_steel",
-                EquipMaterial.STEEL_TOOL));
-
-        register(woolknifeFlint = new ItemWoolknife("woolknife_flint",
-                EquipMaterial.FLINT_TOOL));
+                EquipMaterial.STEEL_TOOL, (r) -> 7 + r.nextInt(3)));
 
         register(spearBronze = new ItemSpearBronze());
         register(spearCopper = new ItemSpearCopper());
@@ -714,22 +711,30 @@ public class ModItems {
                 CreativeTabs.MISC));
         
         register(steelmailHead = new ItemApparel("mail_head",
-                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD));
+                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD,
+                CreativeTabs.COMBAT));
         register(steelmailChest = new ItemApparel("mail_chest",
-                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.CHEST));
+                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.CHEST,
+                CreativeTabs.COMBAT));
         register(steelmailLegs = new ItemApparel("mail_legs",
-                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.LEGS));
+                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.LEGS,
+                CreativeTabs.COMBAT));
         register(steelmailFeet = new ItemApparel("mail_feet",
-                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.FEET));
+                EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.FEET,
+                CreativeTabs.COMBAT));
         
         register(steelplateHead = new ItemApparel("plate_head",
-                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.HEAD));
+                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.HEAD,
+                CreativeTabs.COMBAT));
         register(steelplateChest = new ItemApparel("plate_chest",
-                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.CHEST));
+                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.CHEST,
+                CreativeTabs.COMBAT));
         register(steelplateLegs = new ItemApparel("plate_legs",
-                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.LEGS));
+                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.LEGS,
+                CreativeTabs.COMBAT));
         register(steelplateFeet = new ItemApparel("plate_feet",
-                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET));
+                EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET,
+                CreativeTabs.COMBAT));
 
         register(bowCrude = new ItemBow("bow_crude",
                 200, EntityProjectile.CRUDE_MOD));

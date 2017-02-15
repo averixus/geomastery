@@ -1,6 +1,7 @@
 package com.jj.jjmod.items;
 
 import com.jj.jjmod.blocks.BlockDoor;
+import com.jj.jjmod.container.ContainerInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -15,9 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** Item for custom doors. */
 public class ItemDoor extends ItemNew {
     
-    public BlockDoor block;
+    /** The door block of this item. */
+    private BlockDoor block;
     
     public ItemDoor(BlockDoor block, String name) {
         
@@ -25,52 +28,59 @@ public class ItemDoor extends ItemNew {
         this.block = block;
     }
     
+    /** Attemps to build this item's door structure. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
-            World world, BlockPos pos, EnumHand hand,
+            World world, BlockPos bottomPos, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
-        
-        System.out.println("on item use");
-        
+                
         if (world.isRemote) {
             
             return EnumActionResult.SUCCESS;
         }
         
         ItemStack stack = player.getHeldItem(hand);
-        IBlockState state = world.getBlockState(pos);
+        
+        bottomPos = bottomPos.offset(side);
+        IBlockState state = world.getBlockState(bottomPos);
         Block block = state.getBlock();
         
-        if (!block.isReplaceable(world, pos) || !this.block.canPlaceBlockAt(world, pos)) {
-            
-            pos = pos.offset(side);
-        }
-        
-        BlockPos top = pos.up();
-        IBlockState stateTop = world.getBlockState(top);
+        BlockPos topPos = bottomPos.up();
+        IBlockState stateTop = world.getBlockState(topPos);
         Block blockTop = stateTop.getBlock();
         
-        if (!block.isReplaceable(world, pos) || !blockTop.isReplaceable(world, top) || !this.block.canPlaceBlockAt(world, pos)) {
-            System.out.println("this block " + block + " not replaceable OR");
-            System.out.println("upper block " + blockTop + " not replaceable OR");
-            System.out.println("can't place block at " + pos);
+        if (!block.isReplaceable(world, bottomPos) ||
+                !blockTop.isReplaceable(world, topPos) ||
+                !this.block.canPlaceBlockAt(world, bottomPos)) {
+
             return EnumActionResult.FAIL;
         }
         
-        int facing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int facing = MathHelper.floor(player.rotationYaw * 4.0F /
+                360.0F + 0.5D) & 3;
         EnumFacing playerFacing = EnumFacing.getHorizontal(facing);
         
-        IBlockState placeState = this.block.getDefaultState().withProperty(BlockDoor.FACING, playerFacing).withProperty(BlockDoor.OPEN, false);
-        IBlockState bottomState = placeState.withProperty(BlockDoor.PART, BlockDoor.EnumPart.SB);
-        IBlockState topState = placeState.withProperty(BlockDoor.PART, BlockDoor.EnumPart.ST);
+        IBlockState placeState = this.block.getDefaultState()
+                .withProperty(BlockDoor.FACING, playerFacing)
+                .withProperty(BlockDoor.OPEN, false);
+        IBlockState bottomState = placeState
+                .withProperty(BlockDoor.PART, BlockDoor.EnumPart.SB);
+        IBlockState topState = placeState
+                .withProperty(BlockDoor.PART, BlockDoor.EnumPart.ST);
 
-        world.setBlockState(pos, bottomState);
-        world.setBlockState(top, topState);
+        world.setBlockState(bottomPos, bottomState);
+        world.setBlockState(topPos, topState);
         
-        SoundType soundtype = world.getBlockState(pos).getBlock().getSoundType(world.getBlockState(pos), world, pos, player);
-        world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-        stack.shrink(1);
-        System.out.println("success place");
+        world.playSound(player, bottomPos, SoundType.WOOD.getPlaceSound(),
+                SoundCategory.BLOCKS, (SoundType.WOOD.getVolume() + 1.0F) /
+                2.0F, SoundType.WOOD.getPitch() * 0.8F);
+        
+        if (player.capabilities.isCreativeMode) {
+        
+            stack.shrink(1);
+            ContainerInventory.updateHand(player, hand);
+        }
+        
         return EnumActionResult.SUCCESS;
     }
 }

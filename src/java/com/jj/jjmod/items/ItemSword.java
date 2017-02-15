@@ -1,21 +1,17 @@
 package com.jj.jjmod.items;
 
+import java.util.Collections;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemTool;
-import net.minecraft.item.Item.ToolMaterial;
 
-public class ItemSword extends ItemTool {
-
-    public static final Set<Block> EFFECTIVE_ON =
-            Sets.newHashSet(new Block[] {});
+/** Sword tool item. */
+public class ItemSword extends ItemToolAbstract {
 
     public ItemSword(String name, ToolMaterial material) {
 
-        super(4, -3.1F, material, EFFECTIVE_ON);
+        super(4, -3.1F, material, Collections.emptySet());
         ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
     }
 }

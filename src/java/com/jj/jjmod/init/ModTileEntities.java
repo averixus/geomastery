@@ -2,6 +2,7 @@ package com.jj.jjmod.init;
 
 import com.jj.jjmod.render.tileentity.TileEntityBoxRenderer;
 import com.jj.jjmod.tileentities.TEBeam;
+import com.jj.jjmod.tileentities.TEBed;
 import com.jj.jjmod.tileentities.TEBox;
 import com.jj.jjmod.tileentities.TECarcass;
 import com.jj.jjmod.tileentities.TECraftingArmourer;
@@ -43,6 +44,8 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(TEDrying.class, "drying");
         
         GameRegistry.registerTileEntity(TEBox.class, "box");
+        
+        GameRegistry.registerTileEntity(TEBed.class, "bed");
         
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
         

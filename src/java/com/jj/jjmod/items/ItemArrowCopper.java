@@ -8,12 +8,12 @@ import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemArrowCopper extends ItemArrow {
+/** Copper arrow item. */
+public class ItemArrowCopper extends ItemArrowAbstract {
 
     public ItemArrowCopper() {
 
-        super();
-        ItemNew.setupItem(this, "arrow_copper", 10, CreativeTabs.COMBAT);
+        super("arrow_copper");
     }
 
     @Override

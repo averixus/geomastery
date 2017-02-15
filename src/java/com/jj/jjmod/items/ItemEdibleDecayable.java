@@ -11,8 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
+/** Decayable food items. */
 public class ItemEdibleDecayable extends ItemEdible {
     
+    /** This item's shelf life in days. */
     private int shelfLife;
 
     public ItemEdibleDecayable(String name, int hunger, float saturation,
@@ -22,6 +24,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         this.shelfLife = shelfLife;
     }
     
+    /** Gives this item an ICapDecay with its shelf life. */
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
@@ -29,6 +32,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
     }
     
+    /** Ticks the ICapDecay while this item is an entity. */
     @Override
     public boolean onEntityItemUpdate(EntityItem entity) {
         
@@ -42,18 +46,21 @@ public class ItemEdibleDecayable extends ItemEdible {
         return false;
     }
     
+    /** Makes this item always show a durability bar. */
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
         
         return true;
     }
     
+    /** Makes this item always show a full durability bar. */
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         
         return 0;
     }
     
+    /** Makes this item's durability bar colour represent its decay. */
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         

@@ -16,20 +16,27 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Slab item. */
 public class ItemSlab extends ItemNew {
 
-    public Block single;
-    public Block doubble;
+    /** Single slab block. */
+    private Block single;
+    /** Double slab block. */
+    private Block doubble;
     
-    public ItemSlab(String name, int stackSize, BlockSlabSingle single, BlockSlabDouble doubble) {
+    public ItemSlab(String name, int stackSize, BlockSlabSingle single,
+            BlockSlabDouble doubble) {
         
         super(name, stackSize, CreativeTabs.BUILDING_BLOCKS);
         this.single = single;
         this.doubble = doubble;
     }
     
+    /** Attempts to place this slab. */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float x, float y, float z) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world,
+            BlockPos pos, EnumHand hand, EnumFacing side,
+            float x, float y, float z) {
         
         if (world.isRemote) {
             
@@ -44,7 +51,8 @@ public class ItemSlab extends ItemNew {
             
             world.setBlockState(pos, this.doubble.getDefaultState());
             
-        } else if (block.isReplaceable(world, pos) && this.single.canPlaceBlockAt(world, pos)) {
+        } else if (block.isReplaceable(world, pos) &&
+                this.single.canPlaceBlockAt(world, pos)) {
             
             world.setBlockState(pos, this.single.getDefaultState());
             
@@ -52,7 +60,8 @@ public class ItemSlab extends ItemNew {
             
             pos = pos.offset(side);
             
-            if (!block.isReplaceable(world, pos) || !this.single.canPlaceBlockAt(world, pos)) {
+            if (!block.isReplaceable(world, pos) ||
+                    !this.single.canPlaceBlockAt(world, pos)) {
                 
                 return EnumActionResult.FAIL;
             }
@@ -60,13 +69,14 @@ public class ItemSlab extends ItemNew {
             world.setBlockState(pos, this.single.getDefaultState());
         }
         
-        SoundType sound = this.single.getSoundType();
-        world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
+        world.playSound(player, pos, SoundType.STONE.getPlaceSound(),
+                SoundCategory.BLOCKS, (SoundType.STONE.getVolume() + 1.0F) /
+                2.0F, SoundType.STONE.getPitch() * 0.8F);
         
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateHighlight();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

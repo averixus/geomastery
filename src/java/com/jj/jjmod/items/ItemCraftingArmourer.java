@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** Armourer crafting device item. */
 public class ItemCraftingArmourer extends ItemNew {
 
     public ItemCraftingArmourer() {
@@ -25,8 +26,11 @@ public class ItemCraftingArmourer extends ItemNew {
         super("crafting_armourer", 1, CreativeTabs.DECORATIONS);
     }
     
+    /** Attempts to build armourer crafting device structure. */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float x, float y, float z) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world,
+            BlockPos pos, EnumHand hand, EnumFacing side,
+            float x, float y, float z) {
          
         if (world.isRemote) {
             
@@ -36,8 +40,9 @@ public class ItemCraftingArmourer extends ItemNew {
         ItemStack stack = player.getHeldItem(hand);
 
         // Calculate Positions
-        BlockPos posM = pos.up();
-        int intFacing = MathHelper.floor(player.rotationYaw* 4.0F / 360.0F + 0.5D) & 3;
+        BlockPos posM = pos.offset(side);
+        int intFacing = MathHelper.floor(player.rotationYaw* 4.0F /
+                360.0F + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posL = posM.offset(enumFacing.rotateYCCW());
         BlockPos posT = posL.up();
@@ -68,29 +73,30 @@ public class ItemCraftingArmourer extends ItemNew {
         // Place all
         IBlockState placeState = ModBlocks.craftingArmourer.getDefaultState();
         
-        System.out.println("placing T");
         world.setBlockState(posT, placeState);
-        System.out.println("placed T " + world.getBlockState(posT) + ", placing L");
         world.setBlockState(posL, placeState);
-        System.out.println("placed L " + world.getBlockState(posL) + ", placing M");
         world.setBlockState(posM, placeState);
-        System.out.println("placed M " + world.getBlockState(posM) + ", placing R");
         world.setBlockState(posR, placeState);
-        System.out.println("placed R " + world.getBlockState(posR));
         
         // Set up tileentities
-        ((TECraftingArmourer) world.getTileEntity(posT)).setState(enumFacing, EnumPartArmourer.T);
-        ((TECraftingArmourer) world.getTileEntity(posL)).setState(enumFacing, EnumPartArmourer.L);
-        ((TECraftingArmourer) world.getTileEntity(posM)).setState(enumFacing, EnumPartArmourer.M);
-        ((TECraftingArmourer) world.getTileEntity(posR)).setState(enumFacing, EnumPartArmourer.R);
+        ((TECraftingArmourer) world.getTileEntity(posT))
+                .setState(enumFacing, EnumPartArmourer.T);
+        ((TECraftingArmourer) world.getTileEntity(posL))
+                .setState(enumFacing, EnumPartArmourer.L);
+        ((TECraftingArmourer) world.getTileEntity(posM))
+                .setState(enumFacing, EnumPartArmourer.M);
+        ((TECraftingArmourer) world.getTileEntity(posR))
+                .setState(enumFacing, EnumPartArmourer.R);
         
         // Use item
-        world.playSound(null, posM, SoundType.METAL.getPlaceSound(), SoundCategory.BLOCKS, SoundType.METAL.getVolume() + 1.0F / 2.0F, SoundType.METAL.getPitch());
+        world.playSound(null, posM, SoundType.METAL.getPlaceSound(),
+                SoundCategory.BLOCKS, SoundType.METAL.getVolume() + 1.0F
+                / 2.0F, SoundType.METAL.getPitch());
         
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

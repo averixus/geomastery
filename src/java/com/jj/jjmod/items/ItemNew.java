@@ -3,6 +3,7 @@ package com.jj.jjmod.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
+/** General superclass for new items and basic implementation. */
 public class ItemNew extends Item {
     
     public ItemNew(String name, int stackSize, CreativeTabs tab) {
@@ -20,6 +21,7 @@ public class ItemNew extends Item {
         this(name, 1);
     }
     
+    /** Applies constructor functions statically. */
     public static void setupItem(Item item, String name,
             int stackSize, CreativeTabs tab) {
         

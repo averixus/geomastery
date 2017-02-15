@@ -243,13 +243,13 @@ public class ModBlocks {
         buildSets();
         
         registerItemless(bedLeaf = new BlockBedPlain("bed_leaf", 0.2F, 
-                () -> null, true, null));
+                0.33F, () -> null, true, null));
         registerItemless(bedCotton = new BlockBedBreakable("bed_cotton", 2.0F,
-                () -> ModItems.bedCotton, true, null));
+                0.66F, () -> ModItems.bedCotton, true, null));
         registerItemless(bedWool = new BlockBedBreakable("bed_wool", 2.0F,
-                () -> ModItems.bedWool, true, null));
+                0.66F, () -> ModItems.bedWool, true, null));
         registerItemless(bedSimple = new BlockBedPlain("bed_simple", 2.0F,
-                () -> ModItems.bedSimple, false, null));
+                2F, () -> ModItems.bedSimple, false, null));
         
         registerItemless(antler = new BlockAntler());
         

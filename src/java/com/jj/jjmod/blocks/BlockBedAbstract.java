@@ -3,6 +3,8 @@ package com.jj.jjmod.blocks;
 import java.util.List;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
+import com.jj.jjmod.tileentities.TEBed;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
@@ -19,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigateClimber;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -46,19 +49,33 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
     protected static final AxisAlignedBB FLAT_BOUNDS =
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
 
+    /** This bed's item. */
     protected Supplier<Item> itemRef;
+    /** Whether this bed has the flat bounding box. */
     protected boolean isFlat;
+    /** The amount to heal the player when sleeping in this bed. */
+    protected float healAmount;
 
-    public BlockBedAbstract(String name, float hardness,
+    public BlockBedAbstract(String name, float hardness, float healAmount,
             Supplier<Item> itemRef, boolean isFlat, ToolType harvestTool) {
 
-        super(BlockMaterial.WOOD_FURNITURE);
+        super(BlockMaterial.WOOD_HANDHARVESTABLE);
         BlockNew.setupBlock(this, name, null, hardness, harvestTool);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(PART, EnumPartBed.FOOT)
                 .withProperty(OCCUPIED, false));
         this.itemRef = itemRef;
         this.isFlat = isFlat;
+        this.healAmount = healAmount;
+    }
+    
+    /** Drops this bed's item with damage if applicable. */
+    protected abstract void drop(World world, BlockPos pos, TEBed te);
+    
+    /** @return The amount the player heals sleeping in this Bed. */
+    public float getHealAmount() {
+        
+        return this.healAmount;
     }
 
     @Override
@@ -158,12 +175,8 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
             if (world.getBlockState(pos.offset(facing))
                     .getBlock() != this) {
 
+                this.drop(world, pos, (TEBed) world.getTileEntity(pos));
                 world.setBlockToAir(pos);
-
-                if (!world.isRemote) {
-
-                    this.dropBlockAsItem(world, pos, state, 0);
-                }
             }
         }
     }
@@ -176,8 +189,16 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
     }
     
     @Override
-    public abstract List<ItemStack> getDrops(IBlockAccess world,
-            BlockPos pos, IBlockState state, int fortune);
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        
+        player.addExhaustion(0.005F);
+        
+        if (state.getValue(PART) == EnumPartBed.FOOT) {
+            
+            this.drop(world, pos, (TEBed) te);
+        }
+    }
 
     @Nullable
     public static BlockPos getSafeExitLocation(World world,

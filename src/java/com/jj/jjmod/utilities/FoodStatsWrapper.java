@@ -20,14 +20,6 @@ public class FoodStatsWrapper extends FoodStats {
         this.player = player;
     }
     
-    /** Used for most eating */
-    @Override
-    public void addStats(ItemFood item, ItemStack stack) {
-        
-        this.player.getCapability(ModCapabilities.CAP_PLAYER, null)
-                .addStats(item, stack);
-    }
-    
     /** Used to wear down hunger from actions */
     @Override
     public void addExhaustion(float exhaustion) {
@@ -65,6 +57,10 @@ public class FoodStatsWrapper extends FoodStats {
         
         return 5.0F;
     }
+    
+    /** Used for most eating */
+    @Override
+    public void addStats(ItemFood item, ItemStack stack) {}
     
     /** Only used for eating vanilla cake */
     @Override

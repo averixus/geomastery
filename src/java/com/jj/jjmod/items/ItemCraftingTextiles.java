@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** Textiles crafting device item. */
 public class ItemCraftingTextiles extends ItemNew {
 
     public ItemCraftingTextiles() {
@@ -26,22 +27,23 @@ public class ItemCraftingTextiles extends ItemNew {
         super("crafting_textiles", 1, CreativeTabs.DECORATIONS);
     }
 
+    /** Attempts to build textiles crafting device structure. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
-            World world, BlockPos pos, EnumHand hand, EnumFacing enumFacing,
+            World world, BlockPos pos, EnumHand hand, EnumFacing side,
             float x, float y, float z) {
         
-        ItemStack stack = player.getHeldItem(hand);
-
         if (world.isRemote) {
 
             return EnumActionResult.SUCCESS;
         }
+        
+        ItemStack stack = player.getHeldItem(hand);
 
         // Calculate positions
-        BlockPos frontPos = pos.up();
-        int i = MathHelper.floor(
-                player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        BlockPos frontPos = pos.offset(side);
+        int i = MathHelper.floor(player.rotationYaw * 4.0F /
+                360.0F + 0.5D) & 3;
         EnumFacing facing = EnumFacing.getHorizontal(i);
         BlockPos backPos = frontPos.offset(facing);
 
@@ -80,7 +82,7 @@ public class ItemCraftingTextiles extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;

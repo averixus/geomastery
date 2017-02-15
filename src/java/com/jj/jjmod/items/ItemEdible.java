@@ -1,19 +1,25 @@
 package com.jj.jjmod.items;
 
 import com.jj.jjmod.capabilities.ICapPlayer;
+import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
+/** Food items with food type. */
 public class ItemEdible extends ItemFood {
     
+    /** This item's food type. */
     private final FoodType type;
 
     public ItemEdible(String name, int hunger, float saturation,
@@ -24,6 +30,13 @@ public class ItemEdible extends ItemFood {
         ItemNew.setupItem(this, name, stackSize, CreativeTabs.FOOD);
     }
     
+    /** @return This item's food type. */
+    public FoodType getType() {
+
+        return this.type;
+    }
+    
+    /** Starts eating this item if its type is not full. */
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
@@ -31,9 +44,9 @@ public class ItemEdible extends ItemFood {
         ItemStack stack = player.getHeldItem(hand);
         ICapPlayer capability = player
                 .getCapability(ModCapabilities.CAP_PLAYER, null);
-        System.out.println("on item right click " + this);
+
         if (capability.canEat(this.type)) {
-            System.out.println("can eat, eating");
+
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
@@ -41,8 +54,27 @@ public class ItemEdible extends ItemFood {
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
     
-    public FoodType getType() {
+    /** Eats this item. */
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack,
+            World world, EntityLivingBase entity) {
         
-        return this.type;
+        if (entity instanceof EntityPlayer) {
+        
+            EntityPlayer player = (EntityPlayer) entity;
+            
+            player.getCapability(ModCapabilities.CAP_PLAYER, null)
+                .addStats(this, stack);
+            
+            world.playSound(player, player.posX, player.posY, player.posZ,
+                    SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F,
+                    world.rand.nextFloat() * 0.1F + 0.9F);
+            
+            stack.shrink(1);
+            ContainerInventory.updateHand(player, player.getActiveHand());
+        }
+        
+        return stack;
+
     }
 }

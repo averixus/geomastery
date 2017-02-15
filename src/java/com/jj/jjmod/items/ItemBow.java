@@ -24,30 +24,34 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Bow item with variable power and funcitonality to choose best arrows. */
 public class ItemBow extends ItemNew {
     
-    public static final Class[] PRIORITY = {ItemArrowSteel.class, ItemArrowBronze.class, ItemArrowCopper.class, ItemArrowFlint.class, ItemArrowWood.class};
+    /** Arrow classes in order of priority. */
+    private static final Class[] PRIORITY = {ItemArrowSteel.class,
+            ItemArrowBronze.class, ItemArrowCopper.class,
+            ItemArrowFlint.class, ItemArrowWood.class};
     
+    /** Modifier for firing velocity. */
     private float powerModifier;
     
     public ItemBow(String name, int durability, float powerModifier) {
 
         super(name, 1, CreativeTabs.COMBAT);
         this.setMaxDamage(durability);
+        this.powerModifier = powerModifier;
 
         // Check how far the bow is pulled for the model
         this.addPropertyOverride(new ResourceLocation("pull"),
                 new IItemPropertyGetter() {
 
             @Override
-            @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World world,
                     @Nullable EntityLivingBase entity) {
 
                 ItemStack activeStack = entity.getActiveItemStack();
 
-                if (activeStack == null ||
-                        activeStack.getItem() != ModItems.bowCrude) {
+                if (!(activeStack.getItem() instanceof ItemBow)) {
 
                     return 0F;
 
@@ -64,7 +68,6 @@ public class ItemBow extends ItemNew {
                 new IItemPropertyGetter() {
 
             @Override
-            @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World world,
                     @Nullable EntityLivingBase entity) {
 
@@ -80,18 +83,120 @@ public class ItemBow extends ItemNew {
             }
         });
     }
+    
+    /** Fires an arrow. */
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World world,
+            EntityLivingBase entity, int timeLeft) {
 
+        if (!(entity instanceof EntityPlayer) || world.isRemote) {
+
+            return;
+        }
+
+        EntityPlayer player = (EntityPlayer) entity;
+
+        // Find and prepare arrow item
+        InvLocation ammoSlot = this.findAmmoSlot(player);
+        ItemStack ammo = ammoSlot.getStack();
+        int chargeTime = this.getMaxItemUseDuration(stack) - timeLeft;
+
+        if (ammo.isEmpty()) {
+
+            if (player.capabilities.isCreativeMode) {
+
+                ammo = new ItemStack(ModItems.arrowSteel);
+
+            } else {
+
+                return;
+            }
+        }
+
+        float velocity = getArrowVelocity(chargeTime);
+
+        if (velocity < 0.2) {
+
+            return;
+        }
+
+        // Create arrow entity
+        ItemArrowAbstract arrow = (ItemArrowAbstract) ammo.getItem();
+        EntityProjectile entityArrow = arrow.createArrow(world, stack, player);
+
+        entityArrow.setAim(player, player.rotationPitch,
+                player.rotationYaw, 0F, velocity, 1F);
+        world.spawnEntity(entityArrow);
+        world.playSound(null, player.posX, player.posY, player.posZ,
+                SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F,
+                1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
+
+        // Use and damage items
+        if (!player.capabilities.isCreativeMode) {
+
+            ammo.shrink(1);
+            
+            if (ammoSlot.getType() == InvType.OFFHAND) {
+            
+                ContainerInventory.updateHand(player, EnumHand.OFF_HAND);
+                
+            } else {
+            
+                ContainerInventory.updateInventory(player, ammoSlot.getIndex());
+            }
+            
+            stack.damageItem(1, player);
+            ContainerInventory.updateHand(player, player.getActiveHand());
+        }
+    }
+
+    /** Charges bow if there is ammo. */
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world,
+            EntityPlayer player, EnumHand hand) {
+
+        boolean hasAmmo = this.findAmmoSlot(player).isValid();
+        ItemStack stack = player.getHeldItem(hand);
+
+        if (!player.capabilities.isCreativeMode && !hasAmmo) {
+
+            return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+
+        } else {
+
+            player.setActiveHand(hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        }
+    }
+
+    /** @return The velocity of an arrow fired from this bow. */
+    private float getArrowVelocity(int charge) {
+
+        float velocity = charge / 20F;
+        velocity = ((velocity * velocity) + (2F * velocity)) / 3F;
+
+        if (velocity > 1F) {
+
+            velocity = 1F;
+        }
+
+        return velocity * this.powerModifier;
+    }
+    
+    /** @return The InvLocation of the primary or prioritised arrow stack. */
     private InvLocation findAmmoSlot(EntityPlayer player) {
 
         InvType invType = InvType.MAIN;
         int index = -1;
         
-        if (player.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemArrow) {
+        if (player.getHeldItem(EnumHand.OFF_HAND).getItem()
+                instanceof ItemArrow) {
 
             index = 0;
             invType = InvType.OFFHAND;
 
-        } else if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemArrow) {
+        } else if (player.getHeldItem(EnumHand.MAIN_HAND).getItem()
+                instanceof ItemArrow) {
 
             index = player.inventory.currentItem;
 
@@ -114,152 +219,14 @@ public class ItemBow extends ItemNew {
         return new InvLocation(player, invType, index);
     }
 
-    @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world,
-            EntityLivingBase entity, int timeLeft) {
-
-        if (!(entity instanceof EntityPlayer)) {
-
-            return;
-        }
-
-        EntityPlayer player = (EntityPlayer) entity;
-        boolean creative = player.capabilities.isCreativeMode;
-        InvLocation ammoSlot = this.findAmmoSlot(player);
-        ItemStack ammo = ammoSlot.getStack();
-        int chargeTime = this.getMaxItemUseDuration(stack) - timeLeft;
-
-        if (ammo.isEmpty()) {
-
-            if (creative) {
-
-                ammo = new ItemStack(ModItems.arrowSteel);
-
-            } else {
-
-                return;
-            }
-        }
-
-        float velocity = getArrowVelocity(chargeTime);
-
-        if (velocity < 0.1 || world.isRemote) {
-
-            return;
-        }
-
-        // Create entity arrow
-        Item arrow = ammo.getItem();
-        EntityProjectile entityArrow;
-
-        if (arrow == ModItems.arrowWood) {
-
-            ItemArrowWood arrowType = (ItemArrowWood) ammo.getItem();
-            entityArrow =
-                    arrowType.createArrow(world, ammo, player);
-
-
-        } else if (arrow == ModItems.arrowFlint) {
-
-            ItemArrowFlint arrowType = (ItemArrowFlint) ammo.getItem();
-            entityArrow =
-                    arrowType.createArrow(world, ammo, player);
-
-        } else if (arrow == ModItems.arrowCopper) {
-
-            ItemArrowCopper arrowType = (ItemArrowCopper) ammo.getItem();
-            entityArrow =
-                    arrowType.createArrow(world, ammo, player);
-
-        } else if (arrow == ModItems.arrowBronze) {
-
-            ItemArrowBronze arrowType = (ItemArrowBronze) ammo.getItem();
-            entityArrow =
-                    arrowType.createArrow(world, ammo, player);
-
-        } else {
-
-            ItemArrowSteel arrowType = (ItemArrowSteel) ammo.getItem();
-            entityArrow =
-                    arrowType.createArrow(world, ammo, player);
-
-        }
-        
-        entityArrow.setAim(player, player.rotationPitch,
-                player.rotationYaw, 0F, velocity * this.powerModifier, 1F);
-        world.spawnEntity(entityArrow);
-        world.playSound(null, player.posX, player.posY, player.posZ,
-                SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F,
-                1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
-
-        stack.damageItem(1, player);
-
-        if (!creative) {
-
-            ammo.shrink(1);
-            
-            if (ammoSlot.getType() == InvType.OFFHAND) {
-            
-                ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
-                
-            } else {
-            
-                ((ContainerInventory) player.inventoryContainer).sendUpdateInventory(ammoSlot.getIndex(), ammo);
-            }
-        }
-    }
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-
-        boolean hasAmmo = this.findAmmoSlot(player).isValid();
-        ItemStack stack = player.getHeldItem(hand);
-
-        ActionResult<ItemStack> action = net.minecraftforge.event
-                .ForgeEventFactory.onArrowNock(stack, world,
-                player, hand, hasAmmo);
-
-        if (action != null) {
-
-            return action;
-        }
-
-        if (!player.capabilities.isCreativeMode && !hasAmmo) {
-
-            return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
-
-        } else {
-
-            player.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-        }
-    }
-
-    @Override
-    public int getItemEnchantability() {
-
-        return 1;
-    }
-
-    public static float getArrowVelocity(int charge) {
-
-        float velocity = charge / 20F;
-        velocity = ((velocity * velocity) + (2F * velocity)) / 3F;
-
-        if (velocity > 1F) {
-
-            velocity = 1F;
-        }
-
-        return velocity;
-    }
-
+    /** @return The time taken for the bow to charge. */
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
 
         return 72000;
     }
-
+    
+    /** Makes the player move like pulling a bow. */
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
 

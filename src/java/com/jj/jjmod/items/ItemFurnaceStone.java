@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** Stone furnace item. */
 public class ItemFurnaceStone extends ItemNew {
 
     public ItemFurnaceStone() {
@@ -26,22 +27,24 @@ public class ItemFurnaceStone extends ItemNew {
         super("furnace_stone", 1, CreativeTabs.DECORATIONS);
     }
 
+    /** Attempts to build stone furnace structure. */
     @Override
     public EnumActionResult onItemUse(EntityPlayer player,
             World world, BlockPos pos, EnumHand hand,
-            EnumFacing playerFacing, float x, float y, float z) {
-
-        ItemStack stack = player.getHeldItem(hand);
+            EnumFacing side, float x, float y, float z) {
         
         if (world.isRemote) {
 
             return EnumActionResult.SUCCESS;
         }
+        
+        ItemStack stack = player.getHeldItem(hand);
 
         // Calculate positions
-        BlockPos posBM = pos.up();
-        int facing = MathHelper.floor((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        EnumFacing enumFacing = EnumFacing.getHorizontal(facing);
+        BlockPos posBM = pos.offset(side);
+        int intFacing = MathHelper.floor((player.rotationYaw * 4.0F / 
+                360.0F) + 0.5D) & 3;
+        EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posBL = posBM.offset(enumFacing.rotateY().getOpposite());
         BlockPos posBR = posBM.offset(enumFacing.rotateY());
         BlockPos posTL = posBL.up();
@@ -112,7 +115,7 @@ public class ItemFurnaceStone extends ItemNew {
         if (!player.capabilities.isCreativeMode) {
             
             stack.shrink(1);
-            ((ContainerInventory) player.inventoryContainer).sendUpdateOffhand();
+            ContainerInventory.updateHand(player, hand);
         }
         
         return EnumActionResult.SUCCESS;
