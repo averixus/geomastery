@@ -21,7 +21,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Abstract superclass for block-fruiting Crop blocks. */
-public abstract class BlockCropBlockfruit extends BlockCrop {
+public abstract class BlockCropBlockfruit extends BlockCropAbstract {
 
     public static final PropertyDirection FACING = BlockTorch.FACING;
 

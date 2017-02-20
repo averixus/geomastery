@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Slab item. */
-public class ItemSlab extends ItemNew {
+public class ItemSlab extends ItemJj {
 
     /** Single slab block. */
     private Block single;

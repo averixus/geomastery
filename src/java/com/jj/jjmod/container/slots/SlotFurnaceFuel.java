@@ -1,6 +1,5 @@
 package com.jj.jjmod.container.slots;
 
-import com.jj.jjmod.container.ContainerFurnace;
 import com.jj.jjmod.tileentities.TEFurnaceAbstract;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -8,34 +7,43 @@ import net.minecraft.item.ItemStack;
 
 public class SlotFurnaceFuel extends Slot {
 
-    private TEFurnaceAbstract furnace;
+    /** The furnace this slot draws inventory from. */
+    private final TEFurnaceAbstract furnace;
+    /** The index of this slot in the furnace fuels list. */
+    private final int index;
     
-    public SlotFurnaceFuel(TEFurnaceAbstract furnace, int xPos, int yPos) {
+    public SlotFurnaceFuel(TEFurnaceAbstract furnace, int index,
+            int xPos, int yPos) {
         
         super(null, 0, xPos, yPos);
         this.furnace = furnace;
+        this.index = index;
     }
     
     @Override
     public boolean isItemValid(ItemStack stack) {
-        
-        return this.furnace.isItemFuel(stack);
+
+        return this.furnace.recipes.getFuelTime(stack) > 0;
     }
     
     @Override
     public ItemStack getStack() {
         
-        return this.furnace.getFuel();
+        return this.furnace.getFuel(this.index);
     }
     
     @Override
     public void putStack(ItemStack stack) {
         
-        this.furnace.setFuel(stack);
+        this.furnace.setFuel(stack, this.index);
     }
     
+    /** Sorts the inputs list when the slot is changed. */
     @Override
-    public void onSlotChanged() {}
+    public void onSlotChanged() {
+
+        this.furnace.sort();
+    }
     
     @Override
     public int getSlotStackLimit() {
@@ -46,7 +54,7 @@ public class SlotFurnaceFuel extends Slot {
     @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.furnace.getFuel().splitStack(amount);
+        return this.furnace.getFuel(this.index).splitStack(amount);
     }
     
     @Override

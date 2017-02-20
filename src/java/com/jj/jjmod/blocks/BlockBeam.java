@@ -1,7 +1,10 @@
 package com.jj.jjmod.blocks;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.jj.jjmod.blocks.BlockBeam.EnumAxis;
 import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.tileentities.TEBeam.EnumPartBeam;
@@ -15,7 +18,9 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -175,7 +180,7 @@ public class BlockBeam extends BlockComplexAbstract {
             
             if (part.shouldDrop()) {
 
-                spawnItem(world, pos, tileBeam.getItem());
+                spawnAsEntity(world, pos, new ItemStack(tileBeam.getItem()));
             }
         }
     }
@@ -204,7 +209,7 @@ public class BlockBeam extends BlockComplexAbstract {
                 
                 if (tileBeam.getPart().shouldDrop()) {
 
-                    spawnItem(world, pos, tileBeam.getItem());
+                    spawnAsEntity(world, pos, new ItemStack(tileBeam.getItem()));
                 }
                 
                 return true;
@@ -212,14 +217,14 @@ public class BlockBeam extends BlockComplexAbstract {
             
             case POLE : {
 
-                spawnItem(world, pos, EnumFloor.POLE.getItem());    
+                spawnAsEntity(world, pos, new ItemStack(EnumFloor.POLE.getItem()));
                 tileBeam.removeFloor();
                 return false;
             }
             
             case WOOD : {
 
-                spawnItem(world, pos, EnumFloor.WOOD.getItem());
+                spawnAsEntity(world, pos, new ItemStack(EnumFloor.WOOD.getItem()));
                 tileBeam.removeFloor();
                 return false;
             }
@@ -232,8 +237,28 @@ public class BlockBeam extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
             BlockPos pos) {
 
-        // TODO 
-        return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumFloor floor = state.getValue(FLOOR);
+        
+        if (floor != EnumFloor.NONE) {
+            
+            return TOP_HALF;
+        }
+        
+        return BEAM[state.getValue(AXIS).ordinal()];
+    }
+    
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+        
+        state = this.getActualState(state, world, pos);
+        
+        addCollisionBoxToList(pos, entityBox, list, BEAM[state.getValue(AXIS).ordinal()]);
+        
+        if (state.getValue(FLOOR) != EnumFloor.NONE) {
+            
+            addCollisionBoxToList(pos, entityBox, list, BEAM_FLOOR);
+        }
     }
 
     @Override
@@ -254,8 +279,8 @@ public class BlockBeam extends BlockComplexAbstract {
             
             TEBeam tileBeam = (TEBeam) tileEntity;
             
-            state = state.withProperty(FLOOR, tileBeam.getFloor());
-            state = state.withProperty(AXIS,
+            state = tileBeam.getFloor() == null ? state : state.withProperty(FLOOR, tileBeam.getFloor());
+            state = tileBeam.getFacing() == null ? state : state.withProperty(AXIS,
                     EnumAxis.get(tileBeam.getFacing()));
             state = state.withProperty(NORTH_SIDE,
                     tileBeam.hasSideConnection(EnumFacing.NORTH)); 

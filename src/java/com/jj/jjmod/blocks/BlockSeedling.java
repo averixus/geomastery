@@ -19,11 +19,6 @@ import net.minecraft.world.biome.Biome;
 
 /** Abstract superclass for Seedling blocks. */
 public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
-
-    protected static final AxisAlignedBB BOUNDS =
-            new AxisAlignedBB(0.09999999403953552D, 0.0D,
-                    0.09999999403953552D, 0.8999999761581421D,
-                    0.800000011920929D, 0.8999999761581421D);
     
     /** WorldGenerator factory for this tree. */
     private ITreeGenRef treeGen;
@@ -45,7 +40,13 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        return BOUNDS;
+        return BlockNew.CENTRE_SIXTEEN;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return NULL_AABB;
     }
     
     @Override

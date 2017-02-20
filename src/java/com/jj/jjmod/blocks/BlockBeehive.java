@@ -44,15 +44,6 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     private static final String NAME = "beehive";
-    
-    private static final AxisAlignedBB EAST = new AxisAlignedBB(0.5625D,
-            0.3125D, 0.3125D, 0.9375D, 0.75D, 0.6875D);
-    private static final AxisAlignedBB WEST = new AxisAlignedBB(0.0625D,
-            0.3125D, 0.3125D, 0.4375D, 0.75D, 0.6875D);
-    private static final AxisAlignedBB NORTH = new AxisAlignedBB(0.3125D,
-            0.3125D, 0.0625D, 0.6875D, 0.75D, 0.4375D);
-    private static final AxisAlignedBB SOUTH = new AxisAlignedBB(0.3125D,
-            0.3125D, 0.5625D, 0.6875D, 0.75D, 0.9375D);
 
     /** Chance of growth per update tick. */
     private float chance = 0.2F;
@@ -213,16 +204,8 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             
             IBlockState newState = state.withProperty(AGE, 0);
             world.setBlockState(pos, newState);
-            
-            if (!world.isRemote) {
-                
-                world.spawnEntity(new EntityItem(world,
-                        pos.getX(), pos.getY(), pos.getZ(),
-                        new ItemStack(ModItems.honey, 4)));
-                world.spawnEntity(new EntityItem(world,
-                        pos.getX(), pos.getY(), pos.getZ(),
-                        new ItemStack(ModItems.beeswax)));
-            }
+            spawnAsEntity(world, pos, new ItemStack(ModItems.honey, 4));
+            spawnAsEntity(world, pos, new ItemStack(ModItems.beeswax));
             
             return true;
         }
@@ -247,33 +230,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        switch (state.getValue(FACING)) {
-            
-            case EAST: {
-                
-                return EAST;
-            }
-            
-            case WEST: {
-                
-                return WEST;
-            }
-            
-            case SOUTH: {
-                
-                return SOUTH;
-            }
-            
-            case NORTH: {
-                
-                return NORTH;
-            }
-            
-            default: {
-                
-                return NORTH;
-            }
-        }
+        return BLIP[state.getValue(FACING).getHorizontalIndex()];
     }
 
     @Override

@@ -50,20 +50,10 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
 
         if (state.getValue(PART) == EnumPartTextiles.FRONT) {
 
-            spawnItem(world, pos, ModItems.craftingTextiles);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingTextiles));
         }
     }
     
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos,
-            IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) ==
-                EnumPartTextiles.FRONT) {
-        
-            spawnItem(world, pos, ModItems.craftingTextiles);
-        }
-    }
     
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
@@ -86,7 +76,7 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
             if (brokenBack) {
 
                 world.setBlockToAir(pos);
-                spawnItem(world, pos, ModItems.craftingTextiles);
+                spawnAsEntity(world, pos, new ItemStack(ModItems.craftingTextiles));
             }
             
         } else {
@@ -106,7 +96,13 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART).isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return state.getValue(PART) == EnumPartTextiles.BACK ? FULL_BLOCK_AABB : HALF[state.getValue(FACING).getHorizontalIndex()];
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return state.getValue(PART) == EnumPartTextiles.BACK ? FULL_BLOCK_AABB : NULL_AABB;
     }
 
     @Override

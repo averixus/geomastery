@@ -1,6 +1,7 @@
 package com.jj.jjmod.capabilities;
 
 import com.jj.jjmod.init.ModPackets;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -10,64 +11,74 @@ public class DefaultCapDecay implements ICapDecay {
     
     private static final int DAY_TICKS = 24000;
     private static final int MAX_STAGE = 10;
-    
-    private int maxAge;
-    private int stage = 0;
-    private int ageTimer = 0;
+        
+    private int stageSize;
+    private long birthTime;
     
     public DefaultCapDecay(int maxDays) {
         
-        this.maxAge = maxDays * DAY_TICKS;
+        int maxAge = maxDays * /*DAY_TICKS*/ 100; //test
+        this.stageSize = maxAge / MAX_STAGE;
+        System.out.println("constructing capability, birth time " + this.birthTime);
     }
-    
-    @Override
-    public boolean updateAndRot() {
 
-        this.stage = (int) (((float) this.ageTimer / this.maxAge) * MAX_STAGE);
-
-        if (this.stage >= MAX_STAGE) {
-            
-            return true;
-            
-        } else {
-
-            this.ageTimer++;
-            return false;
-        }
-    }
     
     @Override
     public float getRenderFraction() {
 
-        return 1F - ((float) this.stage / MAX_STAGE);
+        long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
+        long timeDiff = currentTime - this.birthTime;
+        long stage = timeDiff / this.stageSize;
+        return Math.min(1, Math.max(0, 1F - ((float) stage / MAX_STAGE)));
     }
     
     @Override
-    public int getAge() {
+    public long getBirthTime() {
         
-        return this.ageTimer;
+        return this.birthTime;
     }
     
     @Override
-    public void setAge(int age) {
+    public int getStageSize() {
         
-        this.ageTimer = age;
+        return this.stageSize;
+    }
+    
+    @Override
+    public void setBirthTime(long birthTime) {
+        
+        this.birthTime = (birthTime / this.stageSize) * this.stageSize;
+    }
+    
+    @Override
+    public void setStageSize(int stageSize) {
+        
+        this.stageSize = stageSize;
+    }
+    
+    @Override
+    public boolean isRot() {
+        
+        long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
+        long timeDiff = currentTime - this.birthTime;
+        return timeDiff >= (this.stageSize * MAX_STAGE);
     }
     
     @Override
     public NBTTagCompound serializeNBT() {
         
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("stage", this.stage);
-        nbt.setInteger("maxage", this.maxAge);
+        nbt.setLong("birthTime", this.birthTime);
+        nbt.setInteger("stageSize", this.stageSize);
+        System.out.println("writing nbt, birth time " + this.birthTime);
         return nbt;
     }
     
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         
-        this.stage = nbt.getInteger("stage");
-        this.maxAge = nbt.getInteger("maxage");
-        this.ageTimer = this.stage / this.maxAge;
+        this.birthTime = nbt.getLong("birthTime");
+        this.stageSize = nbt.getInteger("stageSize");
+        System.out.println("reading from nbt, birth time " + this.birthTime);
     }
 }

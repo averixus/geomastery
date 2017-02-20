@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModRecipes;
-import com.jj.jjmod.container.ContainerFurnace;
+import com.jj.jjmod.container.ContainerFurnaceSingle;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -22,18 +22,14 @@ import net.minecraft.util.math.BlockPos;
 /** TileEntity for Stone Furnace blocks. */
 public class TEFurnaceStone extends TEFurnaceAbstract {
 
+    /** This block's horizontal facing. */
     private EnumFacing facing;
+    /** This block's part in the structure. */
     private EnumPartStone part;
 
     public TEFurnaceStone() {
 
-        super(ModRecipes.STONE);
-    }
-    
-    @Override
-    public int getCookTime(ItemStack stack) {
-
-        return 300;
+        super(ModRecipes.STONE, 6);
     }
 
     /** Sets this Stone Furnace block to the given information. */
@@ -155,12 +151,6 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         private EnumPartStone(String name) {
 
             this.name = name;
-        }
-
-        @Override
-        public String toString() {
-
-            return this.name;
         }
 
         @Override

@@ -1,3 +1,6 @@
 {
-    "parent": "jjmod:block/crafters/drying"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "jjmod:items/drying"
+    }
 }

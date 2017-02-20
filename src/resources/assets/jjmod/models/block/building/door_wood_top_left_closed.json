@@ -2,10 +2,8 @@
 "__comment": "Designed by bdcraftjgrowe65 with bDcraft Cubik pRO 0.96 beta - http://bdcraft.net",
 "textures": {
     "woodworkingbenchpanels": "jjmod:blocks/building/woodworkingbenchpanels",
-    "door_spruce_lower": "jjmod:blocks/building/door_spruce_lower",
-    "door_spruce_upper": "jjmod:blocks/building/door_spruce_upper",
-    "door_spruce_upperflipped": "jjmod:blocks/building/door_spruce_upperflipped",
-    "door_spruce_lowerflipped": "jjmod:blocks/building/door_spruce_lowerflipped"
+    "door_upper": "jjmod:blocks/building/door_upper",
+    "door_upper_flipped": "jjmod:blocks/building/door_upper_flipped"
 },
 "elements": [ 
 {
@@ -24,12 +22,12 @@
     "from": [ 10, 0, 0 ],
     "to": [ 11, 15, 15 ],
     "faces": {
-        "down":  { "uv": [ 6, 16, 5, 1 ], "texture": "#door_spruce_lower" },
-        "up":    { "uv": [ 10, 1, 11, 16 ], "texture": "#door_spruce_lower" },
-        "north": { "uv": [ 5, 1, 6, 16 ], "texture": "#door_spruce_upper" },
-        "south": { "uv": [ 10, 1, 11, 16 ], "texture": "#door_spruce_upperflipped" },
-        "west":  { "uv": [ 1, 1, 16, 16 ], "texture": "#door_spruce_upper" },
-        "east":  { "uv": [ 0, 1, 15, 16 ], "texture": "#door_spruce_upperflipped" }
+        "down":  { "uv": [ 14, 15, 13, 0 ], "texture": "#door_upper" },
+        "up":    { "uv": [ 13, 0, 14, 15 ], "texture": "#door_upper" },
+        "north": { "uv": [ 13, 0, 14, 15 ], "texture": "#door_upper" },
+        "south": { "uv": [ 13, 0, 14, 15 ], "texture": "#door_upper" },
+        "west":  { "uv": [ 1, 0, 16, 15 ], "texture": "#door_upper_flipped" },
+        "east":  { "uv": [ 0, 0, 15, 15 ], "texture": "#door_upper" }
     }
 },
 {

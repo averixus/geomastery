@@ -18,7 +18,7 @@ import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.biome.BiomeTaiga;
 
 /** Chickpea Crop block. */
-public class BlockCropChickpea extends BlockCrop {
+public class BlockCropChickpea extends BlockCropAbstract {
     
     public BlockCropChickpea() {
         

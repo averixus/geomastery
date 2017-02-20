@@ -9,7 +9,7 @@ import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
 /** Wheat Crop block. */
-public class BlockCropWheat extends BlockCrop {
+public class BlockCropWheat extends BlockCropAbstract {
     
     public BlockCropWheat() {
         

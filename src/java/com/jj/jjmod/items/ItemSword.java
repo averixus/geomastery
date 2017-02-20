@@ -12,6 +12,6 @@ public class ItemSword extends ItemToolAbstract {
     public ItemSword(String name, ToolMaterial material) {
 
         super(4, -3.1F, material, Collections.emptySet());
-        ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.COMBAT);
     }
 }

@@ -7,8 +7,12 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.jj.jjmod.blocks.BlockAntler;
 import com.jj.jjmod.blocks.BlockBeam;
-import com.jj.jjmod.blocks.BlockBedBreakable;
-import com.jj.jjmod.blocks.BlockBedPlain;
+import com.jj.jjmod.blocks.BlockBedBreakableAbstract;
+import com.jj.jjmod.blocks.BlockBedCotton;
+import com.jj.jjmod.blocks.BlockBedLeaf;
+import com.jj.jjmod.blocks.BlockBedPlainAbstract;
+import com.jj.jjmod.blocks.BlockBedSimple;
+import com.jj.jjmod.blocks.BlockBedWool;
 import com.jj.jjmod.blocks.BlockBeehive;
 import com.jj.jjmod.blocks.BlockBox;
 import com.jj.jjmod.blocks.BlockCarcass;
@@ -26,7 +30,7 @@ import com.jj.jjmod.blocks.BlockCraftingMason;
 import com.jj.jjmod.blocks.BlockCraftingSawpit;
 import com.jj.jjmod.blocks.BlockCraftingTextiles;
 import com.jj.jjmod.blocks.BlockCraftingWoodworking;
-import com.jj.jjmod.blocks.BlockCrop;
+import com.jj.jjmod.blocks.BlockCropAbstract;
 import com.jj.jjmod.blocks.BlockCropBeetroot;
 import com.jj.jjmod.blocks.BlockCropBlockfruit;
 import com.jj.jjmod.blocks.BlockCropBlockfruitMelon;
@@ -53,6 +57,8 @@ import com.jj.jjmod.blocks.BlockFurnaceCookfire;
 import com.jj.jjmod.blocks.BlockFurnaceStone;
 import com.jj.jjmod.blocks.BlockHarvestableLeaves;
 import com.jj.jjmod.blocks.BlockLight;
+import com.jj.jjmod.blocks.BlockLightCandle;
+import com.jj.jjmod.blocks.BlockLightTorch;
 import com.jj.jjmod.blocks.BlockLode;
 import com.jj.jjmod.blocks.BlockPeat;
 import com.jj.jjmod.blocks.BlockRiceBase;
@@ -71,8 +77,8 @@ import com.jj.jjmod.blocks.BlockStairsSimple;
 import com.jj.jjmod.blocks.BlockStairsStraight;
 import com.jj.jjmod.blocks.BlockVault;
 import com.jj.jjmod.blocks.BlockWall;
-import com.jj.jjmod.blocks.BlockWallSimple;
-import com.jj.jjmod.blocks.BlockWallSingle;
+import com.jj.jjmod.blocks.BlockWallHeightless;
+import com.jj.jjmod.blocks.BlockWallThin;
 import com.jj.jjmod.blocks.BlockWallStraight;
 import com.jj.jjmod.blocks.BlockWood;
 import com.jj.jjmod.utilities.BlockMaterial;
@@ -112,10 +118,10 @@ public class ModBlocks {
     /** Vanilla blocks classed as Light. */
     public static final Set<Block> LIGHT = Sets.newHashSet();
     
-    public static BlockBedPlain bedLeaf;
-    public static BlockBedBreakable bedCotton;
-    public static BlockBedBreakable bedWool;
-    public static BlockBedPlain bedSimple;
+    public static BlockBedPlainAbstract bedLeaf;
+    public static BlockBedBreakableAbstract bedCotton;
+    public static BlockBedBreakableAbstract bedWool;
+    public static BlockBedPlainAbstract bedSimple;
     
     public static BlockAntler antler;
     
@@ -151,15 +157,15 @@ public class ModBlocks {
     
     public static BlockBox box;
 
-    public static BlockCrop chickpea;
-    public static BlockCrop cotton;
-    public static BlockCrop hemp;
-    public static BlockCrop pepper;
+    public static BlockCropAbstract chickpea;
+    public static BlockCropAbstract cotton;
+    public static BlockCropAbstract hemp;
+    public static BlockCropAbstract pepper;
     
-    public static BlockCrop wheat;
-    public static BlockCrop carrot;
-    public static BlockCrop potato;
-    public static BlockCrop beetroot;
+    public static BlockCropAbstract wheat;
+    public static BlockCropAbstract carrot;
+    public static BlockCropAbstract potato;
+    public static BlockCropAbstract beetroot;
     
     public static BlockRiceBase riceBase;
     public static BlockRiceTop riceTop;
@@ -213,7 +219,7 @@ public class ModBlocks {
     public static BlockWall wallStoneDouble;
     public static BlockWall wallLogSingle;
     public static BlockWall wallLogDouble;
-    public static BlockWallSingle wallPole;
+    public static BlockWallThin wallPole;
     
     public static BlockStairs stairsBrick;
     public static BlockStairs stairsStone;
@@ -242,24 +248,19 @@ public class ModBlocks {
         
         buildSets();
         
-        registerItemless(bedLeaf = new BlockBedPlain("bed_leaf", 0.2F, 
-                0.33F, () -> null, true, null));
-        registerItemless(bedCotton = new BlockBedBreakable("bed_cotton", 2.0F,
-                0.66F, () -> ModItems.bedCotton, true, null));
-        registerItemless(bedWool = new BlockBedBreakable("bed_wool", 2.0F,
-                0.66F, () -> ModItems.bedWool, true, null));
-        registerItemless(bedSimple = new BlockBedPlain("bed_simple", 2.0F,
-                2F, () -> ModItems.bedSimple, false, null));
+        registerItemless(bedLeaf = new BlockBedLeaf());
+        registerItemless(bedCotton = new BlockBedCotton());
+        registerItemless(bedWool = new BlockBedWool());
+        registerItemless(bedSimple = new BlockBedSimple());
         
         registerItemless(antler = new BlockAntler());
         
         register(beehive = new BlockBeehive());
 
-        register(candleBeeswax = new BlockLight("candle_beeswax",
-                10, 0.005F), 15);
-        register(candleTallow = new BlockLight("candle_tallow", 10, 0.02F), 15);
-        register(torchTallow = new BlockLight("torch_tallow", 13, 0.005F), 4);
-        register(torchTar = new BlockLight("torch_tar", 13, 0.02F), 4);
+        register(candleBeeswax = new BlockLightCandle("candle_beeswax", 0.005F), 15);
+        register(candleTallow = new BlockLightCandle("candle_tallow", 0.02F), 15);
+        register(torchTallow = new BlockLightTorch("torch_tallow", 0.005F), 4);
+        register(torchTar = new BlockLightTorch("torch_tar", 0.02F), 4);
 
         register(carcassChicken = new BlockCarcassChicken());
         register(carcassCowpart = new BlockCarcassCowpart(), true);
@@ -360,19 +361,19 @@ public class ModBlocks {
                 "wall_brick_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallBrick, true, 6, true));
         registerItemless(wallMudSingle =
-                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_single", 1F, ToolType.PICKAXE, false,
                 () -> ModItems.wallMud, false, 1, false));
         registerItemless(wallMudDouble =
-                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallMud, false, 1, false));
         registerItemless(wallRoughSingle =
-                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_single", 1.5F, ToolType.PICKAXE, false,
                 () -> ModItems.wallRough, false, 1, false));
         registerItemless(wallRoughDouble =
-                new BlockWallSimple(BlockMaterial.STONE_FURNITURE,
+                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
                 "wall_rough_double", 3F, ToolType.PICKAXE, true,
                 () -> ModItems.wallRough, false, 1, false));
         registerItemless(wallStoneSingle =
@@ -391,8 +392,7 @@ public class ModBlocks {
                 new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
                 "wall_log_double", 3F, ToolType.AXE, true,
                 () -> ModItems.wallLog, false, 4, true));
-        registerItemless(wallPole =
-                new BlockWallSingle(BlockMaterial.WOOD_FURNITURE,
+        register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE, false, 4, false));
         
         register(stairsBrick = new BlockStairs("stairs_brick",
@@ -456,6 +456,7 @@ public class ModBlocks {
                 .setHarvestLevel(ToolType.SICKLE.name(), 1);
         Blocks.PUMPKIN.setHardness(0.2F);
         Blocks.MELON_BLOCK.setHardness(0.2F);
+        OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST).setMaxStackSize(1));
         
     
     }
@@ -466,6 +467,8 @@ public class ModBlocks {
             
             model(entry.getKey(), entry.getValue());
         }
+        
+        
     }
     
     private static void register(Block block, boolean isOffhandOnly) {
@@ -496,18 +499,17 @@ public class ModBlocks {
         GameRegistry.register(block);
         GameRegistry.register(item
                 .setRegistryName(block.getRegistryName()));
-
         MOD_BLOCKS.put(block, item);
     }
     
     private static void registerItemless(Block block) {
         
         GameRegistry.register(block);
-        model(block, Item.getItemFromBlock(block));
+        MOD_BLOCKS.put(block, Item.getItemFromBlock(block));
     }
     
     private static void model(Block block, Item item) {
-        
+
         ModelLoader.setCustomModelResourceLocation(item, 0,
                 new ModelResourceLocation(block.getRegistryName(),
                 "inventory"));

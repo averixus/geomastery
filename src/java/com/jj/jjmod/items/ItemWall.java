@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Wall item. */
-public class ItemWall extends ItemNew {
+public class ItemWall extends ItemJj {
     
     /** Single wall block. */
     private Block singleWall;

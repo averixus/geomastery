@@ -13,7 +13,7 @@ public abstract class ItemArrowAbstract extends ItemArrow {
 
     public ItemArrowAbstract(String name) {
     
-        ItemNew.setupItem(this, name, 10, CreativeTabs.COMBAT);
+        ItemJj.setupItem(this, name, 10, CreativeTabs.COMBAT);
     }
     
     /** Create an EntityProjectile arrow of this type. */

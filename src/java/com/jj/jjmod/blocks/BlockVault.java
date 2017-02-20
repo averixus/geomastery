@@ -1,19 +1,22 @@
 package com.jj.jjmod.blocks;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -21,7 +24,7 @@ import net.minecraft.world.World;
 /** Vault block. */
 public class BlockVault extends BlockNew implements IBuildingBlock {
     
-    public static final PropertyEnum SHAPE =
+    public static final PropertyEnum<EnumShape> SHAPE =
             PropertyEnum.<EnumShape>create("shape", EnumShape.class);
     public static final PropertyDirection FACING =
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -64,7 +67,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
         
-        if (block instanceof IBuildingBlock) {
+        if (block instanceof IBuildingBlock && block != this) {
             
             IBuildingBlock builtBlock = (IBuildingBlock) block;
             
@@ -169,6 +172,47 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     public IBlockState getStateFromMeta(int meta) {
         
         return this.getDefaultState();
+    }
+    
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        state = this.getActualState(state, world, pos);
+        return state.getValue(SHAPE) == EnumShape.LINTEL ? FULL_BLOCK_AABB : TOP_HALF;
+    }
+    
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+        
+        state = this.getActualState(state, world, pos);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        EnumShape shape = state.getValue(SHAPE);
+        
+        AxisAlignedBB[] boxes;
+        
+        switch (shape) {
+            
+            case SINGLE:
+                boxes = VAULT_STRAIGHT[facing];
+                break;
+                
+            case INTERNAL:
+                boxes = VAULT_INTERNAL[(facing + 3) % 4];
+                break;
+                
+            case EXTERNAL:
+                boxes = VAULT_EXTERNAL[facing];
+                break;
+                
+            case LINTEL:
+            default:
+                return;
+        }
+        
+        for (AxisAlignedBB box : boxes) {
+            
+            addCollisionBoxToList(pos, entityBox, list, box);
+        }
     }
     
     @Override

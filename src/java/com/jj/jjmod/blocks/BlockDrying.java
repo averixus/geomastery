@@ -50,7 +50,13 @@ public class BlockDrying extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FLAT_BOUNDS;
+        return EIGHT;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return SIX;
     }
 
     @Override

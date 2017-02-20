@@ -13,10 +13,10 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -69,8 +69,30 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        //TODO
-        return FULL_BLOCK_AABB;
+        return DOOR_CLOSED[state.getValue(FACING).getHorizontalIndex()];
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        state = this.getActualState(state, world, pos);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        EnumPart part = state.getValue(PART);
+        boolean open = state.getValue(OPEN);
+        
+        if (!open) {
+            System.out.println("door closed facing " + facing);
+            return DOOR_CLOSED[facing];
+        }
+        
+        if (part == EnumPart.LT || part == EnumPart.LB) {
+            System.out.println("door open left facing " + facing);
+            return DOOR_OPEN_LEFT[facing];
+            
+        } else {
+            System.out.println("door open right facing " + facing);
+            return DOOR_OPEN_RIGHT[facing];
+        }
     }
     
     @Override
@@ -111,7 +133,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             
             if (thisState.getValue(PART).shouldDrop()) {
                 
-                spawnItem(world, thisPos, this.item.get());
+                spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
             }
             
         } else if (otherState.getValue(OPEN) != thisState.getValue(OPEN)) {

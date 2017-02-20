@@ -51,7 +51,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
 
         if (((TEFurnaceClay) te).getPart() == EnumPartClay.BL) {
 
-            spawnItem(world, pos, ModItems.furnaceClay);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
         }
     }
     
@@ -62,7 +62,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
         if (this.getActualState(state, world, pos).getValue(PART) ==
                 EnumPartClay.BL) {
         
-            spawnItem(world, pos, ModItems.furnaceClay);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
         }
     }
     
@@ -98,7 +98,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
                 if (brokenBR) {
 
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.furnaceClay);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
                 }
 
                 break;
@@ -151,7 +151,36 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumPartClay part = state.getValue(PART);
+        
+        switch (part) {
+            
+            case BR: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case BL: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case TR: {
+                
+                return EIGHT;
+            }
+            
+            case TL: {
+                
+                return EIGHT;
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
     }
 
     @Override
@@ -170,8 +199,8 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
 
             TEFurnaceClay tileClay = (TEFurnaceClay) tileEntity;
 
-            state = state.withProperty(PART, tileClay.getPart());
-            state = state.withProperty(FACING, tileClay.getFacing());
+            state = tileClay.getPart() == null ? state : state.withProperty(PART, tileClay.getPart());
+            state = tileClay.getFacing() == null ? state : state.withProperty(FACING, tileClay.getFacing());
         }
 
         return state;
@@ -193,6 +222,16 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
     public void activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+        
+        if (tileEntity instanceof TEFurnaceClay) {
+            
+            BlockPos master = ((TEFurnaceClay) tileEntity).getMaster();
+            x = master.getX();
+            y = master.getY();
+            z = master.getZ();
+        }
+        
         player.openGui(Main.instance, GuiList.CLAY.ordinal(), world, x, y, z);
     }
 }

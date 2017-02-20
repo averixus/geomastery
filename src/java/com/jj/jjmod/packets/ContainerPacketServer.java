@@ -1,6 +1,7 @@
 package com.jj.jjmod.packets;
 
 import com.jj.jjmod.container.ContainerInventory;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.utilities.InvLocation.InvType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,7 @@ public class ContainerPacketServer implements IMessage {
 
     protected int slot;
     protected ItemStack stack;
+    protected long birthTime;
 
     public ContainerPacketServer() {}
 
@@ -22,6 +24,11 @@ public class ContainerPacketServer implements IMessage {
 
         this.slot = slot;
         this.stack = stack;
+       
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            
+            this.birthTime = stack.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime();
+        }
     }
 
     @Override
@@ -29,6 +36,7 @@ public class ContainerPacketServer implements IMessage {
 
         this.slot = buf.readInt();
         this.stack = ByteBufUtils.readItemStack(buf);
+        this.birthTime = buf.readLong();
     }
 
     @Override
@@ -36,6 +44,7 @@ public class ContainerPacketServer implements IMessage {
 
         buf.writeInt(this.slot);
         ByteBufUtils.writeItemStack(buf, this.stack);
+        buf.writeLong(this.birthTime);
     }
 
     public static class Handler
@@ -62,8 +71,15 @@ public class ContainerPacketServer implements IMessage {
                 MessageContext ctx) {
 
             EntityPlayer player = ctx.getServerHandler().playerEntity;
+            ItemStack stack = message.stack;
+            
+            if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                
+                stack.getCapability(ModCapabilities.CAP_DECAY, null).setBirthTime(message.birthTime);
+            }
+            
             player.inventoryContainer.inventorySlots.get(message.slot)
-                    .putStack(message.stack);
+                    .putStack(stack);
         }
     }
 }

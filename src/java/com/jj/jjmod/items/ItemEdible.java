@@ -20,14 +20,14 @@ import net.minecraft.world.World;
 public class ItemEdible extends ItemFood {
     
     /** This item's food type. */
-    private final FoodType type;
+    protected final FoodType type;
 
     public ItemEdible(String name, int hunger, float saturation,
             int stackSize, FoodType type) {
         
         super(hunger, saturation, false);
         this.type = type;
-        ItemNew.setupItem(this, name, stackSize, CreativeTabs.FOOD);
+        ItemJj.setupItem(this, name, stackSize, CreativeTabs.FOOD);
     }
     
     /** @return This item's food type. */

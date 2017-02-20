@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemCraftingCandlemaker extends ItemNew {
+public class ItemCraftingCandlemaker extends ItemJj {
 
     public ItemCraftingCandlemaker() {
 

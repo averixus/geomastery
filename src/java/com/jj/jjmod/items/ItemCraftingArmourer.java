@@ -19,7 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /** Armourer crafting device item. */
-public class ItemCraftingArmourer extends ItemNew {
+public class ItemCraftingArmourer extends ItemJj {
 
     public ItemCraftingArmourer() {
         

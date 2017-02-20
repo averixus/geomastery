@@ -38,11 +38,11 @@ public class EquipMaterial {
             new int[] {1, 2, 3, 1}, 0,
             SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
     public static final ArmorMaterial STEELMAIL_APPAREL = EnumHelper
-            .addArmorMaterial("mail_apparel", "jjmod:mail", 11,
+            .addArmorMaterial("steelmail_apparel", "jjmod:steelmail", 11,
             new int[] {1, 4, 5, 2},
             0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0F);
     public static final ArmorMaterial STEELPLATE_APPAREL = EnumHelper
-            .addArmorMaterial("plate_apparel", "jjmod:plate", 15,
+            .addArmorMaterial("steelplate_apparel", "jjmod:steelplate", 15,
             new int[] {2, 5, 6, 2},
             0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
 }

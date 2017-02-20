@@ -5,9 +5,12 @@ import com.jj.jjmod.container.slots.SlotInventory;
 import com.jj.jjmod.init.ModCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /** Abstract superclass of Containers, with utilities for ICapPlayer. */ 
@@ -101,7 +104,7 @@ public abstract class ContainerAbstract extends Container {
 
     /** @return The y co-ordinate for an inventory slot of this row (0-2). */
     protected static int getInvY(int index) {
-        System.out.println("inventory slot y " + (INV_Y + index * SLOT_SIZE));
+
         return INV_Y + index * SLOT_SIZE;
     }
     

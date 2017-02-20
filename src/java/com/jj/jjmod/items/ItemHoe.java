@@ -32,7 +32,7 @@ public class ItemHoe extends ItemToolAbstract {
     public ItemHoe(String name, ToolMaterial material) {
 
         super(2, -3.1F, material, EFFECTIVE_ON);
-        ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.HOE.toString(), 1);
         this.efficiencyOnProperMaterial = 0.25F;
     }

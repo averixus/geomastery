@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Bow item with variable power and funcitonality to choose best arrows. */
-public class ItemBow extends ItemNew {
+public class ItemBow extends ItemJj {
     
     /** Arrow classes in order of priority. */
     private static final Class[] PRIORITY = {ItemArrowSteel.class,

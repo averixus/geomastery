@@ -6,6 +6,7 @@ import com.jj.jjmod.container.slots.SlotDryingInput;
 import com.jj.jjmod.container.slots.SlotDryingOutput;
 import com.jj.jjmod.tileentities.TEDrying;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -15,15 +16,19 @@ import net.minecraft.world.World;
 /** Container for Drying Rack. */
 public class ContainerDrying extends ContainerAbstract {
 
-    private static final int INPUT_X = 56;
-    private static final int OUTPUT_X = 116;
-    private static final int SLOTS_Y = 35;
+    // Co-ordinate constants
+    private static final int INPUT_X = 49;
+    private static final int INPUT_Y = 35;
+    private static final int OUTPUT_X = 113;
 
-    private static final int INPUT_I = 0;
-    private static final int OUTPUT_I = 1;
-    private static final int HOT_START = 2;
-    private static final int HOT_END = 10;
-    private static final int INV_START = 11;
+    // Index constants
+    private static final int INPUT_START = 0;
+    private static final int INPUT_END = 1;
+    private static final int OUTPUT_START = 2;
+    private static final int OUTPUT_END = 3;
+    private static final int HOT_START = 4;
+    private static final int HOT_END = 12;
+    private static final int INV_START = 13;
 
     private final int invEnd;
 
@@ -37,11 +42,19 @@ public class ContainerDrying extends ContainerAbstract {
         this.drying = drying;
         this.pos = pos;
 
-        // Drying slots
-        this.addSlotToContainer(new SlotDryingInput(drying,
-                INPUT_X, SLOTS_Y));
-        this.addSlotToContainer(new SlotDryingOutput(drying,
-                OUTPUT_X, SLOTS_Y));
+        // Input slots
+        for (int i = 0; i < 2; i++) {
+            
+            this.addSlotToContainer(new SlotDryingInput(drying, i,
+                    INPUT_X - (i * SLOT_SIZE), INPUT_Y));
+        }
+        
+        // Output slots
+        for (int i = 0; i < 2; i++) {
+                
+            this.addSlotToContainer(new SlotDryingOutput(drying,
+                    i, OUTPUT_X + (i * SLOT_SIZE), INPUT_Y));
+        }
 
         // Inventory grid
         this.buildHotbar();
@@ -65,43 +78,55 @@ public class ContainerDrying extends ContainerAbstract {
 
         return false;
     }
+    
+    /** Sorts the inputs list when any slot is clicked. */
+    @Override
+    public ItemStack slotClick(int slot, int drag, ClickType click,
+            EntityPlayer player) {
+        
+        ItemStack result = super.slotClick(slot, drag, click, player);
+        this.drying.sort();
+        return result;
+    }
+    
+    /** Prevents slot click from being repeated if the
+     * same item moves into the slot after sorting. */
+    @Override
+    public void retrySlotClick(int slot, int click,
+            boolean mode, EntityPlayer player) {}
 
     @Override
-    @Nullable
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack result = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
-
+        
         if (slot != null && slot.getHasStack()) {
 
-            ItemStack stack1 = slot.getStack();
-            itemstack = stack1.copy();
+            ItemStack inSlot = slot.getStack();
+            result = inSlot.copy();
 
-            if (index == OUTPUT_I) {
+            if (index >= OUTPUT_START && index <= OUTPUT_END) {
 
-                if (!this.mergeItemStack(stack1, HOT_START,
+                if (!this.mergeItemStack(inSlot, HOT_START,
                         this.invEnd + 1, true)) {
 
                     return ItemStack.EMPTY;
                 }
 
-                slot.onSlotChange(stack1, itemstack);
+            } else if (!(index >= INPUT_START && index <= INPUT_END)) {
 
-            } else if (index != INPUT_I) {
+                if (!this.drying.recipes.getCookingResult(inSlot).isEmpty()) {
 
-                if (!this.drying.recipes
-                        .getCookingResult(stack1).isEmpty()) {
-
-                    if (!this.mergeItemStack(stack1, INPUT_I,
-                            INPUT_I + 1, false)) {
+                    if (!this.mergeItemStack(inSlot, INPUT_START,
+                            INPUT_END + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }
 
                 } else if (index >= INV_START && index <= this.invEnd) {
 
-                    if (!this.mergeItemStack(stack1, HOT_START,
+                    if (!this.mergeItemStack(inSlot, HOT_START,
                             HOT_END + 1, false)) {
 
                         return ItemStack.EMPTY;
@@ -109,19 +134,19 @@ public class ContainerDrying extends ContainerAbstract {
 
                 } else if (index >= HOT_START && index <= HOT_END)
 
-                    if (!this.mergeItemStack(stack1, INV_START,
+                    if (!this.mergeItemStack(inSlot, INV_START,
                             this.invEnd + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }
 
-            } else if (!this.mergeItemStack(stack1, HOT_START,
+            } else if (!this.mergeItemStack(inSlot, HOT_START,
                     this.invEnd + 1, false)) {
 
                 return ItemStack.EMPTY;
             }
 
-            if (stack1.getCount() == 0) {
+            if (inSlot.getCount() == 0) {
 
                 slot.putStack(ItemStack.EMPTY);
 
@@ -130,14 +155,14 @@ public class ContainerDrying extends ContainerAbstract {
                 slot.onSlotChanged();
             }
 
-            if (stack1.getCount() == itemstack.getCount()) {
+            if (inSlot.getCount() == result.getCount()) {
 
                 return ItemStack.EMPTY;
             }
 
-            slot.onTake(player, stack1);
+            slot.onTake(player, inSlot);
         }
 
-        return itemstack;
+        return result;
     }
 }

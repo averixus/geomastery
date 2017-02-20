@@ -20,7 +20,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /** Clay furnace item. */
-public class ItemFurnaceClay extends ItemNew {
+public class ItemFurnaceClay extends ItemJj {
 
     public ItemFurnaceClay() {
 

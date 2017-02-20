@@ -21,21 +21,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Simple stairs block, with no connections or corners. */
+/** Stairs block with no connections or corners. */
 public class BlockStairsSimple extends BlockNew {
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-
-    protected static final AxisAlignedBB BOTTOM =
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
-    protected static final AxisAlignedBB WEST =
-            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 0.5D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB EAST =
-            new AxisAlignedBB(0.5D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB NORTH =
-            new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 0.5D);
-    protected static final AxisAlignedBB SOUTH =
-            new AxisAlignedBB(0.0D, 0.5D, 0.5D, 1.0D, 1.0D, 1.0D);
 
     public BlockStairsSimple(String name, float hardness,
             ToolType harvestTool) {
@@ -103,37 +92,13 @@ public class BlockStairsSimple extends BlockNew {
     @Override
     public void addCollisionBoxToList(IBlockState state, World world,
             BlockPos pos, AxisAlignedBB entityBox,
-            List<AxisAlignedBB> list, Entity entity) {
+            List<AxisAlignedBB> list, Entity entity, boolean unused) {
                 
-        addCollisionBoxToList(pos, entityBox, list, BOTTOM);
+        int facing = (state.getValue(FACING).getHorizontalIndex() + 1) % 4;
         
-        EnumFacing facing = state.getValue(FACING);
-        
-        switch (facing) {
+        for (AxisAlignedBB box : STAIRS_STRAIGHT[facing]) {
             
-            case NORTH : {
-                
-                addCollisionBoxToList(pos, entityBox, list, NORTH);
-                break;
-            }
-            
-            case EAST : {
-                
-                addCollisionBoxToList(pos, entityBox, list, EAST);
-                break;
-            }
-            
-            case SOUTH : {
-                
-                addCollisionBoxToList(pos, entityBox, list, SOUTH);
-                break;
-            }
-            
-            case WEST : {
-                
-                addCollisionBoxToList(pos, entityBox, list, WEST);
-                break;
-            }
+            addCollisionBoxToList(pos, entityBox, list, box);
         }
     }
     

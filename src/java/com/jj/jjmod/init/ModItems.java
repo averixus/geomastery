@@ -36,7 +36,7 @@ import com.jj.jjmod.items.ItemFurnaceStone;
 import com.jj.jjmod.items.ItemHoe;
 import com.jj.jjmod.items.ItemHuntingknife;
 import com.jj.jjmod.items.ItemMachete;
-import com.jj.jjmod.items.ItemNew;
+import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.items.ItemPickaxe;
 import com.jj.jjmod.items.ItemRice;
 import com.jj.jjmod.items.ItemSeed;
@@ -69,20 +69,21 @@ public class ModItems {
     /** All new items, for ease of modelling. */
     public static final Set<Item> MOD_ITEMS = Sets.newHashSet();
     
-    public static ItemEdible banana;
-    public static ItemEdible pear;
-    public static ItemEdible orange;
+    public static ItemEdibleDecayable banana;
+    public static ItemEdibleDecayable pear;
+    public static ItemEdibleDecayable orange;
     public static ItemEdible honey;
-    public static ItemEdible wheatBoiled;
-    public static ItemEdible riceBoiled;
-    public static ItemEdible chickpeasBoiled;
-    public static ItemEdible pumpkin;
-    public static ItemEdible melon;
+    public static ItemEdibleDecayable wheatBoiled;
+    public static ItemEdibleDecayable riceBoiled;
+    public static ItemEdibleDecayable chickpeasBoiled;
+    public static ItemEdibleDecayable pumpkin;
+    public static ItemEdibleDecayable melon;
+    public static ItemEdible bread;
     
-    public static ItemEdible apple;
+    public static ItemEdibleDecayable apple;
     public static ItemEdible sugar;
-    public static ItemEdible potatoCooked;
-    public static ItemEdible egg;
+    public static ItemEdibleDecayable potatoCooked;
+    public static ItemEdibleDecayable egg;
     
     public static ItemEdibleDecayablePoison beefRaw;
     public static ItemEdibleDecayablePoison porkRaw;
@@ -97,12 +98,12 @@ public class ModItems {
     public static ItemCarcassDecayable carcassSheep;
     public static ItemCarcassDecayable carcassRabbit;
     
-    public static ItemEdible beefCooked;
-    public static ItemEdible porkCooked;
-    public static ItemEdible muttonCooked;
-    public static ItemEdible rabbitCooked;
-    public static ItemEdible chickenCooked;
-    public static ItemEdible fishCooked;
+    public static ItemEdibleDecayable beefCooked;
+    public static ItemEdibleDecayable porkCooked;
+    public static ItemEdibleDecayable muttonCooked;
+    public static ItemEdibleDecayable rabbitCooked;
+    public static ItemEdibleDecayable chickenCooked;
+    public static ItemEdibleDecayable fishCooked;
     
     public static ItemEdibleDecayableSeed bean;
     public static ItemEdibleDecayableSeed pepper;
@@ -116,9 +117,9 @@ public class ModItems {
         
     public static ItemRice rice;
 
-    public static ItemNew cotton;
-    public static ItemNew twineHemp;
-    public static ItemNew wool;
+    public static ItemJj cotton;
+    public static ItemJj twineHemp;
+    public static ItemJj wool;
     
     public static ItemSeed chickpeas;
     public static ItemSeed cuttingCotton;
@@ -135,58 +136,57 @@ public class ModItems {
     public static ItemBucket bucketEmpty;
     public static ItemBucket bucketWater;
     public static ItemBucket bucketTar;
-    public static ItemNew bucketMilk;
+    public static ItemJj bucketMilk;
 
-    public static ItemNew backpack;
-    public static ItemNew yoke;
+    public static ItemJj backpack;
+    public static ItemJj yoke;
 
-    public static ItemNew amethyst;
-    public static ItemNew fireopal;
-    public static ItemNew ruby;
-    public static ItemNew sapphire;
+    public static ItemJj amethyst;
+    public static ItemJj fireopal;
+    public static ItemJj ruby;
+    public static ItemJj sapphire;
 
-    public static ItemNew beeswax;
-    public static ItemNew skinBear;
-    public static ItemNew skinCow;
-    public static ItemNew skinPig;
-    public static ItemNew skinSheep;
-    public static ItemNew skinWolf;
-    public static ItemNew tallow;
-    public static ItemNew honeycomb;
+    public static ItemJj beeswax;
+    public static ItemJj skinBear;
+    public static ItemJj skinCow;
+    public static ItemJj skinPig;
+    public static ItemJj skinSheep;
+    public static ItemJj skinWolf;
+    public static ItemJj tallow;
+    public static ItemJj honeycomb;
     
-    public static ItemNew rot;
+    public static ItemJj rot;
 
-    public static ItemNew ingotCopper;
-    public static ItemNew ingotSilver;
-    public static ItemNew ingotSteel;
-    public static ItemNew ingotTin;
+    public static ItemJj ingotCopper;
+    public static ItemJj ingotSilver;
+    public static ItemJj ingotSteel;
+    public static ItemJj ingotTin;
 
-    public static ItemNew leaves;
-    public static ItemNew pole;
-    public static ItemNew log;
-    public static ItemNew thicklog;
-    public static ItemNew timber;
+    public static ItemJj leaves;
+    public static ItemJj pole;
+    public static ItemJj log;
+    public static ItemJj thicklog;
+    public static ItemJj timber;
 
-    public static ItemNew claybricks;
-    public static ItemNew dirt;
-    public static ItemNew mudbricks;
-    public static ItemNew peatDry;
-    public static ItemNew peatWet;
+    public static ItemJj dirt;
+    public static ItemJj mudbricks;
+    public static ItemJj peatDry;
+    public static ItemJj peatWet;
     
-    public static ItemNew salt;
-    public static ItemNew chalk;
+    public static ItemJj salt;
+    public static ItemJj chalk;
     
-    public static ItemNew oreTin;
-    public static ItemNew oreCopper;
-    public static ItemNew oreIron;
-    public static ItemNew oreSilver;
-    public static ItemNew oreGold;
+    public static ItemJj oreTin;
+    public static ItemJj oreCopper;
+    public static ItemJj oreIron;
+    public static ItemJj oreSilver;
+    public static ItemJj oreGold;
 
-    public static ItemNew stoneRough;
-    public static ItemNew stoneDressed;
+    public static ItemJj stoneRough;
+    public static ItemJj stoneDressed;
 
-    public static ItemNew potClay;
-    public static ItemNew potMetal;
+    public static ItemJj potClay;
+    public static ItemJj potMetal;
 
     public static ItemCraftingCandlemaker craftingCandlemaker;
     public static ItemCraftingClayworks craftingClayworks;
@@ -200,49 +200,49 @@ public class ModItems {
     public static ItemFurnaceClay furnaceClay;
     public static ItemFurnaceStone furnaceStone;
 
-    public static ItemNew arrowheadBronze;
-    public static ItemNew arrowheadCopper;
-    public static ItemNew arrowheadFlint;
-    public static ItemNew arrowheadSteel;
+    public static ItemJj arrowheadBronze;
+    public static ItemJj arrowheadCopper;
+    public static ItemJj arrowheadFlint;
+    public static ItemJj arrowheadSteel;
 
-    public static ItemNew axeheadBronze;
-    public static ItemNew axeheadCopper;
-    public static ItemNew axeheadFlint;
-    public static ItemNew axeheadSteel;
+    public static ItemJj axeheadBronze;
+    public static ItemJj axeheadCopper;
+    public static ItemJj axeheadFlint;
+    public static ItemJj axeheadSteel;
 
-    public static ItemNew hoeheadBronze;
-    public static ItemNew hoeheadCopper;
-    public static ItemNew hoeheadSteel;
+    public static ItemJj hoeheadBronze;
+    public static ItemJj hoeheadCopper;
+    public static ItemJj hoeheadSteel;
 
-    public static ItemNew knifebladeBronze;
-    public static ItemNew knifebladeCopper;
-    public static ItemNew knifebladeSteel;
+    public static ItemJj knifebladeBronze;
+    public static ItemJj knifebladeCopper;
+    public static ItemJj knifebladeSteel;
 
-    public static ItemNew machetebladeBronze;
-    public static ItemNew machetebladeCopper;
-    public static ItemNew machetebladeSteel;
+    public static ItemJj machetebladeBronze;
+    public static ItemJj machetebladeCopper;
+    public static ItemJj machetebladeSteel;
 
-    public static ItemNew pickheadBronze;
-    public static ItemNew pickheadCopper;
-    public static ItemNew pickheadFlint;
-    public static ItemNew pickheadSteel;
+    public static ItemJj pickheadBronze;
+    public static ItemJj pickheadCopper;
+    public static ItemJj pickheadFlint;
+    public static ItemJj pickheadSteel;
 
-    public static ItemNew sicklebladeBronze;
-    public static ItemNew sicklebladeCopper;
-    public static ItemNew sicklebladeSteel;
+    public static ItemJj sicklebladeBronze;
+    public static ItemJj sicklebladeCopper;
+    public static ItemJj sicklebladeSteel;
 
-    public static ItemNew shovelheadBronze;
-    public static ItemNew shovelheadCopper;
-    public static ItemNew shovelheadSteel;
+    public static ItemJj shovelheadBronze;
+    public static ItemJj shovelheadCopper;
+    public static ItemJj shovelheadSteel;
 
-    public static ItemNew spearheadBronze;
-    public static ItemNew spearheadCopper;
-    public static ItemNew spearheadFlint;
-    public static ItemNew spearheadSteel;
+    public static ItemJj spearheadBronze;
+    public static ItemJj spearheadCopper;
+    public static ItemJj spearheadFlint;
+    public static ItemJj spearheadSteel;
 
-    public static ItemNew swordbladeBronze;
-    public static ItemNew swordbladeCopper;
-    public static ItemNew swordbladeSteel;
+    public static ItemJj swordbladeBronze;
+    public static ItemJj swordbladeCopper;
+    public static ItemJj swordbladeSteel;
 
     public static ItemArrowBronze arrowBronze;
     public static ItemArrowCopper arrowCopper;
@@ -317,6 +317,11 @@ public class ModItems {
     public static ItemApparel furLegs;
     public static ItemApparel furFeet;
     
+    public static ItemApparel leatherHead;
+    public static ItemApparel leatherChest;
+    public static ItemApparel leatherLegs;
+    public static ItemApparel leatherFeet;
+    
     public static ItemApparel steelmailHead;
     public static ItemApparel steelmailChest;
     public static ItemApparel steelmailLegs;
@@ -348,7 +353,7 @@ public class ModItems {
     public static ItemSlab slabStone;
     public static ItemSlab slabBrick;
     
-    public static ItemNew sand;
+    public static ItemJj sand;
 
     public static void preInit() {
 
@@ -370,6 +375,7 @@ public class ModItems {
                 10, 10, 2, FoodType.FRUITVEG, 8));
         register(melon = new ItemEdibleDecayable("melon",
                 12, 12, 2, FoodType.FRUITVEG, 4));
+        register(bread = new ItemEdible("bread", 4, 2, 10, FoodType.CARBS));
         
         register(apple = new ItemEdibleDecayable("apple",
                 4, 4, 5, FoodType.FRUITVEG, 8));
@@ -432,9 +438,9 @@ public class ModItems {
         
         register(rice = new ItemRice());
         
-        register(cotton = new ItemNew("cotton", 6));
-        register(twineHemp = new ItemNew("twine_hemp", 3));
-        register(wool = new ItemNew("wool", 4));
+        register(cotton = new ItemJj("cotton", 6));
+        register(twineHemp = new ItemJj("twine_hemp", 3));
+        register(wool = new ItemJj("wool", 4));
         
         register(chickpeas = new ItemSeed("chickpeas",
                 1, ModBlocks.chickpea));
@@ -465,61 +471,60 @@ public class ModItems {
         register(bucketTar = new ItemBucket("bucket_tar",
                 ModLiquids.tarBlock, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);
-        register(bucketMilk = new ItemNew("bucket_milk",
+        register(bucketMilk = new ItemJj("bucket_milk",
                 1, CreativeTabs.MISC));
         
-        register(backpack = new ItemNew("backpack",
+        register(backpack = new ItemJj("backpack",
                 1, CreativeTabs.TRANSPORTATION));
-        register(yoke = new ItemNew("yoke",
+        register(yoke = new ItemJj("yoke",
                 1, CreativeTabs.TRANSPORTATION));
 
-        register(amethyst = new ItemNew("amethyst", 64));
-        register(fireopal = new ItemNew("fireopal", 64));
-        register(ruby = new ItemNew("ruby", 64));
-        register(sapphire = new ItemNew("sapphire", 64));
+        register(amethyst = new ItemJj("amethyst", 64));
+        register(fireopal = new ItemJj("fireopal", 64));
+        register(ruby = new ItemJj("ruby", 64));
+        register(sapphire = new ItemJj("sapphire", 64));
 
-        register(beeswax = new ItemNew("beeswax"));
-        register(skinBear = new ItemNew("skin_bear", 4));
-        register(skinCow = new ItemNew("skin_cow", 4));
-        register(skinPig = new ItemNew("skin_pig", 4));
-        register(skinSheep = new ItemNew("skin_sheep", 4));
-        register(skinWolf = new ItemNew("skin_wolf", 4));
-        register(tallow = new ItemNew("tallow"));
-        register(honeycomb = new ItemNew("honeycomb"));
+        register(beeswax = new ItemJj("beeswax"));
+        register(skinBear = new ItemJj("skin_bear", 4));
+        register(skinCow = new ItemJj("skin_cow", 4));
+        register(skinPig = new ItemJj("skin_pig", 4));
+        register(skinSheep = new ItemJj("skin_sheep", 4));
+        register(skinWolf = new ItemJj("skin_wolf", 4));
+        register(tallow = new ItemJj("tallow"));
+        register(honeycomb = new ItemJj("honeycomb"));
         
-        register(rot = new ItemNew("rot"));
+        register(rot = new ItemJj("rot"));
 
-        register(ingotCopper = new ItemNew("ingot_copper", 2));
-        register(ingotSilver = new ItemNew("ingot_silver", 2));
-        register(ingotSteel = new ItemNew("ingot_steel", 2));
-        register(ingotTin = new ItemNew("ingot_tin", 2));
+        register(ingotCopper = new ItemJj("ingot_copper", 2));
+        register(ingotSilver = new ItemJj("ingot_silver", 2));
+        register(ingotSteel = new ItemJj("ingot_steel", 2));
+        register(ingotTin = new ItemJj("ingot_tin", 2));
 
-        register(leaves = new ItemNew("leaves", 1));
-        register(pole = new ItemNew("pole", 4));
-        register(log = new ItemNew("log"));
-        register(thicklog = new ItemNew("thicklog"));
-        register(timber = new ItemNew("timber", 3));
+        register(leaves = new ItemJj("leaves", 1));
+        register(pole = new ItemJj("pole", 4));
+        register(log = new ItemJj("log"));
+        register(thicklog = new ItemJj("thicklog"));
+        register(timber = new ItemJj("timber", 3));
 
-        register(claybricks = new ItemNew("claybricks"));
-        register(dirt = new ItemNew("dirt", 4));
-        register(mudbricks = new ItemNew("mudbricks"));
-        register(peatDry = new ItemNew("peat_dry"));
-        register(peatWet = new ItemNew("peat_wet"));
+        register(dirt = new ItemJj("dirt", 4));
+        register(mudbricks = new ItemJj("mudbricks"));
+        register(peatDry = new ItemJj("peat_dry"));
+        register(peatWet = new ItemJj("peat_wet"));
         
-        register(salt = new ItemNew("salt"));
-        register(chalk = new ItemNew("chalk"));        
+        register(salt = new ItemJj("salt"));
+        register(chalk = new ItemJj("chalk"));        
 
-        register(oreTin = new ItemNew("ore_tin"));
-        register(oreCopper = new ItemNew("ore_copper"));
-        register(oreIron = new ItemNew("ore_iron"));
-        register(oreSilver = new ItemNew("ore_silver"));
-        register(oreGold = new ItemNew("ore_gold"));
+        register(oreTin = new ItemJj("ore_tin"));
+        register(oreCopper = new ItemJj("ore_copper"));
+        register(oreIron = new ItemJj("ore_iron"));
+        register(oreSilver = new ItemJj("ore_silver"));
+        register(oreGold = new ItemJj("ore_gold"));
         
-        register(stoneRough = new ItemNew("stone_rough", 4));
-        register(stoneDressed = new ItemNew("stone_dressed", 4));
+        register(stoneRough = new ItemJj("stone_rough", 4));
+        register(stoneDressed = new ItemJj("stone_dressed", 4));
 
-        register(potClay = new ItemNew("pot_clay"));
-        register(potMetal = new ItemNew("pot_metal"));
+        register(potClay = new ItemJj("pot_clay"));
+        register(potMetal = new ItemJj("pot_metal"));
 
         register(craftingCandlemaker = new ItemCraftingCandlemaker(), true);
         register(craftingClayworks = new ItemCraftingClayworks(), true);
@@ -533,49 +538,49 @@ public class ModItems {
         register(furnaceClay = new ItemFurnaceClay(), true);
         register(furnaceStone = new ItemFurnaceStone(), true);
 
-        register(arrowheadBronze = new ItemNew("arrowhead_bronze", 12));
-        register(arrowheadCopper = new ItemNew("arrowhead_copper", 12));
-        register(arrowheadFlint = new ItemNew("arrowhead_flint", 12));
-        register(arrowheadSteel = new ItemNew("arrowhead_steel", 12));
+        register(arrowheadBronze = new ItemJj("arrowhead_bronze", 12));
+        register(arrowheadCopper = new ItemJj("arrowhead_copper", 12));
+        register(arrowheadFlint = new ItemJj("arrowhead_flint", 12));
+        register(arrowheadSteel = new ItemJj("arrowhead_steel", 12));
 
-        register(axeheadBronze = new ItemNew("axehead_bronze", 4));
-        register(axeheadCopper = new ItemNew("axehead_copper", 4));
-        register(axeheadFlint = new ItemNew("axehead_flint", 4));
-        register(axeheadSteel = new ItemNew("axehead_steel", 4));
+        register(axeheadBronze = new ItemJj("axehead_bronze", 4));
+        register(axeheadCopper = new ItemJj("axehead_copper", 4));
+        register(axeheadFlint = new ItemJj("axehead_flint", 4));
+        register(axeheadSteel = new ItemJj("axehead_steel", 4));
 
-        register(hoeheadBronze = new ItemNew("hoehead_bronze"));
-        register(hoeheadCopper = new ItemNew("hoehead_copper"));
-        register(hoeheadSteel = new ItemNew("hoehead_steel"));
+        register(hoeheadBronze = new ItemJj("hoehead_bronze"));
+        register(hoeheadCopper = new ItemJj("hoehead_copper"));
+        register(hoeheadSteel = new ItemJj("hoehead_steel"));
 
-        register(knifebladeBronze = new ItemNew("knifeblade_bronze", 2));
-        register(knifebladeCopper = new ItemNew("knifeblade_copper", 2));
-        register(knifebladeSteel = new ItemNew("knifeblade_steel", 2));
+        register(knifebladeBronze = new ItemJj("knifeblade_bronze", 2));
+        register(knifebladeCopper = new ItemJj("knifeblade_copper", 2));
+        register(knifebladeSteel = new ItemJj("knifeblade_steel", 2));
 
-        register(machetebladeBronze = new ItemNew("macheteblade_bronze"));
-        register(machetebladeCopper = new ItemNew("macheteblade_copper"));
-        register(machetebladeSteel = new ItemNew("macheteblade_steel"));
+        register(machetebladeBronze = new ItemJj("macheteblade_bronze"));
+        register(machetebladeCopper = new ItemJj("macheteblade_copper"));
+        register(machetebladeSteel = new ItemJj("macheteblade_steel"));
 
-        register(pickheadBronze = new ItemNew("pickhead_bronze"));
-        register(pickheadCopper = new ItemNew("pickhead_copper"));
-        register(pickheadFlint = new ItemNew("pickhead_flint"));
-        register(pickheadSteel = new ItemNew("pickhead_steel"));
+        register(pickheadBronze = new ItemJj("pickhead_bronze"));
+        register(pickheadCopper = new ItemJj("pickhead_copper"));
+        register(pickheadFlint = new ItemJj("pickhead_flint"));
+        register(pickheadSteel = new ItemJj("pickhead_steel"));
 
-        register(sicklebladeBronze = new ItemNew("sickleblade_bronze"));
-        register(sicklebladeCopper = new ItemNew("sickleblade_copper"));
-        register(sicklebladeSteel = new ItemNew("sickleblade_steel"));
+        register(sicklebladeBronze = new ItemJj("sickleblade_bronze"));
+        register(sicklebladeCopper = new ItemJj("sickleblade_copper"));
+        register(sicklebladeSteel = new ItemJj("sickleblade_steel"));
 
-        register(shovelheadBronze = new ItemNew("shovelhead_bronze"));
-        register(shovelheadCopper = new ItemNew("shovelhead_copper"));
-        register(shovelheadSteel = new ItemNew("shovelhead_steel"));
+        register(shovelheadBronze = new ItemJj("shovelhead_bronze"));
+        register(shovelheadCopper = new ItemJj("shovelhead_copper"));
+        register(shovelheadSteel = new ItemJj("shovelhead_steel"));
 
-        register(spearheadBronze = new ItemNew("spearhead_bronze", 2));
-        register(spearheadCopper = new ItemNew("spearhead_copper", 2));
-        register(spearheadFlint = new ItemNew("spearhead_flint", 2));
-        register(spearheadSteel = new ItemNew("spearhead_steel", 2));
+        register(spearheadBronze = new ItemJj("spearhead_bronze", 2));
+        register(spearheadCopper = new ItemJj("spearhead_copper", 2));
+        register(spearheadFlint = new ItemJj("spearhead_flint", 2));
+        register(spearheadSteel = new ItemJj("spearhead_steel", 2));
 
-        register(swordbladeBronze = new ItemNew("swordblade_bronze"));
-        register(swordbladeCopper = new ItemNew("swordblade_copper"));
-        register(swordbladeSteel = new ItemNew("swordblade_steel"));
+        register(swordbladeBronze = new ItemJj("swordblade_bronze"));
+        register(swordbladeCopper = new ItemJj("swordblade_copper"));
+        register(swordbladeSteel = new ItemJj("swordblade_steel"));
 
         register(arrowBronze = new ItemArrowBronze());
         register(arrowCopper = new ItemArrowCopper());
@@ -697,6 +702,8 @@ public class ModItems {
                 EquipMaterial.WOOL_APPAREL,
                 EntityEquipmentSlot.FEET, CreativeTabs.MISC));
         
+        
+        
         register(furHead = new ItemApparel("fur_head",
                 EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.HEAD,
                 CreativeTabs.MISC));
@@ -710,29 +717,42 @@ public class ModItems {
                 EquipMaterial.FUR_APPAREL, EntityEquipmentSlot.FEET,
                 CreativeTabs.MISC));
         
-        register(steelmailHead = new ItemApparel("mail_head",
+        register(leatherHead = new ItemApparel("leather_head",
+                EquipMaterial.LEATHER_APPAREL, EntityEquipmentSlot.HEAD,
+                CreativeTabs.COMBAT));
+        register(leatherChest = new ItemApparel("leather_chest",
+                EquipMaterial.LEATHER_APPAREL, EntityEquipmentSlot.CHEST,
+                CreativeTabs.COMBAT));
+        register(leatherLegs = new ItemApparel("leather_legs",
+                EquipMaterial.LEATHER_APPAREL, EntityEquipmentSlot.LEGS,
+                CreativeTabs.COMBAT));
+        register(leatherFeet = new ItemApparel("leather_feet",
+                EquipMaterial.LEATHER_APPAREL, EntityEquipmentSlot.FEET,
+                CreativeTabs.COMBAT));
+        
+        register(steelmailHead = new ItemApparel("steelmail_head",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.HEAD,
                 CreativeTabs.COMBAT));
-        register(steelmailChest = new ItemApparel("mail_chest",
+        register(steelmailChest = new ItemApparel("steelmail_chest",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.CHEST,
                 CreativeTabs.COMBAT));
-        register(steelmailLegs = new ItemApparel("mail_legs",
+        register(steelmailLegs = new ItemApparel("steelmail_legs",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.LEGS,
                 CreativeTabs.COMBAT));
-        register(steelmailFeet = new ItemApparel("mail_feet",
+        register(steelmailFeet = new ItemApparel("steelmail_feet",
                 EquipMaterial.STEELMAIL_APPAREL, EntityEquipmentSlot.FEET,
                 CreativeTabs.COMBAT));
         
-        register(steelplateHead = new ItemApparel("plate_head",
+        register(steelplateHead = new ItemApparel("steelplate_head",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.HEAD,
                 CreativeTabs.COMBAT));
-        register(steelplateChest = new ItemApparel("plate_chest",
+        register(steelplateChest = new ItemApparel("steelplate_chest",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.CHEST,
                 CreativeTabs.COMBAT));
-        register(steelplateLegs = new ItemApparel("plate_legs",
+        register(steelplateLegs = new ItemApparel("steelplate_legs",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.LEGS,
                 CreativeTabs.COMBAT));
-        register(steelplateFeet = new ItemApparel("plate_feet",
+        register(steelplateFeet = new ItemApparel("steelplate_feet",
                 EquipMaterial.STEELPLATE_APPAREL, EntityEquipmentSlot.FEET,
                 CreativeTabs.COMBAT));
 
@@ -768,7 +788,7 @@ public class ModItems {
         register(slabBrick = new ItemSlab("slab_brick", 1,
                 ModBlocks.slabBrickSingle, ModBlocks.slabBrickDouble));
         
-        register(sand = new ItemNew("sand"));
+        register(sand = new ItemJj("sand"));
         
         Items.STICK.setMaxStackSize(8);
         Items.BONE.setMaxStackSize(6);

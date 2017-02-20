@@ -17,7 +17,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /** Item for custom doors. */
-public class ItemDoor extends ItemNew {
+public class ItemDoor extends ItemJj {
     
     /** The door block of this item. */
     private BlockDoor block;

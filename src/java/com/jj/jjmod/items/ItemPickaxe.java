@@ -31,7 +31,7 @@ public class ItemPickaxe extends ItemToolAbstract {
     public ItemPickaxe(String name, ToolMaterial material) {
 
         super(2.5F, -2.8F, material, EFFECTIVE_ON);
-        ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.PICKAXE.toString(), 1);
     }
 }

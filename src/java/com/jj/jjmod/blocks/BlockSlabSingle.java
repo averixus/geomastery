@@ -16,9 +16,6 @@ import net.minecraft.world.World;
 
 /** Single form of slab block. */
 public class BlockSlabSingle extends BlockNew {
-    
-    protected static final AxisAlignedBB BOUNDS =
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
 
     /** Supplier for slab item. */
     private Supplier<Item> item;
@@ -68,6 +65,6 @@ public class BlockSlabSingle extends BlockNew {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        return BOUNDS;
+        return EIGHT;
     }
 }

@@ -2,6 +2,7 @@ package com.jj.jjmod.blocks;
 
 import java.util.Random;
 import java.util.function.Function;
+import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
@@ -12,11 +13,11 @@ import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
 /** Beetroot crop block. */
-public class BlockCropBeetroot extends BlockCrop {
+public class BlockCropBeetroot extends BlockCropAbstract {
     
     public BlockCropBeetroot() {
         
-        super("beetroot", () -> Items.BEETROOT, (rand) -> rand.nextInt(3) + 1,
+        super("beetroot", () -> ModItems.beetroot, (rand) -> rand.nextInt(3) + 1,
                 0.3F, 0.2F, ToolType.SICKLE);
     }
 

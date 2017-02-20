@@ -1,5 +1,21 @@
 {
-    "variants": {
-        "normal": { "model": "jjmod:building/rubble" }
-    }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      { "textures": { "all": "jjmod:blocks/rocks/rubble1" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble2" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble3" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble4" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble5" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble6" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble7" } },
+      { "textures": { "all": "jjmod:blocks/rocks/rubble8" } }
+    ],
+    "inventory": 
+      [ { "textures": { "all": "jjmod:blocks/rocks/rubble1" } } ]
+  }
 }

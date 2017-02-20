@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.items.ItemCarcassDecayable;
 import com.jj.jjmod.items.ItemHuntingknife;
+import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.tileentities.TECarcass;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
@@ -57,28 +58,24 @@ public abstract class BlockCarcass extends BlockNew
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
-        int age = ((TECarcass) te).getAge();
+        long birthTime = ((TECarcass) te).getBirthTime();
         
         if (stack.getItem() instanceof ItemHuntingknife) {
             
-            this.spawnDrops(world, pos, age);
+            this.spawnDrops(world, pos, birthTime);
             
         } else {
 
-            ItemStack drop = new ItemStack(this.item.get());
-            drop.getCapability(ModCapabilities.CAP_DECAY, null).setAge(age);
-            spawnAsEntity(world, pos, drop);
+            spawnAsEntity(world, pos, ItemJj.newStack(this.item.get(), 1, world));
         }
     }
     
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        TECarcass tileEntity = new TECarcass();
-        tileEntity.setShelfLife(this.shelfLife);
-        return tileEntity;
+        return new TECarcass();
     }
     
     /** Spawns the knife harvest drops for this Carcass. */
-    protected abstract void spawnDrops(World world, BlockPos pos, int age);
+    protected abstract void spawnDrops(World world, BlockPos pos, long birthTime);
 }

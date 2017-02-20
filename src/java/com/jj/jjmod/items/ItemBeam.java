@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Beam item. */
-public class ItemBeam extends ItemNew {
+public class ItemBeam extends ItemJj {
     
     /** Minimum length this item's beam structure can span. */
     private int minLength;

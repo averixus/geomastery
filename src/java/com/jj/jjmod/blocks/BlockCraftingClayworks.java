@@ -44,7 +44,7 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
 
         if (state.getValue(PART) == EnumPartClayworks.FR) {
 
-            spawnItem(world, pos, ModItems.craftingClayworks);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingClayworks));
         }
     }
     
@@ -72,7 +72,7 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
                 if (brokenFL) {
 
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.craftingClayworks);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingClayworks));
                 }
 
                 break;
@@ -123,7 +123,42 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART).isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        EnumPartClayworks enumPart = state.getValue(PART);
+        
+        switch (enumPart) {
+            
+            case BR: {
+                
+                return TWELVE;
+            }
+            
+            case BL: {
+                
+                return TWELVE;
+            }
+            
+            case FR: {
+                
+                return CENTRE_FOUR;
+            }
+            
+            case FL: {
+                
+                return TWELVE;
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        EnumPartClayworks enumPart = state.getValue(PART);
+        return enumPart == EnumPartClayworks.BL || enumPart == EnumPartClayworks.BR ? TWELVE : NULL_AABB;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.jj.jjmod.blocks;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import com.jj.jjmod.items.ItemJj;
 import net.minecraft.block.Block ;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -17,7 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Abstract superclass for growable harvestable Crop blocks. */
-public abstract class BlockCropHarvestable extends BlockCrop {
+public abstract class BlockCropHarvestable extends BlockCropAbstract {
     
     /** Maximum permitted height for this Crop. */
     protected int maxHeight;
@@ -66,7 +67,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
             
             if (!world.isRemote) {
                 
-                spawnItem(world, pos, this.cropRef.get());
+                spawnAsEntity(world, pos, ItemJj.newStack(this.cropRef.get(), this.yieldRef.apply(world.rand), world));
             }
             
             return true;

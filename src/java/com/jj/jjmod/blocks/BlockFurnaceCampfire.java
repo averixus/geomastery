@@ -48,7 +48,13 @@ public class BlockFurnaceCampfire extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FLAT_BOUNDS;
+        return SIX;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return TWO;
     }
 
     @Override

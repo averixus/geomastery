@@ -88,7 +88,7 @@ public class TEBeam extends TileEntity {
       * @return Whether or not the floor extends sideways. */
     public boolean hasSideConnection(EnumFacing facing) {
                 
-        if (facing == this.facing || facing == this.facing.getOpposite() ||
+        if (this.facing == null || facing == this.facing || facing == this.facing.getOpposite() ||
                 facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
             
             return false;
@@ -104,7 +104,7 @@ public class TEBeam extends TileEntity {
      * @return Whether or not the floor extends end-ways. */
     public boolean hasEndConnection(EnumFacing facing) {
         
-        if (facing != this.facing && facing != this.facing.getOpposite()) {
+        if (this.facing == null || facing != this.facing && facing != this.facing.getOpposite()) {
             
             return false;
         }

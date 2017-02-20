@@ -48,7 +48,7 @@ public class BlockCraftingKnapping extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FLAT_BOUNDS;
+        return FOUR;
     }
 
     @Override

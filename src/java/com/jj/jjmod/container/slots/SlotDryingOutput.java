@@ -5,15 +5,20 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+/** Container inventory slot for drying rack outputs. */
 public class SlotDryingOutput extends Slot {
     
-    private TEDrying drying;
+    /** The drying rack this slot draws inventory from. */
+    private final TEDrying drying;
+    /** The index of this slot in the drying rack output list. */
+    private final int index;
 
-    public SlotDryingOutput(TEDrying drying, int xPos,
+    public SlotDryingOutput(TEDrying drying, int index, int xPos,
             int yPos) {
         
         super(null, 0, xPos, yPos);
         this.drying = drying;
+        this.index = index;
     }
     
     @Override
@@ -25,13 +30,13 @@ public class SlotDryingOutput extends Slot {
     @Override
     public ItemStack getStack() {
         
-        return this.drying.getOutput();
+        return this.drying.getOutput(this.index);
     }
     
     @Override
     public void putStack(ItemStack stack) {
         
-        this.drying.setOutput(stack);
+        this.drying.setOutput(stack, this.index);
     }
     
     @Override
@@ -46,7 +51,7 @@ public class SlotDryingOutput extends Slot {
     @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.drying.getOutput().splitStack(amount);
+        return this.drying.getOutput(this.index).splitStack(amount);
     }
     
     @Override

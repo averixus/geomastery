@@ -6,6 +6,7 @@ import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TECraftingForge;
+import com.jj.jjmod.tileentities.TEFurnaceClay;
 import com.jj.jjmod.tileentities.TEFurnaceStone;
 import com.jj.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
 import com.jj.jjmod.tileentities.TECraftingForge.EnumPartForge;
@@ -51,7 +52,7 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
 
         if (((TEFurnaceStone) te).getPart() == EnumPartStone.BM) {
 
-            spawnItem(world, pos, ModItems.furnaceStone);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
         }
     }
     
@@ -62,7 +63,7 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
         if (this.getActualState(state, world, pos).getValue(PART) ==
                 EnumPartStone.BM) {
         
-            spawnItem(world, pos, ModItems.furnaceStone);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
         }
     }
 
@@ -98,7 +99,7 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
                 if (brokenBR) {
 
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.furnaceStone);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
                 }
 
                 break;
@@ -178,7 +179,46 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumPartStone part = state.getValue(PART);
+        
+        switch (part) {
+            
+            case BR: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case BM: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case BL: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case TR: {
+                
+                return TWELVE;
+            }
+            
+            case TM: {
+                
+                return TWELVE;
+            }
+            
+            case TL: {
+                
+                return TWELVE;
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
     }
 
     @Override
@@ -197,8 +237,8 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
 
             TEFurnaceStone tileStone = (TEFurnaceStone) tileEntity;
 
-            state = state.withProperty(PART, tileStone.getPart());
-            state = state.withProperty(FACING, tileStone.getFacing());
+            state = tileStone.getPart() == null ? state : state.withProperty(PART, tileStone.getPart());
+            state = tileStone.getFacing() == null ? state : state.withProperty(FACING, tileStone.getFacing());
         }
 
         return state;
@@ -220,6 +260,16 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
     public void activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+        
+        if (tileEntity instanceof TEFurnaceStone) {
+            
+            BlockPos master = ((TEFurnaceStone) tileEntity).getMaster();
+            x = master.getX();
+            y = master.getY();
+            z = master.getZ();
+        }
+        
         player.openGui(Main.instance, GuiList.STONE.ordinal(), world, x, y, z);
     }
 }

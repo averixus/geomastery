@@ -8,8 +8,11 @@ import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
@@ -23,16 +26,26 @@ public class ModLiquids {
     
     public static final ResourceLocation TAR_LOCATION =
             new ResourceLocation("jjmod:block_tar");
-    public static final ResourceLocation TAR_TEXTURE =
-            new ResourceLocation("jjmod:blocks/liquids/tar");
+    public static final ResourceLocation TAR_STILL =
+            new ResourceLocation("jjmod:blocks/liquids/tar_still");
+    public static final ResourceLocation TAR_FLOWING = new ResourceLocation("jjmod:blocks/liquids/tar_flowing");
     
     public static void preInit() {
         
-        tarFluid = new Fluid("fluid_tar", TAR_TEXTURE, TAR_TEXTURE)
-                .setViscosity(5000);
+        tarFluid = new Fluid("fluid_tar", TAR_STILL, TAR_FLOWING);
         FluidRegistry.registerFluid(tarFluid);
         
-        tarBlock = new BlockFluidClassic(tarFluid, BlockMaterial.TAR);
+        tarBlock = new BlockFluidClassic(tarFluid, BlockMaterial.TAR) {
+            
+            @Override
+            public void onEntityCollidedWithBlock(World world, BlockPos pos,
+                    IBlockState state, Entity entity) {
+                
+                entity.motionX *= 0.1D;
+                entity.motionZ *= 0.1D;
+            }
+        };
+        
         tarBlock.setQuantaPerBlock(3);
         tarBlock.setRegistryName("block_tar");
         tarBlock.setUnlocalizedName("block_tar");

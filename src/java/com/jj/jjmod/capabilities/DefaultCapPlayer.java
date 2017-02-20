@@ -396,7 +396,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                                 (TEFurnaceAbstract) world
                                 .getTileEntity(pos);
                         
-                        fireLit = furnace.isBurning();
+                        fireLit = furnace.isHeating();
                     }
                     
                     if (fireLit || block == Blocks.FIRE) {

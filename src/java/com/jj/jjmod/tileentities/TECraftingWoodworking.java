@@ -37,7 +37,7 @@ public class TECraftingWoodworking extends TileEntity {
 
     /** @return The EnumPartWoodworking state of this Woodworking block. */
     public EnumPartWoodworking getPart() {
-        System.out.println("getting part " + this.part);
+
         return this.part;
     }
 
@@ -86,38 +86,24 @@ public class TECraftingWoodworking extends TileEntity {
     /** Enum defining parts of the whole Woodworking structure. */
     public enum EnumPartWoodworking implements IStringSerializable {
 
-        FM("fm", true),
-        FL("fl", false),
-        BL("bl", false),
-        BM("bm", false),
-        BR("br", false),
-        FR("fr", true);
+        FM("fm"),
+        FL("fl"),
+        BL("bl"),
+        BM("bm"),
+        BR("br"),
+        FR("fr");
 
         private final String name;
-        private final boolean isFlat;
 
-        private EnumPartWoodworking(String name, boolean isFlat) {
+        private EnumPartWoodworking(String name) {
 
             this.name = name;
-            this.isFlat = isFlat;
-        }
-
-        @Override
-        public String toString() {
-
-            return this.name;
         }
 
         @Override
         public String getName() {
 
             return this.name;
-        }
-        
-        /** @return Whether this Part has the flat bounding box. */
-        public boolean isFlat() {
-            
-            return this.isFlat;
         }
     }
 }

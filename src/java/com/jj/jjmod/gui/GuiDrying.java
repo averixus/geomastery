@@ -8,52 +8,39 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for Drying Rack */
-public class GuiDrying extends GuiContainer {
+public class GuiDrying extends GuiContainerAbstract {
 
-    /** Text colour */
-    private static final int FOREGROUND = 4210752;
-    private static final String NAME = "Drying Rack";
-    private final String texture;
+    private static final int ARROW_X = 78;
+    private static final int ARROW_Y = 34;
+    
+    private final ResourceLocation texture;
 
     public GuiDrying(ContainerDrying container) {
 
-        super(container);
-        this.texture = "jjmod:textures/gui/drying_" +
-                container.capability.getInventoryRows() + ".png";
-    }
-
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
-        int stringWidth = this.fontRendererObj.getStringWidth(NAME);
-        int start = this.xSize / 2 - stringWidth / 2;
-
-        this.fontRendererObj.drawString(NAME, start, 6, FOREGROUND);
+        super(container, "Drying Rack");
+        this.texture = new ResourceLocation("jjmod:textures/gui/drying_" +
+                container.capability.getInventoryRows() + ".png");
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float ticks, int mouseX,
             int mouseY) {
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager()
-                .bindTexture(new ResourceLocation(this.texture));
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-
-        int l = this.getDryProgress(24);
-        this.drawTexturedModalRect(i + 79, j + 34, 176, 14, l + 1, 16);
+        super.drawGuiContainerBackgroundLayer(ticks, mouseX, mouseY);
+        
+        int drySpent = ((ContainerDrying) this.inventorySlots).drying.getDrySpent();
+        int dryEach = ((ContainerDrying) this.inventorySlots).drying.getDryEach();
+        int arrowLength = dryEach != 0 && drySpent != 0 ?
+                drySpent * ARROW_LENGTH / dryEach : 0;
+        
+        this.drawTexturedModalRect(this.guiLeft + ARROW_X,
+                this.guiTop + ARROW_Y, ARROW_SOURCE_X, ARROW_SOURCE_Y,
+                arrowLength + 1, ARROW_HEIGHT);
     }
 
-    /** Gets the scaled size of the drying progress rectangle.
-     * @return Pixel length of drying progress rectangle. */
-    private int getDryProgress(int pixels) {
+    @Override
+    protected ResourceLocation getTexture() {
 
-        int i = ((ContainerDrying) this.inventorySlots).drying
-                .getDrySpent();
-        int j = ((ContainerDrying) this.inventorySlots).drying
-                .getDryEach();
-        return j != 0 && i != 0 ? i * pixels / j : 0;
+        return this.texture;
     }
 }

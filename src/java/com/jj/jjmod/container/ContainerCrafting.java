@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.jj.jjmod.blocks.BlockComplexAbstract;
 import com.jj.jjmod.crafting.CraftingManager;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.container.slots.SlotCrafting;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -75,6 +76,13 @@ public class ContainerCrafting extends ContainerAbstract {
         @Nullable
         ItemStack stack = this.craftManager
                 .findMatchingRecipe(this.craftMatrix, this.world);
+        
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            
+            stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                    .setBirthTime(this.world.getTotalWorldTime());
+        }
+        
         this.craftResult.setInventorySlotContents(0, stack);
     }
     

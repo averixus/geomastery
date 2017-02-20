@@ -30,7 +30,7 @@ public abstract class ItemSpearAbstract extends ItemToolAbstract {
     public ItemSpearAbstract(String name, ToolMaterial material) {
 
         super(3F, -3.1F, material, Collections.emptySet());
-        ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.COMBAT);
         
         // Check whether spear is being charged for the model
         this.addPropertyOverride(new ResourceLocation("pulling"),

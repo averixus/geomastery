@@ -16,10 +16,10 @@ public class BlockCarcassSheep extends BlockCarcass {
     }
     
     @Override
-    protected void spawnDrops(World world, BlockPos pos, int age) {
+    protected void spawnDrops(World world, BlockPos pos, long age) {
         
         ItemStack meat = new ItemStack(ModItems.muttonRaw, 3);
-        meat.getCapability(ModCapabilities.CAP_DECAY, null).setAge(age);
+        meat.getCapability(ModCapabilities.CAP_DECAY, null).setBirthTime(age);
         
         spawnAsEntity(world, pos, meat);
         spawnAsEntity(world, pos, new ItemStack(ModItems.skinSheep, 4));

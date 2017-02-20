@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemCraftingClayworks extends ItemNew {
+public class ItemCraftingClayworks extends ItemJj {
 
     public ItemCraftingClayworks() {
 

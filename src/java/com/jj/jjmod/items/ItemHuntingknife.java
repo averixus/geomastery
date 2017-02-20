@@ -14,7 +14,7 @@ public class ItemHuntingknife extends ItemToolAbstract {
     public ItemHuntingknife(String name, ToolMaterial material) {
 
         super(1F, -3.1F, material, Collections.emptySet());
-        ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.KNIFE.toString(), 1);
         this.efficiencyOnProperMaterial = 0.25F;
     }

@@ -11,7 +11,7 @@ import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
 /** Hemp Crop block. */
-public class BlockCropHemp extends BlockCrop {
+public class BlockCropHemp extends BlockCropAbstract {
     
     public BlockCropHemp() {
         

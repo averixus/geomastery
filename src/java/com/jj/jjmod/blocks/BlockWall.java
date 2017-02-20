@@ -1,7 +1,9 @@
 package com.jj.jjmod.blocks;
 
+import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IBuildingBlock;
@@ -12,17 +14,18 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Wall block. */
+/** Wall block (implementations: stone, brick). */
 public class BlockWall extends BlockNew implements IBuildingBlock {
     
     public static final PropertyBool NORTH = PropertyBool.create("north");
@@ -302,6 +305,81 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         return state;
     }
     
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+                
+        if (this.isDouble) {
+            
+            return FULL_BLOCK_AABB;
+
+        } else {
+            state = this.getActualState(state, world, pos);
+            EnumPosition position = this.getActualState(state, world, pos).<EnumPosition>getValue(POSITION);
+            return position == EnumPosition.TOP || position == EnumPosition.LONE ? CENTRE_POST_LOW : CENTRE_POST;
+        }
+    }
+    
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+        
+        state = this.getActualState(state, worldIn, pos);
+        
+        if (this.isDouble) {
+            
+            addCollisionBoxToList(pos, entityBox, list, FULL_BLOCK_AABB);
+            return;
+        }
+        
+        if (state.getValue(POSITION) == EnumPosition.TOP || state.getValue(POSITION) == EnumPosition.LONE) {
+        
+            addCollisionBoxToList(pos, entityBox, list, CENTRE_POST_LOW);
+            
+            if (state.getValue(NORTH)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_NORTH_LOW);
+            }
+            
+            if (state.getValue(EAST)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST_LOW);
+            }
+            
+            if (state.getValue(SOUTH)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_SOUTH_LOW);
+            }
+            
+            if (state.getValue(WEST)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST_LOW);
+            }
+            
+        } else {
+            
+            addCollisionBoxToList(pos, entityBox, list, CENTRE_POST);
+            
+            if (state.getValue(NORTH)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_NORTH);
+            }
+            
+            if (state.getValue(EAST)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST);
+            }
+            
+            if (state.getValue(SOUTH)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_SOUTH);
+            }
+            
+            if (state.getValue(WEST)) {
+                
+                addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST);
+            }
+        }
+    }
+        
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
 

@@ -11,6 +11,6 @@ public class ItemApparel extends ItemArmor {
             EntityEquipmentSlot slot, CreativeTabs tab) {
         
         super(material, (slot == EntityEquipmentSlot.LEGS ? 2 : 1), slot);
-        ItemNew.setupItem(this, name, 1, tab);
+        ItemJj.setupItem(this, name, 1, tab);
     }
 }

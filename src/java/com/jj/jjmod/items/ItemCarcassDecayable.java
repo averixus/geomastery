@@ -11,6 +11,7 @@ import com.jj.jjmod.tileentities.TECarcass;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 /** Decayable carcass item. */
-public class ItemCarcassDecayable extends ItemNew {
+public class ItemCarcassDecayable extends ItemJj {
 
     /** The block for this item. */
     private final BlockCarcass block;
@@ -42,21 +43,21 @@ public class ItemCarcassDecayable extends ItemNew {
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
         
-        return new ProviderCapDecay(new
-                DefaultCapDecay(this.block.getShelfLife()));
+        return new ProviderCapDecay(new DefaultCapDecay(this.block.getShelfLife()));
+
     }
     
     /** Ticks the ICapDecay while this item is an entity. */
     @Override
     public boolean onEntityItemUpdate(EntityItem entity) {
-        
+      /*  
         if (!entity.world.isRemote && entity.getEntityItem()
                 .getCapability(ModCapabilities.CAP_DECAY, null)
                 .updateAndRot()) {
             
             entity.setEntityItemStack(new ItemStack(ModItems.rot));
         }
-        
+        */
         return false;
     }
     
@@ -86,7 +87,7 @@ public class ItemCarcassDecayable extends ItemNew {
         IBlockState placeState = this.block.getDefaultState();
         world.setBlockState(pos, placeState);
         ICapDecay cap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
-        ((TECarcass) world.getTileEntity(pos)).setAge(cap.getAge());
+        ((TECarcass) world.getTileEntity(pos)).setData(cap.getBirthTime(), cap.getStageSize());
         
         // Use item
         world.playSound(null, pos, SoundType.CLOTH.getPlaceSound(),

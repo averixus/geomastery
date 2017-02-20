@@ -2,6 +2,7 @@ package com.jj.jjmod.blocks;
 
 import java.util.Random;
 import java.util.function.Supplier;
+import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
@@ -12,11 +13,11 @@ import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
 /** Carrot Crop block. */
-public class BlockCropCarrot extends BlockCrop {
+public class BlockCropCarrot extends BlockCropAbstract {
     
     public BlockCropCarrot() {
         
-        super("carrot", () -> Items.CARROT, (rand) -> rand.nextInt(3) + 1,
+        super("carrot", () -> ModItems.carrot, (rand) -> rand.nextInt(3) + 1,
                 0.3F, 0.2F, ToolType.SICKLE);
     }
 

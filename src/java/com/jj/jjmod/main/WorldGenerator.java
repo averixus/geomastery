@@ -11,6 +11,7 @@ import com.jj.jjmod.worldgen.WorldGenBerry;
 import com.jj.jjmod.worldgen.WorldGenCarrot;
 import com.jj.jjmod.worldgen.WorldGenChalk;
 import com.jj.jjmod.worldgen.WorldGenChickpea;
+import com.jj.jjmod.worldgen.WorldGenClay;
 import com.jj.jjmod.worldgen.WorldGenCoal;
 import com.jj.jjmod.worldgen.WorldGenCopper;
 import com.jj.jjmod.worldgen.WorldGenCotton;
@@ -22,6 +23,7 @@ import com.jj.jjmod.worldgen.WorldGenHemp;
 import com.jj.jjmod.worldgen.WorldGenIron;
 import com.jj.jjmod.worldgen.WorldGenLapis;
 import com.jj.jjmod.worldgen.WorldGenMelon;
+import com.jj.jjmod.worldgen.WorldGenPeat;
 import com.jj.jjmod.worldgen.WorldGenPepper;
 import com.jj.jjmod.worldgen.WorldGenPotato;
 import com.jj.jjmod.worldgen.WorldGenPumpkin;
@@ -30,6 +32,7 @@ import com.jj.jjmod.worldgen.WorldGenRuby;
 import com.jj.jjmod.worldgen.WorldGenSalt;
 import com.jj.jjmod.worldgen.WorldGenSapphire;
 import com.jj.jjmod.worldgen.WorldGenSilver;
+import com.jj.jjmod.worldgen.WorldGenTar;
 import com.jj.jjmod.worldgen.WorldGenTin;
 import com.jj.jjmod.worldgen.WorldGenTomato;
 import com.jj.jjmod.worldgen.WorldGenTreeApple;
@@ -119,6 +122,9 @@ public class WorldGenerator implements IWorldGenerator {
         
         new WorldGenSalt(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenChalk(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenPeat(world, rand).generateChunk(xFromChunk, xFromChunk);
+        new WorldGenTar(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenClay(world, rand).generateChunk(xFromChunk, zFromChunk);
         
         new WorldGenAntler(world, rand).generateChunk(xFromChunk, zFromChunk);
         

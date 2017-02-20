@@ -20,7 +20,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /** Mason crafting device item. */
-public class ItemCraftingMason extends ItemNew {
+public class ItemCraftingMason extends ItemJj {
 
     public ItemCraftingMason() {
 

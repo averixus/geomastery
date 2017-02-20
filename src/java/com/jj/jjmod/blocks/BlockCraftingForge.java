@@ -49,7 +49,7 @@ public class BlockCraftingForge extends BlockComplexAbstract {
 
         if (((TECraftingForge) te).getPart() == EnumPartForge.FM) {
 
-            spawnItem(world, pos, ModItems.craftingForge);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingForge));
         }
     }
 
@@ -91,7 +91,7 @@ public class BlockCraftingForge extends BlockComplexAbstract {
                 if (brokenFL) {
 
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.craftingForge);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingForge));
                 }
 
                 break;
@@ -169,6 +169,52 @@ public class BlockCraftingForge extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
+        state = this.getActualState(state, world, pos);
+        EnumPartForge part = state.getValue(PART);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        
+        switch (part) {
+            
+            case BR: {
+                
+                return HALF[(facing) % 4];
+            }
+            
+            case BM: {
+                
+                return HALF[(facing) % 4];
+            }
+            
+            case BL: {
+                
+                return TEN;
+            }
+            
+            case FR: {
+                
+                return CORNER[(facing + 2) % 4];
+            }
+            
+            case FM: {
+                
+                return CORNER[(facing + 3) % 4];
+            }
+            
+            case FL: {
+                
+                return TEN;
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
         TileEntity tileEntity = world.getTileEntity(pos);
 
         if (!(tileEntity instanceof TECraftingForge)) {
@@ -177,7 +223,8 @@ public class BlockCraftingForge extends BlockComplexAbstract {
         }
 
         EnumPartForge part = ((TECraftingForge) tileEntity).getPart();
-        return part != null && part.isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        
+        return part == EnumPartForge.FR ? CENTRE_TWO : part == EnumPartForge.FL ? NULL_AABB : this.getBoundingBox(state, world, pos);
     }
 
     @Override
@@ -196,8 +243,8 @@ public class BlockCraftingForge extends BlockComplexAbstract {
 
             TECraftingForge tileForge = (TECraftingForge) tileEntity;
 
-            state = state.withProperty(PART, tileForge.getPart());
-            state = state.withProperty(FACING, tileForge.getFacing());
+            state = tileForge.getPart() == null ? state : state.withProperty(PART, tileForge.getPart());
+            state = tileForge.getFacing() == null ? state : state.withProperty(FACING, tileForge.getFacing());
         }
 
         return state;

@@ -11,59 +11,58 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 /** TileEntity for Carcass blocks. */
-public class TECarcass extends TileEntity implements ITickable {
+public class TECarcass extends TileEntity {
     
-    private static final int DAY_TICKS = 24000;
+//    private static final int DAY_TICKS = 24000;
     
-    private int maxAge;
-    private int ageTimer = 0;
+    private int stageSize;
+    private long birthTime;
     
-    @Override
-    public void update() {
-
-        if (this.world.isRemote) {
-            
-            return;
-        }
-
-        if (this.ageTimer >= this.maxAge) {
-
-            this.world.spawnEntity(new EntityItem(this.world, this.pos.getX(),
-                    this.pos.getY(), this.pos.getZ(),
-                    new ItemStack(ModItems.rot)));
-            this.world.setBlockToAir(this.pos);
-            this.world.removeTileEntity(this.pos);
-            
-        } else {
-            
-            this.ageTimer++;
-        }
+ //   private int maxAge;
+ //   private int ageTimer = 0;
+    
+    public void setData(long birthTime, int stageSize) {
+        
+        this.birthTime = birthTime;
+        this.stageSize = stageSize;
+    }
+    
+    public long getBirthTime() {
+        
+        return this.birthTime;
+    }
+    
+    public int getStageSize() {
+        
+        return this.stageSize;
     }
     
     /** @return The current age in ticks. */
-    public int getAge() {
+ //   public int getAge() {
         
-        return this.ageTimer;
-    }
+ //       return this.ageTimer;
+ //   }
     
     /** Sets the age to the given ticks. */
-    public void setAge(int age) {
+ //   public void setAge(int age) {
         
-        this.ageTimer = age;
-    }
+  //      this.ageTimer = age;
+//    }
     
     /** Sets the max age to the given days. */
-    public void setShelfLife(int shelfLife) {
+ //   public void setShelfLife(int shelfLife) {
         
-        this.maxAge = shelfLife * DAY_TICKS;
-    }
+  //      this.maxAge = shelfLife * DAY_TICKS;
+  //  }
     
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 
         super.writeToNBT(nbt);
-        nbt.setInteger("ageTimer", this.ageTimer);
-        nbt.setInteger("maxAge", this.maxAge);
+        nbt.setLong("birthTime", this.birthTime);
+        nbt.setInteger("stageSize", this.stageSize);
+     //   nbt.setInteger("ageTimer", this.ageTimer);
+    //    nbt.setInteger("maxAge", this.maxAge);
         return nbt;
     }
     
@@ -71,7 +70,9 @@ public class TECarcass extends TileEntity implements ITickable {
     public void readFromNBT(NBTTagCompound nbt) {
 
         super.readFromNBT(nbt);
-        this.maxAge = nbt.getInteger("maxAge");
-        this.ageTimer = nbt.getInteger("ageTimer");
+        this.birthTime = nbt.getLong("birthTime");
+        this.stageSize = nbt.getInteger("stageSize");
+      //  this.maxAge = nbt.getInteger("maxAge");
+      //  this.ageTimer = nbt.getInteger("ageTimer");
     }
 }

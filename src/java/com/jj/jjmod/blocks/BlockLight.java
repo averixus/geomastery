@@ -14,8 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Torch or candle block. */
-public class BlockLight extends BlockTorch {
+/** Abstract superclass for torch and candle blocks. */
+public abstract class BlockLight extends BlockTorch {
 
     protected static final AxisAlignedBB FLAT_BOUNDS =
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
@@ -43,38 +43,11 @@ public class BlockLight extends BlockTorch {
             world.setBlockToAir(pos);
         }
     }
-
+    
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess source, BlockPos pos) {
-
-        switch (state.getValue(FACING)) {
-            
-            case EAST: {
-                
-                return TORCH_EAST_AABB;
-            }
-            
-            case WEST: {
-                
-                return TORCH_WEST_AABB;
-            }
-            
-            case SOUTH: {
-                
-                return TORCH_SOUTH_AABB;
-            }
-            
-            case NORTH: {
-                
-                return TORCH_NORTH_AABB;
-            }
-            
-            default: {
-                
-                return FLAT_BOUNDS;
-            }
-        }
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return NULL_AABB;
     }
 
     @Override

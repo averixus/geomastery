@@ -42,13 +42,9 @@ public class ModTileEntities {
                 "crafting_armourer");
 
         GameRegistry.registerTileEntity(TEDrying.class, "drying");
-        
         GameRegistry.registerTileEntity(TEBox.class, "box");
-        
         GameRegistry.registerTileEntity(TEBed.class, "bed");
-        
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
-        
         GameRegistry.registerTileEntity(TECarcass.class, "carcass");
     }
     

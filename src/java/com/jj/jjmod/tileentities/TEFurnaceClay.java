@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModRecipes;
-import com.jj.jjmod.container.ContainerFurnace;
+import com.jj.jjmod.container.ContainerFurnaceSingle;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,21 +19,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 
-/** TileEntity for Clay Furnace blocks. */
+/** TileEntity for clay furnace. */
 public class TEFurnaceClay extends TEFurnaceAbstract {
 
+    /** This block's horizontal facing. */
     private EnumFacing facing;
+    /** This block's part in the structure. */
     private EnumPartClay part;
 
     public TEFurnaceClay() {
 
-        super(ModRecipes.CLAY);
-    }
-    
-    @Override
-    public int getCookTime(ItemStack stack) {
-
-        return 300;
+        super(ModRecipes.CLAY, 4);
     }
     
     /** Sets this Clay Furnace to the given state information. */
@@ -55,8 +51,7 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         return this.part;
     }
 
-    /** @return The position of the master block
-     * of this Clay Furnace structure. */
+    /** @return The position of the master block of this structure. */
     public BlockPos getMaster() {
         
         switch (this.part) {
@@ -142,12 +137,6 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         private EnumPartClay(String name) {
 
             this.name = name;
-        }
-
-        @Override
-        public String toString() {
-
-            return this.name;
         }
 
         @Override

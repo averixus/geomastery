@@ -1,12 +1,17 @@
 package com.jj.jjmod.blocks;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,6 +25,43 @@ public class BlockStairs extends net.minecraft.block.BlockStairs {
         super(modelState);
         BlockNew.setupBlock(this, name, CreativeTabs.BUILDING_BLOCKS,
                 2F, toolType);
+    }
+    
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+        
+        state = this.getActualState(state, world, pos);
+        int facing = state.getValue(FACING).getHorizontalIndex() + 1;
+        EnumShape shape = state.getValue(SHAPE);
+        
+        if (shape == EnumShape.INNER_LEFT || shape == EnumShape.OUTER_LEFT) {
+            
+            facing++;
+        } 
+        
+        facing %= 4;
+        
+        if (shape == EnumShape.INNER_LEFT || shape == EnumShape.INNER_RIGHT) {
+            
+            for (AxisAlignedBB box : BlockNew.STAIRS_INTERNAL[facing]) {
+                
+                addCollisionBoxToList(pos, entityBox, list, box);
+            }
+            
+        } else if (shape == EnumShape.OUTER_LEFT || shape == EnumShape.OUTER_RIGHT) {
+            
+            for (AxisAlignedBB box : BlockNew.STAIRS_EXTERNAL[facing]) {
+                
+                addCollisionBoxToList(pos, entityBox, list, box);
+            }
+            
+        } else {
+            
+            for (AxisAlignedBB box : BlockNew.STAIRS_STRAIGHT[facing]) {
+                
+                addCollisionBoxToList(pos, entityBox, list, box);
+            }
+        }
     }
     
     @Override
@@ -58,7 +100,7 @@ public class BlockStairs extends net.minecraft.block.BlockStairs {
     public IBlockState getActualState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        return state.withProperty(HALF, EnumHalf.BOTTOM);
+        return super.getActualState(state, world, pos).withProperty(HALF, EnumHalf.BOTTOM);
     }
     
     @Override

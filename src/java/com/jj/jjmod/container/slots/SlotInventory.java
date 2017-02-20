@@ -17,7 +17,10 @@ public class SlotInventory extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return !ModBlocks.OFFHAND_ONLY.contains(stack.getItem());
-    }
+        boolean notOffhand = !ModBlocks.OFFHAND_ONLY.contains(stack.getItem());
+      //  boolean capsMatch = this.getStack().isEmpty() || this.getStack().areCapsCompatible(stack);
+     //   System.out.println("checking isitemvalid, caps match? " + capsMatch);
+        return notOffhand /*&& capsMatch*/;
 
+    }
 }

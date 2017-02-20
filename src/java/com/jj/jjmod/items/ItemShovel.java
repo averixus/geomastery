@@ -24,7 +24,7 @@ public class ItemShovel extends ItemToolAbstract {
     public ItemShovel(String name, ToolMaterial material) {
 
         super(2, -3.0F, material, EFFECTIVE_ON);
-        ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.SHOVEL.toString(), 1);
     }
 }

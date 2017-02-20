@@ -20,7 +20,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /** Woodworking crafting device item. */
-public class ItemCraftingWoodworking extends ItemNew {
+public class ItemCraftingWoodworking extends ItemJj {
 
     public ItemCraftingWoodworking() {
 

@@ -1,14 +1,23 @@
 package com.jj.jjmod.items;
 
+import javax.annotation.Nullable;
 import com.jj.jjmod.capabilities.DefaultCapDecay;
+import com.jj.jjmod.capabilities.ICapDecay;
+import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.init.ModCapabilities;
-import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.FoodType;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 /** Decayable food items. */
@@ -22,28 +31,52 @@ public class ItemEdibleDecayable extends ItemEdible {
         
         super(name, hunger, saturation, stackSize, foodType);
         this.shelfLife = shelfLife;
+        
+        this.addPropertyOverride(new ResourceLocation("rot"), new IItemPropertyGetter() {
+            
+            @Override
+            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+                
+                if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                    
+                    if (stack.getCapability(ModCapabilities.CAP_DECAY, null).isRot()) {
+                        
+                        return 1;
+                    }
+                }
+                
+                return 0;
+                
+            }
+        });
     }
     
     /** Gives this item an ICapDecay with its shelf life. */
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
-        
+
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {System.out.println("initcaps, already has cap"); return null;}
+        System.out.println("initcapabilities");
         return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
     }
     
-    /** Ticks the ICapDecay while this item is an entity. */
     @Override
-    public boolean onEntityItemUpdate(EntityItem entity) {
+    public ActionResult<ItemStack> onItemRightClick(World world,
+            EntityPlayer player, EnumHand hand) {
         
-        if (!entity.world.isRemote && entity.getEntityItem()
-                .getCapability(ModCapabilities.CAP_DECAY, null)
-                .updateAndRot()) {
-            
-            entity.setEntityItemStack(new ItemStack(ModItems.rot));
+        ItemStack stack = player.getHeldItem(hand);
+        ICapDecay decayCap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
+        ICapPlayer playerCap = player
+                .getCapability(ModCapabilities.CAP_PLAYER, null);
+
+        if (playerCap.canEat(this.type) && !decayCap.isRot()) {
+
+            player.setActiveHand(hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
         
-        return false;
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
     
     /** Makes this item always show a durability bar. */
@@ -64,9 +97,15 @@ public class ItemEdibleDecayable extends ItemEdible {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
-        float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null)
-                .getRenderFraction();
-        return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
+      //  System.out.println("capability " + stack.getCapability(ModCapabilities.CAP_DECAY, null));
+      //  System.out.println("render fraction " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getRenderFraction());
+        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            
+            float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null).getRenderFraction();
+            return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
+        }
+        
+        return 0;
     }
 }
 

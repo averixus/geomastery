@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Floor item. */
-public class ItemFloor extends ItemNew {
+public class ItemFloor extends ItemJj {
     
     /** This item's floor type. */
     private EnumFloor floor;

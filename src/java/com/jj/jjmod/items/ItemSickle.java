@@ -20,7 +20,7 @@ public class ItemSickle extends ItemToolAbstract {
     public ItemSickle(String name, ToolMaterial material) {
 
         super(1F, -3.1F, material, Collections.emptySet());
-        ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.SICKLE.toString(), 1);
     }
 }

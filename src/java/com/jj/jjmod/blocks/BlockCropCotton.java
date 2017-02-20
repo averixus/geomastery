@@ -8,7 +8,7 @@ import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 
 /** Cotton Crop block. */
-public class BlockCropCotton extends BlockCrop {
+public class BlockCropCotton extends BlockCropAbstract {
     
     public BlockCropCotton() {
         

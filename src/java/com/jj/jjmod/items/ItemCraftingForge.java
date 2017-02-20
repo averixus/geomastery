@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class ItemCraftingForge extends ItemNew {
+public class ItemCraftingForge extends ItemJj {
 
     public ItemCraftingForge() {
 

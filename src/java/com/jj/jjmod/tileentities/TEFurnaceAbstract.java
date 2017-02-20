@@ -1,6 +1,10 @@
 package com.jj.jjmod.tileentities;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import com.jj.jjmod.crafting.CookingManager;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.packets.FurnacePacketClient;
 import net.minecraft.item.ItemStack;
@@ -14,37 +18,68 @@ import net.minecraft.util.math.MathHelper;
 public abstract class TEFurnaceAbstract extends TileEntity
         implements ITickable {
 
-    public final CookingManager recipes;
+    /** Comparator to move all empty stacks to the end of a list. */
+    private static final Comparator<ItemStack> SORTER =
+            (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
 
-    protected ItemStack input = ItemStack.EMPTY;
-    protected ItemStack fuel = ItemStack.EMPTY;
-    protected ItemStack output = ItemStack.EMPTY;
+    /** Recipes for this furnace. */
+    public final CookingManager recipes;
+    /** Size of inputs, outputs, and fuels for this furnace. */
+    protected final int size;
+    
+    /** This furnace's input stacks. */
+    protected List<ItemStack> inputs;
+    /** This funace's fuel stacks. */
+    protected List<ItemStack> fuels;
+    /** This furnace's output stacks. */
+    protected List<ItemStack> outputs;
+    /** Ticks of burning left for the current fuel. */
     protected int fuelLeft;
+    /** Total ticks of burning for each item of current fuel. */
     protected int fuelEach;
+    /** Ticks spent cooking the current input. */
     protected int cookSpent;
+    /** Total ticks to cook each item of the current input. */
     protected int cookEach;
     
-    public TEFurnaceAbstract(CookingManager recipes) {
+    public TEFurnaceAbstract(CookingManager recipes, int size) {
 
         this.recipes = recipes;
+        this.inputs = NonNullList.withSize(size, ItemStack.EMPTY);
+        this.fuels = NonNullList.withSize(size, ItemStack.EMPTY);
+        this.outputs = NonNullList.withSize(size, ItemStack.EMPTY);
+        this.size = size;
+    }
+    
+    /** @return The number of input, fuel, and output slots of this furnace. */
+    public int size() {
+        
+        return this.size;
+    }
+    
+    /** Sorts the input and fuel stacks. */
+    public void sort() {
+        
+        Collections.sort(this.inputs, SORTER);
+        Collections.sort(this.fuels, SORTER);
     }
     
     /** @return The ItemStack in the input slot. */
-    public ItemStack getInput() {
+    public ItemStack getInput(int index) {
         
-        return this.input;
+        return this.inputs.get(index);
     }
     
     /** @return The ItemStack in the fuel slot. */
-    public ItemStack getFuel() {
+    public ItemStack getFuel(int index) {
         
-        return this.fuel;
+        return this.fuels.get(index);
     }
     
     /** @return The ItemStack in the output slot. */
-    public ItemStack getOutput() {
+    public ItemStack getOutput(int index) {
         
-        return this.output;
+        return this.outputs.get(index);
     }
     
     /** @return The ticks of burning left from the current fuel item. */
@@ -82,49 +117,42 @@ public abstract class TEFurnaceAbstract extends TileEntity
     }
     
     /** Sets the ItemStack to the input slot. */
-    public void setInput(ItemStack stack) {
+    public void setInput(ItemStack stack, int index) {
         
-        if (!ItemStack.areItemsEqual(stack, this.input)) {
+        if (index == 0 && !ItemStack.areItemsEqual(stack, this.getInput(0))) {
             
-            this.cookEach = this.getCookTime(stack);
+            this.cookEach = this.recipes.getCookingTime(stack);
             this.cookSpent = 0;
             this.markDirty();
         }
         
-        this.input = stack;
+        this.inputs.set(index, stack);
+        this.sort();
     }
     
     /** Sets the ItemStack to the fuel slot. */
-    public void setFuel(ItemStack stack) {
+    public void setFuel(ItemStack stack, int index) {
         
-        this.fuel = stack;
+        this.fuels.set(index, stack);
+        this.sort();
     }
     
     /** Sets the ItemStack to the output slot. */
-    public void setOutput(ItemStack stack) {
+    public void setOutput(ItemStack stack, int index) {
         
-        this.output = stack;
+        this.outputs.set(index, stack);
     }
-
-    /** @return The ticks the current fuel item can burn for. */
-    public int getFuelTime(ItemStack stack) {
-        
-        return this.recipes.getFuelTime(stack);
-    }
-
-    /** @return The ticks the current input item takes to cook. */
-    public abstract int getCookTime(ItemStack stack);
 
     /** @return Whether this Furnace is currently heating. */
-    public boolean isBurning() {
+    public boolean isHeating() {
 
-        return this.fuelLeft > 0;
+        return true;
     }
     
-    /** @return Whether the ItemStack is a fuel for this Furnace. */
-    public boolean isItemFuel(ItemStack stack) {
-
-        return getFuelTime(stack) > 0;
+    /** @return Whether this Furnace is currently using fuel. */
+    public boolean isUsingFuel() {
+        
+        return this.fuelLeft > 0;
     }
 
     @Override
@@ -135,7 +163,6 @@ public abstract class TEFurnaceAbstract extends TileEntity
             return;
         }
         
-
         boolean isDirty = false;
         
         // Fuel progress
@@ -145,9 +172,9 @@ public abstract class TEFurnaceAbstract extends TileEntity
             
         } else if (this.canCook()) {
             
-            this.fuelEach = this.getFuelTime(this.fuel);
+            this.fuelEach = this.recipes.getFuelTime(this.fuels.get(0));
             this.fuelLeft = this.fuelEach;
-            this.fuel.shrink(1);
+            this.fuels.get(0).shrink(1);
             isDirty = true;
         }
         
@@ -161,14 +188,14 @@ public abstract class TEFurnaceAbstract extends TileEntity
             } else if (this.cookSpent == this.cookEach) {
 
                 this.cookSpent = 0;
-                this.cookEach = this.getCookTime(this.input);
+                this.cookEach = this.recipes.getCookingTime(this.inputs.get(0));
                 this.cookItem();
                 isDirty = true;
             }
         }
 
         // Cook progress reverses if no fuel
-        if (!this.isBurning() && this.cookSpent > 0) {
+        if (!this.isUsingFuel() && this.cookSpent > 0) {
 
             this.cookSpent = MathHelper.clamp(this.cookSpent - 2,
                     0, this.cookEach);
@@ -185,57 +212,88 @@ public abstract class TEFurnaceAbstract extends TileEntity
     /** @return Whether the current input can cook into the current output. */
     protected boolean canCook() {
 
-        if (this.input.isEmpty()) {
+        if (this.inputs.get(0).isEmpty()) {
 
             return false;
         }
 
-        ItemStack result = this.recipes.getCookingResult(this.input);
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
 
         if (result.isEmpty()) {
 
             return false;
         }
+        
+        for (ItemStack output : this.outputs) {
 
-        if (this.output.isEmpty()) {
-
-            return true;
+            if (output.isEmpty()) {
+    
+                return true;
+            }
+    
+            boolean outputCorrect = output.isItemEqual(result);
+            int outputCount = output.getCount() + result.getCount();
+            boolean hasRoom = outputCount < output.getMaxStackSize();
+    
+            if (outputCorrect && hasRoom) {
+                
+                return true;
+            }
         }
-
-        boolean outputCorrect = this.output.isItemEqual(result);
-        int output = this.output.getCount() + result.getCount();
-        boolean hasRoom = output < this.output.getMaxStackSize();
-
-        return outputCorrect && hasRoom;
+        
+        return false;
     }
 
     /** Cooks one input item. */
     protected void cookItem() {
 
-        ItemStack result = this.recipes.getCookingResult(this.input);
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
 
-        if (this.output.isEmpty()) {
-
-            this.output = result.copy();
-
-        } else if (ItemStack.areItemsEqual(this.output, result)) {
-
-            this.output.grow(result.getCount());
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            ItemStack output = this.outputs.get(i);
+            
+            if (ItemStack.areItemsEqual(result, output) &&
+                    (output.getCount() + result.getCount())
+                    <= output.getMaxStackSize()) {
+                
+                output.grow(result.getCount());
+                this.inputs.get(0).shrink(1);
+                this.sort();
+                return;
+            }
         }
-
-        this.input.shrink(1);
+        
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            ItemStack output = this.outputs.get(i);
+            
+            if (output.isEmpty()) {
+                
+                result = result.copy();
+                
+                if (result.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                    
+                    result.getCapability(ModCapabilities.CAP_DECAY, null)
+                            .setBirthTime(this.world.getTotalWorldTime());
+                }
+                
+                this.outputs.set(i, result);
+                this.inputs.get(0).shrink(1);
+                this.sort();
+                return;
+            }
+        }
     }
 
     /** Sends a packet to update the progress bars on the Client. */
     protected void sendProgressPacket() {
         
-        if (this.world.isRemote) {
+        if (!this.world.isRemote) {
             
-            return;
+            ModPackets.NETWORK.sendToAll(new FurnacePacketClient(this.fuelLeft,
+                    this.fuelEach, this.cookSpent, this.cookEach, this.pos));
         }
-
-        ModPackets.NETWORK.sendToAll(new FurnacePacketClient(this.fuelLeft,
-                this.fuelEach, this.cookSpent, this.cookEach, this.pos));
     }
     
     @Override
@@ -243,9 +301,23 @@ public abstract class TEFurnaceAbstract extends TileEntity
 
         super.readFromNBT(compound);
         
-        this.input = new ItemStack(compound.getCompoundTag("input"));
-        this.fuel = new ItemStack(compound.getCompoundTag("fuel"));
-        this.output = new ItemStack(compound.getCompoundTag("output"));
+        for (int i = 0; i < this.inputs.size(); i++) {
+            
+            this.setInput(new ItemStack(compound
+                    .getCompoundTag("input" + i)), i);
+        }
+        
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            this.setOutput(new ItemStack(compound
+                    .getCompoundTag("output" + i)), i);
+        }
+        
+        for (int i = 0; i < this.fuels.size(); i++) {
+            
+            this.setFuel(new ItemStack(compound
+                    .getCompoundTag("fuel" + i)), i);
+        }
 
         this.fuelLeft = compound.getInteger("fuelLeft");
         this.cookSpent = compound.getInteger("cookSpent");
@@ -263,9 +335,23 @@ public abstract class TEFurnaceAbstract extends TileEntity
         compound.setInteger("cookEach", this.cookEach);
         compound.setInteger("fuelEach", this.fuelEach);
         
-        compound.setTag("input", this.input.writeToNBT(new NBTTagCompound()));
-        compound.setTag("fuel", this.fuel.writeToNBT(new NBTTagCompound()));
-        compound.setTag("output", this.output.writeToNBT(new NBTTagCompound()));
+        for (int i = 0; i < this.inputs.size(); i++) {
+            
+            compound.setTag("input" + i, this.getInput(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
+        
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            compound.setTag("output" + i, this.getOutput(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
+        
+        for (int i = 0; i < this.fuels.size(); i++) {
+            
+            compound.setTag("fuel" + i, this.getFuel(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
 
         return compound;
     }

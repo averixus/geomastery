@@ -2,7 +2,7 @@ package com.jj.jjmod.main;
 
 import com.jj.jjmod.blocks.BlockBedAbstract;
 import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
-import com.jj.jjmod.blocks.BlockBedBreakable;
+import com.jj.jjmod.blocks.BlockBedBreakableAbstract;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModCapabilities;
@@ -47,7 +47,7 @@ public class PlayerEventHandler {
         ItemStack remaining = stack;
         System.out.println("playerItemPickup " + stack); 
         if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println(" with cap age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+            System.out.println(" with cap age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime());
         } else {
             System.out.println(" with no capdecay");
         }
@@ -113,7 +113,7 @@ public class PlayerEventHandler {
         }
 
         // Breakable beds take damage
-        if (block instanceof BlockBedBreakable) {
+        if (block instanceof BlockBedBreakableAbstract) {
 
             TileEntity tileEntity = world.getTileEntity(posFoot);
 

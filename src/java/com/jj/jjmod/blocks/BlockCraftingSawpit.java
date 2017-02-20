@@ -52,7 +52,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
 
         if (((TECraftingSawpit) te).getPart() == EnumPartSawpit.B1) {
 
-            spawnItem(world, pos, ModItems.craftingSawpit);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingSawpit));
         }
     }
     
@@ -93,7 +93,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
                 if (brokenB2) {
                     
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.craftingSawpit);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingSawpit));
                 }
                 
                 break;
@@ -359,22 +359,27 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumPartSawpit part = state.getValue(PART);
+        
+        if (part.isPassable()) {
+        
+            return FULL_BLOCK_AABB;
+        }
+        
+        int axis = state.getValue(FACING).getHorizontalIndex() % 2;
+        System.out.println("axis " + axis);
+        return CENTRE_HALF_LOW[axis];
     }
     
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        TileEntity tileEntity = world.getTileEntity(pos);
+        state = this.getActualState(state, world, pos);
+        EnumPartSawpit part = state.getValue(PART);
         
-        if (!(tileEntity instanceof TECraftingSawpit)) {
-            
-            return FULL_BLOCK_AABB;
-        }
-        
-        EnumPartSawpit part = ((TECraftingSawpit) tileEntity).getPart();
-        return part != null && part.isPassable() ? NULL_AABB : FULL_BLOCK_AABB;
+        return part.isPassable() ? NULL_AABB : this.getBoundingBox(state, world, pos);
 
     }
     
@@ -394,8 +399,8 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
             
             TECraftingSawpit tileSawpit = (TECraftingSawpit) tileEntity;
             
-            state = state.withProperty(PART, tileSawpit.getPart());
-            state = state.withProperty(FACING, tileSawpit.getFacing());
+            state = tileSawpit.getPart() == null ? state : state.withProperty(PART, tileSawpit.getPart());
+            state = tileSawpit.getFacing() == null ? state : state.withProperty(FACING, tileSawpit.getFacing());
         }
         
         return state;

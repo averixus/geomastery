@@ -1,7 +1,7 @@
 package com.jj.jjmod.worldgen;
 
 import java.util.Random;
-
+import com.google.common.base.Predicate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -12,9 +12,8 @@ import net.minecraft.world.World;
 /** Abstract superclass for WorldGenerators replacing Stone blocks. */
 public abstract class WorldGenStone extends WorldGenAbstract {
 
-    protected static final BlockMatcher PREDICATE =
+    protected Predicate<IBlockState> predicate =
             BlockMatcher.forBlock(Blocks.STONE);
-
     protected IBlockState state;
     protected int minHeight;
     protected int maxHeight;
@@ -122,7 +121,7 @@ public abstract class WorldGenStone extends WorldGenAbstract {
                                     
                                     if (state.getBlock()
                                             .isReplaceableOreGen(state,
-                                            this.world, blockpos, PREDICATE)) {
+                                            this.world, blockpos, predicate)) {
 
                                         if (this.shouldGenBlock()) {
 

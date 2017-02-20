@@ -8,11 +8,11 @@ public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
 
     public TEFurnaceConstantAbstract(CookingManager recipes) {
         
-        super(recipes);
+        super(recipes, 1);
     }
     
     @Override
-    public boolean isBurning() {
+    public boolean isHeating() {
         
         return this.fuelLeft > 0;
     }
@@ -32,11 +32,11 @@ public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
 
             this.fuelLeft--;
             
-        } else if (!this.fuel.isEmpty()) {
+        } else if (!this.fuels.get(0).isEmpty()) {
             
-            this.fuelEach = this.getFuelTime(this.fuel);
+            this.fuelEach = this.recipes.getFuelTime(this.fuels.get(0));
             this.fuelLeft = this.fuelEach;
-            this.fuel.shrink(1);
+            this.fuels.get(0).shrink(1);
             isDirty = true;
         }
 
@@ -50,14 +50,14 @@ public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
             } else if (this.cookSpent == this.cookEach) {
                 
                 this.cookSpent = 0;
-                this.cookEach = this.getCookTime(this.input);
+                this.cookEach = this.recipes.getCookingTime(this.inputs.get(0));
                 this.cookItem();
                 isDirty = true;
             }
         }
         
         // Cook progress reverses if no fuel
-        if (!this.isBurning() && this.cookSpent > 0) {
+        if (!this.isUsingFuel() && this.cookSpent > 0) {
 
             this.cookSpent = MathHelper.clamp(this.cookSpent - 2,
                     0, this.cookEach);

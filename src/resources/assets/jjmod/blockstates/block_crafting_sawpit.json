@@ -9,7 +9,7 @@
         "facing=north,part=t2": { "model": "jjmod:crafters/sawpit_23", "y": 270 },
         "facing=north,part=t3": { "model": "jjmod:crafters/sawpit_23", "y": 270 },
         "facing=north,part=t4": { "model": "jjmod:crafters/sawpit_4", "y": 90 },
-        "facing=north,part=t5": { "model": "jjmod:crafters/sawpit_15", "y": 270 },
+        "facing=north,part=t5": { "model": "jjmod:crafters/sawpit_15", "y": 90 },
         "facing=east,part=b1": { "model": "jjmod:crafters/sawpit_bottom_1", "y": 90 },
         "facing=east,part=b2": { "model": "jjmod:crafters/sawpit_bottom_2", "y": 90  },
         "facing=east,part=b3": { "model": "jjmod:crafters/sawpit_bottom_3", "y": 90  },

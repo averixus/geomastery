@@ -1,0 +1,33 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "newsoftwood": "jjmod:blocks/building/newsoftwood",
+    "log_spruce": "jjmod:blocks/building/log_spruce"
+},
+"elements": [ 
+{
+    "from": [ -8, 15, 16 ],
+    "to": [ -5, 16, 24 ],
+    "faces": {
+        "down":  { "uv": [ 16, 8, 13, 0 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 0, 0, 3, 8 ], "texture": "#log_spruce" },
+        "north": { "uv": [ 13, 0, 16, 1 ], "texture": "#log_spruce" },
+        "south": { "uv": [ 0, 0, 3, 1 ], "texture": "#log_spruce" },
+        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#log_spruce" },
+        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#log_spruce" }
+    }
+},
+{
+    "from": [ -4, 15, 16 ],
+    "to": [ -1, 16, 24 ],
+    "faces": {
+        "down":  { "uv": [ 11, 8, 8, 0 ], "texture": "#newsoftwood" },
+        "up":    { "uv": [ 5, 0, 8, 8 ], "texture": "#log_spruce" },
+        "north": { "uv": [ 8, 0, 11, 1 ], "texture": "#log_spruce" },
+        "south": { "uv": [ 5, 0, 8, 1 ], "texture": "#log_spruce" },
+        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#log_spruce" },
+        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#log_spruce" }
+    }
+}
+]
+}

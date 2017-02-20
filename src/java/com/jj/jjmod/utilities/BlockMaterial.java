@@ -20,13 +20,13 @@ public class BlockMaterial extends Material {
             new BlockMaterial(MapColor.STONE, true, true,
             false, true, false, true, false);
     public static final BlockMaterial WATER_PLANT =
-            new BlockMaterial(MapColor.WATER, true, false,
+            new BlockMaterial(MapColor.WATER, true, true,
             false, true, false, true, false);
     public static final BlockMaterial CARCASS =
             new BlockMaterial(MapColor.BROWN, true, true,
             true, true, false, false, false);
     public static final BlockMaterial SOIL =
-            new BlockMaterial(MapColor.DIRT, true, false,
+            new BlockMaterial(MapColor.DIRT, true, true,
             false, false, false, false, false);
     public static final BlockMaterial TAR =
             new BlockMaterial(MapColor.BLACK, false, false,

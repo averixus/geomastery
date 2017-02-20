@@ -11,7 +11,7 @@ public class ItemShield extends net.minecraft.item.ItemShield {
 
         super();
         this.setMaxDamage(durability);
-        ItemNew.setupItem(this, name, 1, CreativeTabs.COMBAT);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.COMBAT);
     }
     
     /** Bypass vanilla shield naming. */

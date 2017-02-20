@@ -1,6 +1,11 @@
 package com.jj.jjmod.tileentities;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import com.google.common.collect.Lists;
 import com.jj.jjmod.crafting.CookingManager;
+import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
 import com.jj.jjmod.packets.DryingPacketClient;
@@ -8,46 +13,63 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.NonNullList;
 
 /** TileEntity for Drying Rack block. */
 public class TEDrying extends TileEntity implements ITickable {
 
+    /** Comparator to move all empty stacks to the end of a list. */
+    private static final Comparator<ItemStack> SORTER =
+            (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
+    
+    /** Recipes for this drying rack. */
     public final CookingManager recipes = ModRecipes.DRYING;
-    private ItemStack input = ItemStack.EMPTY;
-    private ItemStack output = ItemStack.EMPTY;
+    
+    /** This drying rack's input stacks. */
+    private List<ItemStack> inputs = NonNullList.withSize(2, ItemStack.EMPTY);
+    /** This drying rack's output stacks. */
+    private List<ItemStack> outputs = NonNullList.withSize(2, ItemStack.EMPTY);
+    /** Ticks spent drying the current item. */
     private int drySpent;
+    /** Total ticks needed to dry the current item. */
     private int dryEach;
 
+    /** Sorts the list of input stacks. */
+    public void sort() {
+
+        Collections.sort(this.inputs, SORTER);
+    }
+
     /** @return The ItemStack in the input slot. */
-    public ItemStack getInput() {
+    public ItemStack getInput(int index) {
         
-        return this.input;
+        return this.inputs.get(index);
     }
     
     /** @return The ItemStack in the output slot. */
-    public ItemStack getOutput() {
+    public ItemStack getOutput(int index) {
         
-        return this.output;
+        return this.outputs.get(index);
     }
 
     /** Sets the given stack to the input slot. */
-    public void setInput(ItemStack stack) {
-        
-        if (!ItemStack.areItemsEqual(stack, this.input)) {
+    public void setInput(ItemStack stack, int index) {
+                
+        if (index == 0 && !ItemStack.areItemsEqual(stack, this.getInput(0))) {
             
-            this.dryEach = this.getDryTime(stack);
+            this.dryEach = this.recipes.getCookingTime(stack);
             this.drySpent = 0;
             this.markDirty();
         }
         
-        this.input = stack;
+        this.inputs.set(index, stack);
+        this.sort();
     }
     
     /** Sets the given stack to the output slot. */
-    public void setOutput(ItemStack stack) {
+    public void setOutput(ItemStack stack, int index) {
         
-        this.output = stack;
+        this.outputs.set(index, stack);
     }
     
     /** @return The ticks spent drying the current item. */
@@ -68,12 +90,6 @@ public class TEDrying extends TileEntity implements ITickable {
         this.drySpent = drySpent;
         this.dryEach = dryEach;
     }
-    
-    /** @return The ticks needed to dry the given item. */
-    public int getDryTime(ItemStack stack) {
-
-        return 200;
-    }
 
     @Override
     public void update() {
@@ -92,7 +108,7 @@ public class TEDrying extends TileEntity implements ITickable {
             } else if (this.drySpent == this.dryEach) {
 
                 this.drySpent = 0;
-                this.dryEach = getDryTime(this.input);
+                this.dryEach = this.recipes.getCookingTime(this.inputs.get(0));
                 this.dryItem();
                 this.markDirty();
             }
@@ -105,61 +121,91 @@ public class TEDrying extends TileEntity implements ITickable {
         this.sendProgressPacket();
     }
 
-    /** @return Whether the current input
-     * can be dried to the current output. */
+    /** @return Whether the current input can be dried to the current output. */
     private boolean canDry() {
 
-        if (this.input.isEmpty()) {
+        if (this.inputs.get(0).isEmpty()) {
 
             return false;
         }
 
-        ItemStack result = this.recipes.getCookingResult(this.input);
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
 
         if (result.isEmpty()) {
 
             return false;
         }
-
-        if (this.output.isEmpty()) {
-
-            return true;
+        
+        for (ItemStack output : this.outputs) {
+            
+            if (output.isEmpty()) {
+                
+                return true;
+            }
+            
+            boolean outputCorrect = output.isItemEqual(result);
+            int outputCount = output.getCount() + result.getCount();
+            boolean hasRoom = outputCount <= output.getMaxStackSize();
+            
+            if (outputCorrect && hasRoom) {
+                
+                return true;
+            }
         }
-
-        boolean outputCorrect = this.output.isItemEqual(result);
-        int output = this.output.getCount() + result.getCount();
-        boolean hasRoom = output <= this.output.getMaxStackSize();
-
-        return outputCorrect && hasRoom;
+        
+        return false;
     }
 
     /** Turns an input into an output. */
     private void dryItem() {
 
-        ItemStack result = this.recipes.getCookingResult(this.input);
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
 
-        if (this.output.isEmpty()) {
-
-            this.output = result.copy();
-            this.input.shrink(1);
-
-        } else if (ItemStack.areItemsEqual(this.output, result)) {
-
-            this.output.grow(result.getCount());
-            this.input.shrink(1);
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            ItemStack output = this.outputs.get(i);
+            
+            if (ItemStack.areItemsEqual(result, output) &&
+                    (output.getCount() + result.getCount())
+                    <= output.getMaxStackSize()) {
+                
+                output.grow(result.getCount());
+                this.inputs.get(0).shrink(1);
+                this.sort();
+                return;
+            }
+        }
+        
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            ItemStack output = this.outputs.get(i);
+            
+            if (output.isEmpty()) {
+                
+                result = result.copy();
+                
+                if (result.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                    
+                    result.getCapability(ModCapabilities.CAP_DECAY, null)
+                            .setBirthTime(this.world.getTotalWorldTime());
+                }
+                
+                this.outputs.set(i, result);
+                this.inputs.get(0).shrink(1);
+                this.sort();
+                return;
+            }
         }
     }
     
     /** Sends an packet to update the progress bars on the Client. */
     private void sendProgressPacket() {
         
-        if (this.world.isRemote) {
-            
-            return;
+        if (!this.world.isRemote) {
+
+            ModPackets.NETWORK.sendToAll(new DryingPacketClient(this.drySpent,
+                    this.dryEach, this.pos));
         }
-        
-        ModPackets.NETWORK.sendToAll(new DryingPacketClient(this.drySpent,
-                this.dryEach, this.pos));
         
     }
 
@@ -167,9 +213,19 @@ public class TEDrying extends TileEntity implements ITickable {
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
+        
+        for (int i = 0; i < this.inputs.size(); i++) {
+            
+            this.setInput(new ItemStack(compound
+                    .getCompoundTag("input" + i)), i);
+        }
+        
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            this.setOutput(new ItemStack(compound
+                    .getCompoundTag("output" + i)), i);
+        }
 
-        this.input = new ItemStack(compound.getCompoundTag("input"));
-        this.output = new ItemStack(compound.getCompoundTag("output"));
         this.drySpent = compound.getInteger("drySpent");
         this.dryEach = compound.getInteger("dryEach");
     }
@@ -181,9 +237,19 @@ public class TEDrying extends TileEntity implements ITickable {
 
         compound.setInteger("drySpent", this.drySpent);
         compound.setInteger("dryEach", this.dryEach);
-        compound.setTag("input", this.input.writeToNBT(new NBTTagCompound()));
-        compound.setTag("output", this.output.writeToNBT(new NBTTagCompound()));
-
+        
+        for (int i = 0; i < this.inputs.size(); i++) {
+            
+            compound.setTag("input" + 1, this.inputs.get(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
+        
+        for (int i = 0; i < this.outputs.size(); i++) {
+            
+            compound.setTag("output" + 1, this.outputs.get(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
+        
         return compound;
     }
 }

@@ -110,7 +110,7 @@ public class ContainerInventory extends ContainerAbstract {
         this.invStart = this.hotEnd + 1;
         this.invEnd = this.invStart + invIndex;
         
-        this.setBackground();
+        this.updateBackground();
         this.onCraftMatrixChanged(this.craftMatrix);
     }
     
@@ -145,11 +145,11 @@ public class ContainerInventory extends ContainerAbstract {
             }
         }
         
-        this.setBackground();
+        this.updateBackground();
     }
     
     /** Sets the ResourceLocation for the GUI with current inventory size. */
-    private void setBackground() {
+    private void updateBackground() {
         
         this.background = new ResourceLocation("jjmod:textures/gui/inventory_"
                 + this.capability.getInventoryRows() + ".png");
@@ -168,7 +168,7 @@ public class ContainerInventory extends ContainerAbstract {
         ItemStack remaining = stack;
         System.out.println("add " + remaining);
         if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+            System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime());
         } else {
             System.out.println("has no capdecay");
         }
@@ -197,24 +197,11 @@ public class ContainerInventory extends ContainerAbstract {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
         ItemStack remaining = stack;
-
-        System.out.println("putInMatchingSlot, \"remaining\" stack: " + remaining);
-        if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
-        } else {
-            System.out.println("has no capdecay");
-        }
-        System.out.println("putInMatchingSlot, \"stack\" stack: " + stack);
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
-        } else {
-            System.out.println("has no capdecay");
-        }
         
         for (int slot = 0; slot < this.capability.getInventorySize() &&
                 !remaining.isEmpty(); slot++) {
 
-            if (ItemStack.areItemsEqual(remaining, inv.get(slot))) {
+            if (ItemStack.areItemsEqual(remaining, inv.get(slot)) && inv.get(slot).areCapsCompatible(remaining)) {
 
                 remaining = this.addToSlot(slot, remaining);
             }
@@ -234,19 +221,7 @@ public class ContainerInventory extends ContainerAbstract {
                 !remaining.isEmpty(); slot++) {
 
             if (inv.get(slot).isEmpty()) {
-                System.out.println("putInEmptySlot, \"remaining\" stack: " + remaining);
-                if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-                    System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
-                } else {
-                    System.out.println("has no capdecay");
-                }
-                
-                System.out.println("putInEmptySlot, \"stack\" stack: " + stack);
-                if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-                    System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
-                } else {
-                    System.out.println("has no capdecay");
-                }
+
                 remaining = this.addToSlot(slot, remaining);
             }
         }
@@ -279,15 +254,15 @@ public class ContainerInventory extends ContainerAbstract {
         if (inSlot.isEmpty()) {
             System.out.println("addToSlot " + stack);
             if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-                System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
+                System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime());
             } else {
                 System.out.println("has no capdecay");
             }
             inv.set(slot, stack);
             result = ItemStack.EMPTY;
             
-        } else if (ItemStack.areItemsEqual(stack, inSlot)) {
-            
+        } else if (ItemStack.areItemsEqual(stack, inSlot) && stack.areCapsCompatible(inSlot)) {
+
             ItemStack added = inSlot.copy();
             int total = inSlot.getCount() + stack.getCount();
             int max = stack.getMaxStackSize();
@@ -306,12 +281,6 @@ public class ContainerInventory extends ContainerAbstract {
             }
         }
         
-        System.out.println("added stack to slot " + stack);
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getAge());
-        } else {
-            System.out.println("has no capdecay");
-        }
         updateInventory(this.player, slot);
         return result;
     }
@@ -551,6 +520,11 @@ public class ContainerInventory extends ContainerAbstract {
     /** Sends a packet to update the index slot of this container. */
     private void updateContainer(int slot) {
 
+        if (slot >= this.inventorySlots.size()) {
+            
+            return;
+        }
+        
         ItemStack stack = this.inventorySlots.get(slot).getStack();
         
         if (this.player instanceof EntityPlayerMP) {

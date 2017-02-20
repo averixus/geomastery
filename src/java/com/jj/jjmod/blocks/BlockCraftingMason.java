@@ -51,7 +51,7 @@ public class BlockCraftingMason extends BlockComplexAbstract {
 
         if (((TECraftingMason) te).getPart() == EnumPartMason.FM) {
 
-            spawnItem(world, pos, ModItems.craftingMason);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingMason));
         }
     }
 
@@ -87,7 +87,7 @@ public class BlockCraftingMason extends BlockComplexAbstract {
                 if (brokenFL) {
 
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.craftingMason);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingMason));
                 }
 
                 break;
@@ -155,15 +155,42 @@ public class BlockCraftingMason extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        TileEntity tileEntity = world.getTileEntity(pos);
-
-        if (!(tileEntity instanceof TECraftingMason)) {
-
-            return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumPartMason part = state.getValue(PART);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        
+        switch (part) {
+            
+            case BR: {
+                
+                return CORNER[(facing + 1) % 4];
+            }
+            
+            case BM: {
+                
+                return CORNER[(facing) % 4];
+            }
+            
+            case FR: {
+                
+                return CORNER[(facing + 2) % 4];
+            }
+            
+            case FM: {
+                
+                return CORNER[(facing + 3) % 4];
+            }
+            
+            case FL: {
+                
+                return HALF[(facing + 3) % 4];
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
         }
-
-        EnumPartMason part = ((TECraftingMason) tileEntity).getPart();
-        return part != null && part.isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
     }
 
     @Override
@@ -182,8 +209,8 @@ public class BlockCraftingMason extends BlockComplexAbstract {
 
             TECraftingMason tileMason = (TECraftingMason) tileEntity;
 
-            state = state.withProperty(PART, tileMason.getPart());
-            state = state.withProperty(FACING, tileMason.getFacing());
+            state = state.withProperty(PART, tileMason.getPart() == null ? state.getValue(PART) : tileMason.getPart());
+            state = state.withProperty(FACING, tileMason.getFacing() == null ? state.getValue(FACING) : tileMason.getFacing());
         }
 
         return state;

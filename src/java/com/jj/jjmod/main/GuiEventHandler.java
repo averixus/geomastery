@@ -53,34 +53,37 @@ public class GuiEventHandler {
             GlStateManager.enableBlend();
             int left = event.getResolution().getScaledWidth() / 2 + 91;
             int top = event.getResolution().getScaledHeight() - 39;
-            Gui gui = new Gui();
-            Minecraft.getMinecraft().getTextureManager()
-            .bindTexture(new ResourceLocation("textures/gui/icons.png"));
+
             ICapPlayer capability = player.getCapability(ModCapabilities
                     .CAP_PLAYER, null);
             
             int carbsHunger = capability.foodLevel(FoodType.CARBS);
-            
+            Minecraft.getMinecraft().getTextureManager()
+                .bindTexture(new ResourceLocation("jjmod:textures/gui/carbs.png"));
             for (int i = 0; i < 10; i++) {
                 
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
                 int y = top;
-                int icon = 16;
                 
-                gui.drawTexturedModalRect(x, y, 16, 27, 9, 9);
+                //background
+                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 9, 9, 27, 9);
                 
+                //full
                 if (idx < carbsHunger) {
                     
-                    gui.drawTexturedModalRect(x, y, icon + 36, 27, 9, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 9, 0, 9, 9, 27, 9);
                     
+                //half
                 } else if (idx == carbsHunger) {
                     
-                    gui.drawTexturedModalRect(x, y, icon + 45, 27, 9, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 18, 0, 9, 9, 27, 9);
                 }
             }
             
             int fruitvegHunger = capability.foodLevel(FoodType.FRUITVEG);
+            Minecraft.getMinecraft().getTextureManager()
+            .bindTexture(new ResourceLocation("jjmod:textures/gui/fruitveg.png"));
             top -= 10;
             
             for (int i = 0; i < 10; i++) {
@@ -88,21 +91,22 @@ public class GuiEventHandler {
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
                 int y = top;
-                int icon = 16;
                 
-                gui.drawTexturedModalRect(x, y, 16, 27, 9, 9);
+                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 9, 9, 27, 9);
                 
                 if (idx < fruitvegHunger) {
                     
-                    gui.drawTexturedModalRect(x, y, icon + 36, 27, 9, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 9, 0, 9, 9, 27, 9);
                     
                 } else if (idx == fruitvegHunger) {
                     
-                    gui.drawTexturedModalRect(x, y, icon + 45, 27, 9, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 18, 0, 9, 9, 27, 9);
                 }
             }
             
             int proteinHunger = capability.foodLevel(FoodType.PROTEIN);
+            Minecraft.getMinecraft().getTextureManager()
+            .bindTexture(new ResourceLocation("jjmod:textures/gui/protein.png"));
             top -= 10;
             
             for (int i = 0; i < 10; i++) {
@@ -110,17 +114,16 @@ public class GuiEventHandler {
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
                 int y = top;
-                int icon = 16;
                 
-                gui.drawTexturedModalRect(x, y, 16, 27, 9, 9);
+                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 9, 9, 27, 9);
                 
                 if (idx < proteinHunger) {
                     
-                    gui.drawTexturedModalRect(x, y, icon + 36, 27, 9, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 9, 0, 9, 9, 27, 9);
                     
                 } else if (idx == proteinHunger) {
                     
-                    gui.drawTexturedModalRect(x, y, icon + 45, 27, 9, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, y, 18, 0, 9, 9, 27, 9);
                 }
             }
             

@@ -76,11 +76,11 @@ public class FoodStatsPartial extends FoodStats {
     public void heal() {
         
         if (this.food >= 10) {
-            System.out.println("tickingheal, timer " + this.healTimer);
+
             this.healTimer++;
             
             if (this.healTimer >= HEALTH_TIMER) {
-                System.out.println("adding health");
+
                 this.player.heal(1.0F);
                 this.addExhaustion(4.0F);
                 this.healTimer = 0;

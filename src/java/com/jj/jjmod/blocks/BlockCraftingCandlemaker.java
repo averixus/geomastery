@@ -44,7 +44,7 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
 
         if (state.getValue(PART) == EnumPartCandlemaker.FRONT) {
 
-            spawnItem(world, pos, ModItems.craftingCandlemaker);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingCandlemaker));
         }
     }
     
@@ -69,7 +69,7 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
             if (brokenBack) {
 
                 world.setBlockToAir(pos);
-                spawnItem(world, pos, ModItems.craftingCandlemaker);
+                spawnAsEntity(world, pos, new ItemStack(ModItems.craftingCandlemaker));
             }
 
         } else {
@@ -88,7 +88,13 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART).isFlat() ? FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return state.getValue(PART) == EnumPartCandlemaker.BACK ? TWELVE : CENTRE_FOUR;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return state.getValue(PART) == EnumPartCandlemaker.BACK ? TWELVE : NULL_AABB;
     }
 
     @Override

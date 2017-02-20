@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "items/bow_standby"
+        "layer0": "jjmod:items/bow_war_standby"
     },
     "display": {
         "thirdperson_righthand": {
@@ -30,21 +30,21 @@
             "predicate": {
                 "pulling": 1
             },
-            "model": "item/bow_pulling_0"
+            "model": "jjmod:item/item_bow_war_pulling_0"
         },
         {
             "predicate": {
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "item/bow_pulling_1"
+            "model": "jjmod:item/item_bow_war_pulling_1"
         },
         {
             "predicate": {
                 "pulling": 1,
                 "pull": 0.9
             },
-            "model": "item/bow_pulling_2"
+            "model": "jjmod:item/item_bow_war_pulling_2"
         }
     ]
 }

@@ -20,7 +20,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /** Sawpit crafting device item. */
-public class ItemCraftingSawpit extends ItemNew {
+public class ItemCraftingSawpit extends ItemJj {
     
     public ItemCraftingSawpit() {
         

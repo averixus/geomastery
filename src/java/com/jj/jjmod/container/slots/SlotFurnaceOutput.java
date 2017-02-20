@@ -7,12 +7,17 @@ import net.minecraft.item.ItemStack;
 
 public class SlotFurnaceOutput extends Slot {
     
-    private TEFurnaceAbstract furnace;
+    /** The furnace this slot draws inventory from. */
+    private final TEFurnaceAbstract furnace;
+    /** The index of this slot in the furnace outputs list. */
+    private final int index;
     
-    public SlotFurnaceOutput(TEFurnaceAbstract furnace, int xPos, int yPos) {
+    public SlotFurnaceOutput(TEFurnaceAbstract furnace, int index,
+            int xPos, int yPos) {
         
         super(null, 0, xPos, yPos);
         this.furnace = furnace;
+        this.index = index;
     }
 
     @Override
@@ -24,13 +29,13 @@ public class SlotFurnaceOutput extends Slot {
     @Override
     public ItemStack getStack() {
         
-        return this.furnace.getOutput();
+        return this.furnace.getOutput(this.index);
     }
     
     @Override
     public void putStack(ItemStack stack) {
         
-        this.furnace.setOutput(stack);
+        this.furnace.setOutput(stack, this.index);
     }
     
     @Override
@@ -45,7 +50,7 @@ public class SlotFurnaceOutput extends Slot {
     @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.furnace.getOutput().splitStack(amount);
+        return this.furnace.getOutput(this.index).splitStack(amount);
     }
     
     @Override

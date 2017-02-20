@@ -1,3 +1,6 @@
 {
-    "parent": "jjmod:block/crafters/cookfire"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "jjmod:items/furnace_cookfire"
+    }
 }

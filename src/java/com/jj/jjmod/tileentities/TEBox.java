@@ -121,12 +121,12 @@ public class TEBox extends TileEntityChest {
             
             if (stack.getItem() instanceof ItemEdibleDecayable) {
                 
-                if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
-                        .updateAndRot()) {
+             //   if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
+             //           .updateAndRot()) {
                     
-                    this.setInventorySlotContents(l,
-                            new ItemStack(ModItems.rot));
-                }
+             //       this.setInventorySlotContents(l,
+              //              new ItemStack(ModItems.rot));
+              //  }
             }
         }
     }

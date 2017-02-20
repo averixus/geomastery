@@ -1,8 +1,11 @@
 package com.jj.jjmod.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.utilities.IBiomeCheck;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
@@ -14,6 +17,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -31,18 +35,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     
     public static final PropertyInteger AGE =
             PropertyInteger.create("age", 0, 7);
-    
-    /** Bounding boxes indexed by crop age. */
-    protected static final AxisAlignedBB[] CROP_BOUNDS = new AxisAlignedBB[]
-            {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D),
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
-    
+
     public BlockRiceTop() {
         
         super(Material.PLANTS, "rice_top", null, 0.2F, ToolType.SICKLE);
@@ -87,15 +80,23 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     }
     
     @Override
-    public Item getItemDropped(IBlockState state,
-            Random rand, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
+            IBlockState state, int fortune) {
+        
+        List<ItemStack> items = new ArrayList<ItemStack>();
+        
+        if (!(blockAccess instanceof World)) {
+            
+            return items;
+        }
         
         if (state.getValue(AGE) == 7) {
-            
-            return ModItems.rice;
-        }
 
-        return Items.AIR;
+            World world = (World) blockAccess;
+            items.add(ItemJj.newStack(ModItems.rice, 1, world));
+        }
+        
+        return items;
     }
     
     @Override
@@ -153,7 +154,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess source, BlockPos pos) {
         
-        return CROP_BOUNDS[state.getValue(AGE)];
+        return CENTRE_SIXTEEN;
     }
     
     @Override

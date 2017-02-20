@@ -53,7 +53,7 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
 
         if (((TECraftingWoodworking) te).getPart() == EnumPartWoodworking.FM) {
 
-            spawnItem(world, pos, ModItems.craftingWoodworking);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingWoodworking));
         }
     }
 
@@ -90,7 +90,7 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
                 if (brokenFL) {
 
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.craftingWoodworking);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingWoodworking));
                 }
 
                 break;
@@ -171,17 +171,61 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        TileEntity tileEntity = world.getTileEntity(pos);
-
-        if (!(tileEntity instanceof TECraftingWoodworking)) {
-
-            return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumPartWoodworking part = state.getValue(PART);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        
+        switch (part) {
+            
+            case BR: {
+                
+                return HALF[(facing + 3) % 4];
+            }
+            
+            case BM: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case BL: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case FR: {
+                
+                return CORNER[(facing + 2) % 4];
+            }
+            
+            case FM: {
+                
+                return HALF[facing];
+            }
+            
+            case FL: {
+                
+                return TWELVE;
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        state = this.getActualState(state, world, pos);
+        EnumPartWoodworking part = state.getValue(PART);
+        
+        if (part == EnumPartWoodworking.BR || part == EnumPartWoodworking.FR || part == EnumPartWoodworking.FM) {
+            
+            return NULL_AABB;
         }
         
-        EnumPartWoodworking enumPart =
-                ((TECraftingWoodworking) tileEntity).getPart();
-        return enumPart != null && enumPart.isFlat() ?
-                FLAT_BOUNDS : FULL_BLOCK_AABB;
+        return this.getBoundingBox(state, world, pos);
     }
 
     @Override
@@ -201,8 +245,8 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
             TECraftingWoodworking tileWoodworking =
                     (TECraftingWoodworking) tileEntity;
 
-            state = state.withProperty(PART, tileWoodworking.getPart());
-            state = state.withProperty(FACING, tileWoodworking.getFacing());
+            state = tileWoodworking.getPart() == null ? state : state.withProperty(PART, tileWoodworking.getPart());
+            state = tileWoodworking.getFacing() == null ? state : state.withProperty(FACING, tileWoodworking.getFacing());
         }
 
         return state;

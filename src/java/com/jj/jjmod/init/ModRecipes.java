@@ -22,11 +22,11 @@ public class ModRecipes {
     public static final CraftingManager MASON = new CraftingManager();
     public static final CraftingManager ARMOURER = new CraftingManager();
     public static final CraftingManager SAWPIT = new CraftingManager();
-    public static final CookingManager CAMPFIRE = new CookingManager();
-    public static final CookingManager COOKFIRE = new CookingManager();
-    public static final CookingManager CLAY = new CookingManager();
-    public static final CookingManager STONE = new CookingManager();
-    public static final CookingManager DRYING = new CookingManager();
+    public static final CookingManager CAMPFIRE = new CookingManager(3);
+    public static final CookingManager COOKFIRE = new CookingManager(3);
+    public static final CookingManager CLAY = new CookingManager(2);
+    public static final CookingManager STONE = new CookingManager(1);
+    public static final CookingManager DRYING = new CookingManager(1);
 
     private static final Item[] METALS =
             {ModItems.ingotCopper, ModItems.ingotTin, ModItems.ingotSteel};
@@ -245,7 +245,13 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 4),
                 "PPP", " P ", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole),
-                "P", "P", 'P', ModItems.pole);
+                "PP", "PP", "PP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorWood),
+                "SS", "SS", "SS", 'S', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CHEST),
+                "SSS", "S S", "SSS", 'S', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(Items.BED),
+                "WWW", "SSS", 'W', ModItems.wool, 'S', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box),
                 "PP", "PP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 6),
@@ -389,18 +395,22 @@ public class ModRecipes {
                 "MM", "MM", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.swordbladeSteel),
                 "M", "M", "M", 'M', ModItems.ingotSteel);
+        FORGE.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
+                "P P", " P ", 'P', ModItems.pole);
     }
 
     public static void setupMason() {
         
         MASON.addShapedRecipe(new ItemStack(ModItems.wallBrick, 4),
-                "BBB", "BBB", 'B', ModItems.claybricks);
+                "BBB", "BBB", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(ModItems.wallStone, 4),
                 "SSS", "SSS", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsStone, 4),
                 "  S", " SS", "SSS", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModItems.slabStone, 2),
                 "SSS", 'S', ModItems.stoneDressed);
+        MASON.addShapelessRecipe(new ItemStack(ModItems.stoneDressed, 2),
+                ModItems.stoneRough);
 
     }
 
@@ -438,27 +448,30 @@ public class ModRecipes {
     
     public static void setupSawpit() {
         
-        
+        SAWPIT.addShapelessRecipe(new ItemStack(ModItems.timber, 3),
+                ModItems.thicklog);
+        SAWPIT.addShapedRecipe(new ItemStack(ModItems.timber, 3),
+                "LLL", 'L', ModItems.log);
     }
 
     public static void setupCampfire() {
 
         for (CookingManager recipes : CAMPFIRE_PLUS) {
             
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.beefRaw),
-                    new ItemStack(ModItems.beefCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.porkRaw),
-                    new ItemStack(ModItems.porkCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.muttonRaw),
-                    new ItemStack(ModItems.muttonCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.rabbitRaw),
-                    new ItemStack(ModItems.rabbitCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.chickenRaw),
-                    new ItemStack(ModItems.chickenCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.fishRaw),
-                    new ItemStack(ModItems.fishCooked));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.potato),
-                    new ItemStack(ModItems.potatoCooked));
+            recipes.addCookingRecipe(new ItemStack(ModItems.beefRaw),
+                    new ItemStack(ModItems.beefCooked), 120);
+            recipes.addCookingRecipe(new ItemStack(ModItems.porkRaw),
+                    new ItemStack(ModItems.porkCooked), 100);
+            recipes.addCookingRecipe(new ItemStack(ModItems.muttonRaw),
+                    new ItemStack(ModItems.muttonCooked), 80);
+            recipes.addCookingRecipe(new ItemStack(ModItems.rabbitRaw),
+                    new ItemStack(ModItems.rabbitCooked), 40);
+            recipes.addCookingRecipe(new ItemStack(ModItems.chickenRaw),
+                    new ItemStack(ModItems.chickenCooked), 60);
+            recipes.addCookingRecipe(new ItemStack(ModItems.fishRaw),
+                    new ItemStack(ModItems.fishCooked), 40);
+            recipes.addCookingRecipe(new ItemStack(ModItems.potato),
+                    new ItemStack(ModItems.potatoCooked), 120);
             recipes.addFuel(new ItemStack(Items.STICK), 200);
             recipes.addFuel(new ItemStack(ModItems.pole), 500);
             recipes.addFuel(new ItemStack(ModItems.log), 1000);
@@ -470,14 +483,14 @@ public class ModRecipes {
 
         for (CookingManager recipes : COOKFIRE_PLUS) {
             
-            recipes.addSmeltingRecipe(new ItemStack(Blocks.REEDS),
-                    new ItemStack(ModItems.sugar));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.chickpeas),
-                    new ItemStack(ModItems.chickpeasBoiled));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat),
-                    new ItemStack(ModItems.wheatBoiled));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.rice),
-                    new ItemStack(ModItems.riceBoiled));
+            recipes.addCookingRecipe(new ItemStack(Items.REEDS),
+                    new ItemStack(ModItems.sugar), 60);
+            recipes.addCookingRecipe(new ItemStack(ModItems.chickpeas),
+                    new ItemStack(ModItems.chickpeasBoiled), 60);
+            recipes.addCookingRecipe(new ItemStack(ModItems.wheat),
+                    new ItemStack(ModItems.wheatBoiled), 60);
+            recipes.addCookingRecipe(new ItemStack(ModItems.rice),
+                    new ItemStack(ModItems.riceBoiled), 60);
         }
     }
 
@@ -485,14 +498,12 @@ public class ModRecipes {
 
         for (CookingManager recipes : CLAY_PLUS) {
             
-            recipes.addSmeltingRecipe(new ItemStack(Blocks.LOG),
-                    new ItemStack(Items.COAL, 1, 1));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.wheat),
-                    new ItemStack(Items.BREAD));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.oreCopper),
-                    new ItemStack(ModItems.ingotCopper));
-            recipes.addSmeltingRecipe(new ItemStack(ModItems.oreTin),
-                    new ItemStack(ModItems.ingotTin));
+            recipes.addCookingRecipe(new ItemStack(ModItems.wheat),
+                    new ItemStack(Items.BREAD), 60);
+            recipes.addCookingRecipe(new ItemStack(ModItems.oreCopper),
+                    new ItemStack(ModItems.ingotCopper), 300);
+            recipes.addCookingRecipe(new ItemStack(ModItems.oreTin),
+                    new ItemStack(ModItems.ingotTin), 300);
             recipes.addFuel(new ItemStack(ModItems.peatDry), 2400);
             recipes.addFuel(new ItemStack(Items.COAL, 1, 1), 3000);
         }
@@ -500,28 +511,28 @@ public class ModRecipes {
 
     public static void setupStone() {
 
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreIron),
-                new ItemStack(ModItems.ingotSteel));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreSilver),
-                new ItemStack(ModItems.ingotSilver));
-        STONE.addSmeltingRecipe(new ItemStack(ModItems.oreGold),
-                new ItemStack(Items.GOLD_INGOT));
-        STONE.addSmeltingRecipe(new ItemStack(Items.CLAY_BALL),
-                new ItemStack(ModItems.claybricks));
+        STONE.addCookingRecipe(new ItemStack(ModItems.oreIron),
+                new ItemStack(ModItems.ingotSteel), 400);
+        STONE.addCookingRecipe(new ItemStack(ModItems.oreSilver),
+                new ItemStack(ModItems.ingotSilver), 300);
+        STONE.addCookingRecipe(new ItemStack(ModItems.oreGold),
+                new ItemStack(Items.GOLD_INGOT), 200);
+        STONE.addCookingRecipe(new ItemStack(Items.CLAY_BALL),
+                new ItemStack(Items.BRICK), 200);
         STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
     }
 
     public static void setupDrying() {
 
-        DRYING.addSmeltingRecipe(new ItemStack(ModItems.dirt),
-                new ItemStack(ModItems.mudbricks));
-        DRYING.addSmeltingRecipe(new ItemStack(ModItems.peatWet),
-                new ItemStack(ModItems.peatDry));
+        DRYING.addCookingRecipe(new ItemStack(ModItems.dirt),
+                new ItemStack(ModItems.mudbricks), 4000);
+        DRYING.addCookingRecipe(new ItemStack(ModItems.peatWet),
+                new ItemStack(ModItems.peatDry), 4000);
         
         for (Item skin : SKINS_ALL) {
             
-            DRYING.addSmeltingRecipe(new ItemStack(skin),
-                    new ItemStack(Items.LEATHER));
+            DRYING.addCookingRecipe(new ItemStack(skin),
+                    new ItemStack(Items.LEATHER), 4000);
         }
     }
 }

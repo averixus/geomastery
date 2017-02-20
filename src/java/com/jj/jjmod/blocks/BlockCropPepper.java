@@ -19,7 +19,7 @@ import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.biome.BiomeTaiga;
 
 /** Pepper Crop block. */
-public class BlockCropPepper extends BlockCrop {
+public class BlockCropPepper extends BlockCropAbstract {
     
     public BlockCropPepper() {
         

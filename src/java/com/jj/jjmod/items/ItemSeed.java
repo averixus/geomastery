@@ -11,6 +11,6 @@ public class ItemSeed extends ItemSeeds {
     public ItemSeed(String name, int stackSize, Block crop) {
 
         super(crop, Blocks.FARMLAND);
-        ItemNew.setupItem(this, name, stackSize, CreativeTabs.MATERIALS);
+        ItemJj.setupItem(this, name, stackSize, CreativeTabs.MATERIALS);
     }
 }

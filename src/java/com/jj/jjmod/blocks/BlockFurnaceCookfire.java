@@ -52,7 +52,13 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return FULL_BLOCK_AABB;
+        return SIX;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return CENTRE_FOURTEEN;
     }
 
     @Override
@@ -84,7 +90,7 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract {
     public void activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.POTFIRE.ordinal(),
+        player.openGui(Main.instance, GuiList.COOKFIRE.ordinal(),
                 world, x, y, z);
     }
 }

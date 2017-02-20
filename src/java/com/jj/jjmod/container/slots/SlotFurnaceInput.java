@@ -5,36 +5,46 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+/** Container inventory slot for furnace inputs. */
 public class SlotFurnaceInput extends Slot {
 
-    private TEFurnaceAbstract furnace;
+    /** The furnace this slot draws inventory from. */
+    private final TEFurnaceAbstract furnace;
+    /** The index of this slot in the furnace inputs list. */
+    private final int index;
     
-    public SlotFurnaceInput(TEFurnaceAbstract furnace, int xPos, int yPos) {
+    public SlotFurnaceInput(TEFurnaceAbstract furnace, int index,
+            int xPos, int yPos) {
         
         super(null, 0, xPos, yPos);
         this.furnace = furnace;
+        this.index = index;
     }
     
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return true;
+        return !this.furnace.recipes.getCookingResult(stack).isEmpty();
     }
     
     @Override
     public ItemStack getStack() {
         
-        return this.furnace.getInput();
+        return this.furnace.getInput(this.index);
     }
     
     @Override
     public void putStack(ItemStack stack) {
         
-        this.furnace.setInput(stack);
+        this.furnace.setInput(stack, this.index);
     }
     
+    /** Sorts the inputs list when the slot is changed. */
     @Override
-    public void onSlotChanged() {}
+    public void onSlotChanged() {
+
+        this.furnace.sort();
+    }
     
     @Override
     public int getSlotStackLimit() {
@@ -45,7 +55,7 @@ public class SlotFurnaceInput extends Slot {
     @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.furnace.getInput().splitStack(amount);
+        return this.furnace.getInput(this.index).splitStack(amount);
     }
     
     @Override

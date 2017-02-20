@@ -25,7 +25,7 @@ public class ItemAxe extends ItemToolAbstract {
     public ItemAxe(String name, ToolMaterial material) {
 
         super(3, -3.1F, material, EFFECTIVE_ON);
-        ItemNew.setupItem(this, name, 1, CreativeTabs.TOOLS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.AXE.toString(), 1);
     }
 }

@@ -16,7 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 /** Rice seed item. */
-public class ItemRice extends ItemNew {
+public class ItemRice extends ItemJj {
         
     public ItemRice() {
         

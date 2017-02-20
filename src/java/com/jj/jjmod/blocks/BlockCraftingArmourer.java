@@ -50,7 +50,7 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
 
         if (((TECraftingArmourer) te).getPart() == EnumPartArmourer.T) {
 
-            spawnItem(world, pos, ModItems.craftingArmourer);
+            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingArmourer));
         }
     }
     
@@ -91,7 +91,7 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
                 if (brokenL) {
                     
                     world.setBlockToAir(pos);
-                    spawnItem(world, pos, ModItems.craftingArmourer);
+                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingArmourer));
                 }
                 
                 break;
@@ -146,8 +146,73 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        //TODO
-        return FULL_BLOCK_AABB;
+        state = this.getActualState(state, world, pos);
+        EnumPartArmourer part = state.getValue(PART);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        
+        switch (part) {
+            
+            case R: {
+                
+                return TWELVE;
+            }
+            
+            case M: {
+                
+                return FULL_BLOCK_AABB;
+            }
+            
+            case L: {
+                
+                return HALF[(facing + 1) % 4];
+            }
+            
+            case T: {
+                
+                return CORNER[(facing + 2) % 4];
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        state = this.getActualState(state, world, pos);
+        EnumPartArmourer part = state.getValue(PART);
+        
+        switch (part) {
+            
+            case R: {
+                
+                return TWELVE;
+            }
+            
+            case M: {
+                
+                return FOURTEEN;
+            }
+            
+            case L: {
+                
+                return NULL_AABB;
+            }
+            
+            case T: {
+                
+                return NULL_AABB;
+            }
+            
+            default: {
+                
+                return FULL_BLOCK_AABB;
+            }
+        }
+        
     }
     
     @Override
@@ -166,8 +231,8 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
             
             TECraftingArmourer tileArmourer = (TECraftingArmourer) tileEntity;
             
-            state = state.withProperty(PART, tileArmourer.getPart());
-            state = state.withProperty(FACING, tileArmourer.getFacing());
+            state = tileArmourer.getPart() == null ? state : state.withProperty(PART, tileArmourer.getPart());
+            state = tileArmourer.getFacing() == null ? state : state.withProperty(FACING, tileArmourer.getFacing());
         }
         
         return state;

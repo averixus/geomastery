@@ -1,9 +1,11 @@
 package com.jj.jjmod.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -51,9 +53,24 @@ public class BlockHarvestableLeaves extends BlockLeaves {
     }
     
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
+            IBlockState state, int fortune) {
         
-        return Items.AIR;        
+        List<ItemStack> items = new ArrayList<ItemStack>();
+        
+        if (!(blockAccess instanceof World)) {
+            
+            return items;
+        }
+        
+        World world = (World) blockAccess;
+                
+        if (state.getValue(AGE) == 7) {
+            
+            items.add(ItemJj.newStack(this.itemRef.get(), 1, world));
+        }
+        
+        return items;
     }
     
     @Override
@@ -104,9 +121,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
                     }
                 }
                 
-                world.spawnEntity(new EntityItem(world,
-                        pos.getX(), pos.getY(), pos.getZ(),
-                        new ItemStack(this.itemRef.get())));
+                spawnAsEntity(world, pos, ItemJj.newStack(this.itemRef.get(), 1, world));
             }  
             
             return true;

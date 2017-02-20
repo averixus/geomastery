@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.block.state.IBlockProperties;
 
 /** Abstract superclass for bed items. */
-public abstract class ItemBedAbstract extends ItemNew {
+public abstract class ItemBedAbstract extends ItemJj {
 
     /** The bed block this item places. */
     protected Block bedBlock;

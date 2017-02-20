@@ -51,13 +51,11 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
 
     /** This bed's item. */
     protected Supplier<Item> itemRef;
-    /** Whether this bed has the flat bounding box. */
-    protected boolean isFlat;
     /** The amount to heal the player when sleeping in this bed. */
     protected float healAmount;
 
     public BlockBedAbstract(String name, float hardness, float healAmount,
-            Supplier<Item> itemRef, boolean isFlat, ToolType harvestTool) {
+            Supplier<Item> itemRef, ToolType harvestTool) {
 
         super(BlockMaterial.WOOD_HANDHARVESTABLE);
         BlockNew.setupBlock(this, name, null, hardness, harvestTool);
@@ -65,7 +63,6 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
                 .withProperty(PART, EnumPartBed.FOOT)
                 .withProperty(OCCUPIED, false));
         this.itemRef = itemRef;
-        this.isFlat = isFlat;
         this.healAmount = healAmount;
     }
     
@@ -179,13 +176,6 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
                 world.setBlockToAir(pos);
             }
         }
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess source, BlockPos pos) {
-
-        return this.isFlat ? FLAT_BOUNDS : BED_BOUNDS;
     }
     
     @Override
