@@ -7,7 +7,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Pear trees. */
+/** WorldGenerator for pear trees. */
 public class WorldGenTreePear extends WorldGenTree {
     
     public WorldGenTreePear(World world, Random rand, boolean isSapling) {

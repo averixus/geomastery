@@ -42,13 +42,14 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
                 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (((TECraftingArmourer) te).getPart() == EnumPartArmourer.T) {
+        if (((TECraftingArmourer) te).getPart().shouldDrop()) {
 
             spawnAsEntity(world, pos, new ItemStack(ModItems.craftingArmourer));
         }
@@ -65,7 +66,7 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
         
         return true;
     }
-    
+
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
@@ -80,20 +81,14 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
         TECraftingArmourer tileArmourer = (TECraftingArmourer) tileEntity;
         EnumPartArmourer part = tileArmourer.getPart();
         EnumFacing facing = tileArmourer.getFacing();
+        boolean broken = false;
         
         switch (part) {
             
             case T: {
                 
-                boolean brokenL = world.getBlockState(pos.down())
+                broken = world.getBlockState(pos.down())
                         .getBlock() != this;
-                
-                if (brokenL) {
-                    
-                    world.setBlockToAir(pos);
-                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingArmourer));
-                }
-                
                 break;
             }
             
@@ -104,11 +99,7 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
                 boolean brokenM = world.getBlockState(pos
                         .offset(facing.rotateY())).getBlock() != this;
                 
-                if (brokenT || brokenM) {
-                    
-                    world.setBlockToAir(pos);
-                }
-                
+                broken = brokenM || brokenT;
                 break;
             }
             
@@ -119,25 +110,26 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
                 boolean brokenR = world.getBlockState(pos
                         .offset(facing.rotateY())).getBlock() != this;
                 
-                if (brokenL || brokenR) {
-                    
-                    world.setBlockToAir(pos);
-                }
-                
+                broken = brokenL || brokenR;
                 break;
             }
             
             case R: {
                 
-                boolean brokenM = world.getBlockState(pos
-                        .offset(facing.rotateYCCW())).getBlock() != this;
-                
-                if (brokenM) {
-                    
-                    world.setBlockToAir(pos);
-                }
-                
+                broken = world.getBlockState(pos.offset(facing.rotateYCCW()))
+                        .getBlock() != this;
                 break;
+            }
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos,
+                        new ItemStack(ModItems.craftingArmourer));
             }
         }
     }
@@ -152,67 +144,43 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
         
         switch (part) {
             
-            case R: {
-                
+            case R: 
                 return TWELVE;
-            }
-            
-            case M: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case L: {
-                
+
+            case L: 
                 return HALF[(facing + 1) % 4];
-            }
             
-            case T: {
-                
+            case T: 
                 return CORNER[(facing + 2) % 4];
-            }
-            
-            default: {
                 
+            case M: 
+            default: 
                 return FULL_BLOCK_AABB;
-            }
         }
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         state = this.getActualState(state, world, pos);
         EnumPartArmourer part = state.getValue(PART);
         
         switch (part) {
             
-            case R: {
-                
+            case R: 
                 return TWELVE;
-            }
             
-            case M: {
-                
+            case M: 
                 return FOURTEEN;
-            }
             
-            case L: {
-                
+            case L: 
+            case T: 
                 return NULL_AABB;
-            }
             
-            case T: {
-                
-                return NULL_AABB;
-            }
-            
-            default: {
-                
+            default: 
                 return FULL_BLOCK_AABB;
-            }
         }
-        
     }
     
     @Override
@@ -231,8 +199,10 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
             
             TECraftingArmourer tileArmourer = (TECraftingArmourer) tileEntity;
             
-            state = tileArmourer.getPart() == null ? state : state.withProperty(PART, tileArmourer.getPart());
-            state = tileArmourer.getFacing() == null ? state : state.withProperty(FACING, tileArmourer.getFacing());
+            state = tileArmourer.getPart() == null ? state :
+                state.withProperty(PART, tileArmourer.getPart());
+            state = tileArmourer.getFacing() == null ? state :
+                state.withProperty(FACING, tileArmourer.getFacing());
         }
         
         return state;
@@ -251,10 +221,15 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
     }
     
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
+
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.ARMOURER.ordinal(),
+                    world, x, y, z);
+        }
         
-        player.openGui(Main.instance, GuiList.ARMOURER.ordinal(),
-                world, x, y, z);
+        return true;
     }
 }

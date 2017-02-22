@@ -12,12 +12,15 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
-/** Class to populate a chunk with a Rice lake. */
+/** Class to populate a chunk with a rice lake. */
 public class PopulateChunkRicelake extends WorldGenAbstract {
         
-    private final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
-    private final IBlockState base = ModBlocks.riceBase.getDefaultState();
-    private final IBlockState top = ModBlocks.riceTop.getDefaultState();
+    /** Water block state. */
+    private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
+    /** Rice base block state. */
+    private static final IBlockState base = ModBlocks.riceBase.getDefaultState();
+    /** Rice top block state. */
+    private static final IBlockState top = ModBlocks.riceTop.getDefaultState();
 
     public PopulateChunkRicelake(World world, Random rand) {
         
@@ -27,14 +30,13 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
     @Override
     public void generateChunk(int xChunk, int zChunk) {
         
-        // RiceLake setup
+        // Rice lake setup
         BlockPos start = new BlockPos((xChunk * 16) + this.rand.nextInt(16),
                 256, (zChunk * 16) + this.rand.nextInt(16));        
         BlockPos position;
         
-        for (position = start;
-                position.getY() > 5 && this.world.isAirBlock(position);
-                position = position.down()) {}
+        for (position = start; position.getY() > 5 &&
+                this.world.isAirBlock(position); position = position.down()) {}
 
         // Vanilla generation
         if (position.getY() <= 4) {
@@ -109,7 +111,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
 
                             if (k < 4 && !material.isSolid() && this.world
                                     .getBlockState(position.add(k1, k, l2))
-                                    .getBlock() != this.water.getBlock()) {
+                                    .getBlock() != water.getBlock()) {
                                 
                                 return;
                             }
@@ -118,7 +120,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 }
             }
             
-            // RiceLake generation using vanilla loops
+            // Rice lake generation using vanilla loops
             ArrayList<BlockPos> possibles = new ArrayList<BlockPos>();
 
             for (int l1 = 0; l1 < 16; ++l1) {
@@ -134,9 +136,8 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                             if (i4 >= 4) {
                                 
                                 if (this.world.getBlockState(target) !=
-                                        this.top &&
-                                        this.world.getBlockState(target) !=
-                                        this.base) {
+                                        top && this.world.getBlockState(target)
+                                        != base) {
                                     
                                     this.world.setBlockState(target,
                                             Blocks.AIR.getDefaultState(), 2);
@@ -144,7 +145,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                                 
                             } else {
                                     
-                                this.world.setBlockState(target, this.water, 2);
+                                this.world.setBlockState(target, water, 2);
                                 Block below = this.world
                                         .getBlockState(target.down())
                                         .getBlock();
@@ -171,8 +172,8 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 if (this.world.canSeeSky(rice.up()) &&
                         this.world.isAirBlock(rice.up())) {
                     
-                    this.world.setBlockState(rice, this.base, 2);
-                    this.world.setBlockState(rice.up(), this.top, 2);
+                    this.world.setBlockState(rice, base, 2);
+                    this.world.setBlockState(rice.up(), top, 2);
                     riceCount++;
                 }
             }

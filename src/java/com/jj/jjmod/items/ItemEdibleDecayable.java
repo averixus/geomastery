@@ -32,21 +32,24 @@ public class ItemEdibleDecayable extends ItemEdible {
         super(name, hunger, saturation, stackSize, foodType);
         this.shelfLife = shelfLife;
         
-        this.addPropertyOverride(new ResourceLocation("rot"), new IItemPropertyGetter() {
+        // Check whether the item is rotten for model
+        this.addPropertyOverride(new ResourceLocation("rot"),
+                new IItemPropertyGetter() {
             
             @Override
-            public float apply(ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+            public float apply(ItemStack stack, @Nullable World world,
+                    @Nullable EntityLivingBase entity) {
                 
                 if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
                     
-                    if (stack.getCapability(ModCapabilities.CAP_DECAY, null).isRot()) {
+                    if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                            .isRot()) {
                         
                         return 1;
                     }
                 }
                 
                 return 0;
-                
             }
         });
     }
@@ -56,8 +59,6 @@ public class ItemEdibleDecayable extends ItemEdible {
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
 
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {System.out.println("initcaps, already has cap"); return null;}
-        System.out.println("initcapabilities");
         return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
     }
     
@@ -66,7 +67,8 @@ public class ItemEdibleDecayable extends ItemEdible {
             EntityPlayer player, EnumHand hand) {
         
         ItemStack stack = player.getHeldItem(hand);
-        ICapDecay decayCap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
+        ICapDecay decayCap = stack
+                .getCapability(ModCapabilities.CAP_DECAY, null);
         ICapPlayer playerCap = player
                 .getCapability(ModCapabilities.CAP_PLAYER, null);
 
@@ -97,11 +99,10 @@ public class ItemEdibleDecayable extends ItemEdible {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
-      //  System.out.println("capability " + stack.getCapability(ModCapabilities.CAP_DECAY, null));
-      //  System.out.println("render fraction " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getRenderFraction());
         if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
             
-            float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null).getRenderFraction();
+            float fraction = stack.getCapability(ModCapabilities.CAP_DECAY,
+                    null).getRenderFraction();
             return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
         }
         

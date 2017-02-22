@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
+/** WorldGenerator for extra clay blocks. */
 public class WorldGenClay extends WorldGenStone {
 
     public WorldGenClay(World world, Random rand) {
@@ -23,7 +24,8 @@ public class WorldGenClay extends WorldGenStone {
                 }
                 
                 Block block = state.getBlock();
-                return block == Blocks.STONE || block == Blocks.DIRT || block == Blocks.GRASS;
+                return block == Blocks.STONE || block == Blocks.DIRT ||
+                        block == Blocks.GRASS;
             }
         };
     }

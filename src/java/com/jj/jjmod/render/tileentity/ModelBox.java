@@ -5,13 +5,17 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Model for Box block. */
+/** Model for box block. */
 @SideOnly(Side.CLIENT)
 public class ModelBox extends ModelBase {
 
+    /** Model for first side of lid. */
     ModelRenderer lid1 = new ModelRenderer(this, 0, 0);
+    /** Model for second side of lid. */
     ModelRenderer lid2 = new ModelRenderer(this, 0, 0);
+    /** Model for base. */
     ModelRenderer bottom = new ModelRenderer(this, 0, 0);
+    /** Model for knob. */
     ModelRenderer knob = new ModelRenderer(this, 0, 0);
     
     ModelBox() {

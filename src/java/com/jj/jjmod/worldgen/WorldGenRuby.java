@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Ruby Lode. */
+/** WorldGenerator for ruby lode. */
 public class WorldGenRuby extends WorldGenStone {
 
     public WorldGenRuby(World world, Random rand) {

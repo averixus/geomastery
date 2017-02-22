@@ -6,7 +6,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Tomato crops. */
+/** WorldGenerator for tomato crops. */
 public class WorldGenTomato extends WorldGenCrop {
 
     public WorldGenTomato(World world, Random rand) {

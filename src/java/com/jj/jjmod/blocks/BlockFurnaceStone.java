@@ -31,7 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Stone Furnace block. */
+/** Stone furnace block. */
 public class BlockFurnaceStone extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartStone> PART = PropertyEnum
@@ -44,25 +44,15 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
         super("furnace_stone", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (((TEFurnaceStone) te).getPart() == EnumPartStone.BM) {
+        if (((TEFurnaceStone) te).getPart().shouldDrop()) {
 
-            spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
-        }
-    }
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos,
-            IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) ==
-                EnumPartStone.BM) {
-        
             spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
         }
     }
@@ -77,100 +67,61 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
 
-        TileEntity tileEntity = world.getTileEntity(pos);
-
-        if (!(tileEntity instanceof TEFurnaceStone)) {
-
-            return;
-        }
-
-        TEFurnaceStone tileStone = (TEFurnaceStone) tileEntity;
-        EnumPartStone part = tileStone.getPart();
-        EnumFacing facing = tileStone.getFacing();
+        state = this.getActualState(state, world, pos);
+        EnumPartStone part = state.getValue(PART);
+        EnumFacing facing = state.getValue(FACING);
+        boolean broken = false;
 
         switch (part) {
 
             case BM: {
 
-                boolean brokenBR = world.getBlockState(pos
-                        .offset(facing.rotateY()))
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
                         .getBlock() != this;
-
-                if (brokenBR) {
-
-                    world.setBlockToAir(pos);
-                    spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
-                }
-
                 break;
             }
 
             case BR: {
 
-                boolean brokenTR = world
-                        .getBlockState(pos.up()).getBlock() != this;
-
-                if (brokenTR) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.up()).getBlock() != this;
                 break;
             }
 
             case TR: {
 
-                boolean brokenTM = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenTM) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
             }
 
             case TM: {
 
-                boolean brokenTL = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenTL) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
             }
 
             case TL: {
 
-                boolean brokenBL = world
-                        .getBlockState(pos.down()).getBlock() != this;
-
-                if (brokenBL) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.down()).getBlock() != this;
                 break;
             }
 
             case BL: {
 
-                boolean brokenBM = world
-                        .getBlockState(pos.offset(facing.rotateY()))
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
                         .getBlock() != this;
-
-                if (brokenBM) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
+            }
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceStone));
             }
         }
     }
@@ -183,41 +134,17 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
         EnumPartStone part = state.getValue(PART);
         
         switch (part) {
-            
-            case BR: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case BM: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case BL: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case TR: {
-                
+
+            case TR: 
+            case TM: 
+            case TL: 
                 return TWELVE;
-            }
-            
-            case TM: {
                 
-                return TWELVE;
-            }
-            
-            case TL: {
-                
-                return TWELVE;
-            }
-            
-            default: {
-                
+            case BR: 
+            case BM:             
+            case BL:
+            default: 
                 return FULL_BLOCK_AABB;
-            }
         }
     }
 
@@ -237,8 +164,10 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
 
             TEFurnaceStone tileStone = (TEFurnaceStone) tileEntity;
 
-            state = tileStone.getPart() == null ? state : state.withProperty(PART, tileStone.getPart());
-            state = tileStone.getFacing() == null ? state : state.withProperty(FACING, tileStone.getFacing());
+            state = tileStone.getPart() == null ? state :
+                state.withProperty(PART, tileStone.getPart());
+            state = tileStone.getFacing() == null ? state :
+                state.withProperty(FACING, tileStone.getFacing());
         }
 
         return state;
@@ -257,7 +186,7 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
         TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
@@ -269,7 +198,13 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
             y = master.getY();
             z = master.getZ();
         }
+
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.STONE.ordinal(),
+                    world, x, y, z);
+        }
         
-        player.openGui(Main.instance, GuiList.STONE.ordinal(), world, x, y, z);
+        return true;
     }
 }

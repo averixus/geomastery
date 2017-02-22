@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModCapabilities;
 import com.jj.jjmod.init.ModEntities;
 import com.jj.jjmod.init.ModItems;
-import com.jj.jjmod.init.ModLiquids;
+import com.jj.jjmod.init.ModFluids;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
 import com.jj.jjmod.init.ModTileEntities;
@@ -20,22 +20,28 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
+    /** Gui event handler instance. */
     public static final GuiEventHandler GUI =
             new GuiEventHandler();
+    /** Block event handler instance. */
     public static final BlockEventHandler BLOCK =
             new BlockEventHandler();
+    /** Entity event handler instance. */
     public static final EntityEventHandler ENTITY =
             new EntityEventHandler();
+    /** Player event handler instance. */
     public static final PlayerEventHandler PLAYER =
             new PlayerEventHandler();
+    /** Capability event handler instance. */
     public static final CapabilityEventHandler CAPABILITY =
             new CapabilityEventHandler();
+    /** Worldgenerator instance. */
     public static final IWorldGenerator WORLDGEN = new WorldGenerator();
 
-    public void preInit(FMLPreInitializationEvent e) {
+    public void preInit() {
 
+        ModFluids.preInit();
         ModBlocks.preInit();
-        ModLiquids.preInit();
         ModItems.preInit();
         ModPackets.preInit();
         ModCapabilities.preInit();
@@ -50,7 +56,7 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(CAPABILITY);
     }
 
-    public void init(FMLInitializationEvent e) {
+    public void init() {
 
         ModBiomes.init();
         ModRecipes.init();
@@ -60,7 +66,7 @@ public class CommonProxy {
                 new GuiHandler());
     }
 
-    public void postInit(FMLPostInitializationEvent e) {
+    public void postInit() {
 
     }
 }

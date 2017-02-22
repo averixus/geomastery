@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.BlockMaterial;
-import com.jj.jjmod.utilities.ToolType;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -36,15 +36,17 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
                 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (state.getValue(PART) == EnumPartClayworks.FR) {
+        if (state.getValue(PART).shouldDrop()) {
 
-            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingClayworks));
+            spawnAsEntity(world, pos,
+                    new ItemStack(ModItems.craftingClayworks));
         }
     }
     
@@ -60,61 +62,47 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
 
         EnumFacing facing = state.getValue(FACING);
         EnumPartClayworks part = state.getValue(PART);
+        boolean broken = false;
 
         switch (part) {
 
             case FR: {
 
-                boolean brokenFL = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenFL) {
-
-                    world.setBlockToAir(pos);
-                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingClayworks));
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
             }
 
             case FL: {
 
-                boolean brokenBL = world.getBlockState(pos.offset(facing))
+                broken = world.getBlockState(pos.offset(facing))
                         .getBlock() != this;
-
-                if (brokenBL) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case BL: {
 
-                boolean brokenBR = world.getBlockState(pos
-                        .offset(facing.rotateY())).getBlock() != this;
-
-                if (brokenBR) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
+                        .getBlock() != this;
                 break;
             }
 
             case BR: {
 
-                boolean brokenFR = world.getBlockState(pos
-                        .offset(facing.getOpposite())).getBlock() != this;
-
-                if (brokenFR) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.getOpposite()))
+                        .getBlock() != this;
                 break;
+            }
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos,
+                        new ItemStack(ModItems.craftingClayworks));
             }
         }
     }
@@ -127,38 +115,26 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
         
         switch (enumPart) {
             
-            case BR: {
-                
+            case BR:
+            case BL:
+            case FL:
                 return TWELVE;
-            }
             
-            case BL: {
-                
-                return TWELVE;
-            }
-            
-            case FR: {
-                
+            case FR: 
                 return CENTRE_FOUR;
-            }
             
-            case FL: {
-                
-                return TWELVE;
-            }
-            
-            default: {
-                
+            default: 
                 return FULL_BLOCK_AABB;
-            }
         }
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         EnumPartClayworks enumPart = state.getValue(PART);
-        return enumPart == EnumPartClayworks.BL || enumPart == EnumPartClayworks.BR ? TWELVE : NULL_AABB;
+        return enumPart == EnumPartClayworks.BL ||
+                enumPart == EnumPartClayworks.BR ? TWELVE : NULL_AABB;
     }
 
     @Override
@@ -200,46 +176,43 @@ public class BlockCraftingClayworks extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.CLAYWORKS.ordinal(),
-                world, x, y, z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.CLAYWORKS.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 
     /** Enum defining parts of the whole Clayworks structure. */
-    public enum EnumPartClayworks implements IStringSerializable {
+    public enum EnumPartClayworks implements IStringSerializable, IMultipart {
 
-        FR("fr", true),
-        FL("fl", false),
-        BL("bl", false),
-        BR("br", false);
+        FR("fr"),
+        FL("fl"),
+        BL("bl"),
+        BR("br");
 
         private final String name;
-        private final boolean isFlat;
 
-        private EnumPartClayworks(String name, boolean isFlat) {
+        private EnumPartClayworks(String name) {
 
             this.name = name;
-            this.isFlat = isFlat;
         }
-
+        
         @Override
-        public String toString() {
-
-            return this.name;
+        public boolean shouldDrop() {
+            
+            return this == FR;
         }
 
         @Override
         public String getName() {
 
             return this.name;
-        }
-        
-        /** @return Whether this Part has the flat bounding box. */
-        public boolean isFlat() {
-            
-            return this.isFlat;
         }
     }
 }

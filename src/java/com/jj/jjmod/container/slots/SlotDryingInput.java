@@ -13,8 +13,7 @@ public class SlotDryingInput extends Slot {
     /** The index of this slot in the drying rack input list. */
     private final int index;
 
-    public SlotDryingInput(TEDrying drying, int index, int xPos,
-            int yPos) {
+    public SlotDryingInput(TEDrying drying, int index, int xPos, int yPos) {
         
         super(null, 0, xPos, yPos);
         this.drying = drying;
@@ -39,7 +38,6 @@ public class SlotDryingInput extends Slot {
         this.drying.setInput(stack, this.index);
     }
     
-    /** Sorts the inputs list when the slot is changed. */
     @Override
     public void onSlotChanged() {
 

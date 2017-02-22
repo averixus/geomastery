@@ -13,25 +13,26 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** Packet to update the player temperature icon on the Client. */
 public class TempPacketClient implements IMessage {
     
-    protected int stage;
+    /** The temperature stage. */
+    protected TempStage stage;
     
     public TempPacketClient() {}
     
     public TempPacketClient(TempStage stage) {
         
-        this.stage = stage.ordinal();
+        this.stage = stage;
     }
     
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        this.stage = buf.readInt();
+        this.stage = TempStage.values()[buf.readInt()];
     }
     
     @Override
     public void toBytes(ByteBuf buf) {
         
-        buf.writeInt(this.stage);
+        buf.writeInt(this.stage.ordinal());
     }
     
     public static class Handler
@@ -57,8 +58,7 @@ public class TempPacketClient implements IMessage {
             
             EntityPlayer player = Minecraft.getMinecraft().player;
             ((DefaultCapPlayer) player.getCapability(ModCapabilities
-                    .CAP_PLAYER, null))
-                    .processTempMessage(TempStage.values()[message.stage]);
+                    .CAP_PLAYER, null)).processTempMessage(message.stage);
         }
     }
 }

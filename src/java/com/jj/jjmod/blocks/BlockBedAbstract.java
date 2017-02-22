@@ -1,13 +1,12 @@
 package com.jj.jjmod.blocks;
 
-import java.util.List;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
-import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
 import com.jj.jjmod.tileentities.TEBed;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -15,39 +14,26 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Abstract superclass for Bed blocks. */
 public abstract class BlockBedAbstract extends BlockHorizontal {
 
     public static final PropertyEnum<EnumPartBed> PART =
             PropertyEnum.<EnumPartBed>create("part", EnumPartBed.class);
-    public static final PropertyBool OCCUPIED =
-            PropertyBool.create("occupied");
-
-    protected static final AxisAlignedBB BED_BOUNDS =
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D);
-    protected static final AxisAlignedBB FLAT_BOUNDS =
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
+    public static final PropertyBool OCCUPIED = BlockBed.OCCUPIED;
 
     /** This bed's item. */
     protected Supplier<Item> itemRef;
@@ -67,7 +53,7 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
     }
     
     /** Drops this bed's item with damage if applicable. */
-    protected abstract void drop(World world, BlockPos pos, TEBed te);
+    protected abstract void dropItem(World world, BlockPos pos, TEBed te);
     
     /** @return The amount the player heals sleeping in this Bed. */
     public float getHealAmount() {
@@ -75,6 +61,7 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return this.healAmount;
     }
 
+    /** The player sleeps in this bed if possible. */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
@@ -138,7 +125,7 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return false;
     }
 
-    /** @return The Player currently in this Bed block, null if none. */
+    /** @return The player currently in this bed block, null if none. */
     private EntityPlayer getPlayerInBed(World world, BlockPos pos) {
 
         for (EntityPlayer player: world.playerEntities) {
@@ -153,6 +140,8 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         return null;
     }
 
+    /** Checks if this block is part of a whole
+     * bed structure, removes it if not. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
@@ -172,12 +161,13 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
             if (world.getBlockState(pos.offset(facing))
                     .getBlock() != this) {
 
-                this.drop(world, pos, (TEBed) world.getTileEntity(pos));
+                this.dropItem(world, pos, (TEBed) world.getTileEntity(pos));
                 world.setBlockToAir(pos);
             }
         }
     }
     
+    /** Breaks this block and drops its item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
@@ -186,59 +176,8 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         
         if (state.getValue(PART) == EnumPartBed.FOOT) {
             
-            this.drop(world, pos, (TEBed) te);
+            this.dropItem(world, pos, (TEBed) te);
         }
-    }
-
-    @Nullable
-    public static BlockPos getSafeExitLocation(World world,
-            BlockPos pos, int tries) {
-
-        EnumFacing facing = world.getBlockState(pos).getValue(FACING);
-        int x = pos.getX();
-        int y = pos.getY();
-        int z = pos.getZ();
-
-        for (int i = 0; i <= 1; ++i) {
-
-            int x1 = x - facing.getFrontOffsetX() * i - 1;
-            int z1 = z - facing.getFrontOffsetZ() * i - 1;
-            int x2 = x1 + 2;
-            int z2 = z1 + 2;
-
-            for (int j = x1; j <= x2; ++j) {
-
-                for (int k = z1; k <= z2; ++k) {
-
-                    BlockPos newPos = new BlockPos(j, y, k);
-
-                    if (hasRoomForPlayer(world, newPos)) {
-
-                        if (tries <= 0) {
-
-                            return newPos;
-                        }
-
-                        tries--;
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /** @return Whether the given pos has space around it for a player. */
-    private static boolean hasRoomForPlayer(World world, BlockPos pos) {
-
-        boolean hasFloorSpace = world.getBlockState(pos.down())
-                .isSideSolid(world, pos, EnumFacing.UP);
-        boolean hasFeetSpace = !world.getBlockState(pos)
-                .getMaterial().isSolid();
-        boolean hasHeadSpace = !world.getBlockState(pos.up())
-                .getMaterial().isSolid();
-
-        return hasFloorSpace && hasFeetSpace && hasHeadSpace;
     }
 
     @Override
@@ -302,71 +241,18 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
     }
 
     @Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
-
-        EnumFacing facing = rot.rotate(state.getValue(FACING));
-        return state.withProperty(FACING, facing);
-    }
-
-    @Override
-    public IBlockState withMirror(IBlockState state, Mirror mirror) {
-
-        Rotation rot = mirror.toRotation(state.getValue(FACING));
-        return state.withRotation(rot);
-    }
-
-    @Override
     protected BlockStateContainer createBlockState() {
 
         return new BlockStateContainer(this,
                 new IProperty[] {FACING, PART, OCCUPIED});
     }
 
+    /** Needed for Forge bed implementations. */
     @Override
     public boolean isBed(IBlockState state, IBlockAccess world,
             BlockPos pos, Entity player) {
 
         return true;
-    }
-
-    @Override
-    public BlockPos getBedSpawnPosition(IBlockState state,
-            IBlockAccess world, BlockPos pos, EntityPlayer player) {
-
-        if (world instanceof World) {
-
-            return getSafeExitLocation((World) world, pos, 0);
-        }
-
-        return null;
-    }
-
-    @Override
-    public void setBedOccupied(IBlockAccess world, BlockPos pos,
-            EntityPlayer player, boolean occupied) {
-
-        if (world instanceof World) {
-
-            IBlockState state = world.getBlockState(pos);
-            state = state.getBlock().getActualState(state, world, pos);
-            state = state.withProperty(OCCUPIED, true);
-            ((World) world).setBlockState(pos, state, 4);
-        }
-    }
-
-    @Override
-    public EnumFacing getBedDirection(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-
-        return getActualState(state, world, pos).getValue(FACING);
-    }
-
-    @Override
-    public boolean isBedFoot(IBlockAccess world, BlockPos pos) {
-
-        EnumPartBed part = getActualState(world.getBlockState(pos),
-                world, pos).getValue(PART);
-        return part == EnumPartBed.FOOT;
     }
     
     @Override
@@ -392,12 +278,6 @@ public abstract class BlockBedAbstract extends BlockHorizontal {
         private EnumPartBed(String name) {
 
             this.name = name;
-        }
-
-        @Override
-        public String toString() {
-
-            return this.name;
         }
 
         @Override

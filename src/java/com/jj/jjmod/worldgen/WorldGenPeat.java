@@ -5,6 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
+/** WorldGenerator for peat blocks. */
 public class WorldGenPeat extends WorldGenSurface {
 
     public WorldGenPeat(World world, Random rand) {

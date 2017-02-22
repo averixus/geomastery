@@ -81,7 +81,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     }
     
     /** @return Whether the vault at the given pos is an external corner. */
-    protected boolean isExternalCorner(IBlockAccess world,
+    private boolean isExternalCorner(IBlockAccess world,
             BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
@@ -111,7 +111,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     /** Checks whether the vault at the given pos is the centre
      * corner from three sides, centred on the given direction.
      * @return Whether this is a centre corner. */
-    protected boolean isCentreCorner(IBlockAccess world,
+    private boolean isCentreCorner(IBlockAccess world,
             BlockPos pos, EnumFacing direction) {
         
         return this.hasValidSide(world, pos, direction.rotateY()) &&
@@ -122,7 +122,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     /** Checks whether the vault at the given pos is a lintel
      * in the axis of the given direction.
      * @return Whether this is a lintel. */
-    protected boolean hasLintel(IBlockAccess world,
+    private boolean hasLintel(IBlockAccess world,
             BlockPos pos, EnumFacing direction) {
         
         return this.hasValidSide(world, pos, direction) &&
@@ -146,6 +146,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return result;
     }
     
+    /** Checks position and breaks if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block blockIn, BlockPos unused) {
@@ -175,14 +176,18 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         state = this.getActualState(state, world, pos);
-        return state.getValue(SHAPE) == EnumShape.LINTEL ? FULL_BLOCK_AABB : TOP_HALF;
+        return state.getValue(SHAPE) == EnumShape.LINTEL ?
+                FULL_BLOCK_AABB : TOP_HALF;
     }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
         
         state = this.getActualState(state, world, pos);
         int facing = state.getValue(FACING).getHorizontalIndex();

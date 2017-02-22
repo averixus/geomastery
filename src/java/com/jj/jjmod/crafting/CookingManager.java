@@ -12,9 +12,13 @@ import net.minecraft.item.ItemStack;
  */
 public class CookingManager {
 
+    /** Map of inputs to outputs. */
     private final Map<ItemStack, ItemStack> recipes;
+    /** Map of inputs to cooking times. */
     private final Map<ItemStack, Integer> cookingTimes;
+    /** Map of fuels to burning times. */
     private final Map<ItemStack, Integer> fuels;
+    /** Multiplier for cooking times. */
     private final int multiplier;
 
     public CookingManager(int multiplier) {
@@ -26,8 +30,9 @@ public class CookingManager {
     }
 
     /** Adds a smelting recipe. */
-    public void addCookingRecipe(ItemStack input, ItemStack output, int cookTime) {
-        System.out.println("adding recipe for " + input);
+    public void addCookingRecipe(ItemStack input,
+            ItemStack output, int cookTime) {
+
         this.recipes.put(input, output);
         this.cookingTimes.put(input, cookTime * this.multiplier);
     }
@@ -40,10 +45,9 @@ public class CookingManager {
     /** Gets the smelting result for the input.
      * @return The output ItemStack smelted from the input. */
     public ItemStack getCookingResult(ItemStack stack) {
-        System.out.println("checking for recipe of " + stack);
+
         for (Entry<ItemStack, ItemStack> entry : this.recipes.entrySet()) {
-            System.out.println("comparing to entry " + entry.getKey());
-            System.out.println("equal? " + ItemStack.areItemsEqual(stack, entry.getKey()));
+
             if (ItemStack.areItemsEqual(stack, entry.getKey())) {
 
                 return entry.getValue();

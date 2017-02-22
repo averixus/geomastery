@@ -10,7 +10,7 @@ import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
-/** Hemp Crop block. */
+/** Hemp crop block. */
 public class BlockCropHemp extends BlockCropAbstract {
     
     public BlockCropHemp() {

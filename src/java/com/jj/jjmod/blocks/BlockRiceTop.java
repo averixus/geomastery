@@ -35,6 +35,11 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     
     public static final PropertyInteger AGE =
             PropertyInteger.create("age", 0, 7);
+    
+    /** Chance of death per update tick if invalid position. */
+    private static final float DEATH_CHANCE = 0.5F;
+    /** Chance of growth per update tick. */
+    private static final float GROWTH_CHANCE = 0.3F;
 
     public BlockRiceTop() {
         
@@ -60,7 +65,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     /** Checks whether this block can stay in the
      * given position, drops it if not.
      * @return Whether this block stayed. */
-    protected boolean checkStay(World world, IBlockState state, BlockPos pos) {
+    private boolean checkStay(World world, IBlockState state, BlockPos pos) {
         
         if (world.getBlockState(pos.down()).getBlock() != ModBlocks.riceBase) {
             
@@ -79,26 +84,29 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
         }
     }
     
+    /** @return Whether this crop can grow at the given position. */
+    private boolean canGrow(World world, BlockPos pos) {
+        
+        return world.getLightFor(EnumSkyBlock.SKY, pos) >= 8 &&
+                this.isPermitted(world.getBiome(pos));
+    }
+    
+    /** Harvests items if full grown. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
             IBlockState state, int fortune) {
         
         List<ItemStack> items = new ArrayList<ItemStack>();
         
-        if (!(blockAccess instanceof World)) {
-            
-            return items;
-        }
-        
         if (state.getValue(AGE) == 7) {
 
-            World world = (World) blockAccess;
-            items.add(ItemJj.newStack(ModItems.rice, 1, world));
+            items.add(new ItemStack(ModItems.rice, 1));
         }
         
         return items;
     }
     
+    /** Check position and die or grow according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
@@ -108,28 +116,20 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
             return;
         }
         
-        if (!this.canGrow(world, pos) && rand.nextFloat() <= 0.5) {
+        if (!this.canGrow(world, pos) && rand.nextFloat() <= DEATH_CHANCE) {
             
             world.setBlockToAir(pos);
             return;
         }
         
-
         int oldAge = state.getValue(AGE);
         int newAge = Math.min(oldAge + 1, 7);
         
-        if (rand.nextFloat() <= 0.3) {
+        if (rand.nextFloat() <= GROWTH_CHANCE) {
         
             IBlockState newState = state.withProperty(AGE, newAge);
             world.setBlockState(pos, newState);
         }
-    }
-    
-    /** @return Whether this crop can grow at the given position. */
-    protected boolean canGrow(World world, BlockPos pos) {
-        
-        return world.getLightFor(EnumSkyBlock.SKY, pos) >= 8 &&
-                this.isPermitted(world.getBiome(pos));
     }
     
     @Override

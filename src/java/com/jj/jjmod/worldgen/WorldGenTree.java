@@ -11,9 +11,16 @@ import net.minecraft.world.biome.Biome;
 /** Abstract superclass for tree WorldGenerators. */
 public abstract class WorldGenTree extends WorldGenAbstract {
     
+    /** Chance to generate per chunk. */
+    private static final float CHANCE = 0.001F;
+    
+    /** Whether to send block updates for this generation. */
     protected boolean notify;
+    /** Average spacing between trees. */
     protected int spread;
+    /** Maximum number of trees generated per cluster. */
     protected int maxCluster;
+    /** Type of seedling to generate. */
     protected BlockSeedling seedlingType;
     
     public WorldGenTree(World world, Random rand, boolean isSapling,
@@ -26,13 +33,16 @@ public abstract class WorldGenTree extends WorldGenAbstract {
         this.seedlingType = seedlingType;
     }
     
+    /** Generates a single tree. */
+    public abstract boolean generateTree(BlockPos pos); 
+    
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
         
         Biome biome = this.world.getBiome(new
                 BlockPos(xFromChunk, 0, zFromChunk));
         
-        if (this.rand.nextFloat() <= 0.001 &&
+        if (this.rand.nextFloat() <= CHANCE &&
                 this.seedlingType.isPermitted(biome)) {
             
             int centreX = this.rand.nextInt(16) + xFromChunk;
@@ -59,10 +69,7 @@ public abstract class WorldGenTree extends WorldGenAbstract {
                 y = this.findValidDirt(x, z);
             }
         }
-    }
-    
-    /** Generates a single tree. */
-    public abstract boolean generateTree(BlockPos pos);    
+    }   
     
     /** Sets a blockstate with flags according to the phase of generation. */
     protected void setBlock(BlockPos pos, IBlockState state) {

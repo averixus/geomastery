@@ -12,7 +12,9 @@ import net.minecraft.world.World;
 /** Abstract superclass for WorldGen objects. */
 public abstract class WorldGenAbstract {
     
+    /** The world to generate in. */
     protected World world;
+    /** Random for utilities. */
     protected Random rand;
     
     public WorldGenAbstract(World world, Random rand) {
@@ -20,6 +22,9 @@ public abstract class WorldGenAbstract {
         this.world = world;
         this.rand = rand;
     }
+    
+    /** Executes this WorldGen at the given chunk position. */
+    public abstract void generateChunk(int xFromChunk, int zFromChunk);
     
     /** Finds an air block with adjacent log block,
      * at the given x and z co-ordinates.
@@ -143,7 +148,4 @@ public abstract class WorldGenAbstract {
         
         return -1;
     }
-    
-    /** Executes this WorldGen at the given chunk position. */
-    public abstract void generateChunk(int xFromChunk, int zFromChunk);
 }

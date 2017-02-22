@@ -1,11 +1,6 @@
 package com.jj.jjmod.tileentities;
 
-import javax.annotation.Nullable;
-
-import com.jj.jjmod.blocks.BlockCraftingForge;
-import com.jj.jjmod.init.ModBlocks;
-
-import net.minecraft.block.state.IBlockState;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -13,10 +8,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
-/** TileEntity for Forge crafting block. */
+/** TileEntity for forge crafting block. */
 public class TECraftingForge extends TileEntity {
 
+    /** EnumFacing of this forge block. */
     private EnumFacing facing;
+    /** Part of this forge block. */
     private EnumPartForge part;
 
     /** Sets the given state information. */
@@ -55,14 +52,14 @@ public class TECraftingForge extends TileEntity {
         this.part = EnumPartForge.values()[compound.getInteger("part")];
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -70,7 +67,7 @@ public class TECraftingForge extends TileEntity {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -78,41 +75,33 @@ public class TECraftingForge extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
 
-    /** Enum defining parts of the whole Forge structure. */
-    public enum EnumPartForge implements IStringSerializable {
+    /** Enum defining parts of the whole forge structure. */
+    public enum EnumPartForge implements IStringSerializable, IMultipart {
 
-        FM("fm", true),
-        FL("fl", false),
-        BL("bl", false),
-        BM("bm", false),
-        BR("br", false),
-        FR("fr", true);
+        FM("fm"),
+        FL("fl"),
+        BL("bl"),
+        BM("bm"),
+        BR("br"),
+        FR("fr");
 
         private String name;
-        private boolean isFlat;
 
-        private EnumPartForge(String name, boolean isFlat) {
+        private EnumPartForge(String name) {
 
             this.name = name;
-            this.isFlat = isFlat;
         }
-
+        
         @Override
-        public String toString() {
-
-            return this.name;
+        public boolean shouldDrop() {
+            
+            return this == FM;
         }
 
         @Override
         public String getName() {
 
             return this.name;
-        }
-        
-        /** @return Whether this Part has the flat bounding box. */
-        public boolean isFlat() {
-            
-            return this.isFlat;
         }
     }
 }

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderArrow extends Render<EntityArrow> {
 
+    /** Texture of this arrow. */
     private final ResourceLocation texture;
 
     RenderArrow(RenderManager renderManager, ResourceLocation texture) {

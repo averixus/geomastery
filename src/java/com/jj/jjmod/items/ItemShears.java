@@ -16,6 +16,7 @@ import net.minecraftforge.common.IShearable;
 /** Shears tool item. */
 public class ItemShears extends ItemToolAbstract {
     
+    /** Random function for wool yield using these shears. */
     private Function<Random, Integer> yield;
 
     public ItemShears(String name, ToolMaterial material,

@@ -15,6 +15,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,7 @@ import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 import net.minecraft.world.biome.BiomeSwamp;
 
+/** Beehive block. */
 public class BlockBeehive extends BlockNew implements IBiomeCheck {
     
     public static final PropertyInteger AGE =
@@ -43,35 +45,19 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
     public static final PropertyDirection FACING =
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
-    private static final String NAME = "beehive";
-
     /** Chance of growth per update tick. */
     private float chance = 0.2F;
     
     public BlockBeehive() {
         
-        super(Material.PLANTS, NAME, null, 5.0F, null);
+        super(Material.PLANTS, "beehive", CreativeTabs.DECORATIONS, 5.0F, null);
         this.setTickRandomly(true);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(AGE, 0).withProperty(FACING, EnumFacing.NORTH));
         
     }
     
-    /** @return Whether this Beehive can be planted at this position. */
-    public boolean canPlant(World world, BlockPos pos) {
-        
-        boolean result = false;
-        
-        for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
-            
-            IBlockState check = this.getDefaultState()
-                    .withProperty(FACING, facing);
-            result = result ? result : this.canStay(world, pos, check);
-        }
-        
-        return result;
-    }
-    
+    /** Checks position (breaks if invalid) and grows according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
@@ -91,6 +77,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         }
     }
     
+    /** Checks position and breaks if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
@@ -101,7 +88,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         }
     }
     
-    /** @return Whether this Beehive can stay at this position. */
+    /** @return Whether this beehive can stay at this position. */
     public boolean canStay(World world,
             BlockPos pos, IBlockState state) {
         
@@ -112,6 +99,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
                 this.isPermitted(biome);
     }
     
+    /** Calculates valid state when placed. */
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos,
             EnumFacing placeFacing, float x, float y, float z,
@@ -158,31 +146,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         return check;
     }
     
-    @Override
-    protected BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this, new IProperty[] {AGE, FACING});
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        IBlockState result = this.getDefaultState();
-        result = result.withProperty(AGE, meta % 4);
-        result = result.withProperty(FACING,
-                EnumFacing.getHorizontal(meta / 4));
-        return result;
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        int meta = 0;
-        meta = meta + (4 * (state.getValue(FACING).getHorizontalIndex()));
-        meta = meta + (state.getValue(AGE));
-        return meta;
-    }
-    
+    /** Checks position (breaks if invalid) and harvests available items. */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
@@ -211,6 +175,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         }
     }
     
+    /** @return Available items for harvesting. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
@@ -224,6 +189,31 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         }
         
         return items;
+    }
+    
+    @Override
+    protected BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, new IProperty[] {AGE, FACING});
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        
+        IBlockState result = this.getDefaultState();
+        result = result.withProperty(AGE, meta % 4);
+        result = result.withProperty(FACING,
+                EnumFacing.getHorizontal(meta / 4));
+        return result;
+    }
+    
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        int meta = 0;
+        meta = meta + (4 * (state.getValue(FACING).getHorizontalIndex()));
+        meta = meta + (state.getValue(AGE));
+        return meta;
     }
     
     @Override

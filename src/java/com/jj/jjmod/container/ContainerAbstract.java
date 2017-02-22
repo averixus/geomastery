@@ -16,15 +16,24 @@ import net.minecraft.world.World;
 /** Abstract superclass of Containers, with utilities for ICapPlayer. */ 
 public abstract class ContainerAbstract extends Container {
 
+    /** Size of a slot in pixels. */
     protected static final int SLOT_SIZE = 18;
+    /** Y-position of the start of hotbar. */
     protected static final int HOT_Y = 142;
+    /** Number of slots in a row. */
     protected static final int ROW_LENGTH = 9;
+    /** Y-position of the start of the inventory grid. */
     protected static final int INV_Y = 84;
+    /** X-position of the start of the inventory grid. */
     protected static final int INV_X = 8;
 
+    /** The player who owns this container. */
     protected EntityPlayer player;
+    /** The player capability of this container. */
     public ICapPlayer capability;
+    /** The player inventory of this container. */
     protected InventoryPlayer playerInv;
+    /** The world of this container. */
     protected World world;
 
     public ContainerAbstract(EntityPlayer player, World world) {
@@ -73,7 +82,7 @@ public abstract class ContainerAbstract extends Container {
      * the player capability.
      * @return The difference between the index of the first main inventory
      * slot, and the last total inventory slot:
-     * this is -1 if there are 0 inventory rows. */
+     * -1 if there are 0 inventory rows. */
     protected int buildInvgrid() { 
         
         int invIndex = -1;

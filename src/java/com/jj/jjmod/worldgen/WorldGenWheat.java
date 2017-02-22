@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Wheat crops. */
+/** WorldGenerator for wheat crops. */
 public class WorldGenWheat extends WorldGenCrop {
 
     public WorldGenWheat(World world, Random rand) {

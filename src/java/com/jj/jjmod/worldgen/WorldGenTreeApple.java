@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Apple trees. */
+/** WorldGenerator for apple trees. */
 public class WorldGenTreeApple extends WorldGenTree {
 
     public WorldGenTreeApple(World world, Random rand, boolean isSapling) {

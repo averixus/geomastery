@@ -34,13 +34,16 @@ public class ItemJj extends Item {
         item.setCreativeTab(tab);
     }
     
+    /** @return A new stack of the item with a decay capability
+     * set to the current world time if applicable. */
     public static ItemStack newStack(Item item, int count, World world) {
         
         ItemStack stack = new ItemStack(item, count);
         
         if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
             
-            stack.getCapability(ModCapabilities.CAP_DECAY, null).setBirthTime(world.getTotalWorldTime());
+            stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                    .setBirthTime(world.getTotalWorldTime());
         }
         
         return stack;

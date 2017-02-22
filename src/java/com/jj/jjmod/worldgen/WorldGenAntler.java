@@ -11,7 +11,8 @@ import net.minecraft.world.World;
 /** WorldGenerator for Antler blocks. */
 public class WorldGenAntler extends WorldGenAbstract {
 
-    private float chance = 0.001F;
+    /** Chance of generating per chunk. */
+    private static final float CHANCE = 0.001F;
     
     public WorldGenAntler(World world, Random rand) {
         
@@ -21,7 +22,7 @@ public class WorldGenAntler extends WorldGenAbstract {
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
         
-        if (this.rand.nextFloat() <= this.chance) {
+        if (this.rand.nextFloat() <= CHANCE) {
             
             int x = 0;
             int z = 0;

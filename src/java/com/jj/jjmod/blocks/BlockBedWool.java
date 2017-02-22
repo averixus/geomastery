@@ -6,6 +6,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+/** Wool bedroll block. */
 public class BlockBedWool extends BlockBedBreakableAbstract {
 
     public BlockBedWool() {
@@ -14,13 +15,15 @@ public class BlockBedWool extends BlockBedBreakableAbstract {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return BlockNew.SIX;
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return BlockNew.FOUR;
     }

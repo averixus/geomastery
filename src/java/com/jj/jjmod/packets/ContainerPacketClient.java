@@ -11,11 +11,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the ContainerPlayer on the client. */
+/** Packet to update the ContainerInventory on the client. */
 public class ContainerPacketClient implements IMessage {
 
+    /** Index of the slot in the container. */
     protected int slot;
+    /** The stack in the index slot. */
     protected ItemStack stack;
+    /** The birth time of the decay capablity if applicable. */
     protected long birthTime;
 
     public ContainerPacketClient() {}
@@ -27,7 +30,8 @@ public class ContainerPacketClient implements IMessage {
         
         if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
             
-            this.birthTime = stack.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime();
+            this.birthTime = stack.getCapability(ModCapabilities.CAP_DECAY,
+                    null).getBirthTime();
         }
     }
 
@@ -73,9 +77,10 @@ public class ContainerPacketClient implements IMessage {
             
             if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
                 
-                stack.getCapability(ModCapabilities.CAP_DECAY, null).setBirthTime(message.birthTime);
+                stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                .setBirthTime(message.birthTime);
             }
-            
+
             player.inventoryContainer.inventorySlots.get(message.slot)
                     .putStack(stack);
         }

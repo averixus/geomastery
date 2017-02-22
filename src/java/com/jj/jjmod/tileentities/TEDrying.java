@@ -15,7 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 
-/** TileEntity for Drying Rack block. */
+/** TileEntity for drying rack block. */
 public class TEDrying extends TileEntity implements ITickable {
 
     /** Comparator to move all empty stacks to the end of a list. */

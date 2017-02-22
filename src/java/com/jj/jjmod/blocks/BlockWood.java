@@ -12,7 +12,6 @@ public class BlockWood extends BlockLog {
     
     public BlockWood(String name, float hardness) {
         
-        super();
         BlockNew.setupBlock(this, name, CreativeTabs.BUILDING_BLOCKS,
                 hardness, ToolType.AXE);
         this.setDefaultState(this.blockState.getBaseState()
@@ -67,23 +66,18 @@ public class BlockWood extends BlockLog {
         
         switch (state.getValue(LOG_AXIS)) {
             
-            case X: {
-                
+            case X: 
                 meta |= 4;
                 break;
-            }
-            
-            case Z: {
                 
+            case Z:
                 meta |= 8;
                 break;
-            }
             
-            case NONE: {
-                
+            case Y:
+            case NONE:
                 meta |= 12;
                 break;
-            }
         }
         
         return meta;

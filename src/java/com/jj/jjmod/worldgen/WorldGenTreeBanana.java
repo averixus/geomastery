@@ -7,7 +7,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Banana trees. */
+/** WorldGenerator for banana trees. */
 public class WorldGenTreeBanana extends WorldGenTree {
 
     public WorldGenTreeBanana(World world, Random rand, boolean isSapling) {

@@ -27,25 +27,36 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     /** Number of input, fuel, and output slots. */
     public int size;
     
-    // Co-ordinate constants
+    /** Y-position of start of input slots. */
     protected static final int INPUT_Y = 17;
+    /** Y-position of start of fuel slots. */
     protected static final int FUEL_Y = 53;
 
-    // Index constants
+    /** Index of first input slot. */
     protected static final int INPUT_START = 0;
     
-    // Index fields
+    /** Index of last input slot. */
     protected final int inputEnd;
+    /** Index of first fuel slot. */
     protected final int fuelStart;
+    /** Index of last fuel slot. */
     protected final int fuelEnd;
+    /** Index of first output slot. */
     protected final int outputStart;
+    /** Index of last output slot. */
     protected final int outputEnd;
+    /** Index of first hotbar slot. */
     protected final int hotStart;
+    /** Index of last hotbar slot. */
     protected final int hotEnd;
+    /** Index of first inventory slot. */
     protected final int invStart;
+    /** Index of last inventory slot. */
     protected final int invEnd;
 
+    /** The furnace TileEntity for this container. */
     public final TEFurnaceAbstract furnace;
+    /** The position of this container. */
     protected BlockPos pos;
 
     public ContainerFurnaceAbstract(EntityPlayer player, World world,
@@ -79,8 +90,10 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     
     /** Builds this furnace's input slots. */
     protected abstract void buildInput();
+    
     /** Builds this furnace's fuel slots. */
     protected abstract void buildFuel();
+    
     /** Builds this furnace's output slots. */
     protected abstract void buildOutput();
 

@@ -8,21 +8,22 @@ import net.minecraft.world.World;
 
 public class EntityArrowBronze extends EntityProjectile {
 
-    private static final double damage = 1.55D;
+    /** Damager done by this arrow. */
+    private static final double DAMAGE = 1.55D;
     
     public EntityArrowBronze(World world) {
 
-        super(world, damage);
+        super(world, DAMAGE);
     }
 
     public EntityArrowBronze(World world, double x, double y, double z) {
 
-        super(world, x, y, z, damage);
+        super(world, x, y, z, DAMAGE);
     }
 
     public EntityArrowBronze(World world, EntityLivingBase shooter) {
 
-        super(world, shooter, damage);
+        super(world, shooter, DAMAGE);
     }
 
     @Override

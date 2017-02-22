@@ -20,9 +20,9 @@ import net.minecraft.world.World;
 public class ItemSlab extends ItemJj {
 
     /** Single slab block. */
-    private Block single;
+    private final Block single;
     /** Double slab block. */
-    private Block doubble;
+    private final Block doubble;
     
     public ItemSlab(String name, int stackSize, BlockSlabSingle single,
             BlockSlabDouble doubble) {
@@ -81,5 +81,4 @@ public class ItemSlab extends ItemJj {
         
         return EnumActionResult.SUCCESS;
     }
-
 }

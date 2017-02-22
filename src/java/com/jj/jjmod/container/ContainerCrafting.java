@@ -20,25 +20,42 @@ import net.minecraft.world.World;
 /** Container for Crafting devices. */
 public class ContainerCrafting extends ContainerAbstract {
 
+    /** X-position of the output slot. */
     private static final int OUTPUT_X = 124;
+    /** Y-position of the output slot. */
     private static final int OUTPUT_Y = 35;
+    /** X-position of the start of the craft grid. */
     private static final int CRAFT_X = 30;
+    /** Y-position of the start of the craft grid. */
     private static final int CRAFT_Y = 17;
+    /** Columns of the craft grid. */
     private static final int CRAFT_COLS = 3;
+    /** Rows of the craft grid. */
     private static final int CRAFT_ROWS = 3;
 
+    /** Index of the start of player hotbar. */
     private static final int HOT_START = 0;
+    /** Index of the end of player hotbar. */
     private static final int HOT_END = 8;
+    /** Index of the start of player inventory. */
     private static final int INV_START = 9;
 
+    /** Index of the end of player inventory. */
     private final int invEnd;
+    /** Index of the start of craft grid. */
     private final int craftStart;
+    /** Index of the end of craft grid. */
     private final int craftEnd;
+    /** Index of the output slot. */
     private final int outputI;
 
+    /** Inventory of the craft grid. */
     private InventoryCrafting craftMatrix;
+    /** Inventory of the craft output. */
     private IInventory craftResult = new InventoryCraftResult();
+    /** Crafting manager of this crafter. */
     private CraftingManager craftManager;
+    /** Position of this crafter. */
     private BlockPos pos;
 
     public ContainerCrafting(EntityPlayer player, World world,

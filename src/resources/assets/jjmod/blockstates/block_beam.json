@@ -9,19 +9,19 @@
             "apply": { "model": "jjmod:building/beam", "y": 90 }
         },
         {
-            "when": { "northend": "true" },
+            "when": { "axis": "ns", "front": "true" },
             "apply": { "model": "jjmod:building/beam_end", "y": 270 }
         },
         {
-            "when": { "eastend": "true" },
-            "apply": { "model": "jjmod:building/beam_end" }
-        },
-        {
-            "when": { "southend": "true" },
+            "when": { "axis": "ns", "back": "true" },
             "apply": { "model": "jjmod:building/beam_end", "y": 90 }
         },
         {
-            "when": { "westend": "true" },
+            "when": { "axis": "ew", "front": "true" },
+            "apply": { "model": "jjmod:building/beam_end" }
+        },
+        {
+            "when": { "axis": "ew", "back": "true" },
             "apply": { "model": "jjmod:building/beam_end", "y": 180 }
         },
         {
@@ -41,140 +41,132 @@
             "apply": { "model": "jjmod:building/floor_wood" }
         },
         {
-            "when": { "floor": "pole", "northside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_left" }
-        },
-        {
-            "when": { "floor": "pole", "eastside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_left", "y": 90 }
-        },
-                {
-            "when": { "floor": "pole", "southside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_right" }
-        },
-        {
-            "when": { "floor": "pole", "westside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_right", "y": 90 }
-        },
-        {
-            "when": { "floor": "wood", "northside": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_right" }
-        },
-        {
-            "when": { "floor": "wood", "eastside": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_right", "y": 90 }
-        },
-        {
-            "when": { "floor": "wood", "southside": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_left" }
-        },
-        {
-            "when": { "floor": "wood", "westside": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_left", "y": 90 }
-        },
-        {
-            "when": { "floor": "wood", "southend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_end", "y": 270 }
-        },
-        {
-            "when": { "floor": "wood", "westend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_end" }
-        },
-                {
-            "when": { "floor": "pole", "northend": "true" },
+            "when": { "axis": "ns", "floor": "pole", "front": "true" },
             "apply": { "model": "jjmod:building/floor_pole_end", "y": 90 }
         },
         {
-            "when": { "floor": "pole", "eastend": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_end", "y": 180 }
-        },
-                {
-            "when": { "floor": "pole", "southend": "true" },
+            "when": { "axis": "ns", "floor": "pole", "back": "true" },
             "apply": { "model": "jjmod:building/floor_pole_end", "y": 270 }
         },
         {
-            "when": { "floor": "pole", "westend": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_end"}
+            "when": { "axis": "ew", "floor": "pole", "front": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_end", "y": 180 }
         },
         {
-            "when": { "floor": "wood", "northend": "true" },
+            "when": { "axis": "ew", "floor": "pole", "back": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_end" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "front": "true" },
             "apply": { "model": "jjmod:building/floor_wood_end", "y": 90 }
         },
         {
-            "when": { "floor": "wood", "eastend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_end", "y": 180 }
-        },
-                {
-            "when": { "floor": "wood", "southend": "true" },
+            "when": { "axis": "ns", "floor": "wood", "back": "true" },
             "apply": { "model": "jjmod:building/floor_wood_end", "y": 270 }
         },
         {
-            "when": { "floor": "wood", "westend": "true" },
+            "when": { "axis": "ew", "floor": "wood", "front": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_end", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "back": "true" },
             "apply": { "model": "jjmod:building/floor_wood_end" }
         },
         {
-            "when": { "floor": "pole", "northend": "true", "eastside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_left", "y": 90 }
+            "when": { "axis": "ns", "floor": "pole", "left": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_right", "y": 90 }
         },
         {
-            "when": { "floor": "pole", "northside": "true", "eastend": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_right", "y": 180 }
+            "when": { "axis": "ns", "floor": "pole", "right": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_left", "y": 90 }
         },
         {
-            "when": { "floor": "pole", "eastend": "true", "southside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_left", "y": 180 }
+            "when": { "axis": "ew", "floor": "pole", "left": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_left" }
         },
         {
-            "when": { "floor": "pole", "eastside": "true", "southend": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_right", "y": 270 }
+            "when": { "axis": "ew", "floor": "pole", "right": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_right" }
         },
         {
-            "when": { "floor": "pole", "southend": "true", "westside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_left", "y": 270 }
+            "when": { "axis": "ns", "floor": "wood", "left": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_left", "y": 90 }
         },
         {
-            "when": { "floor": "pole", "southside": "true", "westend": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_right" }
+            "when": { "axis": "ns", "floor": "wood", "right": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_right", "y": 90 }
         },
         {
-            "when": { "floor": "pole", "westend": "true", "northside": "true" },
-            "apply": { "model": "jjmod:building/floor_pole_corner_left" }
+            "when": { "axis": "ew", "floor": "wood", "left": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_right" }
         },
         {
-            "when": { "floor": "pole", "westside": "true", "northend": "true" },
+            "when": { "axis": "ew", "floor": "wood", "right": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_left" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "fl": "true" },
             "apply": { "model": "jjmod:building/floor_pole_corner_right", "y": 90 }
         },
         {
-            "when": { "floor": "wood", "northend": "true", "eastside": "true" },
+            "when": { "axis": "ns", "floor": "pole", "fr": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_left", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "bl": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_left", "y": 270 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "br": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_right", "y": 270 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "fl": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_right", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "fr": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_left", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "bl": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_left" }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "br": "true" },
+            "apply": { "model": "jjmod:building/floor_pole_corner_right" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "fl": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_corner_right", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "fr": "true" },
             "apply": { "model": "jjmod:building/floor_wood_corner_left", "y": 90 }
         },
         {
-            "when": { "floor": "wood", "northside": "true", "eastend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_corner_right", "y": 180 }
-        },
-        {
-            "when": { "floor": "wood", "eastend": "true", "southside": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_corner_left", "y": 180 }
-        },
-        {
-            "when": { "floor": "wood", "eastside": "true", "southend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_corner_right", "y": 270 }
-        },
-        {
-            "when": { "floor": "wood", "southend": "true", "westside": "true" },
+            "when": { "axis": "ns", "floor": "wood", "bl": "true" },
             "apply": { "model": "jjmod:building/floor_wood_corner_left", "y": 270 }
         },
         {
-            "when": { "floor": "wood", "southside": "true", "westend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_corner_right" }
+            "when": { "axis": "ns", "floor": "wood", "br": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_corner_right", "y": 270 }
         },
         {
-            "when": { "floor": "wood", "westend": "true", "northside": "true" },
+            "when": { "axis": "ew", "floor": "wood", "fl": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_corner_right", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "fr": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_corner_left", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "bl": "true" },
             "apply": { "model": "jjmod:building/floor_wood_corner_left" }
         },
         {
-            "when": { "floor": "wood", "westside": "true", "northend": "true" },
-            "apply": { "model": "jjmod:building/floor_wood_corner_right", "y": 90 }
+            "when": { "axis": "ew", "floor": "wood", "br": "true" },
+            "apply": { "model": "jjmod:building/floor_wood_corner_right" }
         }
     ]
 }

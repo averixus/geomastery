@@ -91,12 +91,14 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
-            return new ContainerFurnaceSingle(player, world, (TEFurnaceAbstract) te, pos);
+            return new ContainerFurnaceSingle(player, world,
+                    (TEFurnaceAbstract) te, pos);
         }
 
         if (ID == GuiList.COOKFIRE.ordinal()) {
 
-            return new ContainerFurnaceSingle(player, world, (TEFurnaceAbstract) te, pos);
+            return new ContainerFurnaceSingle(player, world,
+                    (TEFurnaceAbstract) te, pos);
         }
 
         if (ID == GuiList.CLAY.ordinal()) {
@@ -202,20 +204,20 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.COOKFIRE.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceSingle(player, world, (TEFurnaceCookfire) te,
-                    pos), GuiList.COOKFIRE.name);
+            return new GuiFurnace(new ContainerFurnaceSingle(player, world,
+                    (TEFurnaceCookfire) te, pos), GuiList.COOKFIRE.name);
         }
 
         if (ID == GuiList.CLAY.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceClay(player, world, (TEFurnaceClay) te,
-                    pos), GuiList.CLAY.name);
+            return new GuiFurnace(new ContainerFurnaceClay(player, world,
+                    (TEFurnaceClay) te, pos), GuiList.CLAY.name);
         }
 
         if (ID == GuiList.STONE.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceStone(player, world, (TEFurnaceStone) te,
-                    pos), GuiList.STONE.name);
+            return new GuiFurnace(new ContainerFurnaceStone(player, world,
+                    (TEFurnaceStone) te, pos), GuiList.STONE.name);
         }
 
         if (ID == GuiList.DRYING.ordinal()) {

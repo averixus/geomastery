@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Salt blocks. */
+/** WorldGenerator for salt blocks. */
 public class WorldGenSalt extends WorldGenStone {
 
     public WorldGenSalt(World world, Random rand) {

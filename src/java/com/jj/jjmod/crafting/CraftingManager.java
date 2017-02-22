@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 /** Crafting recipe manager for variable sized crafting grids. */
 public class CraftingManager {
 
+    /** List of recipes. */
     private final List<IRecipe> recipes;
 
     public CraftingManager() {

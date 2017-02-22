@@ -22,8 +22,8 @@ import net.minecraft.world.World;
 /** Fruit block. */
 public class BlockFruit extends BlockNew {
     
-    public static final PropertyDirection STEM =
-            PropertyDirection.create("stem", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyDirection FACING =
+            PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     /** Supplier for the fruit item. */
     private Supplier<Item> item;
@@ -55,19 +55,19 @@ public class BlockFruit extends BlockNew {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {STEM});
+        return new BlockStateContainer(this, new IProperty[] {FACING});
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
         
-        return state.getValue(STEM).getHorizontalIndex();
+        return state.getValue(FACING).getHorizontalIndex();
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
-        return this.getDefaultState().withProperty(STEM,
+        return this.getDefaultState().withProperty(FACING,
                 EnumFacing.getHorizontal(meta));
     }
 }

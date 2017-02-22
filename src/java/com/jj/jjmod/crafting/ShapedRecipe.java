@@ -13,7 +13,6 @@ public class ShapedRecipe extends ShapedRecipes {
             ItemStack output) {
 
         super(width, height, inputs, output);
-
     }
 
     @Override

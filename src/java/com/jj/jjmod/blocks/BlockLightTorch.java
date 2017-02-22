@@ -14,16 +14,12 @@ public class BlockLightTorch extends BlockLight {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         EnumFacing facing = state.getValue(FACING);
-        
-        if (facing == EnumFacing.UP) {
-            
-            return BlockNew.CENTRE_TEN;
-        }
-        
-        return BlockNew.BLIP[facing.getHorizontalIndex()];
+        return facing == EnumFacing.UP ? BlockNew.CENTRE_TEN :
+            BlockNew.BLIP[facing.getHorizontalIndex()];
     }
 
 }

@@ -12,7 +12,7 @@ import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
-/** Potato Crop block. */
+/** Potato crop block. */
 public class BlockCropPotato extends BlockCropAbstract {
     
     public BlockCropPotato() {

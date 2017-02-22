@@ -38,7 +38,6 @@ public class SlotFurnaceFuel extends Slot {
         this.furnace.setFuel(stack, this.index);
     }
     
-    /** Sorts the inputs list when the slot is changed. */
     @Override
     public void onSlotChanged() {
 

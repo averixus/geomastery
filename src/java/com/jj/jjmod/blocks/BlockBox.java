@@ -36,14 +36,20 @@ public class BlockBox extends BlockComplexAbstract {
     }
     
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
+
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.BOX.ordinal(),
+                    world, x, y, z);
+        }
         
-        player.openGui(Main.instance, GuiList.BOX.ordinal(), world, x, y, z);
+        return true;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta) {
 
         return new TEBox();
     }

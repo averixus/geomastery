@@ -4,7 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 
-/** Apparel and armour Items. */
+/** Apparel and armour items. */
 public class ItemApparel extends ItemArmor {
 
     public ItemApparel(String name, ArmorMaterial material,

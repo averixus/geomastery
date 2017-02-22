@@ -7,7 +7,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Orange trees. */
+/** WorldGenerator for orange trees. */
 public class WorldGenTreeOrange extends WorldGenTree {
     
     public WorldGenTreeOrange(World world, Random rand, boolean isSapling) {

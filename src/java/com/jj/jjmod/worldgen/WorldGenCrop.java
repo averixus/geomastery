@@ -10,8 +10,14 @@ import net.minecraft.world.biome.Biome;
 /** Abstract superclass for WorldGenerators for crop blocks. */
 public abstract class WorldGenCrop extends WorldGenAbstract {
 
+    /** Chance of generating per chunk. */
+    private static final float CHANCE = 0.001F;
+    
+    /** State of the crop block to generate. */
     protected IBlockState crop;
+    /** Average spacing between generated blocks. */
     protected int spread;
+    /** Maximum number of blocks generated per cluster. */
     protected int maxCluster;
     
     public WorldGenCrop(World world, Random rand,
@@ -29,7 +35,7 @@ public abstract class WorldGenCrop extends WorldGenAbstract {
         Biome biome = this.world.getBiome(new
                 BlockPos(xFromChunk, 0, zFromChunk));
 
-        if (this.rand.nextFloat() <= 0.001 &&
+        if (this.rand.nextFloat() <= CHANCE &&
                 ((IBiomeCheck) this.crop.getBlock()).isPermitted(biome)) {
             
             int centreX = this.rand.nextInt(16) + xFromChunk;

@@ -10,21 +10,33 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
+/** Abstract superclass for gui containers. */
 public abstract class GuiContainerAbstract extends GuiContainer {
   
+    /** Name text colour. */
     protected static final int TEXT_COLOUR = 4210752;
+    /** X-position of centre of name. */
     protected static final int NAME_X = 97;
+    /** Y-position of centre of name. */
     protected static final int NAME_Y = 8;
+    /** X-position of source of progress arrow. */
     protected static final int ARROW_SOURCE_X = 176;
+    /** Y-position of source of progress arrow. */
     protected static final int ARROW_SOURCE_Y = 14;
+    /** Height of progress arrow. */
     protected static final int ARROW_HEIGHT = 16;
+    /** Length of progress arrow. */
     protected static final int ARROW_LENGTH = 24;
+    /** X-position of source of progress flame. */
     protected static final int FLAME_SOURCE_X = 176;
+    /** Y-position of source of progress flame. */
     protected static final int FLAME_SOURCE_Y = 12;
+    /** Height of progress flame. */
     protected static final int FLAME_HEIGHT = 13;
+    /** Width of progress flame. */
     protected static final int FLAME_WIDTH = 14;
     
-    
+    /** Name of this container. */
     protected final String name;
     
     public GuiContainerAbstract(Container container, String name) {
@@ -32,6 +44,9 @@ public abstract class GuiContainerAbstract extends GuiContainer {
         super(container);
         this.name = name;
     }
+    
+    /** @return The texture for this container. */
+    protected abstract ResourceLocation getTexture();
     
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -42,15 +57,14 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     }
     
     @Override
-    protected void drawGuiContainerBackgroundLayer(float ticks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(float ticks,
+            int mouseX, int mouseY) {
         
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(this.getTexture());
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0,
                 this.xSize, this.ySize);
     }
-    
-    protected abstract ResourceLocation getTexture();
 
     /** Utility method to draw the player, copied from vanilla */
     protected static void drawEntityOnScreen(int posX, int posY, int scale,

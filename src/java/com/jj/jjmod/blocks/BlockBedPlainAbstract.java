@@ -22,7 +22,7 @@ public abstract class BlockBedPlainAbstract extends BlockBedAbstract {
     }
     
     @Override
-    protected void drop(World world, BlockPos pos, TEBed bed) {
+    protected void dropItem(World world, BlockPos pos, TEBed bed) {
         
         spawnAsEntity(world, pos, new ItemStack(this.itemRef.get()));
     }

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Pig Carcass block. */
+/** Pig carcass block. */
 public class BlockCarcassPig extends BlockCarcass {
 
     public BlockCarcassPig() {

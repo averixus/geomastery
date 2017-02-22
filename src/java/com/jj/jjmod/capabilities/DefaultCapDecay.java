@@ -17,9 +17,8 @@ public class DefaultCapDecay implements ICapDecay {
     
     public DefaultCapDecay(int maxDays) {
         
-        int maxAge = maxDays * /*DAY_TICKS*/ 100; //test
+        int maxAge = maxDays * DAY_TICKS;
         this.stageSize = maxAge / MAX_STAGE;
-        System.out.println("constructing capability, birth time " + this.birthTime);
     }
 
     
@@ -70,7 +69,6 @@ public class DefaultCapDecay implements ICapDecay {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setLong("birthTime", this.birthTime);
         nbt.setInteger("stageSize", this.stageSize);
-        System.out.println("writing nbt, birth time " + this.birthTime);
         return nbt;
     }
     
@@ -79,6 +77,5 @@ public class DefaultCapDecay implements ICapDecay {
         
         this.birthTime = nbt.getLong("birthTime");
         this.stageSize = nbt.getInteger("stageSize");
-        System.out.println("reading from nbt, birth time " + this.birthTime);
     }
 }

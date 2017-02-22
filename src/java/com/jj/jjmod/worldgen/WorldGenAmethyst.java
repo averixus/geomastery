@@ -17,12 +17,12 @@ public class WorldGenAmethyst extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        int rand1 = this.rand.nextInt(4) + 1;
-        int rand2 = this.rand.nextInt(4) + 1;
-        int rand3 = this.rand.nextInt(4) + 1;
-        int rand4 = this.rand.nextInt(4) + 1;
+        int rand1 = this.rand.nextInt(4);
+        int rand2 = this.rand.nextInt(4);
+        int rand3 = this.rand.nextInt(4);
+        int rand4 = this.rand.nextInt(4);
 
-        return rand1 + rand2 + rand3 + rand4 - 3;
+        return rand1 + rand2 + rand3 + rand4 + 1;
     }
 
     @Override

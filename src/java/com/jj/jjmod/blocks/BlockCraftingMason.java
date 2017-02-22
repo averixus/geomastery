@@ -43,13 +43,14 @@ public class BlockCraftingMason extends BlockComplexAbstract {
         super("crafting_mason", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (((TECraftingMason) te).getPart() == EnumPartMason.FM) {
+        if (((TECraftingMason) te).getPart().shouldDrop()) {
 
             spawnAsEntity(world, pos, new ItemStack(ModItems.craftingMason));
         }
@@ -65,88 +66,57 @@ public class BlockCraftingMason extends BlockComplexAbstract {
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
 
-        TileEntity tileEntity = world.getTileEntity(pos);
-
-        if (!(tileEntity instanceof TECraftingMason)) {
-
-            return;
-        }
-
-        TECraftingMason tileMason = (TECraftingMason) tileEntity;
-        EnumPartMason part = tileMason.getPart();
-        EnumFacing facing = tileMason.getFacing();
+        state = this.getActualState(state, world, pos);
+        EnumPartMason part = state.getValue(PART);
+        EnumFacing facing = state.getValue(FACING);
+        boolean broken = false;
 
         switch (part) {
 
             case FM: {
 
-                boolean brokenFL = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenFL) {
-
-                    world.setBlockToAir(pos);
-                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingMason));
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
             }
 
             case FL: {
 
-                boolean brokenBM = world.getBlockState(pos
-                        .offset(facing).offset(facing.rotateY()))
-                        .getBlock() != this;
-
-                if (brokenBM) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing)
+                        .offset(facing.rotateY())).getBlock() != this;
                 break;
             }
 
             case BM: {
 
-                boolean brokenBR = world
-                        .getBlockState(pos.offset(facing.rotateY()))
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
                         .getBlock() != this;
-
-                if (brokenBR) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case BR: {
 
-                boolean brokenFR = world
-                        .getBlockState(pos.offset(facing.getOpposite()))
+                broken = world.getBlockState(pos.offset(facing.getOpposite()))
                         .getBlock() != this;
-
-                if (brokenFR) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case FR: {
 
-                boolean brokenFM = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenFM) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
+            }
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos,
+                        new ItemStack(ModItems.craftingMason));
             }
         }
     }
@@ -161,35 +131,23 @@ public class BlockCraftingMason extends BlockComplexAbstract {
         
         switch (part) {
             
-            case BR: {
-                
+            case BR:
                 return CORNER[(facing + 1) % 4];
-            }
             
-            case BM: {
-                
-                return CORNER[(facing) % 4];
-            }
+            case BM:
+                return CORNER[facing % 4];
             
-            case FR: {
-                
+            case FR: 
                 return CORNER[(facing + 2) % 4];
-            }
             
-            case FM: {
-                
+            case FM: 
                 return CORNER[(facing + 3) % 4];
-            }
             
-            case FL: {
-                
+            case FL: 
                 return HALF[(facing + 3) % 4];
-            }
             
-            default: {
-                
+            default:
                 return FULL_BLOCK_AABB;
-            }
         }
     }
 
@@ -209,8 +167,10 @@ public class BlockCraftingMason extends BlockComplexAbstract {
 
             TECraftingMason tileMason = (TECraftingMason) tileEntity;
 
-            state = state.withProperty(PART, tileMason.getPart() == null ? state.getValue(PART) : tileMason.getPart());
-            state = state.withProperty(FACING, tileMason.getFacing() == null ? state.getValue(FACING) : tileMason.getFacing());
+            state = state.withProperty(PART, tileMason.getPart() == null ?
+                    state.getValue(PART) : tileMason.getPart());
+            state = state.withProperty(FACING, tileMason.getFacing() == null ?
+                    state.getValue(FACING) : tileMason.getFacing());
         }
 
         return state;
@@ -229,9 +189,15 @@ public class BlockCraftingMason extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.MASON.ordinal(), world, x, y, z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.MASON.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 }

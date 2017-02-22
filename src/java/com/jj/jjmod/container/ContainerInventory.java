@@ -31,41 +31,73 @@ import net.minecraft.world.World;
 /** Container for player inventory. */
 public class ContainerInventory extends ContainerAbstract {
 
+    /** Columns of the craft grid. */
     private static final int CRAFT_COLS = 3;
+    /** Rows of the craft grid. */
     private static final int CRAFT_ROWS = 2;
 
+    /** X-position of the output slot. */
     private static final int OUTPUT_X = 154;
+    /** Y-position of the output slot. */
     private static final int OUTPUT_Y = 28;
+    /** X-position of the start of craft grid. */
     private static final int CRAFT_X = 80;
+    /** Y-position of the end of craft grid. */
     private static final int CRAFT_Y = 18;
-    private static final int ARMOUR_X = 8;
+    /** X-position of the apparel slots. */
+    private static final int APPAREL_X = 8;
+    /** Y-position of the head apparel slot. */
     private static final int HEAD_Y = 8;
+    /** Y-position of the chest apparel slot. */
     private static final int CHEST_Y = 26;
+    /** Y-position of the legs apparel slot. */
     private static final int LEGS_Y = 44;
+    /** Y-position of the feet apparel slot. */
     private static final int FEET_Y = 62;
+    /** Y-position of the equipment slots. */
     private static final int EQUIP_Y = 62;
-    private static final int SHIELD_X = 77;
+    /** X-position of the offhand slot. */
+    private static final int OFFHAND_X = 77;
+    /** X-position of the backpack slot. */
     private static final int BACKPACK_X = 95;
+    /** X-position of the yoke slot. */
     private static final int YOKE_X = 113;
 
+    /** Index of the feet apparel slot. */
     private static final int FEET_I = 0;
+    /** Index of the legs apparel slot. */
     private static final int LEGS_I = 1;
+    /** Index of the chest apparel slot. */
     private static final int CHEST_I = 2;
+    /** Index of the head apparel slot. */
     private static final int HEAD_I = 3;
+    /** Index of the offhand slot. */
     private static final int OFFHAND_I = 4;
+    /** Index of the backpack slot. */
     private static final int BACKPACK_I = 5;
+    /** Index of the yoke slot. */
     private static final int YOKE_I = 6;
+    /** Index of the first craft grid slot. */
+    private static final int CRAFT_START = 7;
     
-    private final int craftStart = 7;
+    /** Index of the last craft grid slot. */
     private final int craftEnd;
+    /** Index of the output slot. */
     private final int outputI;
+    /** Index of the first hotbar slot. */
     private final int hotStart;
+    /** Index of the last hotbar slot. */
     private final int hotEnd;
+    /** Index of the first inventory slot. */
     private final int invStart;
+    /** Index of the last inventory slot. */
     private int invEnd;
 
+    /** Texture for the current background of this container. */
     private ResourceLocation background;
+    /** Inventory for the craft grid. */
     public InventoryCrafting craftMatrix;
+    /** Inventory for the craft result. */
     public IInventory craftResult = new InventoryCraftResult();
 
     public ContainerInventory(EntityPlayer player, World world) {
@@ -74,16 +106,16 @@ public class ContainerInventory extends ContainerAbstract {
         this.player.openContainer = this;
         
         // Equipment slots
-        this.addSlotToContainer(new SlotArmour(this.playerInv, this.player,
-                ARMOUR_X, FEET_Y, EntityEquipmentSlot.FEET));
-        this.addSlotToContainer(new SlotArmour(this.playerInv, this.player,
-                ARMOUR_X, LEGS_Y, EntityEquipmentSlot.LEGS));
-        this.addSlotToContainer(new SlotArmour(this.playerInv, this.player,
-                ARMOUR_X, CHEST_Y, EntityEquipmentSlot.CHEST));
-        this.addSlotToContainer(new SlotArmour(this.playerInv, this.player,
-                ARMOUR_X, HEAD_Y, EntityEquipmentSlot.HEAD));
-        this.addSlotToContainer(new SlotArmour(this.playerInv, this.player,
-                SHIELD_X, EQUIP_Y, EntityEquipmentSlot.OFFHAND));
+        this.addSlotToContainer(new SlotArmour(this.playerInv,
+                APPAREL_X, FEET_Y, EntityEquipmentSlot.FEET));
+        this.addSlotToContainer(new SlotArmour(this.playerInv,
+                APPAREL_X, LEGS_Y, EntityEquipmentSlot.LEGS));
+        this.addSlotToContainer(new SlotArmour(this.playerInv,
+                APPAREL_X, CHEST_Y, EntityEquipmentSlot.CHEST));
+        this.addSlotToContainer(new SlotArmour(this.playerInv,
+                APPAREL_X, HEAD_Y, EntityEquipmentSlot.HEAD));
+        this.addSlotToContainer(new SlotArmour(this.playerInv,
+                OFFHAND_X, EQUIP_Y, EntityEquipmentSlot.OFFHAND));
         this.addSlotToContainer(new SlotBackpack(this.player,
                 BACKPACK_X, EQUIP_Y));
         this.addSlotToContainer(new SlotYoke(this.player,
@@ -166,12 +198,7 @@ public class ContainerInventory extends ContainerAbstract {
     public ItemStack add(ItemStack stack) {
         
         ItemStack remaining = stack;
-        System.out.println("add " + remaining);
-        if (remaining.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println("age " + remaining.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime());
-        } else {
-            System.out.println("has no capdecay");
-        }
+
         if (ModBlocks.OFFHAND_ONLY.contains(remaining.getItem())) {
             
             return this.addToOffhand(remaining);
@@ -201,7 +228,8 @@ public class ContainerInventory extends ContainerAbstract {
         for (int slot = 0; slot < this.capability.getInventorySize() &&
                 !remaining.isEmpty(); slot++) {
 
-            if (ItemStack.areItemsEqual(remaining, inv.get(slot)) && inv.get(slot).areCapsCompatible(remaining)) {
+            if (ItemStack.areItemsEqual(remaining, inv.get(slot)) &&
+                    inv.get(slot).areCapsCompatible(remaining)) {
 
                 remaining = this.addToSlot(slot, remaining);
             }
@@ -252,16 +280,12 @@ public class ContainerInventory extends ContainerAbstract {
         ItemStack inSlot = inv.get(slot);
         
         if (inSlot.isEmpty()) {
-            System.out.println("addToSlot " + stack);
-            if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-                System.out.println("age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime());
-            } else {
-                System.out.println("has no capdecay");
-            }
+
             inv.set(slot, stack);
             result = ItemStack.EMPTY;
             
-        } else if (ItemStack.areItemsEqual(stack, inSlot) && stack.areCapsCompatible(inSlot)) {
+        } else if (ItemStack.areItemsEqual(stack, inSlot) &&
+                stack.areCapsCompatible(inSlot)) {
 
             ItemStack added = inSlot.copy();
             int total = inSlot.getCount() + stack.getCount();
@@ -316,8 +340,7 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!stack.isEmpty()) {
 
                     player.dropItem(stack, false);
-                    System.out.println("update packet from container closed");
-                    this.updateContainer(this.craftStart + i);
+                    this.updateContainer(CRAFT_START + i);
                 }
             }
         }
@@ -427,7 +450,7 @@ public class ContainerInventory extends ContainerAbstract {
             slot.onSlotChange(slotStack, result);
             slot.onTake(player, slotStack);
 
-        } else if ((index >= this.craftStart && index <= this.craftEnd) ||
+        } else if ((index >= CRAFT_START && index <= this.craftEnd) ||
                 (index >= FEET_I && index <= YOKE_I)) {
 
             if (!this.mergeItemStack(slotStack, this.hotStart,
@@ -515,6 +538,19 @@ public class ContainerInventory extends ContainerAbstract {
             
         ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
         inv.updateContainer(index + inv.hotStart);
+    }
+    
+    /** Refreshes the player's inventory container size
+     * if it is an instance of this class. */
+    public static void refresh(EntityPlayer player) {
+        
+        if (!(player.inventoryContainer instanceof ContainerInventory)) {
+            
+            return;
+        }
+        
+        ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
+        inv.refresh();
     }
 
     /** Sends a packet to update the index slot of this container. */

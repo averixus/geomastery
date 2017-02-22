@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Redstone Lode. */
+/** WorldGenerator for redstone Lode. */
 public class WorldGenRedstone extends WorldGenStone {
 
     public WorldGenRedstone(World world, Random rand) {

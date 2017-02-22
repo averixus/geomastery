@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities {
 
+    /** ID counter. */
     private static int entityID = 0;
 
     public static void preInit() {
@@ -79,6 +80,5 @@ public class ModEntities {
                 EntityArrowBronze.class, RenderArrowFactory.ARROW_BRONZE);
         RenderingRegistry.registerEntityRenderingHandler(
                 EntityArrowSteel.class, RenderArrowFactory.ARROW_STEEL);
-
     }
 }

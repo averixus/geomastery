@@ -6,7 +6,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Beetroot crops. */
+/** WorldGenerator for beetroot crops. */
 public class WorldGenBeetroot extends WorldGenCrop {
 
     public WorldGenBeetroot(World world, Random rand) {

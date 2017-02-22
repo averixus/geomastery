@@ -1,11 +1,6 @@
 package com.jj.jjmod.tileentities;
 
-import javax.annotation.Nullable;
-
-import com.jj.jjmod.blocks.BlockCraftingMason;
-import com.jj.jjmod.init.ModBlocks;
-
-import net.minecraft.block.state.IBlockState;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -13,10 +8,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
-/** TileEntity for Mason crafting block. */
+/** TileEntity for mason crafting block. */
 public class TECraftingMason extends TileEntity {
 
+    /** EnumFacing of this mason block. */
     private EnumFacing facing;
+    /** Part of this mason block. */
     private EnumPartMason part;
 
     /** Sets the given state information. */
@@ -26,13 +23,13 @@ public class TECraftingMason extends TileEntity {
         this.part = part;
     }
 
-    /** @return The EnumFacing state of this Mason block. */
+    /** @return The EnumFacing state of this mason block. */
     public EnumFacing getFacing() {
 
         return this.facing;
     }
 
-    /** @return The EnumPartMason state of this Mason block. */
+    /** @return The EnumPartMason state of this mason block. */
     public EnumPartMason getPart() {
 
         return this.part;
@@ -55,14 +52,14 @@ public class TECraftingMason extends TileEntity {
         this.part = EnumPartMason.values()[compound.getInteger("part")];
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -70,7 +67,7 @@ public class TECraftingMason extends TileEntity {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -78,40 +75,32 @@ public class TECraftingMason extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
 
-    /** Enum defining parts of the whole Mason structure. */
-    public enum EnumPartMason implements IStringSerializable {
+    /** Enum defining parts of the whole mason structure. */
+    public enum EnumPartMason implements IStringSerializable, IMultipart {
 
-        FM("fm", false),
-        FL("fl", false),
-        BM("bm", false),
-        BR("br", false),
-        FR("fr", false);
+        FM("fm"),
+        FL("fl"),
+        BM("bm"),
+        BR("br"),
+        FR("fr");
 
         private final String name;
-        private final boolean isFlat;
 
-        private EnumPartMason(String name, boolean isFlat) {
+        private EnumPartMason(String name) {
 
             this.name = name;
-            this.isFlat = isFlat;
         }
-
+        
         @Override
-        public String toString() {
-
-            return this.name;
+        public boolean shouldDrop() {
+            
+            return this == FM;
         }
 
         @Override
         public String getName() {
 
             return this.name;
-        }
-        
-        /** @return Whether this Part has the flat bounding box. */
-        public boolean isFlat() {
-            
-            return this.isFlat;
         }
     }
 }

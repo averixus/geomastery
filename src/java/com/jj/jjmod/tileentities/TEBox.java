@@ -16,7 +16,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 
-/** TileEntity for Box block. Closely adapted from vanilla. */
+/** TileEntity for box block. Closely adapted from vanilla. */
 public class TEBox extends TileEntityChest {
     
     @Override
@@ -110,23 +110,6 @@ public class TEBox extends TileEntityChest {
             if (this.lidAngle < 0.0F) {
                 
                 this.lidAngle = 0.0F;
-            }
-        }
-        
-        List<ItemStack> inventory = this.getItems();
-        
-        for (int l = 0; l < this.getSizeInventory(); l++) {
-            
-            ItemStack stack = inventory.get(l);
-            
-            if (stack.getItem() instanceof ItemEdibleDecayable) {
-                
-             //   if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
-             //           .updateAndRot()) {
-                    
-             //       this.setInventorySlotContents(l,
-              //              new ItemStack(ModItems.rot));
-              //  }
             }
         }
     }

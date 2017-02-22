@@ -30,7 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Clay Furnace block. */
+/** Clay furnace block. */
 public class BlockFurnaceClay extends BlockComplexAbstract {
 
     public static final PropertyEnum<EnumPartClay> PART = PropertyEnum
@@ -43,25 +43,15 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
         super("furnace_clay", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (((TEFurnaceClay) te).getPart() == EnumPartClay.BL) {
+        if (((TEFurnaceClay) te).getPart().shouldDrop()) {
 
-            spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
-        }
-    }
-    
-    @Override
-    public void dropBlockAsItemWithChance(World world, BlockPos pos,
-            IBlockState state, float chance, int fortune) {
-        
-        if (this.getActualState(state, world, pos).getValue(PART) ==
-                EnumPartClay.BL) {
-        
             spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
         }
     }
@@ -76,73 +66,47 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
 
-        TileEntity tileEntity = world.getTileEntity(pos);
-
-        if (!(tileEntity instanceof TEFurnaceClay)) {
-
-            return;
-        }
-
-        TEFurnaceClay tileClay = (TEFurnaceClay) tileEntity;
-        EnumPartClay part = tileClay.getPart();
-        EnumFacing facing = tileClay.getFacing();
+        state = this.getActualState(state, world, pos);
+        EnumPartClay part = state.getValue(PART);
+        EnumFacing facing = state.getValue(FACING);
+        boolean broken = false;
 
         switch (part) {
 
             case BL: {
 
-                boolean brokenBR = world
-                        .getBlockState(pos.offset(facing.rotateY()))
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
                         .getBlock() != this;
-
-                if (brokenBR) {
-
-                    world.setBlockToAir(pos);
-                    spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
-                }
-
                 break;
             }
 
             case BR: {
 
-                boolean brokenTR = world
-                        .getBlockState(pos.up()).getBlock() != this;
-
-                if (brokenTR) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.up()).getBlock() != this;
                 break;
             }
 
             case TR: {
 
-                boolean brokenTL = world
-                        .getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenTL) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
             }
 
             case TL: {
 
-                boolean brokenBL = world
-                        .getBlockState(pos.down()).getBlock() != this;
-
-                if (brokenBL) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.down()).getBlock() != this;
                 break;
+            }
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos, new ItemStack(ModItems.furnaceClay));
             }
         }
     }
@@ -155,31 +119,15 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
         EnumPartClay part = state.getValue(PART);
         
         switch (part) {
-            
-            case BR: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case BL: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case TR: {
-                
+
+            case TR: 
+            case TL: 
                 return EIGHT;
-            }
-            
-            case TL: {
                 
-                return EIGHT;
-            }
-            
-            default: {
-                
+            case BR: 
+            case BL:
+            default: 
                 return FULL_BLOCK_AABB;
-            }
         }
     }
 
@@ -199,8 +147,10 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
 
             TEFurnaceClay tileClay = (TEFurnaceClay) tileEntity;
 
-            state = tileClay.getPart() == null ? state : state.withProperty(PART, tileClay.getPart());
-            state = tileClay.getFacing() == null ? state : state.withProperty(FACING, tileClay.getFacing());
+            state = tileClay.getPart() == null ? state :
+                state.withProperty(PART, tileClay.getPart());
+            state = tileClay.getFacing() == null ? state :
+                state.withProperty(FACING, tileClay.getFacing());
         }
 
         return state;
@@ -219,7 +169,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
         TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
@@ -231,7 +181,13 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
             y = master.getY();
             z = master.getZ();
         }
+
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.CLAY.ordinal(),
+                    world, x, y, z);
+        }
         
-        player.openGui(Main.instance, GuiList.CLAY.ordinal(), world, x, y, z);
+        return true;
     }
 }

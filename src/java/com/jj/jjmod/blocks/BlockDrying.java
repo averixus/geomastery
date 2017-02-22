@@ -54,7 +54,8 @@ public class BlockDrying extends BlockComplexAbstract {
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return SIX;
     }
@@ -85,10 +86,15 @@ public class BlockDrying extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.DRYING.ordinal(),
-                world, x, y, z);
+        if (!world.isRemote) {
+            
+            return false;
+        }
+        
+        player.openGui(Main.instance, GuiList.DRYING.ordinal(), world, x, y, z);
+        return true;
     }
 }

@@ -21,33 +21,28 @@ public abstract class BlockLight extends BlockTorch {
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
     
     /** Chance of extinguishing per update tick. */
-    private float extinguish;
+    private float extinguishChance;
 
     public BlockLight(String name, int light, float extinguish) {
 
         super();
         this.lightValue = light;
-        this.extinguish = extinguish;
+        this.extinguishChance = extinguish;
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS, 0, null);
     }
     
+    /** Extinguishes according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
         
-        if (rand.nextFloat() <= this.extinguish) {
+        if (rand.nextFloat() <= this.extinguishChance) {
             
             world.playSound(pos.getX(), pos.getY(), pos.getZ(),
                     SoundEvents.BLOCK_FIRE_EXTINGUISH,
                     SoundCategory.BLOCKS, 1, 1, false);
             world.setBlockToAir(pos);
         }
-    }
-    
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-        
-        return NULL_AABB;
     }
 
     @Override

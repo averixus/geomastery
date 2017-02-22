@@ -21,8 +21,22 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 /** Handler for Gui and player input related events. */
 public class GuiEventHandler {
     
- //   private static final ResourceLocation CARBS = new ResourceLocation("jjmod:textures/gui/carbs");
- //   private static final ResourceLocation PROTEIN = new ResourceLocation("textures");
+    /** Texture for the carbs food icons. */
+    private static final ResourceLocation carbsTexture =
+            new ResourceLocation("jjmod:textures/gui/carbs.png");
+    /** Texture for the protein food icons. */
+    private static final ResourceLocation proteinTexture =
+            new ResourceLocation("jjmod:textures/gui/protein.png");
+    /** Texture for the fruitveg food icons. */
+    private static final ResourceLocation fruitvegTexture =
+            new ResourceLocation("jjmod:textures/gui/fruitveg.png");
+    
+    /** Texture for the backpack slot icon. */
+    private static final ResourceLocation backpackTexture = new
+            ResourceLocation("jjmod:gui/backpack_slot");
+    /** Texture for the yoke slot icon. */
+    private static final ResourceLocation yokeTexture = new
+            ResourceLocation("jjmod:gui/yoke_slot");
     
     /** Alters HUD rendering. */
     @SubscribeEvent
@@ -54,76 +68,79 @@ public class GuiEventHandler {
             int left = event.getResolution().getScaledWidth() / 2 + 91;
             int top = event.getResolution().getScaledHeight() - 39;
 
-            ICapPlayer capability = player.getCapability(ModCapabilities
+            ICapPlayer playerCap = player.getCapability(ModCapabilities
                     .CAP_PLAYER, null);
             
-            int carbsHunger = capability.foodLevel(FoodType.CARBS);
+            int carbsHunger = playerCap.foodLevel(FoodType.CARBS);
             Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(new ResourceLocation("jjmod:textures/gui/carbs.png"));
+                    .bindTexture(carbsTexture);
             for (int i = 0; i < 10; i++) {
                 
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
-                int y = top;
                 
-                //background
-                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 9, 9, 27, 9);
+                Gui.drawModalRectWithCustomSizedTexture(x, top,
+                        0, 0, 9, 9, 27, 9);
                 
-                //full
                 if (idx < carbsHunger) {
                     
-                    Gui.drawModalRectWithCustomSizedTexture(x, y, 9, 0, 9, 9, 27, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, top,
+                            9, 0, 9, 9, 27, 9);
                     
-                //half
                 } else if (idx == carbsHunger) {
                     
-                    Gui.drawModalRectWithCustomSizedTexture(x, y, 18, 0, 9, 9, 27, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, top,
+                            18, 0, 9, 9, 27, 9);
                 }
             }
             
-            int fruitvegHunger = capability.foodLevel(FoodType.FRUITVEG);
+            int fruitvegHunger = playerCap.foodLevel(FoodType.FRUITVEG);
             Minecraft.getMinecraft().getTextureManager()
-            .bindTexture(new ResourceLocation("jjmod:textures/gui/fruitveg.png"));
+                    .bindTexture(fruitvegTexture);
             top -= 10;
             
             for (int i = 0; i < 10; i++) {
                 
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
-                int y = top;
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 9, 9, 27, 9);
+                Gui.drawModalRectWithCustomSizedTexture(x, top,
+                        0, 0, 9, 9, 27, 9);
                 
                 if (idx < fruitvegHunger) {
                     
-                    Gui.drawModalRectWithCustomSizedTexture(x, y, 9, 0, 9, 9, 27, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, top,
+                            9, 0, 9, 9, 27, 9);
                     
                 } else if (idx == fruitvegHunger) {
                     
-                    Gui.drawModalRectWithCustomSizedTexture(x, y, 18, 0, 9, 9, 27, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, top,
+                            18, 0, 9, 9, 27, 9);
                 }
             }
             
-            int proteinHunger = capability.foodLevel(FoodType.PROTEIN);
+            int proteinHunger = playerCap.foodLevel(FoodType.PROTEIN);
             Minecraft.getMinecraft().getTextureManager()
-            .bindTexture(new ResourceLocation("jjmod:textures/gui/protein.png"));
+                    .bindTexture(proteinTexture);
             top -= 10;
             
             for (int i = 0; i < 10; i++) {
                 
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
-                int y = top;
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 9, 9, 27, 9);
+                Gui.drawModalRectWithCustomSizedTexture(x, top,
+                        0, 0, 9, 9, 27, 9);
                 
                 if (idx < proteinHunger) {
                     
-                    Gui.drawModalRectWithCustomSizedTexture(x, y, 9, 0, 9, 9, 27, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, top,
+                            9, 0, 9, 9, 27, 9);
                     
                 } else if (idx == proteinHunger) {
                     
-                    Gui.drawModalRectWithCustomSizedTexture(x, y, 18, 0, 9, 9, 27, 9);
+                    Gui.drawModalRectWithCustomSizedTexture(x, top,
+                            18, 0, 9, 9, 27, 9);
                 }
             }
             
@@ -135,10 +152,8 @@ public class GuiEventHandler {
     @SubscribeEvent
     public void textureStich(TextureStitchEvent.Pre event) {
 
-        event.getMap().registerSprite(new
-                ResourceLocation("jjmod:gui/backpack_slot"));
-        event.getMap().registerSprite(new
-                ResourceLocation("jjmod:gui/yoke_slot"));
+        event.getMap().registerSprite(backpackTexture);
+        event.getMap().registerSprite(yokeTexture);
     }
     
     /** Alters which vanilla Gui is opened. */

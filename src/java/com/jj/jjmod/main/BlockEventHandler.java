@@ -53,7 +53,7 @@ public class BlockEventHandler {
             world.setBlockToAir(sourcePos);
         }
 
-        // Make dirt and stone fall
+        // Make dirt, clay, and stone fall
         for (EnumFacing facing : EnumFacing.VALUES) {
         
             BlockPos pos = sourcePos.offset(facing);
@@ -115,7 +115,8 @@ public class BlockEventHandler {
                 }
                     
             
-            } else if (block == Blocks.DIRT || block == Blocks.GRASS) {
+            } else if (block == Blocks.DIRT || block == Blocks.GRASS ||
+                    block == Blocks.CLAY) {
 
                 shouldFall = airBelow;
             }
@@ -206,7 +207,7 @@ public class BlockEventHandler {
         
         if (block == Blocks.TALLGRASS || block == Blocks.DOUBLE_PLANT) {
 
-            event.getDrops().replaceAll((Object) -> ItemStack.EMPTY);
+            event.getDrops().replaceAll((stack) -> ItemStack.EMPTY);
         }
 
         if (block instanceof BlockLog) {

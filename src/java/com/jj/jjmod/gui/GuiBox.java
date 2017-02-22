@@ -5,9 +5,10 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-/** Gui for Box */
+/** Gui for box container. */
 public class GuiBox extends GuiContainerAbstract {
     
+    /** Texture of this gui. */
     private final ResourceLocation texture;
     
     public GuiBox(ContainerBox container) {

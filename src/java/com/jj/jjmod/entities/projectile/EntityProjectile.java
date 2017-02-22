@@ -10,9 +10,11 @@ import net.minecraft.world.World;
 /** Abstract superclass for Arrow and Spear entities. */
 public abstract class EntityProjectile extends EntityArrow {
     
-    // Velocity modifiers
+    /** Velocity modifier for war bow. */
     public static final float BOW_MOD = 3F;
+    /** Velocity modifier for crude bow. */
     public static final float CRUDE_MOD = 2F;
+    /** Velocity modifier for spears. */
     public static final float SPEAR_MOD = 1.8F;
     
     public EntityProjectile(World world, double damage) {

@@ -13,9 +13,13 @@ import net.minecraft.util.NonNullList;
 /** Container slot for crafting recipe output. */
 public class SlotCrafting extends Slot {
 
+    /** The crafting manager for this slot. */
     private final CraftingManager craftingManager;
+    /** The crafting grid that leads to this slot. */
     private final InventoryCrafting craftInv;
+    /** The player who owns this slot. */
     private final EntityPlayer player;
+    /** The amount of items crafted at this slot. */
     private int amountCrafted;
 
     public SlotCrafting(EntityPlayer player,

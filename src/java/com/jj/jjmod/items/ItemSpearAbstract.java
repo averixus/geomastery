@@ -52,6 +52,10 @@ public abstract class ItemSpearAbstract extends ItemToolAbstract {
             }
         });
     }
+    
+    /** Creates this spear's thrown entity. */
+    protected abstract void throwSpear(World world, EntityPlayer player,
+            float velocity, int damage);
 
     /** Throws spear. */
     @Override
@@ -130,8 +134,4 @@ public abstract class ItemSpearAbstract extends ItemToolAbstract {
 
         return EnumAction.BOW;
     }
-
-    /** Creates this spear's thrown entity. */
-    protected abstract void throwSpear(World world, EntityPlayer player,
-            float velocity, int damage);
 }

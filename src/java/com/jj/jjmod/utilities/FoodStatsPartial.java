@@ -13,13 +13,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** FoodStats class for single food type. */
 public class FoodStatsPartial extends FoodStats {
     
+    /** Ticks between healing or damaging from hunger. */
     private static final int HEALTH_TIMER = 600;
     
+    /** The food level of this type. */
     private int food = 20;
+    /** The saturation level of this type. */
     private float saturation = 5.0F;
+    /** The exhaustion level of this type. */
     private float exhaustion;
+    /** Ticks since last damage. */
     private int damageTimer;
+    /** Ticks since last heal. */
     private int healTimer;
+    /** Player owning this type. */
     private EntityPlayer player;
     
     public FoodStatsPartial(EntityPlayer player) {

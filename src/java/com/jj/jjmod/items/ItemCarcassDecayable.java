@@ -43,22 +43,9 @@ public class ItemCarcassDecayable extends ItemJj {
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
         
-        return new ProviderCapDecay(new DefaultCapDecay(this.block.getShelfLife()));
+        return new ProviderCapDecay(new
+                DefaultCapDecay(this.block.getShelfLife()));
 
-    }
-    
-    /** Ticks the ICapDecay while this item is an entity. */
-    @Override
-    public boolean onEntityItemUpdate(EntityItem entity) {
-      /*  
-        if (!entity.world.isRemote && entity.getEntityItem()
-                .getCapability(ModCapabilities.CAP_DECAY, null)
-                .updateAndRot()) {
-            
-            entity.setEntityItemStack(new ItemStack(ModItems.rot));
-        }
-        */
-        return false;
     }
     
     /** Attempts to place this item's carcass block. */
@@ -87,7 +74,8 @@ public class ItemCarcassDecayable extends ItemJj {
         IBlockState placeState = this.block.getDefaultState();
         world.setBlockState(pos, placeState);
         ICapDecay cap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
-        ((TECarcass) world.getTileEntity(pos)).setData(cap.getBirthTime(), cap.getStageSize());
+        ((TECarcass) world.getTileEntity(pos))
+                .setData(cap.getBirthTime(), cap.getStageSize());
         
         // Use item
         world.playSound(null, pos, SoundType.CLOTH.getPlaceSound(),

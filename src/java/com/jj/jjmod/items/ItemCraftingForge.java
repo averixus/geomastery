@@ -41,7 +41,8 @@ public class ItemCraftingForge extends ItemJj {
 
         // Calculate positions
         BlockPos posFM = pos.up();
-        int intFacing = MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int intFacing = MathHelper.floor(player.rotationYaw * 4.0F /
+                360.0F + 0.5D) & 3;
         EnumFacing enumFacing = EnumFacing.getHorizontal(intFacing);
         BlockPos posFL =
                 posFM.offset(enumFacing.rotateY().getOpposite());

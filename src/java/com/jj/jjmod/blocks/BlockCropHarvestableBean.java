@@ -7,7 +7,7 @@ import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 
-/** Bean Crop block. */
+/** Bean crop block. */
 public class BlockCropHarvestableBean extends BlockCropHarvestable {
     
     public BlockCropHarvestableBean() {

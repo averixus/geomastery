@@ -12,7 +12,7 @@ import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeTaiga;
 
-/** Carrot Crop block. */
+/** Carrot crop block. */
 public class BlockCropCarrot extends BlockCropAbstract {
     
     public BlockCropCarrot() {
@@ -28,5 +28,4 @@ public class BlockCropCarrot extends BlockCropAbstract {
                 biome == Biomes.STONE_BEACH || biome instanceof BiomeForest ||
                 biome == Biomes.RIVER || biome instanceof BiomePlains;
     }
-
 }

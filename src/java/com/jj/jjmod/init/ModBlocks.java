@@ -75,16 +75,20 @@ import com.jj.jjmod.blocks.BlockSlabSingle;
 import com.jj.jjmod.blocks.BlockStairs;
 import com.jj.jjmod.blocks.BlockStairsSimple;
 import com.jj.jjmod.blocks.BlockStairsStraight;
+import com.jj.jjmod.blocks.BlockTar;
 import com.jj.jjmod.blocks.BlockVault;
 import com.jj.jjmod.blocks.BlockWall;
 import com.jj.jjmod.blocks.BlockWallHeightless;
-import com.jj.jjmod.blocks.BlockWallThin;
 import com.jj.jjmod.blocks.BlockWallStraight;
+import com.jj.jjmod.blocks.BlockWallThin;
 import com.jj.jjmod.blocks.BlockWood;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -99,24 +103,20 @@ public class ModBlocks {
     
     /** All new blocks, for ease of modelling. */
     private static final Map<Block, Item> MOD_BLOCKS = Maps.newHashMap();
-    
-    /** Array ready to build into Set. */
-    private static final Block[] HEAVY_ARRAY = {Blocks.BEDROCK,
+
+    /** Vanilla blocks classed as Heavy. */
+    public static final Set<Block> HEAVY = Sets.newHashSet(Blocks.BEDROCK,
             Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.SANDSTONE,
             Blocks.RED_SANDSTONE, Blocks.OBSIDIAN, Blocks.STONE,
             Blocks.STONEBRICK, Blocks.PRISMARINE, Blocks.QUARTZ_BLOCK,
             Blocks.BRICK_BLOCK, Blocks.COAL_ORE, Blocks.DIAMOND_ORE,
             Blocks.EMERALD_ORE, Blocks.GOLD_ORE, Blocks.IRON_ORE,
-            Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE};
-    /** Array ready to build into Set. */
-    private static final Block[] LIGHT_ARRAY = {Blocks.CLAY, Blocks.DIRT,
-            Blocks.GRASS, Blocks.GRAVEL, Blocks.ICE, Blocks.PACKED_ICE,
-            Blocks.SAND, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
-
-    /** Vanilla blocks classed as Heavy. */
-    public static final Set<Block> HEAVY = Sets.newHashSet();
+            Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE);
     /** Vanilla blocks classed as Light. */
-    public static final Set<Block> LIGHT = Sets.newHashSet();
+    public static final Set<Block> LIGHT = Sets.newHashSet(Blocks.CLAY,
+            Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL,
+            Blocks.ICE, Blocks.PACKED_ICE, Blocks.SAND,
+            Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY);
     
     public static BlockBedPlainAbstract bedLeaf;
     public static BlockBedBreakableAbstract bedCotton;
@@ -244,10 +244,10 @@ public class ModBlocks {
     
     public static BlockRubble rubble;
     
+    public static BlockTar tar;
+    
     public static void preInit() {
-        
-        buildSets();
-        
+                
         registerItemless(bedLeaf = new BlockBedLeaf());
         registerItemless(bedCotton = new BlockBedCotton());
         registerItemless(bedWool = new BlockBedWool());
@@ -257,8 +257,10 @@ public class ModBlocks {
         
         register(beehive = new BlockBeehive());
 
-        register(candleBeeswax = new BlockLightCandle("candle_beeswax", 0.005F), 15);
-        register(candleTallow = new BlockLightCandle("candle_tallow", 0.02F), 15);
+        register(candleBeeswax = new BlockLightCandle("candle_beeswax",
+                0.005F), 15);
+        register(candleTallow = new BlockLightCandle("candle_tallow",
+                0.02F), 15);
         register(torchTallow = new BlockLightTorch("torch_tallow", 0.005F), 4);
         register(torchTar = new BlockLightTorch("torch_tar", 0.02F), 4);
 
@@ -432,6 +434,8 @@ public class ModBlocks {
         
         register(rubble = new BlockRubble());
         
+        registerFluid(tar = new BlockTar());
+        
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
         Blocks.DIRT.setHarvestLevel("shovel", 1);
@@ -456,7 +460,8 @@ public class ModBlocks {
                 .setHarvestLevel(ToolType.SICKLE.name(), 1);
         Blocks.PUMPKIN.setHardness(0.2F);
         Blocks.MELON_BLOCK.setHardness(0.2F);
-        OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST).setMaxStackSize(1));
+        OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST)
+                .setMaxStackSize(1));
         
     
     }
@@ -467,8 +472,6 @@ public class ModBlocks {
             
             model(entry.getKey(), entry.getValue());
         }
-        
-        
     }
     
     private static void register(Block block, boolean isOffhandOnly) {
@@ -502,6 +505,26 @@ public class ModBlocks {
         MOD_BLOCKS.put(block, item);
     }
     
+    private static void registerFluid(Block block) {
+        
+        Item item = Item.getItemFromBlock(block);
+        ModelBakery.registerItemVariants(item);
+        ModelResourceLocation loc =
+                new ModelResourceLocation(block.getRegistryName(), "normal");
+   
+        ModelLoader.setCustomMeshDefinition(item, stack -> loc);
+        
+        ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+            
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(
+                    IBlockState state) {
+                
+                return loc;
+            }
+        });
+    }
+    
     private static void registerItemless(Block block) {
         
         GameRegistry.register(block);
@@ -513,18 +536,5 @@ public class ModBlocks {
         ModelLoader.setCustomModelResourceLocation(item, 0,
                 new ModelResourceLocation(block.getRegistryName(),
                 "inventory"));
-    }
-    
-    private static void buildSets() {
-        
-        for (Block block : HEAVY_ARRAY) {
-            
-            HEAVY.add(block);
-        }
-                
-        for (Block block : LIGHT_ARRAY) {
-            
-            LIGHT.add(block);
-        }
     }
 }

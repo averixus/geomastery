@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Chalk blocks. */
+/** WorldGenerator for chalk blocks. */
 public class WorldGenChalk extends WorldGenStone {
 
     public WorldGenChalk(World world, Random rand) {

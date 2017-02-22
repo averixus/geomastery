@@ -19,9 +19,10 @@ import net.minecraft.world.World;
 /** Wall block with no height variation (implementations: rough, mud). */
 public class BlockWallHeightless extends BlockWall {
 
-    public BlockWallHeightless(BlockMaterial material, String name, float hardness,
-            ToolType toolType, boolean isDouble, Supplier<Item> wall,
-            boolean isHeavy, int selfHeight, boolean supportsBeam) {
+    public BlockWallHeightless(BlockMaterial material, String name,
+            float hardness, ToolType toolType, boolean isDouble,
+            Supplier<Item> wall, boolean isHeavy,
+            int selfHeight, boolean supportsBeam) {
         
         super(material, name, hardness, toolType, isDouble,
                 wall, isHeavy, selfHeight, supportsBeam);
@@ -48,7 +49,8 @@ public class BlockWallHeightless extends BlockWall {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
                 
         if (this.isDouble) {
             
@@ -61,7 +63,9 @@ public class BlockWallHeightless extends BlockWall {
     }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+    public void addCollisionBoxToList(IBlockState state, World worldIn,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
         
         state = this.getActualState(state, worldIn, pos);
         

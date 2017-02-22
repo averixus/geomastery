@@ -5,7 +5,7 @@ import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Bean blocks. */
+/** WorldGenerator for bean blocks. */
 public class WorldGenBean extends WorldGenCrop {
 
     public WorldGenBean(World world, Random rand) {

@@ -10,10 +10,12 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-/** Container slot for Yoke. */
+/** Container slot for yoke. */
 public class SlotYoke extends Slot {
     
+    /** The player capability of this slot. */
     private ICapPlayer capability;
+    /** The player who owns this slot. */
     private EntityPlayer player;
     
     public SlotYoke(EntityPlayer player, int x, int y) {

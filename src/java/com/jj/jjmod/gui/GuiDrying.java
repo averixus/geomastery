@@ -10,9 +10,12 @@ import net.minecraft.util.ResourceLocation;
 /** Gui for Drying Rack */
 public class GuiDrying extends GuiContainerAbstract {
 
+    /** X-position of progress arrow. */
     private static final int ARROW_X = 78;
+    /** Y-position of progress arrow. */
     private static final int ARROW_Y = 34;
     
+    /** Texture of this gui. */
     private final ResourceLocation texture;
 
     public GuiDrying(ContainerDrying container) {
@@ -28,8 +31,10 @@ public class GuiDrying extends GuiContainerAbstract {
 
         super.drawGuiContainerBackgroundLayer(ticks, mouseX, mouseY);
         
-        int drySpent = ((ContainerDrying) this.inventorySlots).drying.getDrySpent();
-        int dryEach = ((ContainerDrying) this.inventorySlots).drying.getDryEach();
+        int drySpent = ((ContainerDrying) this.inventorySlots)
+                .drying.getDrySpent();
+        int dryEach = ((ContainerDrying) this.inventorySlots)
+                .drying.getDryEach();
         int arrowLength = dryEach != 0 && drySpent != 0 ?
                 drySpent * ARROW_LENGTH / dryEach : 0;
         

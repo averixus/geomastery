@@ -45,15 +45,17 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
                 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (((TECraftingWoodworking) te).getPart() == EnumPartWoodworking.FM) {
+        if (((TECraftingWoodworking) te).getPart().shouldDrop()) {
 
-            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingWoodworking));
+            spawnAsEntity(world, pos,
+                    new ItemStack(ModItems.craftingWoodworking));
         }
     }
 
@@ -67,102 +69,64 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
 
-        TileEntity tileEntity = world.getTileEntity(pos);
-
-        if (!(tileEntity instanceof TECraftingWoodworking)) {
-
-            return;
-        }
-
-        TECraftingWoodworking tileWoodworking =
-                (TECraftingWoodworking) tileEntity;
-        EnumPartWoodworking part = tileWoodworking.getPart();
-        EnumFacing facing = tileWoodworking.getFacing();
+        state = this.getActualState(state, world, pos);
+        EnumPartWoodworking part = state.getValue(PART);
+        EnumFacing facing = state.getValue(FACING);
+        boolean broken = false;
 
         switch (part) {
 
             case FM: {
 
-                boolean brokenFL = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenFL) {
-
-                    world.setBlockToAir(pos);
-                    spawnAsEntity(world, pos, new ItemStack(ModItems.craftingWoodworking));
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
             }
 
             case FL: {
 
-                boolean brokenBL = world.getBlockState(pos.offset(facing))
+                broken = world.getBlockState(pos.offset(facing))
                         .getBlock() != this;
-
-                if (brokenBL) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case BL: {
 
-                boolean brokenBM = world
-                        .getBlockState(pos.offset(facing.rotateY()))
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
                         .getBlock() != this;
-
-                if (brokenBM) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case BM: {
 
-                boolean brokenBR = world
-                        .getBlockState(pos.offset(facing.rotateY()))
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
                         .getBlock() != this;
-
-                if (brokenBR) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case BR: {
 
-                boolean brokenFR = world
-                        .getBlockState(pos.offset(facing.getOpposite()))
+                broken = world.getBlockState(pos.offset(facing.getOpposite()))
                         .getBlock() != this;
-
-                if (brokenFR) {
-
-                    world.setBlockToAir(pos);
-                }
-
                 break;
             }
 
             case FR: {
 
-                boolean brokenFM = world.getBlockState(pos
-                        .offset(facing.rotateY().getOpposite()))
-                        .getBlock() != this;
-
-                if (brokenFM) {
-
-                    world.setBlockToAir(pos);
-                }
-
+                broken = world.getBlockState(pos.offset(facing.rotateY()
+                        .getOpposite())).getBlock() != this;
                 break;
+            }
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos,
+                        new ItemStack(ModItems.craftingWoodworking));
             }
         }
     }
@@ -177,50 +141,35 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
         
         switch (part) {
             
-            case BR: {
-                
+            case BR:
                 return HALF[(facing + 3) % 4];
-            }
             
-            case BM: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case BL: {
-                
-                return FULL_BLOCK_AABB;
-            }
-            
-            case FR: {
-                
+            case FR: 
                 return CORNER[(facing + 2) % 4];
-            }
             
-            case FM: {
-                
+            case FM: 
                 return HALF[facing];
-            }
             
-            case FL: {
-                
+            case FL: 
                 return TWELVE;
-            }
-            
-            default: {
                 
+            case BM: 
+            case BL: 
+            default:
                 return FULL_BLOCK_AABB;
-            }
         }
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         state = this.getActualState(state, world, pos);
         EnumPartWoodworking part = state.getValue(PART);
         
-        if (part == EnumPartWoodworking.BR || part == EnumPartWoodworking.FR || part == EnumPartWoodworking.FM) {
+        if (part == EnumPartWoodworking.BR ||
+                part == EnumPartWoodworking.FR ||
+                part == EnumPartWoodworking.FM) {
             
             return NULL_AABB;
         }
@@ -245,8 +194,10 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
             TECraftingWoodworking tileWoodworking =
                     (TECraftingWoodworking) tileEntity;
 
-            state = tileWoodworking.getPart() == null ? state : state.withProperty(PART, tileWoodworking.getPart());
-            state = tileWoodworking.getFacing() == null ? state : state.withProperty(FACING, tileWoodworking.getFacing());
+            state = tileWoodworking.getPart() == null ? state :
+                state.withProperty(PART, tileWoodworking.getPart());
+            state = tileWoodworking.getFacing() == null ? state :
+                state.withProperty(FACING, tileWoodworking.getFacing());
         }
 
         return state;
@@ -265,10 +216,15 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.WOODWORKING.ordinal(),
-                world, x, y, z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.WOODWORKING.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 }

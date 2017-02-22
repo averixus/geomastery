@@ -77,10 +77,15 @@ public class BlockCraftingKnapping extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.KNAPPING.ordinal(),
-                world, x, y,z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.KNAPPING.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 }

@@ -1,17 +1,7 @@
 package com.jj.jjmod.tileentities;
 
-import javax.annotation.Nullable;
-
-import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModRecipes;
-import com.jj.jjmod.container.ContainerFurnaceSingle;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -32,20 +22,20 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         super(ModRecipes.CLAY, 4);
     }
     
-    /** Sets this Clay Furnace to the given state information. */
+    /** Sets this clay furnace to the given state information. */
     public void setState(EnumFacing facing, EnumPartClay part) {
 
         this.facing = facing;
         this.part = part;
     }
 
-    /** @return The EnumFacing state of this Clay Furnace block. */
+    /** @return The EnumFacing state of this clay furnace block. */
     public EnumFacing getFacing() {
 
         return this.facing;
     }
 
-    /** @return The EnumPartClay state of this Clay Furnace block. */
+    /** @return The EnumPartClay state of this clay furnace block. */
     public EnumPartClay getPart() {
 
         return this.part;
@@ -101,14 +91,14 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         this.part = EnumPartClay.values()[compound.getInteger("part")];
     }
     
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
    @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -116,7 +106,7 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-   /** Require to update rendering on the Client. */
+   /** Required to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -124,8 +114,8 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         this.readFromNBT(packet.getNbtCompound());
     }
 
-    /** Enum defining parts of the Clay Furnace structure. */
-    public enum EnumPartClay implements IStringSerializable {
+    /** Enum defining parts of the clay furnace structure. */
+    public enum EnumPartClay implements IStringSerializable, IMultipart {
 
         BL("bl"),
         BR("br"),
@@ -137,6 +127,12 @@ public class TEFurnaceClay extends TEFurnaceAbstract {
         private EnumPartClay(String name) {
 
             this.name = name;
+        }
+        
+        @Override
+        public boolean shouldDrop() {
+            
+            return this == BL;
         }
 
         @Override

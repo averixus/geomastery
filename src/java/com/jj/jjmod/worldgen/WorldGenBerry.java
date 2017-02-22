@@ -6,7 +6,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Berry crops. */
+/** WorldGenerator for berry crops. */
 public class WorldGenBerry extends WorldGenCrop {
 
     public WorldGenBerry(World world, Random rand) {

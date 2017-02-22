@@ -111,71 +111,16 @@ public class BlockStairsStraight extends BlockNew {
             IBlockAccess world, BlockPos pos) {
         
         EnumFacing facing = state.getValue(FACING);
-        state = state.withProperty(CONNECTION, EnumConnection.NONE);
+        EnumFacing left = facing.rotateYCCW();
+        EnumFacing right = facing.rotateY();
         
-        switch (facing) {
+        if (world.getBlockState(pos.offset(right)).getBlock() == this) {
             
-            case NORTH : {
-                
-                if (world.getBlockState(pos.east()).getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION,
-                            EnumConnection.RIGHT);
-                
-                } else if (world.getBlockState(pos.west()).getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION, EnumConnection.LEFT);
-                }
-                
-                break;
-            }
+            state = state.withProperty(CONNECTION, EnumConnection.RIGHT);
             
-            case EAST : {
-                
-                if (world.getBlockState(pos.south()).getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION,
-                            EnumConnection.RIGHT);
-                
-                } else if (world.getBlockState(pos.north())
-                        .getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION, EnumConnection.LEFT);
-                }
-                
-                break;
-            }
+        } else if (world.getBlockState(pos.offset(left)).getBlock() == this) {
             
-            case SOUTH : {
-                
-                if (world.getBlockState(pos.west()).getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION,
-                            EnumConnection.RIGHT);
-                
-                } else if (world.getBlockState(pos.east()).getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION, EnumConnection.LEFT);
-                }
-                
-                break;
-            }
-            
-            case WEST : {
-                
-                if (world.getBlockState(pos.north()).getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION,
-                            EnumConnection.RIGHT);
-                
-                } else if (world.getBlockState(pos.south())
-                        .getBlock() == this) {
-                    
-                    state = state.withProperty(CONNECTION, EnumConnection.LEFT);
-                }
-                
-                break;
-            }
+            state = state.withProperty(CONNECTION, EnumConnection.LEFT);
         }
 
         return state;
@@ -204,10 +149,8 @@ public class BlockStairsStraight extends BlockNew {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
-        IBlockState state = this.getDefaultState();
         EnumFacing facing = EnumFacing.getHorizontal(meta);
-        state = state.withProperty(FACING, facing);
-        return state;
+        return this.getDefaultState().withProperty(FACING, facing);
     }
     
     @Override

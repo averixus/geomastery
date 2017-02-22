@@ -9,21 +9,22 @@ import net.minecraft.world.World;
 
 public class EntityArrowSteel extends EntityProjectile {
 
-    private static final double damage = 1.77;
+    /** Damager done by this arrow. */
+    private static final double DAMAGE = 1.77;
     
     public EntityArrowSteel(World world) {
 
-        super(world, damage);
+        super(world, DAMAGE);
     }
 
     public EntityArrowSteel(World world, double x, double y, double z) {
 
-        super(world, x, y, z, damage);
+        super(world, x, y, z, DAMAGE);
     }
 
     public EntityArrowSteel(World world, EntityLivingBase shooter) {
 
-        super(world, shooter, damage);
+        super(world, shooter, DAMAGE);
     }
 
     @Override

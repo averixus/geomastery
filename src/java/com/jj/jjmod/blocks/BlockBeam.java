@@ -38,20 +38,14 @@ public class BlockBeam extends BlockComplexAbstract {
     public static final PropertyEnum<EnumFloor> FLOOR =
             PropertyEnum.<TEBeam.EnumFloor>
             create("floor", TEBeam.EnumFloor.class);
-    public static final PropertyBool NORTH_SIDE =
-            PropertyBool.create("northside");
-    public static final PropertyBool EAST_SIDE =
-            PropertyBool.create("eastside");
-    public static final PropertyBool SOUTH_SIDE =
-            PropertyBool.create("southside");
-    public static final PropertyBool WEST_SIDE =
-            PropertyBool.create("westside");
-    public static final PropertyBool NORTH_END =
-            PropertyBool.create("northend");
-    public static final PropertyBool EAST_END = PropertyBool.create("eastend");
-    public static final PropertyBool SOUTH_END =
-            PropertyBool.create("southend");
-    public static final PropertyBool WEST_END = PropertyBool.create("westend");
+    public static final PropertyBool LEFT = PropertyBool.create("left");
+    public static final PropertyBool RIGHT = PropertyBool.create("right");
+    public static final PropertyBool FRONT = PropertyBool.create("front");
+    public static final PropertyBool BACK = PropertyBool.create("back");
+    public static final PropertyBool FL = PropertyBool.create("fl");
+    public static final PropertyBool FR = PropertyBool.create("fr");
+    public static final PropertyBool BL = PropertyBool.create("bl");
+    public static final PropertyBool BR = PropertyBool.create("br");
         
     public BlockBeam() {
         
@@ -70,6 +64,8 @@ public class BlockBeam extends BlockComplexAbstract {
         return true;
     }
 
+    /** Checks if this block is still a valid part
+     * of a beam structure, removes it if not. */
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos,
             Block block, BlockPos unused) {
@@ -94,20 +90,13 @@ public class BlockBeam extends BlockComplexAbstract {
                 BlockPos posFront = pos.offset(facing);
                 IBlockState stateFront = world.getBlockState(posFront);
                 Block blockFront = stateFront.getBlock();
-                boolean validFront = ModBlocks.HEAVY.contains(blockFront);
-                
-                if (blockFront instanceof IBuildingBlock) {
-                    
-                    IBuildingBlock buildingFront = (IBuildingBlock) blockFront;
-                    validFront = buildingFront.supportsBeam();
-                }
+                boolean validFront = ModBlocks.HEAVY.contains(blockFront) ||
+                        ((blockFront instanceof IBuildingBlock) &&
+                        ((IBuildingBlock) blockFront).supportsBeam());
                 
                 BlockPos posBack = pos.offset(facing.getOpposite());
-                IBlockState stateBack = world.getBlockState(posBack);
-                Block blockBack = stateBack.getBlock();
                 TileEntity tileBack = world.getTileEntity(posBack);
-                boolean validBack = (blockBack == this) &&
-                        (tileBack instanceof TEBeam) &&
+                boolean validBack = (tileBack instanceof TEBeam) &&
                         (((TEBeam) tileBack).getFacing() == facing);  
                 
                 if (!validBack || !validFront) {
@@ -121,19 +110,13 @@ public class BlockBeam extends BlockComplexAbstract {
             case MIDDLE: {
                 
                 BlockPos posFront = pos.offset(facing);
-                IBlockState stateFront = world.getBlockState(posFront);
-                Block blockFront = stateFront.getBlock();
                 TileEntity tileFront = world.getTileEntity(posFront);
-                boolean validFront = (blockFront == this) &&
-                        (tileFront instanceof TEBeam) &&
+                boolean validFront = (tileFront instanceof TEBeam) &&
                         (((TEBeam) tileFront).getFacing() == facing);   
                 
                 BlockPos posBack = pos.offset(facing.getOpposite());
-                IBlockState stateBack = world.getBlockState(posBack);
-                Block blockBack = stateBack.getBlock();
                 TileEntity tileBack = world.getTileEntity(posBack);
-                boolean validBack = (blockBack == this) &&
-                        (tileBack instanceof TEBeam) &&
+                boolean validBack = (tileBack instanceof TEBeam) &&
                         (((TEBeam) tileBack).getFacing() == facing);   
                 
                 if (!validBack || !validFront) {
@@ -147,23 +130,16 @@ public class BlockBeam extends BlockComplexAbstract {
             case BACK: {
                 
                 BlockPos posFront = pos.offset(facing);
-                IBlockState stateFront = world.getBlockState(posFront);
-                Block blockFront = stateFront.getBlock();
                 TileEntity tileFront = world.getTileEntity(posFront);
-                boolean validFront = (blockFront == this) &&
-                        (tileFront instanceof TEBeam) &&
+                boolean validFront = (tileFront instanceof TEBeam) &&
                         (((TEBeam) tileFront).getFacing() == facing);  
                 
                 BlockPos posBack = pos.offset(facing.getOpposite());
                 IBlockState stateBack = world.getBlockState(posBack);
                 Block blockBack = stateBack.getBlock();
-                boolean validBack = ModBlocks.HEAVY.contains(blockBack);
-                
-                if (blockBack instanceof IBuildingBlock) {
-                    
-                    IBuildingBlock buildingBack = (IBuildingBlock) blockBack;
-                    validBack = buildingBack.supportsBeam();
-                }
+                boolean validBack = ModBlocks.HEAVY.contains(blockBack) ||
+                        ((blockBack instanceof IBuildingBlock) &&
+                        ((IBuildingBlock) blockBack).supportsBeam());
                 
                 if (!validBack || !validFront) {
                     
@@ -185,6 +161,7 @@ public class BlockBeam extends BlockComplexAbstract {
         }
     }
     
+    /** If this beam has a floor, removes the floor but leaves the block. */
     @Override
     public boolean removedByPlayer(IBlockState state, World world,
             BlockPos pos, EntityPlayer player, boolean willHarvest) {
@@ -200,37 +177,23 @@ public class BlockBeam extends BlockComplexAbstract {
         TEBeam tileBeam = (TEBeam) tileEntity;
         EnumFloor floor = tileBeam.getFloor();
         
-        // Drops floor and leaves beam behind
-        switch (floor) {
+        if (floor == EnumFloor.NONE) {
             
-            case NONE : {
-             
-                world.setBlockToAir(pos);
+            world.setBlockToAir(pos);
+            
+            if (tileBeam.getPart().shouldDrop()) {
                 
-                if (tileBeam.getPart().shouldDrop()) {
-
-                    spawnAsEntity(world, pos, new ItemStack(tileBeam.getItem()));
-                }
-                
-                return true;
+                spawnAsEntity(world, pos, new ItemStack(tileBeam.getItem()));
             }
             
-            case POLE : {
-
-                spawnAsEntity(world, pos, new ItemStack(EnumFloor.POLE.getItem()));
-                tileBeam.removeFloor();
-                return false;
-            }
+            return true;
+          
+        } else {
             
-            case WOOD : {
-
-                spawnAsEntity(world, pos, new ItemStack(EnumFloor.WOOD.getItem()));
-                tileBeam.removeFloor();
-                return false;
-            }
+            spawnAsEntity(world, pos, new ItemStack(floor.getItem()));
+            tileBeam.removeFloor();
+            return false;
         }
-        
-        return false;
     }
 
     @Override
@@ -249,11 +212,14 @@ public class BlockBeam extends BlockComplexAbstract {
     }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
         
         state = this.getActualState(state, world, pos);
         
-        addCollisionBoxToList(pos, entityBox, list, BEAM[state.getValue(AXIS).ordinal()]);
+        addCollisionBoxToList(pos, entityBox, list,
+                BEAM[state.getValue(AXIS).ordinal()]);
         
         if (state.getValue(FLOOR) != EnumFloor.NONE) {
             
@@ -265,8 +231,7 @@ public class BlockBeam extends BlockComplexAbstract {
     public BlockStateContainer createBlockState() {
 
         return new BlockStateContainer(this, new IProperty[] {AXIS, FLOOR,
-                NORTH_SIDE, EAST_SIDE, SOUTH_SIDE, WEST_SIDE, NORTH_END,
-                EAST_END, SOUTH_END, WEST_END});
+                FRONT, RIGHT, BACK, LEFT, FL, FR, BL, BR});
     }
 
     @Override
@@ -275,29 +240,43 @@ public class BlockBeam extends BlockComplexAbstract {
 
         TileEntity tileEntity = world.getTileEntity(pos);
         
-        if (tileEntity instanceof TEBeam) {
+        if (!(tileEntity instanceof TEBeam)) {
             
-            TEBeam tileBeam = (TEBeam) tileEntity;
+            return state;
+        }
             
-            state = tileBeam.getFloor() == null ? state : state.withProperty(FLOOR, tileBeam.getFloor());
-            state = tileBeam.getFacing() == null ? state : state.withProperty(AXIS,
-                    EnumAxis.get(tileBeam.getFacing()));
-            state = state.withProperty(NORTH_SIDE,
-                    tileBeam.hasSideConnection(EnumFacing.NORTH)); 
-            state = state.withProperty(EAST_SIDE,
-                    tileBeam.hasSideConnection(EnumFacing.EAST));
-            state = state.withProperty(SOUTH_SIDE,
-                    tileBeam.hasSideConnection(EnumFacing.SOUTH));
-            state = state.withProperty(WEST_SIDE,
-                    tileBeam.hasSideConnection(EnumFacing.WEST));
-            state = state.withProperty(NORTH_END,
-                    tileBeam.hasEndConnection(EnumFacing.NORTH));
-            state = state.withProperty(EAST_END,
-                    tileBeam.hasEndConnection(EnumFacing.EAST));
-            state = state.withProperty(SOUTH_END,
-                    tileBeam.hasEndConnection(EnumFacing.SOUTH));
-            state = state.withProperty(WEST_END,
-                    tileBeam.hasEndConnection(EnumFacing.WEST));
+        TEBeam tileBeam = (TEBeam) tileEntity;
+        
+        state = tileBeam.getFloor() == null ?
+                state : state.withProperty(FLOOR, tileBeam.getFloor());
+        state = tileBeam.getFacing() == null ? state : state
+                .withProperty(AXIS, EnumAxis.get(tileBeam.getFacing()));
+        
+        EnumFacing frontFacing = state.getValue(AXIS) == EnumAxis.NS ?
+                EnumFacing.NORTH : EnumFacing.EAST;
+        
+        boolean front = world.getBlockState(pos.offset(frontFacing))
+                .getBlock() instanceof BlockWall;
+        boolean back = world.getBlockState(pos.offset(frontFacing
+                .getOpposite())).getBlock() instanceof BlockWall;
+        
+        state = state.withProperty(FRONT, front);
+        state = state.withProperty(BACK, back);
+        
+        if (state.getValue(FLOOR) != EnumFloor.NONE) {
+            
+            boolean right = world.getBlockState(pos.offset(frontFacing
+                    .rotateY())).getBlock() instanceof BlockWall;
+            boolean left = world.getBlockState(pos.offset(frontFacing
+                    .rotateYCCW())).getBlock() instanceof BlockWall;
+            
+            state = state.withProperty(RIGHT, right);
+            state = state.withProperty(LEFT, left);
+            
+            state = state.withProperty(FL, front && left);
+            state = state.withProperty(FR, front && right);
+            state = state.withProperty(BL, back && left);
+            state = state.withProperty(BR, back && right);
         }
         
         return state;
@@ -314,18 +293,13 @@ public class BlockBeam extends BlockComplexAbstract {
 
         return this.getDefaultState();
     }
-
+    
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos,
-            IBlockState state, EntityPlayer player, EnumHand hand,
-            EnumFacing side, float x, float y, float z) {
+    public boolean activate(EntityPlayer player, World world, int x, int y,
+            int z) {
         
         return false;
     }
-    
-    @Override
-    public void activate(EntityPlayer player, World world, int x, int y,
-            int z) {}
     
     /** Enum defining which axis the Beam structure is aligned on. */
     public enum EnumAxis implements IStringSerializable {
@@ -355,31 +329,6 @@ public class BlockBeam extends BlockComplexAbstract {
             } else {
                 
                 return EW;
-            }
-        }
-        
-        /** @return Whether the given direction is
-         * aligned with this EnumAxis. */
-        public boolean matches(EnumFacing facing) {
-            
-            switch (this) {
-                
-                case NS: {
-                    
-                    return facing == EnumFacing.NORTH ||
-                            facing == EnumFacing.SOUTH;
-                }
-                
-                case EW: {
-                    
-                    return facing == EnumFacing.EAST ||
-                            facing == EnumFacing.WEST;
-                }
-                
-                default: {
-                    
-                    return false;
-                }
             }
         }
     }

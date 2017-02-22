@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IBuildingBlock;
+import com.jj.jjmod.utilities.IMultipart;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -25,15 +26,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Door block. */
 public class BlockDoor extends BlockNew implements IBuildingBlock {
-    
-    /** Supplier for the door item. */
-    private Supplier<Item> item;
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
     public static final PropertyEnum<EnumPart> PART =
             PropertyEnum.<EnumPart>create("part", EnumPart.class);
+    
+    /** Supplier for the door item. */
+    private Supplier<Item> item;
 
     public BlockDoor(String name, Supplier<Item> item) {
         
@@ -73,7 +75,8 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         state = this.getActualState(state, world, pos);
         int facing = state.getValue(FACING).getHorizontalIndex();
@@ -81,20 +84,21 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         boolean open = state.getValue(OPEN);
         
         if (!open) {
-            System.out.println("door closed facing " + facing);
+
             return DOOR_CLOSED[facing];
         }
         
         if (part == EnumPart.LT || part == EnumPart.LB) {
-            System.out.println("door open left facing " + facing);
+
             return DOOR_OPEN_LEFT[facing];
             
         } else {
-            System.out.println("door open right facing " + facing);
+
             return DOOR_OPEN_RIGHT[facing];
         }
     }
     
+    /** Checks position (breaks if invalid) and toggles door open. */
     @Override
     public boolean onBlockActivated(World world, BlockPos thisPos,
             IBlockState thisState, EntityPlayer player, EnumHand hand,
@@ -111,13 +115,14 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         
         thisState = thisState.cycleProperty(OPEN);
         world.setBlockState(thisPos, thisState);
-        world.setBlockState(otherPos,
-                otherState.withProperty(OPEN, thisState.getValue(OPEN)));
+        world.setBlockState(otherPos, otherState
+                .withProperty(OPEN, thisState.getValue(OPEN)));
         world.playEvent(player, thisState.getValue(OPEN) ?
                 1006 : 1012, thisPos, 0);
         return true;
     }
     
+    /** Checks position and breaks if invalid. */
     @Override
     public void neighborChanged(IBlockState thisState, World world,
             BlockPos thisPos, Block block, BlockPos unused) {
@@ -241,8 +246,8 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
                 new IProperty[]{FACING, OPEN, PART});
     }
     
-    /** Enum defining part and position of Door blocks. */
-    public enum EnumPart implements IStringSerializable {
+    /** Enum defining part and position of door blocks. */
+    public enum EnumPart implements IStringSerializable, IMultipart {
         
         SB("sb", false), ST("st", true), RB("rb", false),
         RT("rt", true), LB("lb", false), LT("lt", true);
@@ -262,13 +267,14 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             return this.name;
         }
         
-        /** @return Whether or not this Part is the top of the door. */
+        /** @return Whether or not this part is the top of the door. */
         public boolean isTop() {
             
             return this.isTop;
         }
         
-        /** @return Whether or not this Part should drop its item. */
+        /** @return Whether or not this part should drop its item. */
+        @Override
         public boolean shouldDrop() {
             
             return this.isTop;

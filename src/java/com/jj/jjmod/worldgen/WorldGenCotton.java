@@ -6,7 +6,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Cotton crops. */
+/** WorldGenerator for cotton crops. */
 public class WorldGenCotton extends WorldGenCrop {
 
     public WorldGenCotton(World world, Random rand) {

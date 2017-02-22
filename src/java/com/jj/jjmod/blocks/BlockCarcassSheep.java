@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Sheep Carcass block. */
+/** Sheep carcass block. */
 public class BlockCarcassSheep extends BlockCarcass {
     
     public BlockCarcassSheep() {

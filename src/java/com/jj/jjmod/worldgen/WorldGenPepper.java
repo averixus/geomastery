@@ -6,7 +6,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Pepper crops. */
+/** WorldGenerator for pepper crops. */
 public class WorldGenPepper extends WorldGenCrop {
 
     public WorldGenPepper(World world, Random rand) {

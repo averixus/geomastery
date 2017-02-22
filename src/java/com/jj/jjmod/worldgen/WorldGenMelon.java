@@ -32,7 +32,7 @@ public class WorldGenMelon extends WorldGenCrop {
         
         this.world.setBlockState(crop, this.crop);
         this.world.setBlockState(fruit, ModBlocks.melonFruit.getDefaultState()
-                .withProperty(BlockFruit.STEM, fruitOffset.getOpposite()));
+                .withProperty(BlockFruit.FACING, fruitOffset.getOpposite()));
         return true;
     }
 }

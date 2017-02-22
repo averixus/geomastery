@@ -31,11 +31,11 @@ public class ItemBucket extends ItemJj {
     /** This bucket's contents. */
     private final Block contents;
     /** Supplier for the empty version of this bucket. */
-    private Supplier<Item> empty;
+    private final Supplier<Item> empty;
     /** Supplier for the water filled version of this bucket. */
-    private Supplier<Item> water;
+    private final Supplier<Item> water;
     /** Supplier for the tar filled version of this bucket. */
-    private Supplier<Item> tar;
+    private final Supplier<Item> tar;
 
     public ItemBucket(String name, Block contents, Supplier<Item> empty,
             Supplier<Item> water, Supplier<Item> tar) {
@@ -52,15 +52,13 @@ public class ItemBucket extends ItemJj {
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
 
-        System.out.println("on item right click");
         ItemStack stack = player.getHeldItem(hand);
-        System.out.println("item held in " + hand + " " + stack);
         boolean empty = this.contents == Blocks.AIR;
         RayTraceResult rayTrace = this.rayTrace(world, player, empty);
 
         if (world.isRemote || rayTrace == null ||
                 rayTrace.typeOfHit != RayTraceResult.Type.BLOCK) {
-            System.out.println("remote or no target");
+
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
         }
 
@@ -70,23 +68,24 @@ public class ItemBucket extends ItemJj {
 
         // Try to fill with targeted liquid
         if (empty) {
-            System.out.println("this bucket empty");
+
             if ((material == Material.WATER || material == BlockMaterial.TAR) &&
                     (state.getValue(BlockLiquid.LEVEL)) == 0) {
-                System.out.println("targeted tar or water");
+
                 ItemStack full = new ItemStack(material == Material.WATER ?
                         this.water.get() : this.tar.get());
-                System.out.println("full version item " + full);
                 
                 if (hand == EnumHand.OFF_HAND) {
                     
-                 //   player.setHeldItem(EnumHand.OFF_HAND, full);
-                    world.setBlockState(posTarget, Blocks.AIR.getDefaultState(), 11);
+                    world.setBlockState(posTarget,
+                            Blocks.AIR.getDefaultState(), 11);
                     player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1, 1);
-                    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, full);
+                    return new ActionResult<ItemStack>
+                            (EnumActionResult.SUCCESS, full);
                 }
+                
                  if (ContainerInventory.add(player, full).isEmpty()) {
-                     System.out.println("added to inventory, setting state");
+
                      world.setBlockState(posTarget,
                              Blocks.AIR.getDefaultState(), 11);
                      player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1, 1);
@@ -96,14 +95,16 @@ public class ItemBucket extends ItemJj {
             }
 
         } else {
-            System.out.println("this bucket full");
-            boolean replaceable = state.getBlock().isReplaceable(world, posTarget);
+
+            boolean replaceable = state.getBlock()
+                    .isReplaceable(world, posTarget);
             BlockPos posPlace = replaceable && rayTrace.sideHit == EnumFacing.UP
                     ? posTarget : posTarget.offset(rayTrace.sideHit);
-            replaceable = world.getBlockState(posPlace).getBlock().isReplaceable(world, posPlace);
-            System.out.println(" replaceable? " + replaceable + " material not liquid? " + !material.isLiquid());
+            replaceable = world.getBlockState(posPlace).getBlock()
+                    .isReplaceable(world, posPlace);
+
             if (replaceable && !material.isLiquid()) {
-                System.out.println("can place at location");
+
                 world.destroyBlock(posPlace, true);
                 player.playSound(SoundEvents.ITEM_BUCKET_EMPTY, 1, 1);
                 world.setBlockState(posPlace,

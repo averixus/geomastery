@@ -10,12 +10,13 @@ import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
-/** Melon stem Crop block. */
+/** Melon stem crop block. */
 public class BlockCropBlockfruitMelon extends BlockCropBlockfruit {
     
     public BlockCropBlockfruitMelon() {
         
-        super("melon_crop", 0.4F, 0.2F, () -> ModBlocks.melonFruit);
+        super("melon_crop", 0.4F, 0.2F, () -> ModBlocks.melonFruit,
+                () -> ModItems.seedMelon);
     }
 
     @Override

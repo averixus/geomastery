@@ -15,52 +15,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** Container slot for EntityEquipmentSlots. */
 public class SlotArmour extends Slot {
 
-    public EntityEquipmentSlot type;
-    public EntityPlayer player;
-    public InventoryPlayer playerInv;
-    private String texture;
+    /** The equipment type of this slot. */
+    private final EntityEquipmentSlot type;
+    /** The player inventory for this slot. */
+    private final InventoryPlayer playerInv;
 
-    public SlotArmour(InventoryPlayer playerInv, EntityPlayer player, int x,
+    public SlotArmour(InventoryPlayer playerInv, int x,
             int y, EntityEquipmentSlot type) {
 
         super(null, 0, x, y);
         this.type = type;
-        this.player = player;
         this.playerInv = playerInv;
     }
     
     @Override
     @SideOnly(Side.CLIENT)
     public String getSlotTexture() {
-        
-        /*switch (this.type) {
 
-            case HEAD: {
-                
-                return "minecraft:items/empty_armor_slot_helmet";
-            }
-
-            case CHEST: {
-                
-                return "minecraft:items/empty_armor_slot_chestplate";
-            }
-
-            case LEGS: {
-                
-                return "minecraft:items/empty_armor_slot_leggings";
-            }
-            
-            case FEET: {
-                
-                return "minecraft:items/empty_armor_slot_boots";
-            }
-            
-            default: {
-                
-                return null;
-            }
-        }*/
-        
         return this.type.getSlotType() == Type.ARMOR ?
                 ItemArmor.EMPTY_SLOT_NAMES[this.type.getIndex()] : null;
     }
@@ -91,7 +62,8 @@ public class SlotArmour extends Slot {
 
         } else {
 
-            return stack.getItem().isValidArmor(stack, this.type, this.player);
+            return stack.getItem().isValidArmor(stack,
+                    this.type, this.playerInv.player);
         }
     }
 

@@ -29,6 +29,10 @@ public abstract class ItemBedAbstract extends ItemJj {
         super(name, 1, CreativeTabs.DECORATIONS);
         this.bedBlock = bedBlock;
     }
+    
+    /** Place this item's bed block and TE with damage if needed. */
+    protected abstract void placeBed(World world, BlockPos foot, BlockPos head,
+            EnumFacing facing, int usesLeft);
 
     /** Builds a bed structure. */
     @Override
@@ -91,8 +95,4 @@ public abstract class ItemBedAbstract extends ItemJj {
         
         return EnumActionResult.SUCCESS;
     }
-
-    /** Place this item's bed block and TE with damage if needed. */
-    protected abstract void placeBed(World world, BlockPos foot, BlockPos head,
-            EnumFacing facing, int usesLeft);
 }

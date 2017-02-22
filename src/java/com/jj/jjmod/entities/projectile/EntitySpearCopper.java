@@ -9,26 +9,28 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntitySpearCopper extends EntityProjectile {
-
-    public int durability = 0;
     
-    private static final double damage = 8D;
+    /** Damage done by this spear. */
+    private static final double DAMAGE = 8D;
+    
+    /** Durability of this spear's item. */
+    private int durability = 0;
 
     public EntitySpearCopper(World world) {
 
-        super(world, damage);
+        super(world, DAMAGE);
     }
 
     public EntitySpearCopper(World world, EntityLivingBase thrower,
             int durability) {
 
-        super(world, thrower, damage);
+        super(world, thrower, DAMAGE);
         this.durability = durability;
     }
 
     public EntitySpearCopper(World world, double x, double y, double z) {
 
-        super(world, x, y, z, damage);
+        super(world, x, y, z, DAMAGE);
     }
 
     @Override

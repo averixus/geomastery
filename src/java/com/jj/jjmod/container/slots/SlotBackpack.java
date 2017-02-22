@@ -10,17 +10,19 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-/** Container slot for Backpack. */
+/** Container slot for backpack. */
 public class SlotBackpack extends Slot {
     
-    private ICapPlayer capability;
+    /** The player capability of this slot. */
+    private ICapPlayer playerCap;
+    /** The player who owns this slot. */
     private EntityPlayer player;
     
     public SlotBackpack(EntityPlayer player, int x, int y) {
         
         super(null, 0, x, y);
         this.player = player;
-        this.capability = player.getCapability(ModCapabilities.CAP_PLAYER,
+        this.playerCap = player.getCapability(ModCapabilities.CAP_PLAYER,
                 null);
         this.backgroundName = "jjmod:gui/backpack_slot";
     }
@@ -40,20 +42,20 @@ public class SlotBackpack extends Slot {
     @Override
     public ItemStack getStack() {
         
-        return this.capability.getBackpack();
+        return this.playerCap.getBackpack();
     }
     
     @Override
     public void putStack(ItemStack stack) {
         
-        this.capability.putBackpack(stack);
+        this.playerCap.putBackpack(stack);
         this.onSlotChanged();
     }
     
     @Override
     public void onSlotChanged() {
         
-        ((ContainerInventory) this.player.inventoryContainer).refresh();
+        ContainerInventory.refresh(this.player);
     }
     
     @Override
@@ -66,7 +68,7 @@ public class SlotBackpack extends Slot {
     @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.capability.getBackpack().splitStack(amount);
+        return this.playerCap.getBackpack().splitStack(amount);
     }
     
     @Override

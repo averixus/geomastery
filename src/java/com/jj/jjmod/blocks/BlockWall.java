@@ -32,10 +32,12 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     public static final PropertyBool EAST = PropertyBool.create("east");
     public static final PropertyBool SOUTH = PropertyBool.create("south");
     public static final PropertyBool WEST = PropertyBool.create("west");
-    public static final PropertyEnum POSITION =
+    public static final PropertyEnum<EnumPosition> POSITION =
             PropertyEnum.create("position", EnumPosition.class);
-    public static final PropertyEnum STRAIGHT =
+    public static final PropertyEnum<EnumStraight> STRAIGHT =
             PropertyEnum.create("straight", EnumStraight.class);
+    
+    protected static final int maxTypeHeight = 6;
     
     /** Whether this wall is the double form. */
     protected final boolean isDouble;
@@ -43,7 +45,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     protected final boolean isHeavy;
     /** The maximum height of this wall. */
     protected final int selfHeight;
-    /** Whether this wall supports Beams. */
+    /** Whether this wall supports beams. */
     protected final boolean supportsBeam;
     
     /** Supplier for the wall item. */
@@ -211,7 +213,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         boolean sameType = block instanceof IBuildingBlock &&
                 ((IBuildingBlock) block).isDouble() == this.isDouble;
         
-        while (sameType && height <= 6 + 1) {
+        while (sameType && height <= maxTypeHeight + 1) {
             
             height++;
             pos = pos.down();
@@ -220,7 +222,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
                     ((IBuildingBlock) block).isDouble() == this.isDouble;
         }
         
-        return height <= 6;
+        return height <= maxTypeHeight;
     }
     
     /** @return Whether this is within its own allowed height. */
@@ -251,6 +253,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
         return belowTypeHeight && belowSelfHeight && foundation;
     }
     
+    /** Check position and break if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block blockIn, BlockPos unused) {
@@ -306,21 +309,28 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
                 
         if (this.isDouble) {
             
             return FULL_BLOCK_AABB;
 
         } else {
+            
             state = this.getActualState(state, world, pos);
-            EnumPosition position = this.getActualState(state, world, pos).<EnumPosition>getValue(POSITION);
-            return position == EnumPosition.TOP || position == EnumPosition.LONE ? CENTRE_POST_LOW : CENTRE_POST;
+            EnumPosition position = this.getActualState(state, world, pos)
+                    .getValue(POSITION);
+            return position == EnumPosition.TOP ||
+                    position == EnumPosition.LONE ?
+                    CENTRE_POST_LOW : CENTRE_POST;
         }
     }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+    public void addCollisionBoxToList(IBlockState state, World worldIn,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
         
         state = this.getActualState(state, worldIn, pos);
         
@@ -330,7 +340,8 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
             return;
         }
         
-        if (state.getValue(POSITION) == EnumPosition.TOP || state.getValue(POSITION) == EnumPosition.LONE) {
+        if (state.getValue(POSITION) == EnumPosition.TOP ||
+                state.getValue(POSITION) == EnumPosition.LONE) {
         
             addCollisionBoxToList(pos, entityBox, list, CENTRE_POST_LOW);
             

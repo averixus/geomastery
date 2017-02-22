@@ -38,35 +38,47 @@ import net.minecraft.world.biome.Biome;
 public class DefaultCapPlayer implements ICapPlayer {
     
     // Constants
+    /** Ticks the player stays wet for after being in water. */
     private static final int WATER_MAX = 3600;
+    /** Ticks between taking damage from temperature. */
     private static final int DAMAGE_MAX = 200;
-    
+    /** Multiplier to convert actual speed to scaled value. */
     private static final float SPEED_MODIFIER = 43F;
+    /** Default walk speed actual value. */
     private static final float DEFAULT_SPEED = 4.3F;
-    
+    /** Inventory slots in a row. */
     private static final int ROW_LENGTH = 9;
+    /** Hunger cost of sleeping. */
+    private static final int SLEEP_COST = 6;
     
-    // Player
+    /** The player this capability belongs to. */
     public EntityPlayer player;
     
-    // Temperature
+    /** Ticks since temperature damage. */
     private int damageTimer = 0;
+    /** Ticks since wet. */
     private int wetTimer = 0;
+    /** Temperature stage. */
     private TempStage tempStage = TempStage.OK;
     
-    // Inventory
+    /** Backpack slot. */
     private ItemStack backpack = ItemStack.EMPTY;
+    /** Yoke slot. */
     private ItemStack yoke = ItemStack.EMPTY;
     
-    // Food
+    /** Carbs food values. */
     private FoodStatsPartial carbs;
+    /** Protein food values. */
     private FoodStatsPartial protein;
+    /** Fruit/veg food values. */
     private FoodStatsPartial fruitveg;
-    // Convenience collections
+    /** Convenience map of food types onto associated food stats. */
     private final Map<FoodType, FoodStatsPartial> typesMap = Maps.newHashMap();
+    /** Convenience list of food stats. */
     private final List<FoodStatsPartial> typesList = Lists.newArrayList();
+    /** Comparator to sort foodstats in order of total fullness. */
     private final Comparator<FoodStatsPartial> comparator =
-            (a, b) -> Math.round(Math.signum(b.getFullness() - a.getFullness()));
+            (a, b) -> Math.round(b.getFullness() - a.getFullness());
     
     public DefaultCapPlayer(EntityPlayer player) {
 
@@ -206,7 +218,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                 this.player.heal(healAmount);
             }
             
-            food.setFoodLevel(Math.max(food.getFoodLevel() - 6, 0));
+            food.setFoodLevel(Math.max(food.getFoodLevel() - SLEEP_COST, 0));
         }
     }
     
@@ -240,7 +252,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
     }
     
-    /** Calculate the player's temperature based on all factors.
+    /** Calculate the player's temperature.
      * @return Whether the TempStage has changed. */
     private boolean tickTemperature() {
         
@@ -351,8 +363,8 @@ public class DefaultCapPlayer implements ICapPlayer {
                     
                     ItemArmor armor = (ItemArmor) stack.getItem();
                     
-                    if (armor.getArmorMaterial() == EquipMaterial.WOOL_APPAREL ||
-                            armor.getArmorMaterial() ==
+                    if (armor.getArmorMaterial() == EquipMaterial.WOOL_APPAREL
+                            || armor.getArmorMaterial() ==
                             EquipMaterial.FUR_APPAREL) {
 
                         clothesVar += 0.5;

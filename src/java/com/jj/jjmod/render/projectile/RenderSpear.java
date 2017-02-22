@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderSpear extends Render<EntityArrow> {
 
+    /** Texture of this spear. */
     private final ResourceLocation texture;
 
     RenderSpear(RenderManager renderManager, ResourceLocation texture) {

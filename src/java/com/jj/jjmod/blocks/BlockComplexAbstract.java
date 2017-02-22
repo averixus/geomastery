@@ -27,60 +27,66 @@ import net.minecraft.world.World;
 public abstract class BlockComplexAbstract extends BlockNew
         implements ITileEntityProvider {
 
-    protected static final AxisAlignedBB FLAT_BOUNDS
-            = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
-
     public BlockComplexAbstract(String name, Material material,
             float hardness, ToolType harvestTool) {
 
         super(material, name, null, hardness, harvestTool);
     }
 
+    /** All implementations have to override this. Activates TileEntitiy/GUI. */
+    public abstract boolean activate(EntityPlayer player, World world, int x,
+            int y, int z);
+    
+    /** All implementations have to override this.
+     * Checks whether this block is still in a valid position
+     * and/or part of a valid structure, breaks if not. */
+    @Override
+    public abstract void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused);
+
+    /** All implementations have to override this.
+     * @return Highlight bounding box of complex-shaped block. */
+    @Override
+    public abstract AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos);
+
+    /** All implementations have to override this.
+     * @return BlockStateContainer of all needed properties. */
+    @Override
+    public abstract BlockStateContainer createBlockState();
+
+    /** All implementations have to override this.
+     * @return Actual state using TileEntity and position data. */
+    @Override
+    public abstract IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos);
+
+    /** All implementations have to override this. Needed for blockstates. */
+    @Override
+    public abstract int getMetaFromState(IBlockState state);
+
+    /** All implementations have to override this. Needed for blockstates. */
+    @Override
+    public abstract IBlockState getStateFromMeta(int meta);
+
+    /** Cancel normal ItemBlock drop. */
     @Override
     public Item getItemDropped(IBlockState state, Random rand,
             int fortune) {
         
         return Items.AIR;
     }
-
-    @Override
-    public abstract void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused);
-
-    @Override
-    public abstract AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos);
-
-    @Override
-    public abstract BlockStateContainer createBlockState();
-
-    @Override
-    public abstract IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos);
-
-    @Override
-    public abstract int getMetaFromState(IBlockState state);
-
-    @Override
-    public abstract IBlockState getStateFromMeta(int meta);
-
-    /** Activates TileEntitiy/GUI. */
-    public abstract void activate(EntityPlayer player, World world, int x,
-            int y, int z);
-
+    
+    /** Convenience to activate TileEntity/GUI. */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
 
-        if (!world.isRemote) {
-
-            this.activate(player, world, pos.getX(), pos.getY(), pos.getZ());
-        }
-
-        return true;
+        return this.activate(player, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
+    /** Always remove any TileEntity and drop contents. */
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
 
@@ -94,14 +100,6 @@ public abstract class BlockComplexAbstract extends BlockNew
 
         super.breakBlock(world, pos, state);
         world.removeTileEntity(pos);
-    }
-    
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return this.blockMaterial.isSolid() ?
-                this.getBoundingBox(state, world, pos) : NULL_AABB;
     }
 
     @Override

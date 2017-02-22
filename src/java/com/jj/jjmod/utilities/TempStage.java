@@ -7,6 +7,7 @@ public enum TempStage {
     
     COLD("cold"), COOL("cool"), OK("ok"), WARM("warm"), HOT("hot");
     
+    /** Texture of this icon. */
     private ResourceLocation res;
     
     private TempStage(String name) {

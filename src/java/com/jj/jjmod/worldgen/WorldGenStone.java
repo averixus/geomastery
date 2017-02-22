@@ -12,12 +12,18 @@ import net.minecraft.world.World;
 /** Abstract superclass for WorldGenerators replacing Stone blocks. */
 public abstract class WorldGenStone extends WorldGenAbstract {
 
+    /** Predicate for blocks this generator replaces. */
     protected Predicate<IBlockState> predicate =
             BlockMatcher.forBlock(Blocks.STONE);
+    /** State of the block to generate. */
     protected IBlockState state;
+    /** Minimum y co-ordinate to generate at. */
     protected int minHeight;
+    /** Maximum y co-ordinate to generate at. */
     protected int maxHeight;
+    /** Number of veins to generate per chunk. */
     protected int veinCount;
+    /** Chance of generating each vein. */
     protected double veinChance;
 
     public WorldGenStone(World world, Random rand, IBlockState state,
@@ -30,6 +36,12 @@ public abstract class WorldGenStone extends WorldGenAbstract {
         this.veinCount = veinCount;
         this.veinChance = veinChance;
     }
+    
+    /** @return The size of a single vein of this block. */
+    protected abstract int getVeinSize();
+
+    /** @return Whether a single block in a vein should be generated or not. */
+    protected abstract boolean shouldGenBlock();
 
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
@@ -119,9 +131,9 @@ public abstract class WorldGenStone extends WorldGenAbstract {
                                     IBlockState state =
                                             this.world.getBlockState(blockpos);
                                     
-                                    if (state.getBlock()
-                                            .isReplaceableOreGen(state,
-                                            this.world, blockpos, predicate)) {
+                                    if (state.getBlock().isReplaceableOreGen(
+                                            state, this.world,
+                                            blockpos, this.predicate)) {
 
                                         if (this.shouldGenBlock()) {
 
@@ -137,10 +149,4 @@ public abstract class WorldGenStone extends WorldGenAbstract {
             }
         }
     }
-
-    /** @return The size of a single vein of this block. */
-    protected abstract int getVeinSize();
-
-    /** @return Whether a single block in a vein should be generated or not. */
-    protected abstract boolean shouldGenBlock();
 }

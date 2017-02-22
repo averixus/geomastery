@@ -13,28 +13,30 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** Packet to update the player's Food levels on the Client. */
 public class FoodPacketClient implements IMessage {
     
-    protected int type;
+    /** The food type. */
+    protected FoodType type;
+    /** The hunger level. */
     protected int hunger;
     
     public FoodPacketClient() {}
     
     public FoodPacketClient(FoodType type, int hunger) {
         
-        this.type = type.ordinal();
+        this.type = type;
         this.hunger = hunger;
     }
     
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        this.type = buf.readInt();
+        this.type = FoodType.values()[buf.readInt()];
         this.hunger = buf.readInt();
     }
     
     @Override
     public void toBytes(ByteBuf buf) {
         
-        buf.writeInt(this.type);
+        buf.writeInt(this.type.ordinal());
         buf.writeInt(this.hunger);
     }
     
@@ -62,8 +64,7 @@ public class FoodPacketClient implements IMessage {
             EntityPlayer player = Minecraft.getMinecraft().player;
             ((DefaultCapPlayer) player.getCapability(ModCapabilities
                     .CAP_PLAYER, null))
-                    .processFoodMessage(FoodType.values()[message.type],
-                    message.hunger);
+                    .processFoodMessage(message.type, message.hunger);
         }
     }
 }

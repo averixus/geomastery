@@ -10,19 +10,21 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Gui for Furnace devices */
+/** Gui for furnace devices */
 public class GuiFurnace extends GuiContainerAbstract {
 
     /** Correctly cast reference to the furnace container. */
     private final ContainerFurnaceAbstract container;
+    /** Texture of this gui. */
     private final ResourceLocation texture;
 
     public GuiFurnace(ContainerFurnaceAbstract container, String name) {
 
         super(container, name);
         this.container = container;
-        this.texture = new ResourceLocation("jjmod:textures/gui/furnace" + this.container.size +
-                "_" + this.container.capability.getInventoryRows() + ".png");
+        this.texture = new ResourceLocation("jjmod:textures/gui/furnace" +
+                this.container.size + "_" +
+                this.container.capability.getInventoryRows() + ".png");
     }
 
     @Override
@@ -46,9 +48,11 @@ public class GuiFurnace extends GuiContainerAbstract {
 
         int cookSpent = this.container.furnace.getCookSpent();
         int cookEach = this.container.furnace.getCookEach();
-        int arrowLength = cookSpent != 0 && cookEach != 0 ? cookSpent * ARROW_LENGTH / cookEach : 0;
-        this.drawTexturedModalRect(this.guiLeft + this.container.arrowX, this.guiTop +
-                this.container.arrowY, ARROW_SOURCE_X, ARROW_SOURCE_Y,arrowLength + 1, ARROW_HEIGHT);
+        int arrowLength = cookSpent != 0 && cookEach != 0 ?
+                cookSpent * ARROW_LENGTH / cookEach : 0;
+        this.drawTexturedModalRect(this.guiLeft + this.container.arrowX,
+                this.guiTop + this.container.arrowY, ARROW_SOURCE_X,
+                ARROW_SOURCE_Y, arrowLength + 1, ARROW_HEIGHT);
     }
 
     @Override

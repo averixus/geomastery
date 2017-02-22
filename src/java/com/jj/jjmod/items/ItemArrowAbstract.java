@@ -16,7 +16,7 @@ public abstract class ItemArrowAbstract extends ItemArrow {
         ItemJj.setupItem(this, name, 10, CreativeTabs.COMBAT);
     }
     
-    /** Create an EntityProjectile arrow of this type. */
+    /** Creates an EntityProjectile arrow of this type. */
     @Override
     public abstract EntityProjectile createArrow(World world, ItemStack stack,
             EntityLivingBase shooter);

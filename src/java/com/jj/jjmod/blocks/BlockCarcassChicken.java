@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Chicken Carcass block. */
+/** Chicken carcass block. */
 public class BlockCarcassChicken extends BlockCarcass {
     
     public BlockCarcassChicken() {
@@ -26,5 +26,4 @@ public class BlockCarcassChicken extends BlockCarcass {
         spawnAsEntity(world, pos, new ItemStack(Items.BONE));
         spawnAsEntity(world, pos, new ItemStack(Items.FEATHER));
     }
-
 }

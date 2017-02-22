@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Tin Ore. */
+/** WorldGenerator for tin ore. */
 public class WorldGenTin extends WorldGenStone {
 
     public WorldGenTin(World world, Random rand) {
@@ -16,10 +16,10 @@ public class WorldGenTin extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        int rand1 = this.rand.nextInt(2) + 1;
-        int rand2 = this.rand.nextInt(2) + 1;
+        int rand1 = this.rand.nextInt(2);
+        int rand2 = this.rand.nextInt(2);
 
-        return rand1 + rand2 - 1;
+        return rand1 + rand2 + 1;
     }
 
     @Override

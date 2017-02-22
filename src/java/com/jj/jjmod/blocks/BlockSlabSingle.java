@@ -51,6 +51,7 @@ public class BlockSlabSingle extends BlockNew {
         return natural || built;
     }
     
+    /** Check position and break if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {

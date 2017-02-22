@@ -4,7 +4,7 @@ import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Sapphire Lode. */
+/** WorldGenerator for sapphire lode. */
 public class WorldGenSapphire extends WorldGenStone {
 
     public WorldGenSapphire(World world, Random rand) {

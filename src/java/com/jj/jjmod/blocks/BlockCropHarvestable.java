@@ -17,10 +17,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Abstract superclass for growable harvestable Crop blocks. */
+/** Abstract superclass for growable harvestable crop blocks. */
 public abstract class BlockCropHarvestable extends BlockCropAbstract {
     
-    /** Maximum permitted height for this Crop. */
+    /** Maximum permitted height for this crop. */
     protected int maxHeight;
 
     public BlockCropHarvestable(String name, int maxHeight,
@@ -43,42 +43,30 @@ public abstract class BlockCropHarvestable extends BlockCropAbstract {
         super.grow(world, pos, state, rand);
     }
     
+    /** Harvests the crop's items if full grown. */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
         
-        if (!this.canStay(world, pos, state)) {
+        int age = state.getValue(AGE);
+        
+        if (!this.canStay(world, pos, state) || age != 7) {
             
             world.setBlockToAir(pos);
             return false;
         }
+            
+        IBlockState newState = state.withProperty(AGE, 0);
+        world.setBlockState(pos, newState);
         
-        int age = state.getValue(AGE);
-        
-        if (age != 7) {
+        if (!world.isRemote) {
             
-            return false;
-            
-        } else {
-            
-            IBlockState newState = state.withProperty(AGE, 0);
-            world.setBlockState(pos, newState);
-            
-            if (!world.isRemote) {
-                
-                spawnAsEntity(world, pos, ItemJj.newStack(this.cropRef.get(), this.yieldRef.apply(world.rand), world));
-            }
-            
-            return true;
+            spawnAsEntity(world, pos, ItemJj.newStack(this.cropRef.get(),
+                    this.yieldRef.apply(world.rand), world));
         }
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
         
-        return FULL_BLOCK_AABB;
+        return true;
     }
     
     @Override

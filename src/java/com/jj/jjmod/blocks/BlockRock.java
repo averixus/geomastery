@@ -5,9 +5,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
+/** Simple rock block. */
 public class BlockRock extends BlockNew {
 
-    /** Simple Rock block. */
     public BlockRock(String name, float hardness) {
 
         super(Material.ROCK, name, hardness, ToolType.PICKAXE);

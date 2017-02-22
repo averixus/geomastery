@@ -36,16 +36,16 @@ public class ItemEdible extends ItemFood {
         return this.type;
     }
     
-    /** Starts eating this item if its type is not full. */
+    /** Starts eating this item if its food type is not full. */
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
         
         ItemStack stack = player.getHeldItem(hand);
-        ICapPlayer capability = player
+        ICapPlayer playerCap = player
                 .getCapability(ModCapabilities.CAP_PLAYER, null);
 
-        if (capability.canEat(this.type)) {
+        if (playerCap.canEat(this.type)) {
 
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

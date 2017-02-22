@@ -8,8 +8,11 @@ import net.minecraft.item.ItemStack;
 /** Object to store and interact with a particular InventoryPlayer slot. */
 public class InvLocation {
     
+    /** The inventory type of this location. */
     private InvType type;
+    /** The index of this location. */
     private int index;
+    /** The player of this location. */
     private EntityPlayer player;
     
     public InvLocation(EntityPlayer player, InvType type, int index) {
@@ -19,19 +22,19 @@ public class InvLocation {
         this.index = index;
     }
     
-    /** @return The InvType of this InvLocation. */
+    /** @return The InvType of this location. */
     public InvType getType() {
         
         return this.type;
     }
     
-    /** @return The index of this InvLocation. */
+    /** @return The index of this location. */
     public int getIndex() {
         
         return this.index;
     }
     
-    /** Puts the given stack in this InvLocation. */
+    /** Puts the given stack in this location. */
     public void putStack(ItemStack stack) {
         
         List<ItemStack> inv = new ArrayList<ItemStack>();
@@ -67,7 +70,7 @@ public class InvLocation {
         }
     }
     
-    /** @return The ItemStack in this InvLocation. */
+    /** @return The ItemStack in this location. */
     public ItemStack getStack() {
         
         List<ItemStack> inv = new ArrayList<ItemStack>();
@@ -104,7 +107,7 @@ public class InvLocation {
     }
     
     /** Check for invalid slots.
-     *  @return Whether this object refers to a valid InvLocation. */
+     *  @return Whether this object refers to a valid location. */
     public boolean isValid() {
         
         List<ItemStack> inv = new ArrayList<ItemStack>();

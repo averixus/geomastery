@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Copper Ore. */
+/** WorldGenerator for copper ore. */
 public class WorldGenCopper extends WorldGenStone {
 
     public WorldGenCopper(World world, Random rand) {
@@ -17,10 +17,10 @@ public class WorldGenCopper extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        int rand1 = this.rand.nextInt(5) + 1;
-        int rand2 = this.rand.nextInt(5) + 1;
+        int rand1 = this.rand.nextInt(5);
+        int rand2 = this.rand.nextInt(5);
 
-        return rand1 + rand2 - 1;
+        return rand1 + rand2 + 1;
     }
 
     @Override

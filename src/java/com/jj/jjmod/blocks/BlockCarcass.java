@@ -20,15 +20,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Abstract superclass for Carcass blocks. */
+/** Abstract superclass for carcass blocks. */
 public abstract class BlockCarcass extends BlockNew
         implements ITileEntityProvider {
     
-    protected static final AxisAlignedBB HALF_BOUNDS =
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
-    
-    /** Shelf life of this Carcass in days. */
-    private int shelfLife;
+    /** Shelf life of this carcass in days. */
+    protected int shelfLife;
     /** Supplier for the dropped item. */
     protected Supplier<ItemCarcassDecayable> item;
 
@@ -40,7 +37,11 @@ public abstract class BlockCarcass extends BlockNew
         this.item = item;
     }
     
-    /** @return The shelf life of this Carcass in days. */
+    /** Spawns the knife harvest drops for this carcass. */
+    protected abstract void spawnDrops(World world,
+            BlockPos pos, long birthTime);
+    
+    /** @return The shelf life of this carcass in days. */
     public int getShelfLife() {
         
         return this.shelfLife;
@@ -50,9 +51,11 @@ public abstract class BlockCarcass extends BlockNew
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        return HALF_BOUNDS;
+        return EIGHT;
     }
     
+    /** Breaks this block and drops carcass item or
+     * food items according to harvesting tool. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
@@ -66,7 +69,8 @@ public abstract class BlockCarcass extends BlockNew
             
         } else {
 
-            spawnAsEntity(world, pos, ItemJj.newStack(this.item.get(), 1, world));
+            spawnAsEntity(world, pos, ItemJj
+                    .newStack(this.item.get(), 1, world));
         }
     }
     
@@ -75,7 +79,4 @@ public abstract class BlockCarcass extends BlockNew
 
         return new TECarcass();
     }
-    
-    /** Spawns the knife harvest drops for this Carcass. */
-    protected abstract void spawnDrops(World world, BlockPos pos, long birthTime);
 }

@@ -17,7 +17,7 @@ public class Main {
     public static final String NAME = "JJ Mod";
 
     @SidedProxy(clientSide = "com.jj.jjmod.main.ClientProxy",
-            serverSide = "com.jj.jjmod.main.ServerProxy")
+            serverSide = "com.jj.jjmod.main.CommonProxy")
     public static CommonProxy proxy;
 
     @Instance
@@ -27,20 +27,20 @@ public class Main {
     public void preInit(FMLPreInitializationEvent e) {
         
         // Read config, create + register blocks/items/etc
-        proxy.preInit(e);
+        proxy.preInit();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent e) {
         
         // Data structures, crafting recipes, register handler
-        proxy.init(e);
+        proxy.init();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
 
         // Communicate with other mods
-        proxy.postInit(e);
+        proxy.postInit();
     }
 }

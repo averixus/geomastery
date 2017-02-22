@@ -18,9 +18,9 @@ import net.minecraft.world.World;
 public class ItemWall extends ItemJj {
     
     /** Single wall block. */
-    private Block singleWall;
+    private final Block singleWall;
     /** Double wall block. */
-    private Block doubleWall;
+    private final Block doubleWall;
 
     public ItemWall(String name, int stackSize, Block single, Block duble) {
         

@@ -44,6 +44,7 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
         return true;
     }
     
+    /** Checks conditions required to place block. */
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
         
@@ -63,6 +64,7 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
         return count >= 2;
     }
     
+    /** Checks position and breaks if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block blockIn, BlockPos unused) {

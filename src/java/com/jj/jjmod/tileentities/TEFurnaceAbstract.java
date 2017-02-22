@@ -14,7 +14,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
-/** Abstract superclass TileEntity for Furnace blocks. */
+/** Abstract superclass TileEntity for furnace blocks. */
 public abstract class TEFurnaceAbstract extends TileEntity
         implements ITickable {
 
@@ -143,13 +143,13 @@ public abstract class TEFurnaceAbstract extends TileEntity
         this.outputs.set(index, stack);
     }
 
-    /** @return Whether this Furnace is currently heating. */
+    /** @return Whether this furnace is currently heating. */
     public boolean isHeating() {
 
         return true;
     }
     
-    /** @return Whether this Furnace is currently using fuel. */
+    /** @return Whether this furnace is currently using fuel. */
     public boolean isUsingFuel() {
         
         return this.fuelLeft > 0;

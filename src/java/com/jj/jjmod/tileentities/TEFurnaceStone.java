@@ -1,17 +1,7 @@
 package com.jj.jjmod.tileentities;
 
-import javax.annotation.Nullable;
-
-import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModRecipes;
-import com.jj.jjmod.container.ContainerFurnaceSingle;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -19,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 
-/** TileEntity for Stone Furnace blocks. */
+/** TileEntity for stone furnace blocks. */
 public class TEFurnaceStone extends TEFurnaceAbstract {
 
     /** This block's horizontal facing. */
@@ -32,27 +22,27 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         super(ModRecipes.STONE, 6);
     }
 
-    /** Sets this Stone Furnace block to the given information. */
+    /** Sets this stone furnace block to the given information. */
     public void setState(EnumFacing facing, EnumPartStone part) {
 
         this.facing = facing;
         this.part = part;
     }
 
-    /** @return The EnumFacing state of this Stone Furnace block. */
+    /** @return The EnumFacing state of this stone furnace block. */
     public EnumFacing getFacing() {
 
         return this.facing;
     }
 
-    /** @return The EnumPartStone state of this Stone Furnace block. */
+    /** @return The EnumPartStone state of this stone furnace block. */
     public EnumPartStone getPart() {
 
         return this.part;
     }
 
     /** @return The position of the master
-     * block for this Stone Furnace structure. */
+     * block for this stone furnace structure. */
     public BlockPos getMaster() {
 
         switch (this.part) {
@@ -113,14 +103,14 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         this.part = EnumPartStone.values()[compound.getInteger("part")];
     }
     
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
    @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -128,7 +118,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-   /** Require to update rendering on the Client. */
+   /** Required to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -136,8 +126,8 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         this.readFromNBT(packet.getNbtCompound());
     }
 
-    /** Enum defining parts of the whole Stone Furnace structure. */
-    public enum EnumPartStone implements IStringSerializable {
+    /** Enum defining parts of the whole stone furnace structure. */
+    public enum EnumPartStone implements IStringSerializable, IMultipart {
 
         BL("bl"),
         BM("bm"),
@@ -151,6 +141,12 @@ public class TEFurnaceStone extends TEFurnaceAbstract {
         private EnumPartStone(String name) {
 
             this.name = name;
+        }
+        
+        @Override
+        public boolean shouldDrop() {
+            
+            return this == BL;
         }
 
         @Override

@@ -39,7 +39,6 @@ public class SlotFurnaceInput extends Slot {
         this.furnace.setInput(stack, this.index);
     }
     
-    /** Sorts the inputs list when the slot is changed. */
     @Override
     public void onSlotChanged() {
 
@@ -69,5 +68,4 @@ public class SlotFurnaceInput extends Slot {
         
         return false;
     }
-    
 }

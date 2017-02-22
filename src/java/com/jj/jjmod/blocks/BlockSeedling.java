@@ -2,7 +2,7 @@ package com.jj.jjmod.blocks;
 
 import java.util.Random;
 import com.jj.jjmod.utilities.IBiomeCheck;
-import com.jj.jjmod.utilities.ITreeGenRef;
+import com.jj.jjmod.utilities.ITreeGenFactory;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.properties.IProperty;
@@ -17,22 +17,22 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
-/** Abstract superclass for Seedling blocks. */
+/** Abstract superclass for seedling blocks. */
 public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
     
     /** WorldGenerator factory for this tree. */
-    private ITreeGenRef treeGen;
+    private ITreeGenFactory treeGenFactory;
     /** Chanc of growth per update tick. */
     private float growthChance;
     /** Chance of death per update tick if invalid position. */
     private float deathChance = 0.5F;
 
-    public BlockSeedling(String name, ITreeGenRef treeGen, float growthChance) {
+    public BlockSeedling(String name, ITreeGenFactory treeGenFactory,
+            float growthChance) {
         
-        super();
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS,
                 1F, ToolType.SHOVEL);
-        this.treeGen = treeGen;
+        this.treeGenFactory = treeGenFactory;
         this.growthChance = growthChance;
     }
     
@@ -44,22 +44,24 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return NULL_AABB;
     }
     
+    /** Grow or die according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
+
+        super.updateTick(world, pos, state, rand);
 
         if (world.isRemote) {
             
             return;
         }
-        
-        super.updateTick(world, pos, state, rand);
-        
+                
         if (!this.isPermitted(world.getBiome(pos)) &&
                 rand.nextFloat() <= this.deathChance) {
 
@@ -69,7 +71,8 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
 
         if (rand.nextFloat() <= this.growthChance) {
             
-            this.treeGen.makeTreeGen(world, rand, true).generateTree(pos);
+            this.treeGenFactory.makeTreeGen(world, rand, true)
+                    .generateTree(pos);
         }
     }
 }

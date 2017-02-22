@@ -67,7 +67,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModItems {
     
     /** All new items, for ease of modelling. */
-    public static final Set<Item> MOD_ITEMS = Sets.newHashSet();
+    private static final Set<Item> MOD_ITEMS = Sets.newHashSet();
     
     public static ItemEdibleDecayable banana;
     public static ItemEdibleDecayable pear;
@@ -399,11 +399,16 @@ public class ModItems {
         register(fishRaw = new ItemEdibleDecayablePoison("fish_raw",
                 1, 3, 10, FoodType.PROTEIN, 1));
         
-        register(carcassCowpart = new ItemCarcassDecayable("carcass_cowpart", ModBlocks.carcassCowpart));
-        register(carcassPig = new ItemCarcassDecayable("carcass_pig", ModBlocks.carcassPig));
-        register(carcassChicken = new ItemCarcassDecayable("carcass_chicken", ModBlocks.carcassChicken));
-        register(carcassSheep = new ItemCarcassDecayable("carcass_sheep", ModBlocks.carcassSheep));
-        register(carcassRabbit = new ItemCarcassDecayable("carcass_rabbit", ModBlocks.carcassRabbit));
+        register(carcassCowpart = new ItemCarcassDecayable("carcass_cowpart",
+                ModBlocks.carcassCowpart));
+        register(carcassPig = new ItemCarcassDecayable("carcass_pig",
+                ModBlocks.carcassPig));
+        register(carcassChicken = new ItemCarcassDecayable("carcass_chicken",
+                ModBlocks.carcassChicken));
+        register(carcassSheep = new ItemCarcassDecayable("carcass_sheep",
+                ModBlocks.carcassSheep));
+        register(carcassRabbit = new ItemCarcassDecayable("carcass_rabbit",
+                ModBlocks.carcassRabbit));
         
         register(beefCooked = new ItemEdibleDecayable("beef_cooked",
                 6, 6, 5, FoodType.PROTEIN, 2));
@@ -469,7 +474,7 @@ public class ModItems {
                 Blocks.FLOWING_WATER, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);
         register(bucketTar = new ItemBucket("bucket_tar",
-                ModLiquids.tarBlock, () -> bucketEmpty,
+                ModBlocks.tar, () -> bucketEmpty,
                 () -> bucketWater, () -> bucketTar), true);
         register(bucketMilk = new ItemJj("bucket_milk",
                 1, CreativeTabs.MISC));

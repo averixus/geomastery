@@ -49,6 +49,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         return ModItems.rice;
     }
     
+    /** Do not render sides when next to real water. */
     @Override
     public boolean doesSideBlockRendering(IBlockState state,
             IBlockAccess world, BlockPos pos, EnumFacing face) {
@@ -65,6 +66,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         return false;
     }
     
+    /** Check position and break if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unusued) {
@@ -76,6 +78,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         }
     }
     
+    /** Render translucent and cutout model parts. */
     @Override
     public boolean canRenderInLayer(IBlockState state,
             BlockRenderLayer layer) {
@@ -120,6 +123,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         return true;
     }
     
+    /** Slow down entities like water. */
     @Override
     public void onEntityCollidedWithBlock(World world, BlockPos pos,
             IBlockState state, Entity entity) {

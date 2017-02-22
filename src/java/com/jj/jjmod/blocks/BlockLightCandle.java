@@ -14,15 +14,11 @@ public class BlockLightCandle extends BlockLight {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         EnumFacing facing = state.getValue(FACING);
-        
-        if (facing == EnumFacing.UP) {
-            
-            return BlockNew.CENTRE_FOUR;
-        }
-        
-        return BlockNew.BLIP[facing.getHorizontalIndex()];
+        return facing == EnumFacing.UP ? BlockNew.CENTRE_FOUR :
+            BlockNew.BLIP[facing.getHorizontalIndex()];
     }
 }

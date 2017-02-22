@@ -9,9 +9,9 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class ProviderCapDecay implements ICapabilitySerializable {
 
-    private final DefaultCapDecay instance;
+    private final ICapDecay instance;
     
-    public ProviderCapDecay(DefaultCapDecay instance) {
+    public ProviderCapDecay(ICapDecay instance) {
         
         this.instance = instance;
     }

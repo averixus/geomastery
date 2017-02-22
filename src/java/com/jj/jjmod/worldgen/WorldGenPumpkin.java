@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Pumpkin crops. */
+/** WorldGenerator for pumpkin crops. */
 public class WorldGenPumpkin extends WorldGenCrop {
 
     public WorldGenPumpkin(World world, Random rand) {
@@ -32,7 +32,7 @@ public class WorldGenPumpkin extends WorldGenCrop {
         
         this.world.setBlockState(crop, this.crop);
         this.world.setBlockState(fruit, ModBlocks.pumpkinFruit.getDefaultState()
-                .withProperty(BlockFruit.STEM, fruitOffset.getOpposite()));
+                .withProperty(BlockFruit.FACING, fruitOffset.getOpposite()));
         return true;
     }
 }

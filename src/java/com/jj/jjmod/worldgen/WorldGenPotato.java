@@ -4,7 +4,7 @@ import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Potato crops. */
+/** WorldGenerator for potato crops. */
 public class WorldGenPotato extends WorldGenCrop {
 
     public WorldGenPotato(World world, Random rand) {

@@ -43,15 +43,19 @@ public class BlockWallStraight extends BlockWall {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return CENTRE_POST;
     }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
         
-        EnumStraight straight = this.getActualState(state, world, pos).<EnumStraight>getValue(STRAIGHT);
+        EnumStraight straight = this.getActualState(state, world, pos)
+                .getValue(STRAIGHT);
         
         addCollisionBoxToList(pos, entityBox, list, CENTRE_POST);
         

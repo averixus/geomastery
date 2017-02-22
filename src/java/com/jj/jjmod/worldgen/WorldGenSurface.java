@@ -6,13 +6,21 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Abstract superclass for generating blocks on the surface. */
 public abstract class WorldGenSurface extends WorldGenAbstract {
 
+    /** Chance of generating per chunk. */
+    private static final float CHANCE = 0.05F;
+    
+    /** State of the block to generate. */
     protected IBlockState block;
+    /** Minimum y co-ordinate to generate at. */
     protected int minHeight;
+    /** Maximum y co-ordinate to generate at. */
     protected int maxHeight;
     
-    public WorldGenSurface(World world, Random rand, int minHeight, int maxHeight, IBlockState block) {
+    public WorldGenSurface(World world, Random rand, int minHeight,
+            int maxHeight, IBlockState block) {
         
         super(world, rand);
         this.minHeight = minHeight;
@@ -20,10 +28,13 @@ public abstract class WorldGenSurface extends WorldGenAbstract {
         this.block = block;
     }
     
+    /** @return Size of cluster to generate. */
+    protected abstract int getClusterSize();
+    
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
         
-        if (this.rand.nextFloat() <= 0.05) {
+        if (this.rand.nextFloat() <= CHANCE) {
             
             int centreX = this.rand.nextInt(16) + xFromChunk;
             int centreZ = this.rand.nextInt(16) + zFromChunk;
@@ -38,8 +49,8 @@ public abstract class WorldGenSurface extends WorldGenAbstract {
             while (tries < cluster * 2 && count < cluster) {
                 
                 if (y >= this.minHeight && y <= this.maxHeight) {
+                    
                     BlockPos pos = new BlockPos(x, y, z);
-                    System.out.println("putting" + this.block + " at " + pos);
                     this.world.setBlockState(pos, this.block);
                     count++;
                 }
@@ -52,6 +63,4 @@ public abstract class WorldGenSurface extends WorldGenAbstract {
             }
         }
     }
-    
-    protected abstract int getClusterSize();
 }

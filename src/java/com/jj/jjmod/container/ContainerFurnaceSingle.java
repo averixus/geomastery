@@ -8,11 +8,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Container for single-slot furnaces. */
 public class ContainerFurnaceSingle extends ContainerFurnaceAbstract {
 
-    // Co-ordinate constants
+    /** X-position of start of input slots. */
     private static final int INPUT_X = 56;
+    /** X-position of start of output slots. */
     private static final int OUTPUT_X = 116;
+    /** Y-position of start of output slots. */
     private static final int OUTPUT_Y = 35;
     
     public ContainerFurnaceSingle(EntityPlayer player, World world,

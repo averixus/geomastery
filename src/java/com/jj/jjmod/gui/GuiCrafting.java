@@ -10,9 +10,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Gui for Crafting devices */
+/** Gui for crafting devices */
 public class GuiCrafting extends GuiContainerAbstract {
 
+    /** Texture for this gui. */
     private final ResourceLocation texture;
 
     public GuiCrafting(ContainerCrafting container, String name) {

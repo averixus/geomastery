@@ -14,11 +14,14 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class ModCapabilities {
     
+    /** Player capability. */
     @CapabilityInject(ICapPlayer.class)
     public static final Capability<ICapPlayer> CAP_PLAYER = null;
+    /** Player capability ID. */
     public static final ResourceLocation CAP_PLAYER_ID =
             new ResourceLocation(Main.MODID, "CapabilityPlayer");
     
+    /** Decay capability. */
     @CapabilityInject(ICapDecay.class)
     public static final Capability<ICapDecay> CAP_DECAY = null;
 

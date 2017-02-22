@@ -10,15 +10,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the Furnace progress bars on the Client. */
+/** Packet to update the furnace progress bars on the Client. */
 public class FurnacePacketClient implements IMessage {
 
+    /** Fuel left value of the furnace. */
     protected int fuelLeft;
+    /** Fuel each value of the furnace. */
     protected int fuelEach;
+    /** Cook spent value of the furnace. */
     protected int cookSpent;
+    /** Cook each value of the furnace. */
     protected int cookEach;
+    /** X co-ordinate. */
     protected int x;
+    /** Y co-ordinate. */
     protected int y;
+    /** Z co-odinate. */
     protected int z;
     
     public FurnacePacketClient() {}

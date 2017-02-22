@@ -52,6 +52,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
                 .gameSettings.fancyGraphics);
     }
     
+    /** Gets harvestable items if applicable. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
             IBlockState state, int fortune) {
@@ -73,17 +74,12 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         return items;
     }
     
+    /** Grows up according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
         
         super.updateTick(world, pos, state, rand);
-        state = world.getBlockState(pos);
-        
-        if (state.getBlock() != this) {
-            
-            return;
-        }
         
         if (rand.nextFloat() <= this.growthChance) {
             
@@ -94,6 +90,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         }
     }
     
+    /** Harvests fruit if full grown. */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
@@ -121,7 +118,8 @@ public class BlockHarvestableLeaves extends BlockLeaves {
                     }
                 }
                 
-                spawnAsEntity(world, pos, ItemJj.newStack(this.itemRef.get(), 1, world));
+                spawnAsEntity(world, pos,
+                        ItemJj.newStack(this.itemRef.get(), 1, world));
             }  
             
             return true;

@@ -8,21 +8,22 @@ import net.minecraft.world.World;
 
 public class EntityArrowCopper extends EntityProjectile {
     
-    private static final double damage = 1.33D;
+    /** Damager done by this arrow. */
+    private static final double DAMAGE = 1.33D;
 
     public EntityArrowCopper(World world) {
 
-        super(world, damage);
+        super(world, DAMAGE);
     }
 
     public EntityArrowCopper(World world, double x, double y, double z) {
 
-        super(world, x, y, z, damage);
+        super(world, x, y, z, DAMAGE);
     }
 
     public EntityArrowCopper(World world, EntityLivingBase shooter) {
 
-        super(world, shooter, damage);
+        super(world, shooter, DAMAGE);
     }
 
     @Override

@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Cookfire Furnace block. */
+/** Cookfire furnace block. */
 public class BlockFurnaceCookfire extends BlockComplexAbstract {
 
     public BlockFurnaceCookfire() {
@@ -56,7 +56,8 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract {
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return CENTRE_FOURTEEN;
     }
@@ -87,10 +88,15 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.COOKFIRE.ordinal(),
-                world, x, y, z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.COOKFIRE.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 }

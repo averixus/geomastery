@@ -5,7 +5,7 @@ import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.BlockMaterial;
-import com.jj.jjmod.utilities.ToolType;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -36,15 +36,17 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
                 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (state.getValue(PART) == EnumPartCandlemaker.FRONT) {
+        if (state.getValue(PART).shouldDrop()) {
 
-            spawnAsEntity(world, pos, new ItemStack(ModItems.craftingCandlemaker));
+            spawnAsEntity(world, pos,
+                    new ItemStack(ModItems.craftingCandlemaker));
         }
     }
     
@@ -60,26 +62,26 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
 
         EnumFacing facing = state.getValue(FACING);
         EnumPartCandlemaker part = state.getValue(PART);
+        boolean broken = false;
 
         if (part == EnumPartCandlemaker.FRONT) {
 
-            boolean brokenBack = world.getBlockState(pos.offset(facing))
-                    .getBlock() != this;
-
-            if (brokenBack) {
-
-                world.setBlockToAir(pos);
-                spawnAsEntity(world, pos, new ItemStack(ModItems.craftingCandlemaker));
-            }
+            broken = world.getBlockState(pos.offset(facing)).getBlock() != this;
 
         } else {
 
-            boolean brokenFront = world.getBlockState(pos
-                    .offset(facing.getOpposite())).getBlock() != this;
-
-            if (brokenFront) {
-
-                world.setBlockToAir(pos);
+            broken = world.getBlockState(pos.offset(facing.getOpposite()))
+                    .getBlock() != this;
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos,
+                        new ItemStack(ModItems.craftingCandlemaker));
             }
         }
     }
@@ -88,13 +90,16 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART) == EnumPartCandlemaker.BACK ? TWELVE : CENTRE_FOUR;
+        return state.getValue(PART) == EnumPartCandlemaker.BACK ?
+                TWELVE : CENTRE_FOUR;
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
-        return state.getValue(PART) == EnumPartCandlemaker.BACK ? TWELVE : NULL_AABB;
+        return state.getValue(PART) == EnumPartCandlemaker.BACK ?
+                TWELVE : NULL_AABB;
     }
 
     @Override
@@ -146,44 +151,41 @@ public class BlockCraftingCandlemaker extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.CANDLEMAKER.ordinal(),
-                world, x, y, z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.CANDLEMAKER.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 
     /** Enum defining parts of the whole Candlemaker structure. */
-    public enum EnumPartCandlemaker implements IStringSerializable {
+    public enum EnumPartCandlemaker implements IStringSerializable, IMultipart {
 
-        FRONT("front", true),
-        BACK("back", false);
+        FRONT("front"),
+        BACK("back");
 
         private final String name;
-        private final boolean isFlat;
 
-        private EnumPartCandlemaker(String name, boolean isFlat) {
+        private EnumPartCandlemaker(String name) {
 
             this.name = name;
-            this.isFlat = isFlat;
         }
-
+        
         @Override
-        public String toString() {
-
-            return this.name;
+        public boolean shouldDrop() {
+            
+            return this == FRONT;
         }
 
         @Override
         public String getName() {
 
             return this.name;
-        }
-        
-        /** @return Whether this Part has the flat bounding box. */
-        public boolean isFlat() {
-            
-            return this.isFlat;
         }
     }
 }

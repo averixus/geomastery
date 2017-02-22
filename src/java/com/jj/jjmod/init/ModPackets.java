@@ -3,8 +3,6 @@ package com.jj.jjmod.init;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.packets.ContainerPacketClient;
 import com.jj.jjmod.packets.ContainerPacketServer;
-import com.jj.jjmod.packets.DecayPacketClient;
-import com.jj.jjmod.packets.DecayPacketServerAsk;
 import com.jj.jjmod.packets.DryingPacketClient;
 import com.jj.jjmod.packets.FloorUpdateClient;
 import com.jj.jjmod.packets.FoodPacketClient;
@@ -17,8 +15,11 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class ModPackets {
 
+    /** Network instance for sending packets. */
     public static final SimpleNetworkWrapper NETWORK =
             NetworkRegistry.INSTANCE.newSimpleChannel(Main.MODID);
+    
+    /** ID counter. */
     private static int id = 0;
 
     public static void preInit() {
@@ -39,9 +40,5 @@ public class ModPackets {
                 DryingPacketClient.class, id++, Side.CLIENT);
         NETWORK.registerMessage(FurnacePacketClient.Handler.class,
                 FurnacePacketClient.class, id++, Side.CLIENT);
-        NETWORK.registerMessage(DecayPacketClient.Handler.class,
-                DecayPacketClient.class, id++, Side.CLIENT);
-        NETWORK.registerMessage(DecayPacketServerAsk.Handler.class,
-                DecayPacketServerAsk.class, id++, Side.SERVER);
     }
 }

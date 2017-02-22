@@ -1,6 +1,6 @@
 package com.jj.jjmod.tileentities;
 
-import javax.annotation.Nullable;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -8,10 +8,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
-/** TileEntity for Sawpit crafting block. */
+/** TileEntity for sawpit crafting block. */
 public class TECraftingSawpit extends TileEntity {
     
+    /** EnumFacing of this sawpit block. */
     private EnumFacing facing;
+    /** Part of this sawpit block. */
     private EnumPartSawpit part;
     
     /** Sets the given state information. */
@@ -21,13 +23,13 @@ public class TECraftingSawpit extends TileEntity {
         this.part = part;
     }
     
-    /** @return The EnumFacing state of this Sawpit block. */
+    /** @return The EnumFacing state of this sawpit block. */
     public EnumFacing getFacing() {
         
         return this.facing;
     }
     
-    /** @return The EnumPartSawpit state of this Sawpit block. */
+    /** @return The EnumPartSawpit state of this sawpit block. */
     public EnumPartSawpit getPart() {
         
         return this.part;
@@ -50,7 +52,7 @@ public class TECraftingSawpit extends TileEntity {
         this.part = EnumPartSawpit.values()[compound.getInteger("part")];
     }
     
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
         
@@ -58,14 +60,14 @@ public class TECraftingSawpit extends TileEntity {
     }
     
     @Override
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     public SPacketUpdateTileEntity getUpdatePacket() {
         
         return new SPacketUpdateTileEntity(this.getPos(), 0,
                 this.writeToNBT(new NBTTagCompound()));
     }
     
-    /** Require to update rendering on the Client. */
+    /** Required to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -73,8 +75,8 @@ public class TECraftingSawpit extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
     
-    /** Enum defining parts of the whole Sawpit structure. */
-    public enum EnumPartSawpit implements IStringSerializable {
+    /** Enum defining parts of the whole sawpit structure. */
+    public enum EnumPartSawpit implements IStringSerializable, IMultipart {
         
         B1 ("b1", true), B2("b2", true), B3("b3", true),
         B4("b4", true), B5("b5", true), M1 ("m1", true),
@@ -90,6 +92,12 @@ public class TECraftingSawpit extends TileEntity {
             this.name = name;
             this.isPassable = isPassable;
         }
+        
+        @Override
+        public boolean shouldDrop() {
+            
+            return this == B1;
+        }
 
         @Override
         public String getName() {
@@ -97,7 +105,7 @@ public class TECraftingSawpit extends TileEntity {
             return this.name;
         }
         
-        /** @return Whether this Part has null collision boundng box. */
+        /** @return Whether this part has null collision boundng box. */
         public boolean isPassable() {
             
             return this.isPassable;

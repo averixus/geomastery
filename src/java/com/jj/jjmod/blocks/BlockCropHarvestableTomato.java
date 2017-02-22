@@ -7,7 +7,7 @@ import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 
-/** Tomato Crop block. */
+/** Tomato crop block. */
 public class BlockCropHarvestableTomato extends BlockCropHarvestable {
     
     public BlockCropHarvestableTomato() {

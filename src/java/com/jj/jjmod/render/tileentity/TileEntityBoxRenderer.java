@@ -5,9 +5,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-/** Render class for Box block. */
+/** Render class for box block. */
 public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
 
+    /** Texture for box .*/
     private static final ResourceLocation TEXTURE = new
             ResourceLocation("jjmod:textures/blocks/crafters/woodwork1.png");
     

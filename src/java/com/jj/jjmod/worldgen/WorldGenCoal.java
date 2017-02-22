@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-/** WorldGenrator for Coal Ore. */
+/** WorldGenrator for coal ore. */
 public class WorldGenCoal extends WorldGenStone {
 
     public WorldGenCoal(World world, Random rand) {

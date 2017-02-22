@@ -1,13 +1,10 @@
 package com.jj.jjmod.tileentities;
 
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
-import com.jj.jjmod.blocks.BlockBeam.EnumAxis;
-import com.jj.jjmod.blocks.BlockWall;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.packets.FloorUpdateClient;
-import net.minecraft.block.Block;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,12 +14,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
-/** TileEntity for Beam block. */
+/** TileEntity for beam block. */
 public class TEBeam extends TileEntity {
     
+    /** Direction this beam is facing. */
     private EnumFacing facing;
+    /** This block's part in the whole structure. */
     private EnumPartBeam part;
+    /** The floor on this beam block. */
     private EnumFloor floor;
+    /** The beam item associated with this block. */
     private Item item;
     
     /** Sets the given state information. */
@@ -34,7 +35,7 @@ public class TEBeam extends TileEntity {
         this.floor = EnumFloor.NONE;
     }
     
-    /** Attempts to apply the given floor to this Beam block.
+    /** Attempts to apply the given floor to this beam block.
      * @return Whether the floor is successfully applied. */
     public boolean applyFloor(EnumFloor floor) {
         
@@ -55,65 +56,25 @@ public class TEBeam extends TileEntity {
         this.sendFloorUpdate();
     }
     
-    /** Sends a packet to update the floor of this Beam block on the Client. */
-    private void sendFloorUpdate() {
-        
-        if (!this.world.isRemote) {
-            
-            ModPackets.NETWORK
-                    .sendToAll(new FloorUpdateClient(this.floor,this.pos));
-        }
-    }
-    
-    /** @return The EnumFacing state of this Beam block. */
+    /** @return The EnumFacing state of this beam block. */
     public EnumFacing getFacing() {
         
         return this.facing;
     }
     
-    /** @return the EnumPartBeam state of this Beam block. */
+    /** @return the EnumPartBeam state of this beam block. */
     public EnumPartBeam getPart() {
         
         return this.part;
     }
     
-    /** @return The EnumFloor state of this Beam block. */
+    /** @return The EnumFloor state of this beam block. */
     public EnumFloor getFloor() {
         
         return this.floor;
     }
     
-    /** Checks whether the floor on this Beam block needs to
-      * extend sideways in the given direction.
-      * @return Whether or not the floor extends sideways. */
-    public boolean hasSideConnection(EnumFacing facing) {
-                
-        if (this.facing == null || facing == this.facing || facing == this.facing.getOpposite() ||
-                facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
-            
-            return false;
-        }
-        
-        Block block = this.world.getBlockState(this.pos.offset(facing))
-                .getBlock();
-        return block instanceof BlockWall;
-    }
-    
-    /** Checks whether the floor on this Beam block needs to
-     * extend forwards/backwards in the given direction.
-     * @return Whether or not the floor extends end-ways. */
-    public boolean hasEndConnection(EnumFacing facing) {
-        
-        if (this.facing == null || facing != this.facing && facing != this.facing.getOpposite()) {
-            
-            return false;
-        }
-        
-        Block block = this.world.getBlockState(this.pos.offset(facing))
-                .getBlock();
-        return block instanceof BlockWall;
-    }
-    
+    /** @return The item associated with this beam. */
     public Item getItem() {
         
         return this.item;
@@ -138,12 +99,14 @@ public class TEBeam extends TileEntity {
         this.floor = EnumFloor.values()[compound.getInteger("floor")];
     }
     
+    /** Required to update rendering on the Client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
+    /** Required to update rendering on the Client. */
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -151,6 +114,7 @@ public class TEBeam extends TileEntity {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
+    /** Required to update rendering on the Client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -158,8 +122,18 @@ public class TEBeam extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
     
+    /** Sends a packet to update the floor of this beam block on the Client. */
+    private void sendFloorUpdate() {
+        
+        if (!this.world.isRemote) {
+            
+            ModPackets.NETWORK
+                    .sendToAll(new FloorUpdateClient(this.floor,this.pos));
+        }
+    }
+    
     /** Enum defining parts of the whole Beam structure. */
-    public enum EnumPartBeam implements IStringSerializable {
+    public enum EnumPartBeam implements IStringSerializable, IMultipart {
         
         BACK("start"), MIDDLE("middle"), FRONT("end");
         
@@ -176,14 +150,14 @@ public class TEBeam extends TileEntity {
             return this.name;
         }
         
-        /** @return Whether this part drops a Beam Item. */
+        @Override
         public boolean shouldDrop() {
 
             return this == BACK;
         }
     }
     
-    /** Enum defining types of floor a Beam block can have. */
+    /** Enum defining types of floor a beam block can have. */
     public enum EnumFloor implements IStringSerializable {
         
         NONE("none", () -> Items.AIR),
@@ -205,7 +179,7 @@ public class TEBeam extends TileEntity {
             return this.name;
         }
         
-        /** @return The Ttem form of this Floor. */
+        /** @return The item form of this floor. */
         public Item getItem() {
             
             return this.item.get();

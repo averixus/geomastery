@@ -9,38 +9,61 @@ import net.minecraft.item.ItemStack;
 
 public class ModRecipes {
 
+    /** Crafting recipes for player inventory. */
     public static final CraftingManager INVENTORY = new CraftingManager();
+    /** Crafting recipes for knapping block. */
     public static final CraftingManager KNAPPING = new CraftingManager();
+    /** Crafting recipes for woodworking bench. */
     public static final CraftingManager WOODWORKING
             = new CraftingManager();
+    /** Crafting recipes for textiles table. */
     public static final CraftingManager TEXTILES = new CraftingManager();
+    /** Crafting recipes for clayworks. */
     public static final CraftingManager CLAYWORKS
             = new CraftingManager();
+    /** Crafting recipes for candlemaker's bench. */
     public static final CraftingManager CANDLEMAKER
             = new CraftingManager();
+    /** Crafting recipes for forge. */
     public static final CraftingManager FORGE = new CraftingManager();
+    /** Crafting recipes for mason. */
     public static final CraftingManager MASON = new CraftingManager();
+    /** Crafting recipes for armourer. */
     public static final CraftingManager ARMOURER = new CraftingManager();
+    /** Crafting recipes for sawpit. */
     public static final CraftingManager SAWPIT = new CraftingManager();
+    
+    /** Cooking recipes for campfire. */
     public static final CookingManager CAMPFIRE = new CookingManager(3);
+    /** Cooking recipes for cookfire. */
     public static final CookingManager COOKFIRE = new CookingManager(3);
+    /** Cooking recipes for clay furnace. */
     public static final CookingManager CLAY = new CookingManager(2);
+    /** Cooking recipes for stone furnace. */
     public static final CookingManager STONE = new CookingManager(1);
+    /** Cooking recipes for drying rack. */
     public static final CookingManager DRYING = new CookingManager(1);
 
+    /** All metals usable in crafting for reference. */
     private static final Item[] METALS =
             {ModItems.ingotCopper, ModItems.ingotTin, ModItems.ingotSteel};
+    /** All pots usable in crafting for reference. */
     private static final Item[] POTS = {ModItems.potClay, ModItems.potMetal};
+    /** All skins usable in crafitng furs for reference. */
     private static final Item[] SKINS_FUR = {ModItems.skinBear,
             ModItems.skinWolf, ModItems.skinSheep};
+    /** All skins for reference. */
     private static final Item[] SKINS_ALL = {ModItems.skinBear,
             ModItems.skinCow, ModItems.skinPig,
             ModItems.skinSheep, ModItems.skinWolf};
     
+    /** Cooking managers for campfire and higher furnace levels. */
     private static final CookingManager[] CAMPFIRE_PLUS =
             {CAMPFIRE, COOKFIRE, CLAY, STONE};
+    /** Cooking managers for cookfire and higher furnace levels. */
     private static final CookingManager[] COOKFIRE_PLUS =
             {COOKFIRE, CLAY, STONE};
+    /** Cooking managers for clay furnace and higher furnace levels. */
     private static final CookingManager[] CLAY_PLUS = {CLAY, STONE};
     
     public static void init() {
@@ -62,7 +85,8 @@ public class ModRecipes {
         setupDrying();
     }
     
-    public static void setupInventory() {
+    /** Adds all recipes to inventory. */
+    private static void setupInventory() {
         
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.hoeAntler),
                 "A", 'A', ModItems.shovelAntler);
@@ -113,7 +137,7 @@ public class ModRecipes {
                     ItemStack(ModItems.craftingTextiles), "MPP", "PPP",
                     'M', metal, 'P', ModItems.pole);
             INVENTORY.addShapedRecipe(new
-                    ItemStack(ModItems.craftingWoodworking), "PPM", "PPP",
+                    ItemStack(ModItems.craftingWoodworking), "PMM", "PPP",
                     'P', ModItems.pole, 'M', metal);
             INVENTORY.addShapedRecipe(new
                     ItemStack(ModItems.craftingMason), "MSS", "PPP",
@@ -134,7 +158,8 @@ public class ModRecipes {
         }
     }
 
-    public static void setupKnapping() {
+    /** Adds all recipes to knapping block. */
+    private static void setupKnapping() {
 
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.huntingknifeFlint),
                 "FF", 'F', Items.FLINT);
@@ -147,7 +172,8 @@ public class ModRecipes {
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearFlint),
                 "FSS", 'F', ModItems.spearheadFlint, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowFlint, 5),
-                "FSE", 'F', ModItems.arrowheadFlint, 'S', Items.STICK, 'E', Items.FEATHER);
+                "FSE", 'F', ModItems.arrowheadFlint, 'S', Items.STICK,
+                'E', Items.FEATHER);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 4),
                 "RRR", "RRR", 'R', ModItems.stoneRough);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowheadFlint),
@@ -160,7 +186,8 @@ public class ModRecipes {
                 " F ", " F ", "F F", 'F', Items.FLINT);
     }
 
-    public static void setupWoodworking() {
+    /** Adds all recipes to woodworking bench. */
+    private static void setupWoodworking() {
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelWood),
                 "PPP", 'P', ModItems.pole);
@@ -250,8 +277,6 @@ public class ModRecipes {
                 "SS", "SS", "SS", 'S', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CHEST),
                 "SSS", "S S", "SSS", 'S', ModItems.timber);
-        WOODWORKING.addShapedRecipe(new ItemStack(Items.BED),
-                "WWW", "SSS", 'W', ModItems.wool, 'S', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box),
                 "PP", "PP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 6),
@@ -260,7 +285,8 @@ public class ModRecipes {
                 "PPP", 'W', Blocks.WOOL, 'P', ModItems.pole);
     }
 
-    public static void setupTextiles() {
+    /** Adds all recipes to textiles table. */
+    private static void setupTextiles() {
 
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedCotton),
                 "CCC", "CCC", 'C', ModItems.cotton);
@@ -296,11 +322,13 @@ public class ModRecipes {
         }
     }
 
-    public static void setupClayworks() {
+    /** Adds all recipes to clayworks. */
+    private static void setupClayworks() {
 
     }
 
-    public static void setupCandlemaker() {
+    /** Adds all recipes to candlemaker's bench. */
+    private static void setupCandlemaker() {
 
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 15),
                 "H", "T", "T", 'H', ModItems.twineHemp, 'T', ModItems.tallow);
@@ -311,7 +339,8 @@ public class ModRecipes {
                 ModItems.cotton, 'S', Items.STICK);
     }
 
-    public static void setupForge() {
+    /** Adds all recipes to forge. */
+    private static void setupForge() {
 
         FORGE.addShapedRecipe(new ItemStack(ModItems.shearsCopper), "C ",
                 "CC", 'C', ModItems.ingotCopper);
@@ -399,7 +428,8 @@ public class ModRecipes {
                 "P P", " P ", 'P', ModItems.pole);
     }
 
-    public static void setupMason() {
+    /** Adds all recipes to mason. */
+    private static void setupMason() {
         
         MASON.addShapedRecipe(new ItemStack(ModItems.wallBrick, 4),
                 "BBB", "BBB", 'B', Items.BRICK);
@@ -414,7 +444,8 @@ public class ModRecipes {
 
     }
 
-    public static void setupArmourer() {
+    /** Adds all recipes to armourer. */
+    private static void setupArmourer() {
 
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.swordCopper), "B",
                 "L", "P", 'B', ModItems.swordbladeCopper, 'L',
@@ -446,7 +477,8 @@ public class ModRecipes {
                 "SSS", "SLS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
     }
     
-    public static void setupSawpit() {
+    /** Adds all recipes to sawpit. */
+    private static void setupSawpit() {
         
         SAWPIT.addShapelessRecipe(new ItemStack(ModItems.timber, 3),
                 ModItems.thicklog);
@@ -454,7 +486,8 @@ public class ModRecipes {
                 "LLL", 'L', ModItems.log);
     }
 
-    public static void setupCampfire() {
+    /** Adds all recipes to campfire and higher levels. */
+    private static void setupCampfire() {
 
         for (CookingManager recipes : CAMPFIRE_PLUS) {
             
@@ -479,7 +512,8 @@ public class ModRecipes {
         }
     }
 
-    public static void setupCookfire() {
+    /** Adds all recipes to cookfire and higher levels. */
+    private static void setupCookfire() {
 
         for (CookingManager recipes : COOKFIRE_PLUS) {
             
@@ -494,7 +528,8 @@ public class ModRecipes {
         }
     }
 
-    public static void setupClay() {
+    /** Adds all recipes to clay furnace and higher levels. */
+    private static void setupClay() {
 
         for (CookingManager recipes : CLAY_PLUS) {
             
@@ -509,7 +544,8 @@ public class ModRecipes {
         }
     }
 
-    public static void setupStone() {
+    /** Adds all recipes to stone furnace and higher levels. */
+    private static void setupStone() {
 
         STONE.addCookingRecipe(new ItemStack(ModItems.oreIron),
                 new ItemStack(ModItems.ingotSteel), 400);
@@ -522,7 +558,8 @@ public class ModRecipes {
         STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
     }
 
-    public static void setupDrying() {
+    /** Adds all recipes to drying rack. */
+    private static void setupDrying() {
 
         DRYING.addCookingRecipe(new ItemStack(ModItems.dirt),
                 new ItemStack(ModItems.mudbricks), 4000);

@@ -3,7 +3,7 @@ package com.jj.jjmod.tileentities;
 import com.jj.jjmod.crafting.CookingManager;
 import net.minecraft.util.math.MathHelper;
 
-/** Abstract superclass TileEntity for constant cooking Furnace blocks. */
+/** Abstract superclass TileEntity for constant cooking furnace blocks. */
 public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
 
     public TEFurnaceConstantAbstract(CookingManager recipes) {

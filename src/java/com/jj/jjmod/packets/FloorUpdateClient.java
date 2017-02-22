@@ -11,12 +11,16 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update changed Beam floors on the Client. */
+/** Packet to update changed beam floors on the Client. */
 public class FloorUpdateClient implements IMessage {
     
+    /** The floor type of the beam. */
     protected EnumFloor floor;
+    /** X co-ordinate. */
     protected int x;
+    /** Y co-ordinate. */
     protected int y;
+    /** Z co-ordinate. */
     protected int z;
     
     public FloorUpdateClient() {}

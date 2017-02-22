@@ -10,16 +10,13 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
-/** TileEntity for Carcass blocks. */
+/** TileEntity for carcass blocks. */
 public class TECarcass extends TileEntity {
     
-//    private static final int DAY_TICKS = 24000;
-    
+    /** Length of an age stage in ticks. */
     private int stageSize;
+    /** Birth time of this carcass. */
     private long birthTime;
-    
- //   private int maxAge;
- //   private int ageTimer = 0;
     
     public void setData(long birthTime, int stageSize) {
         
@@ -27,33 +24,17 @@ public class TECarcass extends TileEntity {
         this.stageSize = stageSize;
     }
     
+    /** @return The birth time of this carcass. */
     public long getBirthTime() {
         
         return this.birthTime;
     }
     
+    /** @return The age stage size of this carcass. */
     public int getStageSize() {
         
         return this.stageSize;
     }
-    
-    /** @return The current age in ticks. */
- //   public int getAge() {
-        
- //       return this.ageTimer;
- //   }
-    
-    /** Sets the age to the given ticks. */
- //   public void setAge(int age) {
-        
-  //      this.ageTimer = age;
-//    }
-    
-    /** Sets the max age to the given days. */
- //   public void setShelfLife(int shelfLife) {
-        
-  //      this.maxAge = shelfLife * DAY_TICKS;
-  //  }
     
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -61,8 +42,6 @@ public class TECarcass extends TileEntity {
         super.writeToNBT(nbt);
         nbt.setLong("birthTime", this.birthTime);
         nbt.setInteger("stageSize", this.stageSize);
-     //   nbt.setInteger("ageTimer", this.ageTimer);
-    //    nbt.setInteger("maxAge", this.maxAge);
         return nbt;
     }
     
@@ -72,7 +51,5 @@ public class TECarcass extends TileEntity {
         super.readFromNBT(nbt);
         this.birthTime = nbt.getLong("birthTime");
         this.stageSize = nbt.getInteger("stageSize");
-      //  this.maxAge = nbt.getInteger("maxAge");
-      //  this.ageTimer = nbt.getInteger("ageTimer");
     }
 }

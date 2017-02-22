@@ -13,8 +13,7 @@ public class SlotDryingOutput extends Slot {
     /** The index of this slot in the drying rack output list. */
     private final int index;
 
-    public SlotDryingOutput(TEDrying drying, int index, int xPos,
-            int yPos) {
+    public SlotDryingOutput(TEDrying drying, int index, int xPos, int yPos) {
         
         super(null, 0, xPos, yPos);
         this.drying = drying;

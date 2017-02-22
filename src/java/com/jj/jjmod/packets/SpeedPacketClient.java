@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** Packet to update the player's walk speed on the Client. */
 public class SpeedPacketClient implements IMessage {
     
+    /** The player walk speed. */
     protected float speed;
     
     public SpeedPacketClient() {}

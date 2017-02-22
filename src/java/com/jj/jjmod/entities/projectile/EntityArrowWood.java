@@ -8,21 +8,22 @@ import net.minecraft.world.World;
 
 public class EntityArrowWood extends EntityProjectile {
 
-    private static final double damage = 0.44D;
+    /** Damager done by this arrow. */
+    private static final double DAMAGE = 0.44D;
     
     public EntityArrowWood(World world) {
 
-        super(world, damage);
+        super(world, DAMAGE);
     }
 
     public EntityArrowWood(World world, double x, double y, double z) {
 
-        super(world, x, y, z, damage);
+        super(world, x, y, z, DAMAGE);
     }
 
     public EntityArrowWood(World world, EntityLivingBase shooter) {
 
-        super(world, shooter, damage);
+        super(world, shooter, DAMAGE);
     }
 
     @Override

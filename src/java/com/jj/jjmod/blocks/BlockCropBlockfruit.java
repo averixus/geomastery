@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+import com.google.common.collect.Lists;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
@@ -13,6 +14,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -20,38 +22,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Abstract superclass for block-fruiting Crop blocks. */
+/** Abstract superclass for block-fruiting crop blocks. */
 public abstract class BlockCropBlockfruit extends BlockCropAbstract {
 
     public static final PropertyDirection FACING = BlockTorch.FACING;
-
-    /** Bounding boxes indexed by stem age. */
-    protected static final AxisAlignedBB[] STEM_BOUNDS = new AxisAlignedBB[]
-            {new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D),
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.25D, 0.625D),
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.375D, 0.625D),
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.5D, 0.625D),
-            new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.625D, 0.625D),
-            new AxisAlignedBB( 0.375D, 0.0D, 0.375D, 0.625D, 0.75D,  0.625D),
-            new AxisAlignedBB( 0.375D, 0.0D, 0.375D, 0.625D, 0.875D, 0.625D),
-            new AxisAlignedBB( 0.375D, 0.0D, 0.375D, 0.625D, 1.0D, 0.625D)};
     
     /** Supplier for fruit block. */
     protected Supplier<BlockFruit> fruit;
+    /** Supplier for the seed item. */
+    protected Supplier<Item> seed;
 
-    public BlockCropBlockfruit(String name, float growthChance,
-            float hardness, Supplier<BlockFruit> fruit) {
+    public BlockCropBlockfruit(String name, float growthChance, float hardness,
+            Supplier<BlockFruit> fruit, Supplier<Item> seed) {
 
         super(name, () -> Items.AIR, (rand) -> 0,
                 growthChance, hardness, ToolType.SICKLE);
         this.fruit = fruit;
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-
-        return STEM_BOUNDS[state.getValue(AGE)];
+        this.seed = seed;
     }
     
     @Override
@@ -114,14 +101,14 @@ public abstract class BlockCropBlockfruit extends BlockCropAbstract {
                 soilBlock == Blocks.DIRT || soilBlock == Blocks.GRASS)) {
 
             world.setBlockState(fruitPos, this.fruit.get().getDefaultState()
-                    .withProperty(BlockFruit.STEM, side.getOpposite()));
+                    .withProperty(BlockFruit.FACING, side.getOpposite()));
         }
     }
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
-
-        return new ArrayList<ItemStack>();
+        
+        return Lists.newArrayList(new ItemStack(this.seed.get()));
     }
 }

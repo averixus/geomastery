@@ -28,11 +28,14 @@ public class BlockStairs extends net.minecraft.block.BlockStairs {
     }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, @Nullable Entity entity, boolean unused) {
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
         
         state = this.getActualState(state, world, pos);
-        int facing = state.getValue(FACING).getHorizontalIndex() + 1;
         EnumShape shape = state.getValue(SHAPE);
+
+        int facing = state.getValue(FACING).getHorizontalIndex() + 1;
         
         if (shape == EnumShape.INNER_LEFT || shape == EnumShape.OUTER_LEFT) {
             
@@ -48,7 +51,8 @@ public class BlockStairs extends net.minecraft.block.BlockStairs {
                 addCollisionBoxToList(pos, entityBox, list, box);
             }
             
-        } else if (shape == EnumShape.OUTER_LEFT || shape == EnumShape.OUTER_RIGHT) {
+        } else if (shape == EnumShape.OUTER_LEFT ||
+                shape == EnumShape.OUTER_RIGHT) {
             
             for (AxisAlignedBB box : BlockNew.STAIRS_EXTERNAL[facing]) {
                 
@@ -96,13 +100,16 @@ public class BlockStairs extends net.minecraft.block.BlockStairs {
         return natural || built;
     }
     
+    /** Stairs only exist on bottom half. */
     @Override
     public IBlockState getActualState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        return super.getActualState(state, world, pos).withProperty(HALF, EnumHalf.BOTTOM);
+        return super.getActualState(state, world, pos)
+                .withProperty(HALF, EnumHalf.BOTTOM);
     }
     
+    /** Check position and break if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {

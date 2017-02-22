@@ -10,18 +10,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Abstract superclass for bed blocks which break after a fixed number of uses. */
+/** Abstract superclass for bed blocks
+ * which break after a fixed number of uses. */
 public abstract class BlockBedBreakableAbstract extends BlockBedAbstract
         implements ITileEntityProvider {
 
-    public BlockBedBreakableAbstract(String name, float hardness, float healAmount,
-            Supplier<Item> itemRef, ToolType harvestTool) {
+    public BlockBedBreakableAbstract(String name, float hardness,
+            float healAmount, Supplier<Item> itemRef, ToolType harvestTool) {
 
         super(name, hardness, healAmount, itemRef, harvestTool);
     }
     
     @Override
-    protected void drop(World world, BlockPos pos, TEBed bed) {
+    protected void dropItem(World world, BlockPos pos, TEBed bed) {
 
         int usesLeft = bed.getUsesLeft();
         Item item = this.itemRef.get();
@@ -29,11 +30,12 @@ public abstract class BlockBedBreakableAbstract extends BlockBedAbstract
         spawnAsEntity(world, pos, drop);
     }
 
+    /** Creates a TileEntity at the foot to store damage data. */
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
 
         if (this.getStateFromMeta(meta).getValue(PART) == EnumPartBed.FOOT) {
-            System.out.println("creating tile entity");
+
             TEBed tile = new TEBed();
             tile.setUsesLeft(this.itemRef.get().getMaxDamage());
             return tile;

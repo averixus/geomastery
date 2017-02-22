@@ -8,7 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Carrot crops. */
+/** WorldGenerator for carrot crops. */
 public class WorldGenCarrot extends WorldGenCrop {
 
     public WorldGenCarrot(World world, Random rand) {

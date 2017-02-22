@@ -6,14 +6,15 @@ import com.jj.jjmod.blocks.BlockBedBreakableAbstract;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.items.ItemShield;
 import com.jj.jjmod.tileentities.TEBed;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -44,23 +45,24 @@ public class PlayerEventHandler {
         }
         
         ItemStack stack = event.getItem().getEntityItem();
-        ItemStack remaining = stack;
-        System.out.println("playerItemPickup " + stack); 
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
-            System.out.println(" with cap age " + stack.getCapability(ModCapabilities.CAP_DECAY, null).getBirthTime());
-        } else {
-            System.out.println(" with no capdecay");
+        
+        // Special case for laid eggs
+        if (stack.getItem() instanceof ItemEgg) {
+            
+            int count = stack.getCount();
+            stack = ItemJj.newStack(ModItems.egg, count, player.world);
         }
-        remaining = ((ContainerInventory) player.inventoryContainer)
-                .add(remaining);
 
-        if (remaining.isEmpty()) {
+        stack = ((ContainerInventory) player.inventoryContainer)
+                .add(stack);
+
+        if (stack.isEmpty()) {
 
             event.getItem().setDead();
 
         } else {
             
-            event.getItem().setEntityItemStack(remaining);
+            event.getItem().setEntityItemStack(stack);
         }
 
         event.setCanceled(true);

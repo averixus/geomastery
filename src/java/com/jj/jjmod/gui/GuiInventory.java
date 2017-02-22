@@ -15,10 +15,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** Gui for the player inventory */
 public class GuiInventory extends GuiContainerAbstract {
     
+    /** X-position of player entity. */
     private static final int PLAYER_X = 51;
+    /** Y-position of player entity. */
     private static final int PLAYER_Y = 75;
+    /** Scale of player entity. */
     private static final int PLAYER_SCALE = 30;
+    /** Y offset of player entity. */
     private static final int Y_OFFSET = -50;
+    /** X-position of name. */
     private static final int TEXT_X = 97;
 
     public GuiInventory(ContainerInventory container) {
@@ -38,8 +43,8 @@ public class GuiInventory extends GuiContainerAbstract {
             int mouseX, int mouseY) {
 
         super.drawGuiContainerBackgroundLayer(ticks, mouseX, mouseY);
-        drawEntityOnScreen(this.guiLeft + PLAYER_X, this.guiTop + PLAYER_Y, PLAYER_SCALE,
-                this.xSize + PLAYER_X - mouseX,
+        drawEntityOnScreen(this.guiLeft + PLAYER_X, this.guiTop + PLAYER_Y,
+                PLAYER_SCALE, this.xSize + PLAYER_X - mouseX,
                 this.ySize + PLAYER_Y + Y_OFFSET - mouseY, this.mc.player);
     }
 

@@ -1,15 +1,11 @@
 package com.jj.jjmod.blocks;
 
-import java.util.Random;
 import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
-import com.jj.jjmod.tileentities.TECraftingForge;
-import com.jj.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
-import com.jj.jjmod.tileentities.TECraftingForge.EnumPartForge;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.BlockMaterial;
-import com.jj.jjmod.utilities.ToolType;
+import com.jj.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -17,8 +13,6 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -42,13 +36,14 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
                 5F, null);
     }
     
+    /** Breaks this block and drops item if applicable. */
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         
         player.addExhaustion(0.005F);
 
-        if (state.getValue(PART) == EnumPartTextiles.FRONT) {
+        if (state.getValue(PART).shouldDrop()) {
 
             spawnAsEntity(world, pos, new ItemStack(ModItems.craftingTextiles));
         }
@@ -67,27 +62,26 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
 
         EnumFacing facing = state.getValue(FACING);
         EnumPartTextiles part = state.getValue(PART);
+        boolean broken = false;
 
         if (part == EnumPartTextiles.FRONT) {
 
-            boolean brokenBack = world
-                    .getBlockState(pos.offset(facing)).getBlock() != this;
-
-            if (brokenBack) {
-
-                world.setBlockToAir(pos);
-                spawnAsEntity(world, pos, new ItemStack(ModItems.craftingTextiles));
-            }
+            broken = world.getBlockState(pos.offset(facing)).getBlock() != this;
             
         } else {
 
-            boolean brokenFront = world
-                    .getBlockState(pos.offset(facing.getOpposite()))
+            broken = world.getBlockState(pos.offset(facing.getOpposite()))
                     .getBlock() != this;
-
-            if (brokenFront) {
-
-                world.setBlockToAir(pos);
+        }
+        
+        if (broken) {
+            
+            world.setBlockToAir(pos);
+            
+            if (part.shouldDrop()) {
+                
+                spawnAsEntity(world, pos,
+                        new ItemStack(ModItems.craftingTextiles));
             }
         }
     }
@@ -96,13 +90,16 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
 
-        return state.getValue(PART) == EnumPartTextiles.BACK ? FULL_BLOCK_AABB : HALF[state.getValue(FACING).getHorizontalIndex()];
+        return state.getValue(PART) == EnumPartTextiles.BACK ? FULL_BLOCK_AABB :
+                HALF[state.getValue(FACING).getHorizontalIndex()];
     }
     
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
-        return state.getValue(PART) == EnumPartTextiles.BACK ? FULL_BLOCK_AABB : NULL_AABB;
+        return state.getValue(PART) == EnumPartTextiles.BACK ?
+                FULL_BLOCK_AABB : NULL_AABB;
     }
 
     @Override
@@ -154,44 +151,41 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
     }
 
     @Override
-    public void activate(EntityPlayer player, World world,
+    public boolean activate(EntityPlayer player, World world,
             int x, int y, int z) {
 
-        player.openGui(Main.instance, GuiList.TEXTILES.ordinal(),
-                world, x, y, z);
+        if (!world.isRemote) {
+            
+            player.openGui(Main.instance, GuiList.TEXTILES.ordinal(),
+                    world, x, y, z);
+        }
+        
+        return true;
     }
 
     /** Enum defining parts of the whole Textiles structure. */
-    public enum EnumPartTextiles implements IStringSerializable {
+    public enum EnumPartTextiles implements IStringSerializable, IMultipart {
 
-        FRONT("front", true),
-        BACK("back", false);
+        FRONT("front"),
+        BACK("back");
 
         private final String name;
-        private final boolean isFlat;
 
-        private EnumPartTextiles(String name, boolean isFlat) {
+        private EnumPartTextiles(String name) {
 
             this.name = name;
-            this.isFlat = isFlat;
         }
-
+        
         @Override
-        public String toString() {
-
-            return this.name;
+        public boolean shouldDrop() {
+            
+            return this == FRONT;
         }
 
         @Override
         public String getName() {
 
             return this.name;
-        }
-        
-        /** @return Whether this part has the flat bounding box. */
-        public boolean isFlat() {
-            
-            return this.isFlat;
         }
     }
 }

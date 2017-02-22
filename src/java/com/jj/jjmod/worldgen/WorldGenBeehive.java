@@ -9,10 +9,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** WorldGenerator for Beehive blocks. */
+/** WorldGenerator for beehive blocks. */
 public class WorldGenBeehive extends WorldGenAbstract {
     
-    private float chance = 0.001F;
+    /** Chance of generating per chunk. */
+    private static final float CHANCE = 0.001F;
 
     public WorldGenBeehive(World world, Random rand) {
         
@@ -22,7 +23,7 @@ public class WorldGenBeehive extends WorldGenAbstract {
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
 
-        if (this.rand.nextFloat() <= this.chance) {
+        if (this.rand.nextFloat() <= CHANCE) {
             
             int x = 0;
             int z = 0;

@@ -7,7 +7,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;
 
-/** Cotton Crop block. */
+/** Cotton crop block. */
 public class BlockCropCotton extends BlockCropAbstract {
     
     public BlockCropCotton() {
@@ -22,5 +22,4 @@ public class BlockCropCotton extends BlockCropAbstract {
         return biome instanceof BiomePlains || biome == Biomes.BEACH ||
                 biome instanceof BiomeJungle;
     }
-
 }

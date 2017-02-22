@@ -16,11 +16,11 @@ public class WorldGenGold extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        int rand1 = this.rand.nextInt(2) + 1;
-        int rand2 = this.rand.nextInt(2) + 1;
-        int rand3 = this.rand.nextInt(2) + 1;
+        int rand1 = this.rand.nextInt(2);
+        int rand2 = this.rand.nextInt(2);
+        int rand3 = this.rand.nextInt(2);
 
-        return rand1 + rand2 + rand3 - 3;
+        return rand1 + rand2 + rand3;
     }
 
     @Override
