@@ -1,20 +1,20 @@
 {
     "variants": {
-        "facing=north,occupied=true,part=foot": { "model": "jjmod:beds/wool_foot", "y": 270 },
-        "facing=east,occupied=true,part=foot":  { "model": "jjmod:beds/wool_foot"},
-        "facing=south,occupied=true,part=foot": { "model": "jjmod:beds/wool_foot", "y" : 90 },
-        "facing=west,occupied=true,part=foot":  { "model": "jjmod:beds/wool_foot", "y": 180 },
-        "facing=north,occupied=true,part=head": { "model": "jjmod:beds/wool_head", "y": 270 },
-        "facing=east,occupied=true,part=head":  { "model": "jjmod:beds/wool_head" },
-        "facing=south,occupied=true,part=head": { "model": "jjmod:beds/wool_head", "y": 90 },
-        "facing=west,occupied=true,part=head":  { "model": "jjmod:beds/wool_head", "y": 180 },
-        "facing=north,occupied=false,part=foot": { "model": "jjmod:beds/wool_foot", "y": 270 },
-        "facing=east,occupied=false,part=foot":  { "model": "jjmod:beds/wool_foot" },
-        "facing=south,occupied=false,part=foot": { "model": "jjmod:beds/wool_foot", "y": 90 },
-        "facing=west,occupied=false,part=foot":  { "model": "jjmod:beds/wool_foot", "y": 180 },
-        "facing=north,occupied=false,part=head": { "model": "jjmod:beds/wool_head", "y": 270 },
-        "facing=east,occupied=false,part=head":  { "model": "jjmod:beds/wool_head" },
-        "facing=south,occupied=false,part=head": { "model": "jjmod:beds/wool_head", "y": 90 },
-        "facing=west,occupied=false,part=head":  { "model": "jjmod:beds/wool_head", "y": 180 }
+        "facing=north,occupied=true,part=foot": { "model": "jjmod:bed_wool/foot", "y": 270 },
+        "facing=east,occupied=true,part=foot":  { "model": "jjmod:bed_wool/foot"},
+        "facing=south,occupied=true,part=foot": { "model": "jjmod:bed_wool/foot", "y" : 90 },
+        "facing=west,occupied=true,part=foot":  { "model": "jjmod:bed_wool/foot", "y": 180 },
+        "facing=north,occupied=true,part=head": { "model": "jjmod:bed_wool/head", "y": 270 },
+        "facing=east,occupied=true,part=head":  { "model": "jjmod:bed_wool/head" },
+        "facing=south,occupied=true,part=head": { "model": "jjmod:bed_wool/head", "y": 90 },
+        "facing=west,occupied=true,part=head":  { "model": "jjmod:bed_wool/head", "y": 180 },
+        "facing=north,occupied=false,part=foot": { "model": "jjmod:bed_wool/foot", "y": 270 },
+        "facing=east,occupied=false,part=foot":  { "model": "jjmod:bed_wool/foot" },
+        "facing=south,occupied=false,part=foot": { "model": "jjmod:bed_wool/foot", "y": 90 },
+        "facing=west,occupied=false,part=foot":  { "model": "jjmod:bed_wool/foot", "y": 180 },
+        "facing=north,occupied=false,part=head": { "model": "jjmod:bed_wool/head", "y": 270 },
+        "facing=east,occupied=false,part=head":  { "model": "jjmod:bed_wool/head" },
+        "facing=south,occupied=false,part=head": { "model": "jjmod:bed_wool/head", "y": 90 },
+        "facing=west,occupied=false,part=head":  { "model": "jjmod:bed_wool/head", "y": 180 }
     }
 }

@@ -5,7 +5,7 @@ import com.jj.jjmod.container.slots.SlotBackpack;
 import com.jj.jjmod.container.slots.SlotCrafting;
 import com.jj.jjmod.container.slots.SlotYoke;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;

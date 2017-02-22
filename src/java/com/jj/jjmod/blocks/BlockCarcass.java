@@ -2,7 +2,8 @@ package com.jj.jjmod.blocks;
 
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.capabilities.ICapDecay;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.items.ItemCarcassDecayable;
 import com.jj.jjmod.items.ItemHuntingknife;
 import com.jj.jjmod.items.ItemJj;
@@ -62,6 +63,7 @@ public abstract class BlockCarcass extends BlockNew
         
         player.addExhaustion(0.005F);
         long birthTime = ((TECarcass) te).getBirthTime();
+        int stageSize = ((TECarcass) te).getStageSize();
         
         if (stack.getItem() instanceof ItemHuntingknife) {
             
@@ -69,8 +71,11 @@ public abstract class BlockCarcass extends BlockNew
             
         } else {
 
-            spawnAsEntity(world, pos, ItemJj
-                    .newStack(this.item.get(), 1, world));
+            ItemStack drop = new ItemStack(this.item.get(), 1);
+            ICapDecay capDecay = drop.getCapability(ModCaps.CAP_DECAY, null);
+            capDecay.setBirthTime(birthTime);
+            capDecay.setStageSize(stageSize);
+            spawnAsEntity(world, pos, drop);
         }
     }
     

@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/peat" }
+        "normal": { "model": "jjmod:peat" },
+        "inventory": { "model": "jjmod:peat" }
     }
 }

@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import com.google.common.collect.Lists;
 import com.jj.jjmod.crafting.CookingManager;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.init.ModRecipes;
 import com.jj.jjmod.packets.DryingPacketClient;
@@ -184,9 +184,9 @@ public class TEDrying extends TileEntity implements ITickable {
                 
                 result = result.copy();
                 
-                if (result.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                if (result.hasCapability(ModCaps.CAP_DECAY, null)) {
                     
-                    result.getCapability(ModCapabilities.CAP_DECAY, null)
+                    result.getCapability(ModCaps.CAP_DECAY, null)
                             .setBirthTime(this.world.getTotalWorldTime());
                 }
                 

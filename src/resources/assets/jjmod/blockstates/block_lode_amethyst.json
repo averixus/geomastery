@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/lode_amethyst" }
+        "normal": { "model": "jjmod:lode_amethyst" },
+        "inventory": { "model": "jjmod:lode_amethyst" }
     }
 }

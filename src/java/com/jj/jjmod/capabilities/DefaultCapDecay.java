@@ -24,7 +24,12 @@ public class DefaultCapDecay implements ICapDecay {
     
     @Override
     public float getRenderFraction() {
-
+        
+        if (Minecraft.getMinecraft().world == null) {
+            
+            return 0;
+        }
+        
         long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
         long timeDiff = currentTime - this.birthTime;
         long stage = timeDiff / this.stageSize;
@@ -57,6 +62,11 @@ public class DefaultCapDecay implements ICapDecay {
     
     @Override
     public boolean isRot() {
+        
+        if (Minecraft.getMinecraft().world == null) {
+            
+            return false;
+        }
         
         long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
         long timeDiff = currentTime - this.birthTime;

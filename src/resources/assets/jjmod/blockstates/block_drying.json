@@ -1,5 +1,12 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "normal": { "model": "jjmod:crafters/drying" }
+        "normal": { "model": "jjmod:drying" },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/drying"
+            }
+        }]
     }
 }

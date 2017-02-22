@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:carcass/chicken" }
+        "normal": { "model": "jjmod:carcass_chicken" }
     }
 }

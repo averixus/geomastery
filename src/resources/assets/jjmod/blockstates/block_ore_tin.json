@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/ore_tin" }
+        "normal": { "model": "jjmod:ore_tin" },
+        "inventory": { "model": "jjmod:ore_tin" }
     }
 }

@@ -1,6 +1,6 @@
 package com.jj.jjmod.utilities;
 
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class FoodStatsWrapper extends FoodStats {
     @Override
     public void addExhaustion(float exhaustion) {
         
-        this.player.getCapability(ModCapabilities.CAP_PLAYER, null)
+        this.player.getCapability(ModCaps.CAP_PLAYER, null)
                 .addExhaustion(exhaustion);
     }
     
@@ -32,14 +32,14 @@ public class FoodStatsWrapper extends FoodStats {
     @Override
     public int getFoodLevel() {
         
-        if (!this.player.getCapability(ModCapabilities.CAP_PLAYER, null)
+        if (!this.player.getCapability(ModCaps.CAP_PLAYER, null)
                 .canSprint()) {
             
             return 0;
             
         } else {
         
-        return this.player.getCapability(ModCapabilities.CAP_PLAYER, null)
+        return this.player.getCapability(ModCaps.CAP_PLAYER, null)
                 .getFoodLevel();
         }
     }

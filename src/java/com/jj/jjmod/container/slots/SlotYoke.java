@@ -2,7 +2,7 @@ package com.jj.jjmod.container.slots;
 
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,7 +22,7 @@ public class SlotYoke extends Slot {
         
         super(null, 0, x, y);
         this.player = player;
-        this.capability = player.getCapability(ModCapabilities.CAP_PLAYER,
+        this.capability = player.getCapability(ModCaps.CAP_PLAYER,
                 null);
         this.backgroundName = "jjmod:gui/yoke_slot";
     }

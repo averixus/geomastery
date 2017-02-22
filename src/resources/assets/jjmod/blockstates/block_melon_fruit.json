@@ -1,8 +1,9 @@
 {
     "variants": {
-        "stem=north": { "model": "jjmod:plants/melon_fruit", "y": 90 },
-        "stem=east": { "model": "jjmod:plants/melon_fruit", "y": 180 },
-        "stem=south": { "model": "jjmod:plants/melon_fruit", "y": 270 },
-        "stem=west": { "model": "jjmod:plants/melon_fruit" }
+        "stem=north": { "model": "jjmod:melon", "y": 90 },
+        "stem=east": { "model": "jjmod:melon", "y": 180 },
+        "stem=south": { "model": "jjmod:melon", "y": 270 },
+        "stem=west": { "model": "jjmod:melon" },
+        "inventory": { "model": "jjmod:melon" }
     }
 }

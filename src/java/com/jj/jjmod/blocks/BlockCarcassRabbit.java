@@ -1,6 +1,6 @@
 package com.jj.jjmod.blocks;
 
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public class BlockCarcassRabbit extends BlockCarcass {
     protected void spawnDrops(World world, BlockPos pos, long age) {
         
         ItemStack meat = new ItemStack(ModItems.rabbitRaw);
-        meat.getCapability(ModCapabilities.CAP_DECAY, null).setBirthTime(age);
+        meat.getCapability(ModCaps.CAP_DECAY, null).setBirthTime(age);
         
         spawnAsEntity(world, pos, meat);
         spawnAsEntity(world, pos, new ItemStack(Items.RABBIT_HIDE));

@@ -1,12 +1,12 @@
 {
     "variants": {
-        "age=0": { "model": "jjmod:plants/bean_unripe" },
-        "age=1": { "model": "jjmod:plants/bean_unripe" },
-        "age=2": { "model": "jjmod:plants/bean_unripe" },
-        "age=3": { "model": "jjmod:plants/bean_unripe" },
-        "age=4": { "model": "jjmod:plants/bean_unripe" },
-        "age=5": { "model": "jjmod:plants/bean_unripe" },
-        "age=6": { "model": "jjmod:plants/bean_unripe" },
-        "age=7": { "model": "jjmod:plants/bean_ripe" }
+        "age=0": { "model": "jjmod:bean/unripe" },
+        "age=1": { "model": "jjmod:bean/unripe" },
+        "age=2": { "model": "jjmod:bean/unripe" },
+        "age=3": { "model": "jjmod:bean/unripe" },
+        "age=4": { "model": "jjmod:bean/unripe" },
+        "age=5": { "model": "jjmod:bean/unripe" },
+        "age=6": { "model": "jjmod:bean/unripe" },
+        "age=7": { "model": "jjmod:bean/ripe" }
     }
 }

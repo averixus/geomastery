@@ -1,20 +1,20 @@
 {
     "variants": {
-        "facing=north,part=t": { "model": "jjmod:crafters/armourer_t" },
-        "facing=north,part=l": { "model": "jjmod:crafters/armourer_l" },
-        "facing=north,part=m": { "model": "jjmod:crafters/armourer_m" },
-        "facing=north,part=r": { "model": "jjmod:crafters/armourer_r" },
-        "facing=east,part=t": { "model": "jjmod:crafters/armourer_t", "y": 90 },
-        "facing=east,part=l": { "model": "jjmod:crafters/armourer_l", "y": 90 },
-        "facing=east,part=m": { "model": "jjmod:crafters/armourer_m", "y": 90 },
-        "facing=east,part=r": { "model": "jjmod:crafters/armourer_r", "y": 90 },
-        "facing=south,part=t": { "model": "jjmod:crafters/armourer_t", "y": 180 },
-        "facing=south,part=l": { "model": "jjmod:crafters/armourer_l", "y": 180 },
-        "facing=south,part=m": { "model": "jjmod:crafters/armourer_m", "y": 180 },
-        "facing=south,part=r": { "model": "jjmod:crafters/armourer_r", "y": 180 },
-        "facing=west,part=t": { "model": "jjmod:crafters/armourer_t", "y": 270 },
-        "facing=west,part=l": { "model": "jjmod:crafters/armourer_l", "y": 270 },
-        "facing=west,part=m": { "model": "jjmod:crafters/armourer_m", "y": 270 },
-        "facing=west,part=r": { "model": "jjmod:crafters/armourer_r", "y": 270 }
+        "facing=north,part=t": { "model": "jjmod:crafting_armourer/t" },
+        "facing=north,part=l": { "model": "jjmod:crafting_armourer/l" },
+        "facing=north,part=m": { "model": "jjmod:crafting_armourer/m" },
+        "facing=north,part=r": { "model": "jjmod:crafting_armourer/r" },
+        "facing=east,part=t": { "model": "jjmod:crafting_armourer/t", "y": 90 },
+        "facing=east,part=l": { "model": "jjmod:crafting_armourer/l", "y": 90 },
+        "facing=east,part=m": { "model": "jjmod:crafting_armourer/m", "y": 90 },
+        "facing=east,part=r": { "model": "jjmod:crafting_armourer/r", "y": 90 },
+        "facing=south,part=t": { "model": "jjmod:crafting_armourer/t", "y": 180 },
+        "facing=south,part=l": { "model": "jjmod:crafting_armourer/l", "y": 180 },
+        "facing=south,part=m": { "model": "jjmod:crafting_armourer/m", "y": 180 },
+        "facing=south,part=r": { "model": "jjmod:crafting_armourer/r", "y": 180 },
+        "facing=west,part=t": { "model": "jjmod:crafting_armourer/t", "y": 270 },
+        "facing=west,part=l": { "model": "jjmod:crafting_armourer/l", "y": 270 },
+        "facing=west,part=m": { "model": "jjmod:crafting_armourer/m", "y": 270 },
+        "facing=west,part=r": { "model": "jjmod:crafting_armourer/r", "y": 270 }
     }
 }

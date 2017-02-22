@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/ore_silver" }
+        "normal": { "model": "jjmod:ore_silver" },
+        "inventory": { "model": "jjmod:ore_silver" }
     }
 }

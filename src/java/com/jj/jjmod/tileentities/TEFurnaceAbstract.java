@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import com.jj.jjmod.crafting.CookingManager;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.packets.FurnacePacketClient;
 import net.minecraft.item.ItemStack;
@@ -272,9 +272,9 @@ public abstract class TEFurnaceAbstract extends TileEntity
                 
                 result = result.copy();
                 
-                if (result.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                if (result.hasCapability(ModCaps.CAP_DECAY, null)) {
                     
-                    result.getCapability(ModCapabilities.CAP_DECAY, null)
+                    result.getCapability(ModCaps.CAP_DECAY, null)
                             .setBirthTime(this.world.getTotalWorldTime());
                 }
                 

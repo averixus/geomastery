@@ -2,5 +2,13 @@
     "parent": "item/generated",
     "textures": {
         "layer0": "jjmod:items/potato_cooked"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "rot": 1
+            },
+            "model": "jjmod:item/item_rot"
+        }
+    ]
 }

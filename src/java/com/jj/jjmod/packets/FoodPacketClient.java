@@ -1,7 +1,7 @@
 package com.jj.jjmod.packets;
 
 import com.jj.jjmod.capabilities.DefaultCapPlayer;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -62,7 +62,7 @@ public class FoodPacketClient implements IMessage {
         public void processMessage(FoodPacketClient message) {
             
             EntityPlayer player = Minecraft.getMinecraft().player;
-            ((DefaultCapPlayer) player.getCapability(ModCapabilities
+            ((DefaultCapPlayer) player.getCapability(ModCaps
                     .CAP_PLAYER, null))
                     .processFoodMessage(message.type, message.hunger);
         }

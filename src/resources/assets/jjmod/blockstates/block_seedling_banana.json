@@ -1,6 +1,13 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "age=0": { "model": "jjmod:plants/seedling_banana" },
-        "age=1": { "model": "jjmod:plants/seedling_banana" }
+        "age=0": { "model": "jjmod:seedling_banana" },
+        "age=1": { "model": "jjmod:seedling_banana" },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/seedling_banana"
+            }
+        }]
     }
 }

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:building/slab_brick_single" }
+        "normal": { "model": "jjmod:slab_brick/single" }
     }
 }

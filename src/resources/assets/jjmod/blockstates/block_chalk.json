@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/chalk" }
+        "normal": { "model": "jjmod:chalk" },
+        "inventory": { "model": "jjmod:chalk" }
     }
 }

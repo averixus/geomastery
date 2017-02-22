@@ -3,7 +3,7 @@ package com.jj.jjmod.main;
 import com.jj.jjmod.capabilities.DefaultCapPlayer;
 import com.jj.jjmod.capabilities.ProviderCapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodStatsWrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +26,7 @@ public class CapabilityEventHandler {
         if (event.getEntity() instanceof EntityPlayer) {
 
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            player.getCapability(ModCapabilities.CAP_PLAYER, null).syncAll();
+            player.getCapability(ModCaps.CAP_PLAYER, null).syncAll();
         }
     }
     
@@ -41,9 +41,9 @@ public class CapabilityEventHandler {
 
         EntityPlayer player = (EntityPlayer) event.getObject();
         
-        if (!(player.hasCapability(ModCapabilities.CAP_PLAYER, null))) {
+        if (!(player.hasCapability(ModCaps.CAP_PLAYER, null))) {
 
-            event.addCapability(ModCapabilities.CAP_PLAYER_ID,
+            event.addCapability(ModCaps.CAP_PLAYER_ID,
                     new ProviderCapPlayer(new DefaultCapPlayer(player)));
         }
     }
@@ -58,7 +58,7 @@ public class CapabilityEventHandler {
         }
         
         EntityPlayer player = event.player;
-        player.getCapability(ModCapabilities.CAP_PLAYER, null).tick();
+        player.getCapability(ModCaps.CAP_PLAYER, null).tick();
         
         if (player.inventoryContainer instanceof ContainerPlayer &&
                 !player.capabilities.isCreativeMode) {

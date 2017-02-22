@@ -1,5 +1,11 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:crafters/cookfire" }
+        "normal": { "model": "jjmod:furnace_cookfire" },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/furnace_cookfire"
+            }
+        }]
     }
 }

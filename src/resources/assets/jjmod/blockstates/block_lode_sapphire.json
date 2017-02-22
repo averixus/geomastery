@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/lode_sapphire" }
+        "normal": { "model": "jjmod:lode_sapphire" },
+        "inventory": { "model": "jjmod:lode_sapphire" }
     }
 }

@@ -1,8 +1,9 @@
 {
     "variants": {
-        "facing=north": { "model": "jjmod:building/stairs_pole", "y": 180 },
-        "facing=east": { "model": "jjmod:building/stairs_pole", "y": 270 },
-        "facing=south": { "model": "jjmod:building/stairs_pole" },
-        "facing=west": { "model": "jjmod:building/stairs_pole", "y": 90 }
+        "facing=north": { "model": "jjmod:stairs_pole", "y": 180 },
+        "facing=east": { "model": "jjmod:stairs_pole", "y": 270 },
+        "facing=south": { "model": "jjmod:stairs_pole" },
+        "facing=west": { "model": "jjmod:stairs_pole", "y": 90 },
+        "inventory": { "model": "jjmod:stairs_pole" }
     }
 }

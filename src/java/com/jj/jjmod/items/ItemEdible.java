@@ -2,7 +2,7 @@ package com.jj.jjmod.items;
 
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -43,7 +43,7 @@ public class ItemEdible extends ItemFood {
         
         ItemStack stack = player.getHeldItem(hand);
         ICapPlayer playerCap = player
-                .getCapability(ModCapabilities.CAP_PLAYER, null);
+                .getCapability(ModCaps.CAP_PLAYER, null);
 
         if (playerCap.canEat(this.type)) {
 
@@ -63,7 +63,7 @@ public class ItemEdible extends ItemFood {
         
             EntityPlayer player = (EntityPlayer) entity;
             
-            player.getCapability(ModCapabilities.CAP_PLAYER, null)
+            player.getCapability(ModCaps.CAP_PLAYER, null)
                 .addStats(this, stack);
             
             world.playSound(player, player.posX, player.posY, player.posZ,

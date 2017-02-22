@@ -1,8 +1,9 @@
 {
     "variants": {
-        "axis=y":  { "model": "jjmod:wood/log_apple" },
-        "axis=z":   { "model": "jjmod:wood/log_apple", "x": 90 },
-        "axis=x":   { "model": "jjmod:wood/log_apple", "x": 90, "y": 90 },
-        "axis=none": { "model": "jjmod:wood/bark_apple" }
+        "axis=y":  { "model": "jjmod:wood_apple/log" },
+        "axis=z":   { "model": "jjmod:wood_apple/log", "x": 90 },
+        "axis=x":   { "model": "jjmod:wood_apple/log", "x": 90, "y": 90 },
+        "axis=none": { "model": "jjmod:wood_apple/bark" },
+        "inventory": { "model": "jjmod:wood_apple/log" }
     }
 }

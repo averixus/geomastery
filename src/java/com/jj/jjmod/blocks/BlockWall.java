@@ -318,12 +318,17 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
 
         } else {
             
-            state = this.getActualState(state, world, pos);
-            EnumPosition position = this.getActualState(state, world, pos)
-                    .getValue(POSITION);
-            return position == EnumPosition.TOP ||
-                    position == EnumPosition.LONE ?
-                    CENTRE_POST_LOW : CENTRE_POST;
+            switch (this.getActualState(state, world, pos).getValue(STRAIGHT)) {
+                
+                case NS:
+                    return CENTRE_HALF_LOW[0];
+                    
+                case EW:
+                    return CENTRE_HALF_LOW[1];
+                    
+                default:
+                    return CENTRE_POST;
+            }           
         }
     }
     

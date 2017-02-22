@@ -1,6 +1,6 @@
 package com.jj.jjmod.capabilities;
 
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -19,13 +19,13 @@ public class ProviderCapPlayer implements ICapabilitySerializable {
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing side) {
         
-        return capability == ModCapabilities.CAP_PLAYER;
+        return capability == ModCaps.CAP_PLAYER;
     }
     
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing side) {
         
-        if (capability == ModCapabilities.CAP_PLAYER) {
+        if (capability == ModCaps.CAP_PLAYER) {
             
             return (T) this.instance;
         }

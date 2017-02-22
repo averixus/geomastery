@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
+import com.jj.jjmod.init.ModCaps;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -44,12 +45,18 @@ public class CookingManager {
 
     /** Gets the smelting result for the input.
      * @return The output ItemStack smelted from the input. */
-    public ItemStack getCookingResult(ItemStack stack) {
+    public ItemStack getCookingResult(ItemStack input) {
 
+        if (input.hasCapability(ModCaps.CAP_DECAY, null) &&
+                input.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+            
+            return ItemStack.EMPTY;
+        }
+        
         for (Entry<ItemStack, ItemStack> entry : this.recipes.entrySet()) {
 
-            if (ItemStack.areItemsEqual(stack, entry.getKey())) {
-
+            if (ItemStack.areItemsEqual(input, entry.getKey())) {
+                
                 return entry.getValue();
             }
         }
@@ -57,11 +64,13 @@ public class CookingManager {
         return ItemStack.EMPTY;
     }
     
-    public int getCookingTime(ItemStack stack) {
+    /** Gets the time taken to cook the input.
+     * @return The number of ticks taken to cook this input. */
+    public int getCookingTime(ItemStack input) {
         
         for (Entry<ItemStack, Integer> entry : this.cookingTimes.entrySet()) {
             
-            if (ItemStack.areItemsEqual(stack, entry.getKey())) {
+            if (ItemStack.areItemsEqual(input, entry.getKey())) {
                 
                 return entry.getValue();
             }

@@ -13,10 +13,10 @@
             }
         }],
         "base": [{
-            "model": "jjmod:plants/rice_base"
+            "model": "jjmod:rice/base"
         }],
         "trans": [{
-            "model": "jjmod:plants/water"
+            "model": "jjmod:rice/water"
         }]
     }
 }

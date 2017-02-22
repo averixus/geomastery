@@ -5,7 +5,7 @@ import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ICapDecay;
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +17,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -40,9 +41,9 @@ public class ItemEdibleDecayable extends ItemEdible {
             public float apply(ItemStack stack, @Nullable World world,
                     @Nullable EntityLivingBase entity) {
                 
-                if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+                if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
                     
-                    if (stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                    if (stack.getCapability(ModCaps.CAP_DECAY, null)
                             .isRot()) {
                         
                         return 1;
@@ -62,15 +63,16 @@ public class ItemEdibleDecayable extends ItemEdible {
         return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
     }
     
+    /** Starts eating if not rotten. */
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
         
         ItemStack stack = player.getHeldItem(hand);
         ICapDecay decayCap = stack
-                .getCapability(ModCapabilities.CAP_DECAY, null);
+                .getCapability(ModCaps.CAP_DECAY, null);
         ICapPlayer playerCap = player
-                .getCapability(ModCapabilities.CAP_PLAYER, null);
+                .getCapability(ModCaps.CAP_PLAYER, null);
 
         if (playerCap.canEat(this.type) && !decayCap.isRot()) {
 
@@ -79,6 +81,19 @@ public class ItemEdibleDecayable extends ItemEdible {
         }
         
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+    }
+    
+    /** Makes this item named rotten according to capability. */
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
+                stack.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+            
+            return "Rotten " + super.getItemStackDisplayName(stack);
+        }
+        
+        return super.getItemStackDisplayName(stack);
     }
     
     /** Makes this item always show a durability bar. */
@@ -99,9 +114,9 @@ public class ItemEdibleDecayable extends ItemEdible {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
             
-            float fraction = stack.getCapability(ModCapabilities.CAP_DECAY,
+            float fraction = stack.getCapability(ModCaps.CAP_DECAY,
                     null).getRenderFraction();
             return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
         }

@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:carcass/cowpart" }
+        "normal": { "model": "jjmod:carcass_cowpart" }
     }
 }

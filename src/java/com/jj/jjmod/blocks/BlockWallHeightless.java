@@ -58,7 +58,17 @@ public class BlockWallHeightless extends BlockWall {
 
         } else {
 
-            return CENTRE_POST;
+            switch (this.getActualState(state, world, pos).getValue(STRAIGHT)) {
+                
+                case NS:
+                    return CENTRE_HALF[1];
+                    
+                case EW:
+                    return CENTRE_HALF[0];
+                    
+                default:
+                    return CENTRE_POST;
+            }
         }
     }
     

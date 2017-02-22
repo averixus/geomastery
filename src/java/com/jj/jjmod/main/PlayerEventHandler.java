@@ -5,7 +5,7 @@ import com.jj.jjmod.blocks.BlockBedAbstract.EnumPartBed;
 import com.jj.jjmod.blocks.BlockBedBreakableAbstract;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.items.ItemShield;
@@ -133,7 +133,7 @@ public class PlayerEventHandler {
             }
         }
         
-        player.getCapability(ModCapabilities.CAP_PLAYER, null)
+        player.getCapability(ModCaps.CAP_PLAYER, null)
                 .sleep(((BlockBedAbstract) block).getHealAmount());
     }
     

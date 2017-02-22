@@ -1,6 +1,6 @@
 package com.jj.jjmod.main;
 
-import com.jj.jjmod.init.ModBlocks;
+import com.jj.jjmod.init.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -28,28 +28,28 @@ public class EntityEventHandler {
         if (entity instanceof EntityPig) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModBlocks.carcassPig), 0);
+            entity.entityDropItem(new ItemStack(ModItems.carcassPig), 0);
 
         } else if (entity instanceof EntityCow) {
 
             event.getDrops().clear();
             entity.entityDropItem(new
-                    ItemStack(ModBlocks.carcassCowpart, 4), 0);
+                    ItemStack(ModItems.carcassCowpart, 4), 0);
             
         } else if (entity instanceof EntitySheep) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModBlocks.carcassSheep), 0);
+            entity.entityDropItem(new ItemStack(ModItems.carcassSheep), 0);
 
         } else if (entity instanceof EntityChicken) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModBlocks.carcassChicken), 0);
+            entity.entityDropItem(new ItemStack(ModItems.carcassChicken), 0);
 
         } else if (entity instanceof EntityRabbit) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModBlocks.carcassRabbit), 0);
+            entity.entityDropItem(new ItemStack(ModItems.carcassRabbit), 0);
         }
     }
 }

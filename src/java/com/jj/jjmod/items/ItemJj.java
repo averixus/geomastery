@@ -1,6 +1,6 @@
 package com.jj.jjmod.items;
 
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,9 +40,9 @@ public class ItemJj extends Item {
         
         ItemStack stack = new ItemStack(item, count);
         
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
             
-            stack.getCapability(ModCapabilities.CAP_DECAY, null)
+            stack.getCapability(ModCaps.CAP_DECAY, null)
                     .setBirthTime(world.getTotalWorldTime());
         }
         

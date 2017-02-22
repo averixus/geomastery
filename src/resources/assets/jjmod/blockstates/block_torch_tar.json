@@ -1,9 +1,16 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=up": { "model": "jjmod:lights/torch_tar_up" },
-        "facing=east": { "model": "jjmod:lights/torch_tar_side", "y": 270 },
-        "facing=south": { "model": "jjmod:lights/torch_tar_side" },
-        "facing=west": { "model": "jjmod:lights/torch_tar_side", "y": 90 },
-        "facing=north": { "model": "jjmod:lights/torch_tar_side", "y": 180 }
+        "facing=up": { "model": "jjmod:torch_tar/up" },
+        "facing=east": { "model": "jjmod:torch_tar/side", "y": 270 },
+        "facing=south": { "model": "jjmod:torch_tar/side" },
+        "facing=west": { "model": "jjmod:torch_tar/side", "y": 90 },
+        "facing=north": { "model": "jjmod:torch_tar/side", "y": 180 },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/torch_tar"
+            }
+        }]
     }
 }

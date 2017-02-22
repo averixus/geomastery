@@ -1,19 +1,28 @@
 {
+    "forge_marker": 1,
     "multipart": [
         {   
-            "apply": { "model": "jjmod:building/fence_post" }
+            "apply": { "model": "jjmod:fence/post" }
         },
         {   "when": { "north": "true" },
-            "apply": { "model": "jjmod:building/fence_side", "y": 270, "uvlock": true }
+            "apply": { "model": "jjmod:fence/side", "y": 270, "uvlock": true }
         },
         {   "when": { "east": "true" },
-            "apply": { "model": "jjmod:building/fence_side", "uvlock": true }
+            "apply": { "model": "jjmod:fence/side", "uvlock": true }
         },
         {   "when": { "south": "true" },
-            "apply": { "model": "jjmod:building/fence_side", "y": 90, "uvlock": true }
+            "apply": { "model": "jjmod:fence/side", "y": 90, "uvlock": true }
         },
         {   "when": { "west": "true" },
-            "apply": { "model": "jjmod:building/fence_side", "y": 180, "uvlock": true }
+            "apply": { "model": "jjmod:fence/side", "y": 180, "uvlock": true }
         }
-    ]
+    ],
+    "variants": {
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/fence"
+            }
+        }]
+    }
 }

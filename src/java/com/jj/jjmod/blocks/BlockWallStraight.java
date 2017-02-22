@@ -43,13 +43,6 @@ public class BlockWallStraight extends BlockWall {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return CENTRE_POST;
-    }
-    
-    @Override
     public void addCollisionBoxToList(IBlockState state, World world,
             BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
             @Nullable Entity entity, boolean unused) {

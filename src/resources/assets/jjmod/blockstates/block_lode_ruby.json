@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/lode_ruby" }
+        "normal": { "model": "jjmod:lode_ruby" },
+        "inventory": { "model": "jjmod:lode_ruby" }
     }
 }

@@ -1,88 +1,88 @@
 {
     "multipart": [
         {   "when": { "position": "lone", "straight": "ns" },
-            "apply": { "model": "jjmod:building/brick_double_lone_straight" }
+            "apply": { "model": "jjmod:wall_brick_double/lone_straight" }
         },
         {   "when": { "position": "lone", "straight": "ew" },
-            "apply": { "model": "jjmod:building/brick_double_lone_straight", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/lone_straight", "y": 90 }
         },
         {   "when": { "position": "lone", "straight": "no" },
-            "apply": { "model": "jjmod:building/brick_double_lone_post" }
+            "apply": { "model": "jjmod:wall_brick_double/lone_post" }
         },
         {   "when": { "position": "lone", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:building/brick_double_lone_side", "y": 180 }
+            "apply": { "model": "jjmod:wall_brick_double/lone_side", "y": 180 }
         },
         {   "when": { "position": "lone", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:building/brick_double_lone_side", "y": 270 }
+            "apply": { "model": "jjmod:wall_brick_double/lone_side", "y": 270 }
         },
         {   "when": { "position": "lone", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:building/brick_double_lone_side" }
+            "apply": { "model": "jjmod:wall_brick_double/lone_side" }
         },
         {   "when": { "position": "lone", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:building/brick_double_lone_side", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/lone_side", "y": 90 }
         },
         {   "when": { "position": "bottom", "straight": "ns" },
-            "apply": { "model": "jjmod:building/brick_double_bottom_straight" }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_straight" }
         },
         {   "when": { "position": "bottom", "straight": "ew" },
-            "apply": { "model": "jjmod:building/brick_double_bottom_straight", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_straight", "y": 90 }
         },
         {   "when": { "position": "bottom", "straight": "no"},
-            "apply": { "model": "jjmod:building/brick_double_bottom_post" }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_post" }
         },
         {   "when": { "position": "bottom", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:building/brick_double_bottom_side", "y": 180 }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_side", "y": 180 }
         },
         {   "when": { "position": "bottom", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:building/brick_double_bottom_side", "y": 270 }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_side", "y": 270 }
         },
         {   "when": { "position": "bottom", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:building/brick_double_bottom_side" }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_side" }
         },
         {   "when": { "position": "bottom", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:building/brick_double_bottom_side", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/bottom_side", "y": 90 }
         },
         {   "when": { "position": "middle", "straight": "ns" },
-            "apply": { "model": "jjmod:building/brick_double_middle_straight" }
+            "apply": { "model": "jjmod:wall_brick_double/middle_straight" }
         },
         {   "when": { "position": "middle", "straight": "ew" },
-            "apply": { "model": "jjmod:building/brick_double_middle_straight", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/middle_straight", "y": 90 }
         },
         {   "when": { "position": "middle", "straight": "no"},
-            "apply": { "model": "jjmod:building/brick_double_middle_post" }
+            "apply": { "model": "jjmod:wall_brick_double/middle_post" }
         },
         {   "when": { "position": "middle", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:building/brick_double_middle_side", "y": 180 }
+            "apply": { "model": "jjmod:wall_brick_double/middle_side", "y": 180 }
         },
         {   "when": { "position": "middle", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:building/brick_double_middle_side", "y": 270 }
+            "apply": { "model": "jjmod:wall_brick_double/middle_side", "y": 270 }
         },
         {   "when": { "position": "middle", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:building/brick_double_middle_side" }
+            "apply": { "model": "jjmod:wall_brick_double/middle_side" }
         },
         {   "when": { "position": "middle", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:building/brick_double_middle_side", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/middle_side", "y": 90 }
         },
         {   "when": { "position": "top", "straight": "ns" },
-            "apply": { "model": "jjmod:building/brick_double_top_straight" }
+            "apply": { "model": "jjmod:wall_brick_double/top_straight" }
         },
         {   "when": { "position": "top", "straight": "ew" },
-            "apply": { "model": "jjmod:building/brick_double_top_straight", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/top_straight", "y": 90 }
         },
         {   "when": { "position": "top", "straight": "no"},
-            "apply": { "model": "jjmod:building/brick_double_top_post" }
+            "apply": { "model": "jjmod:wall_brick_double/top_post" }
         },
         {   "when": { "position": "top", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:building/brick_double_top_side", "y": 180 }
+            "apply": { "model": "jjmod:wall_brick_double/top_side", "y": 180 }
         },
         {   "when": { "position": "top", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:building/brick_double_top_side", "y": 270 }
+            "apply": { "model": "jjmod:wall_brick_double/top_side", "y": 270 }
         },
         {   "when": { "position": "top", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:building/brick_double_top_side" }
+            "apply": { "model": "jjmod:wall_brick_double/top_side" }
         },
         {   "when": { "position": "top", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:building/brick_double_top_side", "y": 90 }
+            "apply": { "model": "jjmod:wall_brick_double/top_side", "y": 90 }
         }
     ]
 }

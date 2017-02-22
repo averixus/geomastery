@@ -19,6 +19,6 @@ public class BlockLightCandle extends BlockLight {
         
         EnumFacing facing = state.getValue(FACING);
         return facing == EnumFacing.UP ? BlockNew.CENTRE_FOUR :
-            BlockNew.BLIP[facing.getHorizontalIndex()];
+            BlockNew.BLIP[(facing.getHorizontalIndex() + 2) % 4];
     }
 }

@@ -2,7 +2,7 @@ package com.jj.jjmod.main;
 
 import com.jj.jjmod.init.ModBiomes;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModEntities;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModFluids;
@@ -44,7 +44,7 @@ public class CommonProxy {
         ModBlocks.preInit();
         ModItems.preInit();
         ModPackets.preInit();
-        ModCapabilities.preInit();
+        ModCaps.preInit();
         ModEntities.preInit();
         
         GameRegistry.registerWorldGenerator(WORLDGEN, 0);

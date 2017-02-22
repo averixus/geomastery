@@ -3,7 +3,7 @@ package com.jj.jjmod.tileentities;
 import java.util.List;
 import com.jj.jjmod.blocks.BlockBox;
 import com.jj.jjmod.container.ContainerBox;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.items.ItemEdibleDecayable;
 import net.minecraft.entity.player.EntityPlayer;

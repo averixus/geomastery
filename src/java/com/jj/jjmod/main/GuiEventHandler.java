@@ -3,7 +3,7 @@ package com.jj.jjmod.main;
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -49,7 +49,7 @@ public class GuiEventHandler {
         if (event.getType() == ElementType.HOTBAR) {
         
             EnumHandSide hand = player.getPrimaryHand();
-            ResourceLocation icon = player.getCapability(ModCapabilities
+            ResourceLocation icon = player.getCapability(ModCaps
                     .CAP_PLAYER, null).getTempIcon();
             
             int x = event.getResolution().getScaledWidth() / 2;
@@ -68,7 +68,7 @@ public class GuiEventHandler {
             int left = event.getResolution().getScaledWidth() / 2 + 91;
             int top = event.getResolution().getScaledHeight() - 39;
 
-            ICapPlayer playerCap = player.getCapability(ModCapabilities
+            ICapPlayer playerCap = player.getCapability(ModCaps
                     .CAP_PLAYER, null);
             
             int carbsHunger = playerCap.foodLevel(FoodType.CARBS);

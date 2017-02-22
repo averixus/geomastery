@@ -5,7 +5,7 @@ import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ICapDecay;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.tileentities.TECarcass;
 import net.minecraft.block.Block;
@@ -73,7 +73,7 @@ public class ItemCarcassDecayable extends ItemJj {
         // Set up block and TE
         IBlockState placeState = this.block.getDefaultState();
         world.setBlockState(pos, placeState);
-        ICapDecay cap = stack.getCapability(ModCapabilities.CAP_DECAY, null);
+        ICapDecay cap = stack.getCapability(ModCaps.CAP_DECAY, null);
         ((TECarcass) world.getTileEntity(pos))
                 .setData(cap.getBirthTime(), cap.getStageSize());
         
@@ -89,6 +89,19 @@ public class ItemCarcassDecayable extends ItemJj {
         }
         
         return EnumActionResult.SUCCESS;
+    }
+    
+    /** Makes this item named rotten according to capability. */
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
+                stack.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+            
+            return "Rotten " + super.getItemStackDisplayName(stack);
+        }
+        
+        return super.getItemStackDisplayName(stack);
     }
     
     /** Makes this item always show a durability bar. */
@@ -109,7 +122,7 @@ public class ItemCarcassDecayable extends ItemJj {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
-        float fraction = stack.getCapability(ModCapabilities.CAP_DECAY, null)
+        float fraction = stack.getCapability(ModCaps.CAP_DECAY, null)
                 .getRenderFraction();
         return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
     }

@@ -1,5 +1,11 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:crafters/campfire" }
+        "normal": { "model": "jjmod:furnace_campfire" },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/furnace_campfire"
+            }
+        }]
     }
 }

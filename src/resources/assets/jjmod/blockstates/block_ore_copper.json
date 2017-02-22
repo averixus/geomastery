@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/ore_copper" }
+        "normal": { "model": "jjmod:ore_copper" },
+        "inventory": { "model": "jjmod:ore_copper" }
     }
 }

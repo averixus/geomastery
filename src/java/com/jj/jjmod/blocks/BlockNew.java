@@ -55,9 +55,9 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0,0,0,1,1,0.5), new AxisAlignedBB(0.5,0,0,1,1,1)};
     /** Blips, indexed by facing. */
     public static final AxisAlignedBB[] BLIP =
-            {new AxisAlignedBB(0.37,0.37,0,0.62,0.62,0.25),
+            {new AxisAlignedBB(0,0.37,0.37,0.25,0.62,0.62),
             new AxisAlignedBB(0,0.37,0.37,0.25,0.62,0.62),
-            new AxisAlignedBB(0,0.37,0.37,0.25,0.62,0.62),
+            new AxisAlignedBB(0.37,0.37,0,0.62,0.62,0.25),
             new AxisAlignedBB(0.75,0.37,0.37,1,0.62,0.62)};
     /** Corners, indexed by facing. */
     public static final AxisAlignedBB[] CORNER =
@@ -66,6 +66,10 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0.5,0,0.5,1,1,1),
             new AxisAlignedBB(0,0,0.5,0.5,1,1)};
     /** Centre halves, indexed by axis. */
+    public static final AxisAlignedBB[] CENTRE_HALF =
+        {new AxisAlignedBB(0,0,0.25,1,1,0.75),
+        new AxisAlignedBB(0.25,0,0,0.75,1,1)};
+    /** Low centre halves, indexed by axis. */
     public static final AxisAlignedBB[] CENTRE_HALF_LOW =
             {new AxisAlignedBB(0,0,0.25,1,0.75,0.75),
             new AxisAlignedBB(0.25,0,0,0.75,0.75,1)};

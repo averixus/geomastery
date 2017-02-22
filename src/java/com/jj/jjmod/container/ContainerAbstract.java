@@ -2,7 +2,7 @@ package com.jj.jjmod.container;
 
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.slots.SlotInventory;
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -40,7 +40,7 @@ public abstract class ContainerAbstract extends Container {
 
         this.player = player;
         this.capability = player
-                .getCapability(ModCapabilities.CAP_PLAYER, null);
+                .getCapability(ModCaps.CAP_PLAYER, null);
         this.playerInv = player.inventory;
         this.world = world;
 

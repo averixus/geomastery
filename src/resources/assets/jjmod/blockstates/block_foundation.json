@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:building/foundation" }
+        "normal": { "model": "jjmod:foundation" },
+        "inventory": { "model": "jjmod:foundation" }
     }
 }

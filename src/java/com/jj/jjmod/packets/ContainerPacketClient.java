@@ -1,6 +1,6 @@
 package com.jj.jjmod.packets;
 
-import com.jj.jjmod.init.ModCapabilities;
+import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.InvLocation.InvType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -28,9 +28,9 @@ public class ContainerPacketClient implements IMessage {
         this.slot = slot;
         this.stack = stack;
         
-        if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
             
-            this.birthTime = stack.getCapability(ModCapabilities.CAP_DECAY,
+            this.birthTime = stack.getCapability(ModCaps.CAP_DECAY,
                     null).getBirthTime();
         }
     }
@@ -75,9 +75,9 @@ public class ContainerPacketClient implements IMessage {
             EntityPlayer player = Minecraft.getMinecraft().player;
             ItemStack stack = message.stack;
             
-            if (stack.hasCapability(ModCapabilities.CAP_DECAY, null)) {
+            if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
                 
-                stack.getCapability(ModCapabilities.CAP_DECAY, null)
+                stack.getCapability(ModCaps.CAP_DECAY, null)
                 .setBirthTime(message.birthTime);
             }
 

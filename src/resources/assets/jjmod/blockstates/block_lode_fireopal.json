@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:rocks/lode_fireopal" }
+        "normal": { "model": "jjmod:lode_fireopal" },
+        "inventory": { "model": "jjmod:lode_fireopal" }
     }
 }
