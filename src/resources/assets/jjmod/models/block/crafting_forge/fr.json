@@ -3,7 +3,7 @@
     "log": "blocks/log_oak_top",
     "stone1": "jjmod:blocks/complex/stone1",
     "knapping1": "jjmod:blocks/complex/knapping1",
-    "notexture": "blocks/notexture",
+    "notexture": "jjmod:blocks/notexture",
     "soot": "jjmod:blocks/complex/soot",
     "particle": "jjmod:blocks/complex/stone1"
 },

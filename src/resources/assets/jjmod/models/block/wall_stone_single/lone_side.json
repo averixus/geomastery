@@ -1,6 +1,6 @@
 {
 "textures": {
-    "stone": "blocks//stone",
+    "stone": "blocks/stone",
     "stonebrick": "jjmod:blocks/complex/stonebrick",
     "particle": "jjmod:blocks/complex/stonebrick"
 },
