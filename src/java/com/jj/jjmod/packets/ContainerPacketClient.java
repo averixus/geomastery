@@ -80,7 +80,7 @@ public class ContainerPacketClient implements IMessage {
                 stack.getCapability(ModCaps.CAP_DECAY, null)
                 .setBirthTime(message.birthTime);
             }
-
+            System.out.println("processing container update, slot " + message.slot + " stack " + stack);
             player.inventoryContainer.inventorySlots.get(message.slot)
                     .putStack(stack);
         }

@@ -562,7 +562,7 @@ public class ContainerInventory extends ContainerAbstract {
         }
         
         ItemStack stack = this.inventorySlots.get(slot).getStack();
-        
+
         if (this.player instanceof EntityPlayerMP) {
 
             ModPackets.NETWORK

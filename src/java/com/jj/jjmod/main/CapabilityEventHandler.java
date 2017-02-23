@@ -78,7 +78,8 @@ public class CapabilityEventHandler {
         if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
             
             ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
-                    new FoodStatsWrapper(player), "foodStats");
+                    new FoodStatsWrapper(player),
+                    "foodStats", "field_71100_bB");
         }
     }
 }

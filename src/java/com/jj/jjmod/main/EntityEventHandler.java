@@ -1,6 +1,7 @@
 package com.jj.jjmod.main;
 
 import com.jj.jjmod.init.ModItems;
+import com.jj.jjmod.items.ItemJj;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -8,6 +9,7 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,6 +21,7 @@ public class EntityEventHandler {
     public void livingDrops(LivingDropsEvent event) {
 
         Entity entity = event.getEntity();
+        World world = entity.world;
 
         if (entity.world.isRemote) {
 
@@ -28,28 +31,32 @@ public class EntityEventHandler {
         if (entity instanceof EntityPig) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModItems.carcassPig), 0);
+            entity.entityDropItem(ItemJj
+                    .newStack(ModItems.carcassPig, 1, world), 0);
 
         } else if (entity instanceof EntityCow) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new
-                    ItemStack(ModItems.carcassCowpart, 4), 0);
+            entity.entityDropItem(ItemJj
+                    .newStack(ModItems.carcassCowpart, 4, world), 0);
             
         } else if (entity instanceof EntitySheep) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModItems.carcassSheep), 0);
+            entity.entityDropItem(ItemJj
+                    .newStack(ModItems.carcassSheep, 1, world), 0);
 
         } else if (entity instanceof EntityChicken) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModItems.carcassChicken), 0);
+            entity.entityDropItem(ItemJj
+                    .newStack(ModItems.carcassChicken, 1, world), 0);
 
         } else if (entity instanceof EntityRabbit) {
 
             event.getDrops().clear();
-            entity.entityDropItem(new ItemStack(ModItems.carcassRabbit), 0);
+            entity.entityDropItem(ItemJj
+                    .newStack(ModItems.carcassRabbit, 1, world), 0);
         }
     }
 }

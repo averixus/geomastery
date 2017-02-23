@@ -54,11 +54,11 @@ public abstract class ContainerAbstract extends Container {
 
         InventoryCrafting craftMatrix =
                 new InventoryCrafting(this, columns, rows);
+        
+        for (int j = 0; j < rows; j++) {
 
-        for (int i = 0; i < columns; i++) {
-
-            for (int j = 0; j < rows; j++) {
-
+            for (int i = 0; i < columns; i++) {
+                
                 this.addSlotToContainer(new Slot(craftMatrix,
                         j * columns + i, startX + (i * SLOT_SIZE),
                         startY + (j * SLOT_SIZE)));

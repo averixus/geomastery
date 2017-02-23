@@ -91,10 +91,10 @@ public class BlockDrying extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            return false;
+            player.openGui(Main.instance, GuiList.DRYING.ordinal(),
+                    world, x, y, z);
         }
         
-        player.openGui(Main.instance, GuiList.DRYING.ordinal(), world, x, y, z);
         return true;
     }
 }
