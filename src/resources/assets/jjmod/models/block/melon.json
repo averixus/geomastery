@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
-"parent": "block/cube_all",
+"parent": "block/block",
 "textures": {
-    "melon": "blocks/melon_side"
+    "melon": "blocks/melon_side",
+    "particle": "blocks/melon_side"
 },
 "elements": [ 
 {

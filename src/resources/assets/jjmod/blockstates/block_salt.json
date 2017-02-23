@@ -1,6 +1,11 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": { "all": "jjmod:blocks/solids/salt" }
+    },
     "variants": {
-        "normal": { "model": "jjmod:salt" },
-        "inventory": { "model": "jjmod:salt" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

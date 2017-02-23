@@ -1,5 +1,15 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "half_slab",
+        "textures": {
+            "bottom": "jjmod:blocks/solids/chicken",
+            "top": "jjmod:blocks/solids/chicken",
+            "side": "jjmod:blocks/solids/chicken"
+        } 
+    },
     "variants": {
-        "normal": { "model": "jjmod:carcass_chicken" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

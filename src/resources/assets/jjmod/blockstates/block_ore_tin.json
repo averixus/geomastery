@@ -1,6 +1,11 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": { "all": "jjmod:blocks/solids/ore_tin" }
+    },
     "variants": {
-        "normal": { "model": "jjmod:ore_tin" },
-        "inventory": { "model": "jjmod:ore_tin" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

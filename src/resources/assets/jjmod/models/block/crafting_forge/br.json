@@ -1,26 +1,25 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "woodwork1": "jjmod:blocks/crafters/woodwork1",
-    "woodworktools1": "jjmod:blocks/crafters/woodworktools1",
-    "notexture": "jjmod:blocks/crafters/notexture",
-    "soot": "jjmod:blocks/crafters/soot",
-    "woodworktools2": "jjmod:blocks/crafters/woodworktools2",
-    "water": "jjmod:blocks/crafters/water",
-    "softwood1": "jjmod:blocks/crafters/softwood1",
-    "particle": "jjmod:blocks/crafters/stone1"
+    "panels1": "jjmod:blocks/complex/panels1",
+    "tools1": "jjmod:blocks/complex/tools1",
+    "notexture": "jjmod:blocks/notexture",
+    "soot": "jjmod:blocks/complex/soot",
+    "tools2": "jjmod:blocks/complex/tools2",
+    "water": "jjmod:blocks/complex/water",
+    "softwood1": "jjmod:blocks/complex/softwood1",
+    "particle": "jjmod:blocks/complex/stone1"
 },
 "elements": [ 
 {
     "from": [ 0, 0, 13.9375 ],
     "to": [ 14, 5, 15.9375 ],
     "faces": {
-        "down":  { "uv": [ 16, 15.9375, 2, 13.9375 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 0, 0, 14, 2 ], "texture": "#woodworktools1" },
-        "north": { "uv": [ 2, 11, 16, 16 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 0, 11, 14, 16 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 13.9375, 11, 15.9375, 16 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 0.0625, 11, 2.0625, 16 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 16, 15.9375, 2, 13.9375 ], "texture": "#panels1" },
+        "up":    { "uv": [ 0, 0, 14, 2 ], "texture": "#tools1" },
+        "north": { "uv": [ 2, 11, 16, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 0, 11, 14, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 13.9375, 11, 15.9375, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 0.0625, 11, 2.0625, 16 ], "texture": "#panels1" }
     }
 },
 {
@@ -35,36 +34,36 @@
     "from": [ 0, 0, 6.9375 ],
     "to": [ 14, 5, 8.9375 ],
     "faces": {
-        "down":  { "uv": [ 16, 8.9375, 2, 6.9375 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 0, 0, 14, 2 ], "texture": "#woodworktools1" },
-        "north": { "uv": [ 2, 11, 16, 16 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 0, 11, 14, 16 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 6.9375, 11, 8.9375, 16 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 7.0625, 11, 9.0625, 16 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 16, 8.9375, 2, 6.9375 ], "texture": "#panels1" },
+        "up":    { "uv": [ 0, 0, 14, 2 ], "texture": "#tools1" },
+        "north": { "uv": [ 2, 11, 16, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 0, 11, 14, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 6.9375, 11, 8.9375, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 7.0625, 11, 9.0625, 16 ], "texture": "#panels1" }
     }
 },
 {
     "from": [ 14, 0, 6.9375 ],
     "to": [ 16, 9, 15.9375 ],
     "faces": {
-        "down":  { "uv": [ 2, 15.9375, 0, 6.9375 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 14, 6.9375, 16, 15.9375 ], "texture": "#woodworktools2" },
-        "north": { "uv": [ 0, 7, 2, 16 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 14, 7, 16, 16 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 6.9375, 7, 15.9375, 16 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 0.0625, 7, 9.0625, 16 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 2, 15.9375, 0, 6.9375 ], "texture": "#panels1" },
+        "up":    { "uv": [ 14, 6.9375, 16, 15.9375 ], "texture": "#tools2" },
+        "north": { "uv": [ 0, 7, 2, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 14, 7, 16, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 6.9375, 7, 15.9375, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 0.0625, 7, 9.0625, 16 ], "texture": "#panels1" }
     }
 },
 {
     "from": [ 0, 0, 8.9375 ],
     "to": [ 2, 5, 13.9375 ],
     "faces": {
-        "down":  { "uv": [ 16, 13.9375, 14, 8.9375 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 14, 11, 16, 16 ], "texture": "#woodworktools2" },
-        "north": { "uv": [ 14, 11, 16, 16 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 0, 11, 2, 16 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 8.9375, 11, 13.9375, 16 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 2.0625, 11, 7.0625, 16 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 16, 13.9375, 14, 8.9375 ], "texture": "#panels1" },
+        "up":    { "uv": [ 14, 11, 16, 16 ], "texture": "#tools2" },
+        "north": { "uv": [ 14, 11, 16, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 0, 11, 2, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 8.9375, 11, 13.9375, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 2.0625, 11, 7.0625, 16 ], "texture": "#panels1" }
     }
 },
 {
@@ -155,24 +154,24 @@
     "from": [ 14, 0, 0 ],
     "to": [ 16, 16, 7 ],
     "faces": {
-        "down":  { "uv": [ 2, 15.9375, 0, 6.9375 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 14, 6.9375, 16, 15.9375 ], "texture": "#woodworktools2" },
-        "north": { "uv": [ 0, 7, 2, 16 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 14, 7, 16, 16 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 6.9375, 7, 15.9375, 16 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 0.0625, 7, 9.0625, 16 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 2, 15.9375, 0, 6.9375 ], "texture": "#panels1" },
+        "up":    { "uv": [ 14, 6.9375, 16, 15.9375 ], "texture": "#tools2" },
+        "north": { "uv": [ 0, 7, 2, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 14, 7, 16, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 6.9375, 7, 15.9375, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 0.0625, 7, 9.0625, 16 ], "texture": "#panels1" }
     }
 },
 {
     "from": [ 8, 11, 0 ],
     "to": [ 14, 12, 7 ],
     "faces": {
-        "down":  { "uv": [ 6, 7, 0, 0 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 0, 0, 6, 7 ], "texture": "#woodwork1" },
-        "north": { "uv": [ 0.5, 3, 6.5, 4 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 9.5, 3, 15.5, 4 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 0, 3, 7, 4 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 9, 3, 16, 4 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 6, 7, 0, 0 ], "texture": "#panels1" },
+        "up":    { "uv": [ 0, 0, 6, 7 ], "texture": "#panels1" },
+        "north": { "uv": [ 0.5, 3, 6.5, 4 ], "texture": "#panels1" },
+        "south": { "uv": [ 9.5, 3, 15.5, 4 ], "texture": "#panels1" },
+        "west":  { "uv": [ 0, 3, 7, 4 ], "texture": "#panels1" },
+        "east":  { "uv": [ 9, 3, 16, 4 ], "texture": "#panels1" }
     }
 },
 {
@@ -192,12 +191,12 @@
     "to": [ 8.6875, 13, 6.75 ],
     "rotation": { "origin": [ 7.6875, 12, 2.75 ], "axis": "y", "angle": 45 },
     "faces": {
-        "down":  { "uv": [ 3, 11, 2, 7 ], "texture": "#woodworktools1" },
-        "up":    { "uv": [ 2, 7, 3, 11 ], "texture": "#woodworktools1" },
-        "north": { "uv": [ 4, 6, 5, 7 ], "texture": "#woodworktools1" },
-        "south": { "uv": [ 3, 6, 4, 7 ], "texture": "#woodworktools1" },
-        "west":  { "uv": [ 1, 6, 5, 7 ], "texture": "#woodworktools1" },
-        "east":  { "uv": [ 1, 7, 5, 8 ], "texture": "#woodworktools1" }
+        "down":  { "uv": [ 3, 11, 2, 7 ], "texture": "#tools1" },
+        "up":    { "uv": [ 2, 7, 3, 11 ], "texture": "#tools1" },
+        "north": { "uv": [ 4, 6, 5, 7 ], "texture": "#tools1" },
+        "south": { "uv": [ 3, 6, 4, 7 ], "texture": "#tools1" },
+        "west":  { "uv": [ 1, 6, 5, 7 ], "texture": "#tools1" },
+        "east":  { "uv": [ 1, 7, 5, 8 ], "texture": "#tools1" }
     }
 },
 {
@@ -205,12 +204,12 @@
     "to": [ 1.5, 6, 16.4375 ],
     "rotation": { "origin": [ 0.5, 5, 5.9375 ], "axis": "y", "angle": 22.5 },
     "faces": {
-        "down":  { "uv": [ 3, 15, 2, 4.9375 ], "texture": "#woodworktools1" },
-        "up":    { "uv": [ 2, 5, 3, 15.0625 ], "texture": "#woodworktools1" },
-        "north": { "uv": [ 2, 10, 3, 11 ], "texture": "#woodworktools1" },
-        "south": { "uv": [ 0, 10, 1, 11 ], "texture": "#woodworktools1" },
-        "west":  { "uv": [ 0, 3, 10.0625, 4 ], "texture": "#woodworktools1" },
-        "east":  { "uv": [ 0, 3, 10.0625, 4 ], "texture": "#woodworktools1" }
+        "down":  { "uv": [ 3, 15, 2, 4.9375 ], "texture": "#tools1" },
+        "up":    { "uv": [ 2, 5, 3, 15.0625 ], "texture": "#tools1" },
+        "north": { "uv": [ 2, 10, 3, 11 ], "texture": "#tools1" },
+        "south": { "uv": [ 0, 10, 1, 11 ], "texture": "#tools1" },
+        "west":  { "uv": [ 0, 3, 10.0625, 4 ], "texture": "#tools1" },
+        "east":  { "uv": [ 0, 3, 10.0625, 4 ], "texture": "#tools1" }
     }
 },
 {
@@ -218,12 +217,12 @@
     "to": [ 6.0625, 6, 15.3125 ],
     "rotation": { "origin": [ 5.0625, 5, 14.3125 ], "axis": "y", "angle": 22.5 },
     "faces": {
-        "down":  { "uv": [ 10.9375, 15.3125, 9.9375, 14.3125 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 3, 7, 4, 8 ], "texture": "#woodworktools1" },
-        "north": { "uv": [ 9.9375, 10, 10.9375, 11 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 5.0625, 10, 6.0625, 11 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 14, 10, 15, 11 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 1, 10, 2, 11 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 10.9375, 15.3125, 9.9375, 14.3125 ], "texture": "#panels1" },
+        "up":    { "uv": [ 3, 7, 4, 8 ], "texture": "#tools1" },
+        "north": { "uv": [ 9.9375, 10, 10.9375, 11 ], "texture": "#panels1" },
+        "south": { "uv": [ 5.0625, 10, 6.0625, 11 ], "texture": "#panels1" },
+        "west":  { "uv": [ 14, 10, 15, 11 ], "texture": "#panels1" },
+        "east":  { "uv": [ 1, 10, 2, 11 ], "texture": "#panels1" }
     }
 }
 ]

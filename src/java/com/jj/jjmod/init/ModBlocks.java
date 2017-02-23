@@ -287,7 +287,7 @@ public class ModBlocks {
         registerItemless(furnaceClay = new BlockFurnaceClay());
         registerItemless(furnaceStone = new BlockFurnaceStone());
         
-        register(box = new BlockBox());
+        registerModelless(box = new BlockBox(), 1, false);
 
         registerItemless(chickpea = new BlockCropChickpea());
         registerItemless(cotton = new BlockCropCotton());
@@ -523,6 +523,21 @@ public class ModBlocks {
                 return loc;
             }
         });
+    }
+    
+    private static void registerModelless(Block block,
+            int stackSize, boolean isOffhandOnly) {
+        
+        Item item = new ItemBlock(block).setMaxStackSize(stackSize);
+        
+        if (isOffhandOnly) {
+            
+            OFFHAND_ONLY.add(item);
+        }
+
+        GameRegistry.register(block);
+        GameRegistry.register(item
+                .setRegistryName(block.getRegistryName()));
     }
     
     private static void registerItemless(Block block) {

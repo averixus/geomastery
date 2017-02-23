@@ -1,5 +1,15 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "half_slab",
+        "textures": {
+            "bottom": "jjmod:blocks/solids/pig",
+            "top": "jjmod:blocks/solids/pig",
+            "side": "jjmod:blocks/solids/pig"
+        } 
+    },
     "variants": {
-        "normal": { "model": "jjmod:carcass_pig" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

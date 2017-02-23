@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "stonepave": "jjmod:blocks/building/stonepave",
-    "stonepaveside": "jjmod:blocks/building/stonepaveside"
+    "stonepave": "jjmod:blocks/complex/stonepave",
+    "stoneside": "jjmod:blocks/complex/stoneside",
+    "particle": "jjmod:blocks/complex/stonepave"
 },
 "elements": [ 
 {
@@ -11,10 +11,10 @@
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#stonepave" },
         "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#stonepave" },
-        "north": { "uv": [ 0, 0, 16, 8 ], "texture": "#stonepaveside" },
-        "south": { "uv": [ 0, 0, 16, 8 ], "texture": "#stonepaveside" },
-        "west":  { "uv": [ 0, 0, 16, 8 ], "texture": "#stonepaveside" },
-        "east":  { "uv": [ 0, 0, 16, 8 ], "texture": "#stonepaveside" }
+        "north": { "uv": [ 0, 0, 16, 8 ], "texture": "#stoneside" },
+        "south": { "uv": [ 0, 0, 16, 8 ], "texture": "#stoneside" },
+        "west":  { "uv": [ 0, 0, 16, 8 ], "texture": "#stoneside" },
+        "east":  { "uv": [ 0, 0, 16, 8 ], "texture": "#stoneside" }
     }
 }
 ]

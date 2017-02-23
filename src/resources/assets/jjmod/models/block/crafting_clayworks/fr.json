@@ -1,11 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "log": "jjmod:blocks/crafters/log",
-    "clay1": "jjmod:blocks/crafters/clay1",
-    "bark": "jjmod:blocks/crafters/bark",
-    "claydrips": "jjmod:blocks/crafters/claydrips",
-    "particle": "jjmod:blocks/crafters/softwood1"
+    "log": "blocks/log_oak_top",
+    "clay1": "jjmod:blocks/complex/clay1",
+    "bark": "blocks/log_oak",
+    "claydrips": "jjmod:blocks/complex/claydrips",
+    "particle": "jjmod:blocks/complex/softwood1"
 },
 "elements": [ 
 {

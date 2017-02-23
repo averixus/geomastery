@@ -1,0 +1,51 @@
+{
+    "textures": {
+        "knapping2": "jjmod:blocks/complex/knapping2",
+        "knapping1": "jjmod:blocks/complex/knapping1",
+        "knapping3": "jjmod:blocks/complex/knapping3",
+        "particle": "jjmod:blocks/complex/knapping3"
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 1.0, 0.0, 0.0 ], 
+            "to": [ 13.0, 3.0, 7.0 ], 
+            "faces": {
+                "north": { "texture": "#knapping2", "uv": [ 0.0, 0.0, 12.0, 3.0 ] },
+                "east": { "texture": "#knapping2", "uv": [ 0.0, 0.0, 7.0, 3.0 ] },
+                "south": { "texture": "#knapping2", "uv": [ 0.0, 0.0, 12.0, 3.0 ] },
+                "west": { "texture": "#knapping2", "uv": [ 0.0, 0.0, 7.0, 3.0 ] },
+                "up": { "texture": "#knapping2", "uv": [ 0.0, 3.0, 12.0, 10.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 12.0, 7.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 4.0, 0.0, 11.0 ], 
+            "to": [ 11.0, 2.0, 15.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": -22.5 },
+            "faces": {
+                "north": { "texture": "#knapping1", "uv": [ 0.0, 0.0, 7.0, 2.0 ] },
+                "east": { "texture": "#knapping1", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "south": { "texture": "#knapping1", "uv": [ 0.0, 0.0, 7.0, 2.0 ] },
+                "west": { "texture": "#knapping1", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "up": { "texture": "#knapping1", "uv": [ 0.0, 0.0, 7.0, 4.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 7.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 10.0, 3.0, 2.0 ], 
+            "to": [ 12.0, 4.0, 5.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#knapping3", "uv": [ 0.0, 8.0, 2.0, 9.0 ] },
+                "east": { "texture": "#knapping3", "uv": [ 0.0, 0.0, 3.0, 1.0 ] },
+                "south": { "texture": "#knapping3", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "west": { "texture": "#knapping3", "uv": [ 0.0, 0.0, 3.0, 1.0 ] },
+                "up": { "texture": "#knapping3", "uv": [ 0.0, 0.0, 2.0, 3.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 3.0 ] }
+            }
+        }
+    ]
+}

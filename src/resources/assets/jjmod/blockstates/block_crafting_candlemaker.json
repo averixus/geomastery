@@ -1,12 +1,16 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=north,part=front": { "model": "jjmod:crafting_candlemaker/front", "y": 270 },
-        "facing=east,part=front":  { "model": "jjmod:crafting_candlemaker/front" },
-        "facing=south,part=front": { "model": "jjmod:crafting_candlemaker/front", "y": 90 },
-        "facing=west,part=front":  { "model": "jjmod:crafting_candlemaker/front", "y": 180 },
-        "facing=north,part=back": { "model": "jjmod:crafting_candlemaker/back", "y": 270 },
-        "facing=east,part=back":  { "model": "jjmod:crafting_candlemaker/back" },
-        "facing=south,part=back": { "model": "jjmod:crafting_candlemaker/back", "y": 90 },
-        "facing=west,part=back":  { "model": "jjmod:crafting_candlemaker/back", "y": 180 }
+        "part": {
+            "front": { "model": "jjmod:crafting_candlemaker/front" },
+            "back": { "model": "jjmod:crafting_candlemaker/back" }
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
     }
 }

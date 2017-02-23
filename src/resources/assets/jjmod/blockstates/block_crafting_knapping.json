@@ -4,9 +4,7 @@
         "normal": { "model": "jjmod:crafting_knapping" },
         "inventory": [{
             "model": "jjmod:item",
-            "textures": {
-                "layer0": "jjmod:items/crafting_knapping"
-            }
+            "textures": { "layer0": "jjmod:items/crafting_knapping" }
         }]
     }
 }

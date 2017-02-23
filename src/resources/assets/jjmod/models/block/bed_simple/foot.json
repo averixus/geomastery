@@ -1,9 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "linen": "jjmod:blocks/beds/linen",
-    "bark": "jjmod:blocks/crafters/bark",
-    "particle": "jjmod:blocks/beds/linen"
+    "linen": "jjmod:blocks/complex/linen",
+    "bark": "blocks/log_oak",
+    "particle": "jjmod:blocks/complex/linen"
 },
 "elements": [ 
 {

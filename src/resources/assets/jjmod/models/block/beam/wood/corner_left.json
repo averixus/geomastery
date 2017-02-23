@@ -1,20 +1,20 @@
 {
-"__comment": "Designed by bdcraftjgrowe65 with bDcraft Cubik pRO 0.96 beta - http://bdcraft.net",
 "textures": {
-    "woodworkingbenchpanels": "jjmod:blocks/building/woodworkingbenchpanels",
-    "floorboardedges": "jjmod:blocks/building/floorboardedges"
+    "panels1": "jjmod:blocks/complex/panels1",
+    "floorboard": "jjmod:blocks/complex/floorboard",
+    "particle": "jjmod:blocks/complex/panels1"
 },
 "elements": [ 
 {
     "from": [ -8, 15, -8 ],
     "to": [ 0, 16, 0 ],
     "faces": {
-        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#woodworkingbenchpanels" },
-        "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#woodworkingbenchpanels" },
-        "north": { "uv": [ 8, 0, 16, 1 ], "texture": "#floorboardedges" },
-        "south": { "uv": [ 0, 0, 8, 1 ], "texture": "#floorboardedges" },
-        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#floorboardedges" },
-        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#floorboardedges" }
+        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#panels1" },
+        "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#panels1" },
+        "north": { "uv": [ 8, 0, 16, 1 ], "texture": "#floorboard" },
+        "south": { "uv": [ 0, 0, 8, 1 ], "texture": "#floorboard" },
+        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#floorboard" },
+        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#floorboard" }
     }
 }
 ]

@@ -1,10 +1,9 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "linen": "jjmod:blocks/beds/linen",
-    "cotton2": "jjmod:blocks/beds/cotton2",
-    "bark": "jjmod:blocks/crafters/bark",
-    "particle": "jjmod:blocks/beds/linen"
+    "linen": "jjmod:blocks/complex/linen",
+    "cotton2": "jjmod:blocks/complex/cotton2",
+    "bark": "blocks/log_oak",
+    "particle": "jjmod:blocks/complex/linen"
 },
 "elements": [ 
 {

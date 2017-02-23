@@ -1,105 +1,105 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "brickstairs": "jjmod:blocks/building/brickstairs",
-    "brickexternalstairs": "jjmod:blocks/building/brickexternalstairs",
-    "texture": "jjmod:blocks/building/wholebrickwall"
+    "brickside2": "jjmod:blocks/complex/brickside2",
+    "brickext": "jjmod:blocks/complex/brickext",
+    "brickside4": "jjmod:blocks/complex/brickside4",
+    "particle": "jjmod:blocks/complex/brickside2"
 },
 "elements": [ 
 {
     "from": [ 0, 2, 0 ],
     "to": [ 16, 4, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#brickexternalstairs" },
-        "north": { "uv": [ 0, 13, 16, 15 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 12, 16, 14 ], "texture": "#texture" },
-        "west":  { "uv": [ 0, 12, 16, 14 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 13, 16, 15 ], "texture": "#brickstairs" }
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#brickext" },
+        "north": { "uv": [ 0, 13, 16, 15 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 12, 16, 14 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 0, 12, 16, 14 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 13, 16, 15 ], "texture": "#brickside2" }
     }
 },
 {
     "from": [ 0, 0, 1 ],
     "to": [ 15, 2, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 1, 1 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 0, 1, 15, 16 ], "texture": "#brickstairs" },
-        "north": { "uv": [ 1, 9, 16, 11 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 14, 15, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 1, 14, 16, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 14, 15, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 16, 16, 1, 1 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 0, 1, 15, 16 ], "texture": "#brickside2" },
+        "north": { "uv": [ 1, 9, 16, 11 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 14, 15, 16 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 1, 14, 16, 16 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 14, 15, 16 ], "texture": "#brickside4" }
     }
 },
 {
     "from": [ 0, 6, 4 ],
     "to": [ 12, 8, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 4, 4 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 4, 0, 16, 12 ], "texture": "#brickexternalstairs" },
-        "north": { "uv": [ 4, 13, 16, 15 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 8, 12, 10 ], "texture": "#texture" },
-        "west":  { "uv": [ 4, 8, 16, 10 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 13, 12, 15 ], "texture": "#brickstairs" }
+        "down":  { "uv": [ 16, 16, 4, 4 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 4, 0, 16, 12 ], "texture": "#brickext" },
+        "north": { "uv": [ 4, 13, 16, 15 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 8, 12, 10 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 4, 8, 16, 10 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 13, 12, 15 ], "texture": "#brickside2" }
     }
 },
 {
     "from": [ 0, 8, 9 ],
     "to": [ 7, 10, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 9, 9 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 0, 9, 7, 16 ], "texture": "#brickstairs" },
-        "north": { "uv": [ 9, 9, 16, 11 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 6, 7, 8 ], "texture": "#texture" },
-        "west":  { "uv": [ 9, 6, 16, 8 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 6, 7, 8 ], "texture": "#texture" }
+        "down":  { "uv": [ 16, 16, 9, 9 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 0, 9, 7, 16 ], "texture": "#brickside2" },
+        "north": { "uv": [ 9, 9, 16, 11 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 6, 7, 8 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 9, 6, 16, 8 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 6, 7, 8 ], "texture": "#brickside4" }
     }
 },
 {
     "from": [ 0, 10, 8 ],
     "to": [ 8, 12, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 8, 0, 16, 8 ], "texture": "#brickexternalstairs" },
-        "north": { "uv": [ 8, 13, 16, 15 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 4, 8, 6 ], "texture": "#texture" },
-        "west":  { "uv": [ 8, 4, 16, 6 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 13, 8, 15 ], "texture": "#brickstairs" }
+        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 8, 0, 16, 8 ], "texture": "#brickext" },
+        "north": { "uv": [ 8, 13, 16, 15 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 4, 8, 6 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 8, 4, 16, 6 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 13, 8, 15 ], "texture": "#brickside2" }
     }
 },
 {
     "from": [ 0, 12, 13 ],
     "to": [ 3, 14, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 13, 13 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 13, 0, 16, 3 ], "texture": "#brickstairs" },
-        "north": { "uv": [ 13, 9, 16, 11 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 2, 3, 4 ], "texture": "#texture" },
-        "west":  { "uv": [ 13, 2, 16, 4 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 9, 3, 11 ], "texture": "#brickstairs" }
+        "down":  { "uv": [ 16, 16, 13, 13 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 13, 0, 16, 3 ], "texture": "#brickside2" },
+        "north": { "uv": [ 13, 9, 16, 11 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 2, 3, 4 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 13, 2, 16, 4 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 9, 3, 11 ], "texture": "#brickside2" }
     }
 },
 {
     "from": [ 0, 14, 12 ],
     "to": [ 4, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 4, 12, 0 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 12, 0, 16, 4 ], "texture": "#brickexternalstairs" },
-        "north": { "uv": [ 12, 13, 16, 15 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 10, 4, 12 ], "texture": "#texture" },
-        "west":  { "uv": [ 12, 10, 16, 12 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 13, 4, 15 ], "texture": "#brickstairs" }
+        "down":  { "uv": [ 16, 4, 12, 0 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 12, 0, 16, 4 ], "texture": "#brickext" },
+        "north": { "uv": [ 12, 13, 16, 15 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 10, 4, 12 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 12, 10, 16, 12 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 13, 4, 15 ], "texture": "#brickside2" }
     }
 },
 {
     "from": [ 0, 4, 5 ],
     "to": [ 11, 6, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 5, 5 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 0, 5, 11, 16 ], "texture": "#brickstairs" },
-        "north": { "uv": [ 5, 9, 16, 11 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 0, 10, 11, 12 ], "texture": "#texture" },
-        "west":  { "uv": [ 5, 10, 16, 12 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 10, 11, 12 ], "texture": "#texture" }
+        "down":  { "uv": [ 16, 16, 5, 5 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 0, 5, 11, 16 ], "texture": "#brickside2" },
+        "north": { "uv": [ 5, 9, 16, 11 ], "texture": "#brickside2" },
+        "south": { "uv": [ 0, 10, 11, 12 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 5, 10, 16, 12 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 10, 11, 12 ], "texture": "#brickside4" }
     }
 }
 ]

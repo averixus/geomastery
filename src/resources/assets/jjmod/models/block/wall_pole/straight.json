@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "newsoftwood": "jjmod:blocks/building/newsoftwood",
-    "texture": "jjmod:blocks/building/sprucepole2"
+    "softwood1": "jjmod:blocks/complex/softwood1",
+    "pole": "jjmod:blocks/complex/pole",
+    "particle": "jjmod:blocks/complex/pole"
 },
 "parent": "block/block",
 "elements": [ 
@@ -10,48 +10,48 @@
     "from": [ 7, 0, 3 ],
     "to": [ 9, 16, 5 ],
     "faces": {
-        "down":  { "uv": [ 9, 7, 7, 3 ], "texture": "#newsoftwood" },
-        "up":    { "uv": [ 7, 3, 9, 7 ], "texture": "#newsoftwood" },
-        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 3, 0, 7, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 9, 0, 13, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 9, 7, 7, 3 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 7, 3, 9, 7 ], "texture": "#softwood1" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "west":  { "uv": [ 3, 0, 7, 16 ], "texture": "#pole" },
+        "east":  { "uv": [ 9, 0, 13, 16 ], "texture": "#pole" }
     }
 },
 {
     "from": [ 7, 0, 0 ],
     "to": [ 9, 16, 2 ],
     "faces": {
-        "down":  { "uv": [ 9, 9, 7, 7 ], "texture": "#newsoftwood" },
-        "up":    { "uv": [ 7, 7, 9, 9 ], "texture": "#newsoftwood" },
-        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 6, 0, 8, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 6, 0, 8, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 9, 9, 7, 7 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 7, 7, 9, 9 ], "texture": "#softwood1" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "west":  { "uv": [ 6, 0, 8, 16 ], "texture": "#pole" },
+        "east":  { "uv": [ 6, 0, 8, 16 ], "texture": "#pole" }
     }
 },
 {
     "from": [ 7, 0, 6 ],
     "to": [ 9, 16, 13 ],
     "faces": {
-        "down":  { "uv": [ 9, 16, 7, 6 ], "texture": "#newsoftwood" },
-        "up":    { "uv": [ 7, 6, 9, 16 ], "texture": "#newsoftwood" },
-        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 6, 0, 16, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 0, 10, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 9, 16, 7, 6 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 7, 6, 9, 16 ], "texture": "#softwood1" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "west":  { "uv": [ 6, 0, 16, 16 ], "texture": "#pole" },
+        "east":  { "uv": [ 0, 0, 10, 16 ], "texture": "#pole" }
     }
 },
 {
     "from": [ 7, 0, 14 ],
     "to": [ 9, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 9, 7, 7, 3 ], "texture": "#newsoftwood" },
-        "up":    { "uv": [ 7, 3, 9, 7 ], "texture": "#newsoftwood" },
-        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 3, 0, 7, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 9, 0, 13, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 9, 7, 7, 3 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 7, 3, 9, 7 ], "texture": "#softwood1" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#pole" },
+        "west":  { "uv": [ 3, 0, 7, 16 ], "texture": "#pole" },
+        "east":  { "uv": [ 9, 0, 13, 16 ], "texture": "#pole" }
     }
 }
 ]

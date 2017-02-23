@@ -1,8 +1,0 @@
-{
-"parent": "block/half_slab",
-"textures": {
-    "bottom": "jjmod:blocks/carcass/rabbit",
-    "top": "jjmod:blocks/carcass/rabbit",
-    "side": "jjmod:blocks/carcass/rabbit"
-}
-}

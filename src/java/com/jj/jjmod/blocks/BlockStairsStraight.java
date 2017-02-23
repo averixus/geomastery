@@ -121,6 +121,10 @@ public class BlockStairsStraight extends BlockNew {
         } else if (world.getBlockState(pos.offset(left)).getBlock() == this) {
             
             state = state.withProperty(CONNECTION, EnumConnection.LEFT);
+            
+        } else {
+            
+            state = state.withProperty(CONNECTION, EnumConnection.NONE);
         }
 
         return state;

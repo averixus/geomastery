@@ -1,32 +1,32 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "brickpavetest": "jjmod:blocks/building/brickpave",
-    "texture": "jjmod:blocks/building/wholebrickwall"
+    "brickpave1": "jjmod:blocks/complex/brickpave1",
+    "brickside4": "jjmod:blocks/complex/brickside4",
+    "particle": "jjmod:blocks/complex/brickpave1"
 },
 "elements": [ 
 {
     "from": [ 3, 0, 3 ],
     "to": [ 13, 4, 13 ],
     "faces": {
-        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#brickpavetest" },
-        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#brickpavetest" },
-        "north": { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 3, 12, 13, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#brickpave1" },
+        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#brickpave1" },
+        "north": { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" },
+        "south": { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" }
     }
 },
 {
     "from": [ 4, 4, 4 ],
     "to": [ 12, 16, 12 ],
     "faces": {
-        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#brickpavetest" },
-        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#brickpavetest" },
-        "north": { "uv": [ 4, 0, 12, 12 ], "texture": "#texture" },
-        "south": { "uv": [ 4, 0, 12, 12 ], "texture": "#texture" },
-        "west":  { "uv": [ 4, 0, 12, 12 ], "texture": "#texture" },
-        "east":  { "uv": [ 4, 0, 12, 12 ], "texture": "#texture" }
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#brickpave1" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#brickpave1" },
+        "north": { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" },
+        "south": { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" }
     }
 }
 ]

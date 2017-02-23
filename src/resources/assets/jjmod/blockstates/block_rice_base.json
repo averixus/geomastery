@@ -17,6 +17,7 @@
         }],
         "trans": [{
             "model": "jjmod:rice/water"
-        }]
+        }],
+        "inventory": [{}]
     }
 }

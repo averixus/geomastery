@@ -1,19 +1,19 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "dressedstonewall": "jjmod:blocks/building/dressedstonewall"
+    "stonebrick": "jjmod:blocks/complex/stonebrick",
+    "particle": "jjmod:blocks/complex/stonebrick"
 },
 "elements": [ 
 {
     "from": [ 1, 0, 0 ],
     "to": [ 15, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 1, 0, 15, 16 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 1, 0, 15, 16 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 1, 0, 15, 16 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 1, 0, 15, 16 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#stonebrick" }
     }
 }
 ]

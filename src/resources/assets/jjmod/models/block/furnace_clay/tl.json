@@ -1,11 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "clay2": "jjmod:blocks/crafters/clay2",
-    "solidsoot": "jjmod:blocks/crafters/solidsoot",
-    "ovendoor": "jjmod:blocks/crafters/ovendoor",
-    "forgefire": "jjmod:blocks/crafters/fire",
-    "bellows": "jjmod:blocks/crafters/bellows"
+    "clay2": "jjmod:blocks/complex/clay2",
+    "solidsoot": "jjmod:blocks/complex/solidsoot",
+    "ovendoor": "jjmod:blocks/complex/ovendoor",
+    "bellows": "jjmod:blocks/complex/bellows",
+    "particle": "jjmod:blocks/complex/clay2"
 },
 "elements": [ 
 {

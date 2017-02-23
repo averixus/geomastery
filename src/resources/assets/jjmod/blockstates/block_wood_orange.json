@@ -1,9 +1,19 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_column",
+        "textures": {
+            "end": "blocks/log_oak_top",
+            "side": "jjmod:blocks/solids/bark_orange"
+        }
+    },
     "variants": {
-        "axis=y":  { "model": "jjmod:wood_orange/log" },
-        "axis=z":   { "model": "jjmod:wood_orange/log", "x": 90 },
-        "axis=x":   { "model": "jjmod:wood_orange/log", "x": 90, "y": 90 },
-        "axis=none": { "model": "jjmod:wood_orange/bark" },
-        "inventory": { "model": "jjmod:wood_orange/log" }
+        "axis": {
+            "y": {},
+            "z": { "x": 90 },
+            "x": { "x": 90, "y": 90 },
+            "none": {}
+        },
+        "inventory": [{}]
     }
 }

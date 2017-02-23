@@ -1,20 +1,19 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "texture": "jjmod:blocks/building/woodworkingbenchpanels"
+    "panels1": "jjmod:blocks/complex/panels1",
+    "particle": "jjmod:blocks/complex/panels1"
 },
-"parent": "block/block",
 "elements": [ 
 {
     "from": [ 7, 0, 7 ],
     "to": [ 9, 16, 9 ],
     "faces": {
-        "down":  { "uv": [ 8, 9, 6, 7 ], "texture": "#texture" },
-        "up":    { "uv": [ 6, 7, 8, 9 ], "texture": "#texture" },
-        "north": { "uv": [ 6, 0, 8, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 9, 0, 11, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 5, 0, 7, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 5, 0, 7, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 8, 9, 6, 7 ], "texture": "#panels1" },
+        "up":    { "uv": [ 6, 7, 8, 9 ], "texture": "#panels1" },
+        "north": { "uv": [ 6, 0, 8, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 9, 0, 11, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 5, 0, 7, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 5, 0, 7, 16 ], "texture": "#panels1" }
     }
 }
 ]

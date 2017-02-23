@@ -1,16 +1,14 @@
 {
     "forge_marker": 1,
     "variants": {
-        "facing=up": { "model": "jjmod:lights/candle_tallow/up" },
-        "facing=east": { "model": "jjmod:lights/candle_tallow/side" },
-        "facing=south": { "model": "jjmod:lights/candle_tallow/side", "y": 90 },
-        "facing=west": { "model": "jjmod:lights/candle_tallow/side", "y": 180 },
-        "facing=north": { "model": "jjmod:lights/candle_tallow/side", "y": 270 },
+        "facing=up": { "model": "jjmod:candle_tallow/up" },
+        "facing=east": { "model": "jjmod:candle_tallow/side" },
+        "facing=south": { "model": "jjmod:candle_tallow/side", "y": 90 },
+        "facing=west": { "model": "jjmod:candle_tallow/side", "y": 180 },
+        "facing=north": { "model": "jjmod:candle_tallow/side", "y": 270 },
         "inventory": [{
             "model": "jjmod:item",
-            "textures": {
-                "layer0": "jjmod:items/candle_tallow"
-            }
+            "textures": { "layer0": "jjmod:items/candle_tallow" }
         }]
     }
 }

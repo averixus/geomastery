@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "stone": "jjmod:blocks/building/stone",
-    "dressedstonewall": "jjmod:blocks/building/dressedstonewall"
+    "stone": "blocks//stone",
+    "stonebrick": "jjmod:blocks/complex/stonebrick",
+    "particle": "jjmod:blocks/complex/stonebrick"
 },
 "elements": [ 
 {
@@ -21,24 +21,24 @@
     "from": [ 5, 3, 11 ],
     "to": [ 12, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 11, 16, 4, 11 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 5, 11, 12, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 4, 1, 11, 13 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 5, 1, 12, 13 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 11, 1, 16, 13 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 1, 5, 13 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 11, 16, 4, 11 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 5, 11, 12, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 4, 1, 11, 13 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 5, 1, 12, 13 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 11, 1, 16, 13 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 1, 5, 13 ], "texture": "#stonebrick" }
     }
 },
 {
     "from": [ 4, 0, 12 ],
     "to": [ 13, 3, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 3, 12 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 4, 12, 13, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 3, 13, 12, 16 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 4, 13, 13, 16 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 12, 13, 16, 16 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 13, 4, 16 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 12, 16, 3, 12 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 4, 12, 13, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 3, 13, 12, 16 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 4, 13, 13, 16 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 12, 13, 16, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 13, 4, 16 ], "texture": "#stonebrick" }
     }
 }
 ]

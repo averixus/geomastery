@@ -1,11 +1,11 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "clay2": "jjmod:blocks/crafters/clay2",
-    "solidsoot": "jjmod:blocks/crafters/solidsoot",
-    "ovendoor": "jjmod:blocks/crafters/ovendoor",
-    "forgefire": "jjmod:blocks/crafters/fire",
-    "bellows": "jjmod:blocks/crafters/bellows"
+    "clay2": "jjmod:blocks/complex/clay2",
+    "solidsoot": "jjmod:blocks/complex/solidsoot",
+    "ovendoor": "jjmod:blocks/complex/ovendoor",
+    "fire": "jjmod:blocks/complex/fire",
+    "bellows": "jjmod:blocks/complex/bellows",
+    "particle": "jjmod:blocks/complex/clay2"
 },
 "elements": [ 
 {
@@ -109,12 +109,12 @@
     "from": [ 5, 2, 12 ],
     "to": [ 13, 3, 16 ],
     "faces": {
-        "down":  { "uv": [ 11, 16, 3, 12 ], "texture": "#forgefire" },
-        "up":    { "uv": [ 0, 4, 8, 8 ], "texture": "#forgefire" },
-        "north": { "uv": [ 1, 15, 9, 16 ], "texture": "#forgefire" },
-        "south": { "uv": [ 4, 15, 12, 16 ], "texture": "#forgefire" },
-        "west":  { "uv": [ 10, 15, 14, 16 ], "texture": "#forgefire" },
-        "east":  { "uv": [ 1, 15, 5, 16 ], "texture": "#forgefire" }
+        "down":  { "uv": [ 11, 16, 3, 12 ], "texture": "#fire" },
+        "up":    { "uv": [ 0, 4, 8, 8 ], "texture": "#fire" },
+        "north": { "uv": [ 1, 15, 9, 16 ], "texture": "#fire" },
+        "south": { "uv": [ 4, 15, 12, 16 ], "texture": "#fire" },
+        "west":  { "uv": [ 10, 15, 14, 16 ], "texture": "#fire" },
+        "east":  { "uv": [ 1, 15, 5, 16 ], "texture": "#fire" }
     }
 }
 ]

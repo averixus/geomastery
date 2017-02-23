@@ -1,13 +1,14 @@
 {
     "forge_marker": 1,
+    "defaults": {
+         "model": "cross",
+        "textures": { "cross": "jjmod:blocks/plants/seedling_apple" }
+    },
     "variants": {
-        "age=0": { "model": "jjmod:seedling_apple" },
-        "age=1": { "model": "jjmod:seedling_apple" },
+        "normal": [{}],
         "inventory": [{
             "model": "jjmod:item",
-            "textures": {
-                "layer0": "jjmod:items/seedling_apple"
-            }
+            "textures": { "layer0": "jjmod:items/seedling_apple" }
         }]
     }
 }

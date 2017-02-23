@@ -1,8 +1,7 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "leaf": "jjmod:blocks/beds/leaf",
-    "particle": "jjmod:blocks/beds/leaf"
+    "leaf": "jjmod:blocks/complex/leaf",
+    "particle": "jjmod:blocks/complex/leaf"
 },
 "elements": [ 
 {

@@ -1,43 +1,43 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "woodworkingbenchpanelsrotated": "jjmod:blocks/building/woodworkingbenchpanelsrotated"
+    "panels2": "jjmod:blocks/complex/panels2",
+    "particle": "jjmod:blocks/complex/panels1"
 },
 "elements": [ 
 {
     "from": [ 9, 13, 7.5 ],
     "to": [ 16, 15, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 16, 9, 9, 8 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "up":    { "uv": [ 0, 9, 7, 10 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "north": { "uv": [ 8, 1, 15, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "south": { "uv": [ 4, 1, 11, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "west":  { "uv": [ 7, 1, 8, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#woodworkingbenchpanelsrotated" }
+        "down":  { "uv": [ 16, 9, 9, 8 ], "texture": "#panels2" },
+        "up":    { "uv": [ 0, 9, 7, 10 ], "texture": "#panels2" },
+        "north": { "uv": [ 8, 1, 15, 3 ], "texture": "#panels2" },
+        "south": { "uv": [ 4, 1, 11, 3 ], "texture": "#panels2" },
+        "west":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" },
+        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" }
     }
 },
 {
     "from": [ 9, 8, 7.5 ],
     "to": [ 16, 10, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 16, 9, 9, 8 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "up":    { "uv": [ 0, 9, 7, 10 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "north": { "uv": [ 6.5, 1, 13.5, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "south": { "uv": [ 7.5, 1, 14.5, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "west":  { "uv": [ 7, 1, 8, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#woodworkingbenchpanelsrotated" }
+        "down":  { "uv": [ 16, 9, 9, 8 ], "texture": "#panels2" },
+        "up":    { "uv": [ 0, 9, 7, 10 ], "texture": "#panels2" },
+        "north": { "uv": [ 6.5, 1, 13.5, 3 ], "texture": "#panels2" },
+        "south": { "uv": [ 7.5, 1, 14.5, 3 ], "texture": "#panels2" },
+        "west":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" },
+        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" }
     }
 },
 {
     "from": [ 9, 3, 7.5 ],
     "to": [ 16, 5, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 11.5, 11, 4.5, 10 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "up":    { "uv": [ 2.5, 10, 9.5, 11 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "north": { "uv": [ 8.5, 5, 15.5, 7 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "south": { "uv": [ 0.5, 9, 7.5, 11 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "west":  { "uv": [ 7, 1, 8, 3 ], "texture": "#woodworkingbenchpanelsrotated" },
-        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#woodworkingbenchpanelsrotated" }
+        "down":  { "uv": [ 11.5, 11, 4.5, 10 ], "texture": "#panels2" },
+        "up":    { "uv": [ 2.5, 10, 9.5, 11 ], "texture": "#panels2" },
+        "north": { "uv": [ 8.5, 5, 15.5, 7 ], "texture": "#panels2" },
+        "south": { "uv": [ 0.5, 9, 7.5, 11 ], "texture": "#panels2" },
+        "west":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" },
+        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" }
     }
 }
 ]

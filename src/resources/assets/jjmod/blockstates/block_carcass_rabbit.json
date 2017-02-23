@@ -1,5 +1,15 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "half_slab",
+        "textures": {
+            "bottom": "jjmod:blocks/solids/rabbit",
+            "top": "jjmod:blocks/solids/rabbit",
+            "side": "jjmod:blocks/solids/rabbit"
+        } 
+    },
     "variants": {
-        "normal": { "model": "jjmod:carcass_rabbit" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

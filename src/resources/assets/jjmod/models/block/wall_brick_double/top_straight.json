@@ -1,34 +1,34 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "brickpavetest": "jjmod:blocks/building/brickpave",
-    "texture": "jjmod:blocks/building/wholebrickwall",
-    "wholebrickwallupper": "jjmod:blocks/building/wholebrickwallupper",
-    "wholebrickwall2top": "jjmod:blocks/building/wholebrickwall2top"
+    "brickpave1": "jjmod:blocks/complex/brickpave1",
+    "brickside4": "jjmod:blocks/complex/brickside4",
+    "brickside3": "jjmod:blocks/complex/brickside3",
+    "bricktop3": "jjmod:blocks/complex/bricktop3",
+    "particle": "jjmod:blocks/complex/brickpave1"
 },
 "elements": [ 
 {
     "from": [ 0, 14, 0 ],
     "to": [ 16, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#wholebrickwall2top" },
-        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#wholebrickwall2top" },
-        "north": { "uv": [ 0, 2, 16, 4 ], "texture": "#wholebrickwallupper" },
-        "south": { "uv": [ 0, 2, 16, 4 ], "texture": "#wholebrickwallupper" },
-        "west":  { "uv": [ 0, 0, 16, 2 ], "texture": "#wholebrickwallupper" },
-        "east":  { "uv": [ 0, 0, 16, 2 ], "texture": "#wholebrickwallupper" }
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#bricktop3" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#bricktop3" },
+        "north": { "uv": [ 0, 2, 16, 4 ], "texture": "#brickside3" },
+        "south": { "uv": [ 0, 2, 16, 4 ], "texture": "#brickside3" },
+        "west":  { "uv": [ 0, 0, 16, 2 ], "texture": "#brickside3" },
+        "east":  { "uv": [ 0, 0, 16, 2 ], "texture": "#brickside3" }
     }
 },
 {
     "from": [ 1, 0, 0 ],
     "to": [ 15, 14, 16 ],
     "faces": {
-        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#brickpavetest" },
-        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#brickpavetest" },
-        "north": { "uv": [ 1, 2, 15, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 1, 2, 15, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 0, 2, 16, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 2, 16, 16 ], "texture": "#texture" }
+        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#brickpave1" },
+        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#brickpave1" },
+        "north": { "uv": [ 1, 2, 15, 16 ], "texture": "#brickside4" },
+        "south": { "uv": [ 1, 2, 15, 16 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 0, 2, 16, 16 ], "texture": "#brickside4" },
+        "east":  { "uv": [ 0, 2, 16, 16 ], "texture": "#brickside4" }
     }
 }
 ]

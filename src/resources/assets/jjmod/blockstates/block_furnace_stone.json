@@ -1,28 +1,20 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=north,part=bl": { "model": "jjmod:furnace_stone/bl", "y": 270 },
-        "facing=east,part=bl":  { "model": "jjmod:furnace_stone/bl" },
-        "facing=south,part=bl": { "model": "jjmod:furnace_stone/bl", "y": 90 },
-        "facing=west,part=bl":  { "model": "jjmod:furnace_stone/bl", "y": 180 },
-        "facing=north,part=bm": { "model": "jjmod:furnace_stone/bm", "y": 270 },
-        "facing=east,part=bm":  { "model": "jjmod:furnace_stone/bm" },
-        "facing=south,part=bm": { "model": "jjmod:furnace_stone/bm", "y": 90 },
-        "facing=west,part=bm":  { "model": "jjmod:furnace_stone/bm", "y": 180 },
-        "facing=north,part=br": { "model": "jjmod:furnace_stone/br", "y": 270 },
-        "facing=east,part=br":  { "model": "jjmod:furnace_stone/br" },
-        "facing=south,part=br": { "model": "jjmod:furnace_stone/br", "y": 90 },
-        "facing=west,part=br":  { "model": "jjmod:furnace_stone/br", "y": 180 },
-        "facing=north,part=tl": { "model": "jjmod:furnace_stone/tl", "y": 270 },
-        "facing=east,part=tl":  { "model": "jjmod:furnace_stone/tl" },
-        "facing=south,part=tl": { "model": "jjmod:furnace_stone/tl", "y": 90 },
-        "facing=west,part=tl":  { "model": "jjmod:furnace_stone/tl", "y": 180 },
-        "facing=north,part=tm": { "model": "jjmod:furnace_stone/tm", "y": 270 },
-        "facing=east,part=tm":  { "model": "jjmod:furnace_stone/tm" },
-        "facing=south,part=tm": { "model": "jjmod:furnace_stone/tm", "y": 90 },
-        "facing=west,part=tm":  { "model": "jjmod:furnace_stone/tm", "y": 180 },
-        "facing=north,part=tr": { "model": "jjmod:furnace_stone/tr", "y": 270 },
-        "facing=east,part=tr":  { "model": "jjmod:furnace_stone/tr" },
-        "facing=south,part=tr": { "model": "jjmod:furnace_stone/tr", "y": 90 },
-        "facing=west,part=tr":  { "model": "jjmod:furnace_stone/tr", "y": 180 }
+        "part": {
+            "bl": { "model": "jjmod:furnace_stone/bl" },
+            "bm": { "model": "jjmod:furnace_stone/bm" },
+            "br": { "model": "jjmod:furnace_stone/br" },
+            "tl": { "model": "jjmod:furnace_stone/tl" },
+            "tm": { "model": "jjmod:furnace_stone/tm" },
+            "tr": { "model": "jjmod:furnace_stone/tr" } 
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
     }
 }

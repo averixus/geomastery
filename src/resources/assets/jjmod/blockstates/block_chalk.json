@@ -1,6 +1,11 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": { "all": "jjmod:blocks/solids/chalk" }
+    },
     "variants": {
-        "normal": { "model": "jjmod:chalk" },
-        "inventory": { "model": "jjmod:chalk" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

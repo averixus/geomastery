@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:slab_brick/double" }
+        "normal": { "model": "jjmod:slab_brick/double" },
+        "inventory": { "model": "jjmod:slab_brick/double" }
     }
 }

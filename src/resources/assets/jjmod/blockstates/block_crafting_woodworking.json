@@ -1,28 +1,20 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=north,part=bl": { "model": "jjmod:crafting_woodworking/bl", "y": 270 },
-        "facing=east,part=bl":  { "model": "jjmod:crafting_woodworking/bl" },
-        "facing=south,part=bl": { "model": "jjmod:crafting_woodworking/bl", "y": 90 },
-        "facing=west,part=bl":  { "model": "jjmod:crafting_woodworking/bl", "y": 180 },
-        "facing=north,part=bm": { "model": "jjmod:crafting_woodworking/bm", "y": 270 },
-        "facing=east,part=bm":  { "model": "jjmod:crafting_woodworking/bm" },
-        "facing=south,part=bm": { "model": "jjmod:crafting_woodworking/bm", "y": 90 },
-        "facing=west,part=bm":  { "model": "jjmod:crafting_woodworking/bm", "y": 180 },
-        "facing=north,part=br": { "model": "jjmod:crafting_woodworking/br", "y": 270 },
-        "facing=east,part=br":  { "model": "jjmod:crafting_woodworking/br" },
-        "facing=south,part=br": { "model": "jjmod:crafting_woodworking/br", "y": 90 },
-        "facing=west,part=br":  { "model": "jjmod:crafting_woodworking/br", "y": 180 },
-        "facing=north,part=fl": { "model": "jjmod:crafting_woodworking/fl", "y": 270 },
-        "facing=east,part=fl":  { "model": "jjmod:crafting_woodworking/fl" },
-        "facing=south,part=fl": { "model": "jjmod:crafting_woodworking/fl", "y": 90 },
-        "facing=west,part=fl":  { "model": "jjmod:crafting_woodworking/fl", "y": 180 },
-        "facing=north,part=fm": { "model": "jjmod:crafting_woodworking/fm", "y": 270 },
-        "facing=east,part=fm":  { "model": "jjmod:crafting_woodworking/fm" },
-        "facing=south,part=fm": { "model": "jjmod:crafting_woodworking/fm", "y": 90 },
-        "facing=west,part=fm":  { "model": "jjmod:crafting_woodworking/fm", "y": 180 },
-        "facing=north,part=fr": { "model": "jjmod:crafting_woodworking/fr", "y": 270 },
-        "facing=east,part=fr":  { "model": "jjmod:crafting_woodworking/fr" },
-        "facing=south,part=fr": { "model": "jjmod:crafting_woodworking/fr", "y": 90 },
-        "facing=west,part=fr":  { "model": "jjmod:crafting_woodworking/fr", "y": 180 }
+        "part": {
+            "bl": { "model": "jjmod:crafting_woodworking/bl" },
+            "bm": { "model": "jjmod:crafting_woodworking/bm" },
+            "br": { "model": "jjmod:crafting_woodworking/br" },
+            "fl": { "model": "jjmod:crafting_woodworking/fl" },
+            "fm": { "model": "jjmod:crafting_woodworking/fm" },
+            "fr": { "model": "jjmod:crafting_woodworking/fr" }
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
     }
 }

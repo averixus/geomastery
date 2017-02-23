@@ -1,13 +1,14 @@
 {
     "forge_marker": 1,
+    "defaults": {
+         "model": "cross",
+        "textures": { "cross": "jjmod:blocks/plants/seedling_pear" }
+    },
     "variants": {
-        "age=0": { "model": "jjmod:seedling_pear" },
-        "age=1": { "model": "jjmod:seedling_pear" },
+        "normal": [{}],
         "inventory": [{
             "model": "jjmod:item",
-            "textures": {
-                "layer0": "jjmod:items/seedling_pear"
-            }
+            "textures": { "layer0": "jjmod:items/seedling_pear" }
         }]
     }
 }

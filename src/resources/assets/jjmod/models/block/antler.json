@@ -1,7 +1,7 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "antler": "jjmod:blocks/carcass/antler"
+    "antler": "jjmod:blocks/plants/antler",
+    "particle": "jjmod:blocks/plants/antler"
 },
 "elements": [ 
 {

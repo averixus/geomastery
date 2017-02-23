@@ -1,79 +1,79 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "mudbrickwall": "jjmod:blocks/building/mudbrickwall"
+    "mudbrick": "jjmod:blocks/complex/mudbrick",
+    "particle": "jjmod:blocks/complex/mudbrick"
 },
 "elements": [ 
 {
     "from": [ 4, 8, 0 ],
     "to": [ 12, 16, 4 ],
     "faces": {
-        "down":  { "uv": [ 12, 4, 4, 0 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 4, 0, 12, 4 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 0, 0, 4, 8 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 12, 0, 16, 8 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 12, 4, 4, 0 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 4, 0, 12, 4 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 0, 0, 4, 8 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 12, 0, 16, 8 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 3, 0, 0 ],
     "to": [ 13, 8, 8 ],
     "faces": {
-        "down":  { "uv": [ 13, 8, 3, 0 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 3, 0, 13, 8 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 3, 8, 13, 16 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 3, 8, 13, 16 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 0, 8, 8, 16 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 8, 8, 16, 16 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 13, 8, 3, 0 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 3, 0, 13, 8 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 3, 8, 13, 16 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 3, 8, 13, 16 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 0, 8, 8, 16 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 8, 8, 16, 16 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 3, 8, 4 ],
     "to": [ 12, 16, 8 ],
     "faces": {
-        "down":  { "uv": [ 13, 8, 4, 4 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 3, 4, 12, 8 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 4, 0, 13, 8 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 3, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 4, 0, 8, 8 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 8, 0, 12, 8 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 13, 8, 4, 4 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 3, 4, 12, 8 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 4, 0, 13, 8 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 3, 0, 12, 8 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 4, 0, 8, 8 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 8, 0, 12, 8 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 4, 8, 8 ],
     "to": [ 12, 16, 12 ],
     "faces": {
-        "down":  { "uv": [ 12, 12, 4, 8 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 4, 8, 12, 12 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 8, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 4, 0, 8, 8 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 12, 12, 4, 8 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 4, 8, 12, 12 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 4, 0, 12, 8 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 8, 0, 12, 8 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 4, 0, 8, 8 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 4, 8, 12 ],
     "to": [ 13, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 3, 12 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 4, 12, 13, 16 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 3, 0, 12, 8 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 4, 0, 13, 8 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 12, 0, 16, 8 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 0, 0, 4, 8 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 12, 16, 3, 12 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 4, 12, 13, 16 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 3, 0, 12, 8 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 4, 0, 13, 8 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 12, 0, 16, 8 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 0, 0, 4, 8 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 3, 0, 8 ],
     "to": [ 12, 8, 16 ],
     "faces": {
-        "down":  { "uv": [ 13, 16, 4, 8 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 3, 8, 12, 16 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 4, 8, 13, 16 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 3, 8, 12, 16 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 8, 8, 16, 16 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 0, 8, 8, 16 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 13, 16, 4, 8 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 3, 8, 12, 16 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 4, 8, 13, 16 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 3, 8, 12, 16 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 8, 8, 16, 16 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 0, 8, 8, 16 ], "texture": "#mudbrick" }
     }
 }
 ]

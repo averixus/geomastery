@@ -1,6 +1,11 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": { "all": "jjmod:blocks/solids/peat" }
+    },
     "variants": {
-        "normal": { "model": "jjmod:peat" },
-        "inventory": { "model": "jjmod:peat" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

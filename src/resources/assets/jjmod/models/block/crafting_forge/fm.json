@@ -1,11 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "log": "jjmod:blocks/crafters/log",
-    "stone1": "jjmod:blocks/crafters/stone1",
-    "soot": "jjmod:blocks/crafters/soot",
-    "notexture": "jjmod:blocks/crafters/notexture",
-    "particle": "jjmod:blocks/crafters/stone1"
+    "log": "blocks/log_oak_top",
+    "stone1": "jjmod:blocks/complex/stone1",
+    "soot": "jjmod:blocks/complex/soot",
+    "notexture": "jjmod:blocks/notexture",
+    "particle": "jjmod:blocks/complex/stone1"
 },
 "elements": [ 
 {

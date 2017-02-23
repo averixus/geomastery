@@ -1,20 +1,18 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=north,part=br": { "model": "jjmod:furnace_clay/br", "y": 270 },
-        "facing=east,part=br":  { "model": "jjmod:furnace_clay/br" },
-        "facing=south,part=br": { "model": "jjmod:furnace_clay/br", "y": 90 },
-        "facing=west,part=br":  { "model": "jjmod:furnace_clay/br", "y": 180 },
-        "facing=north,part=bl": { "model": "jjmod:furnace_clay/bl", "y": 270 },
-        "facing=east,part=bl":  { "model": "jjmod:furnace_clay/bl" },
-        "facing=south,part=bl": { "model": "jjmod:furnace_clay/bl", "y": 90 },
-        "facing=west,part=bl":  { "model": "jjmod:furnace_clay/bl", "y": 180 },
-        "facing=north,part=tl": { "model": "jjmod:furnace_clay/tl", "y": 270 },
-        "facing=east,part=tl":  { "model": "jjmod:furnace_clay/tl" },
-        "facing=south,part=tl": { "model": "jjmod:furnace_clay/tl", "y": 90 },
-        "facing=west,part=tl":  { "model": "jjmod:furnace_clay/tl", "y": 180 },
-        "facing=north,part=tr": { "model": "jjmod:furnace_clay/tr", "y": 270 },
-        "facing=east,part=tr":  { "model": "jjmod:furnace_clay/tr" },
-        "facing=south,part=tr": { "model": "jjmod:furnace_clay/tr", "y": 90 },
-        "facing=west,part=tr":  { "model": "jjmod:furnace_clay/tr", "y": 180 }
+        "part": {
+            "br": { "model": "jjmod:furnace_clay/br" },
+            "bl": { "model": "jjmod:furnace_clay/bl" },
+            "tl": { "model": "jjmod:furnace_clay/tl" },
+            "tr": { "model": "jjmod:furnace_clay/tr" }
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
     }
 }

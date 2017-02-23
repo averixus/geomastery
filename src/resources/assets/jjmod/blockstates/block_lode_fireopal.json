@@ -1,6 +1,11 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": { "all": "jjmod:blocks/solids/lode_fireopal" }
+    },
     "variants": {
-        "normal": { "model": "jjmod:lode_fireopal" },
-        "inventory": { "model": "jjmod:lode_fireopal" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

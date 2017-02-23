@@ -47,6 +47,7 @@
         "facing=west,open=true,part=rb": { "model": "jjmod:door_wood/bottom_right_open" },
         "facing=west,open=true,part=rt": { "model": "jjmod:door_wood/top_right_open" },
         "facing=west,open=true,part=lb": { "model": "jjmod:door_wood/bottom_left_open" },
-        "facing=west,open=true,part=lt": { "model": "jjmod:door_wood/top_left_open" }
+        "facing=west,open=true,part=lt": { "model": "jjmod:door_wood/top_left_open" },
+        "inventory": { "model": "jjmod:door_wood/bottom_single_closed" }
     }
 }

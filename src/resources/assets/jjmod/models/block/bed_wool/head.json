@@ -1,9 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "cotton1": "jjmod:blocks/beds/cotton1",
-    "wool": "jjmod:blocks/beds/wool",
-    "particle": "jjmod:blocks/beds/wool"
+    "cotton1": "jjmod:blocks/complex/cotton1",
+    "wool": "jjmod:blocks/complex/wool",
+    "particle": "jjmod:blocks/complex/wool"
 },
 "elements": [ 
 {

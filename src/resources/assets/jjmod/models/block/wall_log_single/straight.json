@@ -1,69 +1,69 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "log_spruce": "jjmod:blocks/building/log_spruce",
-    "JJlog_spruce_wall_end": "jjmod:blocks/building/JJlog_spruce_wall_end",
-    "log_spruce - Copy": "jjmod:blocks/building/log_spruce - Copy"
+    "spruce1": "jjmod:blocks/complex/spruce1",
+    "logwall1": "jjmod:blocks/complex/logwall1",
+    "spruce2": "jjmod:blocks/complex/spruce2",
+    "particle": "jjmod:blocks/complex/spruce1"
 },
 "elements": [ 
 {
     "from": [ 6, 0, 0 ],
     "to": [ 10, 2, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 6, 14, 10, 16 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 6, 14, 10, 16 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 14, 16, 16 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 14, 16, 16 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 14, 10, 16 ], "texture": "#logwall1" },
+        "south": { "uv": [ 6, 14, 10, 16 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 14, 16, 16 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 14, 16, 16 ], "texture": "#spruce2" }
     }
 },
 {
     "from": [ 6, 6, 0 ],
     "to": [ 10, 10, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 6, 6, 10, 10 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 6, 6, 10, 10 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 6, 16, 10 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 6, 16, 10 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 6, 10, 10 ], "texture": "#logwall1" },
+        "south": { "uv": [ 6, 6, 10, 10 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 6, 16, 10 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 6, 16, 10 ], "texture": "#spruce2" }
     }
 },
 {
     "from": [ 6, 14, 0 ],
     "to": [ 10, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 6, 0, 10, 2 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 6, 0, 10, 2 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 0, 16, 2 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 0, 16, 2 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 0, 10, 2 ], "texture": "#logwall1" },
+        "south": { "uv": [ 6, 0, 10, 2 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 0, 16, 2 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 0, 16, 2 ], "texture": "#spruce2" }
     }
 },
 {
     "from": [ 4, 10, 0 ],
     "to": [ 12, 14, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 4, 2, 12, 6 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 4, 2, 12, 6 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 2, 16, 6 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 2, 16, 6 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 4, 2, 12, 6 ], "texture": "#logwall1" },
+        "south": { "uv": [ 4, 2, 12, 6 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 2, 16, 6 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 2, 16, 6 ], "texture": "#spruce2" }
     }
 },
 {
     "from": [ 4, 2, 0 ],
     "to": [ 12, 6, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#log_spruce" },
-        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#log_spruce" },
-        "north": { "uv": [ 4, 10, 12, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "south": { "uv": [ 4, 10, 12, 14 ], "texture": "#JJlog_spruce_wall_end" },
-        "west":  { "uv": [ 0, 10, 16, 14 ], "texture": "#log_spruce - Copy" },
-        "east":  { "uv": [ 0, 10, 16, 14 ], "texture": "#log_spruce - Copy" }
+        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 4, 10, 12, 14 ], "texture": "#logwall1" },
+        "south": { "uv": [ 4, 10, 12, 14 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 10, 16, 14 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 10, 16, 14 ], "texture": "#spruce2" }
     }
 }
 ]

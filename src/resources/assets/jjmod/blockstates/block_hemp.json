@@ -1,12 +1,20 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "crop",
+        "textures": { "crop": "jjmod:blocks/plants/hemp0" }
+    },
     "variants": {
-        "age=0": { "model": "jjmod:hemp/0" },
-        "age=1": { "model": "jjmod:hemp/0" },
-        "age=2": { "model": "jjmod:hemp/1" },
-        "age=3": { "model": "jjmod:hemp/1" },
-        "age=4": { "model": "jjmod:hemp/2" },
-        "age=5": { "model": "jjmod:hemp/2" },
-        "age=6": { "model": "jjmod:hemp/2" },
-        "age=7": { "model": "jjmod:hemp/3" }
+        "age": {
+            "0": {},
+            "1": {},
+            "2": { "textures": { "crop": "jjmod:blocks/plants/hemp1" } },
+            "3": { "textures": { "crop": "jjmod:blocks/plants/hemp1" } },
+            "4": { "textures": { "crop": "jjmod:blocks/plants/hemp2" } },
+            "5": { "textures": { "crop": "jjmod:blocks/plants/hemp2" } },
+            "6": { "textures": { "crop": "jjmod:blocks/plants/hemp2" } },
+            "7": { "textures": { "crop": "jjmod:blocks/plants/hemp3" } }
+        },
+        "inventory": [{}]
     }
 }

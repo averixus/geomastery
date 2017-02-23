@@ -1,5 +1,6 @@
 {
     "variants": {
-        "normal": { "model": "jjmod:antler" }
+        "normal": { "model": "jjmod:antler" },
+        "inventory": { "model": "jjmod:antler" }
     }
 }

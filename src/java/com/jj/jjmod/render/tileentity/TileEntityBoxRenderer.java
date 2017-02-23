@@ -10,7 +10,7 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
 
     /** Texture for box .*/
     private static final ResourceLocation TEXTURE = new
-            ResourceLocation("jjmod:textures/blocks/crafters/woodwork1.png");
+            ResourceLocation("jjmod:textures/blocks/complex/panels1.png");
     
     private ModelBox model = new ModelBox();
     

@@ -1,8 +1,7 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
     "tallow": "jjmod:items/tallow",
-    "fire": "jjmod:blocks/crafters/fire",
+    "fire": "jjmod:blocks/complex/fire",
     "particle": "jjmod:items/tallow"    
 },
 "elements": [ 

@@ -1,13 +1,12 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "stone1": "jjmod:blocks/crafters/stone1",
-    "solidsoot": "jjmod:blocks/crafters/solidsoot",
-    "fire": "jjmod:blocks/crafters/fire",
-    "bellows": "jjmod:blocks/crafters/bellows",
-    "notexture": "jjmod:blocks/crafters/notexture",
-    "soot": "jjmod:blocks/crafters/soot",
-    "particle": "jjmod:blocks/crafters/stone1"
+    "stone1": "jjmod:blocks/complex/stone1",
+    "solidsoot": "jjmod:blocks/complex/solidsoot",
+    "fire": "jjmod:blocks/complex/fire",
+    "bellows": "jjmod:blocks/complex/bellows",
+    "notexture": "jjmod:blocks/notexture",
+    "soot": "jjmod:blocks/complex/soot",
+    "particle": "jjmod:blocks/complex/stone1"
 },
 "elements": [ 
 {

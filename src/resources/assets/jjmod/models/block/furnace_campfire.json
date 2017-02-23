@@ -1,10 +1,9 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "bark": "jjmod:blocks/crafters/bark",
-    "solidsoot": "jjmod:blocks/crafters/solidsoot",
-    "fire": "jjmod:blocks/crafters/fire",
-    "particle": "jjmod:blocks/crafters/bark"
+    "bark": "blocks/log_oak",
+    "solidsoot": "jjmod:blocks/complex/solidsoot",
+    "fire": "jjmod:blocks/complex/fire",
+    "particle": "blocks/log_oak"
 },
 "parent": "block/block",
 "elements": [ 

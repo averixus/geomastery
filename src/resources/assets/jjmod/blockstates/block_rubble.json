@@ -5,16 +5,16 @@
   },
   "variants": {
     "normal": [
-      { "textures": { "all": "jjmod:blocks/rocks/rubble1" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble2" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble3" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble4" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble5" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble6" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble7" } },
-      { "textures": { "all": "jjmod:blocks/rocks/rubble8" } }
+      { "textures": { "all": "jjmod:blocks/solids/rubble1" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble2" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble3" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble4" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble5" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble6" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble7" } },
+      { "textures": { "all": "jjmod:blocks/solids/rubble8" } }
     ],
     "inventory": 
-      [ { "textures": { "all": "jjmod:blocks/rocks/rubble1" } } ]
+      [ { "textures": { "all": "jjmod:blocks/solids/rubble1" } } ]
   }
 }

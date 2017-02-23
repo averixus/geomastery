@@ -1,3 +1,8 @@
 {
-    "parent": "jjmod:block/carcass/cowpart"
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "jjmod:blocks/solids/cowpart",
+        "top": "jjmod:blocks/solids/cowpart",
+        "side": "jjmod:blocks/solids/cowpart"
+    }
 }

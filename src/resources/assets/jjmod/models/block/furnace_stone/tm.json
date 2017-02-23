@@ -1,9 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "stone1": "jjmod:blocks/crafters/stone1",
-    "solidsoot": "jjmod:blocks/crafters/solidsoot",
-    "particle": "jjmod:blocks/crafters/stone1"
+    "stone1": "jjmod:blocks/complex/stone1",
+    "solidsoot": "jjmod:blocks/complex/solidsoot",
+    "particle": "jjmod:blocks/complex/stone1"
 },
 "elements": [ 
 {

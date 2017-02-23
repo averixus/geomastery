@@ -1,6 +1,5 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
-"parent": "block/cube_all",
+"parent": "block/block",
 "textures": {
     "hive": "jjmod:blocks/plants/beehive",
     "particle": "jjmod:blocks/plants/beehive"

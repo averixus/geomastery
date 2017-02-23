@@ -1,6 +1,7 @@
 {
     "parent": "block/crop",
     "textures": {
-        "crop": "jjmod:blocks/plants/rice"
+        "crop": "jjmod:blocks/plants/rice_base",
+        "particle": "jjmod:blocks/plants/rice_base"
     }
 }

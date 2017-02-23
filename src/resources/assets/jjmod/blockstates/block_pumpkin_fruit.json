@@ -1,9 +1,9 @@
 {
     "variants": {
-        "stem=north": { "model": "jjmod:pumpkin", "y": 90 },
-        "stem=east": { "model": "jjmod:pumpkin", "y": 180 },
-        "stem=south": { "model": "jjmod:pumpkin", "y": 270 },
-        "stem=west": { "model": "jjmod:pumpkin" },
+        "facing=north": { "model": "jjmod:pumpkin", "y": 90 },
+        "facing=east": { "model": "jjmod:pumpkin", "y": 180 },
+        "facing=south": { "model": "jjmod:pumpkin", "y": 270 },
+        "facing=west": { "model": "jjmod:pumpkin" },
         "inventory": { "model": "jjmod:pumpkin" }
     }
 }

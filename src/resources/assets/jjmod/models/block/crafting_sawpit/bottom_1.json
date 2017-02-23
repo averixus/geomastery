@@ -1,11 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "notexture": "jjmod:blocks/crafters/notexture",
-    "sawdust": "jjmod:blocks/crafters/sawdust",
-    "bark": "jjmod:blocks/crafters/bark",
-    "softwood1": "jjmod:blocks/crafters/softwood1",
-    "texture": "jjmod:blocks/crafters/sawdust"
+    "notexture": "jjmod:blocks/notexture",
+    "sawdust1": "jjmod:blocks/complex/sawdust1",
+    "bark": "blocks/log_oak",
+    "softwood1": "jjmod:blocks/complex/softwood1",
+    "particle": "jjmod:blocks/complex/sawdust1"
 },
 "elements": [ 
 {
@@ -13,11 +12,11 @@
     "to": [ 16, 0, 16 ],
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#notexture" },
-        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#sawdust" },
-        "north": { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
-        "south": { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
-        "west":  { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 16, 16, 16 ], "texture": "#texture" }
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#sawdust1" },
+        "north": { "uv": [ 0, 16, 16, 16 ], "texture": "#sawdust1" },
+        "south": { "uv": [ 0, 16, 16, 16 ], "texture": "#sawdust1" },
+        "west":  { "uv": [ 0, 16, 16, 16 ], "texture": "#sawdust1" },
+        "east":  { "uv": [ 0, 16, 16, 16 ], "texture": "#sawdust1" }
     }
 },
 {

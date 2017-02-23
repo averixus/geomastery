@@ -1,43 +1,43 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "mudbrickwall": "jjmod:blocks/building/mudbrickwall"
+    "mudbrick": "jjmod:blocks/complex/mudbrick",
+    "particle": "jjmod:blocks/complex/mudbrick"
 },
 "elements": [ 
 {
     "from": [ 2, 8, 0 ],
     "to": [ 13, 16, 6 ],
     "faces": {
-        "down":  { "uv": [ 14, 6, 3, 0 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 2, 0, 13, 6 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 3, 0, 14, 8 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 2, 0, 13, 8 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 0, 0, 6, 8 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 10, 0, 16, 8 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 14, 6, 3, 0 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 2, 0, 13, 6 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 3, 0, 14, 8 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 2, 0, 13, 8 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 0, 0, 6, 8 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 10, 0, 16, 8 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 1, 0, 0 ],
     "to": [ 15, 8, 16 ],
     "faces": {
-        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 1, 8, 15, 16 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 1, 8, 15, 16 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 15, 16, 1, 0 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 1, 0, 15, 16 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 1, 8, 15, 16 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 1, 8, 15, 16 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 0, 8, 16, 16 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 0, 8, 16, 16 ], "texture": "#mudbrick" }
     }
 },
 {
     "from": [ 2, 8, 6 ],
     "to": [ 14, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 14, 16, 2, 6 ], "texture": "#mudbrickwall" },
-        "up":    { "uv": [ 2, 6, 14, 16 ], "texture": "#mudbrickwall" },
-        "north": { "uv": [ 2, 0, 14, 8 ], "texture": "#mudbrickwall" },
-        "south": { "uv": [ 2, 0, 14, 8 ], "texture": "#mudbrickwall" },
-        "west":  { "uv": [ 6, 0, 16, 8 ], "texture": "#mudbrickwall" },
-        "east":  { "uv": [ 0, 0, 10, 8 ], "texture": "#mudbrickwall" }
+        "down":  { "uv": [ 14, 16, 2, 6 ], "texture": "#mudbrick" },
+        "up":    { "uv": [ 2, 6, 14, 16 ], "texture": "#mudbrick" },
+        "north": { "uv": [ 2, 0, 14, 8 ], "texture": "#mudbrick" },
+        "south": { "uv": [ 2, 0, 14, 8 ], "texture": "#mudbrick" },
+        "west":  { "uv": [ 6, 0, 16, 8 ], "texture": "#mudbrick" },
+        "east":  { "uv": [ 0, 0, 10, 8 ], "texture": "#mudbrick" }
     }
 }
 ]

@@ -19,7 +19,6 @@ public class BlockLightTorch extends BlockLight {
         
         EnumFacing facing = state.getValue(FACING);
         return facing == EnumFacing.UP ? BlockNew.CENTRE_TEN :
-            BlockNew.BLIP[facing.getHorizontalIndex()];
+            BlockNew.BLIP[(facing.getHorizontalIndex() + 2) % 4];
     }
-
 }

@@ -1,6 +1,11 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": { "all": "jjmod:blocks/solids/ore_silver" }
+    },
     "variants": {
-        "normal": { "model": "jjmod:ore_silver" },
-        "inventory": { "model": "jjmod:ore_silver" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

@@ -1,13 +1,12 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "softwood1": "jjmod:blocks/crafters/softwood1",
-    "claydrips": "jjmod:blocks/crafters/claydrips",
-    "clay1": "jjmod:blocks/crafters/clay1",
-    "woodwork1": "jjmod:blocks/crafters/woodwork1",
-    "woodworktools1": "jjmod:blocks/crafters/woodworktools1",
-    "woodworktools2": "jjmod:blocks/crafters/woodworktools2",
-    "particle": "jjmod:blocks/crafters/softwood1"
+    "softwood1": "jjmod:blocks/complex/softwood1",
+    "claydrips": "jjmod:blocks/complex/claydrips",
+    "clay1": "jjmod:blocks/complex/clay1",
+    "panels1": "jjmod:blocks/complex/panels1",
+    "tools1": "jjmod:blocks/complex/tools1",
+    "tools2": "jjmod:blocks/complex/tools2",
+    "particle": "jjmod:blocks/complex/softwood1"
 },
 "elements": [ 
 {
@@ -586,24 +585,24 @@
     "from": [ 2, 0, 12 ],
     "to": [ 14, 9, 14 ],
     "faces": {
-        "down":  { "uv": [ 14, 14, 2, 12 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 2, 12, 14, 14 ], "texture": "#woodwork1" },
-        "north": { "uv": [ 2, 7, 14, 16 ], "texture": "#woodwork1" },
-        "south": { "uv": [ 2, 7, 14, 16 ], "texture": "#woodwork1" },
-        "west":  { "uv": [ 12, 7, 14, 16 ], "texture": "#woodwork1" },
-        "east":  { "uv": [ 2, 7, 4, 16 ], "texture": "#woodwork1" }
+        "down":  { "uv": [ 14, 14, 2, 12 ], "texture": "#panels1" },
+        "up":    { "uv": [ 2, 12, 14, 14 ], "texture": "#panels1" },
+        "north": { "uv": [ 2, 7, 14, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 2, 7, 14, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 12, 7, 14, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 2, 7, 4, 16 ], "texture": "#panels1" }
     }
 },
 {
     "from": [ 1, 9, 11 ],
     "to": [ 15, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 15, 16, 1, 11 ], "texture": "#woodwork1" },
-        "up":    { "uv": [ 1, 11, 15, 16 ], "texture": "#woodwork1" },
-        "north": { "uv": [ 2, 0, 16, 2 ], "texture": "#woodworktools1" },
-        "south": { "uv": [ 2, 0, 16, 2 ], "texture": "#woodworktools1" },
-        "west":  { "uv": [ 11, 5, 16, 7 ], "texture": "#woodworktools2" },
-        "east":  { "uv": [ 0, 5, 5, 7 ], "texture": "#woodworktools2" }
+        "down":  { "uv": [ 15, 16, 1, 11 ], "texture": "#panels1" },
+        "up":    { "uv": [ 1, 11, 15, 16 ], "texture": "#panels1" },
+        "north": { "uv": [ 2, 0, 16, 2 ], "texture": "#tools1" },
+        "south": { "uv": [ 2, 0, 16, 2 ], "texture": "#tools1" },
+        "west":  { "uv": [ 11, 5, 16, 7 ], "texture": "#tools2" },
+        "east":  { "uv": [ 0, 5, 5, 7 ], "texture": "#tools2" }
     }
 }
 ]

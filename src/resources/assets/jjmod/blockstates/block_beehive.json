@@ -1,37 +1,23 @@
 {
+    "forge_marker": 1,
+    "defaults": { "model": "jjmod:beehive" },
     "variants": {
-        "age=0,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=0,facing=west": { "model": "jjmod:beehive" },
-        "age=0,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=0,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=1,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=1,facing=west": { "model": "jjmod:beehive" },
-        "age=1,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=1,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=2,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=2,facing=west": { "model": "jjmod:beehive" },
-        "age=2,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=2,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=3,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=3,facing=west": { "model": "jjmod:beehive" },
-        "age=3,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=3,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=4,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=4,facing=west": { "model": "jjmod:beehive" },
-        "age=4,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=4,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=5,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=5,facing=west": { "model": "jjmod:beehive" },
-        "age=5,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=5,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=6,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=6,facing=west": { "model": "jjmod:beehive" },
-        "age=6,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=6,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "age=7,facing=south": { "model": "jjmod:beehive", "y": 270 },
-        "age=7,facing=west": { "model": "jjmod:beehive" },
-        "age=7,facing=north": { "model": "jjmod:beehive", "y": 90 },
-        "age=7,facing=east": { "model": "jjmod:beehive", "y": 180 },
-        "inventory": { "model": "jjmod:beehive" }
+        "facing": {
+            "south": { "y": 270 },
+            "west": {},
+            "north": { "y": 90 },
+            "east": { "y": 180 }
+        },
+        "age": {
+            "0": {},
+            "1": {},
+            "2": {},
+            "3": {},
+            "4": {},
+            "5": {},
+            "6": {},
+            "7": {}
+        },
+        "inventory": [{}]
     }
 }

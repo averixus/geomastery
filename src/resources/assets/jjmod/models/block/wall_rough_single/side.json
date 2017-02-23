@@ -1,43 +1,43 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "roughstonewall": "jjmod:blocks/building/roughstonewall"
+    "roughstone": "jjmod:blocks/complex/roughstone",
+    "particle": "jjmod:blocks/complex/roughstone"
 },
 "elements": [ 
 {
     "from": [ 3, 0, 13 ],
     "to": [ 13, 6, 16 ],
     "faces": {
-        "down":  { "uv": [ 13, 16, 3, 13 ], "texture": "#roughstonewall" },
-        "up":    { "uv": [ 3, 13, 13, 16 ], "texture": "#roughstonewall" },
-        "north": { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstonewall" },
-        "south": { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstonewall" },
-        "west":  { "uv": [ 13, 10, 16, 16 ], "texture": "#roughstonewall" },
-        "east":  { "uv": [ 0, 10, 3, 16 ], "texture": "#roughstonewall" }
+        "down":  { "uv": [ 13, 16, 3, 13 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 3, 13, 13, 16 ], "texture": "#roughstone" },
+        "north": { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstone" },
+        "south": { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 13, 10, 16, 16 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 0, 10, 3, 16 ], "texture": "#roughstone" }
     }
 },
 {
     "from": [ 4, 6, 12 ],
     "to": [ 12, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 12 ], "texture": "#roughstonewall" },
-        "up":    { "uv": [ 4, 12, 12, 16 ], "texture": "#roughstonewall" },
-        "north": { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstonewall" },
-        "south": { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstonewall" },
-        "west":  { "uv": [ 12, 5, 16, 10 ], "texture": "#roughstonewall" },
-        "east":  { "uv": [ 0, 5, 4, 10 ], "texture": "#roughstonewall" }
+        "down":  { "uv": [ 12, 16, 4, 12 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 4, 12, 12, 16 ], "texture": "#roughstone" },
+        "north": { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstone" },
+        "south": { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 12, 5, 16, 10 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 0, 5, 4, 10 ], "texture": "#roughstone" }
     }
 },
 {
     "from": [ 5, 11, 11 ],
     "to": [ 11, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 11, 16, 5, 11 ], "texture": "#roughstonewall" },
-        "up":    { "uv": [ 5, 11, 11, 16 ], "texture": "#roughstonewall" },
-        "north": { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstonewall" },
-        "south": { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstonewall" },
-        "west":  { "uv": [ 11, 0, 16, 5 ], "texture": "#roughstonewall" },
-        "east":  { "uv": [ 0, 0, 5, 5 ], "texture": "#roughstonewall" }
+        "down":  { "uv": [ 11, 16, 5, 11 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 5, 11, 11, 16 ], "texture": "#roughstone" },
+        "north": { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstone" },
+        "south": { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 11, 0, 16, 5 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 0, 0, 5, 5 ], "texture": "#roughstone" }
     }
 }
 ]

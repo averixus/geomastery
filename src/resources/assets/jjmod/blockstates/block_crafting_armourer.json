@@ -1,20 +1,18 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=north,part=t": { "model": "jjmod:crafting_armourer/t" },
-        "facing=north,part=l": { "model": "jjmod:crafting_armourer/l" },
-        "facing=north,part=m": { "model": "jjmod:crafting_armourer/m" },
-        "facing=north,part=r": { "model": "jjmod:crafting_armourer/r" },
-        "facing=east,part=t": { "model": "jjmod:crafting_armourer/t", "y": 90 },
-        "facing=east,part=l": { "model": "jjmod:crafting_armourer/l", "y": 90 },
-        "facing=east,part=m": { "model": "jjmod:crafting_armourer/m", "y": 90 },
-        "facing=east,part=r": { "model": "jjmod:crafting_armourer/r", "y": 90 },
-        "facing=south,part=t": { "model": "jjmod:crafting_armourer/t", "y": 180 },
-        "facing=south,part=l": { "model": "jjmod:crafting_armourer/l", "y": 180 },
-        "facing=south,part=m": { "model": "jjmod:crafting_armourer/m", "y": 180 },
-        "facing=south,part=r": { "model": "jjmod:crafting_armourer/r", "y": 180 },
-        "facing=west,part=t": { "model": "jjmod:crafting_armourer/t", "y": 270 },
-        "facing=west,part=l": { "model": "jjmod:crafting_armourer/l", "y": 270 },
-        "facing=west,part=m": { "model": "jjmod:crafting_armourer/m", "y": 270 },
-        "facing=west,part=r": { "model": "jjmod:crafting_armourer/r", "y": 270 }
+        "part": {
+            "t": { "model": "jjmod:crafting_armourer/t" },
+            "l": { "model": "jjmod:crafting_armourer/l" },
+            "m": { "model": "jjmod:crafting_armourer/m" },
+            "r": { "model": "jjmod:crafting_armourer/r" }
+        },
+        "facing": {
+            "north": {},
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
+        "inventory": [{}]
     }
 }

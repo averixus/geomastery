@@ -1,5 +1,15 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "model": "half_slab",
+        "textures": {
+            "bottom": "jjmod:blocks/solids/cowpart",
+            "top": "jjmod:blocks/solids/cowpart",
+            "side": "jjmod:blocks/solids/cowpart"
+        } 
+    },
     "variants": {
-        "normal": { "model": "jjmod:carcass_cowpart" }
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

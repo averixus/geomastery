@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "stone": "jjmod:blocks/building/stone",
-    "dressedstonewall": "jjmod:blocks/building/dressedstonewall"
+    "stone": "blocks/stone",
+    "stonebrick": "jjmod:blocks/complex/stonebrick",
+    "particle": "jjmod:blocks/complex/stonebrick"
 },
 "parent": "block/block",
 "elements": [ 
@@ -22,24 +22,24 @@
     "from": [ 0, 0, 1 ],
     "to": [ 16, 3, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 0, 1 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 0, 1, 16, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 0, 13, 16, 16 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 0, 13, 16, 16 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 1, 13, 16, 16 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 13, 15, 16 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 16, 16, 0, 1 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 0, 1, 16, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 0, 13, 16, 16 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 0, 13, 16, 16 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 1, 13, 16, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 13, 15, 16 ], "texture": "#stonebrick" }
     }
 },
 {
     "from": [ 0, 3, 5 ],
     "to": [ 16, 7, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 0, 5 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 0, 5, 16, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 0, 9, 16, 13 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 0, 9, 16, 13 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 5, 9, 16, 13 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 9, 11, 13 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 16, 16, 0, 5 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 0, 5, 16, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 0, 9, 16, 13 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 0, 9, 16, 13 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 5, 9, 16, 13 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 9, 11, 13 ], "texture": "#stonebrick" }
     }
 },
 {
@@ -58,12 +58,12 @@
     "from": [ 0, 7, 9 ],
     "to": [ 16, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 0, 9 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 0, 9, 16, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 0, 5, 16, 9 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 0, 5, 16, 9 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 9, 5, 16, 9 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 5, 7, 9 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 16, 16, 0, 9 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 0, 9, 16, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 0, 5, 16, 9 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 0, 5, 16, 9 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 9, 5, 16, 9 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 5, 7, 9 ], "texture": "#stonebrick" }
     }
 },
 {
@@ -82,12 +82,12 @@
     "from": [ 0, 11, 13 ],
     "to": [ 16, 15, 16 ],
     "faces": {
-        "down":  { "uv": [ 16, 16, 0, 13 ], "texture": "#dressedstonewall" },
-        "up":    { "uv": [ 0, 13, 16, 16 ], "texture": "#dressedstonewall" },
-        "north": { "uv": [ 0, 1, 16, 5 ], "texture": "#dressedstonewall" },
-        "south": { "uv": [ 0, 1, 16, 5 ], "texture": "#dressedstonewall" },
-        "west":  { "uv": [ 13, 1, 16, 5 ], "texture": "#dressedstonewall" },
-        "east":  { "uv": [ 0, 1, 3, 5 ], "texture": "#dressedstonewall" }
+        "down":  { "uv": [ 16, 16, 0, 13 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 0, 13, 16, 16 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 0, 1, 16, 5 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 0, 1, 16, 5 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 13, 1, 16, 5 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 1, 3, 5 ], "texture": "#stonebrick" }
     }
 },
 {

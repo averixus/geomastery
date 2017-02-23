@@ -8,9 +8,7 @@
         "facing=north": { "model": "jjmod:torch_tallow/side", "y": 180 },
         "inventory": [{
             "model": "jjmod:item",
-            "textures": {
-                "layer0": "jjmod:items/torch_tallow"
-            }
+            "textures": { "layer0": "jjmod:items/torch_tallow" }
         }]
     }
 }

@@ -1,7 +1,7 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "softwood1": "jjmod:blocks/crafters/softwood1"
+    "softwood1": "jjmod:blocks/complex/softwood1",
+    "particle": "jjmod:blocks/complex/softwood1"
 },
 "elements": [ 
 {

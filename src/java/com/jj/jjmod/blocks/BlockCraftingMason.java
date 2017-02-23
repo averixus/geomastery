@@ -75,15 +75,18 @@ public class BlockCraftingMason extends BlockComplexAbstract {
 
             case FM: {
 
-                broken = world.getBlockState(pos.offset(facing.rotateY()
+                boolean brokenFL = world.getBlockState(pos.offset(facing.rotateY()
                         .getOpposite())).getBlock() != this;
+                boolean brokenBM = world.getBlockState(pos.offset(facing))
+                        .getBlock() != this;
+                broken = brokenFL || brokenBM;
                 break;
             }
 
             case FL: {
 
-                broken = world.getBlockState(pos.offset(facing)
-                        .offset(facing.rotateY())).getBlock() != this;
+                broken = world.getBlockState(pos.offset(facing.rotateY()))
+                        .getBlock() != this;
                 break;
             }
 

@@ -1,3 +1,8 @@
 {
-    "parent": "jjmod:block/carcass/chicken"
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "jjmod:blocks/solids/chicken",
+        "top": "jjmod:blocks/solids/chicken",
+        "side": "jjmod:blocks/solids/chicken"
+    } 
 }

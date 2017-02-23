@@ -1,7 +1,7 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "stone": "jjmod:blocks/building/stone"
+    "stone": "blocks/stone",
+    "particle": "blocks/stone"
 },
 "elements": [ 
 {

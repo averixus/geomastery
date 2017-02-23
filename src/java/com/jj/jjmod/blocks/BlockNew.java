@@ -55,7 +55,7 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0,0,0,1,1,0.5), new AxisAlignedBB(0.5,0,0,1,1,1)};
     /** Blips, indexed by facing. */
     public static final AxisAlignedBB[] BLIP =
-            {new AxisAlignedBB(0,0.37,0.37,0.25,0.62,0.62),
+            {new AxisAlignedBB(0.37,0.37,0.75,0.62,0.62,1),
             new AxisAlignedBB(0,0.37,0.37,0.25,0.62,0.62),
             new AxisAlignedBB(0.37,0.37,0,0.62,0.62,0.25),
             new AxisAlignedBB(0.75,0.37,0.37,1,0.62,0.62)};

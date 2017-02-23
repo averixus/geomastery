@@ -1,45 +1,45 @@
 {
-"__comment": "Designed by bdcraftjgrowe65 with bDcraft Cubik pRO 0.96 beta - http://bdcraft.net",
 "textures": {
-    "woodworkingbenchpanels": "jjmod:blocks/building/woodworkingbenchpanels",
-    "door_lower": "jjmod:blocks/building/door_lower",
-    "door_lower_flipped": "jjmod:blocks/building/door_lower_flipped"
+    "panels1": "jjmod:blocks/complex/panels1",
+    "doorlower1": "jjmod:blocks/complex/doorlower1",
+    "doorlower2": "jjmod:blocks/complex/doorlower2",
+    "particle": "jjmod:blocks/complex/panels1"
 },
 "elements": [ 
 {
     "from": [ 8, 0, 0 ],
     "to": [ 11, 16, 1 ],
     "faces": {
-        "down":  { "uv": [ 8, 1, 5, 0 ], "texture": "#woodworkingbenchpanels", "cullface": "down" },
-        "up":    { "uv": [ 9, 0, 12, 1 ], "texture": "#woodworkingbenchpanels", "cullface": "up" },
-        "north": { "uv": [ 5, 0, 8, 16 ], "texture": "#woodworkingbenchpanels", "cullface": "north" },
-        "south": { "uv": [ 5, 0, 8, 16 ], "texture": "#woodworkingbenchpanels" },
-        "west":  { "uv": [ 1, 0, 2, 16 ], "texture": "#woodworkingbenchpanels" },
-        "east":  { "uv": [ 14, 0, 15, 16 ], "texture": "#woodworkingbenchpanels" }
+        "down":  { "uv": [ 8, 1, 5, 0 ], "texture": "#panels1", "cullface": "down" },
+        "up":    { "uv": [ 9, 0, 12, 1 ], "texture": "#panels1", "cullface": "up" },
+        "north": { "uv": [ 5, 0, 8, 16 ], "texture": "#panels1", "cullface": "north" },
+        "south": { "uv": [ 5, 0, 8, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 1, 0, 2, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 14, 0, 15, 16 ], "texture": "#panels1" }
     }
 },
 {
     "from": [ -4, 0, 1 ],
     "to": [ 10, 16, 2 ],
     "faces": {
-        "down":  { "uv": [ 14, 6, 0, 5 ], "texture": "#door_lower", "cullface": "west" },
-        "up":    { "uv": [ 0, 5, 14, 6 ], "texture": "#door_lower", "cullface": "west" },
-        "north": { "uv": [ 0, 0, 14, 16 ], "texture": "#door_lower", "cullface": "west" },
-        "south": { "uv": [ 2, 0, 16, 16 ], "texture": "#door_lower_flipped", "cullface": "west" },
-        "west":  { "uv": [ 13, 0, 14, 16 ], "texture": "#door_lower", "cullface": "west" },
-        "east":  { "uv": [ 0, 0, 1, 16 ], "texture": "#door_lower", "cullface": "west" }
+        "down":  { "uv": [ 14, 6, 0, 5 ], "texture": "#doorlower1", "cullface": "west" },
+        "up":    { "uv": [ 0, 5, 14, 6 ], "texture": "#doorlower1", "cullface": "west" },
+        "north": { "uv": [ 0, 0, 14, 16 ], "texture": "#doorlower1", "cullface": "west" },
+        "south": { "uv": [ 2, 0, 16, 16 ], "texture": "#doorlower2", "cullface": "west" },
+        "west":  { "uv": [ 13, 0, 14, 16 ], "texture": "#doorlower1", "cullface": "west" },
+        "east":  { "uv": [ 0, 0, 1, 16 ], "texture": "#doorlower1", "cullface": "west" }
     }
 },
 {
     "from": [ 8, 0, 15 ],
     "to": [ 11, 16, 16 ],
     "faces": {
-        "down":  { "uv": [ 8, 16, 5, 15 ], "texture": "#woodworkingbenchpanels", "cullface": "down" },
-        "up":    { "uv": [ 9, 15, 12, 16 ], "texture": "#woodworkingbenchpanels", "cullface": "up" },
-        "north": { "uv": [ 5, 0, 8, 16 ], "texture": "#woodworkingbenchpanels" },
-        "south": { "uv": [ 9, 0, 12, 16 ], "texture": "#woodworkingbenchpanels", "cullface": "south" },
-        "west":  { "uv": [ 15, 0, 16, 16 ], "texture": "#woodworkingbenchpanels" },
-        "east":  { "uv": [ 1, 0, 2, 16 ], "texture": "#woodworkingbenchpanels" }
+        "down":  { "uv": [ 8, 16, 5, 15 ], "texture": "#panels1", "cullface": "down" },
+        "up":    { "uv": [ 9, 15, 12, 16 ], "texture": "#panels1", "cullface": "up" },
+        "north": { "uv": [ 5, 0, 8, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 9, 0, 12, 16 ], "texture": "#panels1", "cullface": "south" },
+        "west":  { "uv": [ 15, 0, 16, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 1, 0, 2, 16 ], "texture": "#panels1" }
     }
 }
 ]
