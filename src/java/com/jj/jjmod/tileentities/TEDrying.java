@@ -38,6 +38,13 @@ public class TEDrying extends TileEntity implements ITickable {
     public void sort() {
 
         Collections.sort(this.inputs, SORTER);
+        
+        if (this.dryEach == -1) {
+            
+            this.dryEach = this.recipes.getCookingTime(this.inputs.get(0));
+            this.drySpent = 0;
+            this.markDirty();
+        }
     }
 
     /** @return The ItemStack in the input slot. */
@@ -54,16 +61,14 @@ public class TEDrying extends TileEntity implements ITickable {
 
     /** Sets the given stack to the input slot. */
     public void setInput(ItemStack stack, int index) {
-                
-        if (index == 0 && !ItemStack.areItemsEqual(stack, this.getInput(0))) {
-            
-            this.dryEach = this.recipes.getCookingTime(stack);
-            this.drySpent = 0;
-            this.markDirty();
-        }
-        
+
         this.inputs.set(index, stack);
         this.sort();
+        
+        if (index == 0 && stack.isEmpty()) {
+            
+            this.drySpent = 0;
+        }
     }
     
     /** Sets the given stack to the output slot. */
@@ -215,13 +220,13 @@ public class TEDrying extends TileEntity implements ITickable {
         super.readFromNBT(compound);
         
         for (int i = 0; i < this.inputs.size(); i++) {
-            
+
             this.setInput(new ItemStack(compound
                     .getCompoundTag("input" + i)), i);
         }
         
         for (int i = 0; i < this.outputs.size(); i++) {
-            
+
             this.setOutput(new ItemStack(compound
                     .getCompoundTag("output" + i)), i);
         }
@@ -239,14 +244,14 @@ public class TEDrying extends TileEntity implements ITickable {
         compound.setInteger("dryEach", this.dryEach);
         
         for (int i = 0; i < this.inputs.size(); i++) {
-            
-            compound.setTag("input" + 1, this.inputs.get(i)
+
+            compound.setTag("input" + i, this.inputs.get(i)
                     .writeToNBT(new NBTTagCompound()));
         }
         
         for (int i = 0; i < this.outputs.size(); i++) {
             
-            compound.setTag("output" + 1, this.outputs.get(i)
+            compound.setTag("output" + i, this.outputs.get(i)
                     .writeToNBT(new NBTTagCompound()));
         }
         

@@ -276,37 +276,30 @@ public class ContainerInventory extends ContainerAbstract {
     private ItemStack addToSlot(int slot, ItemStack stack) {
         
         NonNullList<ItemStack> inv = this.player.inventory.mainInventory;
-        ItemStack result = stack;
+        ItemStack added = stack.copy();
         ItemStack inSlot = inv.get(slot);
+        int max = stack.getMaxStackSize();
+        int total = inSlot.getCount() + stack.getCount();
         
-        if (inSlot.isEmpty()) {
-
-            inv.set(slot, stack);
-            result = ItemStack.EMPTY;
-            
-        } else if (ItemStack.areItemsEqual(stack, inSlot) &&
-                stack.areCapsCompatible(inSlot)) {
-
-            ItemStack added = inSlot.copy();
-            int total = inSlot.getCount() + stack.getCount();
-            int max = stack.getMaxStackSize();
+        if (inSlot.isEmpty() || (ItemStack.areItemsEqual(stack, inSlot) &&
+                stack.areCapsCompatible(inSlot))) {
 
             if (max >= total) {
                 
                 added.setCount(total);
-                inv.set(slot, added);
-                result = ItemStack.EMPTY;
+                stack = ItemStack.EMPTY;
                 
             } else {
                 
                 added.setCount(max);
-                inv.set(slot, added);
-                result.setCount(total - max);
+                stack.setCount(total - max);
             }
+            
+            inv.set(slot, added);
+            updateInventory(this.player, slot);
         }
         
-        updateInventory(this.player, slot);
-        return result;
+        return stack;
     }
 
     @Override

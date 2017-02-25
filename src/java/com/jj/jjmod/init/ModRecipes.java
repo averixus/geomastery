@@ -282,7 +282,7 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 6),
                 "P P", "PPP", "P P", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bedSimple), "WWW",
-                "PPP", 'W', Blocks.WOOL, 'P', ModItems.pole);
+                "PPP", 'W', ModItems.wool, 'P', ModItems.pole);
     }
 
     /** Adds all recipes to textiles table. */
@@ -291,7 +291,7 @@ public class ModRecipes {
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedCotton),
                 "CCC", "CCC", 'C', ModItems.cotton);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.bedWool),
-                "WWW", "WWW", 'W', Blocks.WOOL);
+                "WWW", "WWW", 'W', ModItems.wool);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonChest),
                 "C C", "CCC", "CCC", 'C', ModItems.cotton);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.cottonLegs),

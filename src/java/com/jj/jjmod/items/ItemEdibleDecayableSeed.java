@@ -4,6 +4,7 @@ import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -22,10 +23,13 @@ public class ItemEdibleDecayableSeed extends ItemEdibleDecayable
     /** This item's crop block. */
     private final Block crop;
 
+    @SafeVarargs
     public ItemEdibleDecayableSeed(String name, int hunger, float saturation,
-            int stackSize, Block crop, FoodType foodType, int shelfLife) {
+            int stackSize, Block crop, FoodType foodType, int shelfLife,
+            Class<? extends EntityAnimal>... animalEaters) {
 
-        super(name, hunger, saturation, stackSize, foodType, shelfLife);
+        super(name, hunger, saturation, stackSize, foodType,
+                shelfLife, animalEaters);
         this.crop = crop;
     }
     

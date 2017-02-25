@@ -35,8 +35,8 @@ import com.jj.jjmod.items.ItemFurnaceClay;
 import com.jj.jjmod.items.ItemFurnaceStone;
 import com.jj.jjmod.items.ItemHoe;
 import com.jj.jjmod.items.ItemHuntingknife;
-import com.jj.jjmod.items.ItemMachete;
 import com.jj.jjmod.items.ItemJj;
+import com.jj.jjmod.items.ItemMachete;
 import com.jj.jjmod.items.ItemPickaxe;
 import com.jj.jjmod.items.ItemRice;
 import com.jj.jjmod.items.ItemSeed;
@@ -57,6 +57,11 @@ import com.jj.jjmod.utilities.EquipMaterial;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -155,8 +160,6 @@ public class ModItems {
     public static ItemJj tallow;
     public static ItemJj honeycomb;
     
-    public static ItemJj rot;
-
     public static ItemJj ingotCopper;
     public static ItemJj ingotSilver;
     public static ItemJj ingotSteel;
@@ -400,7 +403,7 @@ public class ModItems {
                 1, 3, 10, FoodType.PROTEIN, 1));
         
         register(carcassCowpart = new ItemCarcassDecayable("carcass_cowpart",
-                ModBlocks.carcassCowpart));
+                ModBlocks.carcassCowpart), true);
         register(carcassPig = new ItemCarcassDecayable("carcass_pig",
                 ModBlocks.carcassPig));
         register(carcassChicken = new ItemCarcassDecayable("carcass_chicken",
@@ -435,7 +438,8 @@ public class ModItems {
         register(potato = new ItemEdibleDecayableSeed("potato",
                 1, 1F, 1, ModBlocks.potato, FoodType.CARBS, 8));
         register(carrot = new ItemEdibleDecayableSeed("carrot",
-                3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 8));
+                3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 8,
+                EntityPig.class, EntityRabbit.class));
         register(beetroot = new ItemEdibleDecayableSeed("beetroot",
                 3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG, 8));
         register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin",
@@ -454,7 +458,8 @@ public class ModItems {
         register(cuttingHemp = new ItemSeed("cutting_hemp",
                 1, ModBlocks.hemp));
 
-        register(wheat = new ItemSeed("wheat", 10, ModBlocks.wheat));
+        register(wheat = new ItemSeed("wheat", 10, ModBlocks.wheat,
+                EntityCow.class, EntitySheep.class, EntityChicken.class));
         register(seedMelon = new ItemSeed("seeds_melon",
                 15, ModBlocks.melonCrop));
         
@@ -497,8 +502,6 @@ public class ModItems {
         register(skinWolf = new ItemJj("skin_wolf", 4));
         register(tallow = new ItemJj("tallow"));
         register(honeycomb = new ItemJj("honeycomb"));
-        
-        register(rot = new ItemJj("rot"));
 
         register(ingotCopper = new ItemJj("ingot_copper", 2));
         register(ingotSilver = new ItemJj("ingot_silver", 2));

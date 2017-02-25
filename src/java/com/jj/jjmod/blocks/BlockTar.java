@@ -14,7 +14,7 @@ public class BlockTar extends BlockFluidClassic {
         
         super(ModFluids.tarFluid, BlockMaterial.TAR);
         BlockNew.setupBlock(this, "tar", null, -1, null);
-        this.setQuantaPerBlock(3);
+        this.setQuantaPerBlock(3);        
     }
     
     @Override
@@ -22,7 +22,7 @@ public class BlockTar extends BlockFluidClassic {
             IBlockState state, Entity entity) {
         
         entity.motionX *= 0.1D;
-        entity.motionY *= 0.1D;
+        entity.motionZ *= 0.1D;
     }
 
 }

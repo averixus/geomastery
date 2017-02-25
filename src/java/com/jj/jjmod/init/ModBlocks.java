@@ -304,13 +304,13 @@ public class ModBlocks {
         registerItemless(riceTop = new BlockRiceTop());
 
         register(leafApple = new BlockHarvestableLeaves("leaf_apple",
-                () -> Items.APPLE, 0.2F));
+                () -> ModItems.apple, () -> seedlingApple, 0.2F));
         register(leafBanana = new BlockHarvestableLeaves("leaf_banana",
-                () -> ModItems.banana, 0.4F));
+                () -> ModItems.banana, () -> seedlingBanana, 0.4F));
         register(leafPear = new BlockHarvestableLeaves("leaf_pear",
-                () -> ModItems.pear, 0.2F));
+                () -> ModItems.pear, () -> seedlingPear, 0.2F));
         register(leafOrange = new BlockHarvestableLeaves("leaf_orange",
-                () -> ModItems.orange, 0.3F));
+                () -> ModItems.orange, () -> seedlingOrange, 0.3F));
         
         register(woodApple = new BlockWood("wood_apple", 2F));
         register(woodBanana = new BlockWood("wood_banana", 1F));
@@ -508,13 +508,13 @@ public class ModBlocks {
     
     private static void registerFluid(Block block) {
         
+        GameRegistry.register(block);
         Item item = Item.getItemFromBlock(block);
         ModelBakery.registerItemVariants(item);
+        
         ModelResourceLocation loc =
                 new ModelResourceLocation(block.getRegistryName(), "normal");
-   
         ModelLoader.setCustomMeshDefinition(item, stack -> loc);
-        
         ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
             
             @Override

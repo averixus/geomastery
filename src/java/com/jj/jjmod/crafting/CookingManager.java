@@ -65,7 +65,8 @@ public class CookingManager {
     }
     
     /** Gets the time taken to cook the input.
-     * @return The number of ticks taken to cook this input. */
+     * @return The number of ticks taken to cook this
+     * input, -1 if the input is not a recipe. */
     public int getCookingTime(ItemStack input) {
         
         for (Entry<ItemStack, Integer> entry : this.cookingTimes.entrySet()) {
@@ -76,7 +77,7 @@ public class CookingManager {
             }
         }
         
-        return 0;
+        return -1;
     }
     
     /** Gets the cook time for the input.

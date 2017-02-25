@@ -197,6 +197,14 @@ public class BlockEventHandler {
 
         if (block instanceof BlockLeaves) {
 
+            for (int i = 0; i < event.getDrops().size(); i++) {
+                
+                if (event.getDrops().get(i).getItem() == Items.APPLE) {
+                    
+                    event.getDrops().remove(i);
+                }
+            }
+            
             event.getDrops().add(new ItemStack(ModItems.leaves));
 
             if (world.rand.nextInt(8) == 0) {

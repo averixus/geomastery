@@ -18,6 +18,6 @@ public class ItemShield extends net.minecraft.item.ItemShield {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
-        return I18n.translateToLocal(this.getUnlocalizedName()).trim();
+        return I18n.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name").trim();
     }
 }

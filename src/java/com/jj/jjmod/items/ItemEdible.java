@@ -1,11 +1,14 @@
 package com.jj.jjmod.items;
 
+import java.util.Set;
+import com.google.common.collect.Sets;
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
@@ -21,12 +24,16 @@ public class ItemEdible extends ItemFood {
     
     /** This item's food type. */
     protected final FoodType type;
+    /** Set of animals which can be bred with this item. */
+    protected final Set<Class<? extends EntityAnimal>> animalEaters;
 
-    public ItemEdible(String name, int hunger, float saturation,
-            int stackSize, FoodType type) {
+    @SafeVarargs
+    public ItemEdible(String name, int hunger, float saturation, int stackSize,
+            FoodType type, Class<? extends EntityAnimal>... animalEaters) {
         
         super(hunger, saturation, false);
         this.type = type;
+        this.animalEaters = Sets.newHashSet(animalEaters);
         ItemJj.setupItem(this, name, stackSize, CreativeTabs.FOOD);
     }
     
@@ -70,11 +77,57 @@ public class ItemEdible extends ItemFood {
                     SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F,
                     world.rand.nextFloat() * 0.1F + 0.9F);
             
-            stack.shrink(1);
-            ContainerInventory.updateHand(player, player.getActiveHand());
+            if (!player.capabilities.isCreativeMode) {
+                
+                stack.shrink(1);
+                ContainerInventory.updateHand(player, player.getActiveHand());
+            }
         }
         
         return stack;
 
+    }
+    
+    /** Breeds or grows the right-clicked animal if applicable. */
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack,
+            EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+        
+        if (entity.world.isRemote) {
+            
+            return true;
+        }
+        
+        if (this.animalEaters.contains(entity.getClass())) {
+            
+            EntityAnimal animal = (EntityAnimal) entity;
+            
+            if (animal.getGrowingAge() == 0 && !animal.isInLove()) {
+                
+                if (!player.capabilities.isCreativeMode) {
+                    
+                    stack.shrink(1);
+                    ContainerInventory.updateHand(player, hand);
+                }
+                
+                animal.setInLove(player);
+                return true;
+            }
+            
+            if (animal.isChild()) {
+                
+                if (!player.capabilities.isCreativeMode) {
+                    
+                    stack.shrink(1);
+                    ContainerInventory.updateHand(player, hand);
+                }
+                
+                animal.ageUp((int)(((float)-animal.getGrowingAge() / 20) *
+                        0.1F), true);
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

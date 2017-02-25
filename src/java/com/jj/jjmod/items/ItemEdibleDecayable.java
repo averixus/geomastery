@@ -8,6 +8,7 @@ import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -27,10 +27,12 @@ public class ItemEdibleDecayable extends ItemEdible {
     /** This item's shelf life in days. */
     private int shelfLife;
 
+    @SafeVarargs
     public ItemEdibleDecayable(String name, int hunger, float saturation,
-            int stackSize, FoodType foodType, int shelfLife) {
+            int stackSize, FoodType foodType, int shelfLife,
+            Class<? extends EntityAnimal>... animalEaters) {
         
-        super(name, hunger, saturation, stackSize, foodType);
+        super(name, hunger, saturation, stackSize, foodType, animalEaters);
         this.shelfLife = shelfLife;
         
         // Check whether the item is rotten for model
@@ -122,6 +124,19 @@ public class ItemEdibleDecayable extends ItemEdible {
         }
         
         return 0;
+    }
+    
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack,
+            EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+        
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
+                !stack.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+            
+            return super.itemInteractionForEntity(stack, player, entity, hand);
+        }
+        
+        return false;
     }
 }
 

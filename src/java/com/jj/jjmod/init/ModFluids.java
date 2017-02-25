@@ -27,6 +27,7 @@ public class ModFluids {
 
         FluidRegistry.registerFluid(tarFluid = new Fluid("fluid_tar",
                 new ResourceLocation("jjmod:blocks/liquids/tar_still"),
-                new ResourceLocation("jjmod:blocks/liquids/tar_flowing")));
+                new ResourceLocation("jjmod:blocks/liquids/tar_flowing"))
+                .setViscosity(10000));
     }
 }
