@@ -2,7 +2,6 @@ package com.jj.jjmod.worldgen;
 
 import java.util.Random;
 import com.jj.jjmod.init.ModBlocks;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.world.World;
 
 /** WorldGenerator for wheat crops. */

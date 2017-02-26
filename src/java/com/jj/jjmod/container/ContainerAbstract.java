@@ -5,12 +5,9 @@ import com.jj.jjmod.container.slots.SlotInventory;
 import com.jj.jjmod.init.ModCaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /** Abstract superclass of Containers, with utilities for ICapPlayer. */ 

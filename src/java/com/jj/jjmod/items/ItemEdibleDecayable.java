@@ -1,12 +1,12 @@
 package com.jj.jjmod.items;
 
-import javax.annotation.Nullable;
 import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ICapDecay;
 import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;

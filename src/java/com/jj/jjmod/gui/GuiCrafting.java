@@ -1,14 +1,7 @@
 package com.jj.jjmod.gui;
 
-import com.jj.jjmod.crafting.CraftingManager;
 import com.jj.jjmod.container.ContainerCrafting;
-
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 /** Gui for crafting devices */
 public class GuiCrafting extends GuiContainerAbstract {

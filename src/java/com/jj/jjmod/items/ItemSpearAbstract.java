@@ -1,12 +1,9 @@
 package com.jj.jjmod.items;
 
 import java.util.Collections;
-import java.util.Set;
-import javax.annotation.Nullable;
-import com.google.common.collect.Sets;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.entities.projectile.EntityProjectile;
-import net.minecraft.block.Block;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,15 +11,12 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Abstract superclass for spear tool items. */
 public abstract class ItemSpearAbstract extends ItemToolAbstract {

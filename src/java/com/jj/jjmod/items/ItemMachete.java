@@ -2,17 +2,10 @@ package com.jj.jjmod.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
-import com.jj.jjmod.container.ContainerInventory;
-import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 
 /** Machete tool item. */
 public class ItemMachete extends ItemToolAbstract {

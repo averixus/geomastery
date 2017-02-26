@@ -2,9 +2,7 @@ package com.jj.jjmod.blocks;
 
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModItems;
-import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomePlains;

@@ -1,7 +1,6 @@
 package com.jj.jjmod.items;
 
 import java.util.ArrayList;
-import com.jj.jjmod.blocks.BlockWall;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.tileentities.TEBeam;

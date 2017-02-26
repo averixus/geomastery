@@ -1,7 +1,7 @@
 package com.jj.jjmod.items;
 
-import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.container.ContainerInventory;
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.tileentities.TECraftingWoodworking;
 import com.jj.jjmod.tileentities.TECraftingWoodworking.EnumPartWoodworking;
 import net.minecraft.block.Block;
@@ -9,7 +9,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;

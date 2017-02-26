@@ -1,11 +1,8 @@
 package com.jj.jjmod.blocks;
 
-import java.util.Random;
-import java.util.function.Function;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
-import net.minecraft.init.Items;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.biome.BiomeHills;

@@ -1,9 +1,6 @@
 package com.jj.jjmod.items;
 
 import java.util.Collections;
-import java.util.Set;
-import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 
 /** Sword tool item. */

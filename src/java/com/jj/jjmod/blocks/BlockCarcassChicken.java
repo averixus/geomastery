@@ -1,6 +1,5 @@
 package com.jj.jjmod.blocks;
 
-import java.util.function.Supplier;
 import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.init.ModItems;
 import net.minecraft.init.Items;

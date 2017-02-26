@@ -6,7 +6,6 @@ import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TEBox;
 import com.jj.jjmod.utilities.BlockMaterial;
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;

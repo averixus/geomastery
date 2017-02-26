@@ -1,25 +1,19 @@
 package com.jj.jjmod.blocks;
 
-import java.util.Random;
-import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TECraftingForge;
-import com.jj.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
 import com.jj.jjmod.tileentities.TECraftingForge.EnumPartForge;
 import com.jj.jjmod.utilities.BlockMaterial;
-import com.jj.jjmod.utilities.ToolType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

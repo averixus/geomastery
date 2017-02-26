@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.utilities.IBiomeCheck;
 import com.jj.jjmod.utilities.ToolType;

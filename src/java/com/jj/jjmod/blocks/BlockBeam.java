@@ -1,18 +1,15 @@
 package com.jj.jjmod.blocks;
 
 import java.util.List;
-import javax.annotation.Nullable;
-import com.jj.jjmod.blocks.BlockBeam.EnumAxis;
 import com.jj.jjmod.init.ModBlocks;
-import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jj.jjmod.tileentities.TEBeam.EnumPartBeam;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -23,7 +20,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

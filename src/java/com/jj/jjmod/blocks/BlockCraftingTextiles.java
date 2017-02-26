@@ -1,11 +1,11 @@
 package com.jj.jjmod.blocks;
 
-import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IMultipart;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;

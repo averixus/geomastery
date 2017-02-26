@@ -4,11 +4,7 @@ import java.util.Random;
 import com.jj.jjmod.init.ModItems;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 /** Antler block. */
 public class BlockAntler extends BlockBush {

@@ -1,10 +1,9 @@
 package com.jj.jjmod.blocks;
 
-import com.jj.jjmod.main.GuiHandler.GuiList;
 import java.util.Random;
+import com.jj.jjmod.main.GuiHandler.GuiList;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.BlockMaterial;
-import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;

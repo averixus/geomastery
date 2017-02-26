@@ -1,10 +1,6 @@
 package com.jj.jjmod.container;
 
-import javax.annotation.Nullable;
 import com.jj.jjmod.blocks.BlockComplexAbstract;
-import com.jj.jjmod.container.slots.SlotFurnaceFuel;
-import com.jj.jjmod.container.slots.SlotFurnaceInput;
-import com.jj.jjmod.container.slots.SlotFurnaceOutput;
 import com.jj.jjmod.tileentities.TEFurnaceAbstract;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;

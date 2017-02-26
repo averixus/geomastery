@@ -1,10 +1,10 @@
 package com.jj.jjmod.blocks;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;

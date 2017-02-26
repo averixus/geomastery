@@ -1,12 +1,8 @@
 package com.jj.jjmod.items;
 
 import java.util.Collections;
-import java.util.Set;
-import com.google.common.collect.Sets;
 import com.jj.jjmod.utilities.ToolType;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemTool;
 
 /** Hunting knife tool item. */
 public class ItemHuntingknife extends ItemToolAbstract {

@@ -1,18 +1,17 @@
  package com.jj.jjmod.items;
 
-import javax.annotation.Nullable;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.entities.projectile.EntityProjectile;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.utilities.InvLocation;
 import com.jj.jjmod.utilities.InvLocation.InvType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -21,8 +20,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Bow item with variable power and funcitonality to choose best arrows. */
 public class ItemBow extends ItemJj {

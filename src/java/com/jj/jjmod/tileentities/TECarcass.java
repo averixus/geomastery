@@ -1,14 +1,7 @@
 package com.jj.jjmod.tileentities;
 
-import com.jj.jjmod.init.ModItems;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
 
 /** TileEntity for carcass blocks. */
 public class TECarcass extends TileEntity {

@@ -1,7 +1,6 @@
 package com.jj.jjmod.items;
 
 import com.jj.jjmod.blocks.BlockBedAbstract;
-import com.jj.jjmod.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;

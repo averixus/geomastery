@@ -1,9 +1,7 @@
 package com.jj.jjmod.blocks;
 
 import com.jj.jjmod.utilities.ToolType;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 
 /** Simple rock block. */
 public class BlockRock extends BlockNew {

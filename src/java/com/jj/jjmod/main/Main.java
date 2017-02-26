@@ -1,6 +1,5 @@
 package com.jj.jjmod.main;
 
-import com.jj.jjmod.init.ModBlocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;

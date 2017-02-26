@@ -1,8 +1,6 @@
 package com.jj.jjmod.packets;
 
-import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModCaps;
-import com.jj.jjmod.utilities.InvLocation.InvType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

@@ -2,7 +2,6 @@ package com.jj.jjmod.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
 import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.utilities.BlockMaterial;

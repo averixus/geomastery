@@ -1,14 +1,7 @@
 package com.jj.jjmod.gui;
 
 import com.jj.jjmod.container.ContainerFurnaceAbstract;
-import com.jj.jjmod.container.ContainerFurnaceSingle;
-import com.jj.jjmod.tileentities.TEFurnaceAbstract;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 /** Gui for furnace devices */
 public class GuiFurnace extends GuiContainerAbstract {

@@ -1,9 +1,7 @@
 package com.jj.jjmod.worldgen;
 
 import java.util.Random;
-
 import com.jj.jjmod.init.ModBlocks;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 
 /** WorldGenerator for tomato crops. */

@@ -1,6 +1,5 @@
 package com.jj.jjmod.container;
 
-import javax.annotation.Nullable;
 import com.jj.jjmod.container.slots.SlotInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

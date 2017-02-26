@@ -1,7 +1,6 @@
 package com.jj.jjmod.blocks;
 
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
 import com.jj.jjmod.capabilities.ICapDecay;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModCaps;
@@ -11,6 +10,7 @@ import com.jj.jjmod.tileentities.TECarcass;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;

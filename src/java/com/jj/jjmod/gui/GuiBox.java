@@ -1,8 +1,6 @@
 package com.jj.jjmod.gui;
 
 import com.jj.jjmod.container.ContainerBox;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for box container. */

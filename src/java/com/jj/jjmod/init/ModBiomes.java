@@ -1,6 +1,5 @@
 package com.jj.jjmod.init;
 
-import java.util.HashMap;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import net.minecraft.init.Biomes;

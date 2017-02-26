@@ -2,11 +2,9 @@ package com.jj.jjmod.blocks;
 
 import java.util.List;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
-import com.jj.jjmod.blocks.BlockWall.EnumPosition;
-import com.jj.jjmod.blocks.BlockWall.EnumStraight;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;

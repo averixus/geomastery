@@ -5,18 +5,10 @@ import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeBeach;
-import net.minecraft.world.biome.BiomeDesert;
 import net.minecraft.world.biome.BiomeForest;
-import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.biome.BiomeJungle;
-import net.minecraft.world.biome.BiomeMesa;
-import net.minecraft.world.biome.BiomeMushroomIsland;
 import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.biome.BiomePlains;
-import net.minecraft.world.biome.BiomeSavanna;
-import net.minecraft.world.biome.BiomeSnow;
-import net.minecraft.world.biome.BiomeSwamp;
-import net.minecraft.world.biome.BiomeTaiga;
 
 /** Pepper crop block. */
 public class BlockCropPepper extends BlockCropAbstract {

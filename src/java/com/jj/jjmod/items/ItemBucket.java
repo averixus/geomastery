@@ -1,7 +1,6 @@
 package com.jj.jjmod.items;
 
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.utilities.BlockMaterial;
 import net.minecraft.block.Block;
@@ -18,9 +17,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;

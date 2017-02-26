@@ -5,7 +5,6 @@ import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.FoodType;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

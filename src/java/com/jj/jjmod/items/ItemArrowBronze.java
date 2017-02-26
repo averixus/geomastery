@@ -1,9 +1,7 @@
 package com.jj.jjmod.items;
 
 import com.jj.jjmod.entities.projectile.EntityArrowBronze;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 

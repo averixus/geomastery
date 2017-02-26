@@ -1,12 +1,11 @@
 package com.jj.jjmod.blocks;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;

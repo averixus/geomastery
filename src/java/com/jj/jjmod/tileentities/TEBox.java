@@ -1,17 +1,12 @@
 package com.jj.jjmod.tileentities;
 
-import java.util.List;
 import com.jj.jjmod.blocks.BlockBox;
 import com.jj.jjmod.container.ContainerBox;
-import com.jj.jjmod.init.ModCaps;
-import com.jj.jjmod.init.ModItems;
-import com.jj.jjmod.items.ItemEdibleDecayable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;

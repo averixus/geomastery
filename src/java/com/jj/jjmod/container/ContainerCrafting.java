@@ -1,12 +1,10 @@
 package com.jj.jjmod.container;
 
-import javax.annotation.Nullable;
-
 import com.jj.jjmod.blocks.BlockComplexAbstract;
+import com.jj.jjmod.container.slots.SlotCrafting;
 import com.jj.jjmod.crafting.CraftingManager;
 import com.jj.jjmod.init.ModCaps;
-import com.jj.jjmod.container.slots.SlotCrafting;
-
+import com.sun.istack.internal.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
