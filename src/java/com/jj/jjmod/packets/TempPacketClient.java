@@ -2,6 +2,7 @@ package com.jj.jjmod.packets;
 
 import com.jj.jjmod.capabilities.DefaultCapPlayer;
 import com.jj.jjmod.init.ModCaps;
+import com.jj.jjmod.main.Main;
 import com.jj.jjmod.utilities.TempStage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -42,21 +43,14 @@ public class TempPacketClient implements IMessage {
         public IMessage onMessage(TempPacketClient message,
                 MessageContext ctx) {
             
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-                
-                @Override
-                public void run() {
-                    
-                    processMessage(message);
-                }
-            });
+            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
             
             return null;
         }
         
         public void processMessage(TempPacketClient message) {
             
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            EntityPlayer player = Main.proxy.getClientPlayer();
             ((DefaultCapPlayer) player.getCapability(ModCaps
                     .CAP_PLAYER, null)).processTempMessage(message.stage);
         }

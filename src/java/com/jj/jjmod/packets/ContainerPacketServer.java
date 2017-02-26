@@ -32,6 +32,10 @@ public class ContainerPacketServer implements IMessage {
             
             this.birthTime = stack.getCapability(ModCaps.CAP_DECAY,
                     null).getBirthTime();
+            
+        } else {
+            
+            this.birthTime = 0L;
         }
     }
 
@@ -59,14 +63,7 @@ public class ContainerPacketServer implements IMessage {
                 MessageContext ctx) {
 
             ctx.getServerHandler().playerEntity.getServer()
-                    .addScheduledTask(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            processMessage(message, ctx);
-                        }
-                    });
+                    .addScheduledTask(() -> processMessage(message, ctx));
 
             return null;
         }

@@ -23,6 +23,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
 
 /** Harvestable fruit leaf block. */
 public class BlockHarvestableLeaves extends BlockLeaves {
@@ -46,9 +47,8 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS,
                 0.2F, ToolType.MACHETE);
         this.fruitRef = itemRef;
+        this.seedlingRef = seedlingRef;
         this.growthChance = growthChance;
-        this.setGraphicsLevel(Minecraft.getMinecraft()
-                .gameSettings.fancyGraphics);
     }
     
     /** Gets seedling by chance and harvestable items if applicable. */

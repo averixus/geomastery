@@ -24,7 +24,7 @@ public class ItemMachete extends ItemToolAbstract {
     public ItemMachete(String name, ToolMaterial material) {
 
         super(1, -3.1F, material, EFFECTIVE_ON);
-        ItemJj.setupItem(this, name, 1, CreativeTabs.DECORATIONS);
+        ItemJj.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.setHarvestLevel(ToolType.MACHETE.toString(), 1);
     }
 }

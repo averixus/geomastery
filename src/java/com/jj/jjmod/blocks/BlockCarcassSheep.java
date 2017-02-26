@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Sheep carcass block. */
-public class BlockCarcassSheep extends BlockCarcass {
+public class BlockCarcassSheep extends BlockCarcassAbstract {
     
     public BlockCarcassSheep() {
         
@@ -25,5 +25,6 @@ public class BlockCarcassSheep extends BlockCarcass {
         spawnAsEntity(world, pos, new ItemStack(ModItems.skinSheep, 4));
         spawnAsEntity(world, pos, new ItemStack(Items.BONE, 3));
         spawnAsEntity(world, pos, new ItemStack(ModItems.tallow));
+        spawnAsEntity(world, pos, new ItemStack(ModItems.wool, 3));
     }
 }

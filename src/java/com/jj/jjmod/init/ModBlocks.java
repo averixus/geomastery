@@ -1,6 +1,5 @@
 package com.jj.jjmod.init;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -16,7 +15,7 @@ import com.jj.jjmod.blocks.BlockBedSimple;
 import com.jj.jjmod.blocks.BlockBedWool;
 import com.jj.jjmod.blocks.BlockBeehive;
 import com.jj.jjmod.blocks.BlockBox;
-import com.jj.jjmod.blocks.BlockCarcass;
+import com.jj.jjmod.blocks.BlockCarcassAbstract;
 import com.jj.jjmod.blocks.BlockCarcassChicken;
 import com.jj.jjmod.blocks.BlockCarcassCowpart;
 import com.jj.jjmod.blocks.BlockCarcassPig;
@@ -86,16 +85,20 @@ import com.jj.jjmod.blocks.BlockWood;
 import com.jj.jjmod.utilities.BlockMaterial;
 import com.jj.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
     
@@ -133,11 +136,11 @@ public class ModBlocks {
     public static BlockLight torchTallow;
     public static BlockLight torchTar;
 
-    public static BlockCarcass carcassChicken;
-    public static BlockCarcass carcassCowpart;
-    public static BlockCarcass carcassPig;
-    public static BlockCarcass carcassSheep;
-    public static BlockCarcass carcassRabbit;
+    public static BlockCarcassAbstract carcassChicken;
+    public static BlockCarcassAbstract carcassCowpart;
+    public static BlockCarcassAbstract carcassPig;
+    public static BlockCarcassAbstract carcassSheep;
+    public static BlockCarcassAbstract carcassRabbit;
 
     public static BlockCraftingCandlemaker craftingCandlemaker;
     public static BlockCraftingClayworks craftingClayworks;
@@ -435,7 +438,7 @@ public class ModBlocks {
         
         register(rubble = new BlockRubble());
         
-        registerFluid(tar = new BlockTar());
+        registerItemless(tar = new BlockTar());
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
@@ -463,10 +466,10 @@ public class ModBlocks {
         Blocks.MELON_BLOCK.setHardness(0.2F);
         OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST)
                 .setMaxStackSize(1));
-        
     
     }
     
+    @SideOnly(Side.CLIENT)
     public static void preInitClient() {
         
         for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
@@ -506,36 +509,43 @@ public class ModBlocks {
         MOD_BLOCKS.put(block, item);
     }
     
-    private static void registerFluid(Block block) {
-        
-        GameRegistry.register(block);
-        Item item = Item.getItemFromBlock(block);
-        ModelBakery.registerItemVariants(item);
-        
-        ModelResourceLocation loc =
-                new ModelResourceLocation(block.getRegistryName(), "normal");
-        ModelLoader.setCustomMeshDefinition(item, stack -> loc);
-        ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-            
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(
-                    IBlockState state) {
-                
-                return loc;
-            }
-        });
-    }
-    
     private static void registerItemless(Block block) {
         
         GameRegistry.register(block);
         MOD_BLOCKS.put(block, Item.getItemFromBlock(block));
     }
     
+    @SideOnly(Side.CLIENT)
     private static void model(Block block, Item item) {
+        
+        if (block instanceof IFluidBlock) {
+            
+            ModelBakery.registerItemVariants(item);
+            
+            ModelResourceLocation loc = new ModelResourceLocation(block
+                    .getRegistryName(), "normal");
+            ModelLoader.setCustomMeshDefinition(item, stack -> loc);
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(
+                        IBlockState state) {
+                    
+                    return loc;
+                }
+            });
+            
+        } else {
 
-        ModelLoader.setCustomModelResourceLocation(item, 0,
-                new ModelResourceLocation(block.getRegistryName(),
-                "inventory"));
+            ModelLoader.setCustomModelResourceLocation(item, 0,
+                    new ModelResourceLocation(block.getRegistryName(),
+                    "inventory"));
+        }
+        
+        if (block instanceof BlockHarvestableLeaves) {
+            
+            ((BlockLeaves) block).setGraphicsLevel(Minecraft.getMinecraft()
+                    .gameSettings.fancyGraphics);
+        }
     }
 }

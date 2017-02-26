@@ -1,9 +1,8 @@
 package com.jj.jjmod.packets;
 
 import com.jj.jjmod.init.ModCaps;
-import com.jj.jjmod.utilities.InvLocation.InvType;
+import com.jj.jjmod.main.Main;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -58,21 +57,14 @@ public class ContainerPacketClient implements IMessage {
         public IMessage onMessage(ContainerPacketClient message,
                 MessageContext ctx) {
 
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    processMessage(message);
-                }
-            });
+            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
 
             return null;
         }
 
         public void processMessage(ContainerPacketClient message) {
 
-            EntityPlayer player = Minecraft.getMinecraft().player;
+            EntityPlayer player = Main.proxy.getClientPlayer();
             ItemStack stack = message.stack;
             
             if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
@@ -80,7 +72,7 @@ public class ContainerPacketClient implements IMessage {
                 stack.getCapability(ModCaps.CAP_DECAY, null)
                 .setBirthTime(message.birthTime);
             }
-            System.out.println("processing container update, slot " + message.slot + " stack " + stack);
+
             player.inventoryContainer.inventorySlots.get(message.slot)
                     .putStack(stack);
         }

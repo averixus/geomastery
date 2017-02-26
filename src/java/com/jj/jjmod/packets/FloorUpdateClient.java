@@ -1,5 +1,6 @@
 package com.jj.jjmod.packets;
 
+import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TEBeam;
 import com.jj.jjmod.tileentities.TEBeam.EnumFloor;
 import io.netty.buffer.ByteBuf;
@@ -58,21 +59,14 @@ public class FloorUpdateClient implements IMessage {
         public IMessage onMessage(FloorUpdateClient message,
                 MessageContext ctx) {
             
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-                
-                @Override
-                public void run() {
-                    
-                    processMessage(message);
-                }
-            });
+            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
             
             return null;
         }
         
         public void processMessage(FloorUpdateClient message) {
             
-            World world = Minecraft.getMinecraft().world;
+            World world = Main.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new
                     BlockPos(message.x, message.y, message.z));
             

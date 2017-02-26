@@ -2,11 +2,10 @@ package com.jj.jjmod.crafting;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 import com.jj.jjmod.init.ModCaps;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 /**
  * Smelting recipe and fuel manager.
@@ -45,10 +44,10 @@ public class CookingManager {
 
     /** Gets the smelting result for the input.
      * @return The output ItemStack smelted from the input. */
-    public ItemStack getCookingResult(ItemStack input) {
+    public ItemStack getCookingResult(ItemStack input, World world) {
 
         if (input.hasCapability(ModCaps.CAP_DECAY, null) &&
-                input.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+                input.getCapability(ModCaps.CAP_DECAY, null).isRot(world)) {
             
             return ItemStack.EMPTY;
         }

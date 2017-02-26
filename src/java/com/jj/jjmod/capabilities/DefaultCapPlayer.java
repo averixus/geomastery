@@ -1,7 +1,5 @@
 package com.jj.jjmod.capabilities;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +12,19 @@ import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModPackets;
 import com.jj.jjmod.items.ItemEdible;
 import com.jj.jjmod.packets.FoodPacketClient;
-import com.jj.jjmod.packets.SpeedPacketClient;
 import com.jj.jjmod.packets.TempPacketClient;
 import com.jj.jjmod.tileentities.TEFurnaceAbstract;
 import com.jj.jjmod.utilities.EquipMaterial;
 import com.jj.jjmod.utilities.FoodStatsPartial;
 import com.jj.jjmod.utilities.FoodType;
+import com.jj.jjmod.utilities.SpeedStage;
 import com.jj.jjmod.utilities.TempStage;
 import net.minecraft.block.Block;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -37,7 +35,6 @@ import net.minecraft.world.biome.Biome;
 
 public class DefaultCapPlayer implements ICapPlayer {
     
-    // Constants
     /** Ticks the player stays wet for after being in water. */
     private static final int WATER_MAX = 3600;
     /** Ticks between taking damage from temperature. */
@@ -60,6 +57,9 @@ public class DefaultCapPlayer implements ICapPlayer {
     private int wetTimer = 0;
     /** Temperature stage. */
     private TempStage tempStage = TempStage.OK;
+    
+    /** Current walk speed. */
+    private SpeedStage speedStage = null;
     
     /** Backpack slot. */
     private ItemStack backpack = ItemStack.EMPTY;
@@ -246,10 +246,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             this.sendTempPacket(this.tempStage);
         }
         
-        if (this.tickSpeed()) {
-
-            this.sendSpeedPacket(this.player.capabilities.getWalkSpeed());
-        }
+        this.tickSpeed();
     }
     
     /** Calculate the player's temperature.
@@ -498,12 +495,10 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
     }
     
-    /** Calculate the player's walk speed based on inventory.
-     * @return Whether the walk speed has changed. */
-    private boolean tickSpeed() {
+    /** Calculate the player's walk speed based on inventory. */
+    private void tickSpeed() {
         
         double speed = DEFAULT_SPEED;
-        double oldSpeed = this.player.capabilities.getWalkSpeed();
         
         for (ItemStack stack : this.player.inventory.armorInventory) {
 
@@ -531,8 +526,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         if (ModBlocks.OFFHAND_ONLY.contains(this.player
                 .getHeldItemOffhand().getItem())) {
-            
-            speed -= 2.0;
+
+            speed -= 2;
         }
         
         if (this.backpack.getItem() == ModItems.backpack) {
@@ -544,15 +539,35 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             speed -= 1.5;
         }
+                
+        SpeedStage oldStage = this.speedStage;
         
-        if (speed < 2) {
+        if (speed <= 2.3) {
             
-            speed = 2;
+            this.speedStage = SpeedStage.SPEED_2_3;
+            
+        } else if (speed <= 2.8) {
+            
+            this.speedStage = SpeedStage.SPEED_2_8;
+            
+        } else if (speed <= 3.3) {
+            
+            this.speedStage = SpeedStage.SPEED_3_3;
+            
+        } else if (speed <= 3.8) {
+            
+            this.speedStage = SpeedStage.SPEED_3_8;
+            
+        } else {
+            
+            this.speedStage = null;
         }
         
-        float adjustedSpeed = (float) speed / SPEED_MODIFIER;
-        this.player.capabilities.setPlayerWalkSpeed(adjustedSpeed);
-        return adjustedSpeed != oldSpeed;
+        if (this.speedStage != oldStage) {
+            
+            SpeedStage.apply(this.player.getEntityAttribute(
+                    SharedMonsterAttributes.MOVEMENT_SPEED), this.speedStage);
+        }
     }
     
     @Override
@@ -569,7 +584,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         this.sendTempPacket(this.tempStage);
-        this.sendSpeedPacket(this.player.capabilities.getWalkSpeed());
+     //  this.sendSpeedPacket(this.player.capabilities.getWalkSpeed());
     }
     
     /** Send a packet to the client to update the FoodType hunger level. */
@@ -584,13 +599,6 @@ public class DefaultCapPlayer implements ICapPlayer {
     private void sendTempPacket(TempStage stage) {
         
         ModPackets.NETWORK.sendTo(new TempPacketClient(stage),
-                (EntityPlayerMP) this.player);
-    }
-    
-    /** Send a packet to the client to update the walk speed. */
-    private void sendSpeedPacket(float speed) {
-        
-        ModPackets.NETWORK.sendTo(new SpeedPacketClient(speed),
                 (EntityPlayerMP) this.player);
     }
     
@@ -614,6 +622,9 @@ public class DefaultCapPlayer implements ICapPlayer {
         nbt.setTag("backpack", this.backpack.writeToNBT(new NBTTagCompound()));
         nbt.setTag("yoke", this.yoke.writeToNBT(new NBTTagCompound()));
         
+        nbt.setInteger("speedStage", this.speedStage == null ?
+                -1 : this.speedStage.ordinal());
+        
         nbt.setInteger("damageTimer", this.damageTimer);
         nbt.setInteger("wetTimer", this.wetTimer);
         nbt.setInteger("tempStage", this.tempStage.ordinal());
@@ -636,6 +647,10 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         this.backpack = new ItemStack(nbt.getCompoundTag("backpack"));
         this.yoke = new ItemStack(nbt.getCompoundTag("yoke"));
+        
+        int speedStage = nbt.getInteger("speedStage");
+        this.speedStage = speedStage == -1 ? null :
+                SpeedStage.values()[speedStage];
         
         this.damageTimer = nbt.getInteger("damageTimer");
         this.wetTimer = nbt.getInteger("wetTimer");

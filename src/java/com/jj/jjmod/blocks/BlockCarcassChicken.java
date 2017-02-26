@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Chicken carcass block. */
-public class BlockCarcassChicken extends BlockCarcass {
+public class BlockCarcassChicken extends BlockCarcassAbstract {
     
     public BlockCarcassChicken() {
         

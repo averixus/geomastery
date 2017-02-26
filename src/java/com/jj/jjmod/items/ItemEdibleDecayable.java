@@ -7,6 +7,7 @@ import com.jj.jjmod.capabilities.ICapPlayer;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.utilities.FoodType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Decayable food items. */
 public class ItemEdibleDecayable extends ItemEdible {
@@ -46,7 +49,7 @@ public class ItemEdibleDecayable extends ItemEdible {
                 if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
                     
                     if (stack.getCapability(ModCaps.CAP_DECAY, null)
-                            .isRot()) {
+                            .isRot(world)) {
                         
                         return 1;
                     }
@@ -76,7 +79,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         ICapPlayer playerCap = player
                 .getCapability(ModCaps.CAP_PLAYER, null);
 
-        if (playerCap.canEat(this.type) && !decayCap.isRot()) {
+        if (playerCap.canEat(this.type) && !decayCap.isRot(world)) {
 
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
@@ -86,11 +89,13 @@ public class ItemEdibleDecayable extends ItemEdible {
     }
     
     /** Makes this item named rotten according to capability. */
+    @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
         if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
-                stack.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+                stack.getCapability(ModCaps.CAP_DECAY, null)
+                .isRot(Minecraft.getMinecraft().world)) {
             
             return "Rotten " + super.getItemStackDisplayName(stack);
         }
@@ -131,7 +136,8 @@ public class ItemEdibleDecayable extends ItemEdible {
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
         
         if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
-                !stack.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+                !stack.getCapability(ModCaps.CAP_DECAY, null)
+                .isRot(player.world)) {
             
             return super.itemInteractionForEntity(stack, player, entity, hand);
         }

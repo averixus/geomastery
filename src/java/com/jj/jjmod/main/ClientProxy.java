@@ -4,12 +4,17 @@ import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModEntities;
 import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.init.ModTileEntities;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
 
+    /** Gui event handler instance. */
+    public static final GuiEventHandler GUI =
+            new GuiEventHandler();
+    
     @Override
     public void preInit() {
 
@@ -19,6 +24,9 @@ public class ClientProxy extends CommonProxy {
         ModTileEntities.preInitClient();
         ModBlocks.preInitClient();
         ModItems.preInitClient();
+      //  ModPackets.preInitClient();
+        
+        MinecraftForge.EVENT_BUS.register(GUI);
     }
 
     @Override
@@ -31,5 +39,23 @@ public class ClientProxy extends CommonProxy {
     public void postInit() {
 
         super.postInit();
+    }
+    
+    @Override
+    public EntityPlayer getClientPlayer() {
+        
+        return Minecraft.getMinecraft().player;
+    }
+    
+    @Override
+    public World getClientWorld() {
+        
+        return Minecraft.getMinecraft().world;
+    }
+    
+    @Override
+    public void addMinecraftRunnable(Runnable task) {
+        
+        Minecraft.getMinecraft().addScheduledTask(task);
     }
 }

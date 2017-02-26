@@ -23,7 +23,8 @@ public class SlotDryingInput extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return !this.drying.recipes.getCookingResult(stack).isEmpty();
+        return !this.drying.recipes.getCookingResult(stack,
+                this.drying.getWorld()).isEmpty();
     }
     
     @Override

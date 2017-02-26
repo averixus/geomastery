@@ -1,6 +1,7 @@
 package com.jj.jjmod.capabilities;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /** Capability to make ItemStacks decay over time. */
@@ -23,5 +24,5 @@ public interface ICapDecay extends INBTSerializable<NBTTagCompound> {
     public void setBirthTime(long age);
 
     /** @return Whether the item is older than its shelf life. */
-    public boolean isRot();
+    public boolean isRot(World world);
 }

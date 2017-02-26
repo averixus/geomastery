@@ -152,7 +152,8 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
             } else if (!(index >= INPUT_START && index <= this.inputEnd) &&
                     !(index >= this.fuelStart && index <= this.fuelEnd)) {
 
-                if (!this.furnace.recipes.getCookingResult(inSlot).isEmpty()) {
+                if (!this.furnace.recipes.getCookingResult(inSlot, this.world)
+                        .isEmpty()) {
 
                     if (!this.mergeItemStack(inSlot, INPUT_START,
                             this.inputEnd + 1, false)) {

@@ -196,25 +196,23 @@ public class ContainerInventory extends ContainerAbstract {
     /** Attempts to put the ItemStack into this container.
      * @return The ItemStack left over. */
     public ItemStack add(ItemStack stack) {
-        
-        ItemStack remaining = stack;
 
-        if (ModBlocks.OFFHAND_ONLY.contains(remaining.getItem())) {
+        if (ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
             
-            return this.addToOffhand(remaining);
+            return this.addToOffhand(stack);
         }
         
-        if (!remaining.isEmpty()) {
+        if (!stack.isEmpty()) {
             
-            remaining = this.putInMatchingSlot(remaining);
+            stack = this.putInMatchingSlot(stack);
         }
         
-        if (!remaining.isEmpty()) {
+        if (!stack.isEmpty()) {
             
-            remaining = this.putInEmptySlot(remaining);
+            stack = this.putInEmptySlot(stack);
         }
         
-        return remaining;
+        return stack;
     }
     
     /** Attempts to put the ItemStack into a non-full
@@ -263,15 +261,28 @@ public class ContainerInventory extends ContainerAbstract {
         
         if (this.playerInv.offHandInventory.get(0).isEmpty()) {
             
-            this.playerInv.offHandInventory.set(0, stack);
+            ItemStack added = stack.copy();
+            int max = stack.getMaxStackSize();
+            int total = stack.getCount();
+            
+            if (max >= total) {
+
+                stack = ItemStack.EMPTY;
+                
+            } else {
+
+                added.setCount(max);
+                stack.setCount(total - max);
+            }
+            
+            this.playerInv.offHandInventory.set(0, added);
             updateHand(this.player, EnumHand.OFF_HAND);
-            return ItemStack.EMPTY;
         }
         
         return stack;
     }
     
-    /** Attempts to put the ItemStack into the index slot.
+    /** Attempts to put the ItemStack into the inventory index slot.
      * @return The ItemStack left over. */
     private ItemStack addToSlot(int slot, ItemStack stack) {
         

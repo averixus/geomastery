@@ -222,7 +222,8 @@ public abstract class TEFurnaceAbstract extends TileEntity
             return false;
         }
 
-        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
+                this.world);
 
         if (result.isEmpty()) {
 
@@ -252,7 +253,8 @@ public abstract class TEFurnaceAbstract extends TileEntity
     /** Cooks one input item. */
     protected void cookItem() {
 
-        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
+                this.world);
 
         for (int i = 0; i < this.outputs.size(); i++) {
             

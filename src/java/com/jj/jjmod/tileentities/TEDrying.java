@@ -134,7 +134,8 @@ public class TEDrying extends TileEntity implements ITickable {
             return false;
         }
 
-        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
+                this.world);
 
         if (result.isEmpty()) {
 
@@ -164,7 +165,8 @@ public class TEDrying extends TileEntity implements ITickable {
     /** Turns an input into an output. */
     private void dryItem() {
 
-        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0));
+        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
+                this.world);
 
         for (int i = 0; i < this.outputs.size(); i++) {
             

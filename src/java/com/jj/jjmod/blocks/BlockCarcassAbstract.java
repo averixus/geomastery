@@ -3,17 +3,18 @@ package com.jj.jjmod.blocks;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.jj.jjmod.capabilities.ICapDecay;
+import com.jj.jjmod.init.ModBlocks;
 import com.jj.jjmod.init.ModCaps;
 import com.jj.jjmod.items.ItemCarcassDecayable;
 import com.jj.jjmod.items.ItemHuntingknife;
-import com.jj.jjmod.items.ItemJj;
 import com.jj.jjmod.tileentities.TECarcass;
 import com.jj.jjmod.utilities.BlockMaterial;
+import com.jj.jjmod.utilities.IBuildingBlock;
 import com.jj.jjmod.utilities.ToolType;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,7 +23,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Abstract superclass for carcass blocks. */
-public abstract class BlockCarcass extends BlockNew
+public abstract class BlockCarcassAbstract extends BlockNew
         implements ITileEntityProvider {
     
     /** Shelf life of this carcass in days. */
@@ -30,7 +31,7 @@ public abstract class BlockCarcass extends BlockNew
     /** Supplier for the dropped item. */
     protected Supplier<ItemCarcassDecayable> item;
 
-    public BlockCarcass(String name, float hardness, int shelfLife,
+    public BlockCarcassAbstract(String name, float hardness, int shelfLife,
             Supplier<ItemCarcassDecayable> item) {
 
         super(BlockMaterial.CARCASS, name, null, hardness, ToolType.KNIFE);
@@ -83,5 +84,54 @@ public abstract class BlockCarcass extends BlockNew
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
         return new TECarcass();
+    }
+    
+    /** Check position and break if invalid. */
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+        
+        if (!this.canPlaceBlockAt(world, pos)) {
+
+            TileEntity te = world.getTileEntity(pos);
+            
+            if (te instanceof TECarcass) {
+
+                long birthTime = ((TECarcass) te).getBirthTime();
+                int stageSize = ((TECarcass) te).getStageSize();
+                ItemStack drop = new ItemStack(this.item.get(), 1);
+                ICapDecay capDecay = drop
+                        .getCapability(ModCaps.CAP_DECAY, null);
+                capDecay.setBirthTime(birthTime);
+                capDecay.setStageSize(stageSize);
+                spawnAsEntity(world, pos, drop);
+            }
+            
+            world.setBlockToAir(pos);
+        }
+    }
+    
+    @Override
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+
+        Block block = world.getBlockState(pos.down()).getBlock();
+        
+        if (ModBlocks.LIGHT.contains(block) ||
+                ModBlocks.HEAVY.contains(block)) {
+
+            return true;
+        }
+        
+        if (block instanceof IBuildingBlock) {
+            
+            IBuildingBlock builtBlock = (IBuildingBlock) block;
+            
+            if (builtBlock.isHeavy() || builtBlock.isLight()) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

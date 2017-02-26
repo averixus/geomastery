@@ -116,6 +116,10 @@ public class ModRecipes {
                 "SRP", "LBP", 'S', ModItems.ingotSteel, 'R',
                 ModItems.stoneRough, 'P', ModItems.pole, 'L',
                 Items.LEATHER, 'B', ModItems.beeswax);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
+                "SRP", "LBP", 'S', ModItems.ingotSteel, 'R',
+                ModItems.stoneRough, 'P', ModItems.pole, 'L',
+                Items.LEATHER, 'B', ModItems.tallow);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingSawpit),
                 "PSP", " S ", 'P', ModItems.pole, 'S', ModItems.ingotSteel);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire),
@@ -331,12 +335,11 @@ public class ModRecipes {
     private static void setupCandlemaker() {
 
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 15),
-                "H", "T", "T", 'H', ModItems.twineHemp, 'T', ModItems.tallow);
+                "T", "T", 'T', ModItems.tallow);
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleBeeswax, 15),
-                "H", "B", "B", 'H', ModItems.twineHemp, 'B', ModItems.beeswax);
+                "B", "B", 'B', ModItems.beeswax);
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4),
-                "T", "C", "S", 'T', ModItems.tallow, 'C',
-                ModItems.cotton, 'S', Items.STICK);
+                "T", "S", 'T', ModItems.tallow, 'S', Items.STICK);
     }
 
     /** Adds all recipes to forge. */
@@ -371,7 +374,7 @@ public class ModRecipes {
         FORGE.addShapedRecipe(new ItemStack(ModItems.sicklebladeCopper),
                 "MM ", "  M", "  M", 'M', ModItems.ingotCopper);
         FORGE.addShapedRecipe(new ItemStack(ModItems.shovelheadCopper),
-                "MM", "MM", "MM", 'M', ModItems.ingotCopper);
+                "MM", "MM", 'M', ModItems.ingotCopper);
         FORGE.addShapedRecipe(new ItemStack(ModItems.swordbladeCopper),
                 "M", "M", "M", 'M', ModItems.ingotCopper);
 
@@ -398,7 +401,7 @@ public class ModRecipes {
                 "TM ", "  M", "  M", 'M', ModItems.ingotCopper, 'T',
                 ModItems.ingotTin);
         FORGE.addShapedRecipe(new ItemStack(ModItems.shovelheadBronze),
-                "TM", "MM", "MM", 'M', ModItems.ingotCopper, 'T',
+                "TM", "MM", 'M', ModItems.ingotCopper, 'T',
                 ModItems.ingotTin);
         FORGE.addShapedRecipe(new ItemStack(ModItems.swordbladeBronze),
                 "T", "M", "M", 'M', ModItems.ingotCopper, 'T',
@@ -421,7 +424,7 @@ public class ModRecipes {
         FORGE.addShapedRecipe(new ItemStack(ModItems.sicklebladeSteel),
                 "MM ", "  M", "  M", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.shovelheadSteel), "MM",
-                "MM", "MM", 'M', ModItems.ingotSteel);
+                "MM", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.swordbladeSteel),
                 "M", "M", "M", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
@@ -484,6 +487,10 @@ public class ModRecipes {
                 ModItems.thicklog);
         SAWPIT.addShapedRecipe(new ItemStack(ModItems.timber, 3),
                 "LLL", 'L', ModItems.log);
+        SAWPIT.addShapedRecipe(new ItemStack(ModItems.beamShort),
+                "LLL", "L  ", 'L', ModItems.log);
+        SAWPIT.addShapedRecipe(new ItemStack(ModItems.beamLong),
+                "TTT", "TTT", "TT ", 'T', ModItems.thicklog);
     }
 
     /** Adds all recipes to campfire and higher levels. */

@@ -256,7 +256,7 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     /** Check position and break if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block blockIn, BlockPos unused) {
+            BlockPos pos, Block block, BlockPos unused) {
         
         if (!this.canPlaceBlockAt(world, pos)) {
             

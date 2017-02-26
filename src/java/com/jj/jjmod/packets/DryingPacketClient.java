@@ -1,5 +1,6 @@
 package com.jj.jjmod.packets;
 
+import com.jj.jjmod.main.Main;
 import com.jj.jjmod.tileentities.TEDrying;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -63,21 +64,14 @@ public class DryingPacketClient implements IMessage {
         public IMessage onMessage(DryingPacketClient message,
                 MessageContext ctx) {
             
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-                
-                @Override
-                public void run() {
-                    
-                    processMessage(message);
-                }
-            });
+            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
             
             return null;
         }
         
         public void processMessage(DryingPacketClient message) {
             
-            World world = Minecraft.getMinecraft().world;
+            World world = Main.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new
                     BlockPos(message.x, message.y, message.z));
             

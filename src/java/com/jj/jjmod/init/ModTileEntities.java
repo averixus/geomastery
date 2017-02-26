@@ -17,6 +17,8 @@ import com.jj.jjmod.tileentities.TEFurnaceCookfire;
 import com.jj.jjmod.tileentities.TEFurnaceStone;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModTileEntities {
 
@@ -48,6 +50,7 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(TECarcass.class, "carcass");
     }
     
+    @SideOnly(Side.CLIENT)
     public static void preInitClient() {
         
         ClientRegistry.bindTileEntitySpecialRenderer(TEBox.class,

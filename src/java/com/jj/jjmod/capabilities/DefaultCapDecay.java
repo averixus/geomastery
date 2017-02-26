@@ -1,11 +1,8 @@
 package com.jj.jjmod.capabilities;
 
-import com.jj.jjmod.init.ModPackets;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.World;
 
 public class DefaultCapDecay implements ICapDecay {
     
@@ -26,7 +23,7 @@ public class DefaultCapDecay implements ICapDecay {
     public float getRenderFraction() {
         
         if (Minecraft.getMinecraft().world == null) {
-            
+
             return 0;
         }
         
@@ -61,14 +58,14 @@ public class DefaultCapDecay implements ICapDecay {
     }
     
     @Override
-    public boolean isRot() {
+    public boolean isRot(World world) {
         
-        if (Minecraft.getMinecraft().world == null) {
+        if (world == null) {
             
             return false;
         }
         
-        long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
+        long currentTime = world.getTotalWorldTime();
         long timeDiff = currentTime - this.birthTime;
         return timeDiff >= (this.stageSize * MAX_STAGE);
     }

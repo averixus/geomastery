@@ -1,19 +1,17 @@
 package com.jj.jjmod.items;
 
-import com.jj.jjmod.blocks.BlockCarcass;
+import com.jj.jjmod.blocks.BlockCarcassAbstract;
 import com.jj.jjmod.capabilities.DefaultCapDecay;
 import com.jj.jjmod.capabilities.ICapDecay;
 import com.jj.jjmod.capabilities.ProviderCapDecay;
 import com.jj.jjmod.container.ContainerInventory;
 import com.jj.jjmod.init.ModCaps;
-import com.jj.jjmod.init.ModItems;
 import com.jj.jjmod.tileentities.TECarcass;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,14 +23,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Decayable carcass item. */
 public class ItemCarcassDecayable extends ItemJj {
 
     /** The block for this item. */
-    private final BlockCarcass block;
+    private final BlockCarcassAbstract block;
     
-    public ItemCarcassDecayable(String name, BlockCarcass block) {
+    public ItemCarcassDecayable(String name, BlockCarcassAbstract block) {
         
         super(name, 1, CreativeTabs.FOOD);
         this.block = block;
@@ -65,7 +65,8 @@ public class ItemCarcassDecayable extends ItemJj {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
             
-        if (!block.isReplaceable(world, pos)) {
+        if (!block.isReplaceable(world, pos) ||
+                !this.block.canPlaceBlockAt(world, pos)) {
             
             return EnumActionResult.FAIL;
         }
@@ -92,11 +93,13 @@ public class ItemCarcassDecayable extends ItemJj {
     }
     
     /** Makes this item named rotten according to capability. */
+    @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
         if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
-                stack.getCapability(ModCaps.CAP_DECAY, null).isRot()) {
+                stack.getCapability(ModCaps.CAP_DECAY, null)
+                .isRot(Minecraft.getMinecraft().world)) {
             
             return "Rotten " + super.getItemStackDisplayName(stack);
         }

@@ -24,7 +24,8 @@ public class SlotFurnaceInput extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return !this.furnace.recipes.getCookingResult(stack).isEmpty();
+        return !this.furnace.recipes.getCookingResult(stack,
+                this.furnace.getWorld()).isEmpty();
     }
     
     @Override

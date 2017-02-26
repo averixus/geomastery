@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Cow part carcass block. */
-public class BlockCarcassCowpart extends BlockCarcass {
+public class BlockCarcassCowpart extends BlockCarcassAbstract {
 
     public BlockCarcassCowpart() {
         
