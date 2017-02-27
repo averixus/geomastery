@@ -3,7 +3,7 @@ package com.jayavery.jjmod.items;
 import java.util.Collections;
 import com.jayavery.jjmod.container.ContainerInventory;
 import com.jayavery.jjmod.entities.projectile.EntityProjectile;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

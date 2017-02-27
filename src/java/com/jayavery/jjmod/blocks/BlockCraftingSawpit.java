@@ -8,7 +8,7 @@ import com.jayavery.jjmod.tileentities.TECraftingSawpit;
 import com.jayavery.jjmod.tileentities.TECraftingSawpit.EnumPartSawpit;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.IBuildingBlock;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;

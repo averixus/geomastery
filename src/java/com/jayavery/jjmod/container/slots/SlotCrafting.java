@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.container.slots;
 
 import com.jayavery.jjmod.crafting.CraftingManager;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;

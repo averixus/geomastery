@@ -10,7 +10,7 @@ import com.jayavery.jjmod.tileentities.TECarcass;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;

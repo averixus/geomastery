@@ -4,7 +4,7 @@ import com.jayavery.jjmod.blocks.BlockComplexAbstract;
 import com.jayavery.jjmod.container.slots.SlotCrafting;
 import com.jayavery.jjmod.crafting.CraftingManager;
 import com.jayavery.jjmod.init.ModCaps;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;

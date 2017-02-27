@@ -6,7 +6,7 @@ import com.jayavery.jjmod.capabilities.ICapPlayer;
 import com.jayavery.jjmod.capabilities.ProviderCapDecay;
 import com.jayavery.jjmod.init.ModCaps;
 import com.jayavery.jjmod.utilities.FoodType;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;

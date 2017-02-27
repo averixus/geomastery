@@ -27,6 +27,11 @@ public abstract class BlockLight extends BlockTorch {
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS, 0, null);
     }
     
+    public int getLightLevel() {
+        
+        return this.lightValue;
+    }
+    
     /** Extinguishes according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
