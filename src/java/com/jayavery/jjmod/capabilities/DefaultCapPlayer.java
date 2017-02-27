@@ -39,8 +39,6 @@ public class DefaultCapPlayer implements ICapPlayer {
     private static final int WATER_MAX = 3600;
     /** Ticks between taking damage from temperature. */
     private static final int DAMAGE_MAX = 200;
-    /** Multiplier to convert actual speed to scaled value. */
-    private static final float SPEED_MODIFIER = 43F;
     /** Default walk speed actual value. */
     private static final float DEFAULT_SPEED = 4.3F;
     /** Inventory slots in a row. */
