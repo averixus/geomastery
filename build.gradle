@@ -15,10 +15,6 @@ version = "0.1-mc1.11.2"
 group = "com.jayavery.jjmod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "jjmod"
 
-//sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
-//compileJava {
-//    sourceCompatibility = targetCompatibility = "1.6"
-//}
 
 sourceSets {
     main {

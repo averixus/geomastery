@@ -6,7 +6,7 @@ import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TECraftingMason;
 import com.jayavery.jjmod.tileentities.TECraftingMason.EnumPartMason;
 import com.jayavery.jjmod.utilities.BlockMaterial;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;

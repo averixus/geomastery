@@ -4,7 +4,7 @@ import java.util.List;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;

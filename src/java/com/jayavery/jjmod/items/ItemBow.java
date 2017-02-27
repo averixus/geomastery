@@ -5,7 +5,7 @@ import com.jayavery.jjmod.entities.projectile.EntityProjectile;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.utilities.InvLocation;
 import com.jayavery.jjmod.utilities.InvLocation.InvType;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

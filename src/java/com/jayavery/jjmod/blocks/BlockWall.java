@@ -7,7 +7,7 @@ import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;

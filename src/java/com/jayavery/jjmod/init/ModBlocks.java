@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.init;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -56,6 +57,7 @@ import com.jayavery.jjmod.blocks.BlockFurnaceClay;
 import com.jayavery.jjmod.blocks.BlockFurnaceCookfire;
 import com.jayavery.jjmod.blocks.BlockFurnaceStone;
 import com.jayavery.jjmod.blocks.BlockHarvestableLeaves;
+import com.jayavery.jjmod.blocks.BlockInvisibleLight;
 import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.blocks.BlockLightCandle;
 import com.jayavery.jjmod.blocks.BlockLightTorch;
@@ -250,6 +252,8 @@ public class ModBlocks {
     
     public static BlockTar tar;
     
+    public static BlockInvisibleLight invisibleLight;
+    
     public static void preInit() {
                 
         registerItemless(bedLeaf = new BlockBedLeaf());
@@ -440,6 +444,8 @@ public class ModBlocks {
         
         registerItemless(tar = new BlockTar());
         
+        registerItemless(invisibleLight = new BlockInvisibleLight());
+        
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
         Blocks.DIRT.setHarvestLevel("shovel", 1);
@@ -534,6 +540,11 @@ public class ModBlocks {
                     return loc;
                 }
             });
+            
+        } else if (block instanceof BlockInvisibleLight) {
+            
+            ModelLoader.setCustomStateMapper(block,
+                    (b) -> Collections.emptyMap());
             
         } else {
 
