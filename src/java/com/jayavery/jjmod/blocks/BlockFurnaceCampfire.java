@@ -30,8 +30,23 @@ public class BlockFurnaceCampfire extends BlockComplexAbstract {
 
         super("furnace_campfire", BlockMaterial.STONE_HANDHARVESTABLE,
                 5F, null);
-        this.lightValue = 14;
         this.setCreativeTab(CreativeTabs.DECORATIONS);
+    }
+    
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        TileEntity te = world.getTileEntity(pos);
+    
+        if (te instanceof TEFurnaceCampfire) {
+            
+            if (((TEFurnaceCampfire) te).isHeating()) {
+                
+                return 14;
+            }
+        }
+        
+        return 12;
     }
 
     @Override

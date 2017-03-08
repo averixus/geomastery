@@ -148,4 +148,27 @@ public abstract class WorldGenAbstract {
         
         return -1;
     }
+    
+    /** Finds a solid block with air above and solid blocks on all sides,
+     * at the given x and z co-ordinates.
+     * @return The y co-ordinate of the valid position, -1 if none. */
+    protected int findSurroundedSurface(int x, int z) {
+        
+        BlockPos checkPos = new BlockPos(x, 256, z);
+        
+        while (this.world.isAirBlock(checkPos) && checkPos.getY() > 0) {
+            
+            checkPos = checkPos.down();
+        }
+        
+        if (!this.world.isAirBlock(checkPos.north()) &&
+                !this.world.isAirBlock(checkPos.east()) &&
+                !this.world.isAirBlock(checkPos.south()) &&
+                !this.world.isAirBlock(checkPos.west())) {
+            
+            return checkPos.getY();
+        }
+        
+        return -1;
+    }
 }

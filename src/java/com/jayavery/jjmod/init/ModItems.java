@@ -506,9 +506,9 @@ public class ModItems {
         register(ingotSteel = new ItemJj("ingot_steel", 2));
         register(ingotTin = new ItemJj("ingot_tin", 2));
 
-        register(leaves = new ItemJj("leaves", 1));
-        register(pole = new ItemJj("pole", 4));
-        register(log = new ItemJj("log"));
+        register(leaves = new ItemJj("leaves", 3));
+        register(pole = new ItemJj("pole", 6));
+        register(log = new ItemJj("log", 3));
         register(thicklog = new ItemJj("thicklog"));
         register(timber = new ItemJj("timber", 3));
 
@@ -795,12 +795,13 @@ public class ModItems {
         
         register(sand = new ItemJj("sand"));
         
-        Items.STICK.setMaxStackSize(8);
+        Items.STICK.setMaxStackSize(12);
         Items.BONE.setMaxStackSize(6);
         Items.FLINT.setMaxStackSize(6);
         Items.LEATHER.setMaxStackSize(3);
         Items.COAL.setMaxStackSize(1);
         Items.RABBIT_HIDE.setMaxStackSize(4);
+        Items.REEDS.setMaxStackSize(5);
     }
     
     public static void preInitClient() {

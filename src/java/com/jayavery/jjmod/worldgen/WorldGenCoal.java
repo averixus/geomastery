@@ -16,7 +16,7 @@ public class WorldGenCoal extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        return this.rand.nextInt(19) + 1;
+        return this.rand.nextInt(10) + 1;
     }
 
     @Override

@@ -9,7 +9,7 @@ public class WorldGenLapis extends WorldGenStone {
 
     public WorldGenLapis(World world, Random rand) {
 
-        super(world, rand, Blocks.LAPIS_ORE.getDefaultState(), 60, 70, 2, 1);
+        super(world, rand, Blocks.LAPIS_ORE.getDefaultState(), 60, 70, 1, 1);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class WorldGenLapis extends WorldGenStone {
     @Override
     protected boolean shouldGenBlock() {
 
-        if (this.rand.nextFloat() < 0.6) {
+        if (this.rand.nextFloat() < 0.3) {
 
             return true;
         }

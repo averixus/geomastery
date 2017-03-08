@@ -16,7 +16,7 @@ import com.jayavery.jjmod.init.ModRecipes;
 import com.jayavery.jjmod.tileentities.TEDrying;
 import com.jayavery.jjmod.tileentities.TEFurnaceAbstract;
 import com.jayavery.jjmod.tileentities.TEFurnaceClay;
-import com.jayavery.jjmod.tileentities.TEFurnaceCookfire;
+import com.jayavery.jjmod.tileentities.TEFurnacePotfire;
 import com.jayavery.jjmod.tileentities.TEFurnaceStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -193,7 +193,7 @@ public class GuiHandler implements IGuiHandler {
         if (ID == GuiList.COOKFIRE.ordinal()) {
 
             return new GuiFurnace(new ContainerFurnaceSingle(player, world,
-                    (TEFurnaceCookfire) te, pos), GuiList.COOKFIRE.name);
+                    (TEFurnacePotfire) te, pos), GuiList.COOKFIRE.name);
         }
 
         if (ID == GuiList.CLAY.ordinal()) {

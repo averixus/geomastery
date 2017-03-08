@@ -89,11 +89,11 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(Items.FISHING_ROD),
                 "SS ", " TT", 'S', Items.STICK, 'T', ModItems.twineHemp);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.spearWood),
-                "SSS", 'S', Items.STICK);
+                "S", "S", "S", 'S', Items.STICK);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bowCrude),
                 "STS", " S ", 'S', Items.STICK, 'T', ModItems.twineHemp);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5),
-                "SF", 'S', Items.STICK, 'F', Items.FEATHER);
+                "S", "F", 'S', Items.STICK, 'F', Items.FEATHER);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.potClay),
                 "C C", " C ", 'C', Items.CLAY_BALL);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.craftingKnapping),
@@ -115,9 +115,7 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire),
                 "S S", "SSS", 'S', Items.STICK);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceClay),
-                "C C", "CCC", 'C', Items.CLAY_BALL);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceStone),
-                "S S", "SSS", 'S', ModItems.stoneRough);
+                "C C", "MMM", 'C', Items.CLAY_BALL, 'M', ModItems.mudbricks);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.drying),
                 "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf),
@@ -126,7 +124,9 @@ public class ModRecipes {
                 "MMM", "MMM", 'M', ModItems.mudbricks);
         
         for (Item metal : METALS) {
-        
+            
+            INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceStone),
+                    "S S", "SMS", 'S', ModItems.stoneRough, 'M', metal);
             INVENTORY.addShapedRecipe(new
                     ItemStack(ModItems.craftingTextiles), "MPP", "PPP",
                     'M', metal, 'P', ModItems.pole);
@@ -147,7 +147,7 @@ public class ModRecipes {
         
         for (Item pot : POTS) {
             
-            INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCookfire),
+            INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnacePotfire),
                     "SPS", "SSS", 'S', Items.STICK, 'P', pot);
         }
     }
@@ -156,17 +156,17 @@ public class ModRecipes {
     private static void setupKnapping() {
 
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.huntingknifeFlint),
-                "FF", 'F', Items.FLINT);
+                "F", "F", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeFlint),
-                "FSS", 'F', ModItems.axeheadFlint, 'S', Items.STICK);
+                "F", "S", "S", 'F', ModItems.axeheadFlint, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.pickaxeFlint),
-                "FSS", 'F', ModItems.pickheadFlint, 'S', Items.STICK);
+                "F", "S", "S", 'F', ModItems.pickheadFlint, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.shearsFlint),
                 "F ", "FF", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.spearFlint),
-                "FSS", 'F', ModItems.spearheadFlint, 'S', Items.STICK);
+                "F", "S", "S", 'F', ModItems.spearheadFlint, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowFlint, 5),
-                "FSE", 'F', ModItems.arrowheadFlint, 'S', Items.STICK,
+                "F", "S", "E", 'F', ModItems.arrowheadFlint, 'S', Items.STICK,
                 'E', Items.FEATHER);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 4),
                 "RRR", "RRR", 'R', ModItems.stoneRough);
@@ -184,78 +184,84 @@ public class ModRecipes {
     private static void setupWoodworking() {
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelWood),
-                "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(Items.BOW), "PTP",
-                " P ", 'P', ModItems.pole, 'T', ModItems.twineHemp);
+                "P", "P", "P", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(Items.BOW), "P", "PT", "P",
+                'P', ModItems.pole, 'T', ModItems.twineHemp);
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.huntingknifeCopper),
-                "BP", 'B', ModItems.knifebladeCopper, 'P', ModItems.pole);
+                "B", "P", 'B', ModItems.knifebladeCopper, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.macheteCopper),
-                "BP", 'B', ModItems.machetebladeCopper, 'P',
+                "B", "P", 'B', ModItems.machetebladeCopper, 'P',
                 ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.pickaxeCopper),
-                "HPP", 'H', ModItems.pickheadCopper, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.pickheadCopper,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.spearCopper),
-                "HPP", 'H', ModItems.spearheadCopper, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.spearheadCopper,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.axeCopper),
-                "HPP", 'H', ModItems.axeheadCopper, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.axeheadCopper, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.hoeCopper),
-                "HPP", 'H', ModItems.hoeheadCopper, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.hoeheadCopper, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.sickleCopper),
-                "BP", 'B', ModItems.sicklebladeCopper, 'P',
-                ModItems.pole);
+                "B", "P", 'B', ModItems.sicklebladeCopper, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelCopper),
                 "HPP", 'H', ModItems.shovelheadCopper, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowCopper),
-                "ASF", 'A', ModItems.arrowheadCopper, 'S', Items.STICK,
+                "A", "S", "F", 'A', ModItems.arrowheadCopper, 'S', Items.STICK,
                 'F', Items.FEATHER);
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.huntingknifeBronze),
-                "BP", 'B', ModItems.knifebladeBronze, 'P', ModItems.pole);
+                "B", "P", 'B', ModItems.knifebladeBronze, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.macheteBronze),
-                "BP", 'B', ModItems.machetebladeBronze, 'P',
+                "B", "P", 'B', ModItems.machetebladeBronze, 'P',
                 ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.pickaxeBronze),
-                "HPP", 'H', ModItems.pickheadBronze, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.pickheadBronze,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.spearBronze),
-                "HPP", 'H', ModItems.spearheadBronze, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.spearheadBronze,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.axeBronze),
-                "HPP", 'H', ModItems.axeheadBronze, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.axeheadBronze, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.hoeBronze),
-                "HPP", 'H', ModItems.hoeheadBronze, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.hoeheadBronze, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.sickleBronze),
-                "BP", 'B', ModItems.sicklebladeBronze, 'P',
+                "B", "P", 'B', ModItems.sicklebladeBronze, 'P',
                 ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelBronze),
-                "HPP", 'H', ModItems.shovelheadBronze, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.shovelheadBronze,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowBronze),
-                "ASF", 'A', ModItems.arrowheadBronze, 'S', Items.STICK,
+                "A", "S", "F", 'A', ModItems.arrowheadBronze, 'S', Items.STICK,
                 'F', Items.FEATHER);
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.huntingknifeSteel),
-                "BP", 'B', ModItems.knifebladeSteel, 'P', ModItems.pole);
+                "B", "P", 'B', ModItems.knifebladeSteel, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.macheteSteel),
-                "BP", 'B', ModItems.machetebladeSteel, 'P',
+                "B", "P", 'B', ModItems.machetebladeSteel, 'P',
                 ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.pickaxeSteel),
-                "HPP", 'H', ModItems.pickheadSteel, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.pickheadSteel, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.spearSteel),
-                "HPP", 'H', ModItems.spearheadSteel, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.spearheadSteel,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.axeSteel),
-                "HPP", 'H', ModItems.axeheadSteel, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.axeheadSteel, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.hoeSteel),
-                "HPP", 'H', ModItems.hoeheadSteel, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.hoeheadSteel, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.sickleSteel),
-                "BP", 'B', ModItems.sicklebladeSteel, 'P', ModItems.pole);
+                "B", "P", 'B', ModItems.sicklebladeSteel, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelSteel),
-                "HPP", 'H', ModItems.shovelheadSteel, 'P', ModItems.pole);
+                "H", "P", "P", 'H', ModItems.shovelheadSteel,
+                'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowSteel),
-                "ASF", 'A', ModItems.arrowheadSteel, 'S', Items.STICK,
+                "A", "S", "F", 'A', ModItems.arrowheadSteel, 'S', Items.STICK,
                 'F', Items.FEATHER);
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood),
                 " P ", "PPP", " P ", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 4),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 3),
                 "PPP", "PPP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 4),
                 "  P", " PP", "PPP", 'P', ModItems.pole);

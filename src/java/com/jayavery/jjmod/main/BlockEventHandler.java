@@ -288,7 +288,11 @@ public class BlockEventHandler {
         if (block == Blocks.GRAVEL) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(Items.FLINT));
+            
+            if (world.rand.nextInt(4) == 0) {
+            
+                event.getDrops().add(new ItemStack(Items.FLINT));
+            }
         }
     }
 }

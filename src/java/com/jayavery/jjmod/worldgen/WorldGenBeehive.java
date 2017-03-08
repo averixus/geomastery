@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class WorldGenBeehive extends WorldGenAbstract {
     
     /** Chance of generating per chunk. */
-    private static final float CHANCE = 0.001F;
+    private static final float CHANCE = 0.01F;
 
     public WorldGenBeehive(World world, Random rand) {
         

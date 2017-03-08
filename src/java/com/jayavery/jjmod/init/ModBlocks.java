@@ -53,7 +53,7 @@ import com.jayavery.jjmod.blocks.BlockFoundation;
 import com.jayavery.jjmod.blocks.BlockFruit;
 import com.jayavery.jjmod.blocks.BlockFurnaceCampfire;
 import com.jayavery.jjmod.blocks.BlockFurnaceClay;
-import com.jayavery.jjmod.blocks.BlockFurnaceCookfire;
+import com.jayavery.jjmod.blocks.BlockFurnacePotfire;
 import com.jayavery.jjmod.blocks.BlockFurnaceStone;
 import com.jayavery.jjmod.blocks.BlockHarvestableLeaves;
 import com.jayavery.jjmod.blocks.BlockInvisibleLight;
@@ -155,7 +155,7 @@ public class ModBlocks {
     public static BlockDrying drying;
 
     public static BlockFurnaceCampfire furnaceCampfire;
-    public static BlockFurnaceCookfire furnaceCookfire;
+    public static BlockFurnacePotfire furnacePotfire;
     public static BlockFurnaceClay furnaceClay;
     public static BlockFurnaceStone furnaceStone;
     
@@ -288,7 +288,7 @@ public class ModBlocks {
         register(drying = new BlockDrying());
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
-        register(furnaceCookfire = new BlockFurnaceCookfire());
+        register(furnacePotfire = new BlockFurnacePotfire());
         registerItemless(furnaceClay = new BlockFurnaceClay());
         registerItemless(furnaceStone = new BlockFurnaceStone());
         
@@ -400,7 +400,7 @@ public class ModBlocks {
                 "wall_log_double", 3F, ToolType.AXE, true,
                 () -> ModItems.wallLog, false, 4, true));
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
-                "wall_pole", 2F, ToolType.AXE, false, 4, false));
+                "wall_pole", 2F, ToolType.AXE, false, 4, false), 3);
         
         register(stairsBrick = new BlockStairs("stairs_brick",
                 wallBrickDouble.getDefaultState(), ToolType.PICKAXE));

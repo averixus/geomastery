@@ -14,7 +14,7 @@ public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
     @Override
     public boolean isHeating() {
         
-        return this.fuelLeft > 0;
+        return this.isUsingFuel();
     }
     
     @Override

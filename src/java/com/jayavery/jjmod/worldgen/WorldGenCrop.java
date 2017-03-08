@@ -12,7 +12,7 @@ import net.minecraft.world.biome.Biome;
 public abstract class WorldGenCrop extends WorldGenAbstract {
 
     /** Chance of generating per chunk. */
-    private static final float CHANCE = 0.001F;
+    private static final float CHANCE = 0.002F;
     
     /** State of the crop block to generate. */
     protected IBlockState crop;

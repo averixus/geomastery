@@ -148,7 +148,7 @@ public abstract class TEFurnaceAbstract extends TileEntity
         this.outputs.set(index, stack);
     }
 
-    /** @return Whether this furnace is currently heating. */
+    /** @return Whether this furnace is currently producing heat. */
     public boolean isHeating() {
 
         return true;

@@ -33,6 +33,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
     public BlockFurnaceClay() {
 
         super("furnace_clay", BlockMaterial.STONE_HANDHARVESTABLE, 5F, null);
+        this.lightValue = 12;
     }
     
     /** Breaks this block and drops item if applicable. */

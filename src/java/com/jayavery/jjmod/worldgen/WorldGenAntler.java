@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 public class WorldGenAntler extends WorldGenAbstract {
 
     /** Chance of generating per chunk. */
-    private static final float CHANCE = 0.001F;
+    private static final float CHANCE = 0.01F;
     
     public WorldGenAntler(World world, Random rand) {
         

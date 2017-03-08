@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.capabilities;
 
+import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -306,7 +307,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Calculate the player's temperature.
      * @return Whether the TempStage has changed. */
     private boolean tickTemperature() {
-        
+                
         TempStage oldStage = this.tempStage;
         float temp = 0;
         BlockPos playerPos = new BlockPos(this.player.posX,
@@ -316,8 +317,10 @@ public class DefaultCapPlayer implements ICapPlayer {
         // Biome
         Biome biome = world.getBiomeForCoordsBody(playerPos);
         float biomeVar = ModBiomes.getTemp(biome);
-        
         temp += biomeVar;
+        
+        DecimalFormat df = new DecimalFormat("#.#");
+        String print = "Biome base: " + temp + ", ";
 
         // Altitude
         float heightVar = 0;
@@ -330,6 +333,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         temp += heightVar;
 
+        print += "altitude adds " + df.format(heightVar) + ", ";
+        
         // Time of day
         float timeVar;
         long time = world.getWorldTime();
@@ -356,6 +361,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += timeVar;
+        
+        print += "time adds " + df.format(timeVar) + ", ";
         
         // Cave climate
         boolean isCave = true;
@@ -385,6 +392,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         if (isCave) {
             
             temp = 0;
+            print = "Cave base: 0, ";
         }
 
         // Wetness
@@ -401,7 +409,8 @@ public class DefaultCapPlayer implements ICapPlayer {
             this.wetTimer--;
         }
 
-        temp += waterVar;  
+        temp += waterVar;
+        print += "wetness adds " + df.format(waterVar) + ", ";
 
         // Clothing
         float clothesVar = 0;
@@ -429,6 +438,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += clothesVar;
+        print += "clothing adds " + df.format(clothesVar) + ", ";
 
         // Heating blocks
         double fireVar = 0;
@@ -450,15 +460,10 @@ public class DefaultCapPlayer implements ICapPlayer {
                     
                     boolean fireLit = false;
                     
-                    if (block == ModBlocks.furnaceCampfire || 
-                            block == ModBlocks.furnaceCookfire ||
-                            block == ModBlocks.furnaceClay ||
-                            block == ModBlocks.furnaceStone) {
+                    if (world.getTileEntity(pos) instanceof TEFurnaceAbstract) {
                         
                         TEFurnaceAbstract furnace =
-                                (TEFurnaceAbstract) world
-                                .getTileEntity(pos);
-                        
+                                (TEFurnaceAbstract) world.getTileEntity(pos);
                         fireLit = furnace.isHeating();
                     }
                     
@@ -496,6 +501,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += fireVar;
+        print += "heat blocks add " + df.format(fireVar);
 
         // Define stage
         if (temp < 0) {
@@ -518,6 +524,9 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             this.tempStage = TempStage.HOT;
         }
+        
+        print += ". Final temp " + df.format(temp) + " is " + this.tempStage;
+        System.out.println(print);
 
         if ((this.tempStage == TempStage.HOT ||
                 this.tempStage == TempStage.COLD) && this.damageTimer == 0) {

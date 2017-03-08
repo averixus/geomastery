@@ -10,13 +10,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModelBox extends ModelBase {
 
     /** Model for first side of lid. */
-    ModelRenderer lid1 = new ModelRenderer(this, 0, 0);
+    ModelRenderer lid1 = new ModelRenderer(this, 0, 17).setTextureSize(44, 30);
     /** Model for second side of lid. */
-    ModelRenderer lid2 = new ModelRenderer(this, 0, 0);
+    ModelRenderer lid2 = new ModelRenderer(this, 0, 24).setTextureSize(44, 30);
     /** Model for base. */
-    ModelRenderer bottom = new ModelRenderer(this, 0, 0);
+    ModelRenderer bottom = new ModelRenderer(this, 0, 0).setTextureSize(44, 30);
     /** Model for knob. */
-    ModelRenderer knob = new ModelRenderer(this, 0, 0);
+    ModelRenderer knob = new ModelRenderer(this, 0, 0).setTextureSize(44, 30);
     
     ModelBox() {
         

@@ -4,7 +4,8 @@ import java.util.Random;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.main.Main;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
-import com.jayavery.jjmod.tileentities.TEFurnaceCookfire;
+import com.jayavery.jjmod.tileentities.TEFurnaceCampfire;
+import com.jayavery.jjmod.tileentities.TEFurnacePotfire;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
@@ -18,15 +19,30 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Cookfire furnace block. */
-public class BlockFurnaceCookfire extends BlockComplexAbstract {
+/** Potfire furnace block. */
+public class BlockFurnacePotfire extends BlockComplexAbstract {
 
-    public BlockFurnaceCookfire() {
+    public BlockFurnacePotfire() {
 
-        super("furnace_cookfire", BlockMaterial.STONE_HANDHARVESTABLE,
+        super("furnace_potfire", BlockMaterial.STONE_HANDHARVESTABLE,
                 5F, null);
-        this.lightValue = 14;
         this.setCreativeTab(CreativeTabs.DECORATIONS);
+    }
+    
+    @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        TileEntity te = world.getTileEntity(pos);
+    
+        if (te instanceof TEFurnacePotfire) {
+            
+            if (((TEFurnacePotfire) te).isHeating()) {
+                
+                return 14;
+            }
+        }
+        
+        return 12;
     }
     
     @Override
@@ -39,7 +55,7 @@ public class BlockFurnaceCookfire extends BlockComplexAbstract {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        return new TEFurnaceCookfire();
+        return new TEFurnacePotfire();
     }
 
     @Override

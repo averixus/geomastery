@@ -63,7 +63,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         
         World world = (World) blockAccess;
         
-        if (world.rand.nextInt(20) == 0) {
+        if (world.rand.nextInt(10) == 0) {
             
             items.add(new ItemStack(this.seedlingRef.get()));
         }

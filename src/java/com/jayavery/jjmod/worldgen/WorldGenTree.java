@@ -11,7 +11,7 @@ import net.minecraft.world.biome.Biome;
 public abstract class WorldGenTree extends WorldGenAbstract {
     
     /** Chance to generate per chunk. */
-    private static final float CHANCE = 0.001F;
+    private static final float CHANCE = 0.002F;
     
     /** Whether to send block updates for this generation. */
     protected boolean notify;

@@ -12,7 +12,7 @@ public class WorldGenClay extends WorldGenStone {
 
     public WorldGenClay(World world, Random rand) {
         
-        super(world, rand, Blocks.CLAY.getDefaultState(), 40, 80, 10, 1);
+        super(world, rand, Blocks.CLAY.getDefaultState(), 40, 80, 3, 1);
         this.predicate = new Predicate<IBlockState>() {
             
             @Override

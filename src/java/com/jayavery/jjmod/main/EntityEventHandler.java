@@ -3,6 +3,7 @@ package com.jayavery.jjmod.main;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemJj;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
@@ -56,6 +57,10 @@ public class EntityEventHandler {
             event.getDrops().clear();
             entity.entityDropItem(ItemJj
                     .newStack(ModItems.carcassRabbit, 1, world), 0);
+            
+        } else if (entity instanceof EntityMob) {
+            
+            event.getDrops().clear();
         }
     }
 }
