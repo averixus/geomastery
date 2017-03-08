@@ -43,7 +43,6 @@ public class TempPacketClient implements IMessage {
                 MessageContext ctx) {
             
             Main.proxy.addMinecraftRunnable(() -> processMessage(message));
-            
             return null;
         }
         
@@ -51,7 +50,7 @@ public class TempPacketClient implements IMessage {
             
             EntityPlayer player = Main.proxy.getClientPlayer();
             ((DefaultCapPlayer) player.getCapability(ModCaps
-                    .CAP_PLAYER, null)).processTempMessage(message.stage);
+                    .CAP_PLAYER, null)).processTempPacket(message.stage);
         }
     }
 }

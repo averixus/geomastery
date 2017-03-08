@@ -62,7 +62,6 @@ public class ContainerPacketServer implements IMessage {
 
             ctx.getServerHandler().playerEntity.getServer()
                     .addScheduledTask(() -> processMessage(message, ctx));
-
             return null;
         }
 

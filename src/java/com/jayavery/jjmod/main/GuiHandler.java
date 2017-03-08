@@ -53,12 +53,6 @@ public class GuiHandler implements IGuiHandler {
                     pos, ModRecipes.TEXTILES);
         }
 
-        if (ID == GuiList.CLAYWORKS.ordinal()) {
-
-            return new ContainerCrafting(player, world,
-                    pos, ModRecipes.CLAYWORKS);
-        }
-
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
 
             return new ContainerCrafting(player, world,
@@ -160,12 +154,6 @@ public class GuiHandler implements IGuiHandler {
                     pos, ModRecipes.TEXTILES), GuiList.TEXTILES.name);
         }
 
-        if (ID == GuiList.CLAYWORKS.ordinal()) {
-
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, ModRecipes.CLAYWORKS), GuiList.CLAYWORKS.name);
-        }
-
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
 
             return new GuiCrafting(new ContainerCrafting(player, world,
@@ -245,7 +233,6 @@ public class GuiHandler implements IGuiHandler {
         KNAPPING("Knapping Block"),
         WOODWORKING("Woodworking Bench"),
         TEXTILES("Textiles Table"),
-        CLAYWORKS("Clay Works"),
         CANDLEMAKER("Candlemaker's Bench"),
         FORGE("Forge"),
         MASON("Mason's Workshop"),

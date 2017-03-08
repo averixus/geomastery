@@ -72,7 +72,7 @@ public abstract class BlockCropAbstract extends BlockNew
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
                 
-        if (!this.canStay(world, pos, state)) {
+        if (!this.canStay(world, pos)) {
             
             world.setBlockToAir(pos);
         }
@@ -114,7 +114,7 @@ public abstract class BlockCropAbstract extends BlockNew
     }
     
     /** @return Whether this crop can stay at its position. */
-    protected boolean canStay(World world, BlockPos pos, IBlockState state) {
+    public boolean canStay(World world, BlockPos pos) {
         
         Block downBlock = world.getBlockState(pos.down()).getBlock();
         return (downBlock == Blocks.DIRT || downBlock == Blocks.GRASS ||
@@ -130,7 +130,7 @@ public abstract class BlockCropAbstract extends BlockNew
     /** @return Whether this crop can grow at this posiiton. */
     protected boolean canGrow(World world, BlockPos pos, IBlockState state) {
         
-        return this.canStay(world, pos, state) && world.canSeeSky(pos) &&
+        return this.canStay(world, pos) && world.canSeeSky(pos) &&
                 this.isPermitted(world.getBiome(pos));
     }
     
@@ -139,7 +139,7 @@ public abstract class BlockCropAbstract extends BlockNew
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
         
-        if (!this.canStay(world, pos, state)) {
+        if (!this.canStay(world, pos)) {
             
             world.setBlockToAir(pos);
         }

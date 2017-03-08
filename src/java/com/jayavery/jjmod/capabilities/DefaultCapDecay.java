@@ -20,13 +20,18 @@ public class DefaultCapDecay implements ICapDecay {
         this.stageSize = /*maxAge / MAX_STAGE*/ 200;
     }
     
-    //TEST
     @Override
     public void updateFromNBT(NBTTagCompound nbt) {
         
+        if (nbt == null) {
+            
+            return;
+        }
+        
         if (nbt.hasKey("stageSize")) {
             
-            this.stageSize = Math.max(this.stageSize, nbt.getInteger("stageSize"));
+            this.stageSize = Math.max(this.stageSize,
+                    nbt.getInteger("stageSize"));
         }
         
         if (nbt.hasKey("birthTime")) {

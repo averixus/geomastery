@@ -48,7 +48,6 @@ public class FoodPacketClient implements IMessage {
                 MessageContext ctx) {
             
             Main.proxy.addMinecraftRunnable(() -> processMessage(message));
-            
             return null;
         }
         
@@ -56,7 +55,7 @@ public class FoodPacketClient implements IMessage {
             
             EntityPlayer player = Main.proxy.getClientPlayer();
             ((DefaultCapPlayer) player.getCapability(ModCaps.CAP_PLAYER, null))
-                    .processFoodMessage(message.type, message.hunger);
+                    .processFoodPacket(message.type, message.hunger);
         }
     }
 }

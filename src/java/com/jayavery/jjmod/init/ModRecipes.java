@@ -18,9 +18,6 @@ public class ModRecipes {
             = new CraftingManager();
     /** Crafting recipes for textiles table. */
     public static final CraftingManager TEXTILES = new CraftingManager();
-    /** Crafting recipes for clayworks. */
-    public static final CraftingManager CLAYWORKS
-            = new CraftingManager();
     /** Crafting recipes for candlemaker's bench. */
     public static final CraftingManager CANDLEMAKER
             = new CraftingManager();
@@ -72,7 +69,6 @@ public class ModRecipes {
         setupKnapping();
         setupWoodworking();
         setupTextiles();
-        setupClayworks();
         setupCandlemaker();
         setupForge();
         setupMason();
@@ -98,10 +94,6 @@ public class ModRecipes {
                 "STS", " S ", 'S', Items.STICK, 'T', ModItems.twineHemp);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5),
                 "SF", 'S', Items.STICK, 'F', Items.FEATHER);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.backpack),
-                "L L", "LLL", 'L', Items.LEATHER);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.yoke),
-                "LPL", "LLL", 'L', Items.LEATHER, 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.potClay),
                 "C C", " C ", 'C', Items.CLAY_BALL);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.craftingKnapping),
@@ -110,8 +102,6 @@ public class ModRecipes {
                 "PPP", "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingTextiles),
                 "BPP", "PPP",'B', Items.BONE, 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingClayworks),
-                "PCP", "PPP", 'P', ModItems.pole, 'C', Items.CLAY_BALL);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
                 "SRP", "LBP", 'S', ModItems.ingotSteel, 'R',
                 ModItems.stoneRough, 'P', ModItems.pole, 'L',
@@ -267,8 +257,6 @@ public class ModRecipes {
                 " P ", "PPP", " P ", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 4),
                 "PPP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
-                "LLL", "LLL", 'L', ModItems.log);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 4),
                 "  P", " PP", "PPP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 4),
@@ -287,6 +275,8 @@ public class ModRecipes {
                 "P P", "PPP", "P P", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bedSimple), "WWW",
                 "PPP", 'W', ModItems.wool, 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
+                "P P", " P ", 'P', ModItems.pole);
     }
 
     /** Adds all recipes to textiles table. */
@@ -312,6 +302,10 @@ public class ModRecipes {
                 "WWW", "W W", 'W', ModItems.wool);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolFeet),
                 "W W", "W W", 'W', ModItems.wool);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.backpack),
+                "L L", "LLL", 'L', Items.LEATHER);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.yoke),
+                "LPL", "LLL", 'L', Items.LEATHER, 'P', ModItems.pole);
         
         for (Item skin : SKINS_FUR) {
             
@@ -324,11 +318,6 @@ public class ModRecipes {
             TEXTILES.addShapedRecipe(new ItemStack(ModItems.furFeet),
                     "S S", "S S", 'S', skin);
         }
-    }
-
-    /** Adds all recipes to clayworks. */
-    private static void setupClayworks() {
-
     }
 
     /** Adds all recipes to candlemaker's bench. */
@@ -427,8 +416,7 @@ public class ModRecipes {
                 "MM", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.swordbladeSteel),
                 "M", "M", "M", 'M', ModItems.ingotSteel);
-        FORGE.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
-                "P P", " P ", 'P', ModItems.pole);
+
     }
 
     /** Adds all recipes to mason. */
@@ -491,6 +479,8 @@ public class ModRecipes {
                 "LLL", "L  ", 'L', ModItems.log);
         SAWPIT.addShapedRecipe(new ItemStack(ModItems.beamLong),
                 "TTT", "TTT", "TT ", 'T', ModItems.thicklog);
+        SAWPIT.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
+                "LLL", "LLL", 'L', ModItems.log);
     }
 
     /** Adds all recipes to campfire and higher levels. */

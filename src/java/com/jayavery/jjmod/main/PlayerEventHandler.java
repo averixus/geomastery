@@ -78,7 +78,12 @@ public class PlayerEventHandler {
     /** Adds behaviour when player wakes up from a bed. */
     @SubscribeEvent
     public void playerWakeUp(PlayerWakeUpEvent event) {
-
+        
+        if (!event.shouldSetSpawn()) {
+            
+            return;
+        }
+        
         EntityPlayer player = event.getEntityPlayer();
         BlockPos pos = new BlockPos(player);
         World world = event.getEntityPlayer().world;
@@ -150,7 +155,8 @@ public class PlayerEventHandler {
         DamageSource source = event.getSource();
         
         // Copy vanilla shield functionality to allow for custom shields
-        if (!source.isUnblockable() && player.isActiveItemStackBlocking()) {
+        if (!source.isUnblockable() && player.isActiveItemStackBlocking() &&
+                player.getActiveItemStack().getItem() instanceof ItemShield) {
             
             Vec3d sourceVec = source.getDamageLocation();
 
@@ -164,9 +170,7 @@ public class PlayerEventHandler {
                         0.0D, attackVec.zCoord);
 
                 if (attackVec.dotProduct(playerVec) < 0.0D &&
-                        event.getAmount() >= 3 &&
-                        player.getActiveItemStack().getItem()
-                        instanceof ItemShield) {
+                        event.getAmount() >= 3) {
                     
                     EnumHand hand = player.getActiveHand();
                     player.getActiveItemStack().damageItem(1 +

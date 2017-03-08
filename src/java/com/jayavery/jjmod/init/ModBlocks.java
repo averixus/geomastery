@@ -24,7 +24,6 @@ import com.jayavery.jjmod.blocks.BlockCarcassRabbit;
 import com.jayavery.jjmod.blocks.BlockCarcassSheep;
 import com.jayavery.jjmod.blocks.BlockCraftingArmourer;
 import com.jayavery.jjmod.blocks.BlockCraftingCandlemaker;
-import com.jayavery.jjmod.blocks.BlockCraftingClayworks;
 import com.jayavery.jjmod.blocks.BlockCraftingForge;
 import com.jayavery.jjmod.blocks.BlockCraftingKnapping;
 import com.jayavery.jjmod.blocks.BlockCraftingMason;
@@ -145,7 +144,6 @@ public class ModBlocks {
     public static BlockCarcassAbstract carcassRabbit;
 
     public static BlockCraftingCandlemaker craftingCandlemaker;
-    public static BlockCraftingClayworks craftingClayworks;
     public static BlockCraftingForge craftingForge;
     public static BlockCraftingKnapping craftingKnapping;
     public static BlockCraftingMason craftingMason;
@@ -279,7 +277,6 @@ public class ModBlocks {
         register(carcassRabbit = new BlockCarcassRabbit());
 
         registerItemless(craftingCandlemaker = new BlockCraftingCandlemaker());
-        registerItemless(craftingClayworks = new BlockCraftingClayworks());
         registerItemless(craftingForge = new BlockCraftingForge());
         register(craftingKnapping = new BlockCraftingKnapping());
         registerItemless(craftingMason = new BlockCraftingMason());

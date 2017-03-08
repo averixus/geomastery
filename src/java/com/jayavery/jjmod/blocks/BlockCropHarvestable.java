@@ -51,7 +51,7 @@ public abstract class BlockCropHarvestable extends BlockCropAbstract {
         
         int age = state.getValue(AGE);
         
-        if (!this.canStay(world, pos, state) || age != 7) {
+        if (!this.canStay(world, pos) || age != 7) {
             
             world.setBlockToAir(pos);
             return false;
@@ -70,11 +70,11 @@ public abstract class BlockCropHarvestable extends BlockCropAbstract {
     }
     
     @Override
-    protected boolean canStay(World world, BlockPos pos, IBlockState state) {
+    public boolean canStay(World world, BlockPos pos) {
         
         BlockPos downPos = pos.down();
         Block downBlock = world.getBlockState(downPos).getBlock();
-        return super.canStay(world, pos, state) || downBlock == this;
+        return super.canStay(world, pos) || downBlock == this;
     }
     
     /** Attempts to grow another block of this Crop above. */

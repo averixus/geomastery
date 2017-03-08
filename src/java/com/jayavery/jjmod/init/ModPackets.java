@@ -1,6 +1,7 @@
 package com.jayavery.jjmod.init;
 
 import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.packets.BackpackPacketClient;
 import com.jayavery.jjmod.packets.ContainerPacketClient;
 import com.jayavery.jjmod.packets.ContainerPacketServer;
 import com.jayavery.jjmod.packets.DryingPacketClient;
@@ -8,6 +9,7 @@ import com.jayavery.jjmod.packets.FloorUpdateClient;
 import com.jayavery.jjmod.packets.FoodPacketClient;
 import com.jayavery.jjmod.packets.FurnacePacketClient;
 import com.jayavery.jjmod.packets.TempPacketClient;
+import com.jayavery.jjmod.packets.YokePacketClient;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,5 +39,9 @@ public class ModPackets {
                 DryingPacketClient.class, id++, Side.CLIENT);
         NETWORK.registerMessage(FurnacePacketClient.Handler.class,
                 FurnacePacketClient.class, id++, Side.CLIENT);
+        NETWORK.registerMessage(BackpackPacketClient.Handler.class,
+                BackpackPacketClient.class, id++, Side.CLIENT);
+        NETWORK.registerMessage(YokePacketClient.Handler.class,
+                YokePacketClient.class, id++, Side.CLIENT);
     }
 }

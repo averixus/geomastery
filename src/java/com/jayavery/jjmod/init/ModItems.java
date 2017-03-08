@@ -18,7 +18,6 @@ import com.jayavery.jjmod.items.ItemBucket;
 import com.jayavery.jjmod.items.ItemCarcassDecayable;
 import com.jayavery.jjmod.items.ItemCraftingArmourer;
 import com.jayavery.jjmod.items.ItemCraftingCandlemaker;
-import com.jayavery.jjmod.items.ItemCraftingClayworks;
 import com.jayavery.jjmod.items.ItemCraftingForge;
 import com.jayavery.jjmod.items.ItemCraftingMason;
 import com.jayavery.jjmod.items.ItemCraftingSawpit;
@@ -192,7 +191,6 @@ public class ModItems {
     public static ItemJj potMetal;
 
     public static ItemCraftingCandlemaker craftingCandlemaker;
-    public static ItemCraftingClayworks craftingClayworks;
     public static ItemCraftingForge craftingForge;
     public static ItemCraftingMason craftingMason;
     public static ItemCraftingTextiles craftingTextiles;
@@ -436,7 +434,7 @@ public class ModItems {
                 1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG, 4));
         
         register(potato = new ItemEdibleDecayableSeed("potato",
-                1, 1F, 1, ModBlocks.potato, FoodType.CARBS, 8));
+                7, 7F, 5, ModBlocks.potato, FoodType.CARBS, 8));
         register(carrot = new ItemEdibleDecayableSeed("carrot",
                 3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 8,
                 EntityPig.class, EntityRabbit.class));
@@ -466,9 +464,9 @@ public class ModItems {
         register(bedLeaf = new ItemBedPlain("bed_leaf",
                 ModBlocks.bedLeaf), true);
         register(bedCotton = new ItemBedBreakable("bed_cotton",
-                ModBlocks.bedCotton, 20), true);
+                ModBlocks.bedCotton, 20));
         register(bedWool = new ItemBedBreakable("bed_wool",
-                ModBlocks.bedWool, 20), true);
+                ModBlocks.bedWool, 20));
         register(bedSimple = new ItemBedPlain("bed_simple",
                 ModBlocks.bedSimple), true);
 
@@ -535,7 +533,6 @@ public class ModItems {
         register(potMetal = new ItemJj("pot_metal"));
 
         register(craftingCandlemaker = new ItemCraftingCandlemaker(), true);
-        register(craftingClayworks = new ItemCraftingClayworks(), true);
         register(craftingForge = new ItemCraftingForge(), true);
         register(craftingMason = new ItemCraftingMason(), true);
         register(craftingTextiles = new ItemCraftingTextiles(), true);

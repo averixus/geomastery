@@ -74,7 +74,6 @@ public class FurnacePacketClient implements IMessage {
                 MessageContext ctx) {
             
             Main.proxy.addMinecraftRunnable(() -> processMessage(message));
-            
             return null;
         }
         

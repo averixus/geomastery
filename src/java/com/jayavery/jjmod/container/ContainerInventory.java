@@ -141,7 +141,7 @@ public class ContainerInventory extends ContainerAbstract {
         this.invStart = this.hotEnd + 1;
         this.invEnd = this.invStart + invIndex;
         
-        this.updateBackground();
+        this.refresh();
         this.onCraftMatrixChanged(this.craftMatrix);
     }
     

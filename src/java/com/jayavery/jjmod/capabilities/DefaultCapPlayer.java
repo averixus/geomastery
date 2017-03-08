@@ -13,8 +13,10 @@ import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.items.ItemEdible;
+import com.jayavery.jjmod.packets.BackpackPacketClient;
 import com.jayavery.jjmod.packets.FoodPacketClient;
 import com.jayavery.jjmod.packets.TempPacketClient;
+import com.jayavery.jjmod.packets.YokePacketClient;
 import com.jayavery.jjmod.tileentities.TEFurnaceAbstract;
 import com.jayavery.jjmod.utilities.EquipMaterial;
 import com.jayavery.jjmod.utilities.FoodStatsPartial;
@@ -33,7 +35,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -156,7 +157,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     
     @Override
     public void putBackpack(ItemStack stack) {
-        
+
         this.backpack = stack;
     }
     
@@ -235,30 +236,32 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         if (this.player.world.isRemote) {
             
-            this.tickLight();
-            
-        } else {
-
-            for (Entry<FoodType, FoodStatsPartial> entry :
-                    this.typesMap.entrySet()) {
-                
-                if (entry.getValue().tickHunger()) {
-    
-                    this.sendFoodPacket(entry.getKey());
-                }
-            }
-            
-            this.tickHeal();
-    
-            if (this.tickTemperature()) {
-    
-                this.sendTempPacket(this.tempStage);
-            }
-            
-            this.tickSpeed();
+            return;
         }
+            
+        this.tickLight();
+
+        for (Entry<FoodType, FoodStatsPartial> entry :
+                this.typesMap.entrySet()) {
+            
+            if (entry.getValue().tickHunger()) {
+
+                this.sendFoodPacket(entry.getKey());
+            }
+        }
+        
+        this.tickHeal();
+
+        if (this.tickTemperature()) {
+
+            this.sendTempPacket(this.tempStage);
+        }
+        
+        this.tickSpeed();
     }
     
+    /** Place and remove invisible light blocks if the
+     * player is carrying a moving light source. */
     private void tickLight() {
         
         BlockPos newPos = new BlockPos(this.player.getPositionEyes(1F));
@@ -635,10 +638,11 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         this.sendTempPacket(this.tempStage);
-     //  this.sendSpeedPacket(this.player.capabilities.getWalkSpeed());
+        this.sendBackpackPacket(this.backpack);
+        this.sendYokePacket(this.yoke);
     }
     
-    /** Send a packet to the client to update the FoodType hunger level. */
+    /** Sends a packet to the client to update the FoodType hunger level. */
     private void sendFoodPacket(FoodType type) {
         
         ModPackets.NETWORK.sendTo(new FoodPacketClient(type,
@@ -646,21 +650,37 @@ public class DefaultCapPlayer implements ICapPlayer {
                 (EntityPlayerMP) this.player);
     }
     
-    /** Send a packet to the client to update the TempStage. */
+    /** Sends a packet to the client to update the TempStage. */
     private void sendTempPacket(TempStage stage) {
         
         ModPackets.NETWORK.sendTo(new TempPacketClient(stage),
                 (EntityPlayerMP) this.player);
     }
     
+    /** Sends a packet to the client to update the backpack slot, only needed
+     * to sync when joining world (all other syncing is in Container). */
+    private void sendBackpackPacket(ItemStack stack) {
+        
+        ModPackets.NETWORK.sendTo(new BackpackPacketClient(stack),
+                (EntityPlayerMP) this.player);
+    }
+    
+    /** Sends a packet to the client to update the yoke slot, only needed
+     * to sync when joining world (all other syncing is in Container). */
+    private void sendYokePacket(ItemStack stack) {
+        
+        ModPackets.NETWORK.sendTo(new YokePacketClient(stack),
+                (EntityPlayerMP) this.player);
+    }
+    
     /** Receive a packet on the client to update the FoodType hunger level. */
-    public void processFoodMessage(FoodType type, int hunger) {
+    public void processFoodPacket(FoodType type, int hunger) {
         
         this.typesMap.get(type).setFoodLevel(hunger);
     }
     
     /** Receive a packet on the client to update the TempStage. */
-    public void processTempMessage(TempStage stage) {
+    public void processTempPacket(TempStage stage) {
         
         this.tempStage = stage;
     }
@@ -672,7 +692,7 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         nbt.setTag("backpack", this.backpack.writeToNBT(new NBTTagCompound()));
         nbt.setTag("yoke", this.yoke.writeToNBT(new NBTTagCompound()));
-        
+
         nbt.setInteger("speedStage", this.speedStage == null ?
                 -1 : this.speedStage.ordinal());
         
@@ -698,7 +718,7 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         this.backpack = new ItemStack(nbt.getCompoundTag("backpack"));
         this.yoke = new ItemStack(nbt.getCompoundTag("yoke"));
-        
+
         int speedStage = nbt.getInteger("speedStage");
         this.speedStage = speedStage == -1 ? null :
                 SpeedStage.values()[speedStage];

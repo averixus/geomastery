@@ -27,6 +27,9 @@ public interface ICapDecay extends INBTSerializable<NBTTagCompound> {
     /** @return Whether the item is older than its shelf life. */
     public boolean isRot(World world);
     
-    //TEST
+    /** Updates the data using tags passed to {@link net.minecraft.item
+     * .Item#getNBTShareTag(ItemStack stack) Item#getNBTShareTag}
+     * (required to keep the client synced with a physical server
+     * due to Forge ItemStack syncing limitations). */
     public void updateFromNBT(NBTTagCompound nbt);
 }

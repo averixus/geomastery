@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
+/** Invisible light-producing block for moving light sources. */
 public class BlockInvisibleLight extends BlockNew {
     
     public static final PropertyInteger LIGHT =
@@ -18,7 +19,7 @@ public class BlockInvisibleLight extends BlockNew {
     
     public BlockInvisibleLight() {
         
-        super(Material.AIR, "invisible_light", null, -1, null);
+        super(Material.AIR, "invisiblelight", null, -1, null);
     }
     
     @Override
