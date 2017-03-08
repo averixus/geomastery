@@ -5,6 +5,7 @@ import com.jayavery.jjmod.capabilities.ICapDecay;
 import com.jayavery.jjmod.capabilities.ICapPlayer;
 import com.jayavery.jjmod.capabilities.ProviderCapDecay;
 import com.jayavery.jjmod.init.ModCaps;
+import com.jayavery.jjmod.main.Main;
 import com.jayavery.jjmod.utilities.FoodType;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
@@ -46,18 +47,43 @@ public class ItemEdibleDecayable extends ItemEdible {
             public float apply(ItemStack stack, @Nullable World world,
                     @Nullable EntityLivingBase entity) {
                 
+                if (world == null && entity != null) {
+                    
+                    world = entity.world;
+                }
+                
                 if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
                     
-                    if (stack.getCapability(ModCaps.CAP_DECAY, null)
-                            .isRot(world)) {
-                        
+                    ICapDecay decayCap = stack
+                            .getCapability(ModCaps.CAP_DECAY, null);
+                    decayCap.updateFromNBT(stack.getTagCompound());
+
+                    if (decayCap.isRot(world)) {
+
                         return 1;
                     }
                 }
-                
+
                 return 0;
             }
         });
+    }
+
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack) {
+
+        NBTTagCompound tag = stack.getTagCompound() == null ?
+                new NBTTagCompound() : stack.getTagCompound();
+        
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
+
+            tag.setLong("birthTime", stack.getCapability(ModCaps.CAP_DECAY,
+                    null).getBirthTime());
+            tag.setInteger("stageSize", stack.getCapability(ModCaps.CAP_DECAY,
+                    null).getStageSize());
+        }
+        
+        return tag;
     }
     
     /** Gives this item an ICapDecay with its shelf life. */
@@ -76,6 +102,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         ItemStack stack = player.getHeldItem(hand);
         ICapDecay decayCap = stack
                 .getCapability(ModCaps.CAP_DECAY, null);
+        decayCap.updateFromNBT(stack.getTagCompound());
         ICapPlayer playerCap = player
                 .getCapability(ModCaps.CAP_PLAYER, null);
 
@@ -93,11 +120,15 @@ public class ItemEdibleDecayable extends ItemEdible {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
-        if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
-                stack.getCapability(ModCaps.CAP_DECAY, null)
-                .isRot(Minecraft.getMinecraft().world)) {
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
+                
+            ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
+            decayCap.updateFromNBT(stack.getTagCompound());
             
-            return "Rotten " + super.getItemStackDisplayName(stack);
+            if (decayCap.isRot(Main.proxy.getClientWorld())) {
+            
+                return "Rotten " + super.getItemStackDisplayName(stack);
+            }
         }
         
         return super.getItemStackDisplayName(stack);
@@ -123,26 +154,33 @@ public class ItemEdibleDecayable extends ItemEdible {
         
         if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
             
-            float fraction = stack.getCapability(ModCaps.CAP_DECAY,
-                    null).getRenderFraction();
+            ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
+            decayCap.updateFromNBT(stack.getTagCompound());
+            float fraction = decayCap.getRenderFraction();
             return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
         }
         
         return 0;
     }
     
+    /** Feeds to animals if not rotten. */
     @Override
     public boolean itemInteractionForEntity(ItemStack stack,
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
         
-        if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
-                !stack.getCapability(ModCaps.CAP_DECAY, null)
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
+            
+            ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
+            decayCap.updateFromNBT(stack.getTagCompound());
+
+            if (!stack.getCapability(ModCaps.CAP_DECAY, null)
                 .isRot(player.world)) {
             
-            return super.itemInteractionForEntity(stack, player, entity, hand);
+                return super.itemInteractionForEntity(stack,
+                        player, entity, hand);
+            }
         }
         
         return false;
     }
 }
-

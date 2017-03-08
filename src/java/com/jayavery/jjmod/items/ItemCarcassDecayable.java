@@ -6,6 +6,7 @@ import com.jayavery.jjmod.capabilities.ICapDecay;
 import com.jayavery.jjmod.capabilities.ProviderCapDecay;
 import com.jayavery.jjmod.container.ContainerInventory;
 import com.jayavery.jjmod.init.ModCaps;
+import com.jayavery.jjmod.main.Main;
 import com.jayavery.jjmod.tileentities.TECarcass;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -60,7 +61,6 @@ public class ItemCarcassDecayable extends ItemJj {
         }
         
         ItemStack stack = player.getHeldItem(hand);
-        
         pos = pos.offset(side);
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
@@ -74,9 +74,10 @@ public class ItemCarcassDecayable extends ItemJj {
         // Set up block and TE
         IBlockState placeState = this.block.getDefaultState();
         world.setBlockState(pos, placeState);
-        ICapDecay cap = stack.getCapability(ModCaps.CAP_DECAY, null);
+        ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
+        decayCap.updateFromNBT(stack.getTagCompound());
         ((TECarcass) world.getTileEntity(pos))
-                .setData(cap.getBirthTime(), cap.getStageSize());
+                .setData(decayCap.getBirthTime(), decayCap.getStageSize());
         
         // Use item
         world.playSound(null, pos, SoundType.CLOTH.getPlaceSound(),
@@ -97,11 +98,15 @@ public class ItemCarcassDecayable extends ItemJj {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
-        if (stack.hasCapability(ModCaps.CAP_DECAY, null) &&
-                stack.getCapability(ModCaps.CAP_DECAY, null)
-                .isRot(Minecraft.getMinecraft().world)) {
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
             
-            return "Rotten " + super.getItemStackDisplayName(stack);
+            ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
+            decayCap.updateFromNBT(stack.getTagCompound());
+            
+            if (decayCap.isRot(Main.proxy.getClientWorld())) {
+            
+                return "Rotten " + super.getItemStackDisplayName(stack);
+            }
         }
         
         return super.getItemStackDisplayName(stack);
@@ -125,8 +130,14 @@ public class ItemCarcassDecayable extends ItemJj {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
-        float fraction = stack.getCapability(ModCaps.CAP_DECAY, null)
-                .getRenderFraction();
-        return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
+            
+            ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
+            decayCap.updateFromNBT(stack.getTagCompound());
+            float fraction = decayCap.getRenderFraction();
+            return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
+        }
+        
+        return 0;
     }
 }

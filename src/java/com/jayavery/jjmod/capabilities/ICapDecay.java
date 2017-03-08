@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.capabilities;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -25,4 +26,7 @@ public interface ICapDecay extends INBTSerializable<NBTTagCompound> {
 
     /** @return Whether the item is older than its shelf life. */
     public boolean isRot(World world);
+    
+    //TEST
+    public void updateFromNBT(NBTTagCompound nbt);
 }

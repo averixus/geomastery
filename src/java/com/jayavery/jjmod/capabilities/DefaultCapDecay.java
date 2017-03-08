@@ -1,7 +1,9 @@
 package com.jayavery.jjmod.capabilities;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class DefaultCapDecay implements ICapDecay {
@@ -15,9 +17,23 @@ public class DefaultCapDecay implements ICapDecay {
     public DefaultCapDecay(int maxDays) {
         
         int maxAge = maxDays * DAY_TICKS;
-        this.stageSize = maxAge / MAX_STAGE;
+        this.stageSize = /*maxAge / MAX_STAGE*/ 200;
     }
-
+    
+    //TEST
+    @Override
+    public void updateFromNBT(NBTTagCompound nbt) {
+        
+        if (nbt.hasKey("stageSize")) {
+            
+            this.stageSize = Math.max(this.stageSize, nbt.getInteger("stageSize"));
+        }
+        
+        if (nbt.hasKey("birthTime")) {
+            
+            this.birthTime = Math.max(this.birthTime, nbt.getLong("birthTime"));
+        }
+    }
     
     @Override
     public float getRenderFraction() {
@@ -30,7 +46,7 @@ public class DefaultCapDecay implements ICapDecay {
         long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
         long timeDiff = currentTime - this.birthTime;
         long stage = timeDiff / this.stageSize;
-        return Math.min(1, Math.max(0, 1F - ((float) stage / MAX_STAGE)));
+        return MathHelper.clamp(1F - ((float) stage / MAX_STAGE), 0, 1);
     }
     
     @Override
@@ -81,7 +97,7 @@ public class DefaultCapDecay implements ICapDecay {
     
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        
+
         this.birthTime = nbt.getLong("birthTime");
         this.stageSize = nbt.getInteger("stageSize");
     }

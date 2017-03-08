@@ -261,14 +261,15 @@ public class DefaultCapPlayer implements ICapPlayer {
     
     private void tickLight() {
         
-        //BlockPos oldPos = this.lastLightPos;
         BlockPos newPos = new BlockPos(this.player.getPositionEyes(1F));
         
         int offhandLight = 0;
         int mainhandLight = 0;
         
-        Block mainhandHeld = Block.getBlockFromItem(this.player.getHeldItem(EnumHand.MAIN_HAND).getItem());
-        Block offhandHeld = Block.getBlockFromItem(this.player.getHeldItem(EnumHand.OFF_HAND).getItem());
+        Block mainhandHeld = Block.getBlockFromItem(this.player
+                .getHeldItem(EnumHand.MAIN_HAND).getItem());
+        Block offhandHeld = Block.getBlockFromItem(this.player
+                .getHeldItem(EnumHand.OFF_HAND).getItem());
         
         if (mainhandHeld instanceof BlockLight) {
             
@@ -282,33 +283,21 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         int newLightLevel = Math.max(offhandLight, mainhandLight);
         
-        
-        if (!this.lastLightPos.equals(newPos) || this.lastLightLevel != newLightLevel) {
-            System.out.println("pos changed");
+        if (!this.lastLightPos.equals(newPos) ||
+                this.lastLightLevel != newLightLevel) {
             
             this.player.world.setBlockToAir(this.lastLightPos);
 
-         //   this.player.world.markBlockRangeForRenderUpdate(newPos.add(16, 16, 16), newPos.add(-16, -16, -16));
             if (this.player.world.isAirBlock(newPos)) {
                 
-                this.player.world.setBlockState(newPos, ModBlocks.invisibleLight.getDefaultState().withProperty(BlockInvisibleLight.LIGHT, newLightLevel));
+                this.player.world.setBlockState(newPos,
+                        ModBlocks.invisibleLight.getDefaultState()
+                        .withProperty(BlockInvisibleLight.LIGHT,
+                        newLightLevel));
                 this.lastLightPos = newPos;
                 this.lastLightLevel = newLightLevel;
             }
-         //   this.player.world.setLightFor(EnumSkyBlock.BLOCK, this.lightPos, this.lightLevel);
-       //     this.player.world.checkLightFor(EnumSkyBlock.BLOCK, oldPos);
-       //     this.player.world.markBlockRangeForRenderUpdate(this.lightPos.add(16, 16, 16), this.lightPos.add(-16, -16, -16));
-            
-        } 
-        
-
-        
-        /*else if (this.lightLevel != oldLightLevel) {
-            System.out.println("level changed");
-            this.player.world.setLightFor(EnumSkyBlock.BLOCK, this.lightPos, this.lightLevel);
-       //     this.player.world.markBlockRangeForRenderUpdate(this.lightPos.add(16, 16, 16), this.lightPos.add(-16, -16, -16));
-
-        }*/
+        }
     }
     
     /** Calculate the player's temperature.

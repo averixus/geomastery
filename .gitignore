@@ -1,36 +1,13 @@
-run/
-.gradle/
-build/
-gradle-app.setting
-saves/
-crash-reports/
-logs/
-options.txt
-usercache.json
-usernamecache.json
-
-## Eclipse
-
-eclipse/
-*.pydevproject
-.project
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.settings/
-.loadpath
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
+/*
+!/src/
+!.gitignore
+!gradlew*
+!/gradle/
+!/LICENSE.txt
+!/README.md
+!build.gradle
+!/textures/
+!/gradle.properties
+!.gitattributes
+!ASSETS_LICENSE.txt
+!/annotations/
