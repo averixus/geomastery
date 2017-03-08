@@ -34,13 +34,13 @@ public abstract class TEFurnaceAbstract extends TileEntity
     /** This furnace's output stacks. */
     protected List<ItemStack> outputs;
     /** Ticks of burning left for the current fuel. */
-    protected int fuelLeft;
+    protected int fuelLeft = 0;
     /** Total ticks of burning for each item of current fuel. */
-    protected int fuelEach;
+    protected int fuelEach = -1;
     /** Ticks spent cooking the current input. */
-    protected int cookSpent;
+    protected int cookSpent = 0;
     /** Total ticks to cook each item of the current input. */
-    protected int cookEach;
+    protected int cookEach = -1;
     
     public TEFurnaceAbstract(CookingManager recipes, int size) {
 

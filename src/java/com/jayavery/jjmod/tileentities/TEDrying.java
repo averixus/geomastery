@@ -29,9 +29,9 @@ public class TEDrying extends TileEntity implements ITickable {
     /** This drying rack's output stacks. */
     private List<ItemStack> outputs = NonNullList.withSize(2, ItemStack.EMPTY);
     /** Ticks spent drying the current item. */
-    private int drySpent;
+    private int drySpent = 0;
     /** Total ticks needed to dry the current item. */
-    private int dryEach;
+    private int dryEach = -1;
 
     /** Sorts the list of input stacks. */
     public void sort() {
