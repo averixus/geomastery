@@ -6,7 +6,7 @@ import com.jayavery.jjmod.capabilities.ICapDecay;
 import com.jayavery.jjmod.capabilities.ICapPlayer;
 import com.jayavery.jjmod.capabilities.StorageCapDecay;
 import com.jayavery.jjmod.capabilities.StorageCapPlayer;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -19,7 +19,7 @@ public class ModCaps {
     public static final Capability<ICapPlayer> CAP_PLAYER = null;
     /** Player capability ID. */
     public static final ResourceLocation CAP_PLAYER_ID =
-            new ResourceLocation(Main.MODID, "CapabilityPlayer");
+            new ResourceLocation(Jjmod.MODID, "CapabilityPlayer");
     
     /** Decay capability. */
     @CapabilityInject(ICapDecay.class)

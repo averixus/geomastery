@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.packets;
 
 import com.jayavery.jjmod.init.ModCaps;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -41,13 +41,13 @@ public class BackpackPacketClient implements IMessage {
         public IMessage onMessage(BackpackPacketClient message,
                 MessageContext ctx) {
             
-            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
+            Jjmod.proxy.addMinecraftRunnable(() -> processMessage(message));
             return null;
         }
         
         public void processMessage(BackpackPacketClient message) {
             
-            EntityPlayer player = Main.proxy.getClientPlayer();
+            EntityPlayer player = Jjmod.proxy.getClientPlayer();
             
             if (player.hasCapability(ModCaps.CAP_PLAYER, null)) {
                 

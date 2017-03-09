@@ -10,7 +10,7 @@ import com.jayavery.jjmod.entities.projectile.EntitySpearCopper;
 import com.jayavery.jjmod.entities.projectile.EntitySpearFlint;
 import com.jayavery.jjmod.entities.projectile.EntitySpearSteel;
 import com.jayavery.jjmod.entities.projectile.EntitySpearWood;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.render.projectile.RenderArrowFactory;
 import com.jayavery.jjmod.render.projectile.RenderSpearFactory;
 import net.minecraft.util.ResourceLocation;
@@ -26,35 +26,35 @@ public class ModEntities {
 
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "spear_wood"), EntitySpearWood.class,
-                "spear_wood", entityID++, Main.instance, 80, 3, true);
+                "spear_wood", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "spear_flint"), EntitySpearFlint.class,
-                "spear_flint", entityID++, Main.instance, 80, 3, true);
+                "spear_flint", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "spear_copper"), EntitySpearCopper.class,
-                "spear_copper", entityID++, Main.instance, 80, 3, true);
+                "spear_copper", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "spear_bronze"), EntitySpearBronze.class,
-                "spear_bronze", entityID++, Main.instance, 80, 3, true);
+                "spear_bronze", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "spear_steel"), EntitySpearSteel.class,
-                "spear_steel", entityID++, Main.instance, 80, 3, true);
+                "spear_steel", entityID++, Jjmod.instance, 80, 3, true);
 
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_wood"), EntityArrowWood.class,
-                "arrow_wood", entityID++, Main.instance, 80, 3, true);
+                "arrow_wood", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_flint"), EntityArrowFlint.class,
-                "arrow_flint", entityID++, Main.instance, 80, 3, true);
+                "arrow_flint", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_copper"), EntityArrowCopper.class,
-                "arrow_copper", entityID++, Main.instance, 80, 3, true);
+                "arrow_copper", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_bronze"), EntityArrowBronze.class,
-                "arrow_bronze", entityID++, Main.instance, 80, 3, true);
+                "arrow_bronze", entityID++, Jjmod.instance, 80, 3, true);
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_steel"), EntityArrowSteel.class,
-                "arrow_steel", entityID++, Main.instance, 80, 3, true);
+                "arrow_steel", entityID++, Jjmod.instance, 80, 3, true);
     }
     
     public static void preInitClient() {

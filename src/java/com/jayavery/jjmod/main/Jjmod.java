@@ -8,8 +8,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Main.MODID, version = Main.VERSION, name = Main.NAME)
-public class Main {
+@Mod(modid = Jjmod.MODID, version = Jjmod.VERSION, name = Jjmod.NAME)
+public class Jjmod {
 
     public static final String MODID = "jjmod";
     public static final String VERSION = "0.2";
@@ -20,7 +20,7 @@ public class Main {
     public static CommonProxy proxy;
 
     @Instance
-    public static Main instance = new Main();
+    public static Jjmod instance = new Jjmod();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {

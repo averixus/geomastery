@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
@@ -220,7 +220,7 @@ public class BlockCraftingArmourer extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.ARMOURER.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.ARMOURER.ordinal(),
                     world, x, y, z);
         }
         

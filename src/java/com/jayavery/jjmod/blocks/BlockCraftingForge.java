@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TECraftingForge;
 import com.jayavery.jjmod.tileentities.TECraftingForge.EnumPartForge;
@@ -211,7 +211,7 @@ public class BlockCraftingForge extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.FORGE.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.FORGE.ordinal(),
                     world, x, y, z);
         }
         

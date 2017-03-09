@@ -216,10 +216,10 @@ public class BlockEventHandler {
         if (block instanceof BlockLog) {
 
             event.getDrops().clear();
-            int rand = world.rand.nextInt(3);
+            int rand = world.rand.nextInt(6);
             event.getDrops().add(new ItemStack(rand == 0 ?
-                    ModItems.log : rand == 1 ?
-                    ModItems.pole : ModItems.thicklog));
+                    ModItems.thicklog : rand <= 2 ?
+                    ModItems.log : ModItems.pole));
         }
 
         if (block instanceof BlockDirt || block instanceof BlockGrass) {

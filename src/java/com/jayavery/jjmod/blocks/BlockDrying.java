@@ -2,7 +2,7 @@ package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TEDrying;
 import com.jayavery.jjmod.utilities.BlockMaterial;
@@ -91,7 +91,7 @@ public class BlockDrying extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.DRYING.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.DRYING.ordinal(),
                     world, x, y, z);
         }
         

@@ -2,7 +2,7 @@ package com.jayavery.jjmod.packets;
 
 import com.jayavery.jjmod.capabilities.DefaultCapPlayer;
 import com.jayavery.jjmod.init.ModCaps;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.utilities.FoodType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,13 +47,13 @@ public class FoodPacketClient implements IMessage {
         public IMessage onMessage(FoodPacketClient message,
                 MessageContext ctx) {
             
-            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
+            Jjmod.proxy.addMinecraftRunnable(() -> processMessage(message));
             return null;
         }
         
         public void processMessage(FoodPacketClient message) {
             
-            EntityPlayer player = Main.proxy.getClientPlayer();
+            EntityPlayer player = Jjmod.proxy.getClientPlayer();
             ((DefaultCapPlayer) player.getCapability(ModCaps.CAP_PLAYER, null))
                     .processFoodPacket(message.type, message.hunger);
         }

@@ -2,7 +2,7 @@ package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TECraftingSawpit;
 import com.jayavery.jjmod.tileentities.TECraftingSawpit.EnumPartSawpit;
@@ -341,7 +341,7 @@ public class BlockCraftingSawpit extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.SAWPIT.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.SAWPIT.ordinal(),
                     world, x, y, z);
         }
         

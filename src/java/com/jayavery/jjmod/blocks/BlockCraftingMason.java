@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TECraftingMason;
 import com.jayavery.jjmod.tileentities.TECraftingMason.EnumPartMason;
@@ -189,7 +189,7 @@ public class BlockCraftingMason extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.MASON.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.MASON.ordinal(),
                     world, x, y, z);
         }
         

@@ -6,7 +6,7 @@ import com.jayavery.jjmod.capabilities.ICapDecay;
 import com.jayavery.jjmod.capabilities.ProviderCapDecay;
 import com.jayavery.jjmod.container.ContainerInventory;
 import com.jayavery.jjmod.init.ModCaps;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.tileentities.TECarcass;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -103,7 +103,7 @@ public class ItemCarcassDecayable extends ItemJj {
             ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
             decayCap.updateFromNBT(stack.getTagCompound());
             
-            if (decayCap.isRot(Main.proxy.getClientWorld())) {
+            if (decayCap.isRot(Jjmod.proxy.getClientWorld())) {
             
                 return "Rotten " + super.getItemStackDisplayName(stack);
             }

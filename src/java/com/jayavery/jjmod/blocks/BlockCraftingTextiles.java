@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.IMultipart;
@@ -156,7 +156,7 @@ public class BlockCraftingTextiles extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.TEXTILES.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.TEXTILES.ordinal(),
                     world, x, y, z);
         }
         

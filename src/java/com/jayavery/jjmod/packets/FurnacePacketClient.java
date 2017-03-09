@@ -1,6 +1,6 @@
 package com.jayavery.jjmod.packets;
 
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.tileentities.TEFurnaceAbstract;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
@@ -73,13 +73,13 @@ public class FurnacePacketClient implements IMessage {
         public IMessage onMessage(FurnacePacketClient message,
                 MessageContext ctx) {
             
-            Main.proxy.addMinecraftRunnable(() -> processMessage(message));
+            Jjmod.proxy.addMinecraftRunnable(() -> processMessage(message));
             return null;
         }
         
         public void processMessage(FurnacePacketClient message) {
             
-            World world = Main.proxy.getClientWorld();
+            World world = Jjmod.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new BlockPos(message.x,
                     message.y, message.z));
             

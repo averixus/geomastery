@@ -5,7 +5,7 @@ import com.jayavery.jjmod.capabilities.ICapDecay;
 import com.jayavery.jjmod.capabilities.ICapPlayer;
 import com.jayavery.jjmod.capabilities.ProviderCapDecay;
 import com.jayavery.jjmod.init.ModCaps;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.utilities.FoodType;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
@@ -125,7 +125,7 @@ public class ItemEdibleDecayable extends ItemEdible {
             ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
             decayCap.updateFromNBT(stack.getTagCompound());
             
-            if (decayCap.isRot(Main.proxy.getClientWorld())) {
+            if (decayCap.isRot(Jjmod.proxy.getClientWorld())) {
             
                 return "Rotten " + super.getItemStackDisplayName(stack);
             }

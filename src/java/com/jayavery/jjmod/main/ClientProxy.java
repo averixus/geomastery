@@ -3,6 +3,7 @@ package com.jayavery.jjmod.main;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModEntities;
 import com.jayavery.jjmod.init.ModItems;
+import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.init.ModTileEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +25,6 @@ public class ClientProxy extends CommonProxy {
         ModTileEntities.preInitClient();
         ModBlocks.preInitClient();
         ModItems.preInitClient();
-      //  ModPackets.preInitClient();
         
         MinecraftForge.EVENT_BUS.register(GUI);
     }

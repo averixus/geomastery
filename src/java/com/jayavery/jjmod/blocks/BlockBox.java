@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TEBox;
 import com.jayavery.jjmod.utilities.BlockMaterial;
@@ -40,7 +40,7 @@ public class BlockBox extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.BOX.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.BOX.ordinal(),
                     world, x, y, z);
         }
         

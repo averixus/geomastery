@@ -57,7 +57,7 @@ public class CommonProxy {
         ModRecipes.init();
         ModTileEntities.init();
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance,
+        NetworkRegistry.INSTANCE.registerGuiHandler(Jjmod.instance,
                 new GuiHandler());
     }
 
@@ -72,7 +72,7 @@ public class CommonProxy {
     
     public World getClientWorld() {
         
-        throw new RuntimeException("Tired to get Client world on Server side");
+        throw new RuntimeException("Tried to get Client world on Server side");
     }
     
     public void addMinecraftRunnable(Runnable task) {

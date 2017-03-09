@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TECraftingWoodworking;
 import com.jayavery.jjmod.tileentities.TECraftingWoodworking.EnumPartWoodworking;
@@ -212,7 +212,7 @@ public class BlockCraftingWoodworking extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.WOODWORKING.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.WOODWORKING.ordinal(),
                     world, x, y, z);
         }
         

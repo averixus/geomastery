@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TEFurnaceClay;
 import com.jayavery.jjmod.tileentities.TEFurnaceClay.EnumPartClay;
@@ -177,7 +177,7 @@ public class BlockFurnaceClay extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.CLAY.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.CLAY.ordinal(),
                     world, x, y, z);
         }
         

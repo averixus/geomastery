@@ -1,6 +1,6 @@
 package com.jayavery.jjmod.init;
 
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.packets.BackpackPacketClient;
 import com.jayavery.jjmod.packets.ContainerPacketClient;
 import com.jayavery.jjmod.packets.ContainerPacketServer;
@@ -18,7 +18,7 @@ public class ModPackets {
 
     /** Network channel for sending packets. */
     public static final SimpleNetworkWrapper NETWORK =
-            NetworkRegistry.INSTANCE.newSimpleChannel(Main.MODID);
+            NetworkRegistry.INSTANCE.newSimpleChannel(Jjmod.MODID);
     
     /** ID counter. */
     private static int id = 0;

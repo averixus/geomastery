@@ -2,7 +2,7 @@ package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TEFurnaceCampfire;
 import com.jayavery.jjmod.tileentities.TEFurnacePotfire;
@@ -107,7 +107,7 @@ public class BlockFurnacePotfire extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.COOKFIRE.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.COOKFIRE.ordinal(),
                     world, x, y, z);
         }
         

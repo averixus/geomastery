@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Main;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TEFurnaceStone;
 import com.jayavery.jjmod.tileentities.TEFurnaceStone.EnumPartStone;
@@ -193,7 +193,7 @@ public class BlockFurnaceStone extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Main.instance, GuiList.STONE.ordinal(),
+            player.openGui(Jjmod.instance, GuiList.STONE.ordinal(),
                     world, x, y, z);
         }
         
