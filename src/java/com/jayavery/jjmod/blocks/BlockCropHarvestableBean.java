@@ -12,7 +12,7 @@ public class BlockCropHarvestableBean extends BlockCropHarvestable {
     
     public BlockCropHarvestableBean() {
         
-        super("bean", 3, () -> ModItems.bean, (rand) -> 4, 0.4F, 0.2F);
+        super("bean", 3, () -> ModItems.bean, (rand) -> 3, 0.4F, 0.2F);
     }
 
     @Override

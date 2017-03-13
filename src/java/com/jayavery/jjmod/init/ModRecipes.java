@@ -95,21 +95,13 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5),
                 "S", "F", 'S', Items.STICK, 'F', Items.FEATHER);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.potClay),
-                "C C", " C ", 'C', Items.CLAY_BALL);
+                "C C", " C ", 'C', ModItems.clay);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.craftingKnapping),
                 "FFF", 'F', Items.FLINT);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingCandlemaker),
                 "PPP", "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingTextiles),
                 "BPP", "PPP",'B', Items.BONE, 'P', ModItems.pole);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
-                "SRP", "LBP", 'S', ModItems.ingotSteel, 'R',
-                ModItems.stoneRough, 'P', ModItems.pole, 'L',
-                Items.LEATHER, 'B', ModItems.beeswax);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
-                "SRP", "LBP", 'S', ModItems.ingotSteel, 'R',
-                ModItems.stoneRough, 'P', ModItems.pole, 'L',
-                Items.LEATHER, 'B', ModItems.tallow);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingSawpit),
                 "PSP", " S ", 'P', ModItems.pole, 'S', ModItems.ingotSteel);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire),
@@ -120,8 +112,10 @@ public class ModRecipes {
                 "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf),
                 "LLL", 'L', ModItems.leaves);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud),
-                "MMM", "MMM", 'M', ModItems.mudbricks);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud, 2),
+                "M", "M", 'M', ModItems.mudbricks);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.clay, 9),
+                "C", 'C', Items.CLAY_BALL);
         
         for (Item metal : METALS) {
             
@@ -136,6 +130,14 @@ public class ModRecipes {
             INVENTORY.addShapedRecipe(new
                     ItemStack(ModItems.craftingMason), "MSS", "PPP",
                     'M', metal, 'S', ModItems.stoneRough, 'P', ModItems.pole);
+            INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
+                    "MSP", "LBP", 'M', metal, 'S',
+                    ModItems.stoneRough, 'P', ModItems.pole, 'L',
+                    Items.LEATHER, 'B', ModItems.beeswax);
+            INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
+                    "MSP", "LBP", 'M', metal, 'S',
+                    ModItems.stoneRough, 'P', ModItems.pole, 'L',
+                    Items.LEATHER, 'B', ModItems.tallow);
 
             for (Item metal2 : METALS) {
                 
@@ -168,8 +170,8 @@ public class ModRecipes {
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowFlint, 5),
                 "F", "S", "E", 'F', ModItems.arrowheadFlint, 'S', Items.STICK,
                 'E', Items.FEATHER);
-        KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 4),
-                "RRR", "RRR", 'R', ModItems.stoneRough);
+        KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 2),
+                "R", "R", 'R', ModItems.stoneRough);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowheadFlint),
                 "F", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeheadFlint),
@@ -207,7 +209,7 @@ public class ModRecipes {
                 "B", "P", 'B', ModItems.sicklebladeCopper, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelCopper),
                 "HPP", 'H', ModItems.shovelheadCopper, 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowCopper),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowCopper, 5),
                 "A", "S", "F", 'A', ModItems.arrowheadCopper, 'S', Items.STICK,
                 'F', Items.FEATHER);
 
@@ -232,7 +234,7 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelBronze),
                 "H", "P", "P", 'H', ModItems.shovelheadBronze,
                 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowBronze),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowBronze, 5),
                 "A", "S", "F", 'A', ModItems.arrowheadBronze, 'S', Items.STICK,
                 'F', Items.FEATHER);
 
@@ -255,19 +257,19 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelSteel),
                 "H", "P", "P", 'H', ModItems.shovelheadSteel,
                 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowSteel),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.arrowSteel, 5),
                 "A", "S", "F", 'A', ModItems.arrowheadSteel, 'S', Items.STICK,
                 'F', Items.FEATHER);
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood),
                 " P ", "PPP", " P ", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 3),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 1),
                 "PPP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 4),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 1),
                 "  P", " PP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 4),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 1),
                 "  T", " TT", "TTT", 'T', ModItems.timber);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 4),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 2),
                 "PPP", " P ", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole),
                 "PP", "PP", "PP", 'P', ModItems.pole);
@@ -277,12 +279,17 @@ public class ModRecipes {
                 "SSS", "S S", "SSS", 'S', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box),
                 "PP", "PP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 6),
+        WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 8),
                 "P P", "PPP", "P P", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bedSimple), "WWW",
                 "PPP", 'W', ModItems.wool, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
                 "P P", " P ", 'P', ModItems.pole);
+        
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorPole, 2),
+                "PPP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorWood, 2),
+                "TTT", 'T', ModItems.timber);
     }
 
     /** Adds all recipes to textiles table. */
@@ -329,9 +336,9 @@ public class ModRecipes {
     /** Adds all recipes to candlemaker's bench. */
     private static void setupCandlemaker() {
 
-        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 15),
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleTallow, 12),
                 "T", "T", 'T', ModItems.tallow);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleBeeswax, 15),
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.candleBeeswax, 12),
                 "B", "B", 'B', ModItems.beeswax);
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4),
                 "T", "S", 'T', ModItems.tallow, 'S', Items.STICK);
@@ -360,7 +367,7 @@ public class ModRecipes {
                 " M ", "MMM", " M ", 'M', ModItems.ingotCopper);
         FORGE.addShapedRecipe(new ItemStack(ModItems.arrowheadCopper, 24),
                 "M ", " M", 'M', ModItems.ingotCopper);
-        FORGE.addShapedRecipe(new ItemStack(ModItems.spearheadCopper, 2),
+        FORGE.addShapedRecipe(new ItemStack(ModItems.spearheadCopper, 1),
                 " M ", " M ", "M M", 'M', ModItems.ingotCopper);
         FORGE.addShapedRecipe(new ItemStack(ModItems.axeheadCopper), "M ",
                 "MM", "M ", 'M', ModItems.ingotCopper);
@@ -384,7 +391,7 @@ public class ModRecipes {
         FORGE.addShapedRecipe(new ItemStack(ModItems.arrowheadBronze, 24),
                 "T ", " M", 'M', ModItems.ingotCopper, 'T',
                 ModItems.ingotTin);
-        FORGE.addShapedRecipe(new ItemStack(ModItems.spearheadBronze, 2),
+        FORGE.addShapedRecipe(new ItemStack(ModItems.spearheadBronze, 1),
                 " T ", " M ", "M M", 'M', ModItems.ingotCopper, 'T',
                 ModItems.ingotTin);
         FORGE.addShapedRecipe(new ItemStack(ModItems.axeheadBronze), "T ",
@@ -410,7 +417,7 @@ public class ModRecipes {
                 "MMM", " M ", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.arrowheadSteel, 24),
                 "M ", " M", 'M', ModItems.ingotSteel);
-        FORGE.addShapedRecipe(new ItemStack(ModItems.spearheadSteel, 2),
+        FORGE.addShapedRecipe(new ItemStack(ModItems.spearheadSteel, 1),
                 " M ", " M ", "M M", 'M', ModItems.ingotSteel);
         FORGE.addShapedRecipe(new ItemStack(ModItems.axeheadSteel), "M ",
                 "MM", "M ", 'M', ModItems.ingotSteel);
@@ -428,16 +435,26 @@ public class ModRecipes {
     /** Adds all recipes to mason. */
     private static void setupMason() {
         
-        MASON.addShapedRecipe(new ItemStack(ModItems.wallBrick, 4),
-                "BBB", "BBB", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(ModItems.wallStone, 4),
-                "SSS", "SSS", 'S', ModItems.stoneDressed);
-        MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsStone, 4),
-                "  S", " SS", "SSS", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModItems.wallBrick, 2),
+                "B", "B", 'B', Items.BRICK);
+        MASON.addShapedRecipe(new ItemStack(ModItems.wallStone, 2),
+                "S", "S", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsStone, 2),
+                " S", "SS", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsBrick, 2),
+                " B", "BB", 'B', Items.BRICK);
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.vault, 2),
+                "SS", "S ", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModItems.slabStone, 2),
                 "SSS", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModItems.slabBrick, 2),
+                "BBB", 'B', Items.BRICK);
         MASON.addShapelessRecipe(new ItemStack(ModItems.stoneDressed, 2),
                 ModItems.stoneRough);
+        MASON.addShapedRecipe(new ItemStack(ModItems.stoneDressed, 2),
+                "RR", "RR", 'R', ModItems.stoneRough);
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.foundation),
+                "R", 'R', ModItems.stoneRough);
 
     }
 

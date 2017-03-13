@@ -1,8 +1,10 @@
 package com.jayavery.jjmod.main;
 
+import java.util.List;
 import com.jayavery.jjmod.blocks.BlockBedAbstract;
-import com.jayavery.jjmod.blocks.BlockBedBreakableAbstract;
 import com.jayavery.jjmod.blocks.BlockBedAbstract.EnumPartBed;
+import com.jayavery.jjmod.blocks.BlockBedBreakableAbstract;
+import com.jayavery.jjmod.capabilities.ICapPlayer;
 import com.jayavery.jjmod.container.ContainerInventory;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModCaps;
@@ -13,6 +15,7 @@ import com.jayavery.jjmod.tileentities.TEBed;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemStack;
@@ -27,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -80,10 +84,10 @@ public class PlayerEventHandler {
     public void playerWakeUp(PlayerWakeUpEvent event) {
         
         if (!event.shouldSetSpawn()) {
-            
+
             return;
         }
-        
+
         EntityPlayer player = event.getEntityPlayer();
         BlockPos pos = new BlockPos(player);
         World world = event.getEntityPlayer().world;
@@ -180,5 +184,20 @@ public class PlayerEventHandler {
                 }
             }
         }
+    }
+    
+    /** Adds yoke and backpack to player death drops. */
+    @SubscribeEvent
+    public void playerDrops(PlayerDropsEvent event) {
+        
+        EntityPlayer player = event.getEntityPlayer();
+        ICapPlayer capPlayer = player.getCapability(ModCaps.CAP_PLAYER, null);
+        World world = player.world;
+        double x = player.posX;
+        double y = player.posY;
+        double z = player.posZ;
+        List<EntityItem> drops = event.getDrops();
+        drops.add(new EntityItem(world, x, y, z, capPlayer.removeBackpack()));
+        drops.add(new EntityItem(world, x, y, z, capPlayer.removeYoke()));
     }
 }

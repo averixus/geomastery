@@ -14,7 +14,7 @@ public class BlockCropCarrot extends BlockCropAbstract {
     
     public BlockCropCarrot() {
         
-        super("carrot", () -> ModItems.carrot, (rand) -> rand.nextInt(3) + 1,
+        super("carrot", () -> ModItems.carrot, (rand) -> rand.nextInt(3),
                 0.3F, 0.2F, ToolType.SICKLE);
     }
 

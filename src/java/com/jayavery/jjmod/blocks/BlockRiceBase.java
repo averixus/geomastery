@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -46,7 +47,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         
-        return ModItems.rice;
+        return Items.AIR;
     }
     
     /** Do not render sides when next to real water. */

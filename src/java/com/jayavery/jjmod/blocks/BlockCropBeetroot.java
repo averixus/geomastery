@@ -14,8 +14,8 @@ public class BlockCropBeetroot extends BlockCropAbstract {
     
     public BlockCropBeetroot() {
         
-        super("beetroot", () -> ModItems.beetroot,
-                (rand) -> rand.nextInt(3) + 1, 0.3F, 0.2F, ToolType.SICKLE);
+        super("beetroot", () -> ModItems.beetroot, (rand) -> rand.nextInt(3),
+                0.3F, 0.2F, ToolType.SICKLE);
     }
 
     @Override

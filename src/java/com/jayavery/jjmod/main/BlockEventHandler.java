@@ -200,9 +200,12 @@ public class BlockEventHandler {
                 }
             }
             
-            event.getDrops().add(new ItemStack(ModItems.leaves));
+            if (world.rand.nextInt(4) == 0) {
+            
+                event.getDrops().add(new ItemStack(ModItems.leaves));
+            }
 
-            if (world.rand.nextInt(8) == 0) {
+            if (world.rand.nextInt(4) == 0) {
 
                 event.getDrops().add(new ItemStack(Items.STICK));
             }
@@ -226,12 +229,15 @@ public class BlockEventHandler {
 
             event.getDrops().clear();
             
-            if (world.rand.nextInt(10) == 0) {
+            if (world.rand.nextInt(8) == 0) {
 
                 event.getDrops().add(new ItemStack(Items.FLINT));
             }
 
-            event.getDrops().add(new ItemStack(ModItems.dirt, 4));
+            if (world.rand.nextInt(8) == 0) {
+
+                event.getDrops().add(new ItemStack(ModItems.dirt));
+            }
         }
         
         if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {
@@ -293,6 +299,12 @@ public class BlockEventHandler {
             
                 event.getDrops().add(new ItemStack(Items.FLINT));
             }
+        }
+        
+        if (block == Blocks.CLAY) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(Items.CLAY_BALL));
         }
     }
 }

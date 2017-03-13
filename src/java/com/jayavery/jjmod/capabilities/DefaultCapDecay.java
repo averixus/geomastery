@@ -17,7 +17,7 @@ public class DefaultCapDecay implements ICapDecay {
     public DefaultCapDecay(int maxDays) {
         
         int maxAge = maxDays * DAY_TICKS;
-        this.stageSize = /*maxAge / MAX_STAGE*/ 200;
+        this.stageSize = maxAge / MAX_STAGE;
     }
     
     @Override

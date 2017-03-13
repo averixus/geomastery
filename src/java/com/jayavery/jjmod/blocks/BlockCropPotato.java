@@ -14,7 +14,7 @@ public class BlockCropPotato extends BlockCropAbstract {
     
     public BlockCropPotato() {
         
-        super("potato", () -> ModItems.potato, (rand) -> rand.nextInt(3) + 1,
+        super("potato", () -> ModItems.potato, (rand) -> rand.nextInt(3),
                 0.3F, 0.2F, ToolType.SICKLE);
     }
     

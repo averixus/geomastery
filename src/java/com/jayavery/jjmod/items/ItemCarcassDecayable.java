@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.items;
 
+import javax.annotation.Nullable;
 import com.jayavery.jjmod.blocks.BlockCarcassAbstract;
 import com.jayavery.jjmod.capabilities.DefaultCapDecay;
 import com.jayavery.jjmod.capabilities.ICapDecay;
@@ -13,12 +14,15 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -37,6 +41,52 @@ public class ItemCarcassDecayable extends ItemJj {
         
         super(name, 1, CreativeTabs.FOOD);
         this.block = block;
+        this.addPropertyOverride(new ResourceLocation("rot"),
+                new IItemPropertyGetter() {
+            
+            @Override
+            public float apply(ItemStack stack, @Nullable World world,
+                    @Nullable EntityLivingBase entity) {
+                
+                if (world == null && entity != null) {
+                    
+                    world = entity.world;
+                }
+                
+                if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
+                    
+                    ICapDecay decayCap = stack
+                            .getCapability(ModCaps.CAP_DECAY, null);
+                    decayCap.updateFromNBT(stack.getTagCompound());
+
+                    if (decayCap.isRot(world)) {
+
+                        return 1;
+                    }
+                }
+
+                return 0;
+            }
+        });
+    }
+    
+    /** Sends the capability data for syncing to
+     * the client (needed because of Forge syncing limitations). */
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack) {
+
+        NBTTagCompound tag = stack.getTagCompound() == null ?
+                new NBTTagCompound() : stack.getTagCompound();
+        
+        if (stack.hasCapability(ModCaps.CAP_DECAY, null)) {
+
+            tag.setLong("birthTime", stack.getCapability(ModCaps.CAP_DECAY,
+                    null).getBirthTime());
+            tag.setInteger("stageSize", stack.getCapability(ModCaps.CAP_DECAY,
+                    null).getStageSize());
+        }
+        
+        return tag;
     }
     
     /** Gives this item an ICapDecay of its block's shelf life. */
@@ -72,10 +122,17 @@ public class ItemCarcassDecayable extends ItemJj {
         }
         
         // Set up block and TE
-        IBlockState placeState = this.block.getDefaultState();
-        world.setBlockState(pos, placeState);
+
         ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
         decayCap.updateFromNBT(stack.getTagCompound());
+        
+        if (decayCap.isRot(world)) {
+            
+            return EnumActionResult.FAIL;
+        }
+        
+        IBlockState placeState = this.block.getDefaultState();
+        world.setBlockState(pos, placeState);
         ((TECarcass) world.getTileEntity(pos))
                 .setData(decayCap.getBirthTime(), decayCap.getStageSize());
         

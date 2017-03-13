@@ -14,7 +14,7 @@ public class BlockCropHarvestableBerry extends BlockCropHarvestable {
     
     public BlockCropHarvestableBerry() {
         
-        super("berry", 2, () -> ModItems.berry, (rand) -> 9, 0.4F, 0.2F);
+        super("berry", 2, () -> ModItems.berry, (rand) -> 8, 0.4F, 0.2F);
     }
 
     @Override

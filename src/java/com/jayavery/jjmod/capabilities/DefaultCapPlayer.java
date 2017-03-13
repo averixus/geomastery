@@ -221,7 +221,10 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public void sleep(float healAmount) {
 
-        for (FoodStatsPartial food : this.typesList) {
+        for (Entry<FoodType, FoodStatsPartial> entry :
+                this.typesMap.entrySet()) {
+            
+            FoodStatsPartial food = entry.getValue();
             
             if (food.getFoodLevel() > 10) {
                 
@@ -229,6 +232,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             }
             
             food.setFoodLevel(Math.max(food.getFoodLevel() - SLEEP_COST, 0));
+            this.sendFoodPacket(entry.getKey());
         }
     }
     

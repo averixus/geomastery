@@ -400,18 +400,18 @@ public class ModBlocks {
                 "wall_log_double", 3F, ToolType.AXE, true,
                 () -> ModItems.wallLog, false, 4, true));
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
-                "wall_pole", 2F, ToolType.AXE, false, 4, false), 3);
+                "wall_pole", 2F, ToolType.AXE, false, 4, false), 4);
         
         register(stairsBrick = new BlockStairs("stairs_brick",
-                wallBrickDouble.getDefaultState(), ToolType.PICKAXE));
+                wallBrickDouble.getDefaultState(), ToolType.PICKAXE), 2);
         register(stairsStone = new BlockStairs("stairs_stone",
                 wallStoneDouble.getDefaultState(), ToolType.PICKAXE));
         register(stairsWood = new BlockStairsStraight("stairs_wood",
-                2F, ToolType.AXE));
+                2F, ToolType.AXE), 4);
         register(stairsPole = new BlockStairsSimple("stairs_pole",
-                2F, ToolType.AXE));
+                2F, ToolType.AXE), 4);
         
-        register(vault = new BlockVault());
+        register(vault = new BlockVault(), 2);
         
         register(foundation = new BlockFoundation());
         
@@ -469,6 +469,7 @@ public class ModBlocks {
         Blocks.MELON_BLOCK.setHardness(0.2F);
         OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST)
                 .setMaxStackSize(1));
+        Item.getItemFromBlock(Blocks.LADDER).setMaxStackSize(8);
     
     }
     

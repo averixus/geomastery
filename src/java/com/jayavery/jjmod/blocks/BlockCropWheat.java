@@ -13,7 +13,7 @@ public class BlockCropWheat extends BlockCropAbstract {
     
     public BlockCropWheat() {
         
-        super("wheat", () -> ModItems.wheat, (rand) -> 1,
+        super("wheat", () -> ModItems.wheat, (rand) -> 0,
                 0.4F, 0.2F, ToolType.SICKLE);
     }
 

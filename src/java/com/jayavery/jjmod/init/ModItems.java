@@ -177,6 +177,7 @@ public class ModItems {
     
     public static ItemJj salt;
     public static ItemJj chalk;
+    public static ItemJj clay;
     
     public static ItemJj oreTin;
     public static ItemJj oreCopper;
@@ -446,11 +447,11 @@ public class ModItems {
         register(rice = new ItemRice());
         
         register(cotton = new ItemJj("cotton", 6));
-        register(twineHemp = new ItemJj("twine_hemp", 3));
-        register(wool = new ItemJj("wool", 4));
+        register(twineHemp = new ItemJj("twine_hemp", 6));
+        register(wool = new ItemJj("wool", 5));
         
         register(chickpeas = new ItemSeed("chickpeas",
-                1, ModBlocks.chickpea));
+                10, ModBlocks.chickpea));
         register(cuttingCotton = new ItemSeed("cutting_cotton",
                 1, ModBlocks.cotton));
         register(cuttingHemp = new ItemSeed("cutting_hemp",
@@ -489,16 +490,16 @@ public class ModItems {
 
         register(amethyst = new ItemJj("amethyst", 64));
         register(fireopal = new ItemJj("fireopal", 64));
-        register(ruby = new ItemJj("ruby", 64));
+        register(ruby = new ItemJj("ruby", 61));
         register(sapphire = new ItemJj("sapphire", 64));
 
-        register(beeswax = new ItemJj("beeswax"));
+        register(beeswax = new ItemJj("beeswax", 12));
         register(skinBear = new ItemJj("skin_bear", 4));
         register(skinCow = new ItemJj("skin_cow", 4));
         register(skinPig = new ItemJj("skin_pig", 4));
         register(skinSheep = new ItemJj("skin_sheep", 4));
         register(skinWolf = new ItemJj("skin_wolf", 4));
-        register(tallow = new ItemJj("tallow"));
+        register(tallow = new ItemJj("tallow", 2));
         register(honeycomb = new ItemJj("honeycomb"));
 
         register(ingotCopper = new ItemJj("ingot_copper", 2));
@@ -510,15 +511,16 @@ public class ModItems {
         register(pole = new ItemJj("pole", 6));
         register(log = new ItemJj("log", 3));
         register(thicklog = new ItemJj("thicklog"));
-        register(timber = new ItemJj("timber", 3));
+        register(timber = new ItemJj("timber", 6));
 
-        register(dirt = new ItemJj("dirt", 4));
+        register(dirt = new ItemJj("dirt", 1));
         register(mudbricks = new ItemJj("mudbricks"));
         register(peatDry = new ItemJj("peat_dry"));
         register(peatWet = new ItemJj("peat_wet"));
         
         register(salt = new ItemJj("salt"));
-        register(chalk = new ItemJj("chalk"));        
+        register(chalk = new ItemJj("chalk"));
+        register(clay = new ItemJj("clay", 9));
 
         register(oreTin = new ItemJj("ore_tin"));
         register(oreCopper = new ItemJj("ore_copper"));
@@ -526,8 +528,8 @@ public class ModItems {
         register(oreSilver = new ItemJj("ore_silver"));
         register(oreGold = new ItemJj("ore_gold"));
         
-        register(stoneRough = new ItemJj("stone_rough", 4));
-        register(stoneDressed = new ItemJj("stone_dressed", 4));
+        register(stoneRough = new ItemJj("stone_rough", 1));
+        register(stoneDressed = new ItemJj("stone_dressed", 1));
 
         register(potClay = new ItemJj("pot_clay"));
         register(potMetal = new ItemJj("pot_metal"));
@@ -543,40 +545,40 @@ public class ModItems {
         register(furnaceClay = new ItemFurnaceClay(), true);
         register(furnaceStone = new ItemFurnaceStone(), true);
 
-        register(arrowheadBronze = new ItemJj("arrowhead_bronze", 12));
-        register(arrowheadCopper = new ItemJj("arrowhead_copper", 12));
-        register(arrowheadFlint = new ItemJj("arrowhead_flint", 12));
-        register(arrowheadSteel = new ItemJj("arrowhead_steel", 12));
+        register(arrowheadBronze = new ItemJj("arrowhead_bronze", 20));
+        register(arrowheadCopper = new ItemJj("arrowhead_copper", 20));
+        register(arrowheadFlint = new ItemJj("arrowhead_flint", 20));
+        register(arrowheadSteel = new ItemJj("arrowhead_steel", 20));
 
-        register(axeheadBronze = new ItemJj("axehead_bronze", 4));
-        register(axeheadCopper = new ItemJj("axehead_copper", 4));
-        register(axeheadFlint = new ItemJj("axehead_flint", 4));
-        register(axeheadSteel = new ItemJj("axehead_steel", 4));
+        register(axeheadBronze = new ItemJj("axehead_bronze", 2));
+        register(axeheadCopper = new ItemJj("axehead_copper", 2));
+        register(axeheadFlint = new ItemJj("axehead_flint", 2));
+        register(axeheadSteel = new ItemJj("axehead_steel", 2));
 
-        register(hoeheadBronze = new ItemJj("hoehead_bronze"));
-        register(hoeheadCopper = new ItemJj("hoehead_copper"));
-        register(hoeheadSteel = new ItemJj("hoehead_steel"));
+        register(hoeheadBronze = new ItemJj("hoehead_bronze", 2));
+        register(hoeheadCopper = new ItemJj("hoehead_copper", 2));
+        register(hoeheadSteel = new ItemJj("hoehead_steel", 2));
 
         register(knifebladeBronze = new ItemJj("knifeblade_bronze", 2));
         register(knifebladeCopper = new ItemJj("knifeblade_copper", 2));
         register(knifebladeSteel = new ItemJj("knifeblade_steel", 2));
 
-        register(machetebladeBronze = new ItemJj("macheteblade_bronze"));
-        register(machetebladeCopper = new ItemJj("macheteblade_copper"));
-        register(machetebladeSteel = new ItemJj("macheteblade_steel"));
+        register(machetebladeBronze = new ItemJj("macheteblade_bronze", 2));
+        register(machetebladeCopper = new ItemJj("macheteblade_copper", 2));
+        register(machetebladeSteel = new ItemJj("macheteblade_steel", 2));
 
-        register(pickheadBronze = new ItemJj("pickhead_bronze"));
-        register(pickheadCopper = new ItemJj("pickhead_copper"));
-        register(pickheadFlint = new ItemJj("pickhead_flint"));
-        register(pickheadSteel = new ItemJj("pickhead_steel"));
+        register(pickheadBronze = new ItemJj("pickhead_bronze", 2));
+        register(pickheadCopper = new ItemJj("pickhead_copper", 2));
+        register(pickheadFlint = new ItemJj("pickhead_flint", 2));
+        register(pickheadSteel = new ItemJj("pickhead_steel", 2));
 
-        register(sicklebladeBronze = new ItemJj("sickleblade_bronze"));
-        register(sicklebladeCopper = new ItemJj("sickleblade_copper"));
-        register(sicklebladeSteel = new ItemJj("sickleblade_steel"));
+        register(sicklebladeBronze = new ItemJj("sickleblade_bronze", 2));
+        register(sicklebladeCopper = new ItemJj("sickleblade_copper", 2));
+        register(sicklebladeSteel = new ItemJj("sickleblade_steel", 2));
 
-        register(shovelheadBronze = new ItemJj("shovelhead_bronze"));
-        register(shovelheadCopper = new ItemJj("shovelhead_copper"));
-        register(shovelheadSteel = new ItemJj("shovelhead_steel"));
+        register(shovelheadBronze = new ItemJj("shovelhead_bronze", 2));
+        register(shovelheadCopper = new ItemJj("shovelhead_copper", 2));
+        register(shovelheadSteel = new ItemJj("shovelhead_steel", 2));
 
         register(spearheadBronze = new ItemJj("spearhead_bronze", 2));
         register(spearheadCopper = new ItemJj("spearhead_copper", 2));
@@ -766,15 +768,15 @@ public class ModItems {
         register(bowWar = new ItemBow("bow_war",
                 384, EntityProjectile.BOW_MOD));
         
-        register(wallBrick = new ItemWall("wall_brick", 1,
+        register(wallBrick = new ItemWall("wall_brick", 2,
                 ModBlocks.wallBrickSingle, ModBlocks.wallBrickDouble));
-        register(wallMud = new ItemWall("wall_mud", 1,
+        register(wallMud = new ItemWall("wall_mud", 2,
                 ModBlocks.wallMudSingle, ModBlocks.wallMudDouble));
-        register(wallRough = new ItemWall("wall_rough", 1,
+        register(wallRough = new ItemWall("wall_rough", 2,
                 ModBlocks.wallRoughSingle, ModBlocks.wallRoughDouble));
-        register(wallStone = new ItemWall("wall_stone", 1,
+        register(wallStone = new ItemWall("wall_stone", 2,
                 ModBlocks.wallStoneSingle, ModBlocks.wallStoneDouble));
-        register(wallLog = new ItemWall("wall_log", 1,
+        register(wallLog = new ItemWall("wall_log", 2,
                 ModBlocks.wallLogSingle, ModBlocks.wallLogDouble));
         
         register(doorPole = new ItemDoor(ModBlocks.doorPole, "door_pole"),
@@ -785,12 +787,12 @@ public class ModItems {
         register(beamLong = new ItemBeam("beam_long", 4, 8));
         register(beamShort = new ItemBeam("beam_short", 2, 4));
         
-        register(floorPole = new ItemFloor(3, EnumFloor.POLE));
-        register(floorWood = new ItemFloor(4, EnumFloor.WOOD));
+        register(floorPole = new ItemFloor(6, EnumFloor.POLE));
+        register(floorWood = new ItemFloor(6, EnumFloor.WOOD));
         
-        register(slabStone = new ItemSlab("slab_stone", 1,
+        register(slabStone = new ItemSlab("slab_stone", 2,
                 ModBlocks.slabStoneSingle, ModBlocks.slabStoneDouble));
-        register(slabBrick = new ItemSlab("slab_brick", 1,
+        register(slabBrick = new ItemSlab("slab_brick", 2,
                 ModBlocks.slabBrickSingle, ModBlocks.slabBrickDouble));
         
         register(sand = new ItemJj("sand"));
@@ -802,6 +804,8 @@ public class ModItems {
         Items.COAL.setMaxStackSize(1);
         Items.RABBIT_HIDE.setMaxStackSize(4);
         Items.REEDS.setMaxStackSize(5);
+        Items.CLAY_BALL.setMaxStackSize(1);
+        Items.BRICK.setMaxStackSize(1);
     }
     
     public static void preInitClient() {

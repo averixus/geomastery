@@ -22,7 +22,7 @@ public class BlockCropChickpea extends BlockCropAbstract {
     
     public BlockCropChickpea() {
         
-        super("chickpea", () -> ModItems.chickpeas, (rand) -> 2,
+        super("chickpea", () -> ModItems.chickpeas, (rand) -> 1,
                 0.3F, 0.2F, ToolType.SICKLE);
     }
 

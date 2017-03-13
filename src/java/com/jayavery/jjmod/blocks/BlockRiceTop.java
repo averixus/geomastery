@@ -97,6 +97,10 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
         
         if (state.getValue(AGE) == 7) {
 
+            items.add(new ItemStack(ModItems.rice, 2));
+            
+        } else {
+            
             items.add(new ItemStack(ModItems.rice, 1));
         }
         

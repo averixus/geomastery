@@ -4,5 +4,13 @@
         "bottom": "jjmod:blocks/solids/pig",
         "top": "jjmod:blocks/solids/pig",
         "side": "jjmod:blocks/solids/pig"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "rot": 1
+            },
+            "model": "jjmod:item/item_rot"
+        }
+    ]
 }

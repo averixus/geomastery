@@ -15,7 +15,7 @@ public class BlockCropPepper extends BlockCropAbstract {
     
     public BlockCropPepper() {
         
-        super("pepper", () -> ModItems.pepper, (rand) -> 3,
+        super("pepper", () -> ModItems.pepper, (rand) -> 2,
                 0.3F, 0.2F, ToolType.SICKLE);
     }
 

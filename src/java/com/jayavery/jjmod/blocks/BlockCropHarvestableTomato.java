@@ -12,7 +12,7 @@ public class BlockCropHarvestableTomato extends BlockCropHarvestable {
     
     public BlockCropHarvestableTomato() {
         
-        super("tomato", 2, () -> ModItems.tomato, (rand) -> 2, 0.4F, 0.2F);
+        super("tomato", 2, () -> ModItems.tomato, (rand) -> 1, 0.4F, 0.2F);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.jayavery.jjmod.worldgen;
 
 import java.util.Random;
+import com.jayavery.jjmod.blocks.BlockTar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -154,21 +155,27 @@ public abstract class WorldGenAbstract {
      * @return The y co-ordinate of the valid position, -1 if none. */
     protected int findSurroundedSurface(int x, int z) {
         
-        BlockPos checkPos = new BlockPos(x, 256, z);
+        int surface = this.findValidSurface(x, z);
+        BlockPos checkPos = new BlockPos(x, surface - 1, z);
         
-        while (this.world.isAirBlock(checkPos) && checkPos.getY() > 0) {
+        EnumFacing[] surrounds = {EnumFacing.DOWN, EnumFacing.NORTH,
+                EnumFacing.WEST, EnumFacing.SOUTH, EnumFacing.EAST};
+        
+        for (EnumFacing facing : surrounds) {
             
-            checkPos = checkPos.down();
-        }
-        
-        if (!this.world.isAirBlock(checkPos.north()) &&
-                !this.world.isAirBlock(checkPos.east()) &&
-                !this.world.isAirBlock(checkPos.south()) &&
-                !this.world.isAirBlock(checkPos.west())) {
+            BlockPos pos = checkPos.offset(facing);
+            IBlockState state = this.world.getBlockState(pos);
+            Block block = state.getBlock();
+            boolean solid = block.isSideSolid(state, this.world,
+                    pos, facing.getOpposite());
+            boolean tar = block instanceof BlockTar;
             
-            return checkPos.getY();
+            if (!solid && !tar) {
+                
+                return -1;
+            }
         }
-        
-        return -1;
+                
+        return checkPos.getY();
     }
 }

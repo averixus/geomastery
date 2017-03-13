@@ -158,13 +158,16 @@ public abstract class BlockCropAbstract extends BlockNew
         }
         
         World world = (World) blockAccess;
-        
-        items.add(ItemJj.newStack(this.seedRef.get(), 1, world));
-        
+                
         if (state.getValue(AGE) == 7) {
             
             items.add(ItemJj.newStack(this.cropRef.get(),
                     this.yieldRef.apply(world.rand), world));
+            items.add(ItemJj.newStack(this.seedRef.get(), 2, world));
+            
+        } else {
+            
+            items.add(ItemJj.newStack(this.seedRef.get(), 1, world));
         }
         
         return items;

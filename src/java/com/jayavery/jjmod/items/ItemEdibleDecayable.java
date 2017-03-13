@@ -69,6 +69,8 @@ public class ItemEdibleDecayable extends ItemEdible {
         });
     }
 
+    /** Sends the capability data for syncing to
+     * the client (needed because of Forge syncing limitations). */
     @Override
     public NBTTagCompound getNBTShareTag(ItemStack stack) {
 
