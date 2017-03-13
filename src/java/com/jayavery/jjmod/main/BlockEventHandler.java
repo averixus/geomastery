@@ -151,20 +151,6 @@ public class BlockEventHandler {
         }
     }
     
-    /** Adjusts equivalent to Block#updateTick for vanilla blocks. */
-    @SubscribeEvent
-    public void cropGrow(CropGrowEvent.Pre event) {
-        
-        // Sugarcane -> adjust odds
-        if (event.getState().getBlock() == Blocks.REEDS) {
-            
-            if (event.getWorld().rand.nextFloat() > 0.4) {
-                
-                event.setResult(Result.DENY);
-            }
-        }
-    }
-    
     /** Adjusts block breaking speed. */
     @SubscribeEvent
     public void playerBreakSpeed(PlayerEvent.BreakSpeed event) {

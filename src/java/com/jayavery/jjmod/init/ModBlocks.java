@@ -230,7 +230,8 @@ public class ModBlocks {
     public static BlockStairsStraight stairsWood;
     public static BlockStairsSimple stairsPole;
     
-    public static BlockVault vault;
+    public static BlockVault vaultStone;
+    public static BlockVault vaultBrick;
     
     public static BlockFoundation foundation;
     
@@ -411,7 +412,8 @@ public class ModBlocks {
         register(stairsPole = new BlockStairsSimple("stairs_pole",
                 2F, ToolType.AXE), 4);
         
-        register(vault = new BlockVault(), 2);
+        register(vaultStone = new BlockVault("vault_stone"), 2);
+        register(vaultBrick = new BlockVault("vault_brick"), 2);
         
         register(foundation = new BlockFoundation());
         
@@ -448,7 +450,7 @@ public class ModBlocks {
         Blocks.DIRT.setHarvestLevel("shovel", 1);
         Blocks.GRASS.setHarvestLevel("shovel", 1);
         Blocks.SAND.setHarvestLevel("shovel", 1);
-        Blocks.CLAY.setHarvestLevel("shovel", 1);
+        Blocks.CLAY.setHardness(1.8F).setHarvestLevel("shovel", 1);
         Blocks.GRAVEL.setHarvestLevel("shovel", 1);
         Blocks.COBBLESTONE.setHarvestLevel("pickaxe", 1);
         Blocks.STONE.setHarvestLevel("pickaxe", 1);

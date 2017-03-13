@@ -29,9 +29,9 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     public static final PropertyDirection FACING =
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
-    public BlockVault() {
+    public BlockVault(String name) {
         
-        super(BlockMaterial.STONE_FURNITURE, "vault",
+        super(BlockMaterial.STONE_FURNITURE, name,
                 CreativeTabs.BUILDING_BLOCKS, 2, ToolType.PICKAXE);
     }
     

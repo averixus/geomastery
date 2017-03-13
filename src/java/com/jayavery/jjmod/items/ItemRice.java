@@ -20,7 +20,7 @@ public class ItemRice extends ItemJj {
         
     public ItemRice() {
         
-        super("rice", 1);
+        super("rice", 12);
     }
     
     /** Attempts to plant a rice crop. */

@@ -443,8 +443,10 @@ public class ModRecipes {
                 " S", "SS", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsBrick, 2),
                 " B", "BB", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(ModBlocks.vault, 2),
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.vaultStone, 2),
                 "SS", "S ", 'S', ModItems.stoneDressed);
+        MASON.addShapedRecipe(new ItemStack(ModBlocks.vaultBrick, 2),
+                "BB", "B ", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(ModItems.slabStone, 2),
                 "SSS", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModItems.slabBrick, 2),
