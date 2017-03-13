@@ -48,6 +48,7 @@ import com.jayavery.jjmod.blocks.BlockCropPotato;
 import com.jayavery.jjmod.blocks.BlockCropWheat;
 import com.jayavery.jjmod.blocks.BlockDoor;
 import com.jayavery.jjmod.blocks.BlockDrying;
+import com.jayavery.jjmod.blocks.BlockFallTest;
 import com.jayavery.jjmod.blocks.BlockFence;
 import com.jayavery.jjmod.blocks.BlockFoundation;
 import com.jayavery.jjmod.blocks.BlockFruit;
@@ -253,6 +254,8 @@ public class ModBlocks {
     
     public static BlockInvisibleLight invisibleLight;
     
+    public static BlockFallTest test;
+    
     public static void preInit() {
                 
         registerItemless(bedLeaf = new BlockBedLeaf());
@@ -444,6 +447,8 @@ public class ModBlocks {
         registerItemless(tar = new BlockTar());
         
         registerItemless(invisibleLight = new BlockInvisibleLight());
+        
+        register(test = new BlockFallTest());
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);

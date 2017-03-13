@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.init;
 
+import com.jayavery.jjmod.entities.FallingSideways;
 import com.jayavery.jjmod.entities.projectile.EntityArrowBronze;
 import com.jayavery.jjmod.entities.projectile.EntityArrowCopper;
 import com.jayavery.jjmod.entities.projectile.EntityArrowFlint;
@@ -11,6 +12,7 @@ import com.jayavery.jjmod.entities.projectile.EntitySpearFlint;
 import com.jayavery.jjmod.entities.projectile.EntitySpearSteel;
 import com.jayavery.jjmod.entities.projectile.EntitySpearWood;
 import com.jayavery.jjmod.main.Jjmod;
+import com.jayavery.jjmod.render.RenderFallingSideways;
 import com.jayavery.jjmod.render.projectile.RenderArrowFactory;
 import com.jayavery.jjmod.render.projectile.RenderSpearFactory;
 import net.minecraft.util.ResourceLocation;
@@ -55,6 +57,8 @@ public class ModEntities {
         EntityRegistry.registerModEntity(new ResourceLocation("jjmod",
                 "arrow_steel"), EntityArrowSteel.class,
                 "arrow_steel", entityID++, Jjmod.instance, 80, 3, true);
+        
+        EntityRegistry.registerModEntity(new ResourceLocation("jjmod", "fallingsideways"), FallingSideways.class, "fallingsideways", entityID++, Jjmod.instance, 80, 3, true);
     }
     
     public static void preInitClient() {
@@ -80,5 +84,7 @@ public class ModEntities {
                 EntityArrowBronze.class, RenderArrowFactory.ARROW_BRONZE);
         RenderingRegistry.registerEntityRenderingHandler(
                 EntityArrowSteel.class, RenderArrowFactory.ARROW_STEEL);
+        RenderingRegistry.registerEntityRenderingHandler(FallingSideways.class,
+                RenderFallingSideways::new);
     }
 }
