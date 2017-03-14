@@ -24,8 +24,8 @@ public class BlockBox extends BlockComplexAbstract {
 
     public BlockBox() {
         
-        super("box", BlockMaterial.WOOD_FURNITURE, 5, null);
-        this.setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+        super("box", BlockMaterial.WOOD_HANDHARVESTABLE, 5, null);
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
     
     @Override
@@ -51,6 +51,14 @@ public class BlockBox extends BlockComplexAbstract {
     public TileEntity createNewTileEntity(World world, int meta) {
 
         return new TEBox();
+    }
+    
+    @Override
+    public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int data) {
+        
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        return tileentity == null ? false :
+            tileentity.receiveClientEvent(id, data);
     }
     
     @Override

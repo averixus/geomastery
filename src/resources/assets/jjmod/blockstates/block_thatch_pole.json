@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "jjmod:thatch_pole" },
+        "inventory": { "model": "jjmod:thatch_pole" }
+    }
+}

@@ -7,118 +7,114 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
-/** TileEntity for box block. Closely adapted from vanilla. */
-public class TEBox extends TileEntityChest {
+/** TileEntity for box block. */
+public class TEBox extends TileEntity implements ITickable {
     
+    /** The box inventory. */
+    private final ItemStackHandler inv = new ItemStackHandler(18);
+    /** The current lid angle. */
+    public float lidAngle;
+    /** The last tick lid angle. */
+    public float prevLidAngle;
+    /** The number of players viewing this box. */
+    public int users;
+    
+    @SuppressWarnings("unchecked")
     @Override
-    public int getSizeInventory() {
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         
-        return 9;
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
+                (T) this.inv : super.getCapability(capability, facing);
     }
     
     @Override
-    public Container createContainer(InventoryPlayer playerInv,
-            EntityPlayer player) {
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
         
-        return new ContainerBox(player, this.world, this);
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
+                true : super.hasCapability(capability, facing);
     }
     
     @Override
-    public void checkForAdjacentChests() {}
+    public void readFromNBT(NBTTagCompound compound) {
+        
+        super.readFromNBT(compound);
+        this.inv.deserializeNBT(compound.getCompoundTag("inventory"));
+    }
     
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        
+        super.writeToNBT(compound);
+        compound.setTag("inventory", this.inv.serializeNBT());
+        return compound;
+    }
+    
+    /** Updates animation and sound states. */
     @Override
     public void update() {
         
-        int i = this.pos.getX();
-        int j = this.pos.getY();
-        int k = this.pos.getZ();
-        
-        if (!this.world.isRemote) {
-
-            for (EntityPlayer entityplayer : this.world
-                    .getEntitiesWithinAABB(EntityPlayer.class,
-                    new AxisAlignedBB(i - 5.0F,
-                    j - 5.0F, k - 5.0F,
-                    i + 1 + 5.0F,
-                    j + 1 + 5.0F,
-                    k + 1 + 5.0F))) {
-               
-                if (entityplayer.openContainer instanceof ContainerBox) {
-                   
-                    IInventory iinventory =
-                            ((ContainerBox)entityplayer.openContainer).boxInv;
-
-                    if (iinventory == this) {
-                       
-                        ++this.numPlayersUsing;
-                    }
-                }
-            }
-        }
-        
         this.prevLidAngle = this.lidAngle;
         
-        if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F) {
-            
-            double d1 = i + 0.5D;
-            double d2 = k + 0.5D;
+        // Play open sound
+        if (this.users > 0 && this.lidAngle == 0.0F) {
 
-            this.world.playSound((EntityPlayer)null, d1, j + 0.5D,
-                    d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS,
-                    0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+            this.world.playSound(null, this.pos, SoundEvents.BLOCK_CHEST_OPEN,
+                    SoundCategory.BLOCKS, 0.5F,
+                    this.world.rand.nextFloat() * 0.1F + 0.9F);
         }
         
-        if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F ||
-                this.numPlayersUsing > 0 && this.lidAngle < 1.0F) {
+        // Continue closing when unused
+        if (this.users == 0 && this.lidAngle > 0) {
+
+            this.lidAngle -= 0.1F;
             
-            float f2 = this.lidAngle;
+            // Play close sound
+            if (this.lidAngle < 0.5F && this.prevLidAngle >= 0.5F) {
 
-            if (this.numPlayersUsing > 0) {
-                
-                this.lidAngle += 0.1F;
-            }
-            
-            else {
-                
-                this.lidAngle -= 0.1F;
-            }
-
-            if (this.lidAngle > 1.0F) {
-                
-                this.lidAngle = 1.0F;
-            }
-
-            if (this.lidAngle < 0.5F && f2 >= 0.5F) {
-                
-                double d3 = i + 0.5D;
-                double d0 = k + 0.5D;
-
-                this.world.playSound(null, d3, j + 0.5D, d0,
+                this.world.playSound(null, this.pos,
                         SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS,
                         0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
             }
-
-            if (this.lidAngle < 0.0F) {
+            
+            // Prevent overshoot
+            if (this.lidAngle < 0) {
                 
-                this.lidAngle = 0.0F;
+                this.lidAngle = 0;
+            }
+        }
+        
+        // Continue opening when used
+        if (this.users > 0 && this.lidAngle < 1) {
+
+            this.lidAngle += 0.1F;
+            
+            // Prevent overshoot
+            if (this.lidAngle > 1) {
+                
+                this.lidAngle = 1;
             }
         }
     }
     
-    @Override
-    public void closeInventory(EntityPlayer player) {
+    /** Removes a user. */
+    public void open() {
         
-        if (!player.isSpectator() && this.getBlockType() instanceof BlockBox) {
-            
-            this.numPlayersUsing--;
-            this.world.addBlockEvent(this.pos, this.getBlockType(),
-                    1, this.numPlayersUsing);
-            this.world.notifyNeighborsOfStateChange(this.pos,
-                    this.getBlockType(), false);
-        }
+        this.users++;
+    }
+    
+    /** Adds a user. */
+    public void close() {
+        
+        this.users--;
     }
 }

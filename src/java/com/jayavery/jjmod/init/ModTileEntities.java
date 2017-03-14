@@ -1,6 +1,7 @@
 package com.jayavery.jjmod.init;
 
 import com.jayavery.jjmod.render.tileentity.TileEntityBoxRenderer;
+import com.jayavery.jjmod.tileentities.TEBasket;
 import com.jayavery.jjmod.tileentities.TEBeam;
 import com.jayavery.jjmod.tileentities.TEBed;
 import com.jayavery.jjmod.tileentities.TEBox;
@@ -45,6 +46,7 @@ public class ModTileEntities {
 
         GameRegistry.registerTileEntity(TEDrying.class, "drying");
         GameRegistry.registerTileEntity(TEBox.class, "box");
+        GameRegistry.registerTileEntity(TEBasket.class, "basket");
         GameRegistry.registerTileEntity(TEBed.class, "bed");
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
         GameRegistry.registerTileEntity(TECarcass.class, "carcass");

@@ -63,10 +63,21 @@ public abstract class TEFurnaceAbstract extends TileEntity
         Collections.sort(this.inputs, SORTER);
         Collections.sort(this.fuels, SORTER);
         
-        if (this.cookEach == -1) {
+        int newCookEach = this.recipes.getCookingTime(this.inputs.get(0));
+        
+        if (this.cookEach != newCookEach) {
             
-            this.cookEach = this.recipes.getCookingTime(this.inputs.get(0));
+            this.cookEach = newCookEach;
             this.cookSpent = 0;
+            this.markDirty();
+        }
+        
+        int newFuelEach = this.recipes.getFuelTime(this.fuels.get(0));
+        
+        if (this.fuelEach != newFuelEach) {
+            
+            this.fuelEach = newFuelEach;
+            this.fuelLeft = this.fuelEach;
             this.markDirty();
         }
     }
@@ -128,11 +139,6 @@ public abstract class TEFurnaceAbstract extends TileEntity
         
         this.inputs.set(index, stack);
         this.sort();
-        
-        if (index == 0 && stack.isEmpty()) {
-            
-            this.cookSpent = 0;
-        }
     }
     
     /** Sets the ItemStack to the fuel slot. */

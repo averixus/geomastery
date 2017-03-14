@@ -530,7 +530,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         print += ". Final temp " + df.format(temp) + " is " + this.tempStage;
-        System.out.println(print);
+     //   System.out.println(print);
 
         if ((this.tempStage == TempStage.HOT ||
                 this.tempStage == TempStage.COLD) && this.damageTimer == 0) {

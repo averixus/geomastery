@@ -168,6 +168,19 @@ public class BlockEventHandler {
             event.setCanceled(true);
         }
     }
+    
+    /** Reduces sugarcane growth rate to 0.4 of vanilla. */
+    @SubscribeEvent
+    public void cropGrow(CropGrowEvent.Pre event) {
+        
+        if (event.getState().getBlock() == Blocks.REEDS) {
+            
+            if (event.getWorld().rand.nextInt(5) < 3) {
+                
+                event.setResult(Result.DENY);
+            }
+        }
+    }
 
     /** Alters equivalent to Block#getDrops for vanilla blocks. */
     @SubscribeEvent

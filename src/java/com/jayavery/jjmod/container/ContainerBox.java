@@ -1,17 +1,21 @@
 package com.jayavery.jjmod.container;
 
-import com.jayavery.jjmod.container.slots.SlotInventory;
+import com.jayavery.jjmod.blocks.BlockBox;
+import com.jayavery.jjmod.container.slots.SlotIItemHandler;
+import com.jayavery.jjmod.tileentities.TEBox;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-/** Container for Box. Mostly duplicate of Chest with 9 slots. */
+/** Container for box. Mostly duplicate of chest with 18 slots. */
 public class ContainerBox extends ContainerAbstract {
     
-    /** Y-position of the start of the chest grid. */
-    private static final int BOX_Y = 36;
+    /** Y-position of the start of the box grid. */
+    private static final int BOX_Y = 26;
     /** Index of the start of the player hotbar. */
     private static final int HOT_START = 0;
     
@@ -20,31 +24,44 @@ public class ContainerBox extends ContainerAbstract {
     /** Index of the start of the box inventory. */
     private final int boxStart;
     /** Index of the end of the box inventory. */
-    private final int boxEnd;
+    private final int boxEnd; 
+    /** TileEntity of the box. */
+    private final TEBox box;
     /** Inventory of the box. */
-    public final IInventory boxInv;
+    public final IItemHandler boxInv;
+    /** Position of the box. */
+    private final BlockPos pos;
     
-    public ContainerBox(EntityPlayer player, World world, IInventory boxInv) {
+    
+    public ContainerBox(EntityPlayer player, World world,
+            BlockPos pos, TEBox box) {
         
         super(player, world);
-        this.boxInv = boxInv;
-        boxInv.openInventory(player);
+        this.boxInv = box.getCapability(CapabilityItemHandler
+                .ITEM_HANDLER_CAPABILITY, null);
+        this.box = box;
+        this.pos = pos;
+        this.box.open();
         
         // Inventory
         this.buildHotbar();
         int invIndex = this.buildInvgrid();
         
         // Box inventory
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 2; i++) {
             
-            this.addSlotToContainer(new SlotInventory(this.boxInv,
-                    i, getInvX(i), BOX_Y));
+            for (int j = 0; j < 9; j++) {
+                
+                this.addSlotToContainer(new SlotIItemHandler(this.boxInv,
+                        j + (i * ROW_LENGTH), getInvX(j),
+                        BOX_Y + (i * SLOT_SIZE)));
+            }
         }
         
         // Container indices
         this.invEnd = HOT_START + ROW_LENGTH + invIndex;
         this.boxStart = this.invEnd + 1;
-        this.boxEnd = this.invEnd + this.boxInv.getSizeInventory();
+        this.boxEnd = this.invEnd + this.boxInv.getSlots();
     }
     
     @Override
@@ -83,17 +100,26 @@ public class ContainerBox extends ContainerAbstract {
         
         return result;
     }
-    
+
     @Override
     public boolean canInteractWith(EntityPlayer player) {
         
-        return this.boxInv.isUsableByPlayer(player);
+        boolean correctBlock = this.world.getBlockState(this.pos)
+                .getBlock() instanceof BlockBox;
+
+        if (correctBlock) {
+
+            return player.getDistanceSq(this.pos.getX() + 0.5,
+                    this.pos.getY() + 0.5, this.pos.getZ() + 0.5) <= 64;
+        }
+
+        return false;
     }
     
     @Override
     public void onContainerClosed(EntityPlayer player) {
         
         super.onContainerClosed(player);
-        this.boxInv.closeInventory(player);
+        this.box.close();
     }
 }

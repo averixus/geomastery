@@ -13,12 +13,12 @@ public class GuiBox extends GuiContainerAbstract {
         
         super(container, "Box");
         this.texture = new ResourceLocation("jjmod:textures/gui/box_" +
-                container.capability.getInventoryRows() + ".png");
+        container.capability.getInventoryRows() + ".png");
     }
 
     @Override
     protected ResourceLocation getTexture() {
-
+        
         return this.texture;
     }
 }

@@ -149,33 +149,4 @@ public abstract class WorldGenAbstract {
         
         return -1;
     }
-    
-    /** Finds a solid block with air above and solid blocks on all sides,
-     * at the given x and z co-ordinates.
-     * @return The y co-ordinate of the valid position, -1 if none. */
-    protected int findSurroundedSurface(int x, int z) {
-        
-        int surface = this.findValidSurface(x, z);
-        BlockPos checkPos = new BlockPos(x, surface - 1, z);
-        
-        EnumFacing[] surrounds = {EnumFacing.DOWN, EnumFacing.NORTH,
-                EnumFacing.WEST, EnumFacing.SOUTH, EnumFacing.EAST};
-        
-        for (EnumFacing facing : surrounds) {
-            
-            BlockPos pos = checkPos.offset(facing);
-            IBlockState state = this.world.getBlockState(pos);
-            Block block = state.getBlock();
-            boolean solid = block.isSideSolid(state, this.world,
-                    pos, facing.getOpposite());
-            boolean tar = block instanceof BlockTar;
-            
-            if (!solid && !tar) {
-                
-                return -1;
-            }
-        }
-                
-        return checkPos.getY();
-    }
 }

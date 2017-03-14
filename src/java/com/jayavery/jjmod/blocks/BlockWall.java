@@ -395,12 +395,6 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
             }
         }
     }
-        
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
 
     @Override
     public BlockRenderLayer getBlockLayer() {

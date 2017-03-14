@@ -7,6 +7,7 @@ import java.util.Set;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.jayavery.jjmod.blocks.BlockAntler;
+import com.jayavery.jjmod.blocks.BlockBasket;
 import com.jayavery.jjmod.blocks.BlockBeam;
 import com.jayavery.jjmod.blocks.BlockBedBreakableAbstract;
 import com.jayavery.jjmod.blocks.BlockBedCotton;
@@ -61,6 +62,7 @@ import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.blocks.BlockLightCandle;
 import com.jayavery.jjmod.blocks.BlockLightTorch;
 import com.jayavery.jjmod.blocks.BlockLode;
+import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.blocks.BlockPeat;
 import com.jayavery.jjmod.blocks.BlockRiceBase;
 import com.jayavery.jjmod.blocks.BlockRiceTop;
@@ -77,6 +79,7 @@ import com.jayavery.jjmod.blocks.BlockStairs;
 import com.jayavery.jjmod.blocks.BlockStairsSimple;
 import com.jayavery.jjmod.blocks.BlockStairsStraight;
 import com.jayavery.jjmod.blocks.BlockTar;
+import com.jayavery.jjmod.blocks.BlockThatch;
 import com.jayavery.jjmod.blocks.BlockVault;
 import com.jayavery.jjmod.blocks.BlockWall;
 import com.jayavery.jjmod.blocks.BlockWallHeightless;
@@ -92,6 +95,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -159,6 +163,7 @@ public class ModBlocks {
     public static BlockFurnaceClay furnaceClay;
     public static BlockFurnaceStone furnaceStone;
     
+    public static BlockBasket basket;
     public static BlockBox box;
 
     public static BlockCropAbstract chickpea;
@@ -253,6 +258,8 @@ public class ModBlocks {
     
     public static BlockInvisibleLight invisibleLight;
     
+    public static BlockThatch thatchPole;
+    
     public static void preInit() {
                 
         registerItemless(bedLeaf = new BlockBedLeaf());
@@ -293,7 +300,8 @@ public class ModBlocks {
         registerItemless(furnaceClay = new BlockFurnaceClay());
         registerItemless(furnaceStone = new BlockFurnaceStone());
         
-        register(box = new BlockBox(), 1, false);
+        register(basket = new BlockBasket());
+        register(box = new BlockBox());
 
         registerItemless(chickpea = new BlockCropChickpea());
         registerItemless(cotton = new BlockCropCotton());
@@ -444,6 +452,8 @@ public class ModBlocks {
         registerItemless(tar = new BlockTar());
         
         registerItemless(invisibleLight = new BlockInvisibleLight());
+        
+        register(thatchPole = new BlockThatch("thatch_pole", 1F, ToolType.AXE));
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);

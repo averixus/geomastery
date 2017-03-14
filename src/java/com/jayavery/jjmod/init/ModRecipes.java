@@ -107,15 +107,17 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire),
                 "S S", "SSS", 'S', Items.STICK);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceClay),
-                "C C", "MMM", 'C', Items.CLAY_BALL, 'M', ModItems.mudbricks);
+                "C C", "MMM", 'C', ModItems.clay, 'M', ModItems.mudbricks);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.drying),
                 "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf),
                 "LLL", 'L', ModItems.leaves);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud, 2),
                 "M", "M", 'M', ModItems.mudbricks);
-        INVENTORY.addShapedRecipe(new ItemStack(ModItems.clay, 9),
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.clay, 6),
                 "C", 'C', Items.CLAY_BALL);
+        INVENTORY.addShapedRecipe(new ItemStack(Items.CLAY_BALL),
+                "CCC", "CCC", 'C', ModItems.clay);
         
         for (Item metal : METALS) {
             
@@ -575,7 +577,7 @@ public class ModRecipes {
                 new ItemStack(ModItems.ingotSilver), 300);
         STONE.addCookingRecipe(new ItemStack(ModItems.oreGold),
                 new ItemStack(Items.GOLD_INGOT), 200);
-        STONE.addCookingRecipe(new ItemStack(Items.CLAY_BALL),
+        STONE.addCookingRecipe(new ItemStack(ModItems.clay),
                 new ItemStack(Items.BRICK), 200);
         STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
     }
