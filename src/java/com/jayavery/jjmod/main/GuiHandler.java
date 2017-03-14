@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.main;
 
+import com.jayavery.jjmod.container.ContainerBasket;
 import com.jayavery.jjmod.container.ContainerBox;
 import com.jayavery.jjmod.container.ContainerCrafting;
 import com.jayavery.jjmod.container.ContainerDrying;
@@ -7,12 +8,15 @@ import com.jayavery.jjmod.container.ContainerFurnaceClay;
 import com.jayavery.jjmod.container.ContainerFurnaceSingle;
 import com.jayavery.jjmod.container.ContainerFurnaceStone;
 import com.jayavery.jjmod.container.ContainerInventory;
+import com.jayavery.jjmod.gui.GuiBasket;
 import com.jayavery.jjmod.gui.GuiBox;
 import com.jayavery.jjmod.gui.GuiCrafting;
 import com.jayavery.jjmod.gui.GuiDrying;
 import com.jayavery.jjmod.gui.GuiFurnace;
 import com.jayavery.jjmod.gui.GuiInventory;
 import com.jayavery.jjmod.init.ModRecipes;
+import com.jayavery.jjmod.tileentities.TEBasket;
+import com.jayavery.jjmod.tileentities.TEBox;
 import com.jayavery.jjmod.tileentities.TEDrying;
 import com.jayavery.jjmod.tileentities.TEFurnaceAbstract;
 import com.jayavery.jjmod.tileentities.TEFurnaceClay;
@@ -24,6 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 /** Handler for Gui and Container opening. */
 public class GuiHandler implements IGuiHandler {
@@ -123,7 +128,14 @@ public class GuiHandler implements IGuiHandler {
         
         if (ID == GuiList.BOX.ordinal()) {
             
-            return new ContainerBox(player, world, (IInventory) te);
+            return new ContainerBox(player, world, pos, (TEBox) te);
+        }
+        
+        if (ID == GuiList.BASKET.ordinal()) {
+            
+            return new ContainerBasket(player, pos, world, ((TEBasket) te)
+                    .getCapability(CapabilityItemHandler
+                    .ITEM_HANDLER_CAPABILITY, null));
         }
 
         return null;
@@ -221,7 +233,14 @@ public class GuiHandler implements IGuiHandler {
         
         if (ID == GuiList.BOX.ordinal()) {
             
-            return new GuiBox(new ContainerBox(player, world, (IInventory) te));
+            return new GuiBox(new ContainerBox(player, world, pos, (TEBox) te));
+        }
+        
+        if (ID == GuiList.BASKET.ordinal()) {
+            
+            return new GuiBasket(new ContainerBasket(player, pos,
+                    world, ((TEBasket) te).getCapability(CapabilityItemHandler
+                    .ITEM_HANDLER_CAPABILITY, null)));
         }
 
         return null;
@@ -244,7 +263,8 @@ public class GuiHandler implements IGuiHandler {
         STONE("Stone Furnace"),
         DRYING("Drying Rack"),
         INVENTORY("Inventory"),
-        BOX("Box");
+        BOX("Box"),
+        BASKET("Basket");
 
         public final String name;
 

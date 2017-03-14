@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "jjmod:basket" },
+        "inventory": { "model": "jjmod:basket" }
+    }
+}

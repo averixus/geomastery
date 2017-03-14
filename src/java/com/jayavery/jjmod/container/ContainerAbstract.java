@@ -1,7 +1,8 @@
 package com.jayavery.jjmod.container;
 
 import com.jayavery.jjmod.capabilities.ICapPlayer;
-import com.jayavery.jjmod.container.slots.SlotInventory;
+import com.jayavery.jjmod.container.slots.SlotIInventory;
+import com.jayavery.jjmod.container.slots.SlotIItemHandler;
 import com.jayavery.jjmod.init.ModCaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -70,7 +71,7 @@ public abstract class ContainerAbstract extends Container {
 
         for (int m = 0; m < ROW_LENGTH; m++) {
 
-            this.addSlotToContainer(new SlotInventory(this.playerInv,
+            this.addSlotToContainer(new SlotIInventory(this.playerInv,
                     m, getInvX(m), HOT_Y));
         }
     }
@@ -93,7 +94,7 @@ public abstract class ContainerAbstract extends Container {
 
             for (int l = 0; l < ROW_LENGTH; l++) {
 
-                this.addSlotToContainer(new SlotInventory(
+                this.addSlotToContainer(new SlotIInventory(
                         this.playerInv, ++invIndex + ROW_LENGTH,
                         getInvX(l), getInvY(invertRowIndex(k))));
             }

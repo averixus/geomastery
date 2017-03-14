@@ -47,7 +47,7 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
         GlStateManager.scale(1.0F, -1.0F, -1.0F);
         GlStateManager.translate(0.5F, 0.5F, 0.5F);
         
-        GlStateManager.rotate(0.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(20F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
         float angle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * ticks;
         angle = 1.0F - angle;

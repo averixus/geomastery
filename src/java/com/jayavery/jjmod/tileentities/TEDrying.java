@@ -38,9 +38,11 @@ public class TEDrying extends TileEntity implements ITickable {
 
         Collections.sort(this.inputs, SORTER);
         
-        if (this.dryEach == -1) {
+        int newDryEach = this.recipes.getCookingTime(this.inputs.get(0));
+        
+        if (this.dryEach != newDryEach) {
             
-            this.dryEach = this.recipes.getCookingTime(this.inputs.get(0));
+            this.dryEach = newDryEach;
             this.drySpent = 0;
             this.markDirty();
         }
@@ -62,12 +64,6 @@ public class TEDrying extends TileEntity implements ITickable {
     public void setInput(ItemStack stack, int index) {
 
         this.inputs.set(index, stack);
-        this.sort();
-        
-        if (index == 0 && stack.isEmpty()) {
-            
-            this.drySpent = 0;
-        }
     }
     
     /** Sets the given stack to the output slot. */
