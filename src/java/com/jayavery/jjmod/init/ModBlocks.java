@@ -49,7 +49,6 @@ import com.jayavery.jjmod.blocks.BlockCropPotato;
 import com.jayavery.jjmod.blocks.BlockCropWheat;
 import com.jayavery.jjmod.blocks.BlockDoor;
 import com.jayavery.jjmod.blocks.BlockDrying;
-import com.jayavery.jjmod.blocks.BlockFallTest;
 import com.jayavery.jjmod.blocks.BlockFence;
 import com.jayavery.jjmod.blocks.BlockFoundation;
 import com.jayavery.jjmod.blocks.BlockFruit;
@@ -63,7 +62,6 @@ import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.blocks.BlockLightCandle;
 import com.jayavery.jjmod.blocks.BlockLightTorch;
 import com.jayavery.jjmod.blocks.BlockLode;
-import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.blocks.BlockPeat;
 import com.jayavery.jjmod.blocks.BlockRiceBase;
 import com.jayavery.jjmod.blocks.BlockRiceTop;
@@ -96,7 +94,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -258,12 +255,8 @@ public class ModBlocks {
     public static BlockTar tar;
     
     public static BlockInvisibleLight invisibleLight;
-    
-<<<<<<< HEAD
-    public static BlockFallTest test;
-=======
+
     public static BlockThatch thatchPole;
->>>>>>> develop
     
     public static void preInit() {
                 
@@ -458,11 +451,7 @@ public class ModBlocks {
         
         registerItemless(invisibleLight = new BlockInvisibleLight());
         
-<<<<<<< HEAD
-        register(test = new BlockFallTest());
-=======
         register(thatchPole = new BlockThatch("thatch_pole", 1F, ToolType.AXE));
->>>>>>> develop
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);

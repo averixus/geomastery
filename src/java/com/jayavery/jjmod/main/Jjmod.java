@@ -1,5 +1,6 @@
 package com.jayavery.jjmod.main;
 
+import com.jayavery.jjmod.utilities.TreeFallUtils;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -24,7 +25,6 @@ public class Jjmod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-        
         // Read config, create + register blocks/items/etc
         proxy.preInit();
     }

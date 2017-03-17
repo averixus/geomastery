@@ -40,6 +40,7 @@ import com.jayavery.jjmod.worldgen.WorldGenTreeBanana;
 import com.jayavery.jjmod.worldgen.WorldGenTreeOrange;
 import com.jayavery.jjmod.worldgen.WorldGenTreePear;
 import com.jayavery.jjmod.worldgen.WorldGenWheat;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
