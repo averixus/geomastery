@@ -119,6 +119,12 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(Items.CLAY_BALL),
                 "CCC", "CCC", 'C', ModItems.clay);
         
+        for (Item skin : SKINS_ALL) {
+            
+            INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.basket), "SHS",
+                    " S ", 'S', Items.STICK, 'H', skin);
+        }
+        
         for (Item metal : METALS) {
             
             INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceStone),
@@ -265,22 +271,20 @@ public class ModRecipes {
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood),
                 " P ", "PPP", " P ", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 1),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 2),
                 "PPP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 1),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 2),
                 "  P", " PP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 1),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 2),
                 "  T", " TT", "TTT", 'T', ModItems.timber);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 2),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 4),
                 "PPP", " P ", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole),
                 "PP", "PP", "PP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorWood),
                 "SS", "SS", "SS", 'S', ModItems.timber);
-        WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CHEST),
-                "SSS", "S S", "SSS", 'S', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box),
-                "PP", "PP", 'P', ModItems.pole);
+                "PTP", "PPP", 'P', ModItems.pole, 'T', ModItems.tallow);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 8),
                 "P P", "PPP", "P P", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bedSimple), "WWW",
@@ -288,10 +292,18 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
                 "P P", " P ", 'P', ModItems.pole);
         
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorPole, 2),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorPole, 4),
                 "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorWood, 2),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorWood, 4),
                 "TTT", 'T', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.roofPole, 2), 
+                "TTT", "T T", 'T', ModItems.timber);
+        
+        for (Item metal : METALS) {
+            
+            WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CHEST),
+                    "SSS", "SMS", "SSS", 'S', ModItems.timber, 'M', metal);
+        }
     }
 
     /** Adds all recipes to textiles table. */
@@ -317,6 +329,14 @@ public class ModRecipes {
                 "WWW", "W W", 'W', ModItems.wool);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.woolFeet),
                 "W W", "W W", 'W', ModItems.wool);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.leatherChest),
+                "L L", "LLL", "LLL", 'L', Items.LEATHER);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.leatherLegs),
+                "LLL", "L L", "L L", 'L', Items.LEATHER);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.leatherHead),
+                "LLL", "L L", 'L', Items.LEATHER);
+        TEXTILES.addShapedRecipe(new ItemStack(ModItems.leatherFeet),
+                "L L", "L L", 'L', Items.LEATHER);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.backpack),
                 "L L", "LLL", 'L', Items.LEATHER);
         TEXTILES.addShapedRecipe(new ItemStack(ModItems.yoke),

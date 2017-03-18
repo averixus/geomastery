@@ -22,6 +22,8 @@ import net.minecraft.world.World;
 /** Box block. */
 public class BlockBox extends BlockComplexAbstract {
 
+    private static final AxisAlignedBB BOX = new AxisAlignedBB(0.25,0,0.25,0.75,0.56,0.75);
+    
     public BlockBox() {
         
         super("box", BlockMaterial.WOOD_HANDHARVESTABLE, 5, null);
@@ -65,7 +67,7 @@ public class BlockBox extends BlockComplexAbstract {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess source, BlockPos pos) {
         
-        return CENTRE_EIGHT;
+        return BOX;
     }
     
     @Override

@@ -488,10 +488,10 @@ public class ModItems {
         register(yoke = new ItemJj("yoke",
                 1, CreativeTabs.TRANSPORTATION));
 
-        register(amethyst = new ItemJj("amethyst", 64));
-        register(fireopal = new ItemJj("fireopal", 64));
+        register(amethyst = new ItemJj("amethyst", 53));
+        register(fireopal = new ItemJj("fireopal", 47));
         register(ruby = new ItemJj("ruby", 61));
-        register(sapphire = new ItemJj("sapphire", 64));
+        register(sapphire = new ItemJj("sapphire", 59));
 
         register(beeswax = new ItemJj("beeswax", 12));
         register(skinBear = new ItemJj("skin_bear", 4));

@@ -220,7 +220,7 @@ public class BlockEventHandler {
             event.getDrops().clear();
             int rand = world.rand.nextInt(6);
             event.getDrops().add(new ItemStack(rand == 0 ?
-                    ModItems.thicklog : rand <= 2 ?
+                    ModItems.thicklog : rand == 1 ?
                     ModItems.log : ModItems.pole));
         }
 

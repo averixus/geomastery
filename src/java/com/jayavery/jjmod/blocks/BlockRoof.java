@@ -15,9 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockThatch extends BlockNew {
+public class BlockRoof extends BlockNew {
 
-    public BlockThatch(String name, float hardness, ToolType harvestTool) {
+    public BlockRoof(String name, float hardness, ToolType harvestTool) {
         
         super(BlockMaterial.WOOD_HANDHARVESTABLE, name,
                 CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
@@ -77,14 +77,14 @@ public class BlockThatch extends BlockNew {
     
     protected boolean isValidConnection(World world, BlockPos pos) {
         
-        return world.getBlockState(pos).getBlock() instanceof BlockThatch;
+        return world.getBlockState(pos).getBlock() instanceof BlockRoof;
     }
     
     /** @return Whether the given position is a valid supported thatch block. */
     protected boolean isValidSupport(World world, BlockPos pos) {
         
         boolean isThatch = world.getBlockState(pos).getBlock()
-                instanceof BlockThatch;
+                instanceof BlockRoof;
         boolean isSupported = world.getBlockState(pos.down()).getBlock()
                 instanceof IBuildingBlock;
         return isThatch && isSupported;

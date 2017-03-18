@@ -24,7 +24,7 @@ public class BlockBasket extends BlockComplexAbstract {
 
     public BlockBasket() {
         
-        super("basket", BlockMaterial.WOOD_HANDHARVESTABLE, 1, null);
+        super("basket", BlockMaterial.WOOD_HANDHARVESTABLE, 2, null);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
     

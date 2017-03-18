@@ -79,7 +79,7 @@ import com.jayavery.jjmod.blocks.BlockStairs;
 import com.jayavery.jjmod.blocks.BlockStairsSimple;
 import com.jayavery.jjmod.blocks.BlockStairsStraight;
 import com.jayavery.jjmod.blocks.BlockTar;
-import com.jayavery.jjmod.blocks.BlockThatch;
+import com.jayavery.jjmod.blocks.BlockRoof;
 import com.jayavery.jjmod.blocks.BlockVault;
 import com.jayavery.jjmod.blocks.BlockWall;
 import com.jayavery.jjmod.blocks.BlockWallHeightless;
@@ -258,7 +258,7 @@ public class ModBlocks {
     
     public static BlockInvisibleLight invisibleLight;
     
-    public static BlockThatch thatchPole;
+    public static BlockRoof roofPole;
     
     public static void preInit() {
                 
@@ -414,7 +414,7 @@ public class ModBlocks {
         register(stairsBrick = new BlockStairs("stairs_brick",
                 wallBrickDouble.getDefaultState(), ToolType.PICKAXE), 2);
         register(stairsStone = new BlockStairs("stairs_stone",
-                wallStoneDouble.getDefaultState(), ToolType.PICKAXE));
+                wallStoneDouble.getDefaultState(), ToolType.PICKAXE), 2);
         register(stairsWood = new BlockStairsStraight("stairs_wood",
                 2F, ToolType.AXE), 4);
         register(stairsPole = new BlockStairsSimple("stairs_pole",
@@ -453,7 +453,8 @@ public class ModBlocks {
         
         registerItemless(invisibleLight = new BlockInvisibleLight());
         
-        register(thatchPole = new BlockThatch("thatch_pole", 1F, ToolType.AXE));
+        register(roofPole = new BlockRoof("roof_pole",
+                1F, ToolType.AXE), 4);
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
