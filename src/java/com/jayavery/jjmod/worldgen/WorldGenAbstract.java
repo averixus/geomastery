@@ -117,7 +117,7 @@ public abstract class WorldGenAbstract {
     /** Finds an air block with dirt beneath,
      * at the given x and z co-ordinates.
      * @return The y co-ordinate of the valid position, -1 if none. */
-    protected int findValidDirt(int x, int z) {
+    public int findValidDirt(int x, int z) {
         
         int surface = this.findValidSurface(x, z);
         

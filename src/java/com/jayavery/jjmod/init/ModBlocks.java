@@ -256,8 +256,13 @@ public class ModBlocks {
     public static BlockTar tar;
     
     public static BlockInvisibleLight invisibleLight;
+<<<<<<< HEAD
     
     public static BlockRoof roofPole;
+=======
+
+    public static BlockThatch thatchPole;
+>>>>>>> trees
     
     public static void preInit() {
                 

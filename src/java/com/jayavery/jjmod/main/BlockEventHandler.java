@@ -1,10 +1,12 @@
 package com.jayavery.jjmod.main;
 
 import com.jayavery.jjmod.blocks.BlockRock;
+import com.jayavery.jjmod.entities.FallingTreeBlock;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemAxe;
 import com.jayavery.jjmod.items.ItemPickaxe;
+import com.jayavery.jjmod.utilities.TreeFallUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFalling;
@@ -24,6 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
@@ -48,12 +51,24 @@ public class BlockEventHandler {
             world.setBlockToAir(sourcePos);
         }
 
-        // Make dirt, clay, and stone fall
+        // Apply gravity
         for (EnumFacing facing : EnumFacing.VALUES) {
         
             BlockPos pos = sourcePos.offset(facing);
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
+            
+            // Check for falling trees
+            if (block instanceof BlockLog) {
+                
+                TreeFallUtils.checkTreeFall(world, pos);
+                
+            } else if (block instanceof BlockLeaves) {
+                
+                TreeFallUtils.checkLeavesFall(world, pos);
+            }
+            
+            // Check for vertical-falling single blocks
             
             boolean shouldFall = false;
             IBlockState fallState = state;
@@ -114,6 +129,7 @@ public class BlockEventHandler {
                     block == Blocks.CLAY) {
 
                 shouldFall = airBelow;
+                
             }
             
             if (shouldFall) {
@@ -306,4 +322,20 @@ public class BlockEventHandler {
             event.getDrops().add(new ItemStack(Items.CLAY_BALL));
         }
     }
+    
+    /** Fells trees according to player facing. */
+    @SubscribeEvent
+    public void breakBlock(BreakEvent event) {
+        
+        IBlockState state = event.getState();
+        Block block = state.getBlock();
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        
+        if (block instanceof BlockLog) {
+
+            TreeFallUtils.fellTree(world, pos, event.getPlayer()
+                    .getHorizontalFacing().rotateY());
+        }
+    }    
 }

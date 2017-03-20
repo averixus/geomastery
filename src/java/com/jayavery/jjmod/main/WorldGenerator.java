@@ -40,6 +40,7 @@ import com.jayavery.jjmod.worldgen.WorldGenTreeBanana;
 import com.jayavery.jjmod.worldgen.WorldGenTreeOrange;
 import com.jayavery.jjmod.worldgen.WorldGenTreePear;
 import com.jayavery.jjmod.worldgen.WorldGenWheat;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -100,7 +101,7 @@ public class WorldGenerator implements IWorldGenerator {
 
     private void generateOverworldChunk(World world, Random rand,
             int xFromChunk, int zFromChunk) {
-
+        
         new WorldGenCoal(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenDiamond(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenEmerald(world, rand).generateChunk(xFromChunk, zFromChunk);
