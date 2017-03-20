@@ -2,6 +2,7 @@
 "parent": "block/block",
 "textures": {
     "softwood2": "jjmod:blocks/complex/softwood2",
+    "particle": "jjmod:blocks/complex/spruce1",
     "spruce1": "jjmod:blocks/complex/spruce1"
 },
 "elements": [ 

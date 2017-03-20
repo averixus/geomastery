@@ -74,6 +74,7 @@ item.jjmod:item_log.name=Log
 item.jjmod:item_thicklog.name=Thick Log
 item.jjmod:item_timber.name=Sawn Timber
 item.jjmod:item_mudbricks.name=Mud Bricks
+item.brick.name=Bricks
 item.jjmod:item_dirt.name=Loose Dirt
 item.jjmod:item_peat_dry.name=Dry Peat
 item.jjmod:item_peat_wet.name=Peat

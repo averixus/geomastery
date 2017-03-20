@@ -45,7 +45,7 @@ public class BlockRoof extends BlockNew implements IBuildingBlock {
                     return true;
                 }
                 
-                if (!(world.getBlockState(pos).getBlock()
+                if (!(world.getBlockState(offset).getBlock()
                         instanceof BlockRoof)) {
                     
                     break;
@@ -79,11 +79,11 @@ public class BlockRoof extends BlockNew implements IBuildingBlock {
     /** @return Whether the given position is a valid supported thatch block. */
     protected boolean isValidSupport(World world, BlockPos pos) {
         
-        boolean isThatch = world.getBlockState(pos).getBlock()
+        boolean isRoof = world.getBlockState(pos).getBlock()
                 instanceof BlockRoof;
         boolean isSupported = world.getBlockState(pos.down()).getBlock()
                 instanceof IBuildingBlock;
-        return isThatch && isSupported;
+        return isRoof && isSupported;
     }
     
     @Override
