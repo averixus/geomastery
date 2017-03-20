@@ -101,7 +101,7 @@ public class WorldGenerator implements IWorldGenerator {
 
     private void generateOverworldChunk(World world, Random rand,
             int xFromChunk, int zFromChunk) {
-
+        
         new WorldGenCoal(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenDiamond(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenEmerald(world, rand).generateChunk(xFromChunk, zFromChunk);

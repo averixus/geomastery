@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Jjmod.MODID, version = Jjmod.VERSION, name = Jjmod.NAME)
 public class Jjmod {
@@ -31,7 +32,7 @@ public class Jjmod {
 
     @EventHandler
     public void init(FMLInitializationEvent e) {
-        
+
         // Data structures, crafting recipes, register handler
         proxy.init();
     }
