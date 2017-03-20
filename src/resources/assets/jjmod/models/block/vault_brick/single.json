@@ -1,29 +1,36 @@
 {
+"parent": "block/block",
 "textures": {
-    
+    "bricktop4": "jjmod:blocks/complex/bricktop4",
+    "bricktop7": "jjmod:blocks/complex/bricktop7",
+    "brickside1": "jjmod:blocks/complex/brickside1",
+    "brickside2": "jjmod:blocks/complex/brickside2",
+    "brickside4": "jjmod:blocks/complex/brickside4",
+    "brickside5": "jjmod:blocks/complex/brickside5",
+    "particle": "jjmod:blocks/complex/brickside1"
 },
 "elements": [ 
 {
     "from": [ 0, 12, 0 ],
     "to": [ 16, 16, 12 ],
     "faces": {
-        "down":  { "uv": [ 16, 12, 0, 0 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 0, 0, 16, 12 ], "texture": "#brickvaulttop", "cullface": "up" },
-        "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#brickpaveside topflipped", "cullface": "north" },
-        "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#brickpaveside topflipped" },
-        "west":  { "uv": [ 0, 0, 12, 4 ], "texture": "#brickpaveside", "cullface": "west" },
-        "east":  { "uv": [ 4, 0, 16, 4 ], "texture": "#brickpaveside", "cullface": "east" }
+        "down":  { "uv": [ 16, 12, 0, 0 ], "texture": "#brickside2" },
+        "up":    { "uv": [ 0, 0, 16, 12 ], "texture": "#bricktop4", "cullface": "up" },
+        "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#brickside5", "cullface": "north" },
+        "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#brickside5" },
+        "west":  { "uv": [ 0, 0, 12, 4 ], "texture": "#brickside1", "cullface": "west" },
+        "east":  { "uv": [ 4, 0, 16, 4 ], "texture": "#brickside1", "cullface": "east" }
     }
 },
 {
     "from": [ 0, 4, 0 ],
     "to": [ 16, 12, 4 ],
     "faces": {
-        "down":  { "uv": [ 16, 4, 0, 0 ], "texture": "#brickstairs" },
-        "north": { "uv": [ 0, 4, 16, 12 ], "texture": "#wholebrickwall", "cullface": "north" },
-        "south": { "uv": [ 0, 4, 16, 12 ], "texture": "#wholebrickwall" },
-        "west":  { "uv": [ 0, 4, 4, 12 ], "texture": "#wholebrickwall", "cullface": "west" },
-        "east":  { "uv": [ 12, 4, 16, 12 ], "texture": "#wholebrickwall", "cullface": "east" }
+        "down":  { "uv": [ 16, 4, 0, 0 ], "texture": "#brickside2" },
+        "north": { "uv": [ 0, 4, 16, 12 ], "texture": "#brickside4", "cullface": "north" },
+        "south": { "uv": [ 0, 4, 16, 12 ], "texture": "#brickside4" },
+        "west":  { "uv": [ 0, 4, 4, 12 ], "texture": "#brickside4", "cullface": "west" },
+        "east":  { "uv": [ 12, 4, 16, 12 ], "texture": "#brickside4", "cullface": "east" }
     }
 },
 {
@@ -31,24 +38,23 @@
     "to": [ 14, 16, 12 ],
     "rotation": { "origin": [ 2, 16, 7 ], "axis": "x", "angle": 45 },
     "faces": {
-        "down":  { "uv": [ 14, 12, 2, 7 ], "texture": "#brickstairs" },
-        "up":    { "uv": [ 2, 7.5, 14, 12.5 ], "texture": "#brickpavetest" },
-        "north": { "uv": [ 2, 0, 14, 10 ], "texture": "#brickstairs" },
-        "south": { "uv": [ 2, 0, 14, 10 ], "texture": "#brickpaveside" },
-        "west":  { "uv": [ 0, 0, 5, 10 ], "texture": "#brickpaveside" },
-        "east":  { "uv": [ 0, 0, 5, 10 ], "texture": "#brickpaveside" }
+        "down":  { "uv": [ 14, 12, 2, 7 ], "texture": "#brickside2" },
+        "north": { "uv": [ 2, 0, 14, 10 ], "texture": "#brickside2" },
+        "south": { "uv": [ 2, 0, 14, 10 ], "texture": "#brickside1" },
+        "west":  { "uv": [ 0, 0, 5, 10 ], "texture": "#brickside1" },
+        "east":  { "uv": [ 0, 0, 5, 10 ], "texture": "#brickside1" }
     }
 },
 {
     "from": [ 1, 4, -1 ],
     "to": [ 15, 15, 0 ],
     "faces": {
-        "down":  { "uv": [ 1, -1, 15, 0 ], "texture": "#brickstairs", "cullface": "north" },
-        "up":    { "uv": [ 1, 0, 15, 1 ], "texture": "#brickvaulttoprotated", "cullface": "north" },
-        "north": { "uv": [ 1, 1, 15, 12 ], "texture": "#wholebrickwall", "cullface": "north" },
-        "south": { "uv": [ 1, 1, 15, 12 ], "texture": "#wholebrickwall", "cullface": "north" },
-        "west":  { "uv": [ 0, 1, 1, 12 ], "texture": "#wholebrickwall", "cullface": "north" },
-        "east":  { "uv": [ 0, 1, 1, 12 ], "texture": "#wholebrickwall", "cullface": "north" }
+        "down":  { "uv": [ 1, -1, 15, 0 ], "texture": "#brickside2", "cullface": "north" },
+        "up":    { "uv": [ 1, 0, 15, 1 ], "texture": "#bricktop7", "cullface": "north" },
+        "north": { "uv": [ 1, 1, 15, 12 ], "texture": "#brickside4", "cullface": "north" },
+        "south": { "uv": [ 1, 1, 15, 12 ], "texture": "#brickside4", "cullface": "north" },
+        "west":  { "uv": [ 0, 1, 1, 12 ], "texture": "#brickside4", "cullface": "north" },
+        "east":  { "uv": [ 0, 1, 1, 12 ], "texture": "#brickside4", "cullface": "north" }
     }
 }
 ]

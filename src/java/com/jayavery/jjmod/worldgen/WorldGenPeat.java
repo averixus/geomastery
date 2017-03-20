@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class WorldGenPeat extends WorldGenAbstract {
 
     /** Chance of generating per chunk. */
-    private static final float CHANCE = 0.5F;
+    private static final float CHANCE = 1F;
     
     /** State of the block to generate. */
     protected IBlockState block;
