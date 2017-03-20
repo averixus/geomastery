@@ -40,4 +40,10 @@ public class BlockFence extends net.minecraft.block.BlockFence
         
         return false;
     }
+    
+    @Override
+    public boolean isShelter() {
+        
+        return false;
+    }
 }

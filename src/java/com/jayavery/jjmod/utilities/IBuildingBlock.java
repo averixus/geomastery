@@ -11,4 +11,6 @@ public interface IBuildingBlock {
     public boolean isDouble();
     /** @return Whether this block can support beams. */
     public boolean supportsBeam();
+    /** @return Whether this block gives full rain shelter. */
+    public boolean isShelter();
 }

@@ -59,6 +59,12 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return true;
     }
     
+    @Override
+    public boolean isShelter() {
+        
+        return true;
+    }
+    
     /** Checks whether there is a valid support at the
      * given direction from this position.
      * @return Whether there is a valid support in the given direction. */

@@ -7,16 +7,21 @@ import com.jayavery.jjmod.crafting.CookingManager;
 import com.jayavery.jjmod.init.ModCaps;
 import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.packets.FurnacePacketClient;
+import com.jayavery.jjmod.tileentities.TEFurnaceClay.EnumPartClay;
+import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
 /** Abstract superclass TileEntity for furnace blocks. */
-public abstract class TEFurnaceAbstract extends TileEntity
-        implements ITickable {
+public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
+        extends TEMultiAbstract<E> implements ITickable {
 
     /** Comparator to move all empty stacks to the end of a list. */
     private static final Comparator<ItemStack> SORTER =
@@ -336,6 +341,7 @@ public abstract class TEFurnaceAbstract extends TileEntity
         this.cookSpent = compound.getInteger("cookSpent");
         this.cookEach = compound.getInteger("cookEach");
         this.fuelEach = compound.getInteger("fuelEach");
+  
     }
 
     @Override

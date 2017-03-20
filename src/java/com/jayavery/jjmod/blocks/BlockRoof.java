@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockRoof extends BlockNew {
+public class BlockRoof extends BlockNew implements IBuildingBlock {
 
     public BlockRoof(String name, float hardness, ToolType harvestTool) {
         
@@ -45,7 +45,8 @@ public class BlockRoof extends BlockNew {
                     return true;
                 }
                 
-                if (!this.isValidConnection(world, offset)) {
+                if (!(world.getBlockState(pos).getBlock()
+                        instanceof BlockRoof)) {
                     
                     break;
                 }
@@ -73,11 +74,6 @@ public class BlockRoof extends BlockNew {
                 world.destroyBlock(pos, true);
             }
         }
-    }
-    
-    protected boolean isValidConnection(World world, BlockPos pos) {
-        
-        return world.getBlockState(pos).getBlock() instanceof BlockRoof;
     }
     
     /** @return Whether the given position is a valid supported thatch block. */
@@ -118,5 +114,35 @@ public class BlockRoof extends BlockNew {
     public BlockRenderLayer getBlockLayer() {
 
         return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+
+    @Override
+    public boolean isLight() {
+
+        return false;
+    }
+
+    @Override
+    public boolean isHeavy() {
+
+        return false;
+    }
+
+    @Override
+    public boolean isDouble() {
+
+        return false;
+    }
+
+    @Override
+    public boolean supportsBeam() {
+
+        return false;
+    }
+
+    @Override
+    public boolean isShelter() {
+
+        return false;
     }
 }

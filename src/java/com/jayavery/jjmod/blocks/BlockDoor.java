@@ -31,8 +31,8 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
-    public static final PropertyEnum<EnumPart> PART =
-            PropertyEnum.<EnumPart>create("part", EnumPart.class);
+    public static final PropertyEnum<EnumPartDoor> PART =
+            PropertyEnum.<EnumPartDoor>create("part", EnumPartDoor.class);
     
     /** Supplier for the door item. */
     private Supplier<Item> item;
@@ -68,6 +68,12 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     }
     
     @Override
+    public boolean isShelter() {
+        
+        return false;
+    }
+    
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
@@ -80,7 +86,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         
         state = this.getActualState(state, world, pos);
         int facing = state.getValue(FACING).getHorizontalIndex();
-        EnumPart part = state.getValue(PART);
+        EnumPartDoor part = state.getValue(PART);
         boolean open = state.getValue(OPEN);
         
         if (!open) {
@@ -88,7 +94,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             return DOOR_CLOSED[facing];
         }
         
-        if (part == EnumPart.LT || part == EnumPart.LB) {
+        if (part == EnumPartDoor.LT || part == EnumPartDoor.LB) {
 
             return DOOR_OPEN_LEFT[facing];
             
@@ -136,7 +142,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             
             world.setBlockToAir(thisPos);
             
-            if (thisState.getValue(PART).shouldDrop()) {
+            if (thisState.getValue(PART).isTop()) {
                 
                 spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
             }
@@ -151,7 +157,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         
-        if (state.getValue(PART).shouldDrop()) {
+        if (state.getValue(PART).isTop()) {
        
             return this.item.get();
             
@@ -182,7 +188,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         if (leftState.getBlock() == this &&
                 leftState.getValue(FACING) == facing) {
             
-            state = state.withProperty(PART, isTop ? EnumPart.RT : EnumPart.RB);
+            state = state.withProperty(PART, isTop ? EnumPartDoor.RT : EnumPartDoor.RB);
       
         }
         
@@ -192,7 +198,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         if (rightState.getBlock() == this &&
                 rightState.getValue(FACING) == facing) {
             
-            state = state.withProperty(PART, isTop ? EnumPart.LT : EnumPart.LB);
+            state = state.withProperty(PART, isTop ? EnumPartDoor.LT : EnumPartDoor.LB);
         }
         
         return state;
@@ -210,11 +216,11 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         
         if ((meta & 4) > 0) {
             
-            state = state.withProperty(PART, EnumPart.ST);
+            state = state.withProperty(PART, EnumPartDoor.ST);
             
         } else {
             
-            state = state.withProperty(PART, EnumPart.SB);
+            state = state.withProperty(PART, EnumPartDoor.SB);
         }
         
         state = state.withProperty(FACING, EnumFacing.getHorizontal(meta));
@@ -247,15 +253,15 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     }
     
     /** Enum defining part and position of door blocks. */
-    public enum EnumPart implements IStringSerializable, IMultipart {
+    public enum EnumPartDoor implements IStringSerializable {
         
         SB("sb", false), ST("st", true), RB("rb", false),
         RT("rt", true), LB("lb", false), LT("lt", true);
         
-        private String name;
-        private boolean isTop;
+        private final String name;
+        private final boolean isTop;
         
-        private EnumPart(String name, boolean isTop) {
+        private EnumPartDoor(String name, boolean isTop) {
             
             this.isTop = isTop;
             this.name = name;
@@ -269,13 +275,6 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         
         /** @return Whether or not this part is the top of the door. */
         public boolean isTop() {
-            
-            return this.isTop;
-        }
-        
-        /** @return Whether or not this part should drop its item. */
-        @Override
-        public boolean shouldDrop() {
             
             return this.isTop;
         }

@@ -89,6 +89,12 @@ public class BlockWall extends BlockNew implements IBuildingBlock {
     }
     
     @Override
+    public boolean isShelter() {
+        
+        return true;
+    }
+    
+    @Override
     public int quantityDropped(Random rand) {
         
         return this.isDouble ? 2 : 1;

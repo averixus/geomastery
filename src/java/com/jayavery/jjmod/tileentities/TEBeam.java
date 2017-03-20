@@ -133,7 +133,7 @@ public class TEBeam extends TileEntity {
     }
     
     /** Enum defining parts of the whole Beam structure. */
-    public enum EnumPartBeam implements IStringSerializable, IMultipart {
+    public enum EnumPartBeam implements IStringSerializable {
         
         BACK("start"), MIDDLE("middle"), FRONT("end");
         
@@ -150,7 +150,6 @@ public class TEBeam extends TileEntity {
             return this.name;
         }
         
-        @Override
         public boolean shouldDrop() {
 
             return this == BACK;

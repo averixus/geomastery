@@ -51,6 +51,12 @@ public class BlockSlabDouble extends BlockSlabSingle implements IBuildingBlock {
     }
     
     @Override
+    public boolean isShelter() {
+        
+        return true;
+    }
+    
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         

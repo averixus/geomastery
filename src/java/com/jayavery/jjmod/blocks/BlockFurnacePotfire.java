@@ -30,7 +30,8 @@ public class BlockFurnacePotfire extends BlockComplexAbstract {
     }
     
     @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public int getLightValue(IBlockState state, IBlockAccess world,
+            BlockPos pos) {
         
         TileEntity te = world.getTileEntity(pos);
     

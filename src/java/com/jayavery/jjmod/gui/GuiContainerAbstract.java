@@ -19,13 +19,13 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     protected static final int NAME_X = 97;
     /** Y-position of centre of name. */
     protected static final int NAME_Y = 8;
-    /** X-position of source of progress arrow. */
+    /** X-position of source of furnace progress arrow. */
     protected static final int ARROW_SOURCE_X = 176;
-    /** Y-position of source of progress arrow. */
+    /** Y-position of source of furnace progress arrow. */
     protected static final int ARROW_SOURCE_Y = 14;
-    /** Height of progress arrow. */
+    /** Height of furnace progress arrow. */
     protected static final int ARROW_HEIGHT = 16;
-    /** Length of progress arrow. */
+    /** Length of furnace progress arrow. */
     protected static final int ARROW_LENGTH = 24;
     /** X-position of source of progress flame. */
     protected static final int FLAME_SOURCE_X = 176;
@@ -35,6 +35,16 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     protected static final int FLAME_HEIGHT = 13;
     /** Width of progress flame. */
     protected static final int FLAME_WIDTH = 14;
+    /** X-position of crafting durability bar. */
+    protected static final int DURABILITY_X = 9;
+    /** Y-position of crafting durability bar. */
+    protected static final int DURABILITY_Y = 17;
+    /** X-position of source of crafting durability bar. */
+    protected static final int DURABILITY_SOURCE_X = 176;
+    /** Width of crafting durability bar. */
+    protected static final int DURABILITY_WIDTH = 5;
+    /** Height of crafting durability bar. */
+    protected static final int DURABILITY_HEIGHT = 52;
     
     /** Name of this container. */
     protected final String name;

@@ -2,8 +2,8 @@ package com.jayavery.jjmod.tileentities;
 
 import com.jayavery.jjmod.init.ModRecipes;
 
-/** TileEntity for cookfire furnace. */
-public class TEFurnacePotfire extends TEFurnaceConstantAbstract {
+/** TileEntity for pot fire furnace. */
+public class TEFurnacePotfire extends TEFurnaceSingleAbstract {
 
     public TEFurnacePotfire() {
 

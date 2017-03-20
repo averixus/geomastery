@@ -1,10 +1,11 @@
 package com.jayavery.jjmod.container;
 
+import javax.annotation.Nullable;
 import com.jayavery.jjmod.blocks.BlockComplexAbstract;
 import com.jayavery.jjmod.container.slots.SlotCrafting;
 import com.jayavery.jjmod.crafting.CraftingManager;
 import com.jayavery.jjmod.init.ModCaps;
-import javax.annotation.Nullable;
+import com.jayavery.jjmod.tileentities.TECraftingAbstract;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
@@ -53,15 +54,18 @@ public class ContainerCrafting extends ContainerAbstract {
     private IInventory craftResult = new InventoryCraftResult();
     /** Crafting manager of this crafter. */
     private CraftingManager craftManager;
-    /** Position of this crafter. */
+    /** Position of this crafter. */    
     private BlockPos pos;
+    /** TileEntity of this crafter. */
+    public TECraftingAbstract tile;
 
-    public ContainerCrafting(EntityPlayer player, World world,
-            BlockPos pos, CraftingManager craftManager) {
+    public ContainerCrafting(EntityPlayer player, World world, BlockPos pos,
+            CraftingManager craftManager, TECraftingAbstract tile) {
 
         super(player, world);
         this.craftManager = craftManager;
         this.pos = pos;
+        this.tile = tile;
 
         // Inventory
         this.buildHotbar();

@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**TileEntity for campfire furnace. */
-public class TEFurnaceCampfire extends TEFurnaceConstantAbstract {
+public class TEFurnaceCampfire extends TEFurnaceSingleAbstract {
 
     public TEFurnaceCampfire() {
 

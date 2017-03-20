@@ -7,9 +7,12 @@ import com.jayavery.jjmod.tileentities.TEBed;
 import com.jayavery.jjmod.tileentities.TEBox;
 import com.jayavery.jjmod.tileentities.TECarcass;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer;
+import com.jayavery.jjmod.tileentities.TECraftingCandlemaker;
 import com.jayavery.jjmod.tileentities.TECraftingForge;
+import com.jayavery.jjmod.tileentities.TECraftingKnapping;
 import com.jayavery.jjmod.tileentities.TECraftingMason;
 import com.jayavery.jjmod.tileentities.TECraftingSawpit;
+import com.jayavery.jjmod.tileentities.TECraftingTextiles;
 import com.jayavery.jjmod.tileentities.TECraftingWoodworking;
 import com.jayavery.jjmod.tileentities.TEDrying;
 import com.jayavery.jjmod.tileentities.TEFurnaceCampfire;
@@ -43,6 +46,12 @@ public class ModTileEntities {
                 "crafting_sawpit");
         GameRegistry.registerTileEntity(TECraftingArmourer.class,
                 "crafting_armourer");
+        GameRegistry.registerTileEntity(TECraftingCandlemaker.class,
+                "crafting_candlemaker");
+        GameRegistry.registerTileEntity(TECraftingKnapping.class,
+                "crafting_knapping");
+        GameRegistry.registerTileEntity(TECraftingTextiles.class,
+                "crafting_textiles");
 
         GameRegistry.registerTileEntity(TEDrying.class, "drying");
         GameRegistry.registerTileEntity(TEBox.class, "box");

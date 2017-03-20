@@ -44,6 +44,12 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
         return true;
     }
     
+    @Override
+    public boolean isShelter() {
+        
+        return false;
+    }
+    
     /** Checks conditions required to place block. */
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {

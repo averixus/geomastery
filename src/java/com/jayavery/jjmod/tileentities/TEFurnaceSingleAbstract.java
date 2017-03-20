@@ -1,12 +1,14 @@
 package com.jayavery.jjmod.tileentities;
 
 import com.jayavery.jjmod.crafting.CookingManager;
+import com.jayavery.jjmod.utilities.EnumPartSingle;
 import net.minecraft.util.math.MathHelper;
 
 /** Abstract superclass TileEntity for constant cooking furnace blocks. */
-public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
+public abstract class TEFurnaceSingleAbstract extends
+        TEFurnaceAbstract<EnumPartSingle> {
 
-    public TEFurnaceConstantAbstract(CookingManager recipes) {
+    public TEFurnaceSingleAbstract(CookingManager recipes) {
         
         super(recipes, 1);
     }
@@ -69,5 +71,11 @@ public abstract class TEFurnaceConstantAbstract extends TEFurnaceAbstract {
         }
         
         this.sendProgressPacket();
+    }
+    
+    @Override
+    public EnumPartSingle partByOrdinal(int ordinal) {
+        
+        return EnumPartSingle.SINGLE;
     }
 }

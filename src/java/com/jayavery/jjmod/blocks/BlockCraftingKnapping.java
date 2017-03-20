@@ -1,8 +1,9 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
-import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
+import com.jayavery.jjmod.main.Jjmod;
+import com.jayavery.jjmod.tileentities.TECraftingKnapping;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
@@ -36,7 +37,7 @@ public class BlockCraftingKnapping extends BlockComplexAbstract {
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         
-        return null;
+        return new TECraftingKnapping();
     }
 
     @Override

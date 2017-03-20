@@ -64,9 +64,9 @@ public class ItemDoor extends ItemJj {
                 .withProperty(BlockDoor.FACING, playerFacing)
                 .withProperty(BlockDoor.OPEN, false);
         IBlockState bottomState = placeState
-                .withProperty(BlockDoor.PART, BlockDoor.EnumPart.SB);
+                .withProperty(BlockDoor.PART, BlockDoor.EnumPartDoor.SB);
         IBlockState topState = placeState
-                .withProperty(BlockDoor.PART, BlockDoor.EnumPart.ST);
+                .withProperty(BlockDoor.PART, BlockDoor.EnumPartDoor.ST);
 
         world.setBlockState(bottomPos, bottomState);
         world.setBlockState(topPos, topState);

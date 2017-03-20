@@ -66,14 +66,15 @@ public class FurnacePacketClient implements IMessage {
         buf.writeInt(this.z);
     }
     
-    public static class Handler
-    implements IMessageHandler<FurnacePacketClient, IMessage> {
+    public static class Handler implements
+            IMessageHandler<FurnacePacketClient, IMessage> {
         
         @Override
         public IMessage onMessage(FurnacePacketClient message,
                 MessageContext ctx) {
             
-            Jjmod.proxy.addMinecraftRunnable(() -> processMessage(message));
+            Jjmod.proxy.addMinecraftRunnable(() ->
+                    this.processMessage(message));
             return null;
         }
         
