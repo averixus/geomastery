@@ -545,7 +545,7 @@ public class ModItems {
         register(craftingArmourer = new ItemMultipart<EnumPartArmourer>("crafting_armourer", EnumPartArmourer.M, SoundType.METAL), true);
         
         register(furnaceClay = new ItemMultipart<EnumPartClay>("furnace_clay", EnumPartClay.BL, SoundType.STONE), true);
-        register(furnaceStone = new ItemMultipart<EnumPartStone>("furnace_stone", EnumPartStone.BL, SoundType.STONE), true);
+        register(furnaceStone = new ItemMultipart<EnumPartStone>("furnace_stone", EnumPartStone.BM, SoundType.STONE), true);
 
         register(arrowheadBronze = new ItemJj("arrowhead_bronze", 20));
         register(arrowheadCopper = new ItemJj("arrowhead_copper", 20));

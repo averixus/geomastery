@@ -36,6 +36,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -323,8 +324,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         float biomeVar = ModBiomes.getTemp(biome);
         temp += biomeVar;
         
-        DecimalFormat df = new DecimalFormat("#.#");
-        String print = "Biome base: " + temp + ", ";
+        DecimalFormat df = new DecimalFormat("0.0");
+        StringBuilder message = new StringBuilder("Biome base: " + df.format(biomeVar));
 
         // Altitude
         float heightVar = 0;
@@ -336,22 +337,17 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += heightVar;
-
-        print += "altitude adds " + df.format(heightVar) + ", ";
+        message.append(", altitude adds " + df.format(heightVar));
         
         // Time of day
-        float timeVar;
-        long time = world.getWorldTime();
-        
-        if ((time > 0 && time <= 3000) || (time > 12000 && time <= 18000)) {
+        float timeVar = 0;
+        long time = world.getWorldTime() % 24000;
 
-            timeVar = 0;
-            
-        } else if (time > 6000 && time <= 1200) {
+        if (time > 6000 && time <= 12000) {
 
             timeVar = 1;
             
-        } else {
+        } else if (time > 18000) {
 
             timeVar = -1;
             
@@ -365,9 +361,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += timeVar;
-        
-        print += "time adds " + df.format(timeVar) + ", ";
-        
+        message.append(", time adds " + df.format(timeVar));
+                
         // Cave climate
         boolean isCave = true;
         
@@ -396,7 +391,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         if (isCave) {
             
             temp = 0;
-            print = "Cave base: 0, ";
+            message = new StringBuilder("Temp base: 0");
         }
 
         // Wetness
@@ -414,7 +409,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
 
         temp += waterVar;
-        print += "wetness adds " + df.format(waterVar) + ", ";
+        message.append(", wetness adds " + df.format(waterVar));
 
         // Clothing
         float clothesVar = 0;
@@ -442,7 +437,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += clothesVar;
-        print += "clothing adds " + df.format(clothesVar) + ", ";
+        message.append(", clothing adds " + df.format(clothesVar));
 
         // Heating blocks
         double fireVar = 0;
@@ -505,32 +500,10 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += fireVar;
-        print += "heat blocks add " + df.format(fireVar);
+        message.append(", heat blocks add " + df.format(fireVar));
 
         // Define stage
-        if (temp < 0) {
-            
-            this.tempStage = TempStage.COLD;
-            
-        } else if (temp < 2.5) {
-            
-            this.tempStage = TempStage.COOL;
-            
-        } else if (temp < 5.5) {
-            
-            this.tempStage = TempStage.OK;
-            
-        } else if (temp < 8) {
-            
-            this.tempStage = TempStage.WARM;
-            
-        } else {
-            
-            this.tempStage = TempStage.HOT;
-        }
-        
-        print += ". Final temp " + df.format(temp) + " is " + this.tempStage;
-     //   System.out.println(print);
+        this.tempStage = TempStage.fromTemp(temp);
 
         if ((this.tempStage == TempStage.HOT ||
                 this.tempStage == TempStage.COLD) && this.damageTimer == 0) {
@@ -543,6 +516,8 @@ public class DefaultCapPlayer implements ICapPlayer {
             this.damageTimer--;
         }
            
+        message.append(". Final temp " + df.format(temp) + " is " + this.tempStage);
+        this.player.sendMessage(new TextComponentTranslation(message.toString()));
         return oldStage != this.tempStage;
     }
     

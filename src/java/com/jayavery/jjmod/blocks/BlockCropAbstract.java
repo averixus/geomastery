@@ -71,20 +71,20 @@ public abstract class BlockCropAbstract extends BlockNew
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
-                
+        System.out.println("update tick crop");        
         if (!this.canStay(world, pos)) {
-            
+            System.out.println("can't stay");
             world.setBlockToAir(pos);
         }
         
         if (!this.canGrow(world, pos, state) &&
                 rand.nextFloat() <= deathChance) {
-            
+            System.out.println("can't grow");
             Block below = world.getBlockState(pos.down()).getBlock();
             
             if (below == Blocks.FARMLAND || below == Blocks.GRASS ||
                     below == Blocks.DIRT) {
-                
+
                 world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState());
             
             } else {
@@ -93,7 +93,7 @@ public abstract class BlockCropAbstract extends BlockNew
             }
             
         } else if (rand.nextFloat() <= this.growthChance) {
-            
+            System.out.println("can grow");
             this.grow(world, pos, state, rand);
         }
     }

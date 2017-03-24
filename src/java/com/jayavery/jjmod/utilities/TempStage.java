@@ -16,6 +16,31 @@ public enum TempStage {
                 name + ".png");
     }
     
+    /** @return The stage the given temperature belongs to. */
+    public static TempStage fromTemp(float temp) {
+        
+        if (temp <= 0) {
+            
+            return COLD;
+            
+        } else if (temp <= 1.5) {
+            
+            return COOL;
+            
+        } else if (temp <=3.5) {
+            
+            return OK;
+            
+        } else if (temp <= 5) {
+            
+            return WARM;
+            
+        } else {
+            
+            return HOT;
+        }
+    }
+    
     /** @return The ResourceLocation of the icon for this Stage. */
     public ResourceLocation toResourceLocation() {
         

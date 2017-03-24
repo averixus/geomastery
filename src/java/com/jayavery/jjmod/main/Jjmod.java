@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class Jjmod {
 
     public static final String MODID = "jjmod";
-    public static final String VERSION = "0.3";
+    public static final String VERSION = "0.3.1";
     public static final String NAME = "JJ Mod";
 
     @SidedProxy(clientSide = "com.jayavery.jjmod.main.ClientProxy",

@@ -23,7 +23,7 @@ import net.minecraft.world.biome.BiomeTaiga;
 public class ModBiomes {
     
     /** Map of biome base temperatures */
-    private static final Map<Biome, Integer> BIOMES = Maps.newHashMap();
+    private static final Map<Biome, Float> BIOMES = Maps.newHashMap();
     
     public static void init() {
         
@@ -35,14 +35,14 @@ public class ModBiomes {
     }
     
     /** @return The base temp for the biome */
-    public static int getTemp(Biome biome) {
+    public static float getTemp(Biome biome) {
         
         return BIOMES.get(biome);
     }
     
     /** Assigns a temperature to the biome.
      * @return The base temperature for the biome */
-    private static int chooseTemp(Biome biome) {
+    private static float chooseTemp(Biome biome) {
         
         if (biome == Biomes.MUTATED_ICE_FLATS) {
             
@@ -60,40 +60,57 @@ public class ModBiomes {
         }
         
         if (biome == Biomes.COLD_TAIGA || biome == Biomes.COLD_TAIGA_HILLS ||
-                biome == Biomes.MUTATED_TAIGA_COLD ||
-                biome == Biomes.COLD_BEACH) {
+                biome == Biomes.MUTATED_TAIGA_COLD) {
             
             return -1;
         }
         
-        if (biome instanceof BiomeHills || biome == Biomes.STONE_BEACH ||
+        if (biome == Biomes.COLD_BEACH) {
+            
+            return -0.5F;
+        }
+        
+        if (biome instanceof BiomeHills ||
                 biome instanceof BiomeTaiga) {
             
             return 0;
         }
         
+        if (biome == Biomes.STONE_BEACH) {
+            
+            return 0.5F;
+        }
+        
         if (biome == Biomes.BIRCH_FOREST ||
-                biome == Biomes.BIRCH_FOREST_HILLS ||
-                biome instanceof BiomeRiver) {
+                biome == Biomes.BIRCH_FOREST_HILLS) {
             
             return 1;
         }
         
-        if (biome instanceof BiomeOcean || biome instanceof BiomeForest) {
+        if (biome instanceof BiomeOcean || biome instanceof BiomeForest
+                || biome instanceof BiomeRiver) {
             
             return 2;
         }
         
-        if (biome instanceof BiomePlains || biome instanceof BiomeSwamp ||
-                biome instanceof BiomeBeach) {
+        if (biome instanceof BiomePlains) {
+            
+            return 2.5F;
+        }
+        
+        if (biome instanceof BiomeSwamp || biome instanceof BiomeBeach) {
             
             return 3;
         }
         
-        if (biome instanceof BiomeMushroomIsland ||
-                biome instanceof BiomeJungle) {
+        if (biome instanceof BiomeMushroomIsland) {
 
             return 4;
+        }
+        
+        if (biome instanceof BiomeJungle) {
+            
+            return 4.5F;
         }
         
         if (biome instanceof BiomeSavanna) {
