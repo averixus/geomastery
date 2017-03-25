@@ -249,10 +249,7 @@ public class BlockEventHandler {
                 event.getDrops().add(new ItemStack(Items.FLINT));
             }
 
-            if (world.rand.nextInt(8) == 0) {
-
-                event.getDrops().add(new ItemStack(ModItems.dirt));
-            }
+            event.getDrops().add(new ItemStack(ModItems.looseDirt));
         }
         
         if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {
@@ -303,12 +300,13 @@ public class BlockEventHandler {
         if (block == Blocks.SAND) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.sand, 4));
+            event.getDrops().add(new ItemStack(ModItems.looseSand, 1));
         }
         
         if (block == Blocks.GRAVEL) {
             
             event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.looseGravel));
             
             if (world.rand.nextInt(4) == 0) {
             
@@ -319,7 +317,7 @@ public class BlockEventHandler {
         if (block == Blocks.CLAY) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(Items.CLAY_BALL));
+            event.getDrops().add(new ItemStack(ModItems.looseClay));
         }
     }
     

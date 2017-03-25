@@ -515,11 +515,20 @@ public class DefaultCapPlayer implements ICapPlayer {
 
             this.damageTimer--;
         }
-           
-        message.append(". Final temp " + df.format(temp) + " is " + this.tempStage);
-        this.player.sendMessage(new TextComponentTranslation(message.toString()));
+          
+        
+        if (this.messageCounter >= 150) {
+            
+            message.append(". Final temp " + df.format(temp) + " is " + this.tempStage);
+            this.player.sendMessage(new TextComponentTranslation(message.toString()));
+            this.messageCounter = 0;
+        }
+        
+        this.messageCounter++;
         return oldStage != this.tempStage;
     }
+    
+    private int messageCounter = 0;
     
     /** Heal the player if possible, using up fullest FoodTypes first. */
     private void tickHeal() {

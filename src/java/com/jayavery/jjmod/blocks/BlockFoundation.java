@@ -60,7 +60,7 @@ public class BlockFoundation extends BlockNew implements IBuildingBlock {
             
             Block block = world.getBlockState(pos.offset(facing)).getBlock();
             
-            if (ModBlocks.LIGHT.contains(block) ||
+            if (block == this || ModBlocks.LIGHT.contains(block) ||
                     ModBlocks.HEAVY.contains(block)) {
                 
                 count++;

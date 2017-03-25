@@ -26,6 +26,7 @@ import com.jayavery.jjmod.items.ItemFloor;
 import com.jayavery.jjmod.items.ItemHoe;
 import com.jayavery.jjmod.items.ItemHuntingknife;
 import com.jayavery.jjmod.items.ItemJj;
+import com.jayavery.jjmod.items.ItemLooseblock;
 import com.jayavery.jjmod.items.ItemMachete;
 import com.jayavery.jjmod.items.ItemMultipart;
 import com.jayavery.jjmod.items.ItemPickaxe;
@@ -172,14 +173,19 @@ public class ModItems {
     public static ItemJj thicklog;
     public static ItemJj timber;
 
-    public static ItemJj dirt;
+    public static ItemLooseblock looseDirt;
+    public static ItemLooseblock looseGravel;
+    public static ItemLooseblock looseSand;
+    public static ItemLooseblock looseClay;
+    
+    public static ItemJj clay;
+
     public static ItemJj mudbricks;
     public static ItemJj peatDry;
     public static ItemJj peatWet;
     
     public static ItemJj salt;
     public static ItemJj chalk;
-    public static ItemJj clay;
     
     public static ItemJj oreTin;
     public static ItemJj oreCopper;
@@ -357,8 +363,6 @@ public class ModItems {
     public static ItemSlab slabStone;
     public static ItemSlab slabBrick;
     
-    public static ItemJj sand;
-
     public static void preInit() {
 
         register(banana = new ItemEdibleDecayable("banana",
@@ -515,7 +519,12 @@ public class ModItems {
         register(thicklog = new ItemJj("thicklog"));
         register(timber = new ItemJj("timber", 6));
 
-        register(dirt = new ItemJj("dirt", 1));
+        register(looseDirt = new ItemLooseblock("loose_dirt", Blocks.DIRT));
+        register(looseClay = new ItemLooseblock("loose_clay", Blocks.CLAY));
+        register(looseSand = new ItemLooseblock("loose_sand", Blocks.SAND));
+        register(looseGravel = new ItemLooseblock("loose_gravel",
+                Blocks.GRAVEL));
+        
         register(mudbricks = new ItemJj("mudbricks"));
         register(peatDry = new ItemJj("peat_dry"));
         register(peatWet = new ItemJj("peat_wet"));
@@ -796,9 +805,7 @@ public class ModItems {
                 ModBlocks.slabStoneSingle, ModBlocks.slabStoneDouble));
         register(slabBrick = new ItemSlab("slab_brick", 2,
                 ModBlocks.slabBrickSingle, ModBlocks.slabBrickDouble));
-        
-        register(sand = new ItemJj("sand"));
-        
+                
         Items.STICK.setMaxStackSize(12);
         Items.BONE.setMaxStackSize(6);
         Items.FLINT.setMaxStackSize(6);
@@ -806,7 +813,6 @@ public class ModItems {
         Items.COAL.setMaxStackSize(1);
         Items.RABBIT_HIDE.setMaxStackSize(4);
         Items.REEDS.setMaxStackSize(5);
-        Items.CLAY_BALL.setMaxStackSize(1);
         Items.BRICK.setMaxStackSize(1);
     }
     

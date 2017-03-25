@@ -25,7 +25,7 @@ public class BlockMaterial extends Material {
             false, true, false, true, false);
     /** Water plant material. */
     public static final BlockMaterial WATER_PLANT =
-            new BlockMaterial(MapColor.WATER, true, true,
+            new BlockMaterial(MapColor.WATER, false, true,
             false, true, false, true, false);
     /** Carcass material. */
     public static final BlockMaterial CARCASS =
@@ -41,7 +41,7 @@ public class BlockMaterial extends Material {
             false, true, true, false, true);
     /** Blockfruit material. */
     public static final BlockMaterial FRUIT =
-            new BlockMaterial(MapColor.GREEN, true, true,
+            new BlockMaterial(MapColor.GREEN, false, true,
             true, true, false, false, false);
     
     /** Whether this material is solid. */

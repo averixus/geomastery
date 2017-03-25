@@ -45,6 +45,7 @@ public class CommonProxy {
         
         GameRegistry.registerWorldGenerator(WORLDGEN, 0);
         MinecraftForge.TERRAIN_GEN_BUS.register(WORLDGEN);
+        MinecraftForge.ORE_GEN_BUS.register(WORLDGEN);
         MinecraftForge.EVENT_BUS.register(BLOCK);
         MinecraftForge.EVENT_BUS.register(ENTITY);
         MinecraftForge.EVENT_BUS.register(PLAYER);

@@ -89,7 +89,7 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(Items.FISHING_ROD),
                 "SS ", " TT", 'S', Items.STICK, 'T', ModItems.twineHemp);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.spearWood),
-                "S", "S", "S", 'S', Items.STICK);
+                "S", "S", 'S', Items.STICK);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bowCrude),
                 "STS", " S ", 'S', Items.STICK, 'T', ModItems.twineHemp);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5),
@@ -115,8 +115,8 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.wallMud, 2),
                 "M", "M", 'M', ModItems.mudbricks);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.clay, 6),
-                "C", 'C', Items.CLAY_BALL);
-        INVENTORY.addShapedRecipe(new ItemStack(Items.CLAY_BALL),
+                "C", 'C', ModItems.looseClay);
+        INVENTORY.addShapedRecipe(new ItemStack(ModItems.looseClay),
                 "CCC", "CCC", 'C', ModItems.clay);
         
         for (Item skin : SKINS_ALL) {
@@ -605,7 +605,7 @@ public class ModRecipes {
     /** Adds all recipes to drying rack. */
     private static void setupDrying() {
 
-        DRYING.addCookingRecipe(new ItemStack(ModItems.dirt),
+        DRYING.addCookingRecipe(new ItemStack(ModItems.looseDirt),
                 new ItemStack(ModItems.mudbricks), 4000);
         DRYING.addCookingRecipe(new ItemStack(ModItems.peatWet),
                 new ItemStack(ModItems.peatDry), 4000);

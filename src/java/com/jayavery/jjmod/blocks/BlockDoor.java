@@ -77,7 +77,25 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        return DOOR_CLOSED[state.getValue(FACING).getHorizontalIndex()];
+       // return DOOR_CLOSED[state.getValue(FACING).getHorizontalIndex()];
+        state = this.getActualState(state, world, pos);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        EnumPartDoor part = state.getValue(PART);
+        boolean open = state.getValue(OPEN);
+        
+        if (!open) {
+
+            return DOOR_CLOSED[facing];
+        }
+        
+        if (part == EnumPartDoor.LT || part == EnumPartDoor.LB) {
+
+            return DOOR_OPEN_LEFT[facing];
+            
+        } else {
+
+            return DOOR_OPEN_RIGHT[facing];
+        }
     }
     
     @Override

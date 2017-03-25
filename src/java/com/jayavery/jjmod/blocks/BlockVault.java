@@ -217,7 +217,8 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
                 
             case LINTEL:
             default:
-                return;
+                boxes = new AxisAlignedBB[] {FULL_BLOCK_AABB};
+                break;
         }
         
         for (AxisAlignedBB box : boxes) {
