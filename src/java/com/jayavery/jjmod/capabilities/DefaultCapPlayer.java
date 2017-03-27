@@ -342,15 +342,30 @@ public class DefaultCapPlayer implements ICapPlayer {
         // Time of day
         float timeVar = 0;
         long time = world.getWorldTime() % 24000;
-
-        if (time > 6000 && time <= 12000) {
-
+        
+        if (time > 3000 && time <= 6000) {
+            // 9 til 12 am
+            timeVar = 0.5F;
+            
+        } else if (time > 6000 && time <= 9000) {
+            // 12 til 3pm
             timeVar = 1;
             
-        } else if (time > 18000) {
-
+        } else if (time > 9000 && time <= 12000) {
+            // 3 til 6pm
+            timeVar = 0.5F;
+            
+        } else if (time > 15000 && time <= 18000) {
+            // 9 til 12pm
+            timeVar = -0.5F;
+            
+        } else if (time > 18000 && time <= 21000) {
+            // 12 til 3am
             timeVar = -1;
             
+        } else if (time > 21000) {
+            // 3 til 6am
+            timeVar = -0.5F;
         }
         
         if (biomeVar > 3 && time > 4000 && time <= 8000 &&

@@ -5,17 +5,16 @@ import com.jayavery.jjmod.entities.FallingTreeBlock;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemJj;
 import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -82,19 +81,18 @@ public class EntityEventHandler {
     /** Reduces animal spawns by half. */
     @SubscribeEvent
     public void checkSpawn(CheckSpawn event) {
-        
+
         EntityLivingBase entity  = event.getEntityLiving();
         boolean canSpawn = true;
         
-        if (entity instanceof IAnimals) {
+        if (entity instanceof EntityAnimal) {
             
-            if (entity.world.rand.nextInt(1) == 0) {
+            if (entity.world.rand.nextInt(2) == 0) {
                 
                 canSpawn = false;
-                
             }
         }
-        
+
         event.setResult(canSpawn ? Result.DEFAULT : Result.DENY);
     }
     
