@@ -1,6 +1,5 @@
 package com.jayavery.jjmod.capabilities;
 
-import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,7 +36,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -324,9 +323,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         float biomeVar = ModBiomes.getTemp(biome);
         temp += biomeVar;
         
-        DecimalFormat df = new DecimalFormat("0.0");
-        StringBuilder message = new StringBuilder("Biome base: " + df.format(biomeVar));
-
         // Altitude
         float heightVar = 0;
         float belowSea = (float) (64 - this.player.posY);
@@ -337,7 +333,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += heightVar;
-        message.append(", altitude adds " + df.format(heightVar));
         
         // Time of day
         float timeVar = 0;
@@ -376,7 +371,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += timeVar;
-        message.append(", time adds " + df.format(timeVar));
                 
         // Cave climate
         boolean isCave = true;
@@ -406,7 +400,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         if (isCave) {
             
             temp = 0;
-            message = new StringBuilder("Temp base: 0");
         }
 
         // Wetness
@@ -424,7 +417,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
 
         temp += waterVar;
-        message.append(", wetness adds " + df.format(waterVar));
 
         // Clothing
         float clothesVar = 0;
@@ -452,7 +444,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += clothesVar;
-        message.append(", clothing adds " + df.format(clothesVar));
 
         // Heating blocks
         double fireVar = 0;
@@ -491,7 +482,8 @@ public class DefaultCapPlayer implements ICapPlayer {
                         fireVar = Math.max(fireVar, heat);
                         
                     } else if (block == ModBlocks.torchTallow ||
-                            block == ModBlocks.torchTar) {
+                            block == ModBlocks.torchTar ||
+                            block == ModBlocks.invisibleLight) {
 
                         double distance = Math.ceil(Math.sqrt((x * x) +
                                 (y * y) + (z * z)));
@@ -515,7 +507,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += fireVar;
-        message.append(", heat blocks add " + df.format(fireVar));
 
         // Define stage
         this.tempStage = TempStage.fromTemp(temp);
@@ -530,21 +521,10 @@ public class DefaultCapPlayer implements ICapPlayer {
 
             this.damageTimer--;
         }
-          
         
-        if (this.messageCounter >= 150) {
-            
-            message.append(". Final temp " + df.format(temp) + " is " + this.tempStage);
-            this.player.sendMessage(new TextComponentTranslation(message.toString()));
-            this.messageCounter = 0;
-        }
-        
-        this.messageCounter++;
         return oldStage != this.tempStage;
     }
-    
-    private int messageCounter = 0;
-    
+        
     /** Heal the player if possible, using up fullest FoodTypes first. */
     private void tickHeal() {
    
