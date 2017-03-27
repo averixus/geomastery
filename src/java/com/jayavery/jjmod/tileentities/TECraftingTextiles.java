@@ -72,17 +72,19 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            boolean broken = false;
             Block block = ModBlocks.craftingTextiles;
+            Block below = world.getBlockState(pos.down()).getBlock();
+            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
+                    ModBlocks.HEAVY.contains(below) || below == block);
             
             if (this == FRONT) {
 
-                broken = world.getBlockState(pos.offset(facing)).getBlock()
+                broken |= world.getBlockState(pos.offset(facing)).getBlock()
                         != block;
                 
             } else {
 
-                broken = world.getBlockState(pos.offset(facing.getOpposite()))
+                broken |= world.getBlockState(pos.offset(facing.getOpposite()))
                         .getBlock() != block;
             }
             
@@ -110,23 +112,34 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
                 
                 BlockPos frontPos = pos;
                 BlockPos backPos = frontPos.offset(facing);
+                
+                Block block = ModBlocks.craftingTextiles;
+                BlockPos[] positions = {frontPos, backPos};
+                boolean valid = true;
+                
+                for (BlockPos position : positions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    Block blockBelow = world.getBlockState(position.down())
+                            .getBlock();
+                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
+                            ModBlocks.HEAVY.contains(blockBelow) ||
+                            blockBelow == block;
+                    
+                    if (!replaceable || !foundation) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
 
-                // Check replaceable
-                IBlockState frontState = world.getBlockState(frontPos);
-                Block frontBlock = frontState.getBlock();
-                boolean frontReplaceable = frontBlock
-                        .isReplaceable(world, frontPos);
-
-                IBlockState backState = world.getBlockState(backPos);
-                Block backBlock = backState.getBlock();
-                boolean backReplaceable = backBlock
-                        .isReplaceable(world, backPos);
-
-                if (frontReplaceable && backReplaceable) {
+                if (valid) {
 
                     // Place all blocks
-                    IBlockState placeState = ModBlocks
-                            .craftingTextiles.getDefaultState();
+                    IBlockState placeState = block.getDefaultState();
                     
                     world.setBlockState(backPos, placeState);
                     world.setBlockState(frontPos, placeState);

@@ -298,6 +298,8 @@ public class ModRecipes {
                 "TTT", 'T', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.roofPole, 2), 
                 "TTT", "T T", 'T', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
+                "LLL", "LLL", 'L', ModItems.log);
         
         for (Item metal : METALS) {
             
@@ -526,8 +528,6 @@ public class ModRecipes {
                 "LLL", "L  ", 'L', ModItems.log);
         SAWPIT.addShapedRecipe(new ItemStack(ModItems.beamLong),
                 "TTT", "TTT", "TT ", 'T', ModItems.thicklog);
-        SAWPIT.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
-                "LLL", "LLL", 'L', ModItems.log);
     }
 
     /** Adds all recipes to campfire and higher levels. */

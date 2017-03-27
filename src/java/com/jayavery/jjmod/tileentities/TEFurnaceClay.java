@@ -80,34 +80,36 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            boolean broken = false;
             Block block = ModBlocks.furnaceClay;
+            Block below = world.getBlockState(pos.down()).getBlock();
+            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
+                    ModBlocks.HEAVY.contains(below) || below == block);
             
             switch (this) {
                 
                 case BL: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
                     break;
                 }
 
                 case BR: {
 
-                    broken = world.getBlockState(pos.up()).getBlock() != block;
+                    broken |= world.getBlockState(pos.up()).getBlock() != block;
                     break;
                 }
 
                 case TR: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
                     break;
                 }
 
                 case TL: {
 
-                    broken = world.getBlockState(pos.down()).getBlock()
+                    broken |= world.getBlockState(pos.down()).getBlock()
                             != block;
                     break;
                 }
@@ -148,30 +150,48 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
                 BlockPos posBR = posBL.offset(facing.rotateY());
                 BlockPos posTL = posBL.up();
                 BlockPos posTR = posBR.up();
+                
+                Block block = ModBlocks.furnaceClay;
+                BlockPos[] basePositions = {posBL, posBR};
+                BlockPos[] upperPositions = {posTL, posTR};
+                boolean valid = true;
+                
+                for (BlockPos position : basePositions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    Block blockBelow = world.getBlockState(position.down())
+                            .getBlock();
+                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
+                            ModBlocks.HEAVY.contains(blockBelow) ||
+                            blockBelow == block;
+                    
+                    if (!replaceable || !foundation) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
+                
+                for (BlockPos position : upperPositions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    if (!replaceable) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
 
-                // Check replaceable
-                IBlockState stateBL = world.getBlockState(posBL);
-                Block blockBL = stateBL.getBlock();
-                boolean replaceableBL = blockBL.isReplaceable(world, posBL);
-
-                IBlockState stateBR = world.getBlockState(posBR);
-                Block blockBR = stateBR.getBlock();
-                boolean replaceableBR = blockBR.isReplaceable(world, posBR);
-
-                IBlockState stateTL = world.getBlockState(posTL);
-                Block blockTL = stateTL.getBlock();
-                boolean replaceableTL = blockTL.isReplaceable(world, posTL);
-
-                IBlockState stateTR = world.getBlockState(posTR);
-                Block blockTR = stateTR.getBlock();
-                boolean replaceableTR = blockTR.isReplaceable(world, posTR);
-
-                if (replaceableBL && replaceableBR &&
-                        replaceableTL && replaceableTR) {
+                if (valid) {
 
                     // Place all
-                    IBlockState placeState = ModBlocks
-                            .furnaceClay.getDefaultState();
+                    IBlockState placeState = block.getDefaultState();
     
                     world.setBlockState(posBL, placeState);
                     world.setBlockState(posBR, placeState);

@@ -1,6 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
+import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.tileentities.TEBox;
@@ -56,11 +57,21 @@ public class BlockBox extends BlockComplexAbstract {
     }
     
     @Override
-    public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int data) {
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
         
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-        return tileentity == null ? false :
-            tileentity.receiveClientEvent(id, data);
+        Block below = world.getBlockState(pos.down()).getBlock();
+        return ModBlocks.LIGHT.contains(below) ||
+                ModBlocks.HEAVY.contains(below);
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+        
+        if (!this.canPlaceBlockAt(world, pos)) {
+            
+            world.destroyBlock(pos, true);
+        }
     }
     
     @Override
@@ -100,8 +111,4 @@ public class BlockBox extends BlockComplexAbstract {
         
         return new BlockStateContainer(this, new IProperty[0]);
     }
-    
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {}
 }

@@ -4,12 +4,11 @@ import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
+import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -76,14 +75,16 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            boolean broken = false;
             Block block = ModBlocks.craftingArmourer;
+            Block below = world.getBlockState(pos.down()).getBlock();
+            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
+                    ModBlocks.HEAVY.contains(below) || below == block);
             
             switch (this) {
                 
                 case T: {
                     
-                    broken = world.getBlockState(pos.down())
+                    broken |= world.getBlockState(pos.down())
                             .getBlock() != block;
                     break;
                 }
@@ -95,7 +96,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
                     boolean brokenM = world.getBlockState(pos
                             .offset(facing.rotateY())).getBlock() != block;
                     
-                    broken = brokenM || brokenT;
+                    broken |= brokenM || brokenT;
                     break;
                 }
                 
@@ -106,13 +107,13 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
                     boolean brokenR = world.getBlockState(pos
                             .offset(facing.rotateY())).getBlock() != block;
                     
-                    broken = brokenL || brokenR;
+                    broken |= brokenL || brokenR;
                     break;
                 }
                 
                 case R: {
                     
-                    broken = world.getBlockState(pos
+                    broken |= world.getBlockState(pos
                             .offset(facing.rotateYCCW()))
                             .getBlock() != block;
                     break;
@@ -169,29 +170,47 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
                 BlockPos posT = posL.up();
                 BlockPos posR = posM.offset(facing.rotateY());
                 
-                // Check replaceable
-                IBlockState stateT = world.getBlockState(posT);
-                Block blockT = stateT.getBlock();
-                boolean replaceableT = blockT.isReplaceable(world, posT);
+                Block block = ModBlocks.craftingArmourer;
+                BlockPos[] basePositions = {posM, posL, posR};
+                BlockPos[] upperPositions = {posT};
+                boolean valid = true;
                 
-                IBlockState stateL = world.getBlockState(posL);
-                Block blockL = stateL.getBlock();
-                boolean replaceableL = blockL.isReplaceable(world, posL);
+                for (BlockPos position : basePositions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    Block blockBelow = world.getBlockState(position.down())
+                            .getBlock();
+                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
+                            ModBlocks.HEAVY.contains(blockBelow) ||
+                            blockBelow == block;
+                    
+                    if (!replaceable || !foundation) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
                 
-                IBlockState stateM = world.getBlockState(posM);
-                Block blockM = stateM.getBlock();
-                boolean replaceableM = blockM.isReplaceable(world, posM);
+                for (BlockPos position : upperPositions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    if (!replaceable) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
                 
-                IBlockState stateR = world.getBlockState(posR);
-                Block blockR = stateR.getBlock();
-                boolean replaceableR = blockR.isReplaceable(world, posR);
-                
-                if (replaceableT && replaceableL &&
-                        replaceableM && replaceableR) {
+                if (valid) {
                 
                     // Place all
-                    IBlockState placeState = ModBlocks
-                            .craftingArmourer.getDefaultState();
+                    IBlockState placeState = block.getDefaultState();
                     
                     world.setBlockState(posT, placeState);
                     world.setBlockState(posL, placeState);

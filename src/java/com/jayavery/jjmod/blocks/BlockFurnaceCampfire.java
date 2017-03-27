@@ -57,9 +57,23 @@ public class BlockFurnaceCampfire extends BlockComplexAbstract {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {}
+    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+        
+        Block below = world.getBlockState(pos.down()).getBlock();
+        return ModBlocks.LIGHT.contains(below) ||
+                ModBlocks.HEAVY.contains(below);
+    }
 
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+        
+        if (!this.canPlaceBlockAt(world, pos)) {
+            
+            world.destroyBlock(pos, true);
+        }
+    }
+    
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {

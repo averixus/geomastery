@@ -78,8 +78,10 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            boolean broken = false;
             Block block = ModBlocks.craftingMason;
+            Block below = world.getBlockState(pos.down()).getBlock();
+            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
+                    ModBlocks.HEAVY.contains(below) || below == block);
             
             switch (this) {
                 
@@ -89,34 +91,34 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
                             .rotateY().getOpposite())).getBlock() != block;
                     boolean brokenBM = world.getBlockState(pos.offset(facing))
                             .getBlock() != block;
-                    broken = brokenFL || brokenBM;
+                    broken |= brokenFL || brokenBM;
                     break;
                 }
 
                 case FL: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
                     break;
                 }
 
                 case BM: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
                     break;
                 }
 
                 case BR: {
 
-                    broken = world.getBlockState(pos.offset(facing
+                    broken |= world.getBlockState(pos.offset(facing
                             .getOpposite())).getBlock() != block;
                     break;
                 }
 
                 case FR: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
                     break;
                 }
@@ -164,34 +166,34 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
                 BlockPos posBM = posFM.offset(facing);
                 BlockPos posFR = posFM.offset(facing.rotateY());
                 BlockPos posBR = posFR.offset(facing);
+                
+                Block block = ModBlocks.craftingMason;
+                BlockPos[] positions = {posFM, posFL, posBM, posFR, posBR};
+                boolean valid = true;
+                
+                for (BlockPos position : positions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    Block blockBelow = world.getBlockState(position.down())
+                            .getBlock();
+                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
+                            ModBlocks.HEAVY.contains(blockBelow) ||
+                            blockBelow == block;
+                    
+                    if (!replaceable || !foundation) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
 
-                // Check replaceable
-                IBlockState stateFM = world.getBlockState(posFM);
-                Block blockFM = stateFM.getBlock();
-                boolean replaceableFM = blockFM.isReplaceable(world, posFM);
-
-                IBlockState stateFL = world.getBlockState(posFL);
-                Block blockFL = stateFL.getBlock();
-                boolean replaceableFL = blockFL.isReplaceable(world, posFL);
-
-                IBlockState stateBM = world.getBlockState(posBM);
-                Block blockBM = stateBM.getBlock();
-                boolean replaceableBM = blockBM.isReplaceable(world, posBM);
-
-                IBlockState stateBR = world.getBlockState(posBR);
-                Block blockBR = stateBR.getBlock();
-                boolean replaceableBR = blockBR.isReplaceable(world, posBR);
-
-                IBlockState stateFR = world.getBlockState(posFR);
-                Block blockFR = stateFR.getBlock();
-                boolean replaceableFR = blockFR.isReplaceable(world, posFR);
-
-                if (!replaceableFM || !replaceableFL || !replaceableBM ||
-                        !replaceableBR || !replaceableFR) {
+                if (valid) {
 
                     // Place all
-                    IBlockState placeState = ModBlocks
-                            .craftingMason.getDefaultState();
+                    IBlockState placeState = block.getDefaultState();
     
                     world.setBlockState(posFM, placeState);
                     world.setBlockState(posFL, placeState);

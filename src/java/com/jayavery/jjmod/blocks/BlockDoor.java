@@ -2,6 +2,7 @@ package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
 import java.util.function.Supplier;
+import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
@@ -77,7 +78,6 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-       // return DOOR_CLOSED[state.getValue(FACING).getHorizontalIndex()];
         state = this.getActualState(state, world, pos);
         int facing = state.getValue(FACING).getHorizontalIndex();
         EnumPartDoor part = state.getValue(PART);
@@ -187,9 +187,10 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-                
-        return world.getBlockState(pos.down())
-                .isSideSolid(world, pos.down(), EnumFacing.UP) ||
+
+        Block below = world.getBlockState(pos.down()).getBlock();
+        return ModBlocks.LIGHT.contains(below) ||
+                ModBlocks.HEAVY.contains(below) ||
                 world.getBlockState(pos.down()).getBlock() == this;
     }
     

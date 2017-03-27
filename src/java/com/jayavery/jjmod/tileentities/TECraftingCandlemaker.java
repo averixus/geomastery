@@ -4,6 +4,7 @@ import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.tileentities.TECraftingCandlemaker.EnumPartCandlemaker;
+import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -71,17 +72,19 @@ public class TECraftingCandlemaker extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            boolean broken = false;
             Block block = ModBlocks.craftingCandlemaker;
+            Block below = world.getBlockState(pos.down()).getBlock();
+            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
+                    ModBlocks.HEAVY.contains(below) || below == block);
             
             if (this == FRONT) {
 
-                broken = world.getBlockState(pos.offset(facing)).getBlock()
+                broken |= world.getBlockState(pos.offset(facing)).getBlock()
                         != block;
 
             } else {
 
-                broken = world.getBlockState(pos.offset(facing.getOpposite()))
+                broken |= world.getBlockState(pos.offset(facing.getOpposite()))
                         .getBlock() != block;
             }
             
@@ -108,23 +111,34 @@ public class TECraftingCandlemaker extends
                 
                 BlockPos posFront = pos;
                 BlockPos posBack = posFront.offset(facing);
-
-                // Check replaceable
-                IBlockState stateFront = world.getBlockState(posFront);
-                Block blockFront = stateFront.getBlock();
-                boolean replaceableFront = blockFront
-                        .isReplaceable(world, posFront);
-
-                IBlockState stateBack = world.getBlockState(posBack);
-                Block blockBack = stateBack.getBlock();
-                boolean replaceableBack = blockBack
-                        .isReplaceable(world, posBack);
-
-                if (replaceableBack && replaceableFront) {
+                
+                Block block = ModBlocks.craftingCandlemaker;
+                BlockPos[] positions = {posFront, posBack};
+                boolean valid = true;
+                
+                for (BlockPos position : positions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    Block blockBelow = world.getBlockState(position.down())
+                            .getBlock();
+                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
+                            ModBlocks.HEAVY.contains(blockBelow) ||
+                            blockBelow == block;
+                    
+                    if (!replaceable || !foundation) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
+                
+                if (valid) {
 
                     // Place all
-                    IBlockState placeState = ModBlocks
-                            .craftingCandlemaker.getDefaultState();
+                    IBlockState placeState = block.getDefaultState();
                     
                     world.setBlockState(posBack, placeState);
                     world.setBlockState(posFront, placeState);

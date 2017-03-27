@@ -85,48 +85,50 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EnumPartStone> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            boolean broken = false;
             Block block = ModBlocks.furnaceStone;
+            Block below = world.getBlockState(pos.down()).getBlock();
+            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
+                    ModBlocks.HEAVY.contains(below) || below == block);
             
             switch (this) {
                 
                 case BM: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
                     break;
                 }
 
                 case BR: {
 
-                    broken = world.getBlockState(pos.up()).getBlock() != block;
+                    broken |= world.getBlockState(pos.up()).getBlock() != block;
                     break;
                 }
 
                 case TR: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
                     break;
                 }
 
                 case TM: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
                     break;
                 }
 
                 case TL: {
 
-                    broken = world.getBlockState(pos.down()).getBlock()
+                    broken |= world.getBlockState(pos.down()).getBlock()
                             != block;
                     break;
                 }
 
                 case BL: {
 
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
+                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
                     break;
                 }
@@ -171,38 +173,48 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EnumPartStone> {
                 BlockPos posTL = posBL.up();
                 BlockPos posTM = posBM.up();
                 BlockPos posTR = posBR.up();
+                
+                Block block = ModBlocks.furnaceStone;
+                BlockPos[] basePositions = {posBM, posBL, posBR};
+                BlockPos[] upperPositions = {posTL, posTM, posTR};
+                boolean valid = true;
+                
+                for (BlockPos position : basePositions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    Block blockBelow = world.getBlockState(position.down())
+                            .getBlock();
+                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
+                            ModBlocks.HEAVY.contains(blockBelow) ||
+                            blockBelow == block;
+                    
+                    if (!replaceable || !foundation) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
+                
+                for (BlockPos position : upperPositions) {
+                    
+                    Block blockCheck = world.getBlockState(position).getBlock();
+                    boolean replaceable = blockCheck
+                            .isReplaceable(world, position);
+                    
+                    if (!replaceable) {
+                        
+                        valid = false;
+                        break;
+                    }
+                }
 
-                // Check replaceable
-                IBlockState stateBL = world.getBlockState(posBL);
-                Block blockBL = stateBL.getBlock();
-                boolean replaceableBL = blockBL.isReplaceable(world, posBL);
-
-                IBlockState stateBM = world.getBlockState(posBM);
-                Block blockBM = stateBM.getBlock();
-                boolean replaceableBM = blockBM.isReplaceable(world, posBM);
-
-                IBlockState stateBR = world.getBlockState(posBR);
-                Block blockBR = stateBR.getBlock();
-                boolean replaceableBR = blockBR.isReplaceable(world, posBR);
-
-                IBlockState stateTL = world.getBlockState(posTL);
-                Block blockTL = stateTL.getBlock();
-                boolean replaceableTL = blockTL.isReplaceable(world, posTL);
-
-                IBlockState stateTM = world.getBlockState(posTM);
-                Block blockTM = stateTM.getBlock();
-                boolean replaceableTM = blockTM.isReplaceable(world, posTM);
-
-                IBlockState stateTR = world.getBlockState(posTR);
-                Block blockTR = stateTR.getBlock();
-                boolean replaceableTR = blockTR.isReplaceable(world, posTR);
-
-                if (replaceableBL && replaceableBM && replaceableBR &&
-                        replaceableTL && replaceableTM && replaceableTR) {
+                if (valid) {
 
                     // Place all
-                    IBlockState placeState = ModBlocks
-                            .furnaceStone.getDefaultState();
+                    IBlockState placeState = block.getDefaultState();
     
                     world.setBlockState(posBM, placeState);
                     world.setBlockState(posBR, placeState);
