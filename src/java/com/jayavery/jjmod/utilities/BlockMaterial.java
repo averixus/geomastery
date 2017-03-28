@@ -23,10 +23,11 @@ public class BlockMaterial extends Material {
     public static final BlockMaterial STONE_HANDHARVESTABLE =
             new BlockMaterial(MapColor.STONE, true, true,
             false, true, false, true, false);
-    /** Water plant material. */
+    /** Water plant material (has to be 'solid' in order to
+     * render properly next to water). */
     public static final BlockMaterial WATER_PLANT =
-            new BlockMaterial(MapColor.WATER, false, true,
-            false, true, false, true, false);
+            new BlockMaterial(MapColor.WATER, true, true,
+            false, true, false, true, true);
     /** Carcass material. */
     public static final BlockMaterial CARCASS =
             new BlockMaterial(MapColor.BROWN, true, true,

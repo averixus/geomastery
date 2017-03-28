@@ -196,9 +196,9 @@ public class ContainerInventory extends ContainerAbstract {
      * @return The ItemStack left over. */
     public ItemStack add(ItemStack stack) {
 
-        if (ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
+        if (!stack.isEmpty()) {
             
-            return this.addToOffhand(stack);
+            stack = this.addToOffhand(stack);
         }
         
         if (!stack.isEmpty()) {
@@ -258,23 +258,29 @@ public class ContainerInventory extends ContainerAbstract {
      * @return The ItemStack left over. */
     private ItemStack addToOffhand(ItemStack stack) {
         
-        if (this.playerInv.offHandInventory.get(0).isEmpty()) {
-            
-            ItemStack added = stack.copy();
-            int max = stack.getMaxStackSize();
-            int total = stack.getCount();
+        NonNullList<ItemStack> inv = this.player.inventory.offHandInventory;
+        ItemStack added = stack.copy();
+        ItemStack inSlot = inv.get(0);
+        int max = stack.getMaxStackSize();
+        int total = inSlot.getCount() + stack.getCount();
+        
+        if ((inSlot.isEmpty() &&
+                ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) ||
+                (ItemStack.areItemsEqual(stack, inSlot) &&
+                stack.areCapsCompatible(inSlot))) {
             
             if (max >= total) {
-
+                
+                added.setCount(total);
                 stack = ItemStack.EMPTY;
                 
             } else {
-
+                
                 added.setCount(max);
                 stack.setCount(total - max);
             }
             
-            this.playerInv.offHandInventory.set(0, added);
+            inv.set(0, added);
             updateHand(this.player, EnumHand.OFF_HAND);
         }
         

@@ -82,7 +82,7 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         if (this.fuelEach != newFuelEach) {
             
             this.fuelEach = newFuelEach;
-            this.fuelLeft = this.fuelEach;
+          //  this.fuelLeft = this.fuelEach;
             this.markDirty();
         }
     }

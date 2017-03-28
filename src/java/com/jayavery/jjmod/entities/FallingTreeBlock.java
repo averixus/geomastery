@@ -1,14 +1,12 @@
 package com.jayavery.jjmod.entities;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockLog.EnumAxis;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -17,9 +15,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.PooledMutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.border.WorldBorder;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
@@ -278,6 +279,97 @@ public abstract class FallingTreeBlock extends Entity
         public boolean canBeCollidedWith() {
             
             return !this.isDead;
+        }
+        
+        /** Gets collision boxes excluding leaf blocks.
+         * Almost exact copy from vanilla. */
+        public void getCollisionBoxes(World world, AxisAlignedBB entityBox,
+                List<AxisAlignedBB> list) {
+            
+            // Get block bounding boxes excluding leaves
+            int minX = MathHelper.floor(entityBox.minX) - 1;
+            int maxX = MathHelper.ceil(entityBox.maxX) + 1;
+            int minY = MathHelper.floor(entityBox.minY) - 1;
+            int maxY = MathHelper.ceil(entityBox.maxY) + 1;
+            int minZ = MathHelper.floor(entityBox.minZ) - 1;
+            int maxZ = MathHelper.ceil(entityBox.maxZ) + 1;
+            WorldBorder border = world.getWorldBorder();
+            boolean borderCheck = world.func_191503_g(this);
+            PooledMutableBlockPos pos = PooledMutableBlockPos.retain();
+
+            try {
+                
+                for (int x = minX; x < maxX; ++x) {
+                    
+                    for (int z = minZ; z < maxZ; ++z) {
+                        
+                        boolean withinX = x == minX || x == maxX - 1;
+                        boolean withinZ = z == minZ || z == maxZ - 1;
+
+                        if ((!withinX || !withinZ) &&
+                                world.isBlockLoaded(pos.setPos(x, 64, z))) {
+                            
+                            for (int y = minY; y < maxY; ++y) {
+                                
+                                if (!withinX && !withinZ || y != maxY - 1) {
+                                    
+                                    if (this.isOutsideBorder() == borderCheck) {
+                                        
+                                        this.setOutsideBorder(!borderCheck);
+                                    }
+
+                                    pos.setPos(x, y, z);
+                                    IBlockState state =
+                                            Blocks.STONE.getDefaultState();
+
+                                    if (border.contains(pos) || !borderCheck) {
+
+                                        state = world.getBlockState(pos);
+                                    }
+
+                                    if (!(state.getBlock() instanceof
+                                            BlockLeaves)) {
+                                    
+                                        state.addCollisionBoxToList(world, pos,
+                                                entityBox, list, this, false);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            finally {
+                
+                pos.release();
+            }
+            
+            // Get entity bounding boxes
+            List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(
+                    this, entityBox.expandXyz(0.25D));
+
+            for (int i = 0; i < entities.size(); ++i) {
+                
+                Entity entity = entities.get(i);
+
+                if (!this.isRidingSameEntity(entity)) {
+                    
+                    AxisAlignedBB box = entity.getCollisionBoundingBox();
+
+                    if (box != null && box.intersectsWith(entityBox)) {
+                        
+                        list.add(box);
+                    }
+
+                    box = this.getCollisionBox(entity);
+
+                    if (box != null && box.intersectsWith(entityBox)) {
+                        
+                        list.add(box);
+                    }
+                }
+            }
         }
     }
     

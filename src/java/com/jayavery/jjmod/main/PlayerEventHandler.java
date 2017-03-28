@@ -43,7 +43,8 @@ public class PlayerEventHandler {
         
         EntityPlayer player = event.getEntityPlayer();
         
-        if (player.capabilities.isCreativeMode) {
+        if (player.capabilities.isCreativeMode ||
+                !(player.inventoryContainer instanceof ContainerInventory)) {
             
             return;
         }
