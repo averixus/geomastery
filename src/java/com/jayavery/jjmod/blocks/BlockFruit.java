@@ -25,13 +25,15 @@ public class BlockFruit extends BlockNew {
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     /** Supplier for the fruit item. */
-    private Supplier<Item> item;
+    private Supplier<Item> fruit;
+    private Supplier<Item> seed;
     
-    public BlockFruit(String name, Supplier<Item> item) {
+    public BlockFruit(String name, Supplier<Item> item, Supplier<Item> seed) {
         
         super(BlockMaterial.FRUIT, name, CreativeTabs.DECORATIONS,
                 0.2F, ToolType.SICKLE);
-        this.item = item;
+        this.fruit = item;
+        this.seed = seed;
     }
     
     @Override
@@ -47,7 +49,8 @@ public class BlockFruit extends BlockNew {
         
         World world = (World) blockAccess;
         
-        items.add(ItemJj.newStack(this.item.get(), 1, world));
+        items.add(ItemJj.newStack(this.fruit.get(), 1, world));
+        items.add(ItemJj.newStack(this.seed.get(), 1, world));
         return items;
     }
     

@@ -15,11 +15,12 @@
             "m3": {},
             "m4": {},
             "m5": {},
-            "t1": { "submodel": { "t1": { "model": "jjmod:crafting_sawpit/top_15", "y": 270 } } },
+            "t1": { "submodel": { "t1": { "model": "jjmod:crafting_sawpit/top_1", "y": 270 } } },
             "t2": { "submodel": { "t2": { "model": "jjmod:crafting_sawpit/top_23", "y": 270 } } },
             "t3": { "submodel": { "t3": { "model": "jjmod:crafting_sawpit/top_23", "y": 270 } } },
             "t4": { "submodel": { "t4": { "model": "jjmod:crafting_sawpit/top_4", "y": 90 } } },
-            "t5": { "submodel": { "t5": { "model": "jjmod:crafting_sawpit/top_15", "y": 90 } } }
+            "t5": { "submodel": { "t5": { "model": "jjmod:crafting_sawpit/top_5", "y": 90 } } },
+            "t6": { "submodel": { "t6": { "model": "jjmod:crafting_sawpit/top_6", "y": 90 } } }
         },
         "facing": {
             "north": {},

@@ -23,7 +23,6 @@ import com.jayavery.jjmod.blocks.BlockCarcassCowpart;
 import com.jayavery.jjmod.blocks.BlockCarcassPig;
 import com.jayavery.jjmod.blocks.BlockCarcassRabbit;
 import com.jayavery.jjmod.blocks.BlockCarcassSheep;
-import com.jayavery.jjmod.blocks.BlockMultiAbstract;
 import com.jayavery.jjmod.blocks.BlockCraftingArmourer;
 import com.jayavery.jjmod.blocks.BlockCraftingCandlemaker;
 import com.jayavery.jjmod.blocks.BlockCraftingForge;
@@ -51,7 +50,6 @@ import com.jayavery.jjmod.blocks.BlockCropWheat;
 import com.jayavery.jjmod.blocks.BlockDoor;
 import com.jayavery.jjmod.blocks.BlockDrying;
 import com.jayavery.jjmod.blocks.BlockFence;
-import com.jayavery.jjmod.blocks.BlockFoundation;
 import com.jayavery.jjmod.blocks.BlockFruit;
 import com.jayavery.jjmod.blocks.BlockFurnaceCampfire;
 import com.jayavery.jjmod.blocks.BlockFurnaceClay;
@@ -63,6 +61,7 @@ import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.blocks.BlockLightCandle;
 import com.jayavery.jjmod.blocks.BlockLightTorch;
 import com.jayavery.jjmod.blocks.BlockLode;
+import com.jayavery.jjmod.blocks.BlockMultiAbstract;
 import com.jayavery.jjmod.blocks.BlockPeat;
 import com.jayavery.jjmod.blocks.BlockRiceBase;
 import com.jayavery.jjmod.blocks.BlockRiceTop;
@@ -236,9 +235,7 @@ public class ModBlocks {
     
     public static BlockVault vaultStone;
     public static BlockVault vaultBrick;
-    
-    public static BlockFoundation foundation;
-    
+        
     public static BlockDoor doorPole;
     public static BlockDoor doorWood;
     
@@ -316,13 +313,13 @@ public class ModBlocks {
         registerItemless(riceTop = new BlockRiceTop());
 
         register(leafApple = new BlockHarvestableLeaves("leaf_apple",
-                () -> ModItems.apple, () -> seedlingApple, 0.2F));
+                () -> ModItems.apple, () -> seedlingApple, 0.05F));
         register(leafBanana = new BlockHarvestableLeaves("leaf_banana",
-                () -> ModItems.banana, () -> seedlingBanana, 0.4F));
+                () -> ModItems.banana, () -> seedlingBanana, 0.15F));
         register(leafPear = new BlockHarvestableLeaves("leaf_pear",
-                () -> ModItems.pear, () -> seedlingPear, 0.2F));
+                () -> ModItems.pear, () -> seedlingPear, 0.05F));
         register(leafOrange = new BlockHarvestableLeaves("leaf_orange",
-                () -> ModItems.orange, () -> seedlingOrange, 0.3F));
+                () -> ModItems.orange, () -> seedlingOrange, 0.1F));
         
         register(woodApple = new BlockWood("wood_apple", 2F));
         register(woodBanana = new BlockWood("wood_banana", 1F));
@@ -358,9 +355,9 @@ public class ModBlocks {
         registerItemless(pumpkinCrop = new BlockCropBlockfruitPumpkin());
         
         register(melonFruit = new BlockFruit("melon_fruit",
-                () -> ModItems.melon));
+                () -> ModItems.melon, () -> ModItems.seedMelon));
         register(pumpkinFruit = new BlockFruit("pumpkin_fruit",
-                () -> ModItems.pumpkin));
+                () -> ModItems.pumpkin, () -> ModItems.seedPumpkin));
         
         register(seedlingApple = new BlockSeedlingApple());
         register(seedlingPear = new BlockSeedlingPear());
@@ -422,8 +419,6 @@ public class ModBlocks {
         register(vaultStone = new BlockVault("vault_stone"), 2);
         register(vaultBrick = new BlockVault("vault_brick"), 2);
         
-        register(foundation = new BlockFoundation());
-        
         registerItemless(doorPole = new BlockDoor("door_pole",
                 () -> ModItems.doorPole));
         registerItemless(doorWood = new BlockDoor("door_wood",
@@ -446,7 +441,7 @@ public class ModBlocks {
                 .STONE_FURNITURE, "slab_brick_double", 2F, ToolType.PICKAXE,
                 () -> ModItems.slabBrick));
         
-        register(rubble = new BlockRubble());
+        registerItemless(rubble = new BlockRubble());
         
         registerItemless(tar = new BlockTar());
         

@@ -22,7 +22,7 @@ public class ItemLooseblock extends ItemJj {
     
     public ItemLooseblock(String name, Block block) {
         
-        super(name, 1, CreativeTabs.MISC);
+        super(name, 1, CreativeTabs.DECORATIONS);
         this.block = block;
     }
     

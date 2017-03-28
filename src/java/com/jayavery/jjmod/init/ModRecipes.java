@@ -107,7 +107,7 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.furnaceCampfire),
                 "S S", "SSS", 'S', Items.STICK);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceClay),
-                "C C", "MMM", 'C', ModItems.clay, 'M', ModItems.mudbricks);
+                "C C", "MMM", 'C', ModItems.looseClay, 'M', ModItems.mudbricks);
         INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.drying),
                 "PPP", 'P', ModItems.pole);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bedLeaf),
@@ -128,7 +128,7 @@ public class ModRecipes {
         for (Item metal : METALS) {
             
             INVENTORY.addShapedRecipe(new ItemStack(ModItems.furnaceStone),
-                    "S S", "SMS", 'S', ModItems.stoneRough, 'M', metal);
+                    "S S", "SMS", 'S', ModItems.rubble, 'M', metal);
             INVENTORY.addShapedRecipe(new
                     ItemStack(ModItems.craftingTextiles), "MPP", "PPP",
                     'M', metal, 'P', ModItems.pole);
@@ -137,21 +137,21 @@ public class ModRecipes {
                     'P', ModItems.pole, 'M', metal);
             INVENTORY.addShapedRecipe(new
                     ItemStack(ModItems.craftingMason), "MSS", "PPP",
-                    'M', metal, 'S', ModItems.stoneRough, 'P', ModItems.pole);
+                    'M', metal, 'S', ModItems.rubble, 'P', ModItems.pole);
             INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
                     "MSP", "LBP", 'M', metal, 'S',
-                    ModItems.stoneRough, 'P', ModItems.pole, 'L',
+                    ModItems.rubble, 'P', ModItems.pole, 'L',
                     Items.LEATHER, 'B', ModItems.beeswax);
             INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingArmourer),
                     "MSP", "LBP", 'M', metal, 'S',
-                    ModItems.stoneRough, 'P', ModItems.pole, 'L',
+                    ModItems.rubble, 'P', ModItems.pole, 'L',
                     Items.LEATHER, 'B', ModItems.tallow);
 
             for (Item metal2 : METALS) {
                 
                 INVENTORY.addShapedRecipe(new ItemStack(ModItems.craftingForge),
                         "MNS", "PPP", 'M', metal, 'N', metal2,
-                        'S', ModItems.stoneRough, 'P', ModItems.pole);
+                        'S', ModItems.rubble, 'P', ModItems.pole);
             }
         }
         
@@ -179,7 +179,7 @@ public class ModRecipes {
                 "F", "S", "E", 'F', ModItems.arrowheadFlint, 'S', Items.STICK,
                 'E', Items.FEATHER);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.wallRough, 2),
-                "R", "R", 'R', ModItems.stoneRough);
+                "R", "R", 'R', ModItems.rubble);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.arrowheadFlint),
                 "F", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(ModItems.axeheadFlint),
@@ -476,12 +476,9 @@ public class ModRecipes {
         MASON.addShapedRecipe(new ItemStack(ModItems.slabBrick, 2),
                 "BBB", 'B', Items.BRICK);
         MASON.addShapelessRecipe(new ItemStack(ModItems.stoneDressed, 2),
-                ModItems.stoneRough);
+                ModItems.rubble);
         MASON.addShapedRecipe(new ItemStack(ModItems.stoneDressed, 2),
-                "RR", "RR", 'R', ModItems.stoneRough);
-        MASON.addShapedRecipe(new ItemStack(ModBlocks.foundation),
-                "R", 'R', ModItems.stoneRough);
-
+                "RR", "RR", 'R', ModItems.rubble);
     }
 
     /** Adds all recipes to armourer. */
@@ -508,9 +505,11 @@ public class ModRecipes {
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelmailHead),
                 "SSS", "S S", 'S', ModItems.ingotSteel);
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateChest),
-                "SLS", "SSS", "SSS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
+                "SLS", "SSS", "SSS", 'S', ModItems.ingotSteel,
+                'L', Items.LEATHER);
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateLegs),
-                "SSS", "SLS", "S S", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
+                "SSS", "SLS", "S S", 'S', ModItems.ingotSteel,
+                'L', Items.LEATHER);
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateFeet),
                 "S S", "SLS", 'S', ModItems.ingotSteel, 'L', Items.LEATHER);
         ARMOURER.addShapedRecipe(new ItemStack(ModItems.steelplateHead),

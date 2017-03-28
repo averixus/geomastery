@@ -36,20 +36,17 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
     /** Enum defining parts of the whole sawpit structure. */
     public enum EnumPartSawpit implements IMultipart {
         
-        B1 ("b1", true), B2("b2", true), B3("b3", true),
-        B4("b4", true), B5("b5", true), M1 ("m1", true),
-        M2("m2", true), M3("m3", true), M4("m4", true),
-        M5("m5", true), T1 ("t1", false), T2("t2", false),
-        T3("t3", false), T4("t4", false), T5("t5", false);
+        B1 ("b1"), B2("b2"), B3("b3"),
+        B4("b4"), B5("b5"), M1 ("m1"),
+        M2("m2"), M3("m3"), M4("m4"),
+        M5("m5"), T1 ("t1"), T2("t2"),
+        T3("t3"), T4("t4"), T5("t5"), T6("t6");
         
         private final String name;
-        
-        private final boolean isPassable;
-        
-        private EnumPartSawpit(String name, boolean isPassable) {
+                
+        private EnumPartSawpit(String name) {
             
             this.name = name;
-            this.isPassable = isPassable;
         }
 
         @Override
@@ -84,6 +81,8 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                     return pos.offset(facing.rotateYCCW(), 3);
                 case T5:
                     return pos.offset(facing.rotateYCCW(), 4);
+                case T6:
+                    return pos.offset(facing.rotateYCCW()).offset(facing);
                 case M1:
                     return pos.up();
                 case M2:
@@ -202,13 +201,15 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 
                 case T1: {
                     
+                    boolean brokenT6 = world.getBlockState(pos.offset(facing))
+                            .getBlock() != block;
                     boolean brokenT2 = world.getBlockState(pos
                             .offset(facing.rotateY())).getBlock() != block;
                     boolean brokenM1 = world.getBlockState(pos
                             .down()).getBlock() != block;
                     
                     IBlockState frontSupport = world.getBlockState(pos
-                            .offset(facing.getOpposite()));
+                            .offset(facing.getOpposite()).down());
                     Block fsBlock = frontSupport.getBlock();
                     boolean fsValid = false;
                     
@@ -224,7 +225,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                     }
                     
                     IBlockState backSupport = world.getBlockState(pos
-                            .offset(facing));
+                            .offset(facing).down());
                     Block bsBlock = backSupport.getBlock();
                     boolean bsValid = false;
                     
@@ -238,7 +239,8 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                         bsValid = true;
                     }
                     
-                    broken = brokenT2 || brokenM1 || !fsValid || !bsValid;
+                    broken = brokenT2 || brokenM1 ||
+                            brokenT6 || !fsValid || !bsValid;
                     break;
                 }
                 
@@ -271,7 +273,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                             .down()).getBlock() != block;
                     
                     IBlockState frontSupport = world.getBlockState(pos
-                            .offset(facing.getOpposite()));
+                            .offset(facing.getOpposite()).down());
                     Block fsBlock = frontSupport.getBlock();
                     boolean fsValid = false;
                     
@@ -287,7 +289,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                     }
                     
                     IBlockState backSupport = world.getBlockState(pos
-                            .offset(facing));
+                            .offset(facing).down());
                     Block bsBlock = backSupport.getBlock();
                     boolean bsValid = false;
                     
@@ -304,6 +306,12 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                     broken = brokenT4 || brokenM5 || !fsValid || !bsValid;
                     break;
                 }
+                
+                case T6: {
+                    
+                    broken = world.getBlockState(pos.offset(facing
+                            .getOpposite())).getBlock() != block;
+                }
             }
             
             return broken;
@@ -318,6 +326,8 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 
                 case T1: case T2: case T3: case T4: case T5:
                     return BlockNew.CENTRE_HALF_LOW[axis];
+                case T6:
+                    return BlockNew.EIGHT;
                 case B1: case B2: case B3: case B4: case B5:
                 case M1: case M2: case M3: case M4: case M5:
                 default:
@@ -332,6 +342,8 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 
                 case T1: case T2: case T3: case T4: case T5:
                     return this.getBoundingBox(facing);
+                case T6:
+                    return BlockNew.EIGHT;
                 case B1: case B2: case B3: case B4: case B5:
                 case M1: case M2: case M3: case M4: case M5:
                 default:
@@ -343,9 +355,26 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            if (this == B3) {
+            if (this == T6) {
                 
-                BlockPos posB3 = pos;
+                BlockPos posT6 = pos;
+                BlockPos posT1 = posT6.offset(facing.getOpposite());
+                BlockPos posT2 = posT1.offset(facing.rotateY());
+                BlockPos posT3 = posT2.offset(facing.rotateY());
+                BlockPos posT4 = posT3.offset(facing.rotateY());
+                BlockPos posT5 = posT4.offset(facing.rotateY());
+                BlockPos posM1 = posT1.down();
+                BlockPos posM2 = posT2.down();
+                BlockPos posM3 = posT3.down();
+                BlockPos posM4 = posT4.down();
+                BlockPos posM5 = posT5.down();
+                BlockPos posB1 = posM1.down();
+                BlockPos posB2 = posM2.down();
+                BlockPos posB3 = posM3.down();
+                BlockPos posB4 = posM4.down();
+                BlockPos posB5 = posM5.down();
+                
+         /*       BlockPos posB3 = pos;
                 BlockPos posB1 = posB3.offset(facing.rotateYCCW(), 2);
                 BlockPos posB2 = posB1.offset(facing.rotateY());
                 BlockPos posB4 = posB3.offset(facing.rotateY());
@@ -360,15 +389,16 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 BlockPos posT3 = posM3.up();
                 BlockPos posT4 = posM4.up();
                 BlockPos posT5 = posM5.up();
+                BlockPos posT6 = posT1.offset(facing);*/
                 
                 BlockPos[] allPositions = {posB1, posB2, posB3, posB4, posB5,
                         posM1, posM2, posM3, posM4, posM5, posT1, posT2, posT3,
-                        posT4, posT5};
+                        posT4, posT5, posT6};
                 
-                BlockPos supportFL = posT1.offset(facing.getOpposite());
-                BlockPos supportBL = posT1.offset(facing);
-                BlockPos supportFR = posT5.offset(facing.getOpposite());
-                BlockPos supportBR = posT5.offset(facing);
+                BlockPos supportFL = posM1.offset(facing.getOpposite());
+                BlockPos supportBL = posM1.offset(facing);
+                BlockPos supportFR = posM5.offset(facing.getOpposite());
+                BlockPos supportBR = posM5.offset(facing);
                 BlockPos[] allSupports = {supportFL, supportBL,
                         supportFR, supportBR};
                 
@@ -424,6 +454,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 world.setBlockState(posT3, placeState);
                 world.setBlockState(posT4, placeState);
                 world.setBlockState(posT5, placeState);
+                world.setBlockState(posT6, placeState);
                 
                 // Set up tileentities
                 ((TECraftingSawpit) world.getTileEntity(posB1))
@@ -456,6 +487,8 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                         .setState(facing, T4);
                 ((TECraftingSawpit) world.getTileEntity(posT5))
                         .setState(facing, T5);
+                ((TECraftingSawpit) world.getTileEntity(posT6))
+                .setState(facing, T6);
            
                 return true;
             }

@@ -193,7 +193,7 @@ public class ModItems {
     public static ItemJj oreSilver;
     public static ItemJj oreGold;
 
-    public static ItemJj stoneRough;
+    public static ItemLooseblock rubble;
     public static ItemJj stoneDressed;
 
     public static ItemJj potClay;
@@ -539,7 +539,8 @@ public class ModItems {
         register(oreSilver = new ItemJj("ore_silver"));
         register(oreGold = new ItemJj("ore_gold"));
         
-        register(stoneRough = new ItemJj("stone_rough", 1));
+        register(rubble = new ItemLooseblock("rubble", ModBlocks.rubble));
+        
         register(stoneDressed = new ItemJj("stone_dressed", 1));
 
         register(potClay = new ItemJj("pot_clay"));
@@ -550,7 +551,7 @@ public class ModItems {
         register(craftingMason = new ItemMultipart<EnumPartMason>("crafting_mason", EnumPartMason.FM, SoundType.STONE), true);
         register(craftingTextiles = new ItemMultipart<EnumPartTextiles>("crafting_textiles", EnumPartTextiles.FRONT, SoundType.WOOD), true);
         register(craftingWoodworking = new ItemMultipart<EnumPartWoodworking>("crafting_woodworking", EnumPartWoodworking.FM, SoundType.WOOD), true);
-        register(craftingSawpit = new ItemMultipart<EnumPartSawpit>("crafting_sawpit", EnumPartSawpit.B3, SoundType.WOOD), true);
+        register(craftingSawpit = new ItemMultipart<EnumPartSawpit>("crafting_sawpit", EnumPartSawpit.T6, SoundType.WOOD), true);
         register(craftingArmourer = new ItemMultipart<EnumPartArmourer>("crafting_armourer", EnumPartArmourer.M, SoundType.METAL), true);
         
         register(furnaceClay = new ItemMultipart<EnumPartClay>("furnace_clay", EnumPartClay.BL, SoundType.STONE), true);

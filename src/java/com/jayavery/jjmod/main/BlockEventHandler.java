@@ -117,6 +117,13 @@ public class BlockEventHandler {
                     
                     fallState = ModBlocks.rubble.getDefaultState();
                     
+                } else if (block == ModBlocks.salt ||
+                        block == ModBlocks.chalk) {
+                    
+                    shouldFall = airAround && airBelow ?
+                            world.rand.nextFloat() < 0.4F : airBelow ?
+                            world.rand.nextFloat() < 0.05F : false;
+                    
                 } else {
 
                     shouldFall = airAround && airBelow ?
@@ -294,7 +301,7 @@ public class BlockEventHandler {
         if (block instanceof BlockStone) {
 
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.stoneRough, 4));
+            event.getDrops().add(new ItemStack(ModItems.rubble, 1));
         }
         
         if (block == Blocks.SAND) {
@@ -306,11 +313,14 @@ public class BlockEventHandler {
         if (block == Blocks.GRAVEL) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.looseGravel));
             
             if (world.rand.nextInt(4) == 0) {
             
                 event.getDrops().add(new ItemStack(Items.FLINT));
+                
+            } else {
+                
+                event.getDrops().add(new ItemStack(ModItems.looseGravel));
             }
         }
         
