@@ -15,7 +15,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 
 /** TileEntity for drying rack block. */
-public class TEDrying extends TileEntity implements ITickable {
+public class TEDrying extends TEContainerAbstract implements ITickable {
 
     /** Comparator to move all empty stacks to the end of a list. */
     private static final Comparator<ItemStack> SORTER =
@@ -25,9 +25,9 @@ public class TEDrying extends TileEntity implements ITickable {
     public final CookingManager recipes = ModRecipes.DRYING;
     
     /** This drying rack's input stacks. */
-    private List<ItemStack> inputs = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inputs = NonNullList.withSize(2, ItemStack.EMPTY);
     /** This drying rack's output stacks. */
-    private List<ItemStack> outputs = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> outputs = NonNullList.withSize(2, ItemStack.EMPTY);
     /** Ticks spent drying the current item. */
     private int drySpent = 0;
     /** Total ticks needed to dry the current item. */
@@ -46,6 +46,13 @@ public class TEDrying extends TileEntity implements ITickable {
             this.drySpent = 0;
             this.markDirty();
         }
+    }
+    
+    @Override
+    public void dropItems() {
+        
+        this.dropInventory(this.inputs);
+        this.dropInventory(this.outputs);
     }
 
     /** @return The ItemStack in the input slot. */

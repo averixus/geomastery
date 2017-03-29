@@ -9,14 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 /** Abstract superclass for multi part structure tile entities. */
 public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
-        extends TileEntity {
+        extends TEContainerAbstract {
 
     /** EnumFacing of this structure. */
     protected EnumFacing facing;

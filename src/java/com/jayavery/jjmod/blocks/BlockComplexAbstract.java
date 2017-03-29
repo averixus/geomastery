@@ -1,17 +1,18 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.Random;
+import com.jayavery.jjmod.tileentities.TEContainerAbstract;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -21,6 +22,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 /** Abstract superclass for complex blocks with TileEntities,
  * GUIs, non-solid models, complex drops. */
@@ -90,12 +93,29 @@ public abstract class BlockComplexAbstract extends BlockNew
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
 
-        TileEntity tileentity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getTileEntity(pos);
 
-        if (tileentity instanceof IInventory) {
+        if (tileEntity instanceof TEContainerAbstract) {
 
-            InventoryHelper.dropInventoryItems(world, pos,
-                    (IInventory) tileentity);
+            ((TEContainerAbstract) tileEntity).dropItems();
+            
+        } else if (tileEntity.hasCapability(CapabilityItemHandler
+                .ITEM_HANDLER_CAPABILITY, null)) {
+            
+            IItemHandler inventory = tileEntity
+                    .getCapability(CapabilityItemHandler
+                    .ITEM_HANDLER_CAPABILITY, null);
+
+            for (int i = 0; i < inventory.getSlots(); i++) {
+                
+                ItemStack stack = inventory.getStackInSlot(i);
+                
+                if (!stack.isEmpty()) {
+                    
+                    world.spawnEntity(new EntityItem(world, pos.getX(),
+                            pos.getY(), pos.getZ(), stack));
+                }
+            }
         }
 
         super.breakBlock(world, pos, state);

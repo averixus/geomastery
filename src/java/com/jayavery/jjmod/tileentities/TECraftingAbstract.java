@@ -40,6 +40,10 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         return true;
     }
     
+    /** Has no inventory to drop. */
+    @Override
+    public void dropItems() {}
+    
     /** Increments durability based on day, weather, and exposure. */
     @Override
     public void update() {

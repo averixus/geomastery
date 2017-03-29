@@ -33,11 +33,11 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
     protected final int size;
     
     /** This furnace's input stacks. */
-    protected List<ItemStack> inputs;
+    protected NonNullList<ItemStack> inputs;
     /** This funace's fuel stacks. */
-    protected List<ItemStack> fuels;
+    protected NonNullList<ItemStack> fuels;
     /** This furnace's output stacks. */
-    protected List<ItemStack> outputs;
+    protected NonNullList<ItemStack> outputs;
     /** Ticks of burning left for the current fuel. */
     protected int fuelLeft = 0;
     /** Total ticks of burning for each item of current fuel. */
@@ -60,6 +60,14 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
     public int size() {
         
         return this.size;
+    }
+    
+    @Override
+    public void dropItems() {
+
+        this.dropInventory(this.inputs);
+        this.dropInventory(this.outputs);
+        this.dropInventory(this.fuels);
     }
     
     /** Sorts the input and fuel stacks. */

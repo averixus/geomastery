@@ -126,10 +126,6 @@ public abstract class FallingTreeBlock extends Entity
                     this.onGround = false;
                     return;
                 }
-
-             //   this.motionX *= 0.7;
-             //   this.motionZ *= 0.7;
-              //  this.motionY *= -0.5;
                     
                 this.setDead();
 
@@ -285,6 +281,8 @@ public abstract class FallingTreeBlock extends Entity
          * Almost exact copy from vanilla. */
         public void getCollisionBoxes(World world, AxisAlignedBB entityBox,
                 List<AxisAlignedBB> list) {
+            
+            list.clear();
             
             // Get block bounding boxes excluding leaves
             int minX = MathHelper.floor(entityBox.minX) - 1;
