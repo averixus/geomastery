@@ -18,12 +18,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Abstract superclass for growable harvestable crop blocks. */
-public abstract class BlockCropHarvestable extends BlockCropAbstract {
+public abstract class BlockCropHarvestableAbstract extends BlockCropAbstract {
     
     /** Maximum permitted height for this crop. */
     protected int maxHeight;
 
-    public BlockCropHarvestable(String name, int maxHeight,
+    public BlockCropHarvestableAbstract(String name, int maxHeight,
             Supplier<Item> cropRef, Function<Random, Integer> yieldRef,
             float growthRate, float hardness) {
         
@@ -51,7 +51,12 @@ public abstract class BlockCropHarvestable extends BlockCropAbstract {
         
         int age = state.getValue(AGE);
         
-        if (!this.canStay(world, pos) || age != 7) {
+        if (age != 7) {
+            
+            return false;
+        }
+        
+        if (!this.canStay(world, pos)) {
             
             world.setBlockToAir(pos);
             return false;

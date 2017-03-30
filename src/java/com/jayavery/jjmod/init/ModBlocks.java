@@ -39,7 +39,7 @@ import com.jayavery.jjmod.blocks.BlockCropBlockfruitPumpkin;
 import com.jayavery.jjmod.blocks.BlockCropCarrot;
 import com.jayavery.jjmod.blocks.BlockCropChickpea;
 import com.jayavery.jjmod.blocks.BlockCropCotton;
-import com.jayavery.jjmod.blocks.BlockCropHarvestable;
+import com.jayavery.jjmod.blocks.BlockCropHarvestableAbstract;
 import com.jayavery.jjmod.blocks.BlockCropHarvestableBean;
 import com.jayavery.jjmod.blocks.BlockCropHarvestableBerry;
 import com.jayavery.jjmod.blocks.BlockCropHarvestableTomato;
@@ -201,9 +201,9 @@ public class ModBlocks {
     
     public static BlockPeat peat;
     
-    public static BlockCropHarvestable berry;
-    public static BlockCropHarvestable bean;
-    public static BlockCropHarvestable tomato;
+    public static BlockCropHarvestableAbstract berry;
+    public static BlockCropHarvestableAbstract bean;
+    public static BlockCropHarvestableAbstract tomato;
     
     public static BlockCropBlockfruit melonCrop;
     public static BlockCropBlockfruit pumpkinCrop;

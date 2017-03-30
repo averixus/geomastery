@@ -9,10 +9,11 @@ import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.init.ModRecipes;
 import com.jayavery.jjmod.init.ModTileEntities;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -79,5 +80,20 @@ public class CommonProxy {
     public void addMinecraftRunnable(Runnable task) {
         
         throw new RuntimeException("Tried to get Minecraft on Server side");
+    }
+    
+    public void setupProfiling() {
+        
+        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        server.getCommandManager().executeCommand(server, "/debug start");
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            
+            @Override
+            public void run() {
+                
+                MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+                server.getCommandManager().executeCommand(server, "/debug stop");
+            }
+        });
     }
 }

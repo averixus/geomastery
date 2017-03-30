@@ -10,7 +10,7 @@ import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 
 /** Berry crop block. */
-public class BlockCropHarvestableBerry extends BlockCropHarvestable {
+public class BlockCropHarvestableBerry extends BlockCropHarvestableAbstract {
     
     public BlockCropHarvestableBerry() {
         

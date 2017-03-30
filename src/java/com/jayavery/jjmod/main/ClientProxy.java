@@ -58,4 +58,10 @@ public class ClientProxy extends CommonProxy {
         
         Minecraft.getMinecraft().addScheduledTask(task);
     }
+    
+    @Override
+    public void setupProfiling() {
+        
+        // do nothing
+    }
 }

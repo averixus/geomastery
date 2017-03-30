@@ -1,6 +1,5 @@
 package com.jayavery.jjmod.main;
 
-import com.jayavery.jjmod.utilities.TreeFallUtils;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -8,13 +7,13 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 
 @Mod(modid = Jjmod.MODID, version = Jjmod.VERSION, name = Jjmod.NAME)
 public class Jjmod {
 
     public static final String MODID = "jjmod";
-    public static final String VERSION = "0.5";
+    public static final String VERSION = "0.5.1";
     public static final String NAME = "JJ Mod";
 
     @SidedProxy(clientSide = "com.jayavery.jjmod.main.ClientProxy",
@@ -26,6 +25,7 @@ public class Jjmod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
+
         // Read config, create + register blocks/items/etc
         proxy.preInit();
     }
@@ -42,5 +42,12 @@ public class Jjmod {
 
         // Communicate with other mods
         proxy.postInit();
+    }
+    
+    @EventHandler
+    public void serverStarted(FMLServerStartedEvent e) {
+        
+        //debug
+        proxy.setupProfiling();
     }
 }

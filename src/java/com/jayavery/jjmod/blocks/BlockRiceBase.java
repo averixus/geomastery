@@ -94,8 +94,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         BlockPos posBelow = pos.down();
         Block blockBelow = world.getBlockState(posBelow).getBlock();
         
-        if (blockBelow != Blocks.GRASS && blockBelow != Blocks.DIRT &&
-                blockBelow != Blocks.FARMLAND) {
+        if (blockBelow != Blocks.GRASS && blockBelow != Blocks.DIRT) {
 
             return false;
         }

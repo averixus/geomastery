@@ -77,10 +77,11 @@ public abstract class BlockCropAbstract extends BlockNew
             world.setBlockToAir(pos);
         }
         
+        Block below = world.getBlockState(pos.down()).getBlock();
+        
         if (!this.canGrow(world, pos, state) &&
                 rand.nextFloat() <= deathChance) {
 
-            Block below = world.getBlockState(pos.down()).getBlock();
             
             if (below == Blocks.FARMLAND || below == Blocks.GRASS ||
                     below == Blocks.DIRT) {
@@ -92,7 +93,12 @@ public abstract class BlockCropAbstract extends BlockNew
                 world.setBlockToAir(pos);
             }
             
-        } else if (rand.nextFloat() <= this.growthChance) {
+        }
+        
+        float growthChance = below.isFertile(world, pos.down()) ?
+                this.growthChance : this.growthChance / 2;
+
+        if (rand.nextFloat() <= growthChance) {
 
             this.grow(world, pos, state, rand);
         }
