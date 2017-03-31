@@ -91,7 +91,7 @@ public class ModRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.spearWood),
                 "S", "S", 'S', Items.STICK);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.bowCrude),
-                "STS", " S ", 'S', Items.STICK, 'T', ModItems.twineHemp);
+                "S ", "ST", 'S', Items.STICK, 'T', ModItems.twineHemp);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.arrowWood, 5),
                 "S", "F", 'S', Items.STICK, 'F', Items.FEATHER);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.potClay),
@@ -195,7 +195,7 @@ public class ModRecipes {
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shovelWood),
                 "P", "P", "P", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(Items.BOW), "P", "PT", "P",
+        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bowWar), "P ", "TP", "P ",
                 'P', ModItems.pole, 'T', ModItems.twineHemp);
 
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.huntingknifeCopper),
@@ -297,7 +297,7 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorWood, 4),
                 "TTT", 'T', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.roofPole, 2), 
-                "TTT", "T T", 'T', ModItems.timber);
+                "TTT", "T T", 'T', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
                 "LLL", "LLL", 'L', ModItems.log);
         
@@ -582,6 +582,14 @@ public class ModRecipes {
                     new ItemStack(ModItems.ingotCopper), 300);
             recipes.addCookingRecipe(new ItemStack(ModItems.oreTin),
                     new ItemStack(ModItems.ingotTin), 300);
+            recipes.addCookingRecipe(new ItemStack(ModItems.pole),
+                    new ItemStack(Items.COAL, 1, 1),60);
+            recipes.addCookingRecipe(new ItemStack(ModItems.log),
+                    new ItemStack(Items.COAL, 3, 1), 180);
+            recipes.addCookingRecipe(new ItemStack(ModItems.thicklog),
+                    new ItemStack(Items.COAL, 6, 1), 360);
+            recipes.addCookingRecipe(new ItemStack(ModItems.looseClay),
+                    new ItemStack(Items.BRICK), 200);
             recipes.addFuel(new ItemStack(ModItems.peatDry), 2400);
             recipes.addFuel(new ItemStack(Items.COAL, 1, 1), 3000);
         }
@@ -596,8 +604,6 @@ public class ModRecipes {
                 new ItemStack(ModItems.ingotSilver), 300);
         STONE.addCookingRecipe(new ItemStack(ModItems.oreGold),
                 new ItemStack(Items.GOLD_INGOT), 200);
-        STONE.addCookingRecipe(new ItemStack(ModItems.clay),
-                new ItemStack(Items.BRICK), 200);
         STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
     }
 
