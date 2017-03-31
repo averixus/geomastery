@@ -38,7 +38,7 @@ public class WorldGenPeat extends WorldGenAbstract {
             int z = centreZ;
             int y = this.findValidSurface(x, z) - 1;
             
-            int cluster = this.rand.nextInt(100) + 1;
+            int cluster = this.rand.nextInt(50) + 1;
             int count = 0;
             int tries = 0;
             

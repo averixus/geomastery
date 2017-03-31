@@ -18,7 +18,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         extends TEMultiAbstract<E> implements ITickable {
 
     /** Number of days durability remaining for this block. */
-    protected int durability = 20;
+    protected int durability = 15;
     /** Whether this block is currently being rained on. */
     protected boolean isRaining;
     

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class WorldGenTar extends WorldGenAbstract {
     
     /** Chance of generating per chunk. */
-    private static final float CHANCE = 0.05F;
+    private static final float CHANCE = 0.02F;
     
     /** State of the block to generate. */
     protected IBlockState block;

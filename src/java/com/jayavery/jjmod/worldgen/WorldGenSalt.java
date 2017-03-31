@@ -10,13 +10,13 @@ public class WorldGenSalt extends WorldGenStone {
 
     public WorldGenSalt(World world, Random rand) {
         
-        super(world, rand, ModBlocks.salt.getDefaultState(), 20, 60, 1, 0.5);
+        super(world, rand, ModBlocks.salt.getDefaultState(), 20, 60, 1, 1);
     }
 
     @Override
     protected int getVeinSize() {
 
-        return this.rand.nextInt(100) + 1;
+        return this.rand.nextInt(50) + 1;
     }
 
     @Override

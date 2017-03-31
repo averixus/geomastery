@@ -9,7 +9,7 @@ public class WorldGenChalk extends WorldGenStone {
 
     public WorldGenChalk(World world, Random rand) {
         
-        super(world, rand, ModBlocks.chalk.getDefaultState(), 30, 256, 1, 1);
+        super(world, rand, ModBlocks.chalk.getDefaultState(), 30, 256, 5, 1);
     }
 
     @Override
