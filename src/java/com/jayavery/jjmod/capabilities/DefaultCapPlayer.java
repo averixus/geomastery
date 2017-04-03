@@ -232,6 +232,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             }
             
             food.setFoodLevel(Math.max(food.getFoodLevel() - SLEEP_COST, 0));
+            food.setFoodSaturationLevel(0);
             this.sendFoodPacket(entry.getKey());
         }
     }

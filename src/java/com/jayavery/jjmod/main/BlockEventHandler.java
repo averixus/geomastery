@@ -254,9 +254,11 @@ public class BlockEventHandler {
             if (world.rand.nextInt(8) == 0) {
 
                 event.getDrops().add(new ItemStack(Items.FLINT));
-            }
+                
+            } else {
 
-            event.getDrops().add(new ItemStack(ModItems.looseDirt));
+                event.getDrops().add(new ItemStack(ModItems.looseDirt));
+            }
         }
         
         if (block == Blocks.REDSTONE_ORE || block == Blocks.LIT_REDSTONE_ORE) {

@@ -36,8 +36,8 @@ public class GuiCrafting extends GuiContainerAbstract {
         
         if (this.container.tile.hasDurability()) {
             
-            int height = Math.round(((20 -
-                    (float) this.container.tile.getDurability()) / 20)
+            int height = Math.round(((15 -
+                    (float) this.container.tile.getDurability()) / 15)
                     * DURABILITY_HEIGHT);
             this.drawTexturedModalRect(this.guiLeft + DURABILITY_X,
                     this.guiTop + DURABILITY_Y + height, DURABILITY_SOURCE_X,

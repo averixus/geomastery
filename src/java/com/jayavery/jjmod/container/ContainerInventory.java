@@ -201,6 +201,11 @@ public class ContainerInventory extends ContainerAbstract {
             stack = this.addToOffhand(stack);
         }
         
+        if (ModBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
+            
+            return stack;
+        }
+        
         if (!stack.isEmpty()) {
             
             stack = this.putInMatchingSlot(stack);
