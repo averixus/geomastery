@@ -43,11 +43,4 @@ public class Jjmod {
         // Communicate with other mods
         proxy.postInit();
     }
-    
-    // TEST for debugging
-    @EventHandler
-    public void serverStarted(FMLServerStartedEvent e) {
-        
-        proxy.setupProfiling();
-    }
 }

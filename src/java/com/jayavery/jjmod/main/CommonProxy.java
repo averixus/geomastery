@@ -81,23 +81,4 @@ public class CommonProxy {
         
         throw new RuntimeException("Tried to get Minecraft on Server side");
     }
-    
-    // TEST for debugging
-    public void setupProfiling() {
-        
-        MinecraftServer server = FMLCommonHandler.instance()
-                .getMinecraftServerInstance();
-        server.getCommandManager().executeCommand(server, "/debug start");
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            
-            @Override
-            public void run() {
-                
-                MinecraftServer server = FMLCommonHandler.instance()
-                        .getMinecraftServerInstance();
-                server.getCommandManager()
-                        .executeCommand(server, "/debug stop");
-            }
-        });
-    }
 }

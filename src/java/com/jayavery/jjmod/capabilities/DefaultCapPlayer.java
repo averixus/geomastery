@@ -297,7 +297,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             this.player.world.setBlockToAir(this.lastLightPos);
 
-            if (this.player.world.isAirBlock(newPos)) {
+            if (this.player.world.isAirBlock(newPos) && newLightLevel > 0) {
                 
                 this.player.world.setBlockState(newPos,
                         ModBlocks.invisibleLight.getDefaultState()
