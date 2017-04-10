@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.worldgen;
 
 import java.util.Random;
-import com.jayavery.jjmod.blocks.BlockCropAbstract;
+import com.jayavery.jjmod.blocks.BlockCrop;
 import com.jayavery.jjmod.utilities.IBiomeCheck;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -69,7 +69,7 @@ public abstract class WorldGenCrop extends WorldGenAbstract {
      * @return Whether it successfully generates. */
     protected boolean generateOne(BlockPos pos) {
         
-        if (((BlockCropAbstract) this.crop.getBlock())
+        if (((BlockCrop) this.crop.getBlock())
                 .canStay(this.world, pos)) {
         
             this.world.setBlockState(pos, this.crop);

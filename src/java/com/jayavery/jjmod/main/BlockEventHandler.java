@@ -1,6 +1,6 @@
 package com.jayavery.jjmod.main;
 
-import com.jayavery.jjmod.blocks.BlockRock;
+import com.jayavery.jjmod.blocks.BlockSolid;
 import com.jayavery.jjmod.entities.FallingTreeBlock;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
@@ -74,7 +74,7 @@ public class BlockEventHandler {
             IBlockState fallState = state;
             boolean airBelow = world.isAirBlock(pos.down());
             
-            if (block instanceof BlockStone || block instanceof BlockRock ||
+            if (block instanceof BlockStone || block instanceof BlockSolid ||
                     block instanceof BlockOre) {
 
                 boolean airAround = false;
@@ -133,7 +133,7 @@ public class BlockEventHandler {
                     
             
             } else if (block == Blocks.DIRT || block == Blocks.GRASS ||
-                    block == Blocks.CLAY) {
+                    block == Blocks.CLAY || block == ModBlocks.rubble) {
 
                 shouldFall = airBelow;
                 
@@ -233,7 +233,9 @@ public class BlockEventHandler {
             }
         }
         
-        if (block == Blocks.TALLGRASS || block == Blocks.DOUBLE_PLANT) {
+        if (block == Blocks.TALLGRASS || block == Blocks.DOUBLE_PLANT ||
+                block == Blocks.BROWN_MUSHROOM_BLOCK ||
+                block == Blocks.RED_MUSHROOM_BLOCK) {
 
             event.getDrops().replaceAll((stack) -> ItemStack.EMPTY);
         }
@@ -330,6 +332,12 @@ public class BlockEventHandler {
             
             event.getDrops().clear();
             event.getDrops().add(new ItemStack(ModItems.looseClay));
+        }
+        
+        if (block == Blocks.BROWN_MUSHROOM) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(new ItemStack(ModItems.mushroom));
         }
     }
     

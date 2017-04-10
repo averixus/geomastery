@@ -1,13 +1,12 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.List;
-import com.jayavery.jjmod.init.ModBlocks;
+import com.google.common.collect.Lists;
 import com.jayavery.jjmod.utilities.BlockMaterial;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -15,6 +14,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,112 +23,77 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Stairs block with up to a single connection, no corners. */
-public class BlockStairsStraight extends BlockNew {
-    
-    public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    public static final PropertyEnum<EnumConnection> CONNECTION =
-            PropertyEnum.<EnumConnection>create("connection",
-            EnumConnection.class);
-    
-    public BlockStairsStraight(String name, float hardness,
-            ToolType harvestTool) {
-        
-        super(BlockMaterial.WOOD_FURNITURE, name,
-                CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
-    }
-    
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        
-        return this.hasFoundation(world, pos) &&
-                this.hasValidConnections(world, pos);
-    }
-    
-    /** @return Whether this block has a valid
-     * foundation at the given position. */
-    private boolean hasFoundation(World world, BlockPos pos) {
-        
-        Block block = world.getBlockState(pos.down()).getBlock();
-        
-        boolean natural = false;
-        boolean built = false;
-        
-        natural = ModBlocks.LIGHT.contains(block) ||
-                ModBlocks.HEAVY.contains(block);
-        
-        if (block instanceof IBuildingBlock) {
-            
-            IBuildingBlock builtBlock = (IBuildingBlock) block;
-            built = builtBlock.isLight() || builtBlock.isHeavy();
-        }
-        
-        return natural || built;
-    }
-    
-    /** Checks whether this block has less than two adjacent of the same block.
-     * @return Whether this block is valid at the given position. */
-    private boolean hasValidConnections(World world, BlockPos pos) {
-        
-        int count = 0;
+/** Straight stairs block. */
+public abstract class BlockStairsStraight extends BlockBuilding {
 
-        for (EnumFacing direction : EnumFacing.HORIZONTALS) {
-            
-            Block block = world.getBlockState(pos.offset(direction)).getBlock();
-            
-            if (block == this) {
-                
-                count++;
-                
-                Block nextBlock = world.getBlockState(pos
-                        .offset(direction, 2)).getBlock();
-                
-                if (nextBlock == this) {
-                    
-                    return false;
-                }
-            }
-        }
+    public static final PropertyDirection FACING = BlockHorizontal.FACING;
+
+
+    public BlockStairsStraight(String name, float hardness) {
         
-        if (count > 1) {
-            
-            return false;
-        }
-        
-        return true;
+        super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.BUILDING_BLOCKS,
+                hardness, ToolType.AXE);
     }
     
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos,
-            EnumFacing side, float x, float y, float z,
-            int meta, EntityLivingBase placer) {
+    public boolean isValid(World world, BlockPos pos) {
         
-        return this.getDefaultState().withProperty(FACING,
-                placer.getHorizontalFacing());
-    }
-    
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
+        boolean supported = false;
         
-        EnumFacing facing = state.getValue(FACING);
-        EnumFacing left = facing.rotateYCCW();
-        EnumFacing right = facing.rotateY();
-        
-        if (world.getBlockState(pos.offset(right)).getBlock() == this) {
+        if (BlockWeight.getWeight(world.getBlockState(pos.down()).getBlock())
+                .canSupport(this.getWeight())) {
             
-            state = state.withProperty(CONNECTION, EnumConnection.RIGHT);
-            
-        } else if (world.getBlockState(pos.offset(left)).getBlock() == this) {
-            
-            state = state.withProperty(CONNECTION, EnumConnection.LEFT);
+            supported = true;
             
         } else {
             
-            state = state.withProperty(CONNECTION, EnumConnection.NONE);
+            for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+                
+                BlockPos posUp = pos.offset(facing).up();
+                Block blockUp = world.getBlockState(posUp).getBlock();
+                Block foundationUp = world.getBlockState(posUp.down())
+                        .getBlock();
+                BlockPos posDown = pos.offset(facing.getOpposite()).down();
+                Block blockDown = world.getBlockState(posDown).getBlock();
+                Block foundationDown = world.getBlockState(posDown.down())
+                        .getBlock();
+                
+                if ((blockUp instanceof BlockStairsStraight &&
+                        BlockWeight.getWeight(foundationUp)
+                        .canSupport(this.getWeight())) ||
+                        (blockDown instanceof BlockStairsStraight &&
+                        BlockWeight.getWeight(foundationDown)
+                        .canSupport(this.getWeight()))) {
+                    
+                    supported = true;
+                    break;
+                }
+            }
         }
 
-        return state;
+        return this.hasValidConnection(world, pos) && supported;
+    }
+    
+    protected abstract boolean hasValidConnection(World world, BlockPos pos);
+    
+    @Override
+    public BlockWeight getWeight() {
+        
+        return BlockWeight.NONE;
+    }
+    
+    @Override
+    public boolean shouldConnect(IBlockAccess world, IBlockState state,
+            BlockPos pos, EnumFacing direction) {
+        
+        return false;
+    }
+    
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return FULL_BLOCK_AABB;
     }
     
     @Override
@@ -144,10 +110,19 @@ public class BlockStairsStraight extends BlockNew {
     }
     
     @Override
-    protected BlockStateContainer createBlockState() {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
         
-        return new BlockStateContainer(this,
-                new IProperty[] {FACING, CONNECTION});
+        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
+    }
+    
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos,
+            EnumFacing side, float x, float y, float z,
+            int meta, EntityLivingBase placer) {
+        
+        return this.getDefaultState().withProperty(FACING,
+                placer.getHorizontalFacing());
     }
     
     @Override
@@ -162,7 +137,120 @@ public class BlockStairsStraight extends BlockNew {
         
         return state.getValue(FACING).getHorizontalIndex();
     }
+    
+    public static class Single extends BlockStairsStraight {
+        
+        public Single(String name, float hardness) {
+            
+            super(name, hardness);
+        }
 
+        @Override
+        public IBlockState getActualState(IBlockState state, IBlockAccess world,
+                BlockPos pos) {
+
+            return state;
+        }
+
+        @Override
+        public BlockStateContainer createBlockState() {
+
+            return new BlockStateContainer(this, FACING);
+        }
+
+        @Override
+        protected boolean hasValidConnection(World world, BlockPos pos) {
+
+            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                
+                Block connect = world.getBlockState(pos
+                        .offset(direction)).getBlock();
+                
+                if (connect == this) {
+                    
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+    }
+    
+    public static class Joining extends BlockStairsStraight {
+        
+        public static final PropertyEnum<EnumConnection> CONNECTION =
+                PropertyEnum.<EnumConnection>create("connection",
+                EnumConnection.class);
+        
+        public Joining(String name, float hardness) {
+            
+            super(name, hardness);
+        }
+        
+        @Override
+        public IBlockState getActualState(IBlockState state, IBlockAccess world,
+                BlockPos pos) {
+            
+            EnumFacing facing = state.getValue(FACING);
+            EnumFacing left = facing.rotateYCCW();
+            EnumFacing right = facing.rotateY();
+            
+            if (world.getBlockState(pos.offset(right)).getBlock() == this) {
+                
+                state = state.withProperty(CONNECTION, EnumConnection.RIGHT);
+                
+            } else if (world.getBlockState(pos.offset(left))
+                    .getBlock() == this) {
+                
+                state = state.withProperty(CONNECTION, EnumConnection.LEFT);
+                
+            } else {
+                
+                state = state.withProperty(CONNECTION, EnumConnection.NONE);
+            }
+
+            return state;
+        }
+        
+        @Override
+        public BlockStateContainer createBlockState() {
+            
+            return new BlockStateContainer(this, FACING, CONNECTION);
+        }
+
+        @Override
+        protected boolean hasValidConnection(World world, BlockPos pos) {
+
+            int count = 0;
+
+            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                
+                Block block = world.getBlockState(pos.offset(direction))
+                        .getBlock();
+                
+                if (block == this) {
+                    
+                    count++;
+                    
+                    Block nextBlock = world.getBlockState(pos
+                            .offset(direction, 2)).getBlock();
+                    
+                    if (nextBlock == this) {
+                        
+                        return false;
+                    }
+                }
+            }
+            
+            if (count > 1) {
+                
+                return false;
+            }
+            
+            return true;
+        }
+    }
+    
     /** Enum defining connection type of this block. */
     public enum EnumConnection implements IStringSerializable {
         

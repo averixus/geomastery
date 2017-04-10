@@ -1,6 +1,6 @@
 package com.jayavery.jjmod.tileentities;
 
-import com.jayavery.jjmod.blocks.BlockMultiAbstract;
+import com.jayavery.jjmod.blocks.BlockMultiCrafting;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
@@ -76,7 +76,7 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
         state = this.part == null ? state :
                 state.withProperty(partProperty, this.part);
         state = this.facing == null ? state :
-                state.withProperty(BlockMultiAbstract.FACING, this.facing);
+                state.withProperty(BlockMultiCrafting.FACING, this.facing);
         return state;
     }
     

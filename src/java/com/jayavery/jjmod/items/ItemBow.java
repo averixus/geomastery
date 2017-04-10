@@ -1,18 +1,17 @@
  package com.jayavery.jjmod.items;
 
+import javax.annotation.Nullable;
 import com.jayavery.jjmod.container.ContainerInventory;
 import com.jayavery.jjmod.entities.projectile.EntityProjectile;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.utilities.InvLocation;
 import com.jayavery.jjmod.utilities.InvLocation.InvType;
-import javax.annotation.Nullable;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -25,9 +24,9 @@ import net.minecraft.world.World;
 public class ItemBow extends ItemJj {
     
     /** Arrow classes in order of priority. */
-    private static final Class[] PRIORITY = {ItemArrowSteel.class,
-            ItemArrowBronze.class, ItemArrowCopper.class,
-            ItemArrowFlint.class, ItemArrowWood.class};
+    private static final Class[] PRIORITY = {ItemArrow.Steel.class,
+            ItemArrow.Bronze.class, ItemArrow.Copper.class,
+            ItemArrow.Flint.class, ItemArrow.Wood.class};
     
     /** Modifier for firing velocity. */
     private float powerModifier;
@@ -118,7 +117,7 @@ public class ItemBow extends ItemJj {
         }
 
         // Create arrow entity
-        ItemArrowAbstract arrow = (ItemArrowAbstract) ammo.getItem();
+        ItemArrow arrow = (ItemArrow) ammo.getItem();
         EntityProjectile entityArrow = arrow.createArrow(world, stack, player);
 
         entityArrow.setAim(player, player.rotationPitch,

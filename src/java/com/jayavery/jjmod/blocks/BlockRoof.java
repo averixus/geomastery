@@ -1,33 +1,58 @@
 package com.jayavery.jjmod.blocks;
 
+import java.util.List;
+import com.google.common.collect.Lists;
 import com.jayavery.jjmod.utilities.BlockMaterial;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.ToolType;
-import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockRoof extends BlockNew implements IBuildingBlock {
+/** Flat breakable roof block. */
+public class BlockRoof extends BlockBuilding {
 
     public BlockRoof(String name, float hardness, ToolType harvestTool) {
         
         super(BlockMaterial.WOOD_HANDHARVESTABLE, name,
                 CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
     }
+    
+    @Override
+    public BlockWeight getWeight() {
+        
+        return BlockWeight.NONE;
+    }
+    
+    @Override
+    public boolean shouldConnect(IBlockAccess world, IBlockState state,
+            BlockPos pos, EnumFacing direcion) {
+        
+        return false;
+    }
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
+        
+        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
+    }
 
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+    public boolean isValid(World world, BlockPos pos) {
                         
-        if (world.getBlockState(pos.down()).getBlock()
-                instanceof IBuildingBlock) {
+        if (BlockWeight.getWeight(world.getBlockState(pos.down()).getBlock())
+                .canSupport(this.getWeight())) {
             
             return true;
         }
@@ -81,19 +106,9 @@ public class BlockRoof extends BlockNew implements IBuildingBlock {
         
         boolean isRoof = world.getBlockState(pos).getBlock()
                 instanceof BlockRoof;
-        boolean isSupported = world.getBlockState(pos.down()).getBlock()
-                instanceof IBuildingBlock;
+        boolean isSupported = BlockWeight.getWeight(world.getBlockState(pos
+                .down()).getBlock()).canSupport(this.getWeight());
         return isRoof && isSupported;
-    }
-    
-    @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos,
-            Block block, BlockPos unused) {
-        
-        if (!this.canPlaceBlockAt(world, pos)) {
-            
-            world.destroyBlock(pos, true);
-        }
     }
     
     @Override
@@ -109,40 +124,17 @@ public class BlockRoof extends BlockNew implements IBuildingBlock {
         
         return NULL_AABB;
     }
-
+    
     @Override
-    public BlockRenderLayer getBlockLayer() {
-
-        return BlockRenderLayer.CUTOUT_MIPPED;
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return state;
     }
-
+    
     @Override
-    public boolean isLight() {
-
-        return false;
-    }
-
-    @Override
-    public boolean isHeavy() {
-
-        return false;
-    }
-
-    @Override
-    public boolean isDouble() {
-
-        return false;
-    }
-
-    @Override
-    public boolean supportsBeam() {
-
-        return false;
-    }
-
-    @Override
-    public boolean isShelter() {
-
-        return false;
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this);
     }
 }

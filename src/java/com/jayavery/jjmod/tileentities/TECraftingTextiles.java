@@ -1,16 +1,15 @@
 package com.jayavery.jjmod.tileentities;
 
-import com.jayavery.jjmod.blocks.BlockCraftingTextiles;
+import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
 import com.jayavery.jjmod.tileentities.TECraftingTextiles.EnumPartTextiles;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -72,10 +71,10 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            Block block = ModBlocks.craftingTextiles;
+            BlockBuilding block = ModBlocks.craftingTextiles;
             Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
-                    ModBlocks.HEAVY.contains(below) || below == block);
+            boolean broken = !BlockWeight.getWeight(below)
+                    .canSupport(block.getWeight());
             
             if (this == FRONT) {
 
@@ -113,7 +112,7 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
                 BlockPos frontPos = pos;
                 BlockPos backPos = frontPos.offset(facing);
                 
-                Block block = ModBlocks.craftingTextiles;
+                BlockBuilding block = ModBlocks.craftingTextiles;
                 BlockPos[] positions = {frontPos, backPos};
                 boolean valid = true;
                 
@@ -125,9 +124,8 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
                     
                     Block blockBelow = world.getBlockState(position.down())
                             .getBlock();
-                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
-                            ModBlocks.HEAVY.contains(blockBelow) ||
-                            blockBelow == block;
+                    boolean foundation = BlockWeight.getWeight(blockBelow)
+                            .canSupport(block.getWeight());
                     
                     if (!replaceable || !foundation) {
                         

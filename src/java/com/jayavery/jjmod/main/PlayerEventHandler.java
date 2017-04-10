@@ -1,27 +1,22 @@
 package com.jayavery.jjmod.main;
 
 import java.util.List;
-import com.jayavery.jjmod.blocks.BlockBedAbstract;
-import com.jayavery.jjmod.blocks.BlockBedAbstract.EnumPartBed;
-import com.jayavery.jjmod.blocks.BlockBedBreakableAbstract;
+import com.jayavery.jjmod.blocks.BlockBed;
+import com.jayavery.jjmod.blocks.BlockBed.EnumPartBed;
 import com.jayavery.jjmod.capabilities.ICapPlayer;
 import com.jayavery.jjmod.container.ContainerInventory;
-import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModCaps;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemJj;
 import com.jayavery.jjmod.items.ItemShield;
 import com.jayavery.jjmod.tileentities.TEBed;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -95,56 +90,18 @@ public class PlayerEventHandler {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (!(block instanceof BlockBedAbstract)) {
+        if (!(block instanceof BlockBed)) {
 
             return;
         }
-
-        EnumPartBed part = state.getValue(BlockBedAbstract.PART);
-        EnumFacing facing = state.getValue(BlockHorizontal.FACING);
-
-        BlockPos posFoot;
-        BlockPos posHead;
-
-        if (part == EnumPartBed.FOOT) {
-
-            posFoot = pos;
-            posHead = pos.offset(facing);
-
-        } else {
-
-            posHead = pos;
-            posFoot = pos.offset(facing.getOpposite());
-        }
-
-        // Leaf nest breaks after one use
-        if (block == ModBlocks.bedLeaf) {
-
-            world.setBlockToAir(posFoot);
-            world.setBlockToAir(posHead);
-        }
-
-        // Breakable beds take damage
-        if (block instanceof BlockBedBreakableAbstract) {
-
-            TileEntity tileEntity = world.getTileEntity(posFoot);
-
-            if (tileEntity instanceof TEBed) {
-
-                TEBed tileBed = (TEBed) tileEntity;
-                tileBed.addUse();
-
-                if (tileBed.isBroken()) {
-
-                    world.setBlockToAir(posFoot);
-                    world.setBlockToAir(posHead);
-                    world.removeTileEntity(posFoot);
-                }
-            }
-        }
         
+        BlockPos posFoot = state.getValue(BlockBed.PART) == EnumPartBed.FOOT ?
+                pos : pos.offset(state.getValue(BlockBed.FACING).getOpposite());
+        
+        BlockBed bed = (BlockBed) block;
+        bed.onWakeup(world, posFoot, (TEBed) world.getTileEntity(posFoot));
         player.getCapability(ModCaps.CAP_PLAYER, null)
-                .sleep(((BlockBedAbstract) block).getHealAmount());
+                .sleep(bed.getHealAmount());
     }
     
     /** Alters behaviour when the player takes damage. */

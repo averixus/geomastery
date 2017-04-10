@@ -7,7 +7,7 @@
 "elements": [ 
 {
     "from": [ -8, 15, 0 ],
-    "to": [ 0, 16, 16 ],
+    "to": [ 0, 15.9, 16 ],
     "faces": {
         "down":  { "uv": [ 16, 16, 8, 0 ], "texture": "#panels1" },
         "up":    { "uv": [ 0, 0, 8, 16 ], "texture": "#panels1" },

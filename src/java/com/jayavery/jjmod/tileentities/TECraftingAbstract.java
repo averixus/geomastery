@@ -1,17 +1,15 @@
 package com.jayavery.jjmod.tileentities;
 
+import com.jayavery.jjmod.blocks.BlockRoof;
 import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.packets.CraftingPacketClient;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumSkyBlock;
 
 /** Abstract superclass for crafting devices with weathering durability. */
 public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
@@ -110,19 +108,9 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
             Block block = state.getBlock();
             int light = block.getLightOpacity(state, this.world, pos);
             
-            if (block instanceof IBuildingBlock) {
-                
-                IBuildingBlock building = (IBuildingBlock) block;
-                
-                if (building.isShelter()) {
-                    
-                    result = EnumExposure.SHELTERED;
-                    
-                } else {
-                    
-                    result = EnumExposure.PARTIAL;
-                }
-                
+            if (block instanceof BlockRoof) {
+   
+                result = EnumExposure.PARTIAL;                
                 break;
                 
             } else if (light != 0 && !(block instanceof BlockLeaves)) {

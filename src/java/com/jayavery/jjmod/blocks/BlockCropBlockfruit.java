@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 import com.google.common.collect.Lists;
+import com.jayavery.jjmod.init.ModBlocks;
+import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
@@ -12,6 +14,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -21,9 +24,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeBeach;
+import net.minecraft.world.biome.BiomeForest;
+import net.minecraft.world.biome.BiomeHills;
+import net.minecraft.world.biome.BiomeJungle;
+import net.minecraft.world.biome.BiomePlains;
+import net.minecraft.world.biome.BiomeSavanna;
+import net.minecraft.world.biome.BiomeTaiga;
 
-/** Abstract superclass for block-fruiting crop blocks. */
-public abstract class BlockCropBlockfruit extends BlockCropAbstract {
+/** Block-fruiting crop blocks. */
+public abstract class BlockCropBlockfruit extends BlockCrop {
 
     public static final PropertyDirection FACING = BlockTorch.FACING;
     
@@ -44,7 +55,7 @@ public abstract class BlockCropBlockfruit extends BlockCropAbstract {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {AGE, FACING});
+        return new BlockStateContainer(this, AGE, FACING);
     }
 
     @Override
@@ -110,5 +121,41 @@ public abstract class BlockCropBlockfruit extends BlockCropAbstract {
             IBlockState state, int fortune) {
         
         return Lists.newArrayList(new ItemStack(this.seed.get()));
+    }
+    
+    public static class Pumpkin extends BlockCropBlockfruit {
+        
+        public Pumpkin() {
+            
+            super("pumpkin_crop", 0.3F, 0.2F, () -> ModBlocks.pumpkinFruit,
+                    () -> ModItems.seedPumpkin);
+        }
+
+        @Override
+        public boolean isPermitted(Biome biome) {
+
+            return biome instanceof BiomeTaiga || biome instanceof BiomeHills ||
+                    biome instanceof BiomeBeach ||
+                    biome instanceof BiomeForest ||
+                    biome instanceof BiomePlains || biome == Biomes.RIVER ||
+                    biome instanceof BiomeJungle;
+        }
+    }
+    
+    public static class Melon extends BlockCropBlockfruit {
+        
+        public Melon() {
+            
+            super("melon_crop", 0.4F, 0.2F, () -> ModBlocks.melonFruit,
+                    () -> ModItems.seedMelon);
+        }
+
+        @Override
+        public boolean isPermitted(Biome biome) {
+
+            return biome instanceof BiomePlains || biome == Biomes.BEACH ||
+                    biome instanceof BiomeJungle ||
+                    biome instanceof BiomeSavanna;
+        }
     }
 }

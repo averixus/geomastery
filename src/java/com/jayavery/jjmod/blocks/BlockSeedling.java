@@ -4,16 +4,31 @@ import java.util.Random;
 import com.jayavery.jjmod.utilities.IBiomeCheck;
 import com.jayavery.jjmod.utilities.ITreeGenFactory;
 import com.jayavery.jjmod.utilities.ToolType;
+import com.jayavery.jjmod.worldgen.WorldGenTreeApple;
+import com.jayavery.jjmod.worldgen.WorldGenTreeBanana;
+import com.jayavery.jjmod.worldgen.WorldGenTreeOrange;
+import com.jayavery.jjmod.worldgen.WorldGenTreePear;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDesert;
+import net.minecraft.world.biome.BiomeForest;
+import net.minecraft.world.biome.BiomeJungle;
+import net.minecraft.world.biome.BiomeMesa;
+import net.minecraft.world.biome.BiomeMushroomIsland;
+import net.minecraft.world.biome.BiomeOcean;
+import net.minecraft.world.biome.BiomePlains;
+import net.minecraft.world.biome.BiomeSavanna;
+import net.minecraft.world.biome.BiomeSwamp;
 
-/** Abstract superclass for seedling blocks. */
+/** Seedling blocks. */
 public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
     
     /** WorldGenerator factory for this tree. */
@@ -69,6 +84,71 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
             
             this.treeGenFactory.makeTreeGen(world, rand, true)
                     .generateTree(pos);
+        }
+    }
+    
+    public static class Pear extends BlockSeedling {
+        
+        public Pear() {
+            
+            super("seedling_pear", WorldGenTreePear::new, 0.1F);
+        }
+
+        @Override
+        public boolean isPermitted(Biome biome) {
+
+            return biome instanceof BiomeForest ||
+                    biome instanceof BiomeOcean ||
+                    biome instanceof BiomePlains || biome == Biomes.RIVER ||
+                    biome instanceof BiomeJungle ||
+                    biome instanceof BiomeSavanna;
+        }
+    }
+    
+    public static class Orange extends BlockSeedling {
+        
+        public Orange() {
+            
+            super("seedling_orange",  WorldGenTreeOrange::new, 0.15F);
+        }
+
+        @Override
+        public boolean isPermitted(Biome biome) {
+
+            return biome instanceof BiomeJungle ||
+                    biome instanceof BiomeSavanna ||
+                    biome instanceof BiomeDesert || biome instanceof BiomeMesa;
+        }
+    }
+    
+    public static class Banana extends BlockSeedling {
+        
+        public Banana() {
+            
+            super("seedling_banana", WorldGenTreeBanana::new, 0.2F);
+        }
+
+        @Override
+        public boolean isPermitted(Biome biome) {
+
+            return biome instanceof BiomeSwamp ||
+                    biome instanceof BiomeMushroomIsland ||
+                    biome instanceof BiomeJungle;
+        }
+    }
+    
+    public static class Apple extends BlockSeedling {
+        
+        public Apple() {
+            
+            super("seedling_apple", WorldGenTreeApple::new, 0.1F);
+        }
+
+        @Override
+        public boolean isPermitted(Biome biome) {
+
+            return biome instanceof BiomeForest || biome == Biomes.RIVER ||
+                    biome instanceof BiomePlains || biome == Biomes.BEACH;
         }
     }
 }

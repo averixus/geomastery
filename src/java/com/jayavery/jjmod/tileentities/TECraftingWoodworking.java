@@ -1,14 +1,15 @@
 package com.jayavery.jjmod.tileentities;
 
+import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.tileentities.TECraftingWoodworking.EnumPartWoodworking;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -82,10 +83,10 @@ public class TECraftingWoodworking extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            Block block = ModBlocks.craftingWoodworking;
+            BlockBuilding block = ModBlocks.craftingWoodworking;
             Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
-                    ModBlocks.HEAVY.contains(below) || below == block);
+            boolean broken = !BlockWeight.getWeight(below)
+                    .canSupport(block.getWeight());
             
             switch (this) {
                 
@@ -188,7 +189,7 @@ public class TECraftingWoodworking extends
                 BlockPos posBR = posBM.offset(facing.rotateY());
                 BlockPos posFR = posBR.offset(facing.getOpposite());
                 
-                Block block = ModBlocks.craftingWoodworking;
+                BlockBuilding block = ModBlocks.craftingWoodworking;
                 BlockPos[] positions = {posFM, posFL, posBL,
                         posBM, posBR, posFR};
                 boolean valid = true;
@@ -201,9 +202,8 @@ public class TECraftingWoodworking extends
                     
                     Block blockBelow = world.getBlockState(position.down())
                             .getBlock();
-                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
-                            ModBlocks.HEAVY.contains(blockBelow) ||
-                            blockBelow == block;
+                    boolean foundation = BlockWeight.getWeight(blockBelow)
+                            .canSupport(block.getWeight());
                     
                     if (!replaceable || !foundation) {
                         

@@ -1,15 +1,15 @@
 package com.jayavery.jjmod.tileentities;
 
+import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.tileentities.TECraftingSawpit.EnumPartSawpit;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -36,11 +36,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
     /** Enum defining parts of the whole sawpit structure. */
     public enum EnumPartSawpit implements IMultipart {
         
-        B1 ("b1"), B2("b2"), B3("b3"),
-        B4("b4"), B5("b5"), M1 ("m1"),
-        M2("m2"), M3("m3"), M4("m4"),
-        M5("m5"), T1 ("t1"), T2("t2"),
-        T3("t3"), T4("t4"), T5("t5"), T6("t6");
+        FL("fl"), L("l"), M("m"), R("r"), FR("fr"), F("f");
         
         private final String name;
                 
@@ -58,7 +54,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
         @Override
         public ItemStack getDrop() {
             
-            if (this == T1) {
+            if (this == F) {
                 
                 return new ItemStack(ModItems.craftingSawpit);
                 
@@ -73,39 +69,23 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
             
             switch (this) {
                 
-                case T2:
-                    return pos.offset(facing.rotateYCCW());
-                case T3:
-                    return pos.offset(facing.rotateYCCW(), 2);
-                case T4:
-                    return pos.offset(facing.rotateYCCW(), 3);
-                case T5:
-                    return pos.offset(facing.rotateYCCW(), 4);
-                case T6:
-                    return pos.offset(facing.rotateYCCW(), 4).offset(facing);
-                case M1:
-                    return pos.up();
-                case M2:
-                    return pos.up().offset(facing.rotateYCCW());
-                case M3:
-                    return pos.up().offset(facing.rotateYCCW(), 2);
-                case M4:
-                    return pos.up().offset(facing.rotateYCCW(), 3);
-                case M5:
-                    return pos.up().offset(facing.rotateYCCW(), 4);
-                case B1:
-                    return pos.up(2);
-                case B2:
-                    return pos.up(2).offset(facing.rotateYCCW());
-                case B3:
-                    return pos.up(2).offset(facing.rotateYCCW(), 2);
-                case B4:
-                    return pos.up(2).offset(facing.rotateYCCW(), 3);
-                case B5:
-                    return pos.up(2).offset(facing.rotateYCCW(), 4);
-                case T1:
+                case FL:
+                    return pos.offset(facing.getOpposite());
+                case L:
+                    return pos.offset(facing.rotateYCCW())
+                            .offset(facing.getOpposite());
+                case M:
+                    return pos.offset(facing.rotateYCCW(), 2)
+                            .offset(facing.getOpposite());
+                case R:
+                    return pos.offset(facing.rotateYCCW(), 3)
+                            .offset(facing.getOpposite());
+                case FR:
+                    return pos.offset(facing.rotateYCCW(), 4)
+                            .offset(facing.getOpposite());
+                case F:
                 default:
-                    return pos;    
+                    return pos; 
             }
         }
         
@@ -114,203 +94,102 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 EnumFacing facing) {
             
             boolean broken = false;
-            Block block = ModBlocks.craftingSawpit;
+            BlockBuilding block = ModBlocks.craftingSawpit;
             
             switch (this) {
                 
-                case B1: {
+                case F: {
                     
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
-                            .getBlock() != block;
+                    broken = world.getBlockState(pos.offset(facing)).getBlock()
+                            != block;
                     break;
                 }
                 
-                case B2: {
+                case FL: {
                     
-                    boolean brokenB3 = world.getBlockState(pos
-                            .offset(facing.rotateY())).getBlock() != block;
-                    boolean brokenB1 = world.getBlockState(pos
-                            .offset(facing.rotateYCCW())).getBlock() != block;
-                    
-                    broken = brokenB3 || brokenB1;
-                    break;
-                }
-                
-                case B3: {
-                    
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
-                            .getBlock() != block;
-                    break;
-                }
-                
-                case B4: {
-                    
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
-                            .getBlock() != block;
-                    break;
-                }
-                
-                case B5: {
-                    
-                    broken = world.getBlockState(pos.up()).getBlock() != block;
-                    break;
-                }
-                
-                case M5: {
-                    
-                    boolean brokenM4 = world.getBlockState(pos
-                            .offset(facing.rotateYCCW())).getBlock() != block;
-                    boolean brokenB5 = world.getBlockState(pos
-                            .down()).getBlock() != block;
-                    
-                    broken = brokenM4 || brokenB5;
-                    break;
-                }
-                
-                case M4: {
-                    
-                    broken = world.getBlockState(pos.offset(facing
-                            .rotateYCCW())).getBlock() != block;
-                    break;
-                }
-                
-                case M3: {
-                    
-                    broken = world.getBlockState(pos.offset(facing
-                            .rotateYCCW())).getBlock() != block;
-                    break;
-                }
-                
-                case M2: {
-                    
-                    broken = world.getBlockState(pos.offset(facing
-                            .rotateYCCW())).getBlock() != block;
-                    break;
-                }
-                
-                case M1: {
-                    
-                    boolean brokenT1 = world.getBlockState(pos.up())
-                            .getBlock() != block;
-                    boolean brokenB1 = world.getBlockState(pos.down())
-                            .getBlock() != block;
-                    
-                    broken = brokenT1 || brokenB1;
-                    break;
-                }
-                
-                case T1: {
-                    
-                    boolean brokenT2 = world.getBlockState(pos
-                            .offset(facing.rotateY())).getBlock() != block;
-                    boolean brokenM1 = world.getBlockState(pos
-                            .down()).getBlock() != block;
-                    
-                    IBlockState frontSupport = world.getBlockState(pos
-                            .offset(facing.getOpposite()).down());
-                    Block fsBlock = frontSupport.getBlock();
-                    boolean fsValid = false;
-                    
-                    if (fsBlock instanceof IBuildingBlock) {
-                        
-                        IBuildingBlock building = (IBuildingBlock) fsBlock;
-                        
-                        fsValid = building.isDouble() && building.isHeavy();
-                        
-                    } else if (ModBlocks.HEAVY.contains(fsBlock)) {
-                        
-                        fsValid = true;
-                    }
-                    
-                    IBlockState backSupport = world.getBlockState(pos
-                            .offset(facing).down());
-                    Block bsBlock = backSupport.getBlock();
-                    boolean bsValid = false;
-                    
-                    if (bsBlock instanceof IBuildingBlock) {
-                        
-                        IBuildingBlock building = (IBuildingBlock) bsBlock;
-                        bsValid = building.isDouble() && building.isHeavy();
-                        
-                    } else if (ModBlocks.HEAVY.contains(bsBlock)) {
-                        
-                        bsValid = true;
-                    }
-                    
-                    broken = brokenT2 || brokenM1 || !fsValid || !bsValid;
-                    break;
-                }
-                
-                case T2: {
-                    
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
-                            .getBlock() != block;
-                    break;
-                }
-                
-                case T3: {
-                    
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
-                            .getBlock() != block;                
-                    break;
-                }
-                
-                case T4: {
-                    
-                    broken = world.getBlockState(pos.offset(facing.rotateY()))
-                            .getBlock() != block;
-                    break;
-                }
-                
-                case T5: {
-                    
-                    boolean brokenT4 = world.getBlockState(pos
-                            .offset(facing.rotateYCCW())).getBlock() != block;
-                    boolean brokenM5 = world.getBlockState(pos
-                            .down()).getBlock() != block;
-                    boolean brokenT6 = world.getBlockState(pos.offset(facing
+                    boolean brokenL = world.getBlockState(pos.
+                            offset(facing.rotateY())).getBlock() != block;
+                    boolean brokenF = world.getBlockState(pos.offset(facing
                             .getOpposite())).getBlock() != block;
                     
                     IBlockState frontSupport = world.getBlockState(pos
                             .offset(facing.getOpposite()).down());
                     Block fsBlock = frontSupport.getBlock();
-                    boolean fsValid = false;
-                    
-                    if (fsBlock instanceof IBuildingBlock) {
-                        
-                        IBuildingBlock building = (IBuildingBlock) fsBlock;
-                        
-                        fsValid = building.isDouble() && building.isHeavy();
-                        
-                    } else if (ModBlocks.HEAVY.contains(fsBlock)) {
-                        
-                        fsValid = true;
-                    }
+                    boolean fsValid = BlockWeight.getWeight(fsBlock)
+                            .canSupport(block.getWeight());
                     
                     IBlockState backSupport = world.getBlockState(pos
                             .offset(facing).down());
                     Block bsBlock = backSupport.getBlock();
-                    boolean bsValid = false;
+                    boolean bsValid = BlockWeight.getWeight(bsBlock)
+                            .canSupport(block.getWeight());
                     
-                    if (bsBlock instanceof IBuildingBlock) {
-                        
-                        IBuildingBlock building = (IBuildingBlock) bsBlock;
-                        bsValid = building.isDouble() && building.isHeavy();
-                        
-                    } else if (ModBlocks.HEAVY.contains(bsBlock)) {
-                        
-                        bsValid = true;
-                    }
+                    boolean hasAir = world.isAirBlock(pos.down()) &&
+                            world.isAirBlock(pos.down(2));
                     
-                    broken = brokenT4 || brokenM5 || brokenT6 ||
-                            !fsValid || !bsValid;
+                    broken = brokenL || brokenF || !fsValid ||
+                            !bsValid || !hasAir;
                     break;
                 }
                 
-                case T6: {
+                case L: {
                     
-                    broken = world.getBlockState(pos.offset(facing)).getBlock()
-                            != block;
+                    boolean brokenFL = world.getBlockState(pos
+                            .offset(facing.rotateYCCW())).getBlock() != block;
+                    boolean brokenM = world.getBlockState(pos
+                            .offset(facing.rotateY())).getBlock() != block;
+                    boolean hasAir = world.isAirBlock(pos.down()) &&
+                            world.isAirBlock(pos.down(2));
+                    broken = brokenFL || brokenM || !hasAir;
+                    break;
+                }
+                
+                case M: {
+                    
+                    boolean brokenL = world.getBlockState(pos
+                            .offset(facing.rotateYCCW())).getBlock() != block;
+                    boolean brokenR = world.getBlockState(pos
+                            .offset(facing.rotateY())).getBlock() != block; 
+                    boolean hasAir = world.isAirBlock(pos.down()) &&
+                            world.isAirBlock(pos.down(2));
+                    broken = brokenL || brokenR || !hasAir;
+                    break;
+                }
+                
+                case R: {
+                    
+                    boolean brokenM = world.getBlockState(pos
+                            .offset(facing.rotateYCCW())).getBlock() != block;
+                    boolean brokenFR = world.getBlockState(pos
+                            .offset(facing.rotateY())).getBlock() != block;
+                    boolean hasAir = world.isAirBlock(pos.down()) &&
+                            world.isAirBlock(pos.down(2));
+                    broken = brokenM || brokenFR || !hasAir;
+                    break;
+                }
+                
+                case FR: {
+                    
+                    boolean brokenR = world.getBlockState(pos.offset(facing
+                            .rotateYCCW())).getBlock() != block;
+                    
+                    IBlockState frontSupport = world.getBlockState(pos
+                            .offset(facing.getOpposite()).down());
+                    Block fsBlock = frontSupport.getBlock();
+                    boolean fsValid = BlockWeight.getWeight(fsBlock)
+                            .canSupport(block.getWeight());
+                    
+                    IBlockState backSupport = world.getBlockState(pos
+                            .offset(facing).down());
+                    Block bsBlock = backSupport.getBlock();
+                    boolean bsValid = BlockWeight.getWeight(bsBlock)
+                            .canSupport(block.getWeight());
+                    
+                    boolean hasAir = world.isAirBlock(pos.down()) &&
+                            world.isAirBlock(pos.down(2));
+                    
+                    broken = brokenR || !fsValid || !bsValid || !hasAir;
+                    break;
                 }
             }
             
@@ -324,66 +203,49 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 
             switch (this) {
                 
-                case T1: case T2: case T3: case T4: case T5:
+                case FL: case L: case M: case R: case FR:
                     return BlockNew.CENTRE_HALF_LOW[axis];
-                case T6:
-                    return BlockNew.EIGHT;
-                case B1: case B2: case B3: case B4: case B5:
-                case M1: case M2: case M3: case M4: case M5:
+                case F:
                 default:
-                    return Block.FULL_BLOCK_AABB;
+                    return BlockNew.EIGHT;
             }
         }
         
         @Override
         public AxisAlignedBB getCollisionBox(EnumFacing facing) {
             
-            switch (this) {
-                
-                case T1: case T2: case T3: case T4: case T5:
-                    return this.getBoundingBox(facing);
-                case T6:
-                    return BlockNew.EIGHT;
-                case B1: case B2: case B3: case B4: case B5:
-                case M1: case M2: case M3: case M4: case M5:
-                default:
-                    return Block.NULL_AABB;
-            }
+            return this.getBoundingBox(facing);
         }
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            if (this == T6) {
+            if (this == F) {
                 
-                BlockPos posT6 = pos;
-                BlockPos posT5 = posT6.offset(facing);
-                BlockPos posT4 = posT5.offset(facing.rotateYCCW());
-                BlockPos posT3 = posT4.offset(facing.rotateYCCW());
-                BlockPos posT2 = posT3.offset(facing.rotateYCCW());
-                BlockPos posT1 = posT2.offset(facing.rotateYCCW());
-                BlockPos posM1 = posT1.down();
-                BlockPos posM2 = posT2.down();
-                BlockPos posM3 = posT3.down();
-                BlockPos posM4 = posT4.down();
-                BlockPos posM5 = posT5.down();
-                BlockPos posB1 = posM1.down();
-                BlockPos posB2 = posM2.down();
-                BlockPos posB3 = posM3.down();
-                BlockPos posB4 = posM4.down();
-                BlockPos posB5 = posM5.down();
+                BlockBuilding placeBlock = ModBlocks.craftingSawpit;
+                IBlockState placeState = placeBlock.getDefaultState();
                 
-                BlockPos[] allPositions = {posB1, posB2, posB3, posB4, posB5,
-                        posM1, posM2, posM3, posM4, posM5, posT1, posT2, posT3,
-                        posT4, posT5, posT6};
+                BlockPos posF = pos;
+                BlockPos posFL = posF.offset(facing);
+                BlockPos posL = posFL.offset(facing.rotateY());
+                BlockPos posM = posL.offset(facing.rotateY());
+                BlockPos posR = posM.offset(facing.rotateY());
+                BlockPos posFR = posR.offset(facing.rotateY());
                 
-                BlockPos supportFL = posM1.offset(facing.getOpposite());
-                BlockPos supportBL = posM1.offset(facing);
-                BlockPos supportFR = posM5.offset(facing.getOpposite());
-                BlockPos supportBR = posM5.offset(facing);
+                BlockPos[] allPositions = {posFL, posL, posM,
+                        posR, posFR, posF};
+                
+                BlockPos supportFL = posFL.offset(facing.getOpposite()).down();
+                BlockPos supportBL = posFL.offset(facing).down();
+                BlockPos supportFR = posFR.offset(facing.getOpposite()).down();
+                BlockPos supportBR = posFR.offset(facing).down();
                 BlockPos[] allSupports = {supportFL, supportBL,
                         supportFR, supportBR};
+                
+                BlockPos[] allAir = {posFL.down(), posFL.down(2), posL.down(),
+                        posL.down(2), posM.down(), posM.down(2), posR.down(),
+                        posR.down(2), posFR.down(), posFR.down(2)};
                 
                 // Check supports
                 for (BlockPos support : allSupports) {
@@ -391,16 +253,17 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                     IBlockState state = world.getBlockState(support);
                     Block block = state.getBlock();
                     
-                    if (block instanceof IBuildingBlock) {
+                    if (!BlockWeight.getWeight(block)
+                            .canSupport(placeBlock.getWeight())) {
                         
-                        IBuildingBlock building = (IBuildingBlock) block;
-                        
-                        if (!building.isDouble() || !building.isHeavy()) {
-                            
-                            return false;
-                        }
-                        
-                    } else if (!ModBlocks.HEAVY.contains(block)) {
+                        return false;
+                    }
+                }
+                
+                // Check air
+                for (BlockPos air : allAir) {
+                    
+                    if (!world.isAirBlock(air)) {
                         
                         return false;
                     }
@@ -419,59 +282,26 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 }
                 
                 // Place all
-                IBlockState placeState = ModBlocks
-                        .craftingSawpit.getDefaultState();
-
-                world.setBlockState(posB1, placeState);
-                world.setBlockState(posB2, placeState);
-                world.setBlockState(posB3, placeState);
-                world.setBlockState(posB4, placeState);
-                world.setBlockState(posB5, placeState);
-                world.setBlockState(posM5, placeState);
-                world.setBlockState(posM4, placeState);
-                world.setBlockState(posM3, placeState);
-                world.setBlockState(posM2, placeState);
-                world.setBlockState(posM1, placeState);
-                world.setBlockState(posT1, placeState);
-                world.setBlockState(posT2, placeState);
-                world.setBlockState(posT3, placeState);
-                world.setBlockState(posT4, placeState);
-                world.setBlockState(posT5, placeState);
-                world.setBlockState(posT6, placeState);
+                world.setBlockState(posF, placeState);
+                world.setBlockState(posFL, placeState);
+                world.setBlockState(posL, placeState);
+                world.setBlockState(posM, placeState);
+                world.setBlockState(posR, placeState);
+                world.setBlockState(posFR, placeState);
                 
                 // Set up tileentities
-                ((TECraftingSawpit) world.getTileEntity(posB1))
-                        .setState(facing, B1);
-                ((TECraftingSawpit) world.getTileEntity(posB2))
-                        .setState(facing, B2);
-                ((TECraftingSawpit) world.getTileEntity(posB3))
-                        .setState(facing, B3);
-                ((TECraftingSawpit) world.getTileEntity(posB4))
-                        .setState(facing, B4);
-                ((TECraftingSawpit) world.getTileEntity(posB5))
-                        .setState(facing, B5);
-                ((TECraftingSawpit) world.getTileEntity(posM5))
-                        .setState(facing, M5);
-                ((TECraftingSawpit) world.getTileEntity(posM4))
-                        .setState(facing, M4);
-                ((TECraftingSawpit) world.getTileEntity(posM3))
-                        .setState(facing, M3);
-                ((TECraftingSawpit) world.getTileEntity(posM2))
-                        .setState(facing, M2);
-                ((TECraftingSawpit) world.getTileEntity(posM1))
-                        .setState(facing, M1);
-                ((TECraftingSawpit) world.getTileEntity(posT1))
-                        .setState(facing, T1);
-                ((TECraftingSawpit) world.getTileEntity(posT2))
-                        .setState(facing, T2);
-                ((TECraftingSawpit) world.getTileEntity(posT3))
-                        .setState(facing, T3);
-                ((TECraftingSawpit) world.getTileEntity(posT4))
-                        .setState(facing, T4);
-                ((TECraftingSawpit) world.getTileEntity(posT5))
-                        .setState(facing, T5);
-                ((TECraftingSawpit) world.getTileEntity(posT6))
-                        .setState(facing, T6);
+                ((TECraftingSawpit) world.getTileEntity(posF))
+                        .setState(facing, F);
+                ((TECraftingSawpit) world.getTileEntity(posFL))
+                        .setState(facing, FL);
+                ((TECraftingSawpit) world.getTileEntity(posL))
+                        .setState(facing, L);
+                ((TECraftingSawpit) world.getTileEntity(posM))
+                        .setState(facing, M);
+                ((TECraftingSawpit) world.getTileEntity(posR))
+                        .setState(facing, R);
+                ((TECraftingSawpit) world.getTileEntity(posFR))
+                        .setState(facing, FR);
            
                 return true;
             }

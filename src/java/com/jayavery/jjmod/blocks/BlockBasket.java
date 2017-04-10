@@ -1,21 +1,19 @@
 package com.jayavery.jjmod.blocks;
 
-import java.util.Random;
+import java.util.List;
+import com.google.common.collect.Lists;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
-import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.tileentities.TEBasket;
 import com.jayavery.jjmod.utilities.BlockMaterial;
-import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -30,13 +28,15 @@ public class BlockBasket extends BlockComplexAbstract {
     }
     
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
         
-        return Item.getItemFromBlock(this);
+        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
     }
     
     @Override
-    public boolean activate(EntityPlayer player, World world,int x, int y, int z) {
+    public boolean activate(EntityPlayer player, World world,
+            int x, int y, int z) {
         
         if (!world.isRemote) {
             
@@ -48,39 +48,9 @@ public class BlockBasket extends BlockComplexAbstract {
     }
     
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createTileEntity(World world, IBlockState state) {
         
         return new TEBasket();
-    }
-    
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        
-        Block below = world.getBlockState(pos.down()).getBlock();
-        return ModBlocks.LIGHT.contains(below) ||
-                ModBlocks.HEAVY.contains(below);
-    }
-
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-        
-        if (!this.canPlaceBlockAt(world, pos)) {
-            
-            world.destroyBlock(pos, true);
-        }
-    }
-    
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
-    public BlockRenderLayer getBlockLayer() {
-
-        return BlockRenderLayer.CUTOUT_MIPPED;
     }
     
     @Override

@@ -131,8 +131,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
     @Override
     protected BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[]
-                {AGE, DECAYABLE, CHECK_DECAY});
+        return new BlockStateContainer(this, AGE, DECAYABLE, CHECK_DECAY);
     }
     
     @Override

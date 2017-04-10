@@ -9,86 +9,44 @@ import com.google.common.collect.Sets;
 import com.jayavery.jjmod.blocks.BlockAntler;
 import com.jayavery.jjmod.blocks.BlockBasket;
 import com.jayavery.jjmod.blocks.BlockBeam;
-import com.jayavery.jjmod.blocks.BlockBedBreakableAbstract;
-import com.jayavery.jjmod.blocks.BlockBedCotton;
-import com.jayavery.jjmod.blocks.BlockBedLeaf;
-import com.jayavery.jjmod.blocks.BlockBedPlainAbstract;
-import com.jayavery.jjmod.blocks.BlockBedSimple;
-import com.jayavery.jjmod.blocks.BlockBedWool;
+import com.jayavery.jjmod.blocks.BlockBed;
 import com.jayavery.jjmod.blocks.BlockBeehive;
 import com.jayavery.jjmod.blocks.BlockBox;
-import com.jayavery.jjmod.blocks.BlockCarcassAbstract;
-import com.jayavery.jjmod.blocks.BlockCarcassChicken;
-import com.jayavery.jjmod.blocks.BlockCarcassCowpart;
-import com.jayavery.jjmod.blocks.BlockCarcassPig;
-import com.jayavery.jjmod.blocks.BlockCarcassRabbit;
-import com.jayavery.jjmod.blocks.BlockCarcassSheep;
-import com.jayavery.jjmod.blocks.BlockCraftingArmourer;
-import com.jayavery.jjmod.blocks.BlockCraftingCandlemaker;
-import com.jayavery.jjmod.blocks.BlockCraftingForge;
+import com.jayavery.jjmod.blocks.BlockCarcass;
 import com.jayavery.jjmod.blocks.BlockCraftingKnapping;
-import com.jayavery.jjmod.blocks.BlockCraftingMason;
-import com.jayavery.jjmod.blocks.BlockCraftingSawpit;
-import com.jayavery.jjmod.blocks.BlockCraftingTextiles;
-import com.jayavery.jjmod.blocks.BlockCraftingWoodworking;
-import com.jayavery.jjmod.blocks.BlockCropAbstract;
-import com.jayavery.jjmod.blocks.BlockCropBeetroot;
+import com.jayavery.jjmod.blocks.BlockCrop;
 import com.jayavery.jjmod.blocks.BlockCropBlockfruit;
-import com.jayavery.jjmod.blocks.BlockCropBlockfruitMelon;
-import com.jayavery.jjmod.blocks.BlockCropBlockfruitPumpkin;
-import com.jayavery.jjmod.blocks.BlockCropCarrot;
-import com.jayavery.jjmod.blocks.BlockCropChickpea;
-import com.jayavery.jjmod.blocks.BlockCropCotton;
-import com.jayavery.jjmod.blocks.BlockCropHarvestableAbstract;
-import com.jayavery.jjmod.blocks.BlockCropHarvestableBean;
-import com.jayavery.jjmod.blocks.BlockCropHarvestableBerry;
-import com.jayavery.jjmod.blocks.BlockCropHarvestableTomato;
-import com.jayavery.jjmod.blocks.BlockCropHemp;
-import com.jayavery.jjmod.blocks.BlockCropPepper;
-import com.jayavery.jjmod.blocks.BlockCropPotato;
-import com.jayavery.jjmod.blocks.BlockCropWheat;
+import com.jayavery.jjmod.blocks.BlockCropHarvestable;
 import com.jayavery.jjmod.blocks.BlockDoor;
 import com.jayavery.jjmod.blocks.BlockDrying;
-import com.jayavery.jjmod.blocks.BlockFence;
 import com.jayavery.jjmod.blocks.BlockFruit;
 import com.jayavery.jjmod.blocks.BlockFurnaceCampfire;
-import com.jayavery.jjmod.blocks.BlockFurnaceClay;
 import com.jayavery.jjmod.blocks.BlockFurnacePotfire;
-import com.jayavery.jjmod.blocks.BlockFurnaceStone;
 import com.jayavery.jjmod.blocks.BlockHarvestableLeaves;
 import com.jayavery.jjmod.blocks.BlockInvisibleLight;
 import com.jayavery.jjmod.blocks.BlockLight;
-import com.jayavery.jjmod.blocks.BlockLightCandle;
-import com.jayavery.jjmod.blocks.BlockLightTorch;
-import com.jayavery.jjmod.blocks.BlockLode;
-import com.jayavery.jjmod.blocks.BlockMultiAbstract;
-import com.jayavery.jjmod.blocks.BlockPeat;
+import com.jayavery.jjmod.blocks.BlockMultiCrafting;
 import com.jayavery.jjmod.blocks.BlockRiceBase;
 import com.jayavery.jjmod.blocks.BlockRiceTop;
-import com.jayavery.jjmod.blocks.BlockRock;
 import com.jayavery.jjmod.blocks.BlockRoof;
-import com.jayavery.jjmod.blocks.BlockRubble;
 import com.jayavery.jjmod.blocks.BlockSeedling;
-import com.jayavery.jjmod.blocks.BlockSeedlingApple;
-import com.jayavery.jjmod.blocks.BlockSeedlingBanana;
-import com.jayavery.jjmod.blocks.BlockSeedlingOrange;
-import com.jayavery.jjmod.blocks.BlockSeedlingPear;
-import com.jayavery.jjmod.blocks.BlockSlabDouble;
-import com.jayavery.jjmod.blocks.BlockSlabSingle;
-import com.jayavery.jjmod.blocks.BlockStairs;
-import com.jayavery.jjmod.blocks.BlockStairsSimple;
+import com.jayavery.jjmod.blocks.BlockSlab;
+import com.jayavery.jjmod.blocks.BlockSolid;
+import com.jayavery.jjmod.blocks.BlockStairsComplex;
 import com.jayavery.jjmod.blocks.BlockStairsStraight;
 import com.jayavery.jjmod.blocks.BlockTar;
 import com.jayavery.jjmod.blocks.BlockVault;
-import com.jayavery.jjmod.blocks.BlockWall;
-import com.jayavery.jjmod.blocks.BlockWallHeightless;
-import com.jayavery.jjmod.blocks.BlockWallStraight;
+import com.jayavery.jjmod.blocks.BlockWallComplex;
+import com.jayavery.jjmod.blocks.BlockWallLog;
+import com.jayavery.jjmod.blocks.BlockWallRough;
 import com.jayavery.jjmod.blocks.BlockWallThin;
 import com.jayavery.jjmod.blocks.BlockWood;
 import com.jayavery.jjmod.utilities.BlockMaterial;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -110,25 +68,11 @@ public class ModBlocks {
     
     /** All new blocks, for ease of modelling. */
     private static final Map<Block, Item> MOD_BLOCKS = Maps.newHashMap();
-
-    /** Vanilla blocks classed as Heavy. */
-    public static final Set<Block> HEAVY = Sets.newHashSet(Blocks.BEDROCK,
-            Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE, Blocks.SANDSTONE,
-            Blocks.RED_SANDSTONE, Blocks.OBSIDIAN, Blocks.STONE,
-            Blocks.STONEBRICK, Blocks.PRISMARINE, Blocks.QUARTZ_BLOCK,
-            Blocks.BRICK_BLOCK, Blocks.COAL_ORE, Blocks.DIAMOND_ORE,
-            Blocks.EMERALD_ORE, Blocks.GOLD_ORE, Blocks.IRON_ORE,
-            Blocks.LAPIS_ORE, Blocks.REDSTONE_ORE);
-    /** Vanilla blocks classed as Light. */
-    public static final Set<Block> LIGHT = Sets.newHashSet(Blocks.CLAY,
-            Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL,
-            Blocks.ICE, Blocks.PACKED_ICE, Blocks.SAND,
-            Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY);
     
-    public static BlockBedPlainAbstract bedLeaf;
-    public static BlockBedBreakableAbstract bedCotton;
-    public static BlockBedBreakableAbstract bedWool;
-    public static BlockBedPlainAbstract bedSimple;
+    public static BlockBed.Leaf bedLeaf;
+    public static BlockBed.Cotton bedCotton;
+    public static BlockBed.Wool bedWool;
+    public static BlockBed.Simple bedSimple;
     
     public static BlockAntler antler;
     
@@ -139,40 +83,40 @@ public class ModBlocks {
     public static BlockLight torchTallow;
     public static BlockLight torchTar;
 
-    public static BlockCarcassAbstract carcassChicken;
-    public static BlockCarcassAbstract carcassCowpart;
-    public static BlockCarcassAbstract carcassPig;
-    public static BlockCarcassAbstract carcassSheep;
-    public static BlockCarcassAbstract carcassRabbit;
+    public static BlockCarcass carcassChicken;
+    public static BlockCarcass carcassCowpart;
+    public static BlockCarcass carcassPig;
+    public static BlockCarcass carcassSheep;
+    public static BlockCarcass carcassRabbit;
 
-    public static BlockCraftingCandlemaker craftingCandlemaker;
-    public static BlockCraftingForge craftingForge;
+    public static BlockMultiCrafting craftingCandlemaker;
+    public static BlockMultiCrafting craftingForge;
     public static BlockCraftingKnapping craftingKnapping;
-    public static BlockCraftingMason craftingMason;
-    public static BlockCraftingTextiles craftingTextiles;
-    public static BlockCraftingWoodworking craftingWoodworking;
-    public static BlockMultiAbstract craftingArmourer;
-    public static BlockCraftingSawpit craftingSawpit;
+    public static BlockMultiCrafting craftingMason;
+    public static BlockMultiCrafting craftingTextiles;
+    public static BlockMultiCrafting craftingWoodworking;
+    public static BlockMultiCrafting craftingArmourer;
+    public static BlockMultiCrafting craftingSawpit;
 
     public static BlockDrying drying;
 
     public static BlockFurnaceCampfire furnaceCampfire;
     public static BlockFurnacePotfire furnacePotfire;
-    public static BlockFurnaceClay furnaceClay;
-    public static BlockFurnaceStone furnaceStone;
+    public static BlockMultiCrafting furnaceClay;
+    public static BlockMultiCrafting furnaceStone;
     
     public static BlockBasket basket;
     public static BlockBox box;
 
-    public static BlockCropAbstract chickpea;
-    public static BlockCropAbstract cotton;
-    public static BlockCropAbstract hemp;
-    public static BlockCropAbstract pepper;
+    public static BlockCrop chickpea;
+    public static BlockCrop cotton;
+    public static BlockCrop hemp;
+    public static BlockCrop pepper;
     
-    public static BlockCropAbstract wheat;
-    public static BlockCropAbstract carrot;
-    public static BlockCropAbstract potato;
-    public static BlockCropAbstract beetroot;
+    public static BlockCrop wheat;
+    public static BlockCrop carrot;
+    public static BlockCrop potato;
+    public static BlockCrop beetroot;
     
     public static BlockRiceBase riceBase;
     public static BlockRiceTop riceTop;
@@ -187,23 +131,24 @@ public class ModBlocks {
     public static BlockWood woodPear;
     public static BlockWood woodOrange;
 
-    public static BlockLode lodeAmethyst;
-    public static BlockLode lodeFireopal;
-    public static BlockLode lodeRuby;
-    public static BlockLode lodeSapphire;
+    public static BlockSolid lodeAmethyst;
+    public static BlockSolid lodeFireopal;
+    public static BlockSolid lodeRuby;
+    public static BlockSolid lodeSapphire;
 
-    public static BlockRock oreCopper;
-    public static BlockRock oreSilver;
-    public static BlockRock oreTin;
+    public static BlockSolid oreCopper;
+    public static BlockSolid oreSilver;
+    public static BlockSolid oreTin;
     
-    public static BlockRock salt;
-    public static BlockRock chalk;
+    public static BlockSolid salt;
+    public static BlockSolid chalk;
+    public static BlockSolid peat;
     
-    public static BlockPeat peat;
+    public static BlockSolid rubble;
     
-    public static BlockCropHarvestableAbstract berry;
-    public static BlockCropHarvestableAbstract bean;
-    public static BlockCropHarvestableAbstract tomato;
+    public static BlockCropHarvestable berry;
+    public static BlockCropHarvestable bean;
+    public static BlockCropHarvestable tomato;
     
     public static BlockCropBlockfruit melonCrop;
     public static BlockCropBlockfruit pumpkinCrop;
@@ -216,40 +161,37 @@ public class ModBlocks {
     public static BlockSeedling seedlingOrange;
     public static BlockSeedling seedlingBanana;
     
-    public static BlockWall wallBrickSingle;
-    public static BlockWall wallBrickDouble;
-    public static BlockWall wallMudSingle;
-    public static BlockWall wallMudDouble;
-    public static BlockWall wallRoughSingle;
-    public static BlockWall wallRoughDouble;
-    public static BlockWall wallStoneSingle;
-    public static BlockWall wallStoneDouble;
-    public static BlockWall wallLogSingle;
-    public static BlockWall wallLogDouble;
+    public static BlockWallComplex wallBrickSingle; 
+    public static BlockWallComplex wallBrickDouble; 
+    public static BlockWallRough wallMudSingle;
+    public static BlockWallRough wallMudDouble; 
+    public static BlockWallRough wallRoughSingle;
+    public static BlockWallRough wallRoughDouble; 
+    public static BlockWallComplex wallStoneSingle;
+    public static BlockWallComplex wallStoneDouble;
+    public static BlockWallLog wallLogSingle; 
+    public static BlockWallLog wallLogDouble; 
     public static BlockWallThin wallPole;
     
-    public static BlockStairs stairsBrick;
-    public static BlockStairs stairsStone;
-    public static BlockStairsStraight stairsWood;
-    public static BlockStairsSimple stairsPole;
+    public static BlockStairsComplex stairsBrick;
+    public static BlockStairsComplex stairsStone;
+    public static BlockStairsStraight.Joining stairsWood;
+    public static BlockStairsStraight.Single stairsPole;
     
-    public static BlockVault vaultStone;
+    public static BlockVault vaultStoneSingle;
+    public static BlockVault vaultStoneDouble;
     public static BlockVault vaultBrick;
         
     public static BlockDoor doorPole;
     public static BlockDoor doorWood;
     
     public static BlockBeam beam;
-    
-    public static BlockFence fence;
-    
-    public static BlockSlabSingle slabStoneSingle;
-    public static BlockSlabDouble slabStoneDouble;
-    public static BlockSlabSingle slabBrickSingle;
-    public static BlockSlabDouble slabBrickDouble;
-    
-    public static BlockRubble rubble;
-    
+        
+    public static BlockSlab slabStoneSingle;
+    public static BlockSlab slabStoneDouble;
+    public static BlockSlab slabBrickSingle;
+    public static BlockSlab slabBrickDouble;
+        
     public static BlockTar tar;
     
     public static BlockInvisibleLight invisibleLight;
@@ -258,56 +200,56 @@ public class ModBlocks {
     
     public static void preInit() {
                 
-        registerItemless(bedLeaf = new BlockBedLeaf());
-        registerItemless(bedCotton = new BlockBedCotton());
-        registerItemless(bedWool = new BlockBedWool());
-        registerItemless(bedSimple = new BlockBedSimple());
+        registerItemless(bedLeaf = new BlockBed.Leaf());
+        registerItemless(bedCotton = new BlockBed.Cotton());
+        registerItemless(bedWool = new BlockBed.Wool());
+        registerItemless(bedSimple = new BlockBed.Simple());
         
         registerItemless(antler = new BlockAntler());
         
         register(beehive = new BlockBeehive());
 
-        register(candleBeeswax = new BlockLightCandle("candle_beeswax",
+        register(candleBeeswax = new BlockLight.Candle("candle_beeswax",
                 0.005F), 15);
-        register(candleTallow = new BlockLightCandle("candle_tallow",
+        register(candleTallow = new BlockLight.Candle("candle_tallow",
                 0.02F), 15);
-        register(torchTallow = new BlockLightTorch("torch_tallow", 0.005F), 4);
-        register(torchTar = new BlockLightTorch("torch_tar", 0.02F), 4);
+        register(torchTallow = new BlockLight.Torch("torch_tallow", 0.005F), 4);
+        register(torchTar = new BlockLight.Torch("torch_tar", 0.02F), 4);
 
-        register(carcassChicken = new BlockCarcassChicken());
-        register(carcassCowpart = new BlockCarcassCowpart(), true);
-        register(carcassPig = new BlockCarcassPig(), true);
-        register(carcassSheep = new BlockCarcassSheep(), true);
-        register(carcassRabbit = new BlockCarcassRabbit());
+        register(carcassChicken = new BlockCarcass.Chicken());
+        register(carcassCowpart = new BlockCarcass.Cowpart(), true);
+        register(carcassPig = new BlockCarcass.Pig(), true);
+        register(carcassSheep = new BlockCarcass.Sheep(), true);
+        register(carcassRabbit = new BlockCarcass.Rabbit());
 
-        registerItemless(craftingCandlemaker = new BlockCraftingCandlemaker());
-        registerItemless(craftingForge = new BlockCraftingForge());
+        registerItemless(craftingCandlemaker = new BlockMultiCrafting.Candlemaker());
+        registerItemless(craftingForge = new BlockMultiCrafting.Forge());
         register(craftingKnapping = new BlockCraftingKnapping());
-        registerItemless(craftingMason = new BlockCraftingMason());
-        registerItemless(craftingTextiles = new BlockCraftingTextiles());
-        registerItemless(craftingWoodworking = new BlockCraftingWoodworking());
-        registerItemless(craftingArmourer = new BlockCraftingArmourer());
-        registerItemless(craftingSawpit = new BlockCraftingSawpit());
+        registerItemless(craftingMason = new BlockMultiCrafting.Mason());
+        registerItemless(craftingTextiles = new BlockMultiCrafting.Textiles());
+        registerItemless(craftingWoodworking = new BlockMultiCrafting.Woodworking());
+        registerItemless(craftingArmourer = new BlockMultiCrafting.Armourer());
+        registerItemless(craftingSawpit = new BlockMultiCrafting.Sawpit());
         
         register(drying = new BlockDrying());
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
         register(furnacePotfire = new BlockFurnacePotfire());
-        registerItemless(furnaceClay = new BlockFurnaceClay());
-        registerItemless(furnaceStone = new BlockFurnaceStone());
+        registerItemless(furnaceClay = new BlockMultiCrafting.Clay());
+        registerItemless(furnaceStone = new BlockMultiCrafting.Stone());
         
         register(basket = new BlockBasket());
         register(box = new BlockBox());
 
-        registerItemless(chickpea = new BlockCropChickpea());
-        registerItemless(cotton = new BlockCropCotton());
-        registerItemless(hemp = new BlockCropHemp());
-        registerItemless(pepper = new BlockCropPepper());
+        registerItemless(chickpea = new BlockCrop.Chickpea());
+        registerItemless(cotton = new BlockCrop.Cotton());
+        registerItemless(hemp = new BlockCrop.Hemp());
+        registerItemless(pepper = new BlockCrop.Pepper());
         
-        registerItemless(wheat = new BlockCropWheat());
-        registerItemless(carrot = new BlockCropCarrot());
-        registerItemless(potato = new BlockCropPotato());
-        registerItemless(beetroot = new BlockCropBeetroot());
+        registerItemless(wheat = new BlockCrop.Wheat());
+        registerItemless(carrot = new BlockCrop.Carrot());
+        registerItemless(potato = new BlockCrop.Potato());
+        registerItemless(beetroot = new BlockCrop.Beetroot());
         
         registerItemless(riceBase = new BlockRiceBase());
         registerItemless(riceTop = new BlockRiceTop());
@@ -326,97 +268,108 @@ public class ModBlocks {
         register(woodPear = new BlockWood("wood_pear", 2F));
         register(woodOrange = new BlockWood("wood_orange", 2F));
         
-        register(lodeAmethyst = new BlockLode("lode_amethyst",
-                4F, () -> ModItems.amethyst, 2));
-        register(lodeFireopal = new BlockLode("lode_fireopal",
-                4F, () -> ModItems.fireopal, 5));
-        register(lodeRuby = new BlockLode("lode_ruby",
-                4F, () -> ModItems.ruby, 3));
-        register(lodeSapphire = new BlockLode("lode_sapphire",
-                4F, () -> ModItems.sapphire, 8));
+        register(lodeAmethyst = new BlockSolid(Material.ROCK, "lode_amethyst",
+                4F, BlockWeight.HEAVY, () -> ModItems.amethyst,
+                2, ToolType.PICKAXE));
+        register(lodeFireopal = new BlockSolid(Material.ROCK, "lode_fireopal",
+                4F, BlockWeight.HEAVY, () -> ModItems.fireopal,
+                5, ToolType.PICKAXE));
+        register(lodeRuby = new BlockSolid(Material.ROCK, "lode_ruby",
+                4F, BlockWeight.HEAVY, () -> ModItems.ruby,
+                3, ToolType.PICKAXE));
+        register(lodeSapphire = new BlockSolid(Material.ROCK, "lode_sapphire",
+                4F, BlockWeight.HEAVY, () -> ModItems.sapphire,
+                8, ToolType.PICKAXE));
 
-        register(oreCopper = new BlockLode("ore_copper",
-                3F, () -> ModItems.oreCopper, 1));
-        register(oreSilver = new BlockLode("ore_silver",
-                3F, () -> ModItems.oreSilver, 1));
-        register(oreTin = new BlockLode("ore_tin",
-                3F, () -> ModItems.oreTin, 1));
+        register(oreCopper = new BlockSolid(Material.ROCK, "ore_copper",
+                3F, BlockWeight.HEAVY, () -> ModItems.oreCopper,
+                1, ToolType.PICKAXE));
+        register(oreSilver = new BlockSolid(Material.ROCK, "ore_silver",
+                3F, BlockWeight.HEAVY, () -> ModItems.oreSilver,
+                1, ToolType.PICKAXE));
+        register(oreTin = new BlockSolid(Material.ROCK, "ore_tin",
+                3F, BlockWeight.HEAVY, () -> ModItems.oreTin,
+                1, ToolType.PICKAXE));
         
-        register(salt = new BlockRock("salt", 1F));
-        register(chalk = new BlockRock("chalk", 3F));
+        register(salt = new BlockSolid(Material.ROCK, "salt", 1F,
+                BlockWeight.MEDIUM, () -> ModItems.salt, 1, ToolType.PICKAXE));
+        register(chalk = new BlockSolid(Material.ROCK, "chalk", 3F,
+                BlockWeight.MEDIUM, () -> ModItems.chalk, 1, ToolType.PICKAXE));
+        register(peat = new BlockSolid(BlockMaterial.SOIL, "peat", 0.5F,
+                BlockWeight.MEDIUM, () -> ModItems.peatWet,
+                1, ToolType.SHOVEL));
         
-        register(peat = new BlockPeat());
+        registerItemless(rubble = new BlockSolid(Material.ROCK, "rubble", 1F,
+                BlockWeight.HEAVY, () -> ModItems.rubble, 1, ToolType.SHOVEL));
 
-        registerItemless(berry = new BlockCropHarvestableBerry());
-        registerItemless(bean = new BlockCropHarvestableBean());
-        registerItemless(tomato = new BlockCropHarvestableTomato());
+        registerItemless(berry = new BlockCropHarvestable.Berry());
+        registerItemless(bean = new BlockCropHarvestable.Bean());
+        registerItemless(tomato = new BlockCropHarvestable.Tomato());
         
-        registerItemless(melonCrop = new BlockCropBlockfruitMelon());
-        registerItemless(pumpkinCrop = new BlockCropBlockfruitPumpkin());
+        registerItemless(melonCrop = new BlockCropBlockfruit.Melon());
+        registerItemless(pumpkinCrop = new BlockCropBlockfruit.Pumpkin());
         
         register(melonFruit = new BlockFruit("melon_fruit",
                 () -> ModItems.melon, () -> ModItems.seedMelon));
         register(pumpkinFruit = new BlockFruit("pumpkin_fruit",
                 () -> ModItems.pumpkin, () -> ModItems.seedPumpkin));
         
-        register(seedlingApple = new BlockSeedlingApple());
-        register(seedlingPear = new BlockSeedlingPear());
-        register(seedlingOrange = new BlockSeedlingOrange());
-        register(seedlingBanana = new BlockSeedlingBanana());
+        register(seedlingApple = new BlockSeedling.Apple());
+        register(seedlingPear = new BlockSeedling.Pear());
+        register(seedlingOrange = new BlockSeedling.Orange());
+        register(seedlingBanana = new BlockSeedling.Banana());
         
-        registerItemless(wallBrickSingle =
-                new BlockWall(BlockMaterial.STONE_FURNITURE,
-                "wall_brick_single", 2F, ToolType.PICKAXE, false,
-                () -> ModItems.wallBrick, true, 6, true));
+       registerItemless(wallBrickSingle =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_brick_single", 2F, ToolType.PICKAXE,
+                false, () -> ModItems.wallBrick));
         registerItemless(wallBrickDouble =
-                new BlockWall(BlockMaterial.STONE_FURNITURE,
-                "wall_brick_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallBrick, true, 6, true));
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_brick_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallBrick)); 
         registerItemless(wallMudSingle =
-                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
-                "wall_mud_single", 1F, ToolType.PICKAXE, false,
-                () -> ModItems.wallMud, false, 1, false));
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_mud_single", 1F, ToolType.PICKAXE,
+                false, () -> ModItems.wallMud));
         registerItemless(wallMudDouble =
-                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
-                "wall_mud_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallMud, false, 1, false));
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_mud_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallMud));
         registerItemless(wallRoughSingle =
-                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
-                "wall_rough_single", 1.5F, ToolType.PICKAXE, false,
-                () -> ModItems.wallRough, false, 1, false));
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_rough_single", 1.5F, ToolType.PICKAXE,
+                false, () -> ModItems.wallRough));
         registerItemless(wallRoughDouble =
-                new BlockWallHeightless(BlockMaterial.STONE_FURNITURE,
-                "wall_rough_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallRough, false, 1, false));
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_rough_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallRough));
         registerItemless(wallStoneSingle =
-                new BlockWall(BlockMaterial.STONE_FURNITURE,
-                "wall_stone_single", 2F, ToolType.PICKAXE, false,
-                () -> ModItems.wallStone, true, 6, true));
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_stone_single", 2F, ToolType.PICKAXE,
+                false, () -> ModItems.wallStone));
         registerItemless(wallStoneDouble =
-                new BlockWall(BlockMaterial.STONE_FURNITURE,
-                "wall_stone_double", 3F, ToolType.PICKAXE, true,
-                () -> ModItems.wallStone, true, 6, true));
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_stone_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallStone));
         registerItemless(wallLogSingle =
-                new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
-                "wall_log_single", 1F, ToolType.AXE, false,
-                () -> ModItems.wallLog, false, 4, true));
+                new BlockWallLog("wall_log_single", 1F, false));
         registerItemless(wallLogDouble =
-                new BlockWallStraight(BlockMaterial.WOOD_FURNITURE,
-                "wall_log_double", 3F, ToolType.AXE, true,
-                () -> ModItems.wallLog, false, 4, true));
+                new BlockWallLog("wall_log_double", 3F, true));
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
-                "wall_pole", 2F, ToolType.AXE, false, 4, false), 4);
+                "wall_pole", 2F, ToolType.AXE), 4);
         
-        register(stairsBrick = new BlockStairs("stairs_brick",
-                wallBrickDouble.getDefaultState(), ToolType.PICKAXE), 2);
-        register(stairsStone = new BlockStairs("stairs_stone",
-                wallStoneDouble.getDefaultState(), ToolType.PICKAXE), 2);
-        register(stairsWood = new BlockStairsStraight("stairs_wood",
-                2F, ToolType.AXE), 4);
-        register(stairsPole = new BlockStairsSimple("stairs_pole",
-                2F, ToolType.AXE), 4);
+        register(stairsBrick = new BlockStairsComplex("stairs_brick", 3F), 2);
+        register(stairsStone = new BlockStairsComplex("stairs_stone", 3F), 2);
+        register(stairsWood = new BlockStairsStraight.Joining("stairs_wood",
+                2F), 4);
+        register(stairsPole = new BlockStairsStraight.Single("stairs_pole",
+                2F), 4);
         
-        register(vaultStone = new BlockVault("vault_stone"), 2);
+        registerItemless(vaultStoneSingle =
+                new BlockVault("vault_stone_single"));
+        registerItemless(vaultStoneDouble = 
+                new BlockVault("vault_stone_double"));
+        
         register(vaultBrick = new BlockVault("vault_brick"), 2);
         
         registerItemless(doorPole = new BlockDoor("door_pole",
@@ -425,24 +378,16 @@ public class ModBlocks {
                 () -> ModItems.doorWood));
         
         registerItemless(beam = new BlockBeam());
-        
-        register(fence = new BlockFence());
-        
-        registerItemless(slabStoneSingle = new BlockSlabSingle(BlockMaterial
-                .STONE_FURNITURE, "slab_stone_single", 2F, ToolType.PICKAXE,
-                () -> ModItems.slabStone));
-        registerItemless(slabStoneDouble = new BlockSlabDouble(BlockMaterial
-                .STONE_FURNITURE, "slab_stone_double", 2F, ToolType.PICKAXE,
-                () -> ModItems.slabStone));
-        registerItemless(slabBrickSingle = new BlockSlabSingle(BlockMaterial
-                .STONE_FURNITURE, "slab_brick_single", 2F, ToolType.PICKAXE,
-                () -> ModItems.slabBrick));
-        registerItemless(slabBrickDouble = new BlockSlabDouble(BlockMaterial
-                .STONE_FURNITURE, "slab_brick_double", 2F, ToolType.PICKAXE,
-                () -> ModItems.slabBrick));
-        
-        registerItemless(rubble = new BlockRubble());
-        
+                
+        registerItemless(slabStoneSingle = new BlockSlab("slab_stone_single",
+                false, () -> ModItems.slabStone));
+        registerItemless(slabStoneDouble = new BlockSlab("slab_stone_double",
+                true, () -> ModItems.slabStone));
+        registerItemless(slabBrickSingle = new BlockSlab("slab_brick_single",
+                false, () -> ModItems.slabBrick));
+        registerItemless(slabBrickDouble = new BlockSlab("slab_brick_double",
+                true, () -> ModItems.slabBrick));
+                
         registerItemless(tar = new BlockTar());
         
         registerItemless(invisibleLight = new BlockInvisibleLight());
@@ -477,7 +422,6 @@ public class ModBlocks {
         OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST)
                 .setMaxStackSize(1));
         Item.getItemFromBlock(Blocks.LADDER).setMaxStackSize(8);
-    
     }
     
     @SideOnly(Side.CLIENT)
@@ -489,22 +433,22 @@ public class ModBlocks {
         }
     }
     
-    private static void register(Block block, boolean isOffhandOnly) {
+    private static Block register(Block block, boolean isOffhandOnly) {
         
-        register(block, 1, isOffhandOnly);
+        return register(block, 1, isOffhandOnly);
     }
     
-    private static void register(Block block) {
+    private static Block register(Block block) {
         
-        register(block, 1, false);
+        return register(block, 1, false);
     }
         
-    private static void register(Block block, int stackSize) {
+    private static Block register(Block block, int stackSize) {
         
-        register(block, stackSize, false);
+        return register(block, stackSize, false);
     }
 
-    private static void register(Block block,
+    private static Block register(Block block,
             int stackSize, boolean isOffhandOnly) {
 
         Item item = new ItemBlock(block).setMaxStackSize(stackSize);
@@ -518,12 +462,14 @@ public class ModBlocks {
         GameRegistry.register(item
                 .setRegistryName(block.getRegistryName()));
         MOD_BLOCKS.put(block, item);
+        return block;
     }
     
-    private static void registerItemless(Block block) {
+    private static Block registerItemless(Block block) {
         
-        GameRegistry.register(block);
         MOD_BLOCKS.put(block, Item.getItemFromBlock(block));
+        GameRegistry.register(block);
+        return block;
     }
     
     @SideOnly(Side.CLIENT)

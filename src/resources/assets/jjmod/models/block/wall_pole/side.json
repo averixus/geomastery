@@ -4,6 +4,7 @@
     "pole": "jjmod:blocks/complex/pole",
     "particle": "jjmod:blocks/complex/pole"
 },
+"parent": "block/block",
 "elements": [ 
 {
     "from": [ 7, 0, 3 ],

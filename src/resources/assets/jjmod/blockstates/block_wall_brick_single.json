@@ -1,88 +1,59 @@
 {
-    "multipart": [
-        {   "when": { "position": "lone", "straight": "ns" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_straight" }
+    "forge_marker": 1,
+    "defaults": {
+        "model": "jjmod:wall_brick_single/lone_post"
+    },
+    "variants": {
+        "position": {
+            "lone": {},
+            "bottom": { "model": "jjmod:wall_brick_single/bottom_post" },
+            "middle": { "model": "jjmod:wall_brick_single/middle_post" },
+            "top": { "model": "jjmod:wall_brick_single/top_post" }
         },
-        {   "when": { "position": "lone", "straight": "ew" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_straight", "y": 90 }
+        "north": {
+            "none": {},
+            "lonesingle": { "submodel": { "northlonesingle": { "model": "jjmod:wall_brick_single/lone_side", "y": 180 } } },
+            "bottomsingle": { "submodel": { "northbottomsingle": { "model": "jjmod:wall_brick_single/bottom_side", "y": 180 } } },
+            "middlesingle": { "submodel": { "northmiddlesingle": { "model": "jjmod:wall_brick_single/middle_side", "y": 180 } } },
+            "topsingle": { "submodel": { "northtopsingle": { "model": "jjmod:wall_brick_single/top_side", "y": 180 } } },
+            "lonedouble": { "submodel": { "northlonedouble": { "model": "jjmod:wall_brick_single/lone_side", "y": 180 } } },
+            "bottomdouble": { "submodel": { "northbottomdouble": { "model": "jjmod:wall_brick_single/bottom_side", "y": 180 } } },
+            "middledouble": { "submodel": { "northmiddledouble": { "model": "jjmod:wall_brick_single/middle_side", "y": 180 } } },
+            "topdouble": { "submodel": { "northtopdouble": { "model": "jjmod:wall_brick_single/top_side", "y": 180 } } }
         },
-        {   "when": { "position": "lone", "straight": "no" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_post" }
+        "east": {
+            "none": {},
+            "lonesingle": { "submodel": { "eastlonesingle": { "model": "jjmod:wall_brick_single/lone_side", "y": 270 } } },
+            "bottomsingle": { "submodel": { "eastbottomsingle": { "model": "jjmod:wall_brick_single/bottom_side", "y": 270 } } },
+            "middlesingle": { "submodel": { "eastmiddlesingle": { "model": "jjmod:wall_brick_single/middle_side", "y": 270 } } },
+            "topsingle": { "submodel": { "easttopsingle": { "model": "jjmod:wall_brick_single/top_side", "y": 270 } } },
+            "lonedouble": { "submodel": { "eastlonedouble": { "model": "jjmod:wall_brick_single/lone_side", "y": 270 } } },
+            "bottomdouble": { "submodel": { "eastbottomdouble": { "model": "jjmod:wall_brick_single/bottom_side", "y": 270 } } },
+            "middledouble": { "submodel": { "eastmiddledouble": { "model": "jjmod:wall_brick_single/middle_side", "y": 270 } } },
+            "topdouble": { "submodel": { "easttopdouble": { "model": "jjmod:wall_brick_single/top_side", "y": 270 } } }
         },
-        {   "when": { "position": "lone", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_side", "y": 180 }
+        "south": {
+            "none": {},
+            "lonesingle": { "submodel": { "southlonesingle": { "model": "jjmod:wall_brick_single/lone_side" } } },
+            "bottomsingle": { "submodel": { "southbottomsingle": { "model": "jjmod:wall_brick_single/bottom_side" } } },
+            "middlesingle": { "submodel": { "southmiddlesingle": { "model": "jjmod:wall_brick_single/middle_side" } } },
+            "topsingle": { "submodel": { "southtopsingle": { "model": "jjmod:wall_brick_single/top_side" } } },
+            "lonedouble": { "submodel": { "southlonedouble": { "model": "jjmod:wall_brick_single/lone_side" } } },
+            "bottomdouble": { "submodel": { "southbottomdouble": { "model": "jjmod:wall_brick_single/bottom_side" } } },
+            "middledouble": { "submodel": { "southmiddledouble": { "model": "jjmod:wall_brick_single/middle_side" } } },
+            "topdouble": { "submodel": { "southtopdouble": { "model": "jjmod:wall_brick_single/top_side" } } }
         },
-        {   "when": { "position": "lone", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_side", "y": 270 }
+        "west": {
+            "none": {},
+            "lonesingle": { "submodel": { "westlonesingle": { "model": "jjmod:wall_brick_single/lone_side", "y": 90 } } },
+            "bottomsingle": { "submodel": { "westbottomsingle": { "model": "jjmod:wall_brick_single/bottom_side", "y": 90 } } },
+            "middlesingle": { "submodel": { "westmiddlesingle": { "model": "jjmod:wall_brick_single/middle_side", "y": 90 } } },
+            "topsingle": { "submodel": { "westtopsingle": { "model": "jjmod:wall_brick_single/top_side", "y": 90 } } },
+            "lonedouble": { "submodel": { "westlonedouble": { "model": "jjmod:wall_brick_single/lone_side", "y": 90 } } },
+            "bottomdouble": { "submodel": { "westbottomdouble": { "model": "jjmod:wall_brick_single/bottom_side", "y": 90 } } },
+            "middledouble": { "submodel": { "westmiddledouble": { "model": "jjmod:wall_brick_single/middle_side", "y": 90 } } },
+            "topdouble": { "submodel": { "westtopdouble": { "model": "jjmod:wall_brick_single/top_side", "y": 90 } } }
         },
-        {   "when": { "position": "lone", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_side" }
-        },
-        {   "when": { "position": "lone", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/lone_side", "y": 90 }
-        },
-        {   "when": { "position": "bottom", "straight": "ns" },
-            "apply": { "model": "jjmod:wall_brick_single/bottom_straight" }
-        },
-        {   "when": { "position": "bottom", "straight": "ew" },
-            "apply": { "model": "jjmod:wall_brick_single/bottom_straight", "y": 90 }
-        },
-        {   "when": { "position": "bottom", "straight": "no"},
-            "apply": { "model": "jjmod:wall_brick_single/bottom_post" }
-        },
-        {   "when": { "position": "bottom", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/bottom_side", "y": 180 }
-        },
-        {   "when": { "position": "bottom", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/bottom_side", "y": 270 }
-        },
-        {   "when": { "position": "bottom", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/bottom_side" }
-        },
-        {   "when": { "position": "bottom", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/bottom_side", "y": 90 }
-        },
-        {   "when": { "position": "middle", "straight": "ns" },
-            "apply": { "model": "jjmod:wall_brick_single/middle_straight" }
-        },
-        {   "when": { "position": "middle", "straight": "ew" },
-            "apply": { "model": "jjmod:wall_brick_single/middle_straight", "y": 90 }
-        },
-        {   "when": { "position": "middle", "straight": "no"},
-            "apply": { "model": "jjmod:wall_brick_single/middle_post" }
-        },
-        {   "when": { "position": "middle", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/middle_side", "y": 180 }
-        },
-        {   "when": { "position": "middle", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/middle_side", "y": 270 }
-        },
-        {   "when": { "position": "middle", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/middle_side" }
-        },
-        {   "when": { "position": "middle", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/middle_side", "y": 90 }
-        },
-        {   "when": { "position": "top", "straight": "ns" },
-            "apply": { "model": "jjmod:wall_brick_single/top_straight" }
-        },
-        {   "when": { "position": "top", "straight": "ew" },
-            "apply": { "model": "jjmod:wall_brick_single/top_straight", "y": 90 }
-        },
-        {   "when": { "position": "top", "straight": "no"},
-            "apply": { "model": "jjmod:wall_brick_single/top_post" }
-        },
-        {   "when": { "position": "top", "straight": "no", "north": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/top_side", "y": 180 }
-        },
-        {   "when": { "position": "top", "straight": "no", "east": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/top_side", "y": 270 }
-        },
-        {   "when": { "position": "top", "straight": "no", "south": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/top_side" }
-        },
-        {   "when": { "position": "top", "straight": "no", "west": "true" },
-            "apply": { "model": "jjmod:wall_brick_single/top_side", "y": 90 }
-        }
-    ]
+        "inventory": [{}]
+    }
 }

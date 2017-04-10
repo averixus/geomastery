@@ -1,10 +1,11 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.List;
-import com.jayavery.jjmod.utilities.BlockMaterial;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
-import com.jayavery.jjmod.utilities.ToolType;
 import javax.annotation.Nullable;
+import com.google.common.collect.Lists;
+import com.jayavery.jjmod.utilities.BlockMaterial;
+import com.jayavery.jjmod.utilities.BlockWeight;
+import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -13,7 +14,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,7 +24,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Vault block. */
-public class BlockVault extends BlockNew implements IBuildingBlock {
+public class BlockVault extends BlockBuilding {
     
     public static final PropertyEnum<EnumShape> SHAPE =
             PropertyEnum.<EnumShape>create("shape", EnumShape.class);
@@ -36,33 +38,23 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public boolean isLight() {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
         
-        return true;
+        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
     }
     
     @Override
-    public boolean isHeavy() {
+    public boolean shouldConnect(IBlockAccess world, IBlockState state,
+            BlockPos pos, EnumFacing direcion) {
         
-        return true;
+        return false;
     }
     
     @Override
-    public boolean isDouble() {
+    public BlockWeight getWeight() {
         
-        return true;
-    }
-    
-    @Override
-    public boolean supportsBeam() {
-        
-        return true;
-    }
-    
-    @Override
-    public boolean isShelter() {
-        
-        return true;
+        return BlockWeight.HEAVY;
     }
     
     /** Checks whether there is a valid support at the
@@ -72,18 +64,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
             BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
-        
-        if (block instanceof IBuildingBlock && block != this) {
-            
-            IBuildingBlock builtBlock = (IBuildingBlock) block;
-            
-             if (builtBlock.isDouble()) {
-                 
-                 return true;
-             }
-        }
-        
-        return false;
+        return block instanceof BlockWallComplex;
     }
     
     /** @return Whether the vault at the given pos is an external corner. */
@@ -138,7 +119,7 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
+    public boolean isValid(World world, BlockPos pos) {
         
         boolean result = false;
         
@@ -152,33 +133,10 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         return result;
     }
     
-    /** Checks position and breaks if invalid. */
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block blockIn, BlockPos unused) {
-        
-        if (!this.canPlaceBlockAt(world, pos)) {
-            
-            world.destroyBlock(pos, true);
-        }
-    }
-    
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {SHAPE, FACING});
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return 0;
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState();
+        return new BlockStateContainer(this, SHAPE, FACING);
     }
     
     @Override
@@ -282,12 +240,6 @@ public class BlockVault extends BlockNew implements IBuildingBlock {
         }
         
         return state;
-    }
-    
-    @Override
-    public BlockRenderLayer getBlockLayer() {
-
-        return BlockRenderLayer.CUTOUT_MIPPED;
     }
     
     /** Enum defining possible shapes for the vault. */

@@ -1,7 +1,7 @@
 package com.jayavery.jjmod.items;
 
 import javax.annotation.Nullable;
-import com.jayavery.jjmod.blocks.BlockCarcassAbstract;
+import com.jayavery.jjmod.blocks.BlockCarcass;
 import com.jayavery.jjmod.capabilities.DefaultCapDecay;
 import com.jayavery.jjmod.capabilities.ICapDecay;
 import com.jayavery.jjmod.capabilities.ProviderCapDecay;
@@ -32,14 +32,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Decayable carcass item. */
-public class ItemCarcassDecayable extends ItemJj {
+public class ItemCarcassDecayable extends ItemBlockplacer {
 
     /** The block for this item. */
-    private final BlockCarcassAbstract block;
+    private final BlockCarcass block;
     
-    public ItemCarcassDecayable(String name, BlockCarcassAbstract block) {
+    public ItemCarcassDecayable(String name, BlockCarcass block) {
         
-        super(name, 1, CreativeTabs.FOOD);
+        super(name, 1, CreativeTabs.FOOD, SoundType.CLOTH);
         this.block = block;
         this.addPropertyOverride(new ResourceLocation("rot"),
                 new IItemPropertyGetter() {
@@ -101,24 +101,17 @@ public class ItemCarcassDecayable extends ItemJj {
     
     /** Attempts to place this item's carcass block. */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world,
-            BlockPos pos, EnumHand hand, EnumFacing side,
-            float hitX, float hitY, float hitZ) {
-        
-        if (world.isRemote) {
-            
-            return EnumActionResult.SUCCESS;
-        }
-        
-        ItemStack stack = player.getHeldItem(hand);
-        pos = pos.offset(side);
-        IBlockState state = world.getBlockState(pos);
+    protected boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing, ItemStack stack) {
+
+        BlockPos placePos = targetPos.offset(targetSide);
+        IBlockState state = world.getBlockState(placePos);
         Block block = state.getBlock();
             
-        if (!block.isReplaceable(world, pos) ||
-                !this.block.canPlaceBlockAt(world, pos)) {
+        if (!block.isReplaceable(world, placePos) ||
+                !this.block.isValid(world, placePos)) {
             
-            return EnumActionResult.FAIL;
+            return false;
         }
         
         // Set up block and TE
@@ -128,26 +121,15 @@ public class ItemCarcassDecayable extends ItemJj {
         
         if (decayCap.isRot(world)) {
             
-            return EnumActionResult.FAIL;
+            return false;
         }
         
         IBlockState placeState = this.block.getDefaultState();
-        world.setBlockState(pos, placeState);
-        ((TECarcass) world.getTileEntity(pos))
+        world.setBlockState(placePos, placeState);
+        ((TECarcass) world.getTileEntity(placePos))
                 .setData(decayCap.getBirthTime(), decayCap.getStageSize());
         
-        // Use item
-        world.playSound(null, pos, SoundType.CLOTH.getPlaceSound(),
-                SoundCategory.BLOCKS, (SoundType.CLOTH.getVolume() + 1.0F)
-                / 2.0F,  SoundType.CLOTH.getPitch() * 0.8F);
-        
-        if (!player.capabilities.isCreativeMode) {
-            
-            stack.shrink(1);
-            ContainerInventory.updateHand(player, hand);
-        }
-        
-        return EnumActionResult.SUCCESS;
+        return true;
     }
     
     /** Makes this item named rotten according to capability. */

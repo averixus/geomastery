@@ -1,11 +1,11 @@
 package com.jayavery.jjmod.blocks;
 
-import java.util.Random;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
-import com.jayavery.jjmod.init.ModBlocks;
+import com.google.common.collect.Lists;
 import com.jayavery.jjmod.utilities.BlockMaterial;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
-import com.jayavery.jjmod.utilities.IMultipart;
+import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -15,6 +15,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -28,7 +29,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Door block. */
-public class BlockDoor extends BlockNew implements IBuildingBlock {
+public class BlockDoor extends BlockBuilding {
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
@@ -36,42 +37,28 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             PropertyEnum.<EnumPartDoor>create("part", EnumPartDoor.class);
     
     /** Supplier for the door item. */
-    private Supplier<Item> item;
+    protected Supplier<Item> item;
 
     public BlockDoor(String name, Supplier<Item> item) {
         
-        super(BlockMaterial.WOOD_FURNITURE, name, null, 2F, ToolType.AXE);
+        super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.DECORATIONS,
+                2F, ToolType.AXE);
+        this.setHarvestLevel("axe", 0);
         this.item = item;
     }
     
     @Override
-    public boolean isLight() {
+    public BlockWeight getWeight() {
         
-        return true;
+        return BlockWeight.LIGHT;
     }
     
     @Override
-    public boolean isHeavy() {
+    public boolean shouldConnect(IBlockAccess world, IBlockState state,
+            BlockPos pos, EnumFacing direction) {
         
-        return false;
-    }
-    
-    @Override
-    public boolean isDouble() {
-        
-        return true;
-    }
-    
-    @Override
-    public boolean supportsBeam() {
-        
-        return false;
-    }
-    
-    @Override
-    public boolean isShelter() {
-        
-        return false;
+        EnumFacing facing = state.getValue(FACING);
+        return facing != direction && facing != direction.getOpposite();
     }
     
     @Override
@@ -146,7 +133,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         return true;
     }
     
-    /** Checks position and breaks if invalid. */
+    /** Checks position and open state, changes or breaks if invalid. */
     @Override
     public void neighborChanged(IBlockState thisState, World world,
             BlockPos thisPos, Block block, BlockPos unused) {
@@ -156,7 +143,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         IBlockState otherState = world.getBlockState(otherPos);
         
         if (otherState.getBlock() != this ||
-                !this.canPlaceBlockAt(world, thisPos)) {
+                !this.isValid(world, thisPos)) {
             
             world.setBlockToAir(thisPos);
             
@@ -173,25 +160,19 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     }
     
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
+        
+        state = this.getActualState(state, world, pos);
         
         if (state.getValue(PART).isTop()) {
        
-            return this.item.get();
+            return Lists.newArrayList(new ItemStack(this.item.get()));
             
         } else {
             
-            return Items.AIR;
+            return Collections.emptyList();
         }
-    }
-    
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-
-        Block below = world.getBlockState(pos.down()).getBlock();
-        return ModBlocks.LIGHT.contains(below) ||
-                ModBlocks.HEAVY.contains(below) ||
-                world.getBlockState(pos.down()).getBlock() == this;
     }
     
     @Override
@@ -207,7 +188,8 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         if (leftState.getBlock() == this &&
                 leftState.getValue(FACING) == facing) {
             
-            state = state.withProperty(PART, isTop ? EnumPartDoor.RT : EnumPartDoor.RB);
+            state = state.withProperty(PART, isTop ?
+                    EnumPartDoor.RT : EnumPartDoor.RB);
       
         }
         
@@ -217,7 +199,8 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
         if (rightState.getBlock() == this &&
                 rightState.getValue(FACING) == facing) {
             
-            state = state.withProperty(PART, isTop ? EnumPartDoor.LT : EnumPartDoor.LB);
+            state = state.withProperty(PART, isTop ?
+                    EnumPartDoor.LT : EnumPartDoor.LB);
         }
         
         return state;
@@ -267,8 +250,7 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this,
-                new IProperty[]{FACING, OPEN, PART});
+        return new BlockStateContainer(this, FACING, OPEN, PART);
     }
     
     /** Enum defining part and position of door blocks. */
@@ -292,7 +274,6 @@ public class BlockDoor extends BlockNew implements IBuildingBlock {
             return this.name;
         }
         
-        /** @return Whether or not this part is the top of the door. */
         public boolean isTop() {
             
             return this.isTop;

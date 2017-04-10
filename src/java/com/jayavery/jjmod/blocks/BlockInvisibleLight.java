@@ -46,6 +46,7 @@ public class BlockInvisibleLight extends BlockNew {
         return state.getValue(LIGHT);
     }
 
+    /** Makes the block invisible with no bounding box. */
     @Override
     protected RayTraceResult rayTrace(BlockPos pos, Vec3d start,
             Vec3d end, AxisAlignedBB boundingBox) {

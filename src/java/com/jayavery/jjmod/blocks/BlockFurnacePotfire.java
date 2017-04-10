@@ -1,11 +1,12 @@
 package com.jayavery.jjmod.blocks;
 
+import java.util.List;
 import java.util.Random;
+import com.google.common.collect.Lists;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
-import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
-import com.jayavery.jjmod.tileentities.TEFurnaceCampfire;
+import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.tileentities.TEFurnacePotfire;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,36 +48,18 @@ public class BlockFurnacePotfire extends BlockComplexAbstract {
         
         return 12;
     }
-    
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand,
-            int fortune) {
         
-        return ModItems.potClay;
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune) {
+        
+        return Lists.newArrayList(new ItemStack(ModItems.potClay));
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createTileEntity(World worldIn, IBlockState state) {
 
         return new TEFurnacePotfire();
-    }
-
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        
-        Block below = world.getBlockState(pos.down()).getBlock();
-        return ModBlocks.LIGHT.contains(below) ||
-                ModBlocks.HEAVY.contains(below);
-    }
-
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-        
-        if (!this.canPlaceBlockAt(world, pos)) {
-            
-            world.destroyBlock(pos, true);
-        }
     }
     
     @Override

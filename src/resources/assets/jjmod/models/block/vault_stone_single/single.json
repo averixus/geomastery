@@ -1,0 +1,57 @@
+{
+"textures": {
+    "stonebrick": "jjmod:blocks/complex/stonebrick",
+    "stone2": "jjmod:blocks/complex/stone2",
+    "particle": "jjmod:blocks/complex/stone2"
+},
+"elements": [ 
+{
+    "from": [ 4, 12, 0 ],
+    "to": [ 12, 16, 12 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 4, 0 ], "texture": "#stone2" },
+        "up":    { "uv": [ 4, 0, 12, 12 ], "texture": "#stone2", "cullface": "up" },
+        "north": { "uv": [ 4, 0, 12, 4 ], "texture": "#stonebrick", "cullface": "north" },
+        "south": { "uv": [ 4, 0, 12, 4 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 0, 0, 12, 4 ], "texture": "#stonebrick", "cullface": "west" },
+        "east":  { "uv": [ 4, 0, 16, 4 ], "texture": "#stonebrick", "cullface": "east" }
+    }
+},
+{
+    "from": [ 4, 4, 0 ],
+    "to": [ 12, 12, 4 ],
+    "faces": {
+        "down":  { "uv": [ 12, 4, 4, 0 ], "texture": "#stone2" },
+        "north": { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick", "cullface": "north" },
+        "south": { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 0, 4, 4, 12 ], "texture": "#stonebrick", "cullface": "west" },
+        "east":  { "uv": [ 12, 4, 16, 12 ], "texture": "#stonebrick", "cullface": "east" }
+    }
+},
+{
+    "from": [ 6, 5.5, 7.5625 ],
+    "to": [ 10, 15.5, 12.5625 ],
+    "rotation": { "origin": [ 6, 15.5, 7.5625 ], "axis": "x", "angle": 45 },
+    "faces": {
+        "down":  { "uv": [ 10, 12.5625, 6, 7.5625 ], "texture": "#stone" },
+        "up":    { "uv": [ 6, 7, 10, 12 ], "texture": "#stone2" },
+        "north": { "uv": [ 6, 1, 10, 11 ], "texture": "#stone2" },
+        "south": { "uv": [ 6, 1, 10, 11 ], "texture": "#stone2" },
+        "west":  { "uv": [ 7, 1, 12, 11 ], "texture": "#stone2" },
+        "east":  { "uv": [ 3, 1, 8, 11 ], "texture": "#stone2" }
+    }
+},
+{
+    "from": [ 4, 4, -4 ],
+    "to": [ 12, 16, 0 ],
+    "faces": {
+        "down":  { "uv": [ 12, 16, 4, 12 ], "texture": "#stone2", "cullface": "north" },
+        "up":    { "uv": [ 4, 12, 12, 16 ], "texture": "#stone2", "cullface": "north" },
+        "north": { "uv": [ 4, 0, 12, 12 ], "texture": "#stonebrick", "cullface": "north" },
+        "south": { "uv": [ 4, 0, 12, 12 ], "texture": "#stonebrick", "cullface": "north" },
+        "west":  { "uv": [ 12, 0, 16, 12 ], "texture": "#stonebrick", "cullface": "north" },
+        "east":  { "uv": [ 0, 0, 4, 12 ], "texture": "#stonebrick", "cullface": "north" }
+    }
+}
+]
+}

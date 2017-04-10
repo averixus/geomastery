@@ -1,10 +1,10 @@
 package com.jayavery.jjmod.tileentities;
 
+import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -75,10 +75,8 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            Block block = ModBlocks.craftingArmourer;
-            Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
-                    ModBlocks.HEAVY.contains(below) || below == block);
+            BlockBuilding block = ModBlocks.craftingArmourer;
+            boolean broken = !block.isValid(world, pos);
             
             switch (this) {
                 
@@ -170,7 +168,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
                 BlockPos posT = posL.up();
                 BlockPos posR = posM.offset(facing.rotateY());
                 
-                Block block = ModBlocks.craftingArmourer;
+                BlockBuilding block = ModBlocks.craftingArmourer;
                 BlockPos[] basePositions = {posM, posL, posR};
                 BlockPos[] upperPositions = {posT};
                 boolean valid = true;
@@ -180,12 +178,8 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
                     Block blockCheck = world.getBlockState(position).getBlock();
                     boolean replaceable = blockCheck
                             .isReplaceable(world, position);
-                    
-                    Block blockBelow = world.getBlockState(position.down())
-                            .getBlock();
-                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
-                            ModBlocks.HEAVY.contains(blockBelow) ||
-                            blockBelow == block;
+
+                    boolean foundation = block.isValid(world, position);
                     
                     if (!replaceable || !foundation) {
                         

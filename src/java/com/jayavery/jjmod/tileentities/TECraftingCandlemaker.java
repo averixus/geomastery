@@ -1,15 +1,14 @@
 package com.jayavery.jjmod.tileentities;
 
+import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockNew;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.tileentities.TECraftingCandlemaker.EnumPartCandlemaker;
-import com.jayavery.jjmod.utilities.IBuildingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -72,10 +71,8 @@ public class TECraftingCandlemaker extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            Block block = ModBlocks.craftingCandlemaker;
-            Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !(ModBlocks.LIGHT.contains(below) ||
-                    ModBlocks.HEAVY.contains(below) || below == block);
+            BlockBuilding block = ModBlocks.craftingCandlemaker;
+            boolean broken = !block.isValid(world, pos);
             
             if (this == FRONT) {
 
@@ -112,7 +109,7 @@ public class TECraftingCandlemaker extends
                 BlockPos posFront = pos;
                 BlockPos posBack = posFront.offset(facing);
                 
-                Block block = ModBlocks.craftingCandlemaker;
+                BlockBuilding block = ModBlocks.craftingCandlemaker;
                 BlockPos[] positions = {posFront, posBack};
                 boolean valid = true;
                 
@@ -121,12 +118,7 @@ public class TECraftingCandlemaker extends
                     Block blockCheck = world.getBlockState(position).getBlock();
                     boolean replaceable = blockCheck
                             .isReplaceable(world, position);
-                    
-                    Block blockBelow = world.getBlockState(position.down())
-                            .getBlock();
-                    boolean foundation = ModBlocks.LIGHT.contains(blockBelow) ||
-                            ModBlocks.HEAVY.contains(blockBelow) ||
-                            blockBelow == block;
+                    boolean foundation = block.isValid(world, position);
                     
                     if (!replaceable || !foundation) {
                         

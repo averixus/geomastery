@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
+/** Tar fluid block. */
 public class BlockTar extends BlockFluidClassic {
 
     public BlockTar() {
@@ -17,6 +18,7 @@ public class BlockTar extends BlockFluidClassic {
         this.setQuantaPerBlock(3);        
     }
     
+    /** Slows down entities to emulate water. */
     @Override
     public void onEntityCollidedWithBlock(World world, BlockPos pos,
             IBlockState state, Entity entity) {

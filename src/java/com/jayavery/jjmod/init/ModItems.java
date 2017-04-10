@@ -3,32 +3,29 @@ package com.jayavery.jjmod.init;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import com.jayavery.jjmod.entities.projectile.EntityProjectile;
+import com.jayavery.jjmod.entities.projectile.EntitySpearBronze;
+import com.jayavery.jjmod.entities.projectile.EntitySpearCopper;
+import com.jayavery.jjmod.entities.projectile.EntitySpearFlint;
+import com.jayavery.jjmod.entities.projectile.EntitySpearSteel;
+import com.jayavery.jjmod.entities.projectile.EntitySpearWood;
 import com.jayavery.jjmod.items.ItemApparel;
-import com.jayavery.jjmod.items.ItemArrowBronze;
-import com.jayavery.jjmod.items.ItemArrowCopper;
-import com.jayavery.jjmod.items.ItemArrowFlint;
-import com.jayavery.jjmod.items.ItemArrowSteel;
-import com.jayavery.jjmod.items.ItemArrowWood;
+import com.jayavery.jjmod.items.ItemArrow;
 import com.jayavery.jjmod.items.ItemAxe;
-import com.jayavery.jjmod.items.ItemBeam;
-import com.jayavery.jjmod.items.ItemBedBreakable;
-import com.jayavery.jjmod.items.ItemBedPlain;
+import com.jayavery.jjmod.items.ItemBed;
+import com.jayavery.jjmod.items.ItemBlockplacer;
+import com.jayavery.jjmod.items.ItemBlockplacer.Doubling;
 import com.jayavery.jjmod.items.ItemBow;
 import com.jayavery.jjmod.items.ItemBucket;
 import com.jayavery.jjmod.items.ItemCarcassDecayable;
-import com.jayavery.jjmod.items.ItemDoor;
 import com.jayavery.jjmod.items.ItemEdible;
 import com.jayavery.jjmod.items.ItemEdibleDecayable;
-import com.jayavery.jjmod.items.ItemEdibleDecayablePoison;
-import com.jayavery.jjmod.items.ItemEdibleDecayableSeed;
 import com.jayavery.jjmod.items.ItemEdibleSeed;
-import com.jayavery.jjmod.items.ItemFloor;
+import com.jayavery.jjmod.items.ItemEdibleSeedDecayable;
 import com.jayavery.jjmod.items.ItemHoe;
 import com.jayavery.jjmod.items.ItemHuntingknife;
 import com.jayavery.jjmod.items.ItemJj;
-import com.jayavery.jjmod.items.ItemLooseblock;
 import com.jayavery.jjmod.items.ItemMachete;
-import com.jayavery.jjmod.items.ItemMultipart;
+import com.jayavery.jjmod.items.ItemMushroom;
 import com.jayavery.jjmod.items.ItemPickaxe;
 import com.jayavery.jjmod.items.ItemRice;
 import com.jayavery.jjmod.items.ItemSeed;
@@ -36,14 +33,8 @@ import com.jayavery.jjmod.items.ItemShears;
 import com.jayavery.jjmod.items.ItemShield;
 import com.jayavery.jjmod.items.ItemShovel;
 import com.jayavery.jjmod.items.ItemSickle;
-import com.jayavery.jjmod.items.ItemSlab;
-import com.jayavery.jjmod.items.ItemSpearBronze;
-import com.jayavery.jjmod.items.ItemSpearCopper;
-import com.jayavery.jjmod.items.ItemSpearFlint;
-import com.jayavery.jjmod.items.ItemSpearSteel;
-import com.jayavery.jjmod.items.ItemSpearWood;
+import com.jayavery.jjmod.items.ItemSpear;
 import com.jayavery.jjmod.items.ItemSword;
-import com.jayavery.jjmod.items.ItemWall;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer.EnumPartArmourer;
 import com.jayavery.jjmod.tileentities.TECraftingCandlemaker.EnumPartCandlemaker;
@@ -91,13 +82,13 @@ public class ModItems {
     public static ItemEdible sugar;
     public static ItemEdibleDecayable potatoCooked;
     public static ItemEdibleDecayable egg;
-    
-    public static ItemEdibleDecayablePoison beefRaw;
-    public static ItemEdibleDecayablePoison porkRaw;
-    public static ItemEdibleDecayablePoison chickenRaw;
-    public static ItemEdibleDecayablePoison muttonRaw;
-    public static ItemEdibleDecayablePoison rabbitRaw;
-    public static ItemEdibleDecayablePoison fishRaw;
+    public static ItemEdibleDecayable mushroom;
+    public static ItemEdibleDecayable beefRaw;
+    public static ItemEdibleDecayable porkRaw;
+    public static ItemEdibleDecayable chickenRaw;
+    public static ItemEdibleDecayable muttonRaw;
+    public static ItemEdibleDecayable rabbitRaw;
+    public static ItemEdibleDecayable fishRaw;
     
     public static ItemCarcassDecayable carcassCowpart;
     public static ItemCarcassDecayable carcassPig;
@@ -112,14 +103,14 @@ public class ModItems {
     public static ItemEdibleDecayable chickenCooked;
     public static ItemEdibleDecayable fishCooked;
     
-    public static ItemEdibleDecayableSeed bean;
-    public static ItemEdibleDecayableSeed pepper;
-    public static ItemEdibleDecayableSeed tomato;
-    public static ItemEdibleDecayableSeed berry;
+    public static ItemEdibleSeedDecayable bean;
+    public static ItemEdibleSeedDecayable pepper;
+    public static ItemEdibleSeedDecayable tomato;
+    public static ItemEdibleSeedDecayable berry;
     
-    public static ItemEdibleDecayableSeed carrot;
-    public static ItemEdibleDecayableSeed potato;
-    public static ItemEdibleDecayableSeed beetroot;
+    public static ItemEdibleSeedDecayable carrot;
+    public static ItemEdibleSeedDecayable potato;
+    public static ItemEdibleSeedDecayable beetroot;
     public static ItemEdibleSeed seedPumpkin;
         
     public static ItemRice rice;
@@ -135,10 +126,10 @@ public class ModItems {
     public static ItemSeed wheat;
     public static ItemSeed seedMelon;
 
-    public static ItemBedPlain bedLeaf;
-    public static ItemBedBreakable bedCotton;
-    public static ItemBedBreakable bedWool;
-    public static ItemBedPlain bedSimple;
+    public static ItemBed bedLeaf;
+    public static ItemBed bedCotton;
+    public static ItemBed bedWool;
+    public static ItemBed bedSimple;
 
     public static ItemBucket bucketEmpty;
     public static ItemBucket bucketWater;
@@ -173,10 +164,10 @@ public class ModItems {
     public static ItemJj thicklog;
     public static ItemJj timber;
 
-    public static ItemLooseblock looseDirt;
-    public static ItemLooseblock looseGravel;
-    public static ItemLooseblock looseSand;
-    public static ItemLooseblock looseClay;
+    public static ItemBlockplacer.Heaping looseDirt;
+    public static ItemBlockplacer.Heaping looseGravel;
+    public static ItemBlockplacer.Heaping looseSand;
+    public static ItemBlockplacer.Heaping looseClay;
     
     public static ItemJj clay;
 
@@ -193,22 +184,24 @@ public class ModItems {
     public static ItemJj oreSilver;
     public static ItemJj oreGold;
 
-    public static ItemLooseblock rubble;
+    public static ItemBlockplacer.Heaping rubble;
     public static ItemJj stoneDressed;
 
     public static ItemJj potClay;
     public static ItemJj potMetal;
 
-    public static ItemMultipart craftingCandlemaker;
-    public static ItemMultipart craftingForge;
-    public static ItemMultipart craftingMason;
-    public static ItemMultipart craftingTextiles;
-    public static ItemMultipart craftingWoodworking;
-    public static ItemMultipart craftingSawpit;
-    public static ItemMultipart craftingArmourer;
+    public static ItemBlockplacer.Multipart<EnumPartCandlemaker>
+            craftingCandlemaker;
+    public static ItemBlockplacer.Multipart<EnumPartForge> craftingForge;
+    public static ItemBlockplacer.Multipart<EnumPartMason> craftingMason;
+    public static ItemBlockplacer.Multipart<EnumPartTextiles> craftingTextiles;
+    public static ItemBlockplacer.Multipart<EnumPartWoodworking>
+            craftingWoodworking;
+    public static ItemBlockplacer.Multipart<EnumPartSawpit> craftingSawpit;
+    public static ItemBlockplacer.Multipart<EnumPartArmourer> craftingArmourer;
     
-    public static ItemMultipart furnaceClay;
-    public static ItemMultipart furnaceStone;
+    public static ItemBlockplacer.Multipart<EnumPartClay> furnaceClay;
+    public static ItemBlockplacer.Multipart<EnumPartStone> furnaceStone;
 
     public static ItemJj arrowheadBronze;
     public static ItemJj arrowheadCopper;
@@ -254,11 +247,11 @@ public class ModItems {
     public static ItemJj swordbladeCopper;
     public static ItemJj swordbladeSteel;
 
-    public static ItemArrowBronze arrowBronze;
-    public static ItemArrowCopper arrowCopper;
-    public static ItemArrowFlint arrowFlint;
-    public static ItemArrowSteel arrowSteel;
-    public static ItemArrowWood arrowWood;
+    public static ItemArrow.Bronze arrowBronze;
+    public static ItemArrow.Copper arrowCopper;
+    public static ItemArrow.Flint arrowFlint;
+    public static ItemArrow.Steel arrowSteel;
+    public static ItemArrow.Wood arrowWood;
 
     public static ItemHoe hoeBronze;
     public static ItemHoe hoeCopper;
@@ -299,11 +292,11 @@ public class ModItems {
     public static ItemShears shearsCopper;
     public static ItemShears shearsSteel;
 
-    public static ItemSpearBronze spearBronze;
-    public static ItemSpearCopper spearCopper;
-    public static ItemSpearFlint spearFlint;
-    public static ItemSpearSteel spearSteel;
-    public static ItemSpearWood spearWood;
+    public static ItemSpear spearBronze;
+    public static ItemSpear spearCopper;
+    public static ItemSpear spearFlint;
+    public static ItemSpear spearSteel;
+    public static ItemSpear spearWood;
 
     public static ItemSword swordBronze;
     public static ItemSword swordCopper;
@@ -345,23 +338,25 @@ public class ModItems {
     public static ItemBow bowCrude;
     public static ItemBow bowWar;
     
-    public static ItemWall wallBrick;
-    public static ItemWall wallMud;
-    public static ItemWall wallRough;
-    public static ItemWall wallStone;
-    public static ItemWall wallLog;
+    public static ItemBlockplacer.Doubling wallBrick; 
+    public static ItemBlockplacer.Doubling wallMud;
+    public static ItemBlockplacer.Doubling wallRough;
+    public static ItemBlockplacer.Doubling wallStone;
+    public static ItemBlockplacer.Doubling wallLog;
     
-    public static ItemDoor doorPole;
-    public static ItemDoor doorWood;
+    public static ItemBlockplacer.Door doorPole;
+    public static ItemBlockplacer.Door doorWood;
     
-    public static ItemBeam beamLong;
-    public static ItemBeam beamShort;
+    public static ItemBlockplacer.Beam beamLong;
+    public static ItemBlockplacer.Beam beamShort;
     
-    public static ItemFloor floorPole;
-    public static ItemFloor floorWood;
+    public static ItemBlockplacer.Floor floorPole;
+    public static ItemBlockplacer.Floor floorWood;
     
-    public static ItemSlab slabStone;
-    public static ItemSlab slabBrick;
+    public static ItemBlockplacer.Doubling slabStone;
+    public static ItemBlockplacer.Doubling slabBrick;
+    
+    public static ItemBlockplacer.Doubling vaultStone;
     
     public static void preInit() {
 
@@ -393,18 +388,18 @@ public class ModItems {
                 8, 6, 5, FoodType.CARBS, 2));
         register(egg = new ItemEdibleDecayable("egg",
                 5, 5, 6, FoodType.PROTEIN, 4));
-        
-        register(beefRaw = new ItemEdibleDecayablePoison("beef_raw",
+        register(mushroom = new ItemMushroom());
+        register(beefRaw = new ItemEdibleDecayable("beef_raw",
                 3, 6, 5, FoodType.PROTEIN, 1));
-        register(porkRaw = new ItemEdibleDecayablePoison("pork_raw",
+        register(porkRaw = new ItemEdibleDecayable("pork_raw",
                 2, 5, 6, FoodType.PROTEIN, 1));
-        register(chickenRaw = new ItemEdibleDecayablePoison("chicken_raw",
+        register(chickenRaw = new ItemEdibleDecayable("chicken_raw",
                 1, 3, 10, FoodType.PROTEIN, 1));
-        register(muttonRaw = new ItemEdibleDecayablePoison("mutton_raw",
+        register(muttonRaw = new ItemEdibleDecayable("mutton_raw",
                 2, 4, 7, FoodType.PROTEIN, 1));
-        register(rabbitRaw = new ItemEdibleDecayablePoison("rabbit_raw",
+        register(rabbitRaw = new ItemEdibleDecayable("rabbit_raw",
                 1, 2, 15, FoodType.PROTEIN, 1));
-        register(fishRaw = new ItemEdibleDecayablePoison("fish_raw",
+        register(fishRaw = new ItemEdibleDecayable("fish_raw",
                 1, 3, 10, FoodType.PROTEIN, 1));
         
         register(carcassCowpart = new ItemCarcassDecayable("carcass_cowpart",
@@ -431,21 +426,21 @@ public class ModItems {
         register(fishCooked = new ItemEdibleDecayable("fish_cooked",
                 3, 3, 10, FoodType.PROTEIN, 2));
         
-        register(bean = new ItemEdibleDecayableSeed("bean",
+        register(bean = new ItemEdibleSeedDecayable("bean",
                 2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG, 2));
-        register(pepper = new ItemEdibleDecayableSeed("pepper",
+        register(pepper = new ItemEdibleSeedDecayable("pepper",
                 3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG, 2));
-        register(tomato = new ItemEdibleDecayableSeed("tomato",
+        register(tomato = new ItemEdibleSeedDecayable("tomato",
                 3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG, 2));
-        register(berry = new ItemEdibleDecayableSeed("berry",
+        register(berry = new ItemEdibleSeedDecayable("berry",
                 1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG, 2));
         
-        register(potato = new ItemEdibleDecayableSeed("potato",
+        register(potato = new ItemEdibleSeedDecayable("potato",
                 7, 7F, 5, ModBlocks.potato, FoodType.CARBS, 4));
-        register(carrot = new ItemEdibleDecayableSeed("carrot",
+        register(carrot = new ItemEdibleSeedDecayable("carrot",
                 3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 4,
                 EntityPig.class, EntityRabbit.class));
-        register(beetroot = new ItemEdibleDecayableSeed("beetroot",
+        register(beetroot = new ItemEdibleSeedDecayable("beetroot",
                 3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG, 4));
         register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin",
                 1, 1, 15, ModBlocks.pumpkinCrop, FoodType.PROTEIN));
@@ -468,13 +463,13 @@ public class ModItems {
         register(seedMelon = new ItemSeed("seeds_melon",
                 15, ModBlocks.melonCrop));
         
-        register(bedLeaf = new ItemBedPlain("bed_leaf",
+        register(bedLeaf = new ItemBed("bed_leaf",
                 ModBlocks.bedLeaf), true);
-        register(bedCotton = new ItemBedBreakable("bed_cotton",
-                ModBlocks.bedCotton, 20));
-        register(bedWool = new ItemBedBreakable("bed_wool",
-                ModBlocks.bedWool, 20));
-        register(bedSimple = new ItemBedPlain("bed_simple",
+        register(bedCotton = new ItemBed("bed_cotton",
+                ModBlocks.bedCotton));
+        register(bedWool = new ItemBed("bed_wool",
+                ModBlocks.bedWool));
+        register(bedSimple = new ItemBed("bed_simple",
                 ModBlocks.bedSimple), true);
 
         register(bucketEmpty = new ItemBucket("bucket_empty",
@@ -519,11 +514,14 @@ public class ModItems {
         register(thicklog = new ItemJj("thicklog"));
         register(timber = new ItemJj("timber", 6));
 
-        register(looseDirt = new ItemLooseblock("loose_dirt", Blocks.DIRT));
-        register(looseClay = new ItemLooseblock("loose_clay", Blocks.CLAY));
-        register(looseSand = new ItemLooseblock("loose_sand", Blocks.SAND));
-        register(looseGravel = new ItemLooseblock("loose_gravel",
-                Blocks.GRAVEL));
+        register(looseDirt = new ItemBlockplacer.Heaping("loose_dirt",
+                SoundType.GROUND, Blocks.DIRT));
+        register(looseClay = new ItemBlockplacer.Heaping("loose_clay",
+                SoundType.GROUND, Blocks.CLAY));
+        register(looseSand = new ItemBlockplacer.Heaping("loose_sand",
+                SoundType.SAND, Blocks.SAND));
+        register(looseGravel = new ItemBlockplacer.Heaping("loose_gravel",
+                SoundType.GROUND, Blocks.GRAVEL));
         
         register(mudbricks = new ItemJj("mudbricks"));
         register(peatDry = new ItemJj("peat_dry"));
@@ -539,23 +537,33 @@ public class ModItems {
         register(oreSilver = new ItemJj("ore_silver"));
         register(oreGold = new ItemJj("ore_gold"));
         
-        register(rubble = new ItemLooseblock("rubble", ModBlocks.rubble));
+        register(rubble = new ItemBlockplacer.Heaping("rubble",
+                SoundType.GROUND, ModBlocks.rubble));
         
         register(stoneDressed = new ItemJj("stone_dressed", 1));
 
         register(potClay = new ItemJj("pot_clay"));
         register(potMetal = new ItemJj("pot_metal"));
 
-        register(craftingCandlemaker = new ItemMultipart<EnumPartCandlemaker>("crafting_candlemaker", EnumPartCandlemaker.FRONT, SoundType.WOOD), true);
-        register(craftingForge = new ItemMultipart<EnumPartForge>("crafting_forge", EnumPartForge.FM, SoundType.METAL), true);
-        register(craftingMason = new ItemMultipart<EnumPartMason>("crafting_mason", EnumPartMason.FM, SoundType.STONE), true);
-        register(craftingTextiles = new ItemMultipart<EnumPartTextiles>("crafting_textiles", EnumPartTextiles.FRONT, SoundType.WOOD), true);
-        register(craftingWoodworking = new ItemMultipart<EnumPartWoodworking>("crafting_woodworking", EnumPartWoodworking.FM, SoundType.WOOD), true);
-        register(craftingSawpit = new ItemMultipart<EnumPartSawpit>("crafting_sawpit", EnumPartSawpit.T6, SoundType.WOOD), true);
-        register(craftingArmourer = new ItemMultipart<EnumPartArmourer>("crafting_armourer", EnumPartArmourer.M, SoundType.METAL), true);
+        register(craftingCandlemaker = new ItemBlockplacer.Multipart<EnumPartCandlemaker>("crafting_candlemaker",
+                EnumPartCandlemaker.FRONT, SoundType.WOOD), true);
+        register(craftingForge = new ItemBlockplacer.Multipart<EnumPartForge>("crafting_forge",
+                EnumPartForge.FM, SoundType.METAL), true);
+        register(craftingMason = new ItemBlockplacer.Multipart<EnumPartMason>("crafting_mason",
+                EnumPartMason.FM, SoundType.STONE), true);
+        register(craftingTextiles = new ItemBlockplacer.Multipart<EnumPartTextiles>("crafting_textiles",
+                EnumPartTextiles.FRONT, SoundType.WOOD), true);
+        register(craftingWoodworking = new ItemBlockplacer.Multipart<EnumPartWoodworking>("crafting_woodworking",
+                EnumPartWoodworking.FM, SoundType.WOOD), true);
+        register(craftingSawpit = new ItemBlockplacer.Multipart<EnumPartSawpit>("crafting_sawpit",
+                EnumPartSawpit.F, SoundType.WOOD), true);
+        register(craftingArmourer = new ItemBlockplacer.Multipart<EnumPartArmourer>("crafting_armourer",
+                EnumPartArmourer.M, SoundType.METAL), true);
         
-        register(furnaceClay = new ItemMultipart<EnumPartClay>("furnace_clay", EnumPartClay.BL, SoundType.STONE), true);
-        register(furnaceStone = new ItemMultipart<EnumPartStone>("furnace_stone", EnumPartStone.BM, SoundType.STONE), true);
+        register(furnaceClay = new ItemBlockplacer.Multipart<EnumPartClay>("furnace_clay",
+                EnumPartClay.BL, SoundType.STONE), true);
+        register(furnaceStone = new ItemBlockplacer.Multipart<EnumPartStone>("furnace_stone",
+                EnumPartStone.BM, SoundType.STONE), true);
 
         register(arrowheadBronze = new ItemJj("arrowhead_bronze", 20));
         register(arrowheadCopper = new ItemJj("arrowhead_copper", 20));
@@ -601,11 +609,11 @@ public class ModItems {
         register(swordbladeCopper = new ItemJj("swordblade_copper"));
         register(swordbladeSteel = new ItemJj("swordblade_steel"));
 
-        register(arrowBronze = new ItemArrowBronze());
-        register(arrowCopper = new ItemArrowCopper());
-        register(arrowFlint = new ItemArrowFlint());
-        register(arrowSteel = new ItemArrowSteel());
-        register(arrowWood = new ItemArrowWood());
+        register(arrowBronze = new ItemArrow.Bronze());
+        register(arrowCopper = new ItemArrow.Copper());
+        register(arrowFlint = new ItemArrow.Flint());
+        register(arrowSteel = new ItemArrow.Steel());
+        register(arrowWood = new ItemArrow.Wood());
 
         register(hoeBronze = new ItemHoe("hoe_bronze",
                 EquipMaterial.BRONZE_TOOL));
@@ -679,11 +687,16 @@ public class ModItems {
         register(shearsSteel = new ItemShears("shears_steel",
                 EquipMaterial.STEEL_TOOL, (r) -> 7 + r.nextInt(3)));
 
-        register(spearBronze = new ItemSpearBronze());
-        register(spearCopper = new ItemSpearCopper());
-        register(spearFlint = new ItemSpearFlint());
-        register(spearSteel = new ItemSpearSteel());
-        register(spearWood = new ItemSpearWood());
+        register(spearBronze = new ItemSpear("spear_bronze",
+                EquipMaterial.BRONZE_TOOL, EntitySpearBronze::new));
+        register(spearCopper = new ItemSpear("spear_copper",
+                EquipMaterial.COPPER_TOOL, EntitySpearCopper::new));
+        register(spearFlint = new ItemSpear("spear_flint",
+                EquipMaterial.FLINT_TOOL, EntitySpearFlint::new));
+        register(spearSteel = new ItemSpear("spear_steel",
+                EquipMaterial.STEEL_TOOL, EntitySpearSteel::new));
+        register(spearWood = new ItemSpear("spear_wood",
+                EquipMaterial.WOOD_TOOL, EntitySpearWood::new));
 
         register(swordBronze = new ItemSword("sword_bronze",
                 EquipMaterial.BRONZE_TOOL));
@@ -779,33 +792,44 @@ public class ModItems {
                 200, EntityProjectile.CRUDE_MOD));
         register(bowWar = new ItemBow("bow_war",
                 384, EntityProjectile.BOW_MOD));
+
+        register(wallBrick = new ItemBlockplacer.Doubling("wall_brick", 2,
+                SoundType.STONE, ModBlocks.wallBrickSingle,
+                ModBlocks.wallBrickDouble));
+        register(wallMud = new ItemBlockplacer.Doubling("wall_mud", 2,
+                SoundType.GROUND, ModBlocks.wallMudSingle,
+                ModBlocks.wallMudDouble));
+        register(wallRough = new ItemBlockplacer.Doubling("wall_rough", 2,
+                SoundType.STONE, ModBlocks.wallRoughSingle,
+                ModBlocks.wallRoughDouble));
+        register(wallStone = new ItemBlockplacer.Doubling("wall_stone", 2,
+                SoundType.STONE, ModBlocks.wallStoneSingle,
+                ModBlocks.wallStoneDouble));
+        register(wallLog = new ItemBlockplacer.Doubling("wall_log", 2,
+                SoundType.WOOD,ModBlocks.wallLogSingle,
+                ModBlocks.wallLogDouble));
         
-        register(wallBrick = new ItemWall("wall_brick", 2,
-                ModBlocks.wallBrickSingle, ModBlocks.wallBrickDouble));
-        register(wallMud = new ItemWall("wall_mud", 2,
-                ModBlocks.wallMudSingle, ModBlocks.wallMudDouble));
-        register(wallRough = new ItemWall("wall_rough", 2,
-                ModBlocks.wallRoughSingle, ModBlocks.wallRoughDouble));
-        register(wallStone = new ItemWall("wall_stone", 2,
-                ModBlocks.wallStoneSingle, ModBlocks.wallStoneDouble));
-        register(wallLog = new ItemWall("wall_log", 2,
-                ModBlocks.wallLogSingle, ModBlocks.wallLogDouble));
-        
-        register(doorPole = new ItemDoor(ModBlocks.doorPole, "door_pole"),
+        register(doorPole = new ItemBlockplacer.Door(ModBlocks.doorPole, "door_pole"),
                 true);
-        register(doorWood = new ItemDoor(ModBlocks.doorWood, "door_wood"),
+        register(doorWood = new ItemBlockplacer.Door(ModBlocks.doorWood, "door_wood"),
                 true);
         
-        register(beamLong = new ItemBeam("beam_long", 4, 8));
-        register(beamShort = new ItemBeam("beam_short", 2, 4));
+        register(beamLong = new ItemBlockplacer.Beam("beam_long", 4, 8));
+        register(beamShort = new ItemBlockplacer.Beam("beam_short", 2, 4));
         
-        register(floorPole = new ItemFloor(6, EnumFloor.POLE));
-        register(floorWood = new ItemFloor(6, EnumFloor.WOOD));
+        register(floorPole = new ItemBlockplacer.Floor(6, EnumFloor.POLE));
+        register(floorWood = new ItemBlockplacer.Floor(6, EnumFloor.WOOD));
         
-        register(slabStone = new ItemSlab("slab_stone", 2,
-                ModBlocks.slabStoneSingle, ModBlocks.slabStoneDouble));
-        register(slabBrick = new ItemSlab("slab_brick", 2,
-                ModBlocks.slabBrickSingle, ModBlocks.slabBrickDouble));
+        register(slabStone = new ItemBlockplacer.Doubling("slab_stone", 2,
+                SoundType.STONE, ModBlocks.slabStoneSingle,
+                ModBlocks.slabStoneDouble));
+        register(slabBrick = new ItemBlockplacer.Doubling("slab_brick", 2,
+                SoundType.STONE, ModBlocks.slabBrickSingle,
+                ModBlocks.slabBrickDouble));
+        
+        register(vaultStone = new ItemBlockplacer.Doubling("vault_stone", 2,
+                SoundType.STONE, ModBlocks.vaultStoneSingle,
+                ModBlocks.vaultStoneDouble));
                 
         Items.STICK.setMaxStackSize(12);
         Items.BONE.setMaxStackSize(6);

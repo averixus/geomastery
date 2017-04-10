@@ -271,14 +271,12 @@ public class ModRecipes {
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood),
                 " P ", "PPP", " P ", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 2),
-                "PPP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 2),
-                "  P", " PP", "PPP", 'P', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 2),
-                "  T", " TT", "TTT", 'T', ModItems.timber);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.fence, 4),
-                "PPP", " P ", 'P', ModItems.pole);
+   // TODO     WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 2),
+          //      "PPP", "PPP", 'P', ModItems.pole);
+//        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 2),
+//                "  P", " PP", "PPP", 'P', ModItems.pole);
+//        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 2),
+//                "  T", " TT", "TTT", 'T', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole),
                 "PP", "PP", "PP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorWood),
@@ -467,7 +465,7 @@ public class ModRecipes {
                 " S", "SS", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModBlocks.stairsBrick, 2),
                 " B", "BB", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(ModBlocks.vaultStone, 2),
+        MASON.addShapedRecipe(new ItemStack(ModItems.vaultStone, 2),
                 "SS", "S ", 'S', ModItems.stoneDressed);
         MASON.addShapedRecipe(new ItemStack(ModBlocks.vaultBrick, 2),
                 "BB", "B ", 'B', Items.BRICK);

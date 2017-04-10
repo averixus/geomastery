@@ -57,7 +57,7 @@ public class BlockFruit extends BlockNew {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {FACING});
+        return new BlockStateContainer(this, FACING);
     }
     
     @Override
