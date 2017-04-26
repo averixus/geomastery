@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 import com.jayavery.jjmod.blocks.BlockComplexAbstract;
 import com.jayavery.jjmod.container.slots.SlotCrafting;
 import com.jayavery.jjmod.crafting.CraftingManager;
+import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModCaps;
 import com.jayavery.jjmod.tileentities.TECraftingAbstract;
 import net.minecraft.entity.player.EntityPlayer;
@@ -162,14 +163,18 @@ public class ContainerCrafting extends ContainerAbstract {
 
             if (index == this.outputI) {
 
-                if (!this.mergeItemStack(slotStack, HOT_START,
+                if (!ModBlocks.OFFHAND_ONLY.contains(slotStack) &&
+                        !this.mergeItemStack(slotStack, HOT_START,
                         this.invEnd + 1, true)) {
 
                     return ItemStack.EMPTY;
-                }
+                    
+                } else {
 
+                    slot.onTake(player, slotStack);
+                }
+                
                 slot.onSlotChange(slotStack, result);
-                slot.onTake(player, slotStack);
 
             } else if (index >= HOT_START && index <= HOT_END) {
 

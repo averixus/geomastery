@@ -814,8 +814,10 @@ public class ModItems {
         register(doorWood = new ItemBlockplacer.Door(ModBlocks.doorWood, "door_wood"),
                 true);
         
-        register(beamLong = new ItemBlockplacer.Beam("beam_long", 4, 8));
-        register(beamShort = new ItemBlockplacer.Beam("beam_short", 2, 4));
+        register(beamLong = new ItemBlockplacer.Beam("beam_long",
+                ModBlocks.beamThick, 4, 8));
+        register(beamShort = new ItemBlockplacer.Beam("beam_short",
+                ModBlocks.beamThin, 2, 4));
         
         register(floorPole = new ItemBlockplacer.Floor(6, EnumFloor.POLE));
         register(floorWood = new ItemBlockplacer.Floor(6, EnumFloor.WOOD));

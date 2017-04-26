@@ -454,15 +454,34 @@ public class ContainerInventory extends ContainerAbstract {
         }
 
         if (index == this.outputI) {
-
-            if (!this.mergeItemStack(slotStack, this.hotStart,
+            
+            boolean fail = false;
+            
+            if (ModBlocks.OFFHAND_ONLY.contains(slotItem) &&
+                    !this.mergeItemStack(slotStack, OFFHAND_I,
+                    OFFHAND_I + 1, true)) {
+                
+                fail = true;
+                
+            } else if (!ModBlocks.OFFHAND_ONLY.contains(slotItem) &&
+                    !this.mergeItemStack(slotStack, this.hotStart,
                     this.invEnd + 1, true)) {
 
+                fail = true;
+                
+            }
+            
+            if (fail) {
+                
                 result = ItemStack.EMPTY;
+                
+            } else {
+                
+                slot.onTake(player, slotStack);
             }
 
             slot.onSlotChange(slotStack, result);
-            slot.onTake(player, slotStack);
+                
 
         } else if ((index >= CRAFT_START && index <= this.craftEnd) ||
                 (index >= FEET_I && index <= YOKE_I)) {

@@ -172,6 +172,8 @@ public class ModBlocks {
     public static BlockWallLog wallLogSingle; 
     public static BlockWallLog wallLogDouble; 
     public static BlockWallThin wallPole;
+    public static BlockWallThin fence;
+    public static BlockWallThin frame;
     
     public static BlockStairsComplex stairsBrick;
     public static BlockStairsComplex stairsStone;
@@ -181,11 +183,13 @@ public class ModBlocks {
     public static BlockVault vaultStoneSingle;
     public static BlockVault vaultStoneDouble;
     public static BlockVault vaultBrick;
+    public static BlockVault vaultFrame;
         
     public static BlockDoor doorPole;
     public static BlockDoor doorWood;
     
-    public static BlockBeam beam;
+    public static BlockBeam beamThin;
+    public static BlockBeam beamThick;
         
     public static BlockSlab slabStoneSingle;
     public static BlockSlab slabStoneDouble;
@@ -357,6 +361,10 @@ public class ModBlocks {
                 new BlockWallLog("wall_log_double", 3F, true));
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE), 4);
+        register(fence = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
+                "fence", 2F, ToolType.AXE));
+        register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
+                "frame", 2F, ToolType.AXE));
         
         register(stairsBrick = new BlockStairsComplex("stairs_brick", 3F), 2);
         register(stairsStone = new BlockStairsComplex("stairs_stone", 3F), 2);
@@ -365,19 +373,24 @@ public class ModBlocks {
         register(stairsPole = new BlockStairsStraight.Single("stairs_pole",
                 2F), 4);
         
-        registerItemless(vaultStoneSingle =
-                new BlockVault("vault_stone_single"));
-        registerItemless(vaultStoneDouble = 
-                new BlockVault("vault_stone_double"));
-        
-        register(vaultBrick = new BlockVault("vault_brick"), 2);
+        registerItemless(vaultStoneSingle = new BlockVault("vault_stone_single",
+                () -> ModItems.vaultStone, false, BlockWeight.HEAVY));
+        registerItemless(vaultStoneDouble = new BlockVault("vault_stone_double",
+                () -> ModItems.vaultStone, true, BlockWeight.HEAVY));
+        register(vaultBrick = new BlockVault("vault_brick",
+                () -> Item.getItemFromBlock(vaultBrick),
+                false, BlockWeight.HEAVY), 2);
+        register(vaultFrame = new BlockVault("vault_frame",
+                () -> Item.getItemFromBlock(vaultFrame),
+                false, BlockWeight.LIGHT));
         
         registerItemless(doorPole = new BlockDoor("door_pole",
                 () -> ModItems.doorPole));
         registerItemless(doorWood = new BlockDoor("door_wood",
                 () -> ModItems.doorWood));
         
-        registerItemless(beam = new BlockBeam());
+        registerItemless(beamThick = new BlockBeam("beam_thick"));
+        registerItemless(beamThin = new BlockBeam("beam_thin"));
                 
         registerItemless(slabStoneSingle = new BlockSlab("slab_stone_single",
                 false, () -> ModItems.slabStone));

@@ -43,9 +43,9 @@ public class BlockBeam extends BlockBuilding {
     public static final PropertyBool BL = PropertyBool.create("bl");
     public static final PropertyBool BR = PropertyBool.create("br");
         
-    public BlockBeam() {
+    public BlockBeam(String name) {
         
-        super(BlockMaterial.WOOD_FURNITURE, "beam", null, 2F, ToolType.AXE);
+        super(BlockMaterial.WOOD_FURNITURE, name, null, 2F, ToolType.AXE);
     }
     
     @Override
@@ -284,10 +284,10 @@ public class BlockBeam extends BlockBuilding {
             
             Block blockRight = world.getBlockState(pos.offset(frontFacing
                     .rotateY())).getBlock();
-            boolean right = blockRight != this;
+            boolean right = !(blockRight instanceof BlockBeam);
             Block blockLeft = world.getBlockState(pos.offset(frontFacing
                     .rotateYCCW())).getBlock();
-            boolean left = blockLeft != this;
+            boolean left = !(blockLeft instanceof BlockBeam);
             
             state = state.withProperty(RIGHT, right);
             state = state.withProperty(LEFT, left);

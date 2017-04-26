@@ -1,11 +1,14 @@
 package com.jayavery.jjmod.capabilities;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.jayavery.jjmod.blocks.BlockInvisibleLight;
 import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.init.ModBiomes;
@@ -70,7 +73,6 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Previous held item light level. */
     private int lastLightLevel = 0;
     
-    
     /** Backpack slot. */
     private ItemStack backpack = ItemStack.EMPTY;
     /** Yoke slot. */
@@ -89,6 +91,9 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Comparator to sort foodstats in order of total fullness. */
     private final Comparator<FoodStatsPartial> comparator =
             (a, b) -> Math.round(b.getFullness() - a.getFullness());
+            
+    /** Set of item pickup delays. */
+    private final Map<Item, Long> delays = Maps.newHashMap();
     
     public DefaultCapPlayer(EntityPlayer player) {
 
@@ -238,6 +243,18 @@ public class DefaultCapPlayer implements ICapPlayer {
     }
     
     @Override
+    public void addDelay(Item item, long time) {
+        
+        this.delays.put(item, time);
+    }
+    
+    @Override
+    public boolean canPickup(Item item) {
+        
+        return !this.delays.containsKey(item);
+    }
+    
+    @Override
     public void tick() {
         
         if (this.player.world.isRemote) {
@@ -264,6 +281,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         this.tickSpeed();
+        this.tickPickup();
     }
     
     /** Place and remove invisible light blocks if the
@@ -617,6 +635,22 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
     }
     
+    /** Remove pickups that are timed out. */
+    private void tickPickup() {
+        
+        Iterator<Entry<Item, Long>> iterator = this.delays.entrySet().iterator();
+        
+        while (iterator.hasNext()) {
+            
+            Entry<Item, Long> entry = iterator.next();
+            
+            if (entry.getValue() + 100 < this.player.world.getWorldTime()) {
+                
+                iterator.remove();
+            }
+        }
+    }
+
     @Override
     public void syncAll() {
         

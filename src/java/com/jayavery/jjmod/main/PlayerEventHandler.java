@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -45,16 +46,19 @@ public class PlayerEventHandler {
         }
         
         ItemStack stack = event.getItem().getEntityItem();
+        Item item = stack.getItem();
         
         // Special case for laid eggs
-        if (stack.getItem() instanceof ItemEgg) {
+        if (item instanceof ItemEgg) {
             
             int count = stack.getCount();
             stack = ItemJj.newStack(ModItems.egg, count, player.world);
         }
 
-        stack = ((ContainerInventory) player.inventoryContainer)
-                .add(stack);
+        if (player.getCapability(ModCaps.CAP_PLAYER, null).canPickup(item)) {
+            stack = ((ContainerInventory) player.inventoryContainer)
+                    .add(stack);
+        }
 
         if (stack.isEmpty()) {
 
@@ -72,7 +76,13 @@ public class PlayerEventHandler {
     @SubscribeEvent
     public void itemToss(ItemTossEvent event) {
         
-        ContainerInventory.updateHand(event.getPlayer(), EnumHand.MAIN_HAND);
+        EntityPlayer player = event.getPlayer();
+        Item item = event.getEntityItem().getEntityItem().getItem();
+        long time = player.world.getWorldTime();
+        
+        ContainerInventory.updateHand(player, EnumHand.MAIN_HAND);
+        player.getCapability(ModCaps.CAP_PLAYER, null).addDelay(item, time);
+        
     }
 
     /** Adds behaviour when player wakes up from a bed. */

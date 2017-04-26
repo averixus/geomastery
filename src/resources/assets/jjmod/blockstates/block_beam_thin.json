@@ -1,0 +1,172 @@
+{
+    "multipart": [
+        {   
+            "when": { "axis": "ew" },
+            "apply": { "model": "jjmod:beam/thin/middle" }
+        },
+        {
+            "when": { "axis": "ns" },
+            "apply": { "model": "jjmod:beam/thin/middle", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "front": "true" },
+            "apply": { "model": "jjmod:beam/thin/end", "y": 270 }
+        },
+        {
+            "when": { "axis": "ns", "back": "true" },
+            "apply": { "model": "jjmod:beam/thin/end", "y": 90 }
+        },
+        {
+            "when": { "axis": "ew", "front": "true" },
+            "apply": { "model": "jjmod:beam/thin/end" }
+        },
+        {
+            "when": { "axis": "ew", "back": "true" },
+            "apply": { "model": "jjmod:beam/thin/end", "y": 180 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole" },
+            "apply": { "model": "jjmod:beam/pole/middle", "y": 90 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole" },
+            "apply": { "model": "jjmod:beam/pole/middle" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood" },
+            "apply": { "model": "jjmod:beam/wood/middle", "y": 90 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood" },
+            "apply": { "model": "jjmod:beam/wood/middle" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "front": "true" },
+            "apply": { "model": "jjmod:beam/pole/end", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "back": "true" },
+            "apply": { "model": "jjmod:beam/pole/end", "y": 270 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "front": "true" },
+            "apply": { "model": "jjmod:beam/pole/end", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "back": "true" },
+            "apply": { "model": "jjmod:beam/pole/end" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "front": "true" },
+            "apply": { "model": "jjmod:beam/wood/end", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "back": "true" },
+            "apply": { "model": "jjmod:beam/wood/end", "y": 270 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "front": "true" },
+            "apply": { "model": "jjmod:beam/wood/end", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "back": "true" },
+            "apply": { "model": "jjmod:beam/wood/end" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "left": "true" },
+            "apply": { "model": "jjmod:beam/pole/right", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "right": "true" },
+            "apply": { "model": "jjmod:beam/pole/left", "y": 90 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "left": "true" },
+            "apply": { "model": "jjmod:beam/pole/left" }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "right": "true" },
+            "apply": { "model": "jjmod:beam/pole/right" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "left": "true" },
+            "apply": { "model": "jjmod:beam/wood/left", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "right": "true" },
+            "apply": { "model": "jjmod:beam/wood/right", "y": 90 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "left": "true" },
+            "apply": { "model": "jjmod:beam/wood/right" }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "right": "true" },
+            "apply": { "model": "jjmod:beam/wood/left" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "fl": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_right", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "fr": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_left", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "bl": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_left", "y": 270 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "pole", "br": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_right", "y": 270 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "fl": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_right", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "fr": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_left", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "bl": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_left" }
+        },
+        {
+            "when": { "axis": "ew", "floor": "pole", "br": "true" },
+            "apply": { "model": "jjmod:beam/pole/corner_right" }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "fl": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_right", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "fr": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_left", "y": 90 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "bl": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_left", "y": 270 }
+        },
+        {
+            "when": { "axis": "ns", "floor": "wood", "br": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_right", "y": 270 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "fl": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_right", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "fr": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_left", "y": 180 }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "bl": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_left" }
+        },
+        {
+            "when": { "axis": "ew", "floor": "wood", "br": "true" },
+            "apply": { "model": "jjmod:beam/wood/corner_right" }
+        }
+    ]
+}

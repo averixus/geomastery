@@ -1,0 +1,24 @@
+{
+    "variants": {
+        "facing=north,shape=single": { "model": "jjmod:vault_frame/single", "y": 270 },
+        "facing=east,shape=single": { "model": "jjmod:vault_frame/single"},
+        "facing=south,shape=single": { "model": "jjmod:vault_frame/single", "y": 90},
+        "facing=west,shape=single": { "model": "jjmod:vault_frame/single", "y": 180 },
+        "facing=north,shape=internal": { "model": "jjmod:vault_frame/internal" },
+        "facing=east,shape=internal": { "model": "jjmod:vault_frame/internal", "y": 90 },
+        "facing=south,shape=internal": { "model": "jjmod:vault_frame/internal", "y": 180},
+        "facing=west,shape=internal": { "model": "jjmod:vault_frame/internal", "y": 270 },
+        "facing=north,shape=external": { "model": "jjmod:vault_frame/external" },
+        "facing=east,shape=external": { "model": "jjmod:vault_frame/external", "y": 90 },
+        "facing=south,shape=external": { "model": "jjmod:vault_frame/external", "y": 180},
+        "facing=west,shape=external": { "model": "jjmod:vault_frame/external", "y": 270 },
+        "facing=north,shape=lintel": { "model": "jjmod:vault_frame/lintel" },
+        "facing=east,shape=lintel": { "model": "jjmod:vault_frame/lintel", "y": 90 },
+        "facing=south,shape=lintel": { "model": "jjmod:vault_frame/lintel", "y": 180},
+        "facing=west,shape=lintel": { "model": "jjmod:vault_frame/lintel", "y": 270 },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": { "layer0": "jjmod:items/vault_frame" }
+        }]
+    }
+}

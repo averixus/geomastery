@@ -1,13 +1,14 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.List;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
+import com.jayavery.jjmod.utilities.IDoublingWall;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,24 +25,39 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Vault block. */
-public class BlockVault extends BlockBuilding {
+public class BlockVault extends BlockBuilding implements IDoublingWall {
     
     public static final PropertyEnum<EnumShape> SHAPE =
             PropertyEnum.<EnumShape>create("shape", EnumShape.class);
     public static final PropertyDirection FACING =
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
-    public BlockVault(String name) {
+    private final Supplier<Item> item;
+    private final boolean isDouble;
+    private BlockWeight weight;
+    
+    public BlockVault(String name, Supplier<Item> item, boolean isDouble,
+            BlockWeight weight) {
         
         super(BlockMaterial.STONE_FURNITURE, name,
                 CreativeTabs.BUILDING_BLOCKS, 2, ToolType.PICKAXE);
+        this.item = item;
+        this.isDouble = isDouble;
+        this.weight = weight;
+    }
+    
+    @Override
+    public boolean isDouble() {
+        
+        return this.isDouble;
     }
     
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
         
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
+        return Lists.newArrayList(new ItemStack(this.item.get(),
+                this.isDouble() ? 2 : 1));
     }
     
     @Override
@@ -54,7 +70,7 @@ public class BlockVault extends BlockBuilding {
     @Override
     public BlockWeight getWeight() {
         
-        return BlockWeight.HEAVY;
+        return this.weight;
     }
     
     /** Checks whether there is a valid support at the
@@ -64,7 +80,8 @@ public class BlockVault extends BlockBuilding {
             BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
-        return block instanceof BlockWallComplex;
+        return BlockWeight.getWeight(block).canSupport(this.getWeight()) &&
+                !(block instanceof BlockVault);
     }
     
     /** @return Whether the vault at the given pos is an external corner. */
@@ -72,12 +89,10 @@ public class BlockVault extends BlockBuilding {
             BlockPos pos, EnumFacing direction) {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
-        Block cornerA = world.getBlockState(pos.offset(direction.rotateY()))
-                .getBlock();
-        Block cornerB = world.getBlockState(pos.offset(direction.rotateYCCW()))
+        Block corner = world.getBlockState(pos.offset(direction.rotateY()))
                 .getBlock();
         
-        if ((block == this) && ((cornerA == this) || (cornerB == this))) {
+        if (block instanceof BlockVault && corner instanceof BlockVault) {
             
             return true;
         }

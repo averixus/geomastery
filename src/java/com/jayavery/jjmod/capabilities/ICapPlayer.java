@@ -2,6 +2,7 @@ package com.jayavery.jjmod.capabilities;
 
 import com.jayavery.jjmod.items.ItemEdible;
 import com.jayavery.jjmod.utilities.FoodType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -72,6 +73,13 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
     
     /** Add the item's food value to its food type. */
     public void addStats(ItemEdible item, ItemStack stack);
+    
+    /** Adds the item pickup delay. */
+    public void addDelay(Item item, long time);
+    
+    /** Checks whether this item is currently delayed.
+     * @return Whether this item can be picked up. */
+    public boolean canPickup(Item item);
 
     /** Send all necessary update packets to the client. */
     public void syncAll();

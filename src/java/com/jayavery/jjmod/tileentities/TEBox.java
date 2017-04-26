@@ -1,18 +1,13 @@
 package com.jayavery.jjmod.tileentities;
 
-import com.jayavery.jjmod.blocks.BlockBox;
-import com.jayavery.jjmod.container.ContainerBox;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import com.jayavery.jjmod.init.ModPackets;
+import com.jayavery.jjmod.packets.BoxPacketClient;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -44,6 +39,12 @@ public class TEBox extends TileEntity implements ITickable {
                 true : super.hasCapability(capability, facing);
     }
     
+    public void setAngles(float lidAngle, float prevLidAngle) {
+        
+        this.lidAngle = lidAngle;
+        this.prevLidAngle = prevLidAngle;
+    }
+    
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         
@@ -63,6 +64,13 @@ public class TEBox extends TileEntity implements ITickable {
     @Override
     public void update() {
         
+        if (this.world.isRemote) {
+
+            return;
+        }
+                
+        float startLidAngle = this.lidAngle;
+        float startPrevAngle = this.prevLidAngle;
         this.prevLidAngle = this.lidAngle;
         
         // Play open sound
@@ -104,6 +112,12 @@ public class TEBox extends TileEntity implements ITickable {
                 this.lidAngle = 1;
             }
         }
+        
+        if (this.lidAngle != startLidAngle ||
+                this.prevLidAngle != startPrevAngle) {
+            
+            this.sendAnglePacket();
+        }
     }
     
     /** Removes a user. */
@@ -116,5 +130,15 @@ public class TEBox extends TileEntity implements ITickable {
     public void close() {
         
         this.users--;
+    }
+    
+    /** Sends an packet to update the lid angle on the Client. */
+    private void sendAnglePacket() {
+        
+        if (!this.world.isRemote) {
+
+            ModPackets.NETWORK.sendToAll(new BoxPacketClient(this.lidAngle,
+                    this.prevLidAngle, this.pos));
+        }
     }
 }

@@ -1,0 +1,29 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "jjmod:frame/post",
+        "uvlock": true
+    },
+    "variants": {
+        "north": {
+            "true": { "submodel": { "northside": { "model": "jjmod:frame/side" } } },
+            "false": {}
+        },
+        "east": {
+            "true": { "submodel": { "eastside": { "model": "jjmod:frame/side", "y": 90 } } },
+            "false": {}
+        },
+        "south": {
+            "true": { "submodel": { "southside": { "model": "jjmod:frame/side", "y": 180 } } },
+            "false": {}
+        },
+        "west": {
+            "true": { "submodel": { "westside": { "model": "jjmod:frame/side", "y": 270 } } },
+            "false": {}
+        },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": { "layer0": "jjmod:items/frame" }
+        }]
+    }
+}

@@ -215,7 +215,6 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
             ModPackets.NETWORK.sendToAll(new DryingPacketClient(this.drySpent,
                     this.dryEach, this.pos));
         }
-        
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.jayavery.jjmod.items;
 
 import java.util.ArrayList;
+import com.jayavery.jjmod.blocks.BlockBeam;
 import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockDoor;
 import com.jayavery.jjmod.blocks.BlockDoor.EnumPartDoor;
@@ -239,12 +240,16 @@ public abstract class ItemBlockplacer extends ItemJj {
         private int minLength;
         /** Maximm length this item's beam structure can span. */
         private int maxLength;
+        /** Beam block of this item's structure. */
+        private BlockBeam block;
 
-        public Beam(String name, int minLength, int maxLength) {
+        public Beam(String name, BlockBeam block,
+                int minLength, int maxLength) {
             
             super(name, 1, CreativeTabs.BUILDING_BLOCKS, SoundType.WOOD);
             this.minLength = minLength;
             this.maxLength = maxLength;
+            this.block = block;
         }
         
         /** Builds a beam structure. */
@@ -252,9 +257,7 @@ public abstract class ItemBlockplacer extends ItemJj {
         protected boolean place(World world, BlockPos targetPos,
                 EnumFacing targetSide, EnumFacing placeFacing,
                 ItemStack stack) {
-          
-            BlockBuilding block = ModBlocks.beam;
-            
+                      
             // Get positions
             BlockPos posBack = targetPos.offset(targetSide);
             BlockPos posMiddle = posBack.offset(targetSide);
@@ -281,9 +284,9 @@ public abstract class ItemBlockplacer extends ItemJj {
             // Check validity of supports and length
             
             boolean frontValid = BlockWeight.getWeight(frontEnd)
-                    .canSupport(block.getWeight());
+                    .canSupport(this.block.getWeight());
             boolean backValid = BlockWeight.getWeight(backEnd)
-                    .canSupport(block.getWeight());
+                    .canSupport(this.block.getWeight());
             
             if (length < this.minLength || length > this.maxLength ||
                     !frontValid || !backValid) {
@@ -306,7 +309,7 @@ public abstract class ItemBlockplacer extends ItemJj {
             }
             
             // Place blocks
-            IBlockState state = block.getDefaultState();
+            IBlockState state = this.block.getDefaultState();
             
             world.setBlockState(posBack, state);
             world.setBlockState(posFront, state);
@@ -353,7 +356,8 @@ public abstract class ItemBlockplacer extends ItemJj {
             Block block = world.getBlockState(targetPos).getBlock();
             TileEntity tileEntity = world.getTileEntity(targetPos);
             
-            if (block != ModBlocks.beam || !(tileEntity instanceof TEBeam)) {
+            if (!(block instanceof BlockBeam) ||
+                    !(tileEntity instanceof TEBeam)) {
 
                 return false;
             }
