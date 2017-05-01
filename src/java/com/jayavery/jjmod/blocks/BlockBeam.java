@@ -2,17 +2,19 @@ package com.jayavery.jjmod.blocks;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.jayavery.jjmod.tileentities.TEBeam;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumPartBeam;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
+import com.jayavery.jjmod.utilities.IDelayedMultipart;
 import com.jayavery.jjmod.utilities.ToolType;
+import com.jayavery.jjmod.utilities.UnlistedPropertyBool;
+import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -25,27 +27,48 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ICustomModelLoader;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Beam block. */
-public class BlockBeam extends BlockBuilding {
+public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
 
-    public static final PropertyEnum<EnumAxis> AXIS =
-            PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
-    public static final PropertyEnum<EnumFloor> FLOOR =
-            PropertyEnum.<TEBeam.EnumFloor>
-            create("floor", TEBeam.EnumFloor.class);
-    public static final PropertyBool LEFT = PropertyBool.create("left");
-    public static final PropertyBool RIGHT = PropertyBool.create("right");
-    public static final PropertyBool FRONT = PropertyBool.create("front");
-    public static final PropertyBool BACK = PropertyBool.create("back");
-    public static final PropertyBool FL = PropertyBool.create("fl");
-    public static final PropertyBool FR = PropertyBool.create("fr");
-    public static final PropertyBool BL = PropertyBool.create("bl");
-    public static final PropertyBool BR = PropertyBool.create("br");
+    public static final UnlistedPropertyEnum<EnumAxis> AXIS =
+            new UnlistedPropertyEnum<EnumAxis>("axis", EnumAxis.class);
+    public static final UnlistedPropertyEnum<EnumFloor> FLOOR =
+            new UnlistedPropertyEnum<EnumFloor>
+    ("floor", TEBeam.EnumFloor.class);
+    public static final UnlistedPropertyBool LEFT =
+            new UnlistedPropertyBool("left");
+    public static final UnlistedPropertyBool RIGHT =
+            new UnlistedPropertyBool("right");
+    public static final UnlistedPropertyBool FRONT =
+            new UnlistedPropertyBool("front");
+    public static final UnlistedPropertyBool BACK =
+            new UnlistedPropertyBool("back");
+    public static final UnlistedPropertyBool FL =
+            new UnlistedPropertyBool("fl");
+    public static final UnlistedPropertyBool FR = 
+            new UnlistedPropertyBool("fr");
+    public static final UnlistedPropertyBool BL =
+            new UnlistedPropertyBool("bl");
+    public static final UnlistedPropertyBool BR =
+            new UnlistedPropertyBool("br");
+    
+    private final Supplier<ICustomModelLoader> loader;
         
-    public BlockBeam(String name) {
+    public BlockBeam(String name, Supplier<ICustomModelLoader> loader) {
         
         super(BlockMaterial.WOOD_FURNITURE, name, null, 2F, ToolType.AXE);
+        this.loader = loader;
+    }
+    
+    @Override
+    public ICustomModelLoader getLoader() {
+        
+        return this.loader.get();
     }
     
     @Override
@@ -215,15 +238,23 @@ public class BlockBeam extends BlockBuilding {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
             BlockPos pos) {
 
-        state = this.getActualState(state, world, pos);
-        EnumFloor floor = state.getValue(FLOOR);
+        state = this.getExtendedState(state, world, pos);
+        
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return FULL_BLOCK_AABB;
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
+        
+        EnumFloor floor = extState.getValue(FLOOR);
         
         if (floor != EnumFloor.NONE) {
             
             return TOP_HALF;
         }
         
-        return BEAM[state.getValue(AXIS).ordinal()];
+        return BEAM[extState.getValue(AXIS).ordinal()];
     }
     
     @Override
@@ -231,12 +262,19 @@ public class BlockBeam extends BlockBuilding {
             BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
             @Nullable Entity entity, boolean unused) {
         
-        state = this.getActualState(state, world, pos);
+        state = this.getExtendedState(state, world, pos);
+        
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return;
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
         
         addCollisionBoxToList(pos, entityBox, list,
-                BEAM[state.getValue(AXIS).ordinal()]);
+                BEAM[extState.getValue(AXIS).ordinal()]);
         
-        if (state.getValue(FLOOR) != EnumFloor.NONE) {
+        if (extState.getValue(FLOOR) != EnumFloor.NONE) {
             
             addCollisionBoxToList(pos, entityBox, list, BEAM_FLOOR);
         }
@@ -245,29 +283,40 @@ public class BlockBeam extends BlockBuilding {
     @Override
     public BlockStateContainer createBlockState() {
 
-        return new BlockStateContainer(this, AXIS, FLOOR, FRONT, RIGHT,
-                BACK, LEFT, FL, FR, BL, BR);
+        return new ExtendedBlockState(this, new IProperty[0],
+                new IUnlistedProperty[] {AXIS, FLOOR, FRONT, RIGHT,
+                BACK, LEFT, FL, FR, BL, BR});
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world,
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return state;
+    }
+    
+    @Override
+    public IBlockState getExtendedState(IBlockState state, IBlockAccess world,
             BlockPos pos) {
 
         TileEntity tileEntity = world.getTileEntity(pos);
         
-        if (!(tileEntity instanceof TEBeam)) {
+        if (!(tileEntity instanceof TEBeam) ||
+                !(state instanceof IExtendedBlockState)) {
             
             return state;
         }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
             
         TEBeam tileBeam = (TEBeam) tileEntity;
         
-        state = tileBeam.getFloor() == null ?
-                state : state.withProperty(FLOOR, tileBeam.getFloor());
-        state = tileBeam.getFacing() == null ? state : state
+        extState = tileBeam.getFloor() == null ?
+                extState : extState.withProperty(FLOOR, tileBeam.getFloor());
+        extState = tileBeam.getFacing() == null ? extState : extState
                 .withProperty(AXIS, EnumAxis.get(tileBeam.getFacing()));
         
-        EnumFacing frontFacing = state.getValue(AXIS) == EnumAxis.NS ?
+        EnumFacing frontFacing = extState.getValue(AXIS) == EnumAxis.NS ?
                 EnumFacing.NORTH : EnumFacing.EAST;
 
         Block blockFront = world.getBlockState(pos.offset(frontFacing))
@@ -277,10 +326,10 @@ public class BlockBeam extends BlockBuilding {
                 .getOpposite())).getBlock();
         boolean back = blockBack != this;
         
-        state = state.withProperty(FRONT, front);
-        state = state.withProperty(BACK, back);
+        extState = extState.withProperty(FRONT, front);
+        extState = extState.withProperty(BACK, back);
         
-        if (state.getValue(FLOOR) != EnumFloor.NONE) {
+        if (extState.getValue(FLOOR) != EnumFloor.NONE) {
             
             Block blockRight = world.getBlockState(pos.offset(frontFacing
                     .rotateY())).getBlock();
@@ -289,15 +338,15 @@ public class BlockBeam extends BlockBuilding {
                     .rotateYCCW())).getBlock();
             boolean left = !(blockLeft instanceof BlockBeam);
             
-            state = state.withProperty(RIGHT, right);
-            state = state.withProperty(LEFT, left);
-            state = state.withProperty(FL, front && left);
-            state = state.withProperty(FR, front && right);
-            state = state.withProperty(BL, back && left);
-            state = state.withProperty(BR, back && right);
+            extState = extState.withProperty(RIGHT, right);
+            extState = extState.withProperty(LEFT, left);
+            extState = extState.withProperty(FL, front && left);
+            extState = extState.withProperty(FR, front && right);
+            extState = extState.withProperty(BL, back && left);
+            extState = extState.withProperty(BR, back && right);
         }
         
-        return state;
+        return extState;
     }
     
     /** Enum defining which axis the Beam structure is aligned on. */

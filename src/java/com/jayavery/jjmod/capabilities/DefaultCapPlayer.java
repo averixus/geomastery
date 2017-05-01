@@ -54,6 +54,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     private static final int ROW_LENGTH = 9;
     /** Hunger cost of sleeping. */
     private static final int SLEEP_COST = 6;
+    /** Delay before the same item can be picked up. */
+    private static final int PICKUP_DELAY = 100;
     
     /** The player this capability belongs to. */
     public EntityPlayer player;
@@ -644,7 +646,8 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             Entry<Item, Long> entry = iterator.next();
             
-            if (entry.getValue() + 100 < this.player.world.getWorldTime()) {
+            if (entry.getValue() + PICKUP_DELAY <
+                    this.player.world.getWorldTime()) {
                 
                 iterator.remove();
             }

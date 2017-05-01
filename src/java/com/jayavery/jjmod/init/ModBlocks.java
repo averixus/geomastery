@@ -41,8 +41,13 @@ import com.jayavery.jjmod.blocks.BlockWallLog;
 import com.jayavery.jjmod.blocks.BlockWallRough;
 import com.jayavery.jjmod.blocks.BlockWallThin;
 import com.jayavery.jjmod.blocks.BlockWood;
+import com.jayavery.jjmod.render.block.BeamThick;
+import com.jayavery.jjmod.render.block.BeamThin;
+import com.jayavery.jjmod.render.block.WallStoneDouble;
+import com.jayavery.jjmod.render.block.WallStoneSingle;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
+import com.jayavery.jjmod.utilities.IDelayedMultipart;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -56,6 +61,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -323,14 +329,14 @@ public class ModBlocks {
         register(seedlingOrange = new BlockSeedling.Orange());
         register(seedlingBanana = new BlockSeedling.Banana());
         
-       registerItemless(wallBrickSingle =
-                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-                "wall_brick_single", 2F, ToolType.PICKAXE,
-                false, () -> ModItems.wallBrick));
-        registerItemless(wallBrickDouble =
-                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-                "wall_brick_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallBrick)); 
+//       registerItemless(wallBrickSingle =
+//                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+//                "wall_brick_single", 2F, ToolType.PICKAXE,
+//                false, () -> ModItems.wallBrick, WallBrickSingle.Loader::new));
+//        registerItemless(wallBrickDouble =
+//                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+//                "wall_brick_double", 3F, ToolType.PICKAXE,
+//                true, () -> ModItems.wallBrick, WallBrickDouble.Loader::new)); 
         registerItemless(wallMudSingle =
                 new BlockWallRough(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_single", 1F, ToolType.PICKAXE,
@@ -350,11 +356,11 @@ public class ModBlocks {
         registerItemless(wallStoneSingle =
                 new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_single", 2F, ToolType.PICKAXE,
-                false, () -> ModItems.wallStone));
+                false, () -> ModItems.wallStone, WallStoneSingle.Loader::new));
         registerItemless(wallStoneDouble =
                 new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallStone));
+                true, () -> ModItems.wallStone, WallStoneDouble.Loader::new));
         registerItemless(wallLogSingle =
                 new BlockWallLog("wall_log_single", 1F, false));
         registerItemless(wallLogDouble =
@@ -389,8 +395,10 @@ public class ModBlocks {
         registerItemless(doorWood = new BlockDoor("door_wood",
                 () -> ModItems.doorWood));
         
-        registerItemless(beamThick = new BlockBeam("beam_thick"));
-        registerItemless(beamThin = new BlockBeam("beam_thin"));
+        registerItemless(beamThick = new BlockBeam("beam_thick",
+                BeamThick.Loader::new));
+        registerItemless(beamThin = new BlockBeam("beam_thin",
+                BeamThin.Loader::new));
                 
         registerItemless(slabStoneSingle = new BlockSlab("slab_stone_single",
                 false, () -> ModItems.slabStone));
@@ -439,7 +447,7 @@ public class ModBlocks {
     
     @SideOnly(Side.CLIENT)
     public static void preInitClient() {
-        
+                
         for(Entry<Block, Item> entry : MOD_BLOCKS.entrySet()) {
             
             model(entry.getKey(), entry.getValue());
@@ -509,6 +517,24 @@ public class ModBlocks {
             
             ModelLoader.setCustomStateMapper(block,
                     (b) -> Collections.emptyMap());
+            
+        } else if (block instanceof IDelayedMultipart) {
+
+            ModelLoaderRegistry.registerLoader(((IDelayedMultipart)
+                    block).getLoader());
+            
+            ModelResourceLocation loc = new ModelResourceLocation(block
+                    .getRegistryName(), "delayedbake");
+
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(
+                        IBlockState state) {
+                    
+                    return loc;
+                }
+            });
             
         } else {
 

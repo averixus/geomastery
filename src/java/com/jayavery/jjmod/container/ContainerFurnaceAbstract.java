@@ -82,6 +82,8 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
         this.hotEnd = this.hotStart + 8;
         this.invStart = this.hotEnd + 1;
         this.invEnd = this.invStart + invIndex;
+        
+        this.detectAndSendChanges();
     }
     
     /** Builds this furnace's input slots. */

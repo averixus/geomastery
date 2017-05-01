@@ -7,12 +7,13 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayavery.jjmod.utilities.BlockWeight;
+import com.jayavery.jjmod.utilities.IDelayedMultipart;
 import com.jayavery.jjmod.utilities.IDoublingWall;
 import com.jayavery.jjmod.utilities.ToolType;
+import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,23 +26,28 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ICustomModelLoader;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Adaptive wall building block. */
-public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
+public class BlockWallComplex extends BlockBuilding 
+        implements IDoublingWall, IDelayedMultipart {
         
-    public static final PropertyEnum<EnumConnection> NORTH =
-            PropertyEnum.create("north", EnumConnection.class);
-    public static final PropertyEnum<EnumConnection> EAST =
-            PropertyEnum.create("east", EnumConnection.class);
-    public static final PropertyEnum<EnumConnection> SOUTH =
-            PropertyEnum.create("south", EnumConnection.class);
-    public static final PropertyEnum<EnumConnection> WEST =
-            PropertyEnum.create("west", EnumConnection.class);
-    public static final PropertyEnum<EnumPosition> POSITION =
-            PropertyEnum.create("position", EnumPosition.class);
+    public static final UnlistedPropertyEnum<EnumConnection> NORTH =
+            new UnlistedPropertyEnum<EnumConnection>("north", EnumConnection.class);
+    public static final UnlistedPropertyEnum<EnumConnection> EAST =
+            new UnlistedPropertyEnum<EnumConnection>("east", EnumConnection.class);
+    public static final UnlistedPropertyEnum<EnumConnection> SOUTH =
+            new UnlistedPropertyEnum<EnumConnection>("south", EnumConnection.class);
+    public static final UnlistedPropertyEnum<EnumConnection> WEST =
+            new UnlistedPropertyEnum<EnumConnection>("west", EnumConnection.class);
+    public static final UnlistedPropertyEnum<EnumPosition> POSITION =
+            new UnlistedPropertyEnum<EnumPosition>("position", EnumPosition.class);
     
     /** Convenience map of EnumFacing to connection properties. */
-    public static final Map<EnumFacing, PropertyEnum<EnumConnection>>
+    public static final Map<EnumFacing, UnlistedPropertyEnum<EnumConnection>>
             directionProperties = Maps.newHashMap();
     static {
         directionProperties.put(EnumFacing.NORTH, NORTH);
@@ -54,14 +60,24 @@ public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
     protected final Supplier<Item> item;
     /** Whether this block is double. */
     protected final boolean isDouble;
+    /** Delayed multipart loader for this block. */
+    protected final Supplier<ICustomModelLoader> loader;
 
     public BlockWallComplex(Material material, String name, float hardness,
-            ToolType harvestTool, boolean isDouble, Supplier<Item> item) {
+            ToolType harvestTool, boolean isDouble, Supplier<Item> item,
+            Supplier<ICustomModelLoader> loader) {
         
         super(material, name, CreativeTabs.BUILDING_BLOCKS,
                 hardness, harvestTool);
         this.item = item;
         this.isDouble = isDouble;
+        this.loader = loader;
+    }
+    
+    @Override
+    public ICustomModelLoader getLoader() {
+        
+        return this.loader.get();
     }
     
     @Override
@@ -189,22 +205,35 @@ public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
     }
     
     @Override
-    public IBlockState getActualState(IBlockState state,
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+        return state;
+    }
+    
+    @Override
+    public IBlockState getExtendedState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
+        
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return state;
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
         
         for (EnumFacing direction : directionProperties.keySet()) {
             
-            state = state.withProperty(directionProperties.get(direction),
+            extState = extState.withProperty(directionProperties.get(direction),
                     this.connectionType(world, pos, direction));
         }
         
         boolean isBottom = !(this == world
                 .getBlockState(pos.down()).getBlock());
         boolean isTop = world.getBlockState(pos.up()).getBlock() != this;
-        state = state.withProperty(POSITION,
+        extState = extState.withProperty(POSITION,
                 EnumPosition.get(isBottom, isTop));
 
-        return state;
+        return extState;
     }
     
     @Override
@@ -226,7 +255,14 @@ public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
             BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
             @Nullable Entity entity, boolean unused) {
         
-        state = this.getActualState(state, worldIn, pos);
+        state = this.getExtendedState(state, worldIn, pos);
+        
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return;
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
         
         if (this.isDouble()) {
             
@@ -234,27 +270,27 @@ public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
             return;
         }
         
-        if (state.getValue(POSITION) == EnumPosition.TOP ||
-                state.getValue(POSITION) == EnumPosition.LONE) {
+        if (extState.getValue(POSITION) == EnumPosition.TOP ||
+                extState.getValue(POSITION) == EnumPosition.LONE) {
         
             addCollisionBoxToList(pos, entityBox, list, CENTRE_POST_LOW);
             
-            if (state.getValue(NORTH) != EnumConnection.NONE) {
+            if (extState.getValue(NORTH) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_NORTH_LOW);
             }
             
-            if (state.getValue(EAST) != EnumConnection.NONE) {
+            if (extState.getValue(EAST) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST_LOW);
             }
             
-            if (state.getValue(SOUTH) != EnumConnection.NONE) {
+            if (extState.getValue(SOUTH) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_SOUTH_LOW);
             }
             
-            if (state.getValue(WEST) != EnumConnection.NONE) {
+            if (extState.getValue(WEST) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST_LOW);
             }
@@ -263,22 +299,22 @@ public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
             
             addCollisionBoxToList(pos, entityBox, list, CENTRE_POST);
             
-            if (state.getValue(NORTH) != EnumConnection.NONE) {
+            if (extState.getValue(NORTH) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_NORTH);
             }
             
-            if (state.getValue(EAST) != EnumConnection.NONE) {
+            if (extState.getValue(EAST) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST);
             }
             
-            if (state.getValue(SOUTH) != EnumConnection.NONE) {
+            if (extState.getValue(SOUTH) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_SOUTH);
             }
             
-            if (state.getValue(WEST) != EnumConnection.NONE) {
+            if (extState.getValue(WEST) != EnumConnection.NONE) {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST);
             }
@@ -296,8 +332,8 @@ public class BlockWallComplex extends BlockBuilding implements IDoublingWall {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {NORTH, EAST,
-                SOUTH, WEST, POSITION});
+        return new ExtendedBlockState(this, new IProperty[0],
+                new IUnlistedProperty[] {NORTH, EAST, SOUTH, WEST, POSITION});
     }
     
     @Override
