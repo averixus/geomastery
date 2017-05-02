@@ -1,0 +1,49 @@
+{
+"textures": {
+    "panels1": "jjmod:blocks/complex/panels1",
+    "panels2": "jjmod:blocks/complex/panels2",
+    "roofclay3": "jjmod:blocks/complex/roofclay3",
+    "roofclay4": "jjmod:blocks/complex/roofclay4",
+    "roofclay1": "jjmod:blocks/complex/roofclay1",
+    "roofclay2": "jjmod:blocks/complex/roofclay2",
+    "particle": "jjmod:blocks/complex/roofclay1"
+},
+"elements": [ 
+{
+    "from": [ 9.5, 0, 6.5 ],
+    "to": [ 10.5, 4, 16 ],
+    "faces": {
+        "down":  { "uv": [ 7, 16, 6, 6.5 ], "texture": "#panels1" },
+        "up":    { "uv": [ 10, 6.5, 11, 16 ], "texture": "#panels1" },
+        "north": { "uv": [ 8, 12, 9, 16 ], "texture": "#panels2" },
+        "south": { "uv": [ 10, 12, 11, 16 ], "texture": "#panels2" },
+        "west":  { "uv": [ 6.5, 12, 16, 16 ], "texture": "#panels2" },
+        "east":  { "uv": [ 0, 12, 9.5, 16 ], "texture": "#panels2" }
+    }
+},
+{
+    "from": [ 10.5, 0, 9.5 ],
+    "to": [ 16, 4, 10.5 ],
+    "faces": {
+        "down":  { "uv": [ 10.5, 10, 5, 9 ], "texture": "#panels2" },
+        "up":    { "uv": [ 10.5, 10, 16, 11 ], "texture": "#panels2" },
+        "north": { "uv": [ 0, 12, 5.5, 16 ], "texture": "#panels2" },
+        "south": { "uv": [ 10.5, 12, 16, 16 ], "texture": "#panels2" },
+        "west":  { "uv": [ 10, 12, 11, 16 ], "texture": "#panels2" },
+        "east":  { "uv": [ 4, 12, 5, 16 ], "texture": "#panels2" }
+    }
+},
+{
+    "from": [ 6.5, 0, 9.5 ],
+    "to": [ 9.5, 4, 10.5 ],
+    "faces": {
+        "down":  { "uv": [ 8, 9, 5, 8 ], "texture": "#panels1" },
+        "up":    { "uv": [ 5, 10, 8, 11 ], "texture": "#panels1" },
+        "north": { "uv": [ 7, 12, 10, 16 ], "texture": "#panels2" },
+        "south": { "uv": [ 11, 12, 14, 16 ], "texture": "#panels2" },
+        "west":  { "uv": [ 10, 12, 11, 16 ], "texture": "#panels2" },
+        "east":  { "uv": [ 6, 12, 7, 16 ], "texture": "#panels2" }
+    }
+}
+]
+}

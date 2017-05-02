@@ -1,11 +1,11 @@
 {
     "forge_marker": 1,
     "variants": {
-        "normal": { "model": "jjmod:roof_pole" },
+        "normal": { "model": "jjmod:flatroof_pole" },
         "inventory": [{
             "model": "jjmod:item",
             "textures": {
-                "layer0": "jjmod:items/roof_pole"
+                "layer0": "jjmod:items/flatroof_pole"
             }
         }]
     }

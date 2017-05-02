@@ -3,12 +3,12 @@ package com.jayavery.jjmod.blocks;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStairs.EnumShape;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -32,10 +32,11 @@ public class BlockStairsComplex extends BlockBuilding {
             PropertyEnum.<BlockStairs.EnumShape>create("shape",
             BlockStairs.EnumShape.class);
     
-    public BlockStairsComplex(String name, float hardness) {
+    public BlockStairsComplex(Material material,
+            String name, float hardness, ToolType tool) {
         
-        super(BlockMaterial.STONE_FURNITURE, name, CreativeTabs.BUILDING_BLOCKS,
-                hardness, ToolType.PICKAXE);
+        super(material, name, CreativeTabs.BUILDING_BLOCKS,
+                hardness, tool);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class BlockStairsComplex extends BlockBuilding {
 
         offsetState = world.getBlockState(pos.offset(facing.getOpposite()));
 
-        if (offsetState instanceof BlockStairsComplex) {
+        if (offsetState.getBlock() instanceof BlockStairsComplex) {
             
             EnumFacing offsetFacing = offsetState.getValue(FACING);
 
@@ -120,7 +121,7 @@ public class BlockStairsComplex extends BlockBuilding {
         
         if (shape == EnumShape.INNER_LEFT || shape == EnumShape.INNER_RIGHT) {
             
-            for (AxisAlignedBB box : BlockNew.STAIRS_INTERNAL[facing]) {
+            for (AxisAlignedBB box : STAIRS_INTERNAL[facing]) {
                 
                 addCollisionBoxToList(pos, entityBox, list, box);
             }
@@ -128,14 +129,14 @@ public class BlockStairsComplex extends BlockBuilding {
         } else if (shape == EnumShape.OUTER_LEFT ||
                 shape == EnumShape.OUTER_RIGHT) {
             
-            for (AxisAlignedBB box : BlockNew.STAIRS_EXTERNAL[facing]) {
+            for (AxisAlignedBB box : STAIRS_EXTERNAL[facing]) {
                 
                 addCollisionBoxToList(pos, entityBox, list, box);
             }
             
         } else {
             
-            for (AxisAlignedBB box : BlockNew.STAIRS_STRAIGHT[facing]) {
+            for (AxisAlignedBB box : STAIRS_STRAIGHT[facing]) {
                 
                 addCollisionBoxToList(pos, entityBox, list, box);
             }

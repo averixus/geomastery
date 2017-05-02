@@ -32,11 +32,7 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 
 /** Model to wrap delayed baking of multipart. */
 public class WallBrickDouble extends DelayedBakingAbstract {
-    
-    /** Cached map of quads by state. */
-    protected static final Map<IBlockState, List<BakedQuad>> CACHE =
-            Maps.newHashMap();
-    
+
     /** Model names for wall connection types. */
     protected static final Map<EnumConnection, IModel> connections =
             Maps.newEnumMap(EnumConnection.class);
@@ -48,9 +44,6 @@ public class WallBrickDouble extends DelayedBakingAbstract {
     /** Rotation angles for wall connection properties. */
     protected static final Map<UnlistedPropertyEnum<EnumConnection>, Integer>
             properties = Maps.newHashMap();
-    
-    /** Textures required to render this model. */
-    protected static ImmutableList<ResourceLocation> textures;
     
     // Models for all possible parts
     protected static IModel bottomPost;
@@ -65,26 +58,44 @@ public class WallBrickDouble extends DelayedBakingAbstract {
     protected static IModel topPost;
     protected static IModel topSideDouble;
     protected static IModel topSideSingle;
-
-    @Override
-    public Collection<ResourceLocation> getTextures() {
-
-        return textures;
+    
+    public WallBrickDouble() {
+        
+        super("jjmod:blocks/complex/brickpave1",
+                ModBlocks.wallBrickDouble.getRegistryName());
     }
     
-    /** @return A model whose location begins with "jjmod:block/wall_brick_". */
-    protected static IModel model(String wallBrick) {
-        
-        return ModelLoaderRegistry.getModelOrLogError(new ResourceLocation(
-                "jjmod:block/wall_brick_" + wallBrick),
-                "Error loading model for delayed multipart!");
-    }
-
-    /** Sets up for delayed baking. */
+    /** Loads dependent parts and provides the delayed baking model. */
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format,
-            Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
-
+    public IModel loadModel(ResourceLocation rl) throws Exception {
+        
+        // Load part models
+        
+        bottomPost = model("double/bottom_post");
+        bottomSideDouble = model("double/bottom_side");
+        bottomSideSingle = model("single/bottom_side");
+        lonePost = model("double/lone_post");
+        loneSideDouble = model("double/lone_side");
+        loneSideSingle = model("single/lone_side");
+        middlePost = model("double/middle_post");
+        middleSideDouble = model("double/middle_side");
+        middleSideSingle = model("single/middle_side");
+        topPost = model("double/top_post");
+        topSideDouble = model("double/top_side");
+        topSideSingle = model("single/top_side");
+        
+        // Prepare texture dependencies list
+    
+        for (IModel model : new IModel[] {bottomSideSingle, bottomSideDouble,
+                loneSideSingle, loneSideDouble, middleSideSingle,
+                middleSideDouble, topSideSingle, topSideDouble, bottomPost,
+                middlePost, topPost, lonePost}) {
+         
+            this.textures.addAll(model.getTextures());
+        }
+        
+        // Set up multipart mappings
+     
         connections.put(EnumConnection.BOTTOM_SINGLE, bottomSideSingle);
         connections.put(EnumConnection.BOTTOM_DOUBLE, bottomSideDouble);
         connections.put(EnumConnection.LONE_DOUBLE, loneSideDouble);
@@ -104,11 +115,9 @@ public class WallBrickDouble extends DelayedBakingAbstract {
         properties.put(BlockWallComplex.SOUTH, 0);
         properties.put(BlockWallComplex.WEST, 90);
         
-        this.bakeInfo(format, textureGetter, "jjmod:blocks/complex/brickpave1");
         return this;
     }
     
-    /** Retrieves from cache or bakes as required. */
     @Override
     public List<BakedQuad> getQuads(IBlockState state, EnumFacing side,
             long rand) {
@@ -120,15 +129,19 @@ public class WallBrickDouble extends DelayedBakingAbstract {
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        if (CACHE.containsKey(state)) {
+        if (this.cache.containsKey(state)) {
             
-            return CACHE.get(state);
+            return this.cache.get(state);
         }
 
         List<BakedQuad> result = Lists.newArrayList();
         
+        // Post
+        
         this.addQuads(result, positions.get(extState.getValue(BlockWallComplex
                 .POSITION)), state, side, rand);
+        
+        // Sides
         
         for (Entry<UnlistedPropertyEnum<EnumConnection>, Integer> entry :
                 properties.entrySet()) {
@@ -142,74 +155,15 @@ public class WallBrickDouble extends DelayedBakingAbstract {
             }
         }
 
-        CACHE.put(state, result);
+        this.cache.put(state, result);
         return result;
     }
     
-    /** Loader for delayed baking model. */
-    public static class Loader implements ICustomModelLoader {
-
-        @Override
-        public void onResourceManagerReload(IResourceManager rm) {
-            
-            CACHE.clear();
-        }
-
-        @Override
-        public boolean accepts(ResourceLocation loc) {
-
-            return loc instanceof ModelResourceLocation &&
-                    ((ModelResourceLocation) loc).getVariant()
-                    .contains("delayedbake") &&
-                    ModBlocks.wallBrickDouble.getRegistryName().equals(loc);
-        }
-
-        /** Loads dependent parts and provides the delayed baking model. */
-        @Override
-        public IModel loadModel(ResourceLocation modelLocation)
-                throws Exception {
-            
-             bottomPost = bottomPost == null ?
-                     model("double/bottom_post") : bottomPost;
-             bottomSideDouble = bottomSideDouble == null ?
-                     model("double/bottom_side") : bottomSideDouble;
-             bottomSideSingle = bottomSideSingle == null ?
-                     model("single/bottom_side") : bottomSideSingle;
-             lonePost = lonePost == null ? model("double/lone_post") : lonePost;
-             loneSideDouble = loneSideDouble == null ?
-                     model("double/lone_side") : loneSideDouble;
-             loneSideSingle = loneSideSingle == null ?
-                     model("single/lone_side") : loneSideSingle;
-             middlePost = middlePost == null ?
-                     model("double/middle_post") : middlePost;
-             middleSideDouble = middleSideDouble == null ?
-                     model("double/middle_side") : middleSideDouble;
-             middleSideSingle = middleSideSingle == null ?
-                     model("single/middle_side") : middleSideSingle;
-             topPost = topPost == null ? model("double/top_post") : topPost;
-             topSideDouble = topSideDouble == null ?
-                     model("double/top_side") : topSideDouble;
-             topSideSingle = topSideSingle == null ?
-                     model("single/top_side") : topSideSingle;
-             
-             if (textures == null) {
-                 
-                 ImmutableList.Builder<ResourceLocation> builder =
-                         ImmutableList.builder();
-                 
-                 for (IModel model : new IModel[] {bottomSideSingle,
-                         bottomSideDouble, loneSideSingle, loneSideDouble,
-                         middleSideSingle, middleSideDouble, topSideSingle,
-                         topSideDouble, bottomPost, middlePost,
-                         topPost, lonePost}) {
-                     
-                     builder.addAll(model.getTextures());
-                 }
-                 
-                 textures = builder.build();
-             }
-
-            return new WallBrickDouble();
-        }
+    /** @return A model whose location begins with "jjmod:block/wall_brick_". */
+    protected static IModel model(String wallBrick) {
+        
+        return ModelLoaderRegistry.getModelOrLogError(new ResourceLocation(
+                "jjmod:block/wall_brick_" + wallBrick),
+                "Error loading model for delayed multipart double brick wall!");
     }
 }

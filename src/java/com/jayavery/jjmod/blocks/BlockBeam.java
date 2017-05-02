@@ -37,6 +37,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
 
     public static final UnlistedPropertyEnum<EnumAxis> AXIS =
             new UnlistedPropertyEnum<EnumAxis>("axis", EnumAxis.class);
+    public static final UnlistedPropertyBool FRONTBEAM =
+            new UnlistedPropertyBool("frontbeam");
+    public static final UnlistedPropertyBool BACKBEAM =
+            new UnlistedPropertyBool("backbeam");
     public static final UnlistedPropertyEnum<EnumFloor> FLOOR =
             new UnlistedPropertyEnum<EnumFloor>
     ("floor", TEBeam.EnumFloor.class);
@@ -284,8 +288,8 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
     public BlockStateContainer createBlockState() {
 
         return new ExtendedBlockState(this, new IProperty[0],
-                new IUnlistedProperty[] {AXIS, FLOOR, FRONT, RIGHT,
-                BACK, LEFT, FL, FR, BL, BR});
+                new IUnlistedProperty[] {AXIS, FRONTBEAM, BACKBEAM,
+                FLOOR, FRONT, RIGHT, BACK, LEFT, FL, FR, BL, BR});
     }
 
     @Override
@@ -321,13 +325,18 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
 
         Block blockFront = world.getBlockState(pos.offset(frontFacing))
                 .getBlock();
-        boolean front = blockFront != this;
+        boolean front = !(blockFront instanceof BlockBeam);
         Block blockBack = world.getBlockState(pos.offset(frontFacing
                 .getOpposite())).getBlock();
-        boolean back = blockBack != this;
+        boolean back = !(blockBack instanceof BlockBeam);
         
         extState = extState.withProperty(FRONT, front);
         extState = extState.withProperty(BACK, back);
+        
+        EnumPartBeam part = tileBeam.getPart();
+        
+        extState = extState.withProperty(FRONTBEAM, part == EnumPartBeam.FRONT);
+        extState = extState.withProperty(BACKBEAM, part == EnumPartBeam.BACK);
         
         if (extState.getValue(FLOOR) != EnumFloor.NONE) {
             

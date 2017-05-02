@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import com.google.common.base.Function;
+import java.util.Map.Entry;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -12,29 +12,17 @@ import com.jayavery.jjmod.blocks.BlockBeam;
 import com.jayavery.jjmod.blocks.BlockBeam.EnumAxis;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumFloor;
+import com.jayavery.jjmod.utilities.Modeller;
+import com.jayavery.jjmod.utilities.UnlistedPropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class BeamThin extends DelayedBakingAbstract {
-    
-    /** Cached map of quads by state. */
-    protected static final Map<IBlockState, List<BakedQuad>> CACHE =
-            Maps.newHashMap();
-    
-    /** Textures required to render this model. */
-    protected static ImmutableList<ResourceLocation> textures;
     
     // Models for all possible parts
     protected static IModel thinMiddle;
@@ -52,34 +40,141 @@ public class BeamThin extends DelayedBakingAbstract {
     protected static IModel woodCornerRight;
     protected static IModel woodCornerLeft;
     
-    @Override
-    public Collection<ResourceLocation> getTextures() {
+    /** Map of axis -> rotation for main beam. */
+    protected static Map<EnumAxis, Integer> beams =
+            Maps.newEnumMap(EnumAxis.class);
+    /** 3D map of axis -> property -> rotation for beam ends. */
+    protected static Map<EnumAxis, Map<UnlistedPropertyBool, Integer>> ends =
+            Maps.newEnumMap(EnumAxis.class);
+    /** 3D map of axis -> floor -> model part and rotation for floor middles. */
+    protected static Map<EnumAxis, Map<EnumFloor,
+            Modeller>> middles = Maps.newEnumMap(EnumAxis.class);
+    /** 4D map of axis -> floor -> property -> model part and rotation
+     * for floor surrounds. */
+    protected static Map<EnumAxis, Map<EnumFloor, Map<UnlistedPropertyBool,
+            Modeller>>> surrounds = Maps.newEnumMap(EnumAxis.class);
+
+    public BeamThin() {
         
-        return textures;
+        super("jjmod:blocks/complex/softwood1",
+                ModBlocks.beamThin.getRegistryName());
     }
-    
-    /** @return A model whose location begins with "jjmod:block/beam/". */
-    protected static IModel model(String beam) {
-        
-        return ModelLoaderRegistry.getModelOrLogError(new ResourceLocation(
-                "jjmod:block/beam/" + beam),
-                "Error loading model for delayed multipart!");
-    }
-    
-    /** Sets up for delayed baking. */
+
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format,
-            Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
-                
-        this.bakeInfo(format, textureGetter, "jjmod:blocks/complex/softwood1");
+    public IModel loadModel(ResourceLocation rl) throws Exception {
+        
+        // Load part models
+        
+        thinMiddle = model("thin/middle");
+        thinEnd = model("thin/end");
+        poleMiddle = model("pole/middle");
+        poleEnd = model("pole/end");
+        poleLeft = model("pole/left");
+        poleRight = model("pole/right");
+        poleCornerRight = model("pole/corner_right");
+        poleCornerLeft = model("pole/corner_left");
+        woodMiddle = model("wood/middle");
+        woodEnd = model("wood/end");
+        woodLeft = model("wood/left");
+        woodRight = model("wood/right");
+        woodCornerRight = model("wood/corner_right");
+        woodCornerLeft = model("wood/corner_left");
+        
+        // Prepare texture dependencies list
+                    
+        for (IModel model : new IModel[] {thinMiddle, thinEnd,
+                poleMiddle, poleEnd, poleLeft, poleRight,
+                poleCornerRight, poleCornerLeft, woodMiddle, woodEnd,
+                woodLeft, woodRight, woodCornerLeft, woodCornerRight}) {
+            
+            this.textures.addAll(model.getTextures());
+        }
+        
+        // Set up multipart mappings
+        
+        beams.put(EnumAxis.NS, 90);
+        beams.put(EnumAxis.EW, 0);
+        
+        Map<UnlistedPropertyBool, Integer> endsNS = Maps.newHashMap();
+        endsNS.put(BlockBeam.FRONTBEAM, 90);
+        endsNS.put(BlockBeam.BACKBEAM, 270);
+        ends.put(EnumAxis.NS, endsNS);
+        
+        Map<UnlistedPropertyBool, Integer> endsEW = Maps.newHashMap();
+        endsEW.put(BlockBeam.FRONTBEAM, 0);
+        endsEW.put(BlockBeam.BACKBEAM, 180);
+        ends.put(EnumAxis.EW, endsEW);
+        
+        Map<EnumFloor, Modeller> floorsNS = Maps.newEnumMap(EnumFloor.class);
+        floorsNS.put(EnumFloor.POLE, new Modeller(poleMiddle, 90));
+        floorsNS.put(EnumFloor.WOOD, new Modeller(woodMiddle, 90));
+        middles.put(EnumAxis.NS, floorsNS);
+        
+        Map<EnumFloor, Modeller> floorsEW = Maps.newEnumMap(EnumFloor.class);
+        floorsEW.put(EnumFloor.POLE, new Modeller(poleMiddle, 0));
+        floorsEW.put(EnumFloor.WOOD, new Modeller(woodMiddle, 0));
+        middles.put(EnumAxis.EW, floorsEW);
+        
+        Map<EnumFloor, Map<UnlistedPropertyBool, Modeller>>
+                floorNSParts = Maps.newEnumMap(EnumFloor.class);
+        
+        Map<UnlistedPropertyBool, Modeller> poleNSParts = Maps.newHashMap();
+        poleNSParts.put(BlockBeam.FRONT, new Modeller(poleEnd, 90));
+        poleNSParts.put(BlockBeam.BACK, new Modeller(poleEnd, 270));
+        poleNSParts.put(BlockBeam.LEFT, new Modeller(poleRight, 90));
+        poleNSParts.put(BlockBeam.RIGHT, new Modeller(poleLeft, 90));
+        poleNSParts.put(BlockBeam.BL, new Modeller(poleCornerLeft, 270));
+        poleNSParts.put(BlockBeam.BR, new Modeller(poleCornerRight, 270));
+        poleNSParts.put(BlockBeam.FL, new Modeller(poleCornerRight, 90));
+        poleNSParts.put(BlockBeam.FR, new Modeller(poleCornerLeft, 90));
+        floorNSParts.put(EnumFloor.POLE, poleNSParts);
+        
+        Map<UnlistedPropertyBool, Modeller> woodNSParts = Maps.newHashMap();
+        woodNSParts.put(BlockBeam.FRONT, new Modeller(woodEnd, 90));
+        woodNSParts.put(BlockBeam.BACK, new Modeller(woodEnd, 270));
+        woodNSParts.put(BlockBeam.LEFT, new Modeller(woodLeft, 90));
+        woodNSParts.put(BlockBeam.RIGHT, new Modeller(woodRight, 90));
+        woodNSParts.put(BlockBeam.BL, new Modeller(woodCornerLeft, 270));
+        woodNSParts.put(BlockBeam.BR, new Modeller(woodCornerRight, 270));
+        woodNSParts.put(BlockBeam.FL, new Modeller(woodCornerRight, 90));
+        woodNSParts.put(BlockBeam.FR, new Modeller(woodCornerLeft, 90));
+        floorNSParts.put(EnumFloor.WOOD, woodNSParts);
+        
+        Map<EnumFloor, Map<UnlistedPropertyBool, Modeller>>
+                floorEWParts = Maps.newEnumMap(EnumFloor.class);
+
+        Map<UnlistedPropertyBool, Modeller> poleEWParts = Maps.newHashMap();
+        poleEWParts.put(BlockBeam.FRONT, new Modeller(poleEnd, 180));
+        poleEWParts.put(BlockBeam.BACK, new Modeller(poleEnd, 0));
+        poleEWParts.put(BlockBeam.LEFT, new Modeller(poleLeft, 0));
+        poleEWParts.put(BlockBeam.RIGHT, new Modeller(poleRight, 0));
+        poleEWParts.put(BlockBeam.BL, new Modeller(poleCornerLeft, 0));
+        poleEWParts.put(BlockBeam.BR, new Modeller(poleCornerRight, 0));
+        poleEWParts.put(BlockBeam.FL, new Modeller(poleCornerRight, 180));
+        poleEWParts.put(BlockBeam.FR, new Modeller(poleCornerLeft, 180));
+        floorEWParts.put(EnumFloor.POLE, poleEWParts);
+        
+        Map<UnlistedPropertyBool, Modeller> woodEWParts = Maps.newHashMap();
+        woodEWParts.put(BlockBeam.FRONT, new Modeller(woodEnd, 180));
+        woodEWParts.put(BlockBeam.BACK, new Modeller(woodEnd, 0));
+        woodEWParts.put(BlockBeam.LEFT, new Modeller(woodRight, 0));
+        woodEWParts.put(BlockBeam.RIGHT, new Modeller(woodLeft, 0));
+        woodEWParts.put(BlockBeam.BL, new Modeller(woodCornerLeft, 0));
+        woodEWParts.put(BlockBeam.BR, new Modeller(woodCornerRight, 0));
+        woodEWParts.put(BlockBeam.FL, new Modeller(woodCornerRight, 180));
+        woodEWParts.put(BlockBeam.FR, new Modeller(woodCornerLeft, 180));
+        floorEWParts.put(EnumFloor.WOOD, woodEWParts);
+        
+        surrounds.put(EnumAxis.NS, floorNSParts);
+        surrounds.put(EnumAxis.EW, floorEWParts);
+        
         return this;
     }
     
-    /** Retrieves from cache or bakes as required. */
     @Override
-    public List<BakedQuad> getQuads(IBlockState state,
-            EnumFacing facing, long rand) {
-        
+    public List<BakedQuad> getQuads(IBlockState state, EnumFacing facing,
+            long rand) {
+
         if (!(state instanceof IExtendedBlockState)) {
             
             return Collections.emptyList();
@@ -87,331 +182,68 @@ public class BeamThin extends DelayedBakingAbstract {
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        if (CACHE.containsKey(state)) {
+        if (this.cache.containsKey(state)) {
             
-            return CACHE.get(state);
+            return this.cache.get(state);
         }
         
         List<BakedQuad> result = Lists.newArrayList();
         
         EnumAxis axis = extState.getValue(BlockBeam.AXIS);
-        
-        if (axis == EnumAxis.NS) {
-            
-            this.addQuads(result, thinMiddle, 90, state, facing, rand);
-            
-        } else {
-            
-            this.addQuads(result, thinMiddle, state, facing, rand);
-        }
-
-        boolean front = extState.getValue(BlockBeam.FRONT);
-        
-        if (front) {
-            
-            if (axis == EnumAxis.NS) {
-            
-                this.addQuads(result, thinEnd, 270, state, facing, rand);
-                
-            } else {
-                
-                this.addQuads(result, thinEnd, state, facing, rand);
-            }
-        }
-        
-        boolean back = extState.getValue(BlockBeam.BACK);
-        
-        if (back) {
-            
-            if (axis == EnumAxis.NS) {
-                
-                this.addQuads(result, thinEnd, 90, state, facing, rand);
-                
-            } else {
-                
-                this.addQuads(result, thinEnd, 180, state, facing, rand);
-            }
-        }
-        
         EnumFloor floor = extState.getValue(BlockBeam.FLOOR);
+        
+        // Beam middle
+        
+        this.addQuads(result, thinMiddle, beams.get(axis), state, facing, rand);
+        
+        // Beam ends
+        
+        for (Entry<UnlistedPropertyBool, Integer> entry :
+                ends.get(axis).entrySet()) {
+            
+            if (extState.getValue(entry.getKey())) {
+                
+                this.addQuads(result, thinEnd, entry.getValue(),
+                        state, facing, rand);
+            }
+        }
         
         if (floor == EnumFloor.NONE) {
             
             return result;
         }
         
-        boolean left = extState.getValue(BlockBeam.LEFT);
-        boolean right = extState.getValue(BlockBeam.RIGHT);
-        boolean bl = extState.getValue(BlockBeam.BL);
-        boolean br = extState.getValue(BlockBeam.BR);
-        boolean fl = extState.getValue(BlockBeam.FL);
-        boolean fr = extState.getValue(BlockBeam.FR);
+        // Floor middle
         
-        if (floor == EnumFloor.POLE) {
+        Modeller model = middles.get(axis).get(floor);
+        this.addQuads(result, model.model(), model.rot(),
+                extState, facing, rand);
+        
+        // Floor surrounds
+        
+        Map<UnlistedPropertyBool, Modeller> apply =
+                surrounds.get(axis).get(floor);
+        
+        for (Entry<UnlistedPropertyBool, Modeller> entry :
+                apply.entrySet()) {
             
-            if (axis == EnumAxis.NS) {
-            
-                this.addQuads(result, poleMiddle, 90, state, facing, rand);
+            if (extState.getValue(entry.getKey())) {
                 
-                if (front) {
-                    
-                    this.addQuads(result, poleEnd, 90, state, facing, rand);
-                }
-                
-                if (back) {
-                    
-                    this.addQuads(result, poleEnd, 270, state, facing, rand);
-                }
-                
-                if (left) {
-                    
-                    this.addQuads(result, poleRight, 90, state, facing, rand);
-                }
-                
-                if (right) {
-                    
-                    this.addQuads(result, poleLeft, 90, state, facing, rand);
-                }
-                
-                if (bl) {
-                    
-                    this.addQuads(result, poleCornerLeft, 270,
-                            state, facing, rand);
-                }
-                
-                if (br) {
-                    
-                    this.addQuads(result, poleCornerRight, 270,
-                            state, facing, rand);
-                }
-                
-                if (fl) {
-                    
-                    this.addQuads(result, poleCornerRight, 90,
-                            state, facing, rand);
-                }
-                
-                if (fr) {
-                    
-                    this.addQuads(result, poleCornerLeft, 90,
-                            state, facing, rand);
-                }
-                
-            } else {
-                
-                this.addQuads(result, poleMiddle, state, facing, rand);
-                
-                if (front) {
-                    
-                    this.addQuads(result, poleEnd, 180, state, facing, rand);
-                }
-                
-                if (back) {
-                    
-                    this.addQuads(result, poleEnd, state, facing, rand);
-                }
-                
-                if (left) {
-                    
-                    this.addQuads(result, poleLeft, state, facing, rand);
-                }
-                
-                if (right) {
-                    
-                    this.addQuads(result, poleRight, state, facing, rand);
-                }
-                
-                if (fl) {
-                    
-                    this.addQuads(result, poleCornerRight, 180,
-                            state, facing, rand);
-                }
-                
-                if (fr) {
-                    
-                    this.addQuads(result, poleCornerLeft, 180,
-                            state, facing, rand);
-                }
-                
-                if (bl) {
-                    
-                    this.addQuads(result, poleCornerLeft, state, facing, rand);
-                }
-                
-                if (br) {
-                    
-                    this.addQuads(result, poleCornerRight, state, facing, rand);
-                }
+                Modeller amodel = entry.getValue();
+                this.addQuads(result, amodel.model(), amodel.rot(),
+                        state, facing, rand);
             }
         }
         
-        if (floor == EnumFloor.WOOD) {
-            
-            if (axis == EnumAxis.NS) {
-            
-                this.addQuads(result, woodMiddle, 90, state, facing, rand);
-                
-                if (front) {
-                    
-                    this.addQuads(result, woodEnd, 90, state, facing, rand);
-                }
-                
-                if (back) {
-                    
-                    this.addQuads(result, woodEnd, 270,
-                            state, facing, rand);
-                }
-                
-                if (left) {
-                    
-                    this.addQuads(result, woodRight, 90,
-                            state, facing, rand);
-                }
-                
-                if (right) {
-                    
-                    this.addQuads(result, woodLeft, 90,
-                            state, facing, rand);
-                }
-                
-                if (bl) {
-                    
-                    this.addQuads(result, woodCornerLeft, 270,
-                            state, facing, rand);
-                }
-                
-                if (br) {
-                    
-                    this.addQuads(result, woodCornerRight, 270,
-                            state, facing, rand);
-                }
-                
-                if (fl) {
-                    
-                    this.addQuads(result, woodCornerRight, 90,
-                            state, facing, rand);
-                }
-                
-                if (fr) {
-                    
-                    this.addQuads(result, woodCornerLeft, 90,
-                            state, facing, rand);
-                }
-                
-            } else {
-                
-                this.addQuads(result, woodMiddle, state, facing, rand);
-                
-                if (front) {
-                    
-                    this.addQuads(result, woodEnd, 180,
-                            state, facing, rand);
-                }
-                
-                if (back) {
-                    
-                    this.addQuads(result, woodEnd, state, facing, rand);
-                }
-                
-                if (left) {
-                    
-                    this.addQuads(result, woodLeft, state, facing, rand);
-                }
-                
-                if (right) {
-                    
-                    this.addQuads(result, woodRight, state, facing, rand);
-                }
-                
-                if (fl) {
-                    
-                    this.addQuads(result, woodCornerRight, 180,
-                            state, facing, rand);
-                }
-                
-                if (fr) {
-                    
-                    this.addQuads(result, woodCornerLeft, 180,
-                            state, facing, rand);
-                }
-                
-                if (bl) {
-                    
-                    this.addQuads(result, woodCornerLeft,
-                            state, facing, rand);
-                }
-                
-                if (br) {
-                    
-                    this.addQuads(result, woodCornerRight,
-                            state, facing, rand);
-                }
-            }
-        }
-        
-        CACHE.put(state, result);
+        this.cache.put(state, result);
         return result;
     }
     
-    /** Loader for delayed baked model. */
-    public static class Loader implements ICustomModelLoader {
+    /** @return A model whose location begins with "jjmod:block/beam/". */
+    protected static IModel model(String beam) {
         
-        @Override
-        public void onResourceManagerReload(IResourceManager rm) {
-            
-            CACHE.clear();
-        }
-        
-        @Override
-        public boolean accepts(ResourceLocation loc) {
-
-            return loc instanceof ModelResourceLocation &&
-                    ((ModelResourceLocation) loc).getVariant()
-                    .contains("delayedbake") &&
-                    ModBlocks.beamThin.getRegistryName().equals(loc);
-        }
-        
-        /** Loads dependent models and provides the delayed baking model. */
-        @Override
-        public IModel loadModel(ResourceLocation modelLocation)
-                throws Exception {
-            
-            thinMiddle = thinMiddle == null ? model("thin/middle") : thinMiddle;
-            thinEnd = thinEnd == null ? model("thin/end") : thinEnd;
-            poleMiddle = poleMiddle == null ? model("pole/middle") : poleMiddle;
-            poleEnd = poleEnd == null ? model("pole/end") : poleEnd;
-            poleLeft = poleLeft == null ? model("pole/left") : poleLeft;
-            poleRight = poleRight == null ? model("pole/right") : poleRight;
-            poleCornerRight = poleCornerRight == null ?
-                    model("pole/corner_right") : poleCornerRight;
-            poleCornerLeft = poleCornerLeft == null ?
-                    model("pole/corner_left") : poleCornerLeft;
-            woodMiddle = woodMiddle == null ? model("wood/middle") : woodMiddle;
-            woodEnd = woodEnd == null ? model("wood/end") : woodEnd;
-            woodLeft = woodLeft == null ? model("wood/left") : woodLeft;
-            woodRight = woodRight == null ? model("wood/right") : woodRight;
-            woodCornerRight = woodCornerRight == null ?
-                    model("wood/corner_right") : woodCornerRight;
-            woodCornerLeft = woodCornerLeft == null ?
-                    model("wood/corner_left") : woodCornerLeft;
-        
-            if (textures == null) {
-                
-                ImmutableList.Builder<ResourceLocation> builder =
-                        ImmutableList.builder();
-                
-                for (IModel model : new IModel[] {thinMiddle, thinEnd,
-                        poleMiddle, poleEnd, poleLeft, poleRight,
-                        poleCornerRight, poleCornerLeft, woodMiddle, woodEnd,
-                        woodLeft, woodRight, woodCornerLeft, woodCornerRight}) {
-                    
-                    builder.addAll(model.getTextures());
-                }
-                
-                textures = builder.build();
-            }  
-            
-            return new BeamThin();
-        }
+        return ModelLoaderRegistry.getModelOrLogError(new ResourceLocation(
+                "jjmod:block/beam/" + beam),
+                "Error loading model for delayed multipart thin beam!");
     }
 }

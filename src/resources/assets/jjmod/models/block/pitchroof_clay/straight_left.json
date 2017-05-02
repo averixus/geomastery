@@ -1,0 +1,37 @@
+{
+"textures": {
+    "panels1": "jjmod:blocks/complex/panels1",
+    "panels2": "jjmod:blocks/complex/panels2",
+    "roofclay3": "jjmod:blocks/complex/roofclay3",
+    "roofclay4": "jjmod:blocks/complex/roofclay4",
+    "particle": "jjmod:blocks/complex/roofclay1"
+},
+"elements": [ 
+{
+    "from": [ 0.6875, 13.6875, 13.4375 ],
+    "to": [ 16.6875, 16.6875, 14.4375 ],
+    "rotation": { "origin": [ 0.6875, 16.6875, 13.4375 ], "axis": "z", "angle": -45 },
+    "faces": {
+        "down":  { "uv": [ 16, 14, 0, 13 ], "texture": "#panels2" },
+        "up":    { "uv": [ 0, 13, 16, 14 ], "texture": "#panels2" },
+        "north": { "uv": [ 0, 0, 16, 3 ], "texture": "#panels2" },
+        "south": { "uv": [ 0, 0, 16, 3 ], "texture": "#panels2" },
+        "west":  { "uv": [ 14, 0, 15, 3 ], "texture": "#panels1" },
+        "east":  { "uv": [ 2, 0, 3, 3 ], "texture": "#panels1" }
+    }
+},
+{
+    "from": [ 12, 2.375, 13.4375 ],
+    "to": [ 18.62, 5.375, 14.4375 ],
+    "rotation": { "origin": [ 12, 5.375, 13.4375 ], "axis": "z", "angle": -45 },
+    "faces": {
+        "down":  { "uv": [ 16, 15, 9.4375, 14 ], "texture": "#panels2" },
+        "up":    { "uv": [ 0, 14, 6.5625, 15 ], "texture": "#panels2" },
+        "north": { "uv": [ 9.375, 0, 15.9375, 3 ], "texture": "#panels2" },
+        "south": { "uv": [ 0, 0, 6.5625, 3 ], "texture": "#panels2" },
+        "west":  { "uv": [ 14, 0, 15, 3 ], "texture": "#panels1" },
+        "east":  { "uv": [ 2, 0, 3, 3 ], "texture": "#panels1" }
+    }
+}
+]
+}

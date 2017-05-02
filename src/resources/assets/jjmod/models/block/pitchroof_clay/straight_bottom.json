@@ -1,0 +1,62 @@
+{
+"textures": {
+    "panels1": "jjmod:blocks/complex/panels1",
+    "panels2": "jjmod:blocks/complex/panels2",
+    "roofclay3": "jjmod:blocks/complex/roofclay3",
+    "roofclay4": "jjmod:blocks/complex/roofclay4",
+    "particle": "jjmod:blocks/complex/roofclay1"
+},
+"elements": [ 
+{
+    "from": [ 9.5, 0, 0 ],
+    "to": [ 10.5, 4, 16 ],
+    "faces": {
+        "down":  { "uv": [ 1, 16, 0, 0 ], "texture": "#panels1" },
+        "up":    { "uv": [ 15, 0, 16, 16 ], "texture": "#panels1" },
+        "north": { "uv": [ 0, 0, 1, 4 ], "texture": "#panels2" },
+        "south": { "uv": [ 15, 0, 16, 4 ], "texture": "#panels2" },
+        "west":  { "uv": [ 0, 3, 16, 7 ], "texture": "#panels2" },
+        "east":  { "uv": [ 0, 3, 16, 7 ], "texture": "#panels2" }
+    }
+},
+{
+    "from": [ 16.5, 1, 0 ],
+    "to": [ 22, 2, 16 ],
+    "rotation": { "origin": [ 16.5, 2, 0 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 5.5, 16, 0, 0 ], "texture": "#roofclay4" },
+        "up":    { "uv": [ 0, 0, 5.5, 16 ], "texture": "#roofclay4" },
+        "north": { "uv": [ 0, 3, 5.5, 4 ], "texture": "#roofclay4" },
+        "south": { "uv": [ 0, 3, 5.5, 4 ], "texture": "#roofclay4" },
+        "west":  { "uv": [ 0, 3, 16, 4 ], "texture": "#roofclay3" },
+        "east":  { "uv": [ 0, 3, 16, 4 ], "texture": "#roofclay3" }
+    }
+},
+{
+    "from": [ 18.5, -2.5, 0 ],
+    "to": [ 20.5, -1.5, 16 ],
+    "rotation": { "origin": [ 18.5, -1.5, 0 ], "axis": "z", "angle": 45 },
+    "faces": {
+        "down":  { "uv": [ 12, 16, 10, 0 ], "texture": "#panels1" },
+        "up":    { "uv": [ 5, 0, 7, 16 ], "texture": "#panels1" },
+        "north": { "uv": [ 10, 2, 12, 3 ], "texture": "#panels2" },
+        "south": { "uv": [ 4, 2, 6, 3 ], "texture": "#panels2" },
+        "west":  { "uv": [ 0, 4, 16, 5 ], "texture": "#panels2" },
+        "east":  { "uv": [ 0, 2, 16, 3 ], "texture": "#panels2" }
+    }
+},
+{
+    "from": [ 16.625, -2.1875, 6.9375 ],
+    "to": [ 21.125, 0.8125, 8.9375 ],
+    "rotation": { "origin": [ 16.625, 0.8125, 6.9375 ], "axis": "z", "angle": -45 },
+    "faces": {
+        "down":  { "uv": [ 16, 10, 9.4375, 8 ], "texture": "#panels2" },
+        "up":    { "uv": [ 0, 8, 6.5625, 10 ], "texture": "#panels2" },
+        "north": { "uv": [ 9.375, 0, 15.9375, 3 ], "texture": "#panels2" },
+        "south": { "uv": [ 0, 0, 6.5625, 3 ], "texture": "#panels2" },
+        "west":  { "uv": [ 6, 0, 8, 3 ], "texture": "#panels1" },
+        "east":  { "uv": [ 5, 1, 7, 4 ], "texture": "#panels1" }
+    }
+}
+]
+}

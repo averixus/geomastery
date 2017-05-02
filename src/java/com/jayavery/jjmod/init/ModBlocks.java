@@ -19,6 +19,7 @@ import com.jayavery.jjmod.blocks.BlockCropBlockfruit;
 import com.jayavery.jjmod.blocks.BlockCropHarvestable;
 import com.jayavery.jjmod.blocks.BlockDoor;
 import com.jayavery.jjmod.blocks.BlockDrying;
+import com.jayavery.jjmod.blocks.BlockFlatroof;
 import com.jayavery.jjmod.blocks.BlockFruit;
 import com.jayavery.jjmod.blocks.BlockFurnaceCampfire;
 import com.jayavery.jjmod.blocks.BlockFurnacePotfire;
@@ -26,9 +27,9 @@ import com.jayavery.jjmod.blocks.BlockHarvestableLeaves;
 import com.jayavery.jjmod.blocks.BlockInvisibleLight;
 import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.blocks.BlockMultiCrafting;
+import com.jayavery.jjmod.blocks.BlockPitchroof;
 import com.jayavery.jjmod.blocks.BlockRiceBase;
 import com.jayavery.jjmod.blocks.BlockRiceTop;
-import com.jayavery.jjmod.blocks.BlockRoof;
 import com.jayavery.jjmod.blocks.BlockSeedling;
 import com.jayavery.jjmod.blocks.BlockSlab;
 import com.jayavery.jjmod.blocks.BlockSolid;
@@ -43,6 +44,8 @@ import com.jayavery.jjmod.blocks.BlockWallThin;
 import com.jayavery.jjmod.blocks.BlockWood;
 import com.jayavery.jjmod.render.block.BeamThick;
 import com.jayavery.jjmod.render.block.BeamThin;
+import com.jayavery.jjmod.render.block.WallBrickDouble;
+import com.jayavery.jjmod.render.block.WallBrickSingle;
 import com.jayavery.jjmod.render.block.WallStoneDouble;
 import com.jayavery.jjmod.render.block.WallStoneSingle;
 import com.jayavery.jjmod.utilities.BlockMaterial;
@@ -206,7 +209,9 @@ public class ModBlocks {
     
     public static BlockInvisibleLight invisibleLight;
     
-    public static BlockRoof roofPole;
+    public static BlockFlatroof flatroofPole;
+    
+    public static BlockPitchroof pitchroofClay;
     
     public static void preInit() {
                 
@@ -329,14 +334,14 @@ public class ModBlocks {
         register(seedlingOrange = new BlockSeedling.Orange());
         register(seedlingBanana = new BlockSeedling.Banana());
         
-//       registerItemless(wallBrickSingle =
-//                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-//                "wall_brick_single", 2F, ToolType.PICKAXE,
-//                false, () -> ModItems.wallBrick, WallBrickSingle.Loader::new));
-//        registerItemless(wallBrickDouble =
-//                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-//                "wall_brick_double", 3F, ToolType.PICKAXE,
-//                true, () -> ModItems.wallBrick, WallBrickDouble.Loader::new)); 
+       registerItemless(wallBrickSingle =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_brick_single", 2F, ToolType.PICKAXE,
+                false, () -> ModItems.wallBrick, WallBrickSingle::new));
+        registerItemless(wallBrickDouble =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_brick_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallBrick, WallBrickDouble::new)); 
         registerItemless(wallMudSingle =
                 new BlockWallRough(BlockMaterial.STONE_FURNITURE,
                 "wall_mud_single", 1F, ToolType.PICKAXE,
@@ -356,11 +361,11 @@ public class ModBlocks {
         registerItemless(wallStoneSingle =
                 new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_single", 2F, ToolType.PICKAXE,
-                false, () -> ModItems.wallStone, WallStoneSingle.Loader::new));
+                false, () -> ModItems.wallStone, WallStoneSingle::new));
         registerItemless(wallStoneDouble =
                 new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallStone, WallStoneDouble.Loader::new));
+                true, () -> ModItems.wallStone, WallStoneDouble::new));
         registerItemless(wallLogSingle =
                 new BlockWallLog("wall_log_single", 1F, false));
         registerItemless(wallLogDouble =
@@ -372,8 +377,8 @@ public class ModBlocks {
         register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "frame", 2F, ToolType.AXE));
         
-        register(stairsBrick = new BlockStairsComplex("stairs_brick", 3F), 2);
-        register(stairsStone = new BlockStairsComplex("stairs_stone", 3F), 2);
+        register(stairsBrick = new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, ToolType.PICKAXE), 2);
+        register(stairsStone = new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, ToolType.PICKAXE), 2);
         register(stairsWood = new BlockStairsStraight.Joining("stairs_wood",
                 2F), 4);
         register(stairsPole = new BlockStairsStraight.Single("stairs_pole",
@@ -396,9 +401,9 @@ public class ModBlocks {
                 () -> ModItems.doorWood));
         
         registerItemless(beamThick = new BlockBeam("beam_thick",
-                BeamThick.Loader::new));
+                BeamThick::new));
         registerItemless(beamThin = new BlockBeam("beam_thin",
-                BeamThin.Loader::new));
+                BeamThin::new));
                 
         registerItemless(slabStoneSingle = new BlockSlab("slab_stone_single",
                 false, () -> ModItems.slabStone));
@@ -413,8 +418,11 @@ public class ModBlocks {
         
         registerItemless(invisibleLight = new BlockInvisibleLight());
         
-        register(roofPole = new BlockRoof("roof_pole",
+        register(flatroofPole = new BlockFlatroof("flatroof_pole",
                 1F, ToolType.AXE), 4);
+        
+        register(pitchroofClay = new BlockPitchroof(
+                BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F));
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);

@@ -33,10 +33,6 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 /** Model to wrap delayed baking of multipart. */
 public class WallBrickSingle extends DelayedBakingAbstract {
     
-    /** Cached map of quads by state. */
-    protected static final Map<IBlockState, List<BakedQuad>> CACHE =
-            Maps.newHashMap();
-    
     /** Model names for wall connection types. */
     protected static final Map<EnumConnection, IModel> connections =
             Maps.newEnumMap(EnumConnection.class);
@@ -49,9 +45,6 @@ public class WallBrickSingle extends DelayedBakingAbstract {
     protected static final Map<UnlistedPropertyEnum<EnumConnection>, Integer>
             properties = Maps.newHashMap();
     
-    /** Textures required to render this model. */
-    protected static ImmutableList<ResourceLocation> textures;
-    
     // Models for all possible parts
     protected static IModel bottomPost;
     protected static IModel bottomSide;
@@ -62,45 +55,57 @@ public class WallBrickSingle extends DelayedBakingAbstract {
     protected static IModel topPost;
     protected static IModel topSide;
 
-    @Override
-    public Collection<ResourceLocation> getTextures() {
-
-        return textures;
+    public WallBrickSingle() {
+        
+        super("jjmod:blocks/complex/brickpave1",
+                ModBlocks.wallBrickSingle.getRegistryName());
     }
     
-    /** @return A model whose location begins with
-     * "jjmod:block/wall_brick_single/". */
-    protected static IModel model(String wallBrickSingle) {
-        
-        return ModelLoaderRegistry.getModelOrLogError(new ResourceLocation(
-                "jjmod:block/wall_brick_single/" + wallBrickSingle),
-                "Error loading model for delayed multipart!");
-    }
-
-    /** Sets up for delayed baking. */
+    /** Loads dependent parts and provides the delayed baking model. */
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format,
-            Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
+    public IModel loadModel(ResourceLocation modelLocation)
+            throws Exception {
+        
+        // Load part models
+        
+         bottomPost = model("bottom_post");
+         bottomSide = model("bottom_side");
+         lonePost = model("lone_post");
+         loneSide = model("lone_side");
+         middlePost = model("middle_post");
+         middleSide = model("middle_side");
+         topPost = model("top_post");
+         topSide = model("top_side");
 
-        connections.put(EnumConnection.BOTTOM_SINGLE, bottomSide);
-        connections.put(EnumConnection.LONE_SINGLE, loneSide);
-        connections.put(EnumConnection.MIDDLE_SINGLE, middleSide);
-        connections.put(EnumConnection.TOP_SINGLE, topSide);
-        
-        positions.put(EnumPosition.BOTTOM, bottomPost);
-        positions.put(EnumPosition.LONE, lonePost);
-        positions.put(EnumPosition.MIDDLE, middlePost);
-        positions.put(EnumPosition.TOP, topPost);
-        
-        properties.put(BlockWallComplex.NORTH, 180);
-        properties.put(BlockWallComplex.EAST, 270);
-        properties.put(BlockWallComplex.SOUTH, 0);
-        properties.put(BlockWallComplex.WEST, 90);
-        
-        this.bakeInfo(format, textureGetter, "jjmod:blocks/complex/brickpave1");
+         // Prepare texture dependencies list
+         
+         for (IModel model : new IModel[] {bottomSide,
+                 loneSide, middleSide, topSide, bottomPost,
+                 middlePost, topPost, lonePost}) {
+             
+             this.textures.addAll(model.getTextures());
+         }
+         
+         // Set up multipart mappings
+         
+         connections.put(EnumConnection.BOTTOM_SINGLE, bottomSide);
+         connections.put(EnumConnection.LONE_SINGLE, loneSide);
+         connections.put(EnumConnection.MIDDLE_SINGLE, middleSide);
+         connections.put(EnumConnection.TOP_SINGLE, topSide);
+         
+         positions.put(EnumPosition.BOTTOM, bottomPost);
+         positions.put(EnumPosition.LONE, lonePost);
+         positions.put(EnumPosition.MIDDLE, middlePost);
+         positions.put(EnumPosition.TOP, topPost);
+         
+         properties.put(BlockWallComplex.NORTH, 180);
+         properties.put(BlockWallComplex.EAST, 270);
+         properties.put(BlockWallComplex.SOUTH, 0);
+         properties.put(BlockWallComplex.WEST, 90);
+
         return this;
     }
-    
+
     /** Retrieves from cache or bakes as required. */
     @Override
     public List<BakedQuad> getQuads(IBlockState state, EnumFacing side,
@@ -113,15 +118,19 @@ public class WallBrickSingle extends DelayedBakingAbstract {
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        if (CACHE.containsKey(state)) {
+        if (this.cache.containsKey(state)) {
             
-            return CACHE.get(state);
+            return this.cache.get(state);
         }
 
         List<BakedQuad> result = Lists.newArrayList();
         
+        // Post
+        
         this.addQuads(result, positions.get(extState.getValue(BlockWallComplex
                 .POSITION)), state, side, rand);
+        
+        // Sides
         
         for (Entry<UnlistedPropertyEnum<EnumConnection>, Integer> entry :
                 properties.entrySet()) {
@@ -135,64 +144,16 @@ public class WallBrickSingle extends DelayedBakingAbstract {
             }
         }
 
-        CACHE.put(state, result);
+        this.cache.put(state, result);
         return result;
     }
     
-    /** Loader for delayed baking model. */
-    public static class Loader implements ICustomModelLoader {
-
-        @Override
-        public void onResourceManagerReload(IResourceManager rm) {
-            
-            CACHE.clear();
-        }
-
-        @Override
-        public boolean accepts(ResourceLocation loc) {
-
-            return loc instanceof ModelResourceLocation &&
-                    ((ModelResourceLocation) loc).getVariant()
-                    .contains("delayedbake") &&
-                    ModBlocks.wallBrickSingle.getRegistryName().equals(loc);
-        }
-
-        /** Loads dependent parts and provides the delayed baking model. */
-        @Override
-        public IModel loadModel(ResourceLocation modelLocation)
-                throws Exception {
-            
-             bottomPost = bottomPost == null ?
-                     model("bottom_post") : bottomPost;
-             bottomSide = bottomSide == null ?
-                     model("bottom_side") : bottomSide;
-             lonePost = lonePost == null ? model("lone_post") : lonePost;
-             loneSide = loneSide == null ?
-                     model("lone_side") : loneSide;
-             middlePost = middlePost == null ?
-                     model("middle_post") : middlePost;
-             middleSide = middleSide == null ?
-                     model("middle_side") : middleSide;
-             topPost = topPost == null ? model("top_post") : topPost;
-             topSide = topSide == null ?
-                     model("top_side") : topSide;
-             
-             if (textures == null) {
-                 
-                 ImmutableList.Builder<ResourceLocation> builder =
-                         ImmutableList.builder();
-                 
-                 for (IModel model : new IModel[] {bottomSide,
-                         loneSide, middleSide, topSide, bottomPost,
-                         middlePost, topPost, lonePost}) {
-                     
-                     builder.addAll(model.getTextures());
-                 }
-                 
-                 textures = builder.build();
-             }
-
-            return new WallBrickSingle();
-        }
+    /** @return A model whose location begins with
+     * "jjmod:block/wall_brick_single/". */
+    protected static IModel model(String wallBrickSingle) {
+        
+        return ModelLoaderRegistry.getModelOrLogError(new ResourceLocation(
+                "jjmod:block/wall_brick_single/" + wallBrickSingle),
+                "Error loading model for delayed multipart single brick wall!");
     }
 }

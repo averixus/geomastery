@@ -20,9 +20,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Flat breakable roof block. */
-public class BlockRoof extends BlockBuilding {
+public class BlockFlatroof extends BlockBuilding {
 
-    public BlockRoof(String name, float hardness, ToolType harvestTool) {
+    public BlockFlatroof(String name, float hardness, ToolType harvestTool) {
         
         super(BlockMaterial.WOOD_HANDHARVESTABLE, name,
                 CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
@@ -71,7 +71,7 @@ public class BlockRoof extends BlockBuilding {
                 }
                 
                 if (!(world.getBlockState(offset).getBlock()
-                        instanceof BlockRoof)) {
+                        instanceof BlockFlatroof)) {
                     
                     break;
                 }
@@ -105,7 +105,7 @@ public class BlockRoof extends BlockBuilding {
     protected boolean isValidSupport(World world, BlockPos pos) {
         
         boolean isRoof = world.getBlockState(pos).getBlock()
-                instanceof BlockRoof;
+                instanceof BlockFlatroof;
         boolean isSupported = BlockWeight.getWeight(world.getBlockState(pos
                 .down()).getBlock()).canSupport(this.getWeight());
         return isRoof && isSupported;

@@ -1,0 +1,190 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "inventory": [{}],
+        "facing": {
+            "north": {"y": 90},
+            "east": {"y": 180},
+            "south": {"y": 270},
+            "west": {}
+        },
+        "shape": {
+            "tl": {
+                "submodel": {
+                    "tlmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "tltop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "tlleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "tltopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" }
+                }
+            },
+            "tc": {
+                "submodel": {
+                    "tcmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "tctop": { "model": "jjmod:pitchroof_clay/straight_top" }
+                }
+            },
+            "tr": {
+                "submodel": {
+                    "trmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "trtop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "trright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "trtopright": { "model": "jjmod:pitchroof_clay/straight_top_right" }
+                }
+            },
+            "ml": {
+                "submodel": {
+                    "mlmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "mlleft": { "model": "jjmod:pitchroof_clay/straight_left" }
+                }
+            },
+            "mc": {
+                "submodel": {
+                    "mcmain": { "model": "jjmod:pitchroof_clay/straight" }
+                }
+            },
+            "mr": {
+                "submodel": {
+                    "mrmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "mrright": { "model": "jjmod:pitchroof_clay/straight_right" }
+                }
+            },
+            "bl": {
+                "submodel": {
+                    "blmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "blbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
+                    "blleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "blbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" }
+                }
+            },
+            "bc": {
+                "submodel": {
+                    "bcmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "bcbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" }
+                }
+            },
+            "br": {
+                "submodel": {
+                    "brmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "brbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
+                    "brright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "brbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" }
+                }
+            },
+            "st": {
+                "submodel": {
+                    "stmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "sttop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "stleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "stright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "sttopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
+                    "sttopright": { "model": "jjmod:pitchroof_clay/straight_top_right" }
+                }
+            },
+            "sm": {
+                "submodel": {
+                    "smmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "smleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "smright": { "model": "jjmod:pitchroof_clay/straight_right" }
+                }
+            },
+            "sb": {
+                "submodel": {
+                    "sbmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "sbleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "sbright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "sbbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
+                    "sbbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" },
+                    "sbbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" }
+                }
+            },
+            "sl": {
+                "submodel": {
+                    "slmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "slleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "sltop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "slbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
+                    "sltopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
+                    "slbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" }
+                }
+            },
+            "sc": {
+                "submodel": {
+                    "scmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "sctop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "scbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" }
+                }
+            },
+            "sr": {
+                "submodel": {
+                    "srmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "srright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "srtop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "srbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
+                    "srtopright": { "model": "jjmod:pitchroof_clay/straight_top_right" },
+                    "srbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" }
+                }
+            },
+            "ss": {
+                "submodel": {
+                    "ssmain": { "model": "jjmod:pitchroof_clay/straight" },
+                    "ssright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "ssleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "sstop": { "model": "jjmod:pitchroof_clay/straight_top" },
+                    "ssbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
+                    "sstopright": { "model": "jjmod:pitchroof_clay/straight_top_right" },
+                    "sstopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
+                    "ssbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" },
+                    "ssbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" }
+                }
+            },
+            "it": {
+                "submodel": {
+                    "itmain": { "model": "jjmod:pitchroof_clay/internal", "y": 270 },
+                    "ittop": { "model": "jjmod:pitchroof_clay/internal_top", "y": 270 }
+                }
+            },
+            "im": {
+                "submodel": {
+                    "immain": { "model": "jjmod:pitchroof_clay/internal", "y": 270 }
+                }
+            },
+            "ib": {
+                "submodel": {
+                    "ibmain": { "model": "jjmod:pitchroof_clay/internal", "y": 270 },
+                    "ibbottom": { "model": "jjmod:pitchroof_clay/internal_bottom", "y": 270 }
+                }
+            },
+            "is": {
+                "submodel": {
+                    "ismain": { "model": "jjmod:pitchroof_clay/internal", "y": 270 },
+                    "istop": { "model": "jjmod:pitchroof_clay/internal_top", "y": 270 },
+                    "isbottom": { "model": "jjmod:pitchroof_clay/internal_bottom", "y": 270 }
+                }
+            },
+            "et": {
+                "submodel": {
+                    "etmain": { "model": "jjmod:pitchroof_clay/external" },
+                    "ettop": { "model": "jjmod:pitchroof_clay/external_top" }
+                }
+            },
+            "em": {
+                "submodel": {
+                    "emmain": { "model": "jjmod:pitchroof_clay/external" }
+                }
+            },
+            "eb": {
+                "submodel": {
+                    "ebmain": { "model": "jjmod:pitchroof_clay/external" },
+                    "ebbottom": { "model": "jjmod:pitchroof_clay/external_bottom" }
+                }
+            },
+            "es": {
+                "submodel": {
+                    "esmain": { "model": "jjmod:pitchroof_clay/external" },
+                    "estop": { "model": "jjmod:pitchroof_clay/external_top" },
+                    "esbottom": { "model": "jjmod:pitchroof_clay/external_bottom" }
+                }
+            }
+        }
+    }
+}

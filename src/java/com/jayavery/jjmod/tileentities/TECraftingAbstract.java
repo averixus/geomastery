@@ -1,6 +1,6 @@
 package com.jayavery.jjmod.tileentities;
 
-import com.jayavery.jjmod.blocks.BlockRoof;
+import com.jayavery.jjmod.blocks.BlockFlatroof;
 import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.packets.CraftingPacketClient;
 import com.jayavery.jjmod.utilities.IMultipart;
@@ -108,7 +108,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
             Block block = state.getBlock();
             int light = block.getLightOpacity(state, this.world, pos);
             
-            if (block instanceof BlockRoof) {
+            if (block instanceof BlockFlatroof) {
    
                 result = EnumExposure.PARTIAL;                
                 break;
