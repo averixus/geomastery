@@ -41,7 +41,7 @@ public class BlockNew extends Block {
     public static final AxisAlignedBB CENTRE_TWO =
             new AxisAlignedBB(0.25,0,0.25,0.75,0.12,0.75);
     public static final AxisAlignedBB BEAM_FLOOR =
-            new AxisAlignedBB(-0.25,0.94,-0.25,1.25,1,1.25);
+            new AxisAlignedBB(0,0.94,0,1,1,1);
 
     // General rotating boxes
     

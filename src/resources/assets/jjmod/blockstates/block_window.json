@@ -1,0 +1,19 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "jjmod:window/pane"
+    },
+    "variants": {
+        "facing": {
+            "north": {},
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
+        "vault": {
+            "none": {},
+            "left": { "submodel": { "vaultleft": { "model": "jjmod:window/vault_left", "y": 180 } } },
+            "right": { "submodel": { "vaultright": { "model": "jjmod:window/vault_right"} } }
+        }
+    }
+}

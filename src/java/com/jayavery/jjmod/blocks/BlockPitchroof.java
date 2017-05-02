@@ -82,33 +82,25 @@ public class BlockPitchroof extends BlockBuilding {
         IBlockState infront = world.getBlockState(pos
                 .offset(facing.getOpposite()));
         
-        if (behind.getBlock() instanceof BlockPitchroof) {
-            
-            EnumFacing behindFacing = behind.getValue(FACING);
-            
-            if (behindFacing.getAxis() != facing.getAxis()) {
+        if (behind.getBlock() instanceof BlockPitchroof &&
+                behind.getValue(FACING).getAxis() != facing.getAxis()) {
                 
-                if (behindFacing == facing.rotateY()) {
-                    
-                    state = state.withProperty(FACING, facing.rotateY());
-                }
+            if (behind.getValue(FACING) == facing.rotateY()) {
                 
-                shape = EnumShape.getExternal(isTop, isBottom);
+                state = state.withProperty(FACING, facing.rotateY());
             }
             
-        } else if (infront.getBlock() instanceof BlockPitchroof) {
+            shape = EnumShape.getExternal(isTop, isBottom);
             
-            EnumFacing infrontFacing = infront.getValue(FACING);
-            
-            if (infrontFacing.getAxis() != facing.getAxis()) {
+        } else if (infront.getBlock() instanceof BlockPitchroof &&
+                infront.getValue(FACING).getAxis() != facing.getAxis()) {
                 
-                if (infrontFacing == facing.rotateY()) {
-                    
-                    state = state.withProperty(FACING, facing.rotateY());
-                }
+            if (infront.getValue(FACING) == facing.rotateY()) {
                 
-                shape = EnumShape.getInternal(isTop, isBottom);
+                state = state.withProperty(FACING, facing.rotateY());
             }
+            
+            shape = EnumShape.getInternal(isTop, isBottom);
             
         } else {
             

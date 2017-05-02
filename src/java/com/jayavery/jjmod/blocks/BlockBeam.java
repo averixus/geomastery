@@ -14,6 +14,7 @@ import com.jayavery.jjmod.utilities.ToolType;
 import com.jayavery.jjmod.utilities.UnlistedPropertyBool;
 import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -325,10 +326,12 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
 
         Block blockFront = world.getBlockState(pos.offset(frontFacing))
                 .getBlock();
-        boolean front = !(blockFront instanceof BlockBeam);
+        boolean front = !(blockFront instanceof BlockBeam) &&
+                !(blockFront instanceof BlockAir);
         Block blockBack = world.getBlockState(pos.offset(frontFacing
                 .getOpposite())).getBlock();
-        boolean back = !(blockBack instanceof BlockBeam);
+        boolean back = !(blockBack instanceof BlockBeam) &&
+                !(blockBack instanceof BlockAir);
         
         extState = extState.withProperty(FRONT, front);
         extState = extState.withProperty(BACK, back);
@@ -342,10 +345,12 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
             
             Block blockRight = world.getBlockState(pos.offset(frontFacing
                     .rotateY())).getBlock();
-            boolean right = !(blockRight instanceof BlockBeam);
+            boolean right = !(blockRight instanceof BlockBeam) &&
+                    !(blockRight instanceof BlockAir);
             Block blockLeft = world.getBlockState(pos.offset(frontFacing
                     .rotateYCCW())).getBlock();
-            boolean left = !(blockLeft instanceof BlockBeam);
+            boolean left = !(blockLeft instanceof BlockBeam) &&
+                    !(blockLeft instanceof BlockAir);
             
             extState = extState.withProperty(RIGHT, right);
             extState = extState.withProperty(LEFT, left);

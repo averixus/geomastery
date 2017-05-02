@@ -225,10 +225,11 @@ public abstract class ItemBlockplacer extends ItemJj {
             
             IBlockState placeState = this.block.getDefaultState()
                     .withProperty(BlockDoor.FACING, placeFacing)
-                    .withProperty(BlockDoor.OPEN, false);
+                    .withProperty(BlockDoor.OPEN, false)
+                    .withProperty(BlockDoor.TOP, false);
             world.setBlockState(bottomPos, placeState);
-            world.setBlockState(topPos, placeState.withProperty(BlockDoor.PART,
-                    EnumPartDoor.ST));
+            world.setBlockState(topPos, placeState
+                    .withProperty(BlockDoor.TOP, true));
             
             return true;
         }

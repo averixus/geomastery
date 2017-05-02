@@ -33,8 +33,11 @@ public class BlockDoor extends BlockBuilding {
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
+    public static final PropertyBool TOP = PropertyBool.create("top");
     public static final PropertyEnum<EnumPartDoor> PART =
             PropertyEnum.<EnumPartDoor>create("part", EnumPartDoor.class);
+    public static final PropertyEnum<VaultAbove> VAULT =
+            PropertyEnum.create("vault", VaultAbove.class);
     
     /** Supplier for the door item. */
     protected Supplier<Item> item;
@@ -43,7 +46,6 @@ public class BlockDoor extends BlockBuilding {
         
         super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.DECORATIONS,
                 2F, ToolType.AXE);
-        this.setHarvestLevel("axe", 0);
         this.item = item;
     }
     
@@ -75,7 +77,7 @@ public class BlockDoor extends BlockBuilding {
             return DOOR_CLOSED[facing];
         }
         
-        if (part == EnumPartDoor.LT || part == EnumPartDoor.LB) {
+        if (part.isLeft()) {
 
             return DOOR_OPEN_LEFT[facing];
             
@@ -99,7 +101,7 @@ public class BlockDoor extends BlockBuilding {
             return DOOR_CLOSED[facing];
         }
         
-        if (part == EnumPartDoor.LT || part == EnumPartDoor.LB) {
+        if (part.isLeft()) {
 
             return DOOR_OPEN_LEFT[facing];
             
@@ -115,7 +117,7 @@ public class BlockDoor extends BlockBuilding {
             IBlockState thisState, EntityPlayer player, EnumHand hand,
             EnumFacing side, float x, float y, float z) {
         
-        BlockPos otherPos = thisState.getValue(PART).isTop() ?
+        BlockPos otherPos = thisState.getValue(TOP) ?
                 thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
@@ -138,7 +140,7 @@ public class BlockDoor extends BlockBuilding {
     public void neighborChanged(IBlockState thisState, World world,
             BlockPos thisPos, Block block, BlockPos unused) {
         
-        BlockPos otherPos = thisState.getValue(PART).isTop() ?
+        BlockPos otherPos = thisState.getValue(TOP) ?
                 thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
@@ -147,7 +149,7 @@ public class BlockDoor extends BlockBuilding {
             
             world.setBlockToAir(thisPos);
             
-            if (thisState.getValue(PART).isTop()) {
+            if (thisState.getValue(TOP)) {
                 
                 spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
             }
@@ -180,30 +182,41 @@ public class BlockDoor extends BlockBuilding {
             IBlockAccess world, BlockPos pos) {
                 
         EnumFacing facing = state.getValue(FACING);
-        boolean isTop = state.getValue(PART).isTop();
+        boolean isTop = state.getValue(TOP);
         
         IBlockState leftState = world.getBlockState(pos
                 .offset(facing.rotateYCCW()));
-        
-        if (leftState.getBlock() == this &&
-                leftState.getValue(FACING) == facing) {
-            
-            state = state.withProperty(PART, isTop ?
-                    EnumPartDoor.RT : EnumPartDoor.RB);
-      
-        }
+        boolean isRight = leftState.getBlock() == this &&
+                leftState.getValue(FACING) == facing;
         
         IBlockState rightState = world.getBlockState(pos
                 .offset(facing.rotateY()));
+        boolean isLeft = rightState.getBlock() == this &&
+                rightState.getValue(FACING) == facing;
         
-        if (rightState.getBlock() == this &&
-                rightState.getValue(FACING) == facing) {
-            
-            state = state.withProperty(PART, isTop ?
-                    EnumPartDoor.LT : EnumPartDoor.LB);
+        state = state.withProperty(PART, EnumPartDoor
+                .get(isTop, isLeft, isRight, state.getValue(OPEN)));
+        
+        VaultAbove vault = VaultAbove.NONE;
+        BlockPos posUp = pos.up();
+        IBlockState upState = world.getBlockState(posUp);
+        
+        if (isTop && upState.getBlock() instanceof BlockVault) {
+
+            EnumFacing upFacing = upState.getActualState(world, posUp)
+                    .getValue(BlockVault.FACING);
+
+            if (upFacing == facing.rotateY()) {
+                
+                vault = VaultAbove.LEFT;
+                
+            } else if (upFacing == facing.rotateYCCW()) {
+                
+                vault = VaultAbove.RIGHT;
+            }
         }
-        
-        return state;
+
+        return state.withProperty(VAULT, vault);
     }
     
     @Override
@@ -214,17 +227,9 @@ public class BlockDoor extends BlockBuilding {
         if ((meta & 8) > 0) {
             
             state = state.withProperty(OPEN, true);
-        }
-        
-        if ((meta & 4) > 0) {
+        } 
             
-            state = state.withProperty(PART, EnumPartDoor.ST);
-            
-        } else {
-            
-            state = state.withProperty(PART, EnumPartDoor.SB);
-        }
-        
+        state = state.withProperty(TOP, ((meta & 4) > 0));
         state = state.withProperty(FACING, EnumFacing.getHorizontal(meta));
         return state;
     }
@@ -234,7 +239,7 @@ public class BlockDoor extends BlockBuilding {
         
         int meta = state.getValue(FACING).getHorizontalIndex();
         
-        if (state.getValue(PART).isTop()) {
+        if (state.getValue(TOP)) {
             
             meta |= 4;
         }
@@ -250,14 +255,35 @@ public class BlockDoor extends BlockBuilding {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, FACING, OPEN, PART);
+        return new BlockStateContainer(this, FACING, OPEN, TOP, PART, VAULT);
+    }
+    
+    /** Enum defining vault extensions. */
+    public enum VaultAbove implements IStringSerializable {
+        
+        LEFT("left"), RIGHT("right"), NONE("none");
+        
+        private final String name;
+        
+        private VaultAbove(String name) {
+            
+            this.name = name;
+        }
+        
+        @Override
+        public String getName() {
+            
+            return this.name;
+        }
     }
     
     /** Enum defining part and position of door blocks. */
     public enum EnumPartDoor implements IStringSerializable {
         
-        SB("sb", false), ST("st", true), RB("rb", false),
-        RT("rt", true), LB("lb", false), LT("lt", true);
+        SBC("sbc", false), STC("stc", true), RBC("rbc", false),
+        RTC("rtc", true), LBC("lbc", false), LTC("ltc", true),
+        SBO("sbo", false), STO("sto", true), RBO("rbo", false),
+        RTO("rto", true), LBO("lbo", false), LTO("lto", true);
         
         private final String name;
         private final boolean isTop;
@@ -277,6 +303,97 @@ public class BlockDoor extends BlockBuilding {
         public boolean isTop() {
             
             return this.isTop;
+        }
+        
+        public boolean isLeft() {
+            
+            switch (this) {
+                
+                case LBC:
+                case LTC:
+                case LBO:
+                case LTO:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        
+        public static EnumPartDoor get(boolean isTop, boolean isLeft,
+                boolean isRight, boolean isOpen) {
+            
+            if (isTop) {
+                
+                if (isLeft) {
+                    
+                    if (isOpen) {
+                        
+                        return LTO;
+                        
+                    } else {
+                        
+                        return LTC;
+                    }
+                    
+                } else if (isRight) {
+                    
+                   if (isOpen) {
+                       
+                       return RTO;
+                       
+                   } else {
+                       
+                       return RTC;
+                   }
+                    
+                } else {
+                    
+                    if (isOpen) {
+                        
+                        return STO;
+                        
+                    } else {
+                        
+                        return STC;
+                    }
+                }
+                
+            } else {
+                
+                if (isLeft) {
+                    
+                    if (isOpen) {
+                        
+                        return LBO;
+                        
+                    } else {
+                        
+                        return LBC;
+                    }
+                    
+                } else if (isRight) {
+                    
+                   if (isOpen) {
+                       
+                       return RBO;
+                       
+                   } else {
+                       
+                       return RBC;
+                   }
+                    
+                } else {
+                    
+                    if (isOpen) {
+                        
+                        return SBO;
+                        
+                    } else {
+                        
+                        return SBC;
+                    }
+                }
+            }
         }
     }
 }

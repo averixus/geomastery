@@ -41,6 +41,7 @@ import com.jayavery.jjmod.blocks.BlockWallComplex;
 import com.jayavery.jjmod.blocks.BlockWallLog;
 import com.jayavery.jjmod.blocks.BlockWallRough;
 import com.jayavery.jjmod.blocks.BlockWallThin;
+import com.jayavery.jjmod.blocks.BlockWindow;
 import com.jayavery.jjmod.blocks.BlockWood;
 import com.jayavery.jjmod.render.block.BeamThick;
 import com.jayavery.jjmod.render.block.BeamThin;
@@ -196,6 +197,8 @@ public class ModBlocks {
         
     public static BlockDoor doorPole;
     public static BlockDoor doorWood;
+    
+    public static BlockWindow window;
     
     public static BlockBeam beamThin;
     public static BlockBeam beamThick;
@@ -399,6 +402,8 @@ public class ModBlocks {
                 () -> ModItems.doorPole));
         registerItemless(doorWood = new BlockDoor("door_wood",
                 () -> ModItems.doorWood));
+        
+        register(window = new BlockWindow());
         
         registerItemless(beamThick = new BlockBeam("beam_thick",
                 BeamThick::new));

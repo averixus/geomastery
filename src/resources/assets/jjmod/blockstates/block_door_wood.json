@@ -1,53 +1,36 @@
 {
+    "forge_marker": 1,
     "variants": {
-        "facing=north,open=false,part=sb": { "model": "jjmod:door_wood/bottom_single_closed", "y": 90 },
-        "facing=north,open=false,part=st": { "model": "jjmod:door_wood/top_single_closed", "y": 90 },
-        "facing=north,open=false,part=rb": { "model": "jjmod:door_wood/bottom_right_closed", "y": 90 },
-        "facing=north,open=false,part=rt": { "model": "jjmod:door_wood/top_right_closed", "y": 90 },
-        "facing=north,open=false,part=lb": { "model": "jjmod:door_wood/bottom_left_closed", "y": 90 },
-        "facing=north,open=false,part=lt": { "model": "jjmod:door_wood/top_left_closed", "y": 90 },
-        "facing=north,open=true,part=sb": { "model": "jjmod:door_wood/bottom_single_open", "y": 90 },
-        "facing=north,open=true,part=st": { "model": "jjmod:door_wood/top_single_open", "y": 90 },
-        "facing=north,open=true,part=rb": { "model": "jjmod:door_wood/bottom_right_open", "y": 90 },
-        "facing=north,open=true,part=rt": { "model": "jjmod:door_wood/top_right_open", "y": 90 },
-        "facing=north,open=true,part=lb": { "model": "jjmod:door_wood/bottom_left_open", "y": 90 },
-        "facing=north,open=true,part=lt": { "model": "jjmod:door_wood/top_left_open", "y": 90 },
-        "facing=east,open=false,part=sb": { "model": "jjmod:door_wood/bottom_single_closed", "y": 180 },
-        "facing=east,open=false,part=st": { "model": "jjmod:door_wood/top_single_closed", "y": 180 },
-        "facing=east,open=false,part=rb": { "model": "jjmod:door_wood/bottom_right_closed", "y": 180 },
-        "facing=east,open=false,part=rt": { "model": "jjmod:door_wood/top_right_closed", "y": 180 },
-        "facing=east,open=false,part=lb": { "model": "jjmod:door_wood/bottom_left_closed", "y": 180 },
-        "facing=east,open=false,part=lt": { "model": "jjmod:door_wood/top_left_closed", "y": 180 },
-        "facing=east,open=true,part=sb": { "model": "jjmod:door_wood/bottom_single_open", "y": 180 },
-        "facing=east,open=true,part=st": { "model": "jjmod:door_wood/top_single_open", "y": 180 },
-        "facing=east,open=true,part=rb": { "model": "jjmod:door_wood/bottom_right_open", "y": 180 },
-        "facing=east,open=true,part=rt": { "model": "jjmod:door_wood/top_right_open", "y": 180 },
-        "facing=east,open=true,part=lb": { "model": "jjmod:door_wood/bottom_left_open", "y": 180 },
-        "facing=east,open=true,part=lt": { "model": "jjmod:door_wood/top_left_open", "y": 180 },
-        "facing=south,open=false,part=sb": { "model": "jjmod:door_wood/bottom_single_closed", "y": 270 },
-        "facing=south,open=false,part=st": { "model": "jjmod:door_wood/top_single_closed", "y": 270 },
-        "facing=south,open=false,part=rb": { "model": "jjmod:door_wood/bottom_right_closed", "y": 270 },
-        "facing=south,open=false,part=rt": { "model": "jjmod:door_wood/top_right_closed", "y": 270 },
-        "facing=south,open=false,part=lb": { "model": "jjmod:door_wood/bottom_left_closed", "y": 270 },
-        "facing=south,open=false,part=lt": { "model": "jjmod:door_wood/top_left_closed", "y": 270 },
-        "facing=south,open=true,part=sb": { "model": "jjmod:door_wood/bottom_single_open", "y": 270 },
-        "facing=south,open=true,part=st": { "model": "jjmod:door_wood/top_single_open", "y": 270 },
-        "facing=south,open=true,part=rb": { "model": "jjmod:door_wood/bottom_right_open", "y": 270 },
-        "facing=south,open=true,part=rt": { "model": "jjmod:door_wood/top_right_open", "y": 270 },
-        "facing=south,open=true,part=lb": { "model": "jjmod:door_wood/bottom_left_open", "y": 270 },
-        "facing=south,open=true,part=lt": { "model": "jjmod:door_wood/top_left_open", "y": 270 },
-        "facing=west,open=false,part=sb": { "model": "jjmod:door_wood/bottom_single_closed" },
-        "facing=west,open=false,part=st": { "model": "jjmod:door_wood/top_single_closed" },
-        "facing=west,open=false,part=rb": { "model": "jjmod:door_wood/bottom_right_closed" },
-        "facing=west,open=false,part=rt": { "model": "jjmod:door_wood/top_right_closed" },
-        "facing=west,open=false,part=lb": { "model": "jjmod:door_wood/bottom_left_closed" },
-        "facing=west,open=false,part=lt": { "model": "jjmod:door_wood/top_left_closed" },
-        "facing=west,open=true,part=sb": { "model": "jjmod:door_wood/bottom_single_open" },
-        "facing=west,open=true,part=st": { "model": "jjmod:door_wood/top_single_open" },
-        "facing=west,open=true,part=rb": { "model": "jjmod:door_wood/bottom_right_open" },
-        "facing=west,open=true,part=rt": { "model": "jjmod:door_wood/top_right_open" },
-        "facing=west,open=true,part=lb": { "model": "jjmod:door_wood/bottom_left_open" },
-        "facing=west,open=true,part=lt": { "model": "jjmod:door_wood/top_left_open" },
-        "inventory": { "model": "jjmod:door_wood/bottom_single_closed" }
+        "part": {
+            "sbc": { "model": "jjmod:door_wood/bottom_single_closed" },
+            "stc": { "model": "jjmod:door_wood/top_single_closed" },
+            "rbc": { "model": "jjmod:door_wood/bottom_right_closed" },
+            "rtc": { "model": "jjmod:door_wood/top_right_closed" },
+            "lbc": { "model": "jjmod:door_wood/bottom_left_closed" },
+            "ltc": { "model": "jjmod:door_wood/top_left_closed" },
+            "sbo": { "model": "jjmod:door_wood/bottom_single_open" },
+            "sto": { "model": "jjmod:door_wood/top_single_open" },
+            "rbo": { "model": "jjmod:door_wood/bottom_right_open" },
+            "rto": { "model": "jjmod:door_wood/top_right_open" },
+            "lbo": { "model": "jjmod:door_wood/bottom_left_open" },
+            "lto": { "model": "jjmod:door_wood/top_left_open" }
+        },
+        "vault": {
+            "none": {},
+            "left": { "submodel": { "leftvault": { "model": "jjmod:door_vault/left", "y": 90 } } },
+            "right": { "submodel": { "rightvault": { "model": "jjmod:door_vault/right", "y": 270 } } }
+        },
+        "facing": {
+            "north": {"y": 90},
+            "east": {"y": 180},
+            "south": {"y": 270},
+            "west": {}
+        },
+        "open": {
+            "true": {}, "false": {}
+        },
+        "top": {
+            "true": {}, "false": {}
+        }
     }
 }
