@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +27,7 @@ import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Delayed baking cached multipart block model. */
 public abstract class DelayedBakingAbstract
@@ -41,7 +44,7 @@ public abstract class DelayedBakingAbstract
     /** Textures this model needs to load. */
     protected final List<ResourceLocation> textures = Lists.newArrayList();
     /** Cached model quads for states. */
-    protected final Map<IBlockState, List<BakedQuad>> cache = Maps.newHashMap();
+    protected final Map<ImmutableMap<IUnlistedProperty<?>,Optional<?>>, List<BakedQuad>> cache = Maps.newHashMap();
     
     public DelayedBakingAbstract(String particle, ResourceLocation block) {
         

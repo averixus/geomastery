@@ -1,12 +1,12 @@
 package com.jayavery.jjmod.render.block;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.Pair;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayavery.jjmod.blocks.BlockWallComplex;
@@ -14,21 +14,15 @@ import com.jayavery.jjmod.blocks.BlockWallComplex.EnumConnection;
 import com.jayavery.jjmod.blocks.BlockWallComplex.EnumPosition;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Model to wrap delayed baking of multipart. */
 public class WallStoneSingle extends DelayedBakingAbstract {
@@ -54,11 +48,14 @@ public class WallStoneSingle extends DelayedBakingAbstract {
     protected static IModel middleSide;
     protected static IModel topPost;
     protected static IModel topSide;
+    
+    private static Map<Pair<ImmutableMap<IProperty<?>,Comparable<?>>,ImmutableMap<IUnlistedProperty<?>,Optional<?>>>, List<BakedQuad>> CACHE = Maps.newHashMap();
 
     public WallStoneSingle() {
         
         super("jjmod:blocks/complex/stone1",
                 ModBlocks.wallStoneSingle.getRegistryName());
+        System.out.println("construcing wallstonesingle render " + this);
     }
     
     /** Loads dependent parts and provides the delayed baking model. */
@@ -117,12 +114,14 @@ public class WallStoneSingle extends DelayedBakingAbstract {
         }
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
+        ImmutableMap<IUnlistedProperty<?>,Optional<?>> extProps =
+                extState.getUnlistedProperties();
         
-        if (this.cache.containsKey(state)) {
-            
-            return this.cache.get(state);
+        if (this.cache.containsKey(extProps)) {
+            System.out.println("has key " + extProps);
+            return this.cache.get(extProps);
         }
-
+        System.out.println("baking as needed " + extProps);
         List<BakedQuad> result = Lists.newArrayList();
         
         // Post
@@ -144,7 +143,7 @@ public class WallStoneSingle extends DelayedBakingAbstract {
             }
         }
 
-        this.cache.put(state, result);
+        this.cache.put(extProps, result);
         return result;
     }
     

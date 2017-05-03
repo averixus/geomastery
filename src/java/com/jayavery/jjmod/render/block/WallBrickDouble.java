@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayavery.jjmod.blocks.BlockWallComplex;
@@ -29,6 +31,7 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Model to wrap delayed baking of multipart. */
 public class WallBrickDouble extends DelayedBakingAbstract {
@@ -128,10 +131,12 @@ public class WallBrickDouble extends DelayedBakingAbstract {
         }
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
+        ImmutableMap<IUnlistedProperty<?>,Optional<?>> extProps =
+                extState.getUnlistedProperties();
         
-        if (this.cache.containsKey(state)) {
+        if (this.cache.containsKey(extProps)) {
             
-            return this.cache.get(state);
+            return this.cache.get(extProps);
         }
 
         List<BakedQuad> result = Lists.newArrayList();
@@ -155,7 +160,7 @@ public class WallBrickDouble extends DelayedBakingAbstract {
             }
         }
 
-        this.cache.put(state, result);
+        this.cache.put(extProps, result);
         return result;
     }
     

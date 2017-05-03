@@ -1,18 +1,18 @@
 package com.jayavery.jjmod.render.block;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.Pair;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayavery.jjmod.blocks.BlockBeam;
 import com.jayavery.jjmod.blocks.BlockBeam.EnumAxis;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumFloor;
-import com.jayavery.jjmod.utilities.Modeller;
 import com.jayavery.jjmod.utilities.UnlistedPropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -21,6 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 
 public class BeamThick extends DelayedBakingAbstract {
     
@@ -48,11 +49,11 @@ public class BeamThick extends DelayedBakingAbstract {
             Maps.newEnumMap(EnumAxis.class);
     /** 3D map of axis -> floor -> model part and rotation for floor middles. */
     protected static Map<EnumAxis, Map<EnumFloor,
-            Modeller>> middles = Maps.newEnumMap(EnumAxis.class);
+            Pair<IModel, Integer>>> middles = Maps.newEnumMap(EnumAxis.class);
     /** 4D map of axis -> floor -> property -> model part and rotation
      * for floor surrounds. */
     protected static Map<EnumAxis, Map<EnumFloor, Map<UnlistedPropertyBool,
-            Modeller>>> surrounds = Maps.newEnumMap(EnumAxis.class);
+            Pair<IModel, Integer>>>> surrounds = Maps.newEnumMap(EnumAxis.class);
 
 
     public BeamThick() {
@@ -106,64 +107,64 @@ public class BeamThick extends DelayedBakingAbstract {
         endsEW.put(BlockBeam.BACKBEAM, 180);
         ends.put(EnumAxis.EW, endsEW);
         
-        Map<EnumFloor, Modeller> floorsNS = Maps.newEnumMap(EnumFloor.class);
-        floorsNS.put(EnumFloor.POLE, new Modeller(poleMiddle, 90));
-        floorsNS.put(EnumFloor.WOOD, new Modeller(woodMiddle, 90));
+        Map<EnumFloor, Pair<IModel, Integer>> floorsNS = Maps.newEnumMap(EnumFloor.class);
+        floorsNS.put(EnumFloor.POLE, Pair.of(poleMiddle, 90));
+        floorsNS.put(EnumFloor.WOOD, Pair.of(woodMiddle, 90));
         middles.put(EnumAxis.NS, floorsNS);
         
-        Map<EnumFloor, Modeller> floorsEW = Maps.newEnumMap(EnumFloor.class);
-        floorsEW.put(EnumFloor.POLE, new Modeller(poleMiddle, 0));
-        floorsEW.put(EnumFloor.WOOD, new Modeller(woodMiddle, 0));
+        Map<EnumFloor, Pair<IModel, Integer>> floorsEW = Maps.newEnumMap(EnumFloor.class);
+        floorsEW.put(EnumFloor.POLE, Pair.of(poleMiddle, 0));
+        floorsEW.put(EnumFloor.WOOD, Pair.of(woodMiddle, 0));
         middles.put(EnumAxis.EW, floorsEW);
         
-        Map<EnumFloor, Map<UnlistedPropertyBool, Modeller>>
+        Map<EnumFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
                 floorNSParts = Maps.newEnumMap(EnumFloor.class);
         
-        Map<UnlistedPropertyBool, Modeller> poleNSParts = Maps.newHashMap();
-        poleNSParts.put(BlockBeam.FRONT, new Modeller(poleEnd, 90));
-        poleNSParts.put(BlockBeam.BACK, new Modeller(poleEnd, 270));
-        poleNSParts.put(BlockBeam.LEFT, new Modeller(poleRight, 90));
-        poleNSParts.put(BlockBeam.RIGHT, new Modeller(poleLeft, 90));
-        poleNSParts.put(BlockBeam.BL, new Modeller(poleCornerLeft, 270));
-        poleNSParts.put(BlockBeam.BR, new Modeller(poleCornerRight, 270));
-        poleNSParts.put(BlockBeam.FL, new Modeller(poleCornerRight, 90));
-        poleNSParts.put(BlockBeam.FR, new Modeller(poleCornerLeft, 90));
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleNSParts = Maps.newHashMap();
+        poleNSParts.put(BlockBeam.FRONT, Pair.of(poleEnd, 90));
+        poleNSParts.put(BlockBeam.BACK, Pair.of(poleEnd, 270));
+        poleNSParts.put(BlockBeam.LEFT, Pair.of(poleRight, 90));
+        poleNSParts.put(BlockBeam.RIGHT, Pair.of(poleLeft, 90));
+        poleNSParts.put(BlockBeam.BL, Pair.of(poleCornerLeft, 270));
+        poleNSParts.put(BlockBeam.BR, Pair.of(poleCornerRight, 270));
+        poleNSParts.put(BlockBeam.FL, Pair.of(poleCornerRight, 90));
+        poleNSParts.put(BlockBeam.FR, Pair.of(poleCornerLeft, 90));
         floorNSParts.put(EnumFloor.POLE, poleNSParts);
         
-        Map<UnlistedPropertyBool, Modeller> woodNSParts = Maps.newHashMap();
-        woodNSParts.put(BlockBeam.FRONT, new Modeller(woodEnd, 90));
-        woodNSParts.put(BlockBeam.BACK, new Modeller(woodEnd, 270));
-        woodNSParts.put(BlockBeam.LEFT, new Modeller(woodLeft, 90));
-        woodNSParts.put(BlockBeam.RIGHT, new Modeller(woodRight, 90));
-        woodNSParts.put(BlockBeam.BL, new Modeller(woodCornerLeft, 270));
-        woodNSParts.put(BlockBeam.BR, new Modeller(woodCornerRight, 270));
-        woodNSParts.put(BlockBeam.FL, new Modeller(woodCornerRight, 90));
-        woodNSParts.put(BlockBeam.FR, new Modeller(woodCornerLeft, 90));
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodNSParts = Maps.newHashMap();
+        woodNSParts.put(BlockBeam.FRONT, Pair.of(woodEnd, 90));
+        woodNSParts.put(BlockBeam.BACK, Pair.of(woodEnd, 270));
+        woodNSParts.put(BlockBeam.LEFT, Pair.of(woodLeft, 90));
+        woodNSParts.put(BlockBeam.RIGHT, Pair.of(woodRight, 90));
+        woodNSParts.put(BlockBeam.BL, Pair.of(woodCornerLeft, 270));
+        woodNSParts.put(BlockBeam.BR, Pair.of(woodCornerRight, 270));
+        woodNSParts.put(BlockBeam.FL, Pair.of(woodCornerRight, 90));
+        woodNSParts.put(BlockBeam.FR, Pair.of(woodCornerLeft, 90));
         floorNSParts.put(EnumFloor.WOOD, woodNSParts);
         
-        Map<EnumFloor, Map<UnlistedPropertyBool, Modeller>>
+        Map<EnumFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
                 floorEWParts = Maps.newEnumMap(EnumFloor.class);
 
-        Map<UnlistedPropertyBool, Modeller> poleEWParts = Maps.newHashMap();
-        poleEWParts.put(BlockBeam.FRONT, new Modeller(poleEnd, 180));
-        poleEWParts.put(BlockBeam.BACK, new Modeller(poleEnd, 0));
-        poleEWParts.put(BlockBeam.LEFT, new Modeller(poleLeft, 0));
-        poleEWParts.put(BlockBeam.RIGHT, new Modeller(poleRight, 0));
-        poleEWParts.put(BlockBeam.BL, new Modeller(poleCornerLeft, 0));
-        poleEWParts.put(BlockBeam.BR, new Modeller(poleCornerRight, 0));
-        poleEWParts.put(BlockBeam.FL, new Modeller(poleCornerRight, 180));
-        poleEWParts.put(BlockBeam.FR, new Modeller(poleCornerLeft, 180));
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleEWParts = Maps.newHashMap();
+        poleEWParts.put(BlockBeam.FRONT, Pair.of(poleEnd, 180));
+        poleEWParts.put(BlockBeam.BACK, Pair.of(poleEnd, 0));
+        poleEWParts.put(BlockBeam.LEFT, Pair.of(poleLeft, 0));
+        poleEWParts.put(BlockBeam.RIGHT, Pair.of(poleRight, 0));
+        poleEWParts.put(BlockBeam.BL, Pair.of(poleCornerLeft, 0));
+        poleEWParts.put(BlockBeam.BR, Pair.of(poleCornerRight, 0));
+        poleEWParts.put(BlockBeam.FL, Pair.of(poleCornerRight, 180));
+        poleEWParts.put(BlockBeam.FR, Pair.of(poleCornerLeft, 180));
         floorEWParts.put(EnumFloor.POLE, poleEWParts);
         
-        Map<UnlistedPropertyBool, Modeller> woodEWParts = Maps.newHashMap();
-        woodEWParts.put(BlockBeam.FRONT, new Modeller(woodEnd, 180));
-        woodEWParts.put(BlockBeam.BACK, new Modeller(woodEnd, 0));
-        woodEWParts.put(BlockBeam.LEFT, new Modeller(woodRight, 0));
-        woodEWParts.put(BlockBeam.RIGHT, new Modeller(woodLeft, 0));
-        woodEWParts.put(BlockBeam.BL, new Modeller(woodCornerLeft, 0));
-        woodEWParts.put(BlockBeam.BR, new Modeller(woodCornerRight, 0));
-        woodEWParts.put(BlockBeam.FL, new Modeller(woodCornerRight, 180));
-        woodEWParts.put(BlockBeam.FR, new Modeller(woodCornerLeft, 180));
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodEWParts = Maps.newHashMap();
+        woodEWParts.put(BlockBeam.FRONT, Pair.of(woodEnd, 180));
+        woodEWParts.put(BlockBeam.BACK, Pair.of(woodEnd, 0));
+        woodEWParts.put(BlockBeam.LEFT, Pair.of(woodRight, 0));
+        woodEWParts.put(BlockBeam.RIGHT, Pair.of(woodLeft, 0));
+        woodEWParts.put(BlockBeam.BL, Pair.of(woodCornerLeft, 0));
+        woodEWParts.put(BlockBeam.BR, Pair.of(woodCornerRight, 0));
+        woodEWParts.put(BlockBeam.FL, Pair.of(woodCornerRight, 180));
+        woodEWParts.put(BlockBeam.FR, Pair.of(woodCornerLeft, 180));
         floorEWParts.put(EnumFloor.WOOD, woodEWParts);
         
         surrounds.put(EnumAxis.NS, floorNSParts);
@@ -182,10 +183,12 @@ public class BeamThick extends DelayedBakingAbstract {
         }
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
+        ImmutableMap<IUnlistedProperty<?>,Optional<?>> extProps =
+                extState.getUnlistedProperties();
         
-        if (this.cache.containsKey(state)) {
+        if (this.cache.containsKey(extProps)) {
             
-            return this.cache.get(state);
+            return this.cache.get(extProps);
         }
         
         List<BakedQuad> result = Lists.newArrayList();
@@ -222,27 +225,27 @@ public class BeamThick extends DelayedBakingAbstract {
         
         // Floor middle
         
-        Modeller model = middles.get(axis).get(floor);
-        this.addQuads(result, model.model(), model.rot(),
+        Pair<IModel, Integer> model = middles.get(axis).get(floor);
+        this.addQuads(result, model.getLeft(), model.getRight(),
                 extState, facing, rand);
         
         // Floor surrounds
         
-        Map<UnlistedPropertyBool, Modeller> apply =
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> apply =
                 surrounds.get(axis).get(floor);
         
-        for (Entry<UnlistedPropertyBool, Modeller> entry :
+        for (Entry<UnlistedPropertyBool, Pair<IModel, Integer>> entry :
                 apply.entrySet()) {
             
             if (extState.getValue(entry.getKey())) {
                 
-                Modeller amodel = entry.getValue();
-                this.addQuads(result, amodel.model(), amodel.rot(),
+                Pair<IModel, Integer> amodel = entry.getValue();
+                this.addQuads(result, amodel.getLeft(), amodel.getRight(),
                         state, facing, rand);
             }
         }
         
-        this.cache.put(state, result);
+        this.cache.put(extProps, result);
         return result;
     }
     
