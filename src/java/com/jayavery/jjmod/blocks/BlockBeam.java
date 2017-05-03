@@ -10,6 +10,7 @@ import com.jayavery.jjmod.tileentities.TEBeam.EnumPartBeam;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDelayedMultipart;
+import com.jayavery.jjmod.utilities.IDoublingWall;
 import com.jayavery.jjmod.utilities.ToolType;
 import com.jayavery.jjmod.utilities.UnlistedPropertyBool;
 import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
@@ -333,12 +334,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
 
         Block blockFront = world.getBlockState(pos.offset(frontFacing))
                 .getBlock();
-        boolean front = !(blockFront instanceof BlockBeam) &&
-                !(blockFront instanceof BlockAir);
+        boolean front = blockFront instanceof IDoublingWall;
         Block blockBack = world.getBlockState(pos.offset(frontFacing
                 .getOpposite())).getBlock();
-        boolean back = !(blockBack instanceof BlockBeam) &&
-                !(blockBack instanceof BlockAir);
+        boolean back = blockBack instanceof IDoublingWall;
         
         extState = extState.withProperty(FRONT, front);
         extState = extState.withProperty(BACK, back);
@@ -357,12 +356,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
             
             Block blockRight = world.getBlockState(pos.offset(frontFacing
                     .rotateY())).getBlock();
-            boolean right = !(blockRight instanceof BlockBeam) &&
-                    !(blockRight instanceof BlockAir);
+            boolean right = blockRight instanceof IDoublingWall;
             Block blockLeft = world.getBlockState(pos.offset(frontFacing
                     .rotateYCCW())).getBlock();
-            boolean left = !(blockLeft instanceof BlockBeam) &&
-                    !(blockLeft instanceof BlockAir);
+            boolean left = blockLeft instanceof IDoublingWall;
             
             extState = extState.withProperty(RIGHT, right);
             extState = extState.withProperty(LEFT, left);
