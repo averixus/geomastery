@@ -259,7 +259,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
             return TOP_HALF;
         }
         
-        return BEAM[extState.getValue(AXIS).ordinal()];
+        EnumAxis axis = extState.getValue(AXIS);
+        int ordinal = axis == null ? 0 : axis.ordinal();
+        
+        return BEAM[ordinal];
     }
     
     @Override
@@ -276,8 +279,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        addCollisionBoxToList(pos, entityBox, list,
-                BEAM[extState.getValue(AXIS).ordinal()]);
+        EnumAxis axis = extState.getValue(AXIS);
+        int ordinal = axis == null ? 0 : axis.ordinal();
+        
+        addCollisionBoxToList(pos, entityBox, list, BEAM[ordinal]);
         
         if (extState.getValue(FLOOR) != EnumFloor.NONE) {
             
@@ -313,13 +318,15 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
         }
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
-            
         TEBeam tileBeam = (TEBeam) tileEntity;
+        EnumFacing facing = tileBeam.getFacing();
+        EnumPartBeam part = tileBeam.getPart();
+        EnumFloor floor = tileBeam.getFloor();
         
-        extState = tileBeam.getFloor() == null ?
-                extState : extState.withProperty(FLOOR, tileBeam.getFloor());
-        extState = tileBeam.getFacing() == null ? extState : extState
-                .withProperty(AXIS, EnumAxis.get(tileBeam.getFacing()));
+        extState = floor == null ? extState :
+                extState.withProperty(FLOOR, floor);
+        extState = facing == null ? extState :
+                extState.withProperty(AXIS, EnumAxis.get(facing));
         
         EnumFacing frontFacing = extState.getValue(AXIS) == EnumAxis.NS ?
                 EnumFacing.NORTH : EnumFacing.EAST;
@@ -336,10 +343,15 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
         extState = extState.withProperty(FRONT, front);
         extState = extState.withProperty(BACK, back);
         
-        EnumPartBeam part = tileBeam.getPart();
+        boolean frontBeam = (part == EnumPartBeam.FRONT &&
+                facing == frontFacing) || (part == EnumPartBeam.BACK &&
+                facing == frontFacing.getOpposite());
+        boolean backBeam = (part == EnumPartBeam.FRONT &&
+                facing == frontFacing.getOpposite()) ||
+                (part == EnumPartBeam.BACK && facing == frontFacing);
         
-        extState = extState.withProperty(FRONTBEAM, part == EnumPartBeam.FRONT);
-        extState = extState.withProperty(BACKBEAM, part == EnumPartBeam.BACK);
+        extState = extState.withProperty(FRONTBEAM, frontBeam);
+        extState = extState.withProperty(BACKBEAM, backBeam);
         
         if (extState.getValue(FLOOR) != EnumFloor.NONE) {
             

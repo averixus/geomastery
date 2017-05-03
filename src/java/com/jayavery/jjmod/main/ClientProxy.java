@@ -13,8 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy {
 
     /** Gui event handler instance. */
-    public static final GuiEventHandler GUI =
-            new GuiEventHandler();
+    public static final GuiEventHandler GUI = new GuiEventHandler();
     
     @Override
     public void preInit() {

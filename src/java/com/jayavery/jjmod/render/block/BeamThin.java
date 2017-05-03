@@ -96,8 +96,8 @@ public class BeamThin extends DelayedBakingAbstract {
         beams.put(EnumAxis.EW, 0);
         
         Map<UnlistedPropertyBool, Integer> endsNS = Maps.newHashMap();
-        endsNS.put(BlockBeam.FRONTBEAM, 90);
-        endsNS.put(BlockBeam.BACKBEAM, 270);
+        endsNS.put(BlockBeam.FRONTBEAM, 270);
+        endsNS.put(BlockBeam.BACKBEAM, 90);
         ends.put(EnumAxis.NS, endsNS);
         
         Map<UnlistedPropertyBool, Integer> endsEW = Maps.newHashMap();
@@ -191,6 +191,11 @@ public class BeamThin extends DelayedBakingAbstract {
         
         EnumAxis axis = extState.getValue(BlockBeam.AXIS);
         EnumFloor floor = extState.getValue(BlockBeam.FLOOR);
+        
+        if (axis == null || floor == null) {
+            
+            return Collections.emptyList();
+        }
         
         // Beam middle
         

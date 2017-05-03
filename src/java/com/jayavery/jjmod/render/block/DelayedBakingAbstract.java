@@ -56,8 +56,10 @@ public abstract class DelayedBakingAbstract
 
         TRSRTransformation transform = new TRSRTransformation(ModelRotation
                 .getModelRotation(0, yRotate));
+
         IBakedModel baked = model.bake(transform, this.format,
                 this.textureGetter);
+
         list.addAll(baked.getQuads(state, side, rand));
     }
     
