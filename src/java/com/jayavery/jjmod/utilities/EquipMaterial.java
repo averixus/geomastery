@@ -52,7 +52,7 @@ public class EquipMaterial {
             .addArmorMaterial("steelmail_apparel", "jjmod:steelmail", 11,
             new int[] {1, 4, 5, 2},
             0, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0F);
-    /** Steel place apparel material. */
+    /** Steel plate apparel material. */
     public static final ArmorMaterial STEELPLATE_APPAREL = EnumHelper
             .addArmorMaterial("steelplate_apparel", "jjmod:steelplate", 15,
             new int[] {2, 5, 6, 2},

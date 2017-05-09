@@ -10,7 +10,7 @@ import com.jayavery.jjmod.tileentities.TEBeam.EnumPartBeam;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDelayedMultipart;
-import com.jayavery.jjmod.utilities.IDoublingWall;
+import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import com.jayavery.jjmod.utilities.UnlistedPropertyBool;
 import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
@@ -334,10 +334,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
 
         Block blockFront = world.getBlockState(pos.offset(frontFacing))
                 .getBlock();
-        boolean front = blockFront instanceof IDoublingWall;
+        boolean front = blockFront instanceof IDoublingBlock;
         Block blockBack = world.getBlockState(pos.offset(frontFacing
                 .getOpposite())).getBlock();
-        boolean back = blockBack instanceof IDoublingWall;
+        boolean back = blockBack instanceof IDoublingBlock;
         
         extState = extState.withProperty(FRONT, front);
         extState = extState.withProperty(BACK, back);
@@ -356,10 +356,10 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
             
             Block blockRight = world.getBlockState(pos.offset(frontFacing
                     .rotateY())).getBlock();
-            boolean right = blockRight instanceof IDoublingWall;
+            boolean right = blockRight instanceof IDoublingBlock;
             Block blockLeft = world.getBlockState(pos.offset(frontFacing
                     .rotateYCCW())).getBlock();
-            boolean left = blockLeft instanceof IDoublingWall;
+            boolean left = blockLeft instanceof IDoublingBlock;
             
             extState = extState.withProperty(RIGHT, right);
             extState = extState.withProperty(LEFT, left);

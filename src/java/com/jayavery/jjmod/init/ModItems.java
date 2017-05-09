@@ -2,6 +2,11 @@ package com.jayavery.jjmod.init;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
+import com.jayavery.jjmod.blocks.BlockSlab;
+import com.jayavery.jjmod.blocks.BlockVault;
+import com.jayavery.jjmod.blocks.BlockWallComplex;
+import com.jayavery.jjmod.blocks.BlockWallLog;
+import com.jayavery.jjmod.blocks.BlockWallRough;
 import com.jayavery.jjmod.entities.projectile.EntityProjectile;
 import com.jayavery.jjmod.entities.projectile.EntitySpearBronze;
 import com.jayavery.jjmod.entities.projectile.EntitySpearCopper;
@@ -13,7 +18,6 @@ import com.jayavery.jjmod.items.ItemArrow;
 import com.jayavery.jjmod.items.ItemAxe;
 import com.jayavery.jjmod.items.ItemBed;
 import com.jayavery.jjmod.items.ItemBlockplacer;
-import com.jayavery.jjmod.items.ItemBlockplacer.Doubling;
 import com.jayavery.jjmod.items.ItemBow;
 import com.jayavery.jjmod.items.ItemBucket;
 import com.jayavery.jjmod.items.ItemCarcassDecayable;
@@ -338,11 +342,11 @@ public class ModItems {
     public static ItemBow bowCrude;
     public static ItemBow bowWar;
     
-    public static ItemBlockplacer.Doubling wallBrick; 
-    public static ItemBlockplacer.Doubling wallMud;
-    public static ItemBlockplacer.Doubling wallRough;
-    public static ItemBlockplacer.Doubling wallStone;
-    public static ItemBlockplacer.Doubling wallLog;
+    public static ItemBlockplacer.Doubling<BlockWallComplex> wallBrick; 
+    public static ItemBlockplacer.Doubling<BlockWallRough> wallMud;
+    public static ItemBlockplacer.Doubling<BlockWallRough> wallRough;
+    public static ItemBlockplacer.Doubling<BlockWallComplex> wallStone;
+    public static ItemBlockplacer.Doubling<BlockWallLog> wallLog;
     
     public static ItemBlockplacer.Door doorPole;
     public static ItemBlockplacer.Door doorWood;
@@ -353,10 +357,10 @@ public class ModItems {
     public static ItemBlockplacer.Floor floorPole;
     public static ItemBlockplacer.Floor floorWood;
     
-    public static ItemBlockplacer.Doubling slabStone;
-    public static ItemBlockplacer.Doubling slabBrick;
+    public static ItemBlockplacer.Doubling<BlockSlab> slabStone;
+    public static ItemBlockplacer.Doubling<BlockSlab> slabBrick;
     
-    public static ItemBlockplacer.Doubling vaultStone;
+    public static ItemBlockplacer.Doubling<BlockVault> vaultStone;
     
     public static void preInit() {
 
@@ -793,26 +797,26 @@ public class ModItems {
         register(bowWar = new ItemBow("bow_war",
                 384, EntityProjectile.BOW_MOD));
 
-        register(wallBrick = new ItemBlockplacer.Doubling("wall_brick", 2,
-                SoundType.STONE, ModBlocks.wallBrickSingle,
+        register(wallBrick = new ItemBlockplacer.Doubling<BlockWallComplex>(
+                "wall_brick", 2, SoundType.STONE, ModBlocks.wallBrickSingle,
                 ModBlocks.wallBrickDouble));
-        register(wallMud = new ItemBlockplacer.Doubling("wall_mud", 2,
-                SoundType.GROUND, ModBlocks.wallMudSingle,
+        register(wallMud = new ItemBlockplacer.Doubling<BlockWallRough>(
+                "wall_mud", 2, SoundType.GROUND, ModBlocks.wallMudSingle,
                 ModBlocks.wallMudDouble));
-        register(wallRough = new ItemBlockplacer.Doubling("wall_rough", 2,
-                SoundType.STONE, ModBlocks.wallRoughSingle,
+        register(wallRough = new ItemBlockplacer.Doubling<BlockWallRough>(
+                "wall_rough", 2, SoundType.STONE, ModBlocks.wallRoughSingle,
                 ModBlocks.wallRoughDouble));
-        register(wallStone = new ItemBlockplacer.Doubling("wall_stone", 2,
-                SoundType.STONE, ModBlocks.wallStoneSingle,
+        register(wallStone = new ItemBlockplacer.Doubling<BlockWallComplex>(
+                "wall_stone", 2, SoundType.STONE, ModBlocks.wallStoneSingle,
                 ModBlocks.wallStoneDouble));
-        register(wallLog = new ItemBlockplacer.Doubling("wall_log", 2,
-                SoundType.WOOD,ModBlocks.wallLogSingle,
+        register(wallLog = new ItemBlockplacer.Doubling<BlockWallLog>(
+                "wall_log", 2, SoundType.WOOD,ModBlocks.wallLogSingle,
                 ModBlocks.wallLogDouble));
         
-        register(doorPole = new ItemBlockplacer.Door(ModBlocks.doorPole, "door_pole"),
-                true);
-        register(doorWood = new ItemBlockplacer.Door(ModBlocks.doorWood, "door_wood"),
-                true);
+        register(doorPole = new ItemBlockplacer.Door(ModBlocks.doorPole,
+                "door_pole"), true);
+        register(doorWood = new ItemBlockplacer.Door(ModBlocks.doorWood,
+                "door_wood"), true);
         
         register(beamLong = new ItemBlockplacer.Beam("beam_long",
                 ModBlocks.beamThick, 4, 8));
@@ -822,15 +826,15 @@ public class ModItems {
         register(floorPole = new ItemBlockplacer.Floor(6, EnumFloor.POLE));
         register(floorWood = new ItemBlockplacer.Floor(6, EnumFloor.WOOD));
         
-        register(slabStone = new ItemBlockplacer.Doubling("slab_stone", 2,
-                SoundType.STONE, ModBlocks.slabStoneSingle,
+        register(slabStone = new ItemBlockplacer.Doubling<BlockSlab>(
+                "slab_stone", 2, SoundType.STONE, ModBlocks.slabStoneSingle,
                 ModBlocks.slabStoneDouble));
-        register(slabBrick = new ItemBlockplacer.Doubling("slab_brick", 2,
-                SoundType.STONE, ModBlocks.slabBrickSingle,
+        register(slabBrick = new ItemBlockplacer.Doubling<BlockSlab>(
+                "slab_brick", 2, SoundType.STONE, ModBlocks.slabBrickSingle,
                 ModBlocks.slabBrickDouble));
         
-        register(vaultStone = new ItemBlockplacer.Doubling("vault_stone", 2,
-                SoundType.STONE, ModBlocks.vaultStoneSingle,
+        register(vaultStone = new ItemBlockplacer.Doubling<BlockVault>(
+                "vault_stone", 2, SoundType.STONE, ModBlocks.vaultStoneSingle,
                 ModBlocks.vaultStoneDouble));
                 
         Items.STICK.setMaxStackSize(12);

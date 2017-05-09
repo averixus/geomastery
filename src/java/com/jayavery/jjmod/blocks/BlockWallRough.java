@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayavery.jjmod.utilities.BlockWeight;
-import com.jayavery.jjmod.utilities.IDoublingWall;
+import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,7 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Rough heaping wall block. */
-public class BlockWallRough extends BlockBuilding implements IDoublingWall {
+public class BlockWallRough extends BlockBuilding implements IDoublingBlock {
 
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
@@ -84,6 +84,12 @@ public class BlockWallRough extends BlockBuilding implements IDoublingWall {
     public BlockWeight getWeight() {
         
         return BlockWeight.MEDIUM;
+    }
+    
+    @Override
+    public boolean shouldDouble(IBlockState state, EnumFacing side) {
+        
+        return side != EnumFacing.UP;
     }
     
     @Override

@@ -25,6 +25,7 @@
 {
     "from": [ 1.4375, 16.4375, 8 ],
     "to": [ 17.4375, 17.4375, 16 ],
+    "shade": false,
     "rotation": { "origin": [ 1.4375, 17.4375, 8 ], "axis": "z", "angle": -45 },
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 8 ], "texture": "#roofclay3" },
@@ -38,6 +39,7 @@
 {
     "from": [ 12.75, 5.125, 10.5 ],
     "to": [ 19.37, 6.125, 16 ],
+    "shade": false,
     "rotation": { "origin": [ 12.75, 6.125, 10.5 ], "axis": "z", "angle": -45 },
     "faces": {
         "down":  { "uv": [ 6.5625, 16, 0, 10.5 ], "texture": "#roofclay4" },
@@ -89,6 +91,7 @@
 {
     "from": [ 8, 16.4375, 1.4375 ],
     "to": [ 16, 17.4375, 17.4375 ],
+    "shade": false,
     "rotation": { "origin": [ 8, 17.4375, 1.4375 ], "axis": "x", "angle": 45 },
     "faces": {
         "down":  { "uv": [ 8, 16, 0, 0 ], "texture": "#roofclay1" },
@@ -102,6 +105,7 @@
 {
     "from": [ 10.5, 5.125, 12.75 ],
     "to": [ 16, 6.125, 19.37 ],
+    "shade": false,
     "rotation": { "origin": [ 10.5, 6.125, 12.75 ], "axis": "x", "angle": 45 },
     "faces": {
         "down":  { "uv": [ 5.5, 6.5625, 0, 0 ], "texture": "#roofclay2" },
@@ -115,6 +119,7 @@
 {
     "from": [ 1.4375, 16.4375, 4 ],
     "to": [ 11.4375, 17.4375, 8 ],
+    "shade": false,
     "rotation": { "origin": [ 1.4375, 17.4375, 4 ], "axis": "z", "angle": -45 },
     "faces": {
         "down":  { "uv": [ 16, 8, 6, 4 ], "texture": "#roofclay3" },
@@ -128,6 +133,7 @@
 {
     "from": [ 1.4375, 16.4375, 1 ],
     "to": [ 6.4375, 17.4375, 4 ],
+    "shade": false,
     "rotation": { "origin": [ 1.4375, 17.4375, 1 ], "axis": "z", "angle": -45 },
     "faces": {
         "down":  { "uv": [ 16, 4, 11, 1 ], "texture": "#roofclay3" },
@@ -154,6 +160,7 @@
 {
     "from": [ 1, 16.4375, 1.4375 ],
     "to": [ 4, 17.4375, 6.4375 ],
+    "shade": false,
     "rotation": { "origin": [ 1, 17.4375, 1.4375 ], "axis": "x", "angle": 45 },
     "faces": {
         "down":  { "uv": [ 15, 5, 12, 0 ], "texture": "#roofclay1" },
@@ -167,6 +174,7 @@
 {
     "from": [ 4, 16.4375, 1.4375 ],
     "to": [ 8, 17.4375, 11.4375 ],
+    "shade": false,
     "rotation": { "origin": [ 4, 17.4375, 1.4375 ], "axis": "x", "angle": 45 },
     "faces": {
         "down":  { "uv": [ 12, 10, 8, 0 ], "texture": "#roofclay1" },

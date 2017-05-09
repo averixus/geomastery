@@ -36,6 +36,7 @@
 {
     "from": [ 1.4375, 16.4375, 0 ],
     "to": [ 17.4375, 17.4375, 16 ],
+    "shade": false,
     "rotation": { "origin": [ 1.4375, 17.4375, 0 ], "axis": "z", "angle": -45 },
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#roofclay3" },
@@ -49,6 +50,7 @@
 {
     "from": [ 12.75, 5.125, 0 ],
     "to": [ 19.374, 6.125, 16 ],
+    "shade": false,
     "rotation": { "origin": [ 12.75, 6.125, 0 ], "axis": "z", "angle": -45 },
     "faces": {
         "down":  { "uv": [ 6.5625, 16, 0, 0 ], "texture": "#roofclay4" },

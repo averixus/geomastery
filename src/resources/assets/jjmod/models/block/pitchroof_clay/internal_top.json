@@ -12,6 +12,7 @@
 {
     "from": [ 0, 17, 2 ],
     "to": [ 2, 18, 16 ],
+    "shade": false,
     "faces": {
         "down":  { "uv": [ 11, 16, 9, 2 ], "texture": "#roofclay3" },
         "up":    { "uv": [ 9, 2, 11, 16 ], "texture": "#roofclay3" },
@@ -36,6 +37,7 @@
 {
     "from": [ 0, 17, 0 ],
     "to": [ 16, 18, 2 ],
+    "shade": false,
     "faces": {
         "down":  { "uv": [ 16, 11, 0, 9 ], "texture": "#roofclay1" },
         "up":    { "uv": [ 0, 8, 16, 10 ], "texture": "#roofclay1" },

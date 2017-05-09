@@ -10,6 +10,7 @@
 {
     "from": [ 0, 17, 16 ],
     "to": [ 2, 18, 17 ],
+    "shade": false,
     "faces": {
         "down":  { "uv": [ 16, 1, 14, 0 ], "texture": "#roofclay3" },
         "up":    { "uv": [ 0, 0, 2, 1 ], "texture": "#roofclay3" },

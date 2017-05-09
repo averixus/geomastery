@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
-import com.jayavery.jjmod.utilities.IDoublingWall;
+import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyDirection;
@@ -25,7 +25,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Vault block. */
-public class BlockVault extends BlockBuilding implements IDoublingWall {
+public class BlockVault extends BlockBuilding implements IDoublingBlock {
     
     public static final PropertyEnum<EnumShape> SHAPE =
             PropertyEnum.<EnumShape>create("shape", EnumShape.class);
@@ -44,6 +44,22 @@ public class BlockVault extends BlockBuilding implements IDoublingWall {
         this.item = item;
         this.isDouble = isDouble;
         this.weight = weight;
+    }
+    
+    @Override
+    public boolean shouldDouble(IBlockState state, EnumFacing side) {
+        
+        EnumShape shape = state.getValue(SHAPE);
+        
+        if (shape != EnumShape.SINGLE) {
+            
+            return true;
+            
+        } else {
+            
+            EnumFacing facing = state.getValue(FACING);
+            return side != facing.rotateY() && side != facing.rotateYCCW();            
+        }
     }
     
     @Override

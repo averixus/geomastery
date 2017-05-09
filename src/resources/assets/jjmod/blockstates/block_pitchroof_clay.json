@@ -14,7 +14,8 @@
                     "tlmain": { "model": "jjmod:pitchroof_clay/straight" },
                     "tltop": { "model": "jjmod:pitchroof_clay/straight_top" },
                     "tlleft": { "model": "jjmod:pitchroof_clay/straight_left" },
-                    "tltopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" }
+                    "tltopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
+                    "tlmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "tc": {
@@ -28,13 +29,15 @@
                     "trmain": { "model": "jjmod:pitchroof_clay/straight" },
                     "trtop": { "model": "jjmod:pitchroof_clay/straight_top" },
                     "trright": { "model": "jjmod:pitchroof_clay/straight_right" },
-                    "trtopright": { "model": "jjmod:pitchroof_clay/straight_top_right" }
+                    "trtopright": { "model": "jjmod:pitchroof_clay/straight_top_right" },
+                    "trmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "ml": {
                 "submodel": {
                     "mlmain": { "model": "jjmod:pitchroof_clay/straight" },
-                    "mlleft": { "model": "jjmod:pitchroof_clay/straight_left" }
+                    "mlleft": { "model": "jjmod:pitchroof_clay/straight_left" },
+                    "mlmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "mc": {
@@ -45,7 +48,8 @@
             "mr": {
                 "submodel": {
                     "mrmain": { "model": "jjmod:pitchroof_clay/straight" },
-                    "mrright": { "model": "jjmod:pitchroof_clay/straight_right" }
+                    "mrright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "mrmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "bl": {
@@ -53,7 +57,8 @@
                     "blmain": { "model": "jjmod:pitchroof_clay/straight" },
                     "blbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
                     "blleft": { "model": "jjmod:pitchroof_clay/straight_left" },
-                    "blbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" }
+                    "blbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" },
+                    "blmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "bc": {
@@ -67,7 +72,8 @@
                     "brmain": { "model": "jjmod:pitchroof_clay/straight" },
                     "brbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
                     "brright": { "model": "jjmod:pitchroof_clay/straight_right" },
-                    "brbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" }
+                    "brbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" },
+                    "brmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "st": {
@@ -77,14 +83,16 @@
                     "stleft": { "model": "jjmod:pitchroof_clay/straight_left" },
                     "stright": { "model": "jjmod:pitchroof_clay/straight_right" },
                     "sttopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
-                    "sttopright": { "model": "jjmod:pitchroof_clay/straight_top_right" }
+                    "sttopright": { "model": "jjmod:pitchroof_clay/straight_top_right" },
+                    "stmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "sm": {
                 "submodel": {
                     "smmain": { "model": "jjmod:pitchroof_clay/straight" },
                     "smleft": { "model": "jjmod:pitchroof_clay/straight_left" },
-                    "smright": { "model": "jjmod:pitchroof_clay/straight_right" }
+                    "smright": { "model": "jjmod:pitchroof_clay/straight_right" },
+                    "smmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "sb": {
@@ -94,7 +102,8 @@
                     "sbright": { "model": "jjmod:pitchroof_clay/straight_right" },
                     "sbbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
                     "sbbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" },
-                    "sbbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" }
+                    "sbbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" },
+                    "sbmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "sl": {
@@ -104,7 +113,8 @@
                     "sltop": { "model": "jjmod:pitchroof_clay/straight_top" },
                     "slbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
                     "sltopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
-                    "slbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" }
+                    "slbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" },
+                    "slmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "sc": {
@@ -121,7 +131,8 @@
                     "srtop": { "model": "jjmod:pitchroof_clay/straight_top" },
                     "srbottom": { "model": "jjmod:pitchroof_clay/straight_bottom" },
                     "srtopright": { "model": "jjmod:pitchroof_clay/straight_top_right" },
-                    "srbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" }
+                    "srbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" },
+                    "srmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "ss": {
@@ -134,7 +145,8 @@
                     "sstopright": { "model": "jjmod:pitchroof_clay/straight_top_right" },
                     "sstopleft": { "model": "jjmod:pitchroof_clay/straight_top_left" },
                     "ssbottomright": { "model": "jjmod:pitchroof_clay/straight_bottom_right" },
-                    "ssbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" }
+                    "ssbottomleft": { "model": "jjmod:pitchroof_clay/straight_bottom_left" },
+                    "ssmid": { "model": "jjmod:pitchroof_clay/straight_leftright" }
                 }
             },
             "it": {

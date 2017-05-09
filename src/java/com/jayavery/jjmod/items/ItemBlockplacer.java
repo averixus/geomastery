@@ -1,16 +1,16 @@
 package com.jayavery.jjmod.items;
 
 import java.util.ArrayList;
+import java.util.function.BiPredicate;
 import com.jayavery.jjmod.blocks.BlockBeam;
 import com.jayavery.jjmod.blocks.BlockBuilding;
 import com.jayavery.jjmod.blocks.BlockDoor;
-import com.jayavery.jjmod.blocks.BlockDoor.EnumPartDoor;
 import com.jayavery.jjmod.container.ContainerInventory;
-import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.tileentities.TEBeam;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumFloor;
 import com.jayavery.jjmod.tileentities.TEBeam.EnumPartBeam;
 import com.jayavery.jjmod.utilities.BlockWeight;
+import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -101,17 +101,18 @@ public abstract class ItemBlockplacer extends ItemJj {
         }
     }
     
-    public static class Doubling extends ItemBlockplacer {
+    public static class Doubling<B extends BlockBuilding & IDoublingBlock>
+            extends ItemBlockplacer {
         
-        private final BlockBuilding single;
-        private final BlockBuilding duble;
+        private final B single;
+        private final B duble;
         
         public Doubling(String name, int stackSize, SoundType sound,
-                BlockBuilding single, BlockBuilding duble) {
+                B single, B duble) {
             
             super(name, stackSize, CreativeTabs.BUILDING_BLOCKS, sound);
             this.single = single;
-            this.duble = duble;            
+            this.duble = duble; 
         }
         
         @Override
@@ -122,8 +123,9 @@ public abstract class ItemBlockplacer extends ItemJj {
             IBlockState targetState = world.getBlockState(targetPos);
             Block targetBlock = targetState.getBlock();
 
-            if (targetBlock == this.single && targetSide != EnumFacing.UP &&
-                    this.duble.isValid(world, targetPos)) {
+            if (targetBlock == this.single && this.single
+                    .shouldDouble(targetState.getActualState(world, targetPos),
+                    targetSide) && this.duble.isValid(world, targetPos)) {
                 
                 world.setBlockState(targetPos, this.duble.getDefaultState());
            

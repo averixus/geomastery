@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
-import com.jayavery.jjmod.utilities.IDoublingWall;
+import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -22,7 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Crossing log wall block. */
-public class BlockWallLog extends BlockBuilding implements IDoublingWall {
+public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
     
     public static final PropertyEnum<EnumStraight> STRAIGHT =
             PropertyEnum.create("straight", EnumStraight.class);
@@ -41,6 +41,12 @@ public class BlockWallLog extends BlockBuilding implements IDoublingWall {
     public BlockWeight getWeight() {
         
         return BlockWeight.MEDIUM;
+    }
+    
+    @Override
+    public boolean shouldDouble(IBlockState state, EnumFacing side) {
+        
+        return side != EnumFacing.UP;
     }
     
     @Override

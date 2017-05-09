@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDelayedMultipart;
-import com.jayavery.jjmod.utilities.IDoublingWall;
+import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
 import net.minecraft.block.Block;
@@ -33,7 +33,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Adaptive wall building block. */
 public class BlockWallComplex extends BlockBuilding 
-        implements IDoublingWall, IDelayedMultipart {
+        implements IDoublingBlock, IDelayedMultipart {
         
     public static final UnlistedPropertyEnum<EnumConnection> NORTH =
             new UnlistedPropertyEnum<EnumConnection>("north", EnumConnection.class);
@@ -84,6 +84,12 @@ public class BlockWallComplex extends BlockBuilding
     public BlockWeight getWeight() {
 
         return BlockWeight.HEAVY;
+    }
+    
+    @Override
+    public boolean shouldDouble(IBlockState state, EnumFacing side) {
+        
+        return side != EnumFacing.UP;
     }
     
     @Override
@@ -146,8 +152,8 @@ public class BlockWallComplex extends BlockBuilding
         
         boolean sideDouble = this.isDouble();
         
-        if (this.isDouble() && blockSide instanceof IDoublingWall && 
-                !((IDoublingWall) blockSide).isDouble()) {
+        if (this.isDouble() && blockSide instanceof IDoublingBlock && 
+                !((IDoublingBlock) blockSide).isDouble()) {
             
             sideDouble = false;
         }

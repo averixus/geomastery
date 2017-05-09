@@ -118,10 +118,10 @@ public class WallStoneSingle extends DelayedBakingAbstract {
                 extState.getUnlistedProperties();
         
         if (this.cache.containsKey(extProps)) {
-            System.out.println("has key " + extProps);
+
             return this.cache.get(extProps);
         }
-        System.out.println("baking as needed " + extProps);
+
         List<BakedQuad> result = Lists.newArrayList();
         
         // Post
