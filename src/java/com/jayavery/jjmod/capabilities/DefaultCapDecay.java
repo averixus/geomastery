@@ -41,14 +41,14 @@ public class DefaultCapDecay implements ICapDecay {
     }
     
     @Override
-    public float getRenderFraction() {
+    public float getFraction(World world) {
         
-        if (Minecraft.getMinecraft().world == null) {
-
+        if (world == null) {
+            
             return 0;
         }
         
-        long currentTime = Minecraft.getMinecraft().world.getTotalWorldTime();
+        long currentTime = world.getTotalWorldTime();
         long timeDiff = currentTime - this.birthTime;
         long stage = timeDiff / this.stageSize;
         return MathHelper.clamp(1F - ((float) stage / MAX_STAGE), 0, 1);

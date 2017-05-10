@@ -1,31 +1,31 @@
 {
 "textures": {
     "stonebrick": "jjmod:blocks/complex/stonebrick",
+    "stonebrick2": "jjmod:blocks/complex/stonebrick2",
     "particle": "jjmod:blocks/complex/stonebrick"
 },
 "elements": [ 
 {
-    "from": [ 4, 3, 4 ],
-    "to": [ 12, 16, 12 ],
+    "from": [ 5, 3, 5 ],
+    "to": [ 11, 16, 11 ],
     "faces": {
-        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick" },
-        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick" },
-        "north": { "uv": [ 4, 0, 12, 13 ], "texture": "#stonebrick" },
-        "south": { "uv": [ 4, 0, 12, 13 ], "texture": "#stonebrick" },
-        "west":  { "uv": [ 4, 0, 12, 13 ], "texture": "#stonebrick" },
-        "east":  { "uv": [ 4, 0, 12, 13 ], "texture": "#stonebrick" }
+        "up":    { "uv": [ 5, 5, 11, 11 ], "texture": "#stonebrick", "cullface": "up" },
+        "north": { "uv": [ 5, 0, 11, 13 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 5, 0, 11, 13 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 5, 0, 11, 13 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 5, 0, 11, 13 ], "texture": "#stonebrick" }
     }
 },
 {
-    "from": [ 3, 0, 3 ],
-    "to": [ 13, 3, 13 ],
+    "from": [ 4, 0, 4 ],
+    "to": [ 12, 3, 12 ],
     "faces": {
-        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#stonebrick" },
-        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#stonebrick" },
-        "north": { "uv": [ 3, 13, 13, 16 ], "texture": "#stonebrick" },
-        "south": { "uv": [ 3, 13, 13, 16 ], "texture": "#stonebrick" },
-        "west":  { "uv": [ 3, 13, 13, 16 ], "texture": "#stonebrick" },
-        "east":  { "uv": [ 3, 13, 13, 16 ], "texture": "#stonebrick" }
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick", "cullface": "down" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick2" },
+        "north": { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" }
     }
 }
 ]

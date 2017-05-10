@@ -12,6 +12,7 @@ import com.google.common.collect.Maps;
 import com.jayavery.jjmod.blocks.BlockWallComplex;
 import com.jayavery.jjmod.blocks.BlockWallComplex.EnumConnection;
 import com.jayavery.jjmod.blocks.BlockWallComplex.EnumPosition;
+import com.jayavery.jjmod.blocks.BlockWallLog.EnumStraight;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.utilities.UnlistedPropertyEnum;
 import net.minecraft.block.properties.IProperty;
@@ -32,8 +33,16 @@ public class WallStoneSingle extends DelayedBakingAbstract {
             Maps.newEnumMap(EnumConnection.class);
     
     /** Model names for wall post positions. */
-    protected static final Map<EnumPosition, IModel> positions =
+    protected static final Map<EnumPosition, IModel> posts =
             Maps.newEnumMap(EnumPosition.class);
+    
+    /** Model names for straight wall positions. */
+    protected static final Map<EnumPosition, IModel> straights =
+            Maps.newEnumMap(EnumPosition.class);
+    
+    /** Rotation angles for straight walls. */
+    protected static final Map<EnumStraight, Integer> axes =
+            Maps.newEnumMap(EnumStraight.class);
     
     /** Rotation angles for wall connection properties. */
     protected static final Map<UnlistedPropertyEnum<EnumConnection>, Integer>
@@ -48,9 +57,9 @@ public class WallStoneSingle extends DelayedBakingAbstract {
     protected static IModel middleSide;
     protected static IModel topPost;
     protected static IModel topSide;
+    protected static IModel topStraight;
+    protected static IModel loneStraight;
     
-    private static Map<Pair<ImmutableMap<IProperty<?>,Comparable<?>>,ImmutableMap<IUnlistedProperty<?>,Optional<?>>>, List<BakedQuad>> CACHE = Maps.newHashMap();
-
     public WallStoneSingle() {
         
         super("jjmod:blocks/complex/stone1",
@@ -73,12 +82,14 @@ public class WallStoneSingle extends DelayedBakingAbstract {
          middleSide = model("middle_side");
          topPost = model("top_post");
          topSide = model("top_side");
+         topStraight = model("top_straight");
+         loneStraight = model("lone_straight");
 
          // Prepare texture dependencies list
          
-         for (IModel model : new IModel[] {bottomSide,
-                 loneSide, middleSide, topSide, bottomPost,
-                 middlePost, topPost, lonePost}) {
+         for (IModel model : new IModel[] {bottomSide, loneSide, middleSide,
+                 topSide, bottomPost, middlePost, topPost, lonePost,
+                 topStraight, loneStraight}) {
              
              this.textures.addAll(model.getTextures());
          }
@@ -90,10 +101,16 @@ public class WallStoneSingle extends DelayedBakingAbstract {
          connections.put(EnumConnection.MIDDLE_SINGLE, middleSide);
          connections.put(EnumConnection.TOP_SINGLE, topSide);
          
-         positions.put(EnumPosition.BOTTOM, bottomPost);
-         positions.put(EnumPosition.LONE, lonePost);
-         positions.put(EnumPosition.MIDDLE, middlePost);
-         positions.put(EnumPosition.TOP, topPost);
+         posts.put(EnumPosition.BOTTOM, bottomPost);
+         posts.put(EnumPosition.LONE, lonePost);
+         posts.put(EnumPosition.MIDDLE, middlePost);
+         posts.put(EnumPosition.TOP, topPost);
+         
+         straights.put(EnumPosition.TOP, topStraight);
+         straights.put(EnumPosition.LONE, loneStraight);
+         
+         axes.put(EnumStraight.NS, 0);
+         axes.put(EnumStraight.EW, 90);
          
          properties.put(BlockWallComplex.NORTH, 180);
          properties.put(BlockWallComplex.EAST, 270);
@@ -124,22 +141,34 @@ public class WallStoneSingle extends DelayedBakingAbstract {
 
         List<BakedQuad> result = Lists.newArrayList();
         
-        // Post
+        EnumStraight straight = extState.getValue(BlockWallComplex.STRAIGHT);
+        EnumPosition position = extState.getValue(BlockWallComplex.POSITION);
         
-        this.addQuads(result, positions.get(extState.getValue(BlockWallComplex
-                .POSITION)), state, side, rand);
-        
-        // Sides
-        
-        for (Entry<UnlistedPropertyEnum<EnumConnection>, Integer> entry :
-                properties.entrySet()) {
+        if (straight != EnumStraight.NO) {
             
-            EnumConnection connection = extState.getValue(entry.getKey());
+            // Straight
             
-            if (connection != EnumConnection.NONE) {
+            this.addQuads(result, straights.get(position), axes.get(straight),
+                    extState, side, rand);
             
-                this.addQuads(result, connections.get(connection),
-                        entry.getValue(), state, side, rand);
+        } else {
+            
+            // Post
+            
+            this.addQuads(result, posts.get(position), state, side, rand);
+                    
+            // Sides
+            
+            for (Entry<UnlistedPropertyEnum<EnumConnection>, Integer> entry :
+                    properties.entrySet()) {
+                
+                EnumConnection connection = extState.getValue(entry.getKey());
+                
+                if (connection != EnumConnection.NONE) {
+                
+                    this.addQuads(result, connections.get(connection),
+                            entry.getValue(), state, side, rand);
+                }
             }
         }
 

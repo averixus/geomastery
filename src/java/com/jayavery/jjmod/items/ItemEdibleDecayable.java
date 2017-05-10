@@ -158,7 +158,7 @@ public class ItemEdibleDecayable extends ItemEdible {
             
             ICapDecay decayCap = stack.getCapability(ModCaps.CAP_DECAY, null);
             decayCap.updateFromNBT(stack.getTagCompound());
-            float fraction = decayCap.getRenderFraction();
+            float fraction = decayCap.getFraction(Jjmod.proxy.getClientWorld());
             return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
         }
         

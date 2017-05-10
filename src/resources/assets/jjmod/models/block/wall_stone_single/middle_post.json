@@ -5,8 +5,8 @@
 },
 "elements": [ 
 {
-    "from": [ 4, 0, 4 ],
-    "to": [ 12, 16, 12 ],
+    "from": [ 5, 0, 5 ],
+    "to": [ 11, 16, 11 ],
     "faces": {
         "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick" },
         "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick" },

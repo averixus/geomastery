@@ -34,7 +34,7 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
     
     private final Supplier<Item> item;
     private final boolean isDouble;
-    private BlockWeight weight;
+    private final BlockWeight weight;
     
     public BlockVault(String name, Supplier<Item> item, boolean isDouble,
             BlockWeight weight) {

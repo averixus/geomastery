@@ -1,25 +1,25 @@
 {
 "textures": {
-    "stone": "blocks/stone",
+    "stone2": "jjmod:blocks/complex/stone2",
     "stonebrick": "jjmod:blocks/complex/stonebrick",
     "particle": "jjmod:blocks/complex/stonebrick"
 },
 "elements": [ 
 {
-    "from": [ 3, 15, 3 ],
-    "to": [ 13, 16, 13 ],
+    "from": [ 4, 15, 4 ],
+    "to": [ 12, 16, 12 ],
     "faces": {
-        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#stone" },
-        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#stone" },
-        "north": { "uv": [ 3, 0, 13, 1 ], "texture": "#stone" },
-        "south": { "uv": [ 3, 0, 13, 1 ], "texture": "#stone" },
-        "west":  { "uv": [ 3, 0, 13, 1 ], "texture": "#stone" },
-        "east":  { "uv": [ 3, 0, 13, 1 ], "texture": "#stone" }
+        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#stone2" },
+        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#stone2" },
+        "north": { "uv": [ 3, 0, 13, 1 ], "texture": "#stone2" },
+        "south": { "uv": [ 3, 0, 13, 1 ], "texture": "#stone2" },
+        "west":  { "uv": [ 3, 0, 13, 1 ], "texture": "#stone2" },
+        "east":  { "uv": [ 3, 0, 13, 1 ], "texture": "#stone2" }
     }
 },
 {
-    "from": [ 4, 0, 4 ],
-    "to": [ 12, 15, 12 ],
+    "from": [ 5, 0, 5 ],
+    "to": [ 11, 15, 11 ],
     "faces": {
         "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick" },
         "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick" },

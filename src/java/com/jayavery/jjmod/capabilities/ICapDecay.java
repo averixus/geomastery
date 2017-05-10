@@ -10,7 +10,7 @@ public interface ICapDecay extends INBTSerializable<NBTTagCompound> {
 
     /** Get the effective damage level for rendering the durability bar.
      * @return A float between 0 (full freshness) and 1 (rot). */
-    public float getRenderFraction();
+    public float getFraction(World world);
 
     /** @return The current age in ticks. */
     public long getBirthTime();

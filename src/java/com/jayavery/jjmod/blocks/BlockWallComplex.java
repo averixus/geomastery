@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jayavery.jjmod.blocks.BlockWallLog.EnumStraight;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDelayedMultipart;
 import com.jayavery.jjmod.utilities.IDoublingBlock;
@@ -45,6 +46,8 @@ public class BlockWallComplex extends BlockBuilding
             new UnlistedPropertyEnum<EnumConnection>("west", EnumConnection.class);
     public static final UnlistedPropertyEnum<EnumPosition> POSITION =
             new UnlistedPropertyEnum<EnumPosition>("position", EnumPosition.class);
+    public static final UnlistedPropertyEnum<EnumStraight> STRAIGHT =
+            new UnlistedPropertyEnum<EnumStraight>("straight", EnumStraight.class);
     
     /** Convenience map of EnumFacing to connection properties. */
     public static final Map<EnumFacing, UnlistedPropertyEnum<EnumConnection>>
@@ -227,17 +230,33 @@ public class BlockWallComplex extends BlockBuilding
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        for (EnumFacing direction : directionProperties.keySet()) {
+        EnumConnection north = this.connectionType(world, pos, EnumFacing.NORTH);
+        EnumConnection east = this.connectionType(world, pos, EnumFacing.EAST);
+        EnumConnection south = this.connectionType(world, pos, EnumFacing.SOUTH);
+        EnumConnection west = this.connectionType(world, pos, EnumFacing.WEST);
+        
+        extState = extState.withProperty(NORTH, north);
+        extState = extState.withProperty(EAST, east);
+        extState = extState.withProperty(SOUTH, south);
+        extState = extState.withProperty(WEST, west);
+        
+        boolean isBottom = this != world.getBlockState(pos.down()).getBlock();
+        Block above = world.getBlockState(pos.up()).getBlock();
+        boolean isTop = this.isDouble() ? above != this :
+            !(above instanceof BlockBuilding);
+        EnumPosition position = EnumPosition.get(isBottom, isTop);
+        extState = extState.withProperty(POSITION, position);
+        
+        EnumStraight straight = EnumStraight.getOnlyStraight(
+                north != EnumConnection.NONE, east != EnumConnection.NONE,
+                south != EnumConnection.NONE, west != EnumConnection.NONE);
+        
+        if (position != EnumPosition.TOP && position != EnumPosition.LONE) {
             
-            extState = extState.withProperty(directionProperties.get(direction),
-                    this.connectionType(world, pos, direction));
+            straight = EnumStraight.NO;
         }
         
-        boolean isBottom = !(this == world
-                .getBlockState(pos.down()).getBlock());
-        boolean isTop = world.getBlockState(pos.up()).getBlock() != this;
-        extState = extState.withProperty(POSITION,
-                EnumPosition.get(isBottom, isTop));
+        extState = extState.withProperty(STRAIGHT, straight);
 
         return extState;
     }
@@ -339,7 +358,8 @@ public class BlockWallComplex extends BlockBuilding
     public BlockStateContainer createBlockState() {
         
         return new ExtendedBlockState(this, new IProperty[0],
-                new IUnlistedProperty[] {NORTH, EAST, SOUTH, WEST, POSITION});
+                new IUnlistedProperty[] {NORTH, EAST, SOUTH, WEST,
+                STRAIGHT, POSITION});
     }
     
     @Override

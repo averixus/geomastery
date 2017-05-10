@@ -81,7 +81,7 @@ public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
         boolean west = this.hasConnection(world, pos, EnumFacing.WEST);        
         
         state = state.withProperty(STRAIGHT, EnumStraight
-                .get(north, east, south, west));
+                .getAlwaysStraight(north, east, south, west));
         
         return state;
     }
@@ -154,8 +154,8 @@ public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
             return this.name;
         }
         
-        /** @return The EnumStraight according to the given properties. */
-        public static EnumStraight get(boolean north, boolean east,
+        /** @return The EnumStraight for given properties when always straight. */
+        public static EnumStraight getAlwaysStraight(boolean north, boolean east,
                 boolean south, boolean west) {
             
             if ((north || south) && !east && !west) {
@@ -169,6 +169,24 @@ public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
             } else {
                 
                 return NO;                
+            }
+        }
+        
+        /** @return The EnumStraight for given properties when only straight. */
+        public static EnumStraight getOnlyStraight(boolean north, boolean east,
+                boolean south, boolean west) {
+            
+            if (north && south && !east && !west) {
+                
+                return NS;
+                
+            } else if (!north && !south && east && west) {
+                
+                return EW;
+                
+            } else {
+                
+                return NO;
             }
         }
     }

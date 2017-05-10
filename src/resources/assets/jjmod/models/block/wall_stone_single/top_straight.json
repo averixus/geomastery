@@ -1,0 +1,31 @@
+{
+"textures": {
+    "stonebrick": "jjmod:blocks/complex/stonebrick",
+    "stone2": "jjmod:blocks/complex/stone2",
+    "particle": "jjmod:blocks/complex/stonebrick"
+},
+"elements": [ 
+{
+    "from": [ 5, 0, 0 ],
+    "to": [ 11, 11, 16 ],
+    "faces": {
+        "north": { "uv": [ 5, 5, 11, 16 ], "texture": "#stonebrick", "cullface": "north" },
+        "south": { "uv": [ 5, 5, 11, 16 ], "texture": "#stonebrick", "cullface": "south" },
+        "west":  { "uv": [ 0, 5, 16, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 0, 5, 16, 16 ], "texture": "#stonebrick" }
+    }
+},
+{
+    "from": [ 4, 11, 0 ],
+    "to": [ 12, 12, 16 ],
+    "faces": {
+        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#stone2" },
+        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#stone2" },
+        "north": { "uv": [ 4, 4, 12, 5 ], "texture": "#stone2", "cullface": "north" },
+        "south": { "uv": [ 4, 4, 12, 5 ], "texture": "#stone2", "cullface": "south" },
+        "west":  { "uv": [ 0, 4, 16, 5 ], "texture": "#stone2" },
+        "east":  { "uv": [ 0, 4, 16, 5 ], "texture": "#stone2" }
+    }
+}
+]
+}
