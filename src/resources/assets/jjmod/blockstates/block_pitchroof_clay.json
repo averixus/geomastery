@@ -1,7 +1,10 @@
 {
     "forge_marker": 1,
     "variants": {
-        "inventory": [{}],
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": { "layer0": "jjmod:items/pitchroof_clay" }    
+        }],
         "facing": {
             "north": {"y": 90},
             "east": {"y": 180},

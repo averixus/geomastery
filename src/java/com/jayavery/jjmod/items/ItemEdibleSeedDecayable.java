@@ -22,15 +22,19 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
     
     /** This item's crop block. */
     private final Block crop;
+    /** This item's plant type. */
+    private final EnumPlantType plantType;
 
     @SafeVarargs
     public ItemEdibleSeedDecayable(String name, int hunger, float saturation,
-            int stackSize, Block crop, FoodType foodType, int shelfLife,
+            int stackSize, Block crop, EnumPlantType plantType,
+            FoodType foodType, int shelfLife,
             Class<? extends EntityAnimal>... animalEaters) {
 
         super(name, hunger, saturation, stackSize, foodType,
                 shelfLife, animalEaters);
         this.crop = crop;
+        this.plantType = plantType;
     }
     
     /** Attempts to plant this item's crop. */
@@ -66,7 +70,7 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         
-        return EnumPlantType.Crop;
+        return this.plantType;
     }
     
     /** Gets plant state for block interactions. */

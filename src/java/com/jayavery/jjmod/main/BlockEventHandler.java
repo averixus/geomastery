@@ -5,6 +5,7 @@ import com.jayavery.jjmod.entities.FallingTreeBlock;
 import com.jayavery.jjmod.init.ModBlocks;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemAxe;
+import com.jayavery.jjmod.items.ItemJj;
 import com.jayavery.jjmod.items.ItemPickaxe;
 import com.jayavery.jjmod.utilities.TreeFallUtils;
 import net.minecraft.block.Block;
@@ -35,6 +36,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** Handler for block related events. */
 public class BlockEventHandler {
+    
+    private static final BlockPos[] HORIZONTALS = {new BlockPos(1, 0, 1),
+            new BlockPos(1, 0, -1), new BlockPos(-1, 0, 1),
+            new BlockPos(-1, 0, -1), new BlockPos(1, 0, 0),
+            new BlockPos(-1, 0, 0), new BlockPos(0, 0, 1),
+            new BlockPos(0, 0, -1)};
 
     /** Alters equivalent to Block#neighborChanged behaviour
      * for vanilla blocks. */
@@ -70,76 +77,70 @@ public class BlockEventHandler {
             
             // Check for vertical-falling single blocks
             
-            boolean shouldFall = false;
             IBlockState fallState = state;
-            boolean airBelow = world.isAirBlock(pos.down());
+            BlockPos below = pos.down();
             
-            if (block instanceof BlockStone || block instanceof BlockSolid ||
-                    block instanceof BlockOre) {
-
-                boolean airAround = false;
+            boolean airBelow = world.isAirBlock(below);
+            int airAround = 0;
+            int airAroundBelow = 0;
+            
+            float fallChance = -1;
+            float baseChance = -1;
+            
+            for (BlockPos offset : HORIZONTALS) {
                 
-                for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                if (world.isAirBlock(pos.add(offset))) {
                     
-                    if (world.isAirBlock(pos.offset(direction))) {
+                    airAround++;
+                }
+                
+                if (world.isAirBlock(below.add(offset))) {
+                    
+                    airAroundBelow++;
+                }
+            }
                         
-                        airAround = true;
+            if (block instanceof BlockStone) {
+                
+                EnumType type = state.getValue(BlockStone.VARIANT);
+                
+                switch (type) {
+                    
+                    case ANDESITE:
+                        baseChance = 0.05F;
                         break;
-                    }
+                    case DIORITE:
+                        baseChance = 0.04F;
+                        break;
+                    default:
+                        baseChance = 0.03F;
                 }
                 
-                if (block instanceof BlockStone) {
-
-                    EnumType type = state.getValue(BlockStone.VARIANT);
-                    
-                    if (type == EnumType.GRANITE) {
-
-                        shouldFall = false;
-                        
-                    } else if (type == EnumType.ANDESITE) {
-
-                        shouldFall = airAround && airBelow ?
-                                world.rand.nextFloat() < 0.33 : airBelow ?
-                                world.rand.nextFloat() < 0.04F : false;
-                        
-                    } else if (type == EnumType.DIORITE) {
-
-                        shouldFall = airAround && airBelow ?
-                                world.rand.nextFloat() < 0.25 : airBelow ?
-                                world.rand.nextFloat() < 0.03F : false;
-                        
-                    } else {
-
-                        shouldFall = airAround && airBelow ?
-                                world.rand.nextFloat() < 0.17F : airBelow ?
-                                world.rand.nextFloat() < 0.02F : false;
-                    }
-                    
-                    fallState = ModBlocks.rubble.getDefaultState();
-                    
-                } else if (block == ModBlocks.salt ||
-                        block == ModBlocks.chalk) {
-                    
-                    shouldFall = airAround && airBelow ?
-                            world.rand.nextFloat() < 0.4F : airBelow ?
-                            world.rand.nextFloat() < 0.05F : false;
-                    
-                } else {
-
-                    shouldFall = airAround && airBelow ?
-                            world.rand.nextFloat()< 0.17F : airBelow ?
-                            world.rand.nextFloat() < 0.02F : false;
-                }
-                    
-            
+                fallState = ModBlocks.rubble.getDefaultState();
+                
+            } else if (block == ModBlocks.salt || block == ModBlocks.chalk) {
+                
+                baseChance = 0.06F;
+                
+            } else if (block instanceof BlockSolid ||
+                    block instanceof BlockOre) {
+                
+                baseChance = 0.03F;
+                
             } else if (block == Blocks.DIRT || block == Blocks.GRASS ||
                     block == Blocks.CLAY || block == ModBlocks.rubble) {
 
-                shouldFall = airBelow;
+                baseChance = 1F;
                 
             }
             
-            if (shouldFall) {
+            if (airBelow) {
+            
+                fallChance = baseChance *
+                        (1 + airAround + (airAroundBelow / 2));
+            }
+            
+            if (world.rand.nextFloat() < fallChance) {
 
                 if (!BlockFalling.fallInstantly &&
                         world.isAreaLoaded(pos.add(-32, -32, -32),
@@ -334,10 +335,20 @@ public class BlockEventHandler {
             event.getDrops().add(new ItemStack(ModItems.looseClay));
         }
         
-        if (block == Blocks.BROWN_MUSHROOM) {
+        if (block == Blocks.BROWN_MUSHROOM ||
+                block == Blocks.BROWN_MUSHROOM_BLOCK) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(ModItems.mushroom));
+            event.getDrops().add(ItemJj
+                    .newStack(ModItems.mushroomBrown, 1, world));
+        }
+        
+        if (block == Blocks.RED_MUSHROOM ||
+                block == Blocks.RED_MUSHROOM_BLOCK) {
+            
+            event.getDrops().clear();
+            event.getDrops().add(ItemJj
+                    .newStack(ModItems.mushroomRed, 1, world));
         }
     }
     

@@ -15,14 +15,17 @@ public abstract class TEContainerAbstract extends TileEntity {
 
         for (int i = 0; i < inventory.size(); i++) {
             
-            ItemStack stack = inventory.get(i);
+            this.dropItem(inventory.get(i));
+        }
+    }
+    
+    /** Drops the given stack. */
+    protected void dropItem(ItemStack stack) {
+        
+        if (!stack.isEmpty()) {
             
-            if (!stack.isEmpty()) {
-                
-                this.world.spawnEntity(new EntityItem(this.world,
-                        this.pos.getX(), this.pos.getY(),
-                        this.pos.getZ(), stack));
-            }
+            this.world.spawnEntity(new EntityItem(this.world, this.pos.getX(),
+                    this.pos.getY(), this.pos.getZ(), stack));
         }
     }
 }

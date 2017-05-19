@@ -243,7 +243,7 @@ public class BlockWallComplex extends BlockBuilding
         boolean isBottom = this != world.getBlockState(pos.down()).getBlock();
         Block above = world.getBlockState(pos.up()).getBlock();
         boolean isTop = this.isDouble() ? above != this :
-            !(above instanceof BlockBuilding);
+                !(above instanceof BlockBuilding);
         EnumPosition position = EnumPosition.get(isBottom, isTop);
         extState = extState.withProperty(POSITION, position);
         

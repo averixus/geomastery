@@ -2,6 +2,7 @@ package com.jayavery.jjmod.main;
 
 import com.jayavery.jjmod.container.ContainerBasket;
 import com.jayavery.jjmod.container.ContainerBox;
+import com.jayavery.jjmod.container.ContainerCompost;
 import com.jayavery.jjmod.container.ContainerCrafting;
 import com.jayavery.jjmod.container.ContainerDrying;
 import com.jayavery.jjmod.container.ContainerFurnaceClay;
@@ -10,6 +11,7 @@ import com.jayavery.jjmod.container.ContainerFurnaceStone;
 import com.jayavery.jjmod.container.ContainerInventory;
 import com.jayavery.jjmod.gui.GuiBasket;
 import com.jayavery.jjmod.gui.GuiBox;
+import com.jayavery.jjmod.gui.GuiCompost;
 import com.jayavery.jjmod.gui.GuiCrafting;
 import com.jayavery.jjmod.gui.GuiDrying;
 import com.jayavery.jjmod.gui.GuiFurnace;
@@ -17,6 +19,7 @@ import com.jayavery.jjmod.gui.GuiInventory;
 import com.jayavery.jjmod.init.ModRecipes;
 import com.jayavery.jjmod.tileentities.TEBasket;
 import com.jayavery.jjmod.tileentities.TEBox;
+import com.jayavery.jjmod.tileentities.TECompost;
 import com.jayavery.jjmod.tileentities.TECraftingAbstract;
 import com.jayavery.jjmod.tileentities.TEDrying;
 import com.jayavery.jjmod.tileentities.TEFurnaceAbstract;
@@ -160,6 +163,11 @@ public class GuiHandler implements IGuiHandler {
                     .getCapability(CapabilityItemHandler
                     .ITEM_HANDLER_CAPABILITY, null));
         }
+        
+        if (ID == GuiList.COMPOST.ordinal()) {
+            
+            return new ContainerCompost(player, world, pos, (TECompost) te);
+        }
 
         return null;
     }
@@ -275,8 +283,8 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.DRYING.ordinal()) {
 
-            return new GuiDrying(
-                    new ContainerDrying(player, world, (TEDrying) te, pos));
+            return new GuiDrying(new ContainerDrying(player,
+                    world, (TEDrying) te, pos));
         }
 
         if (ID == GuiList.INVENTORY.ordinal()) {
@@ -294,6 +302,12 @@ public class GuiHandler implements IGuiHandler {
             return new GuiBasket(new ContainerBasket(player, pos,
                     world, ((TEBasket) te).getCapability(CapabilityItemHandler
                     .ITEM_HANDLER_CAPABILITY, null)));
+        }
+        
+        if (ID == GuiList.COMPOST.ordinal()) {
+            
+            return new GuiCompost(new ContainerCompost(player,
+                    world, pos, (TECompost) te));
         }
 
         return null;
@@ -317,7 +331,8 @@ public class GuiHandler implements IGuiHandler {
         DRYING("Drying Rack"),
         INVENTORY("Inventory"),
         BOX("Box"),
-        BASKET("Basket");
+        BASKET("Basket"),
+        COMPOST("Compost Heap");
 
         public final String name;
 

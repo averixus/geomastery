@@ -322,6 +322,29 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         }
     }
     
+    /** Required to update GUI on the client. */
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    /** Required to update GUI on the client. */
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        return new SPacketUpdateTileEntity(this.getPos(), 0,
+                this.writeToNBT(new NBTTagCompound()));
+    }
+
+    /** Required to update GUI on the client. */
+    @Override
+    public void onDataPacket(NetworkManager net,
+            SPacketUpdateTileEntity packet) {
+
+        this.readFromNBT(packet.getNbtCompound());
+    }
+    
     @Override
     public void readFromNBT(NBTTagCompound compound) {
 

@@ -13,6 +13,7 @@ import com.jayavery.jjmod.blocks.BlockBed;
 import com.jayavery.jjmod.blocks.BlockBeehive;
 import com.jayavery.jjmod.blocks.BlockBox;
 import com.jayavery.jjmod.blocks.BlockCarcass;
+import com.jayavery.jjmod.blocks.BlockCompost;
 import com.jayavery.jjmod.blocks.BlockCraftingKnapping;
 import com.jayavery.jjmod.blocks.BlockCrop;
 import com.jayavery.jjmod.blocks.BlockCropBlockfruit;
@@ -27,6 +28,7 @@ import com.jayavery.jjmod.blocks.BlockHarvestableLeaves;
 import com.jayavery.jjmod.blocks.BlockInvisibleLight;
 import com.jayavery.jjmod.blocks.BlockLight;
 import com.jayavery.jjmod.blocks.BlockMultiCrafting;
+import com.jayavery.jjmod.blocks.BlockMushroombaby;
 import com.jayavery.jjmod.blocks.BlockPitchroof;
 import com.jayavery.jjmod.blocks.BlockRiceBase;
 import com.jayavery.jjmod.blocks.BlockRiceTop;
@@ -64,6 +66,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -109,6 +112,8 @@ public class ModBlocks {
     public static BlockMultiCrafting craftingSawpit;
 
     public static BlockDrying drying;
+    
+    public static BlockCompost compost;
 
     public static BlockFurnaceCampfire furnaceCampfire;
     public static BlockFurnacePotfire furnacePotfire;
@@ -130,6 +135,9 @@ public class ModBlocks {
     
     public static BlockRiceBase riceBase;
     public static BlockRiceTop riceTop;
+    
+    public static BlockMushroombaby mushroombabyRed;
+    public static BlockMushroombaby mushroombabyBrown;
     
     public static BlockHarvestableLeaves leafApple;
     public static BlockHarvestableLeaves leafBanana;
@@ -250,6 +258,8 @@ public class ModBlocks {
         registerItemless(craftingSawpit = new BlockMultiCrafting.Sawpit());
         
         register(drying = new BlockDrying());
+        
+        register(compost = new BlockCompost());
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
         register(furnacePotfire = new BlockFurnacePotfire());
@@ -271,7 +281,12 @@ public class ModBlocks {
         
         registerItemless(riceBase = new BlockRiceBase());
         registerItemless(riceTop = new BlockRiceTop());
-
+        
+        registerItemless(mushroombabyBrown = new BlockMushroombaby(
+                "mushroombaby_brown", Blocks.BROWN_MUSHROOM));
+        registerItemless(mushroombabyRed = new BlockMushroombaby(
+                "mushroombaby_red", Blocks.RED_MUSHROOM));
+        
         register(leafApple = new BlockHarvestableLeaves("leaf_apple",
                 () -> ModItems.apple, () -> seedlingApple, 0.05F));
         register(leafBanana = new BlockHarvestableLeaves("leaf_banana",
@@ -378,7 +393,7 @@ public class ModBlocks {
         register(fence = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "fence", 2F, ToolType.AXE));
         register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
-                "frame", 2F, ToolType.AXE));
+                "frame", 2F, ToolType.AXE), 6);
         
         register(stairsBrick = new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, ToolType.PICKAXE), 2);
         register(stairsStone = new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, ToolType.PICKAXE), 2);
@@ -396,14 +411,14 @@ public class ModBlocks {
                 false, BlockWeight.HEAVY), 2);
         register(vaultFrame = new BlockVault("vault_frame",
                 () -> Item.getItemFromBlock(vaultFrame),
-                false, BlockWeight.LIGHT));
+                false, BlockWeight.LIGHT), 6);
         
         registerItemless(doorPole = new BlockDoor("door_pole",
                 () -> ModItems.doorPole));
         registerItemless(doorWood = new BlockDoor("door_wood",
                 () -> ModItems.doorWood));
         
-        register(window = new BlockWindow());
+        register(window = new BlockWindow(), 4);
         
         registerItemless(beamThick = new BlockBeam("beam_thick",
                 BeamThick::new));
@@ -427,7 +442,7 @@ public class ModBlocks {
                 1F, ToolType.AXE), 4);
         
         register(pitchroofClay = new BlockPitchroof(
-                BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F));
+                BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F), 4);
         
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
@@ -511,10 +526,13 @@ public class ModBlocks {
         
         if (block instanceof IFluidBlock) {
             
-            ModelBakery.registerItemVariants(item);
+
+            ResourceLocation registry = block.getRegistryName();
+            ModelResourceLocation loc = new ModelResourceLocation(
+                    registry.getResourceDomain() + ":fluid#" +
+                    registry.getResourcePath());
             
-            ModelResourceLocation loc = new ModelResourceLocation(block
-                    .getRegistryName(), "normal");
+            ModelBakery.registerItemVariants(item);
             ModelLoader.setCustomMeshDefinition(item, stack -> loc);
             ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
                 

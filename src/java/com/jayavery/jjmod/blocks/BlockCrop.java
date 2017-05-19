@@ -184,9 +184,6 @@ public abstract class BlockCrop extends BlockNew
                     this.yieldRef.apply(world.rand), world));
             items.add(ItemJj.newStack(this.seedRef.get(), 2, world));
             
-        } else {
-            
-            items.add(ItemJj.newStack(this.seedRef.get(), 1, world));
         }
         
         return items;

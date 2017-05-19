@@ -125,7 +125,7 @@ public class ContainerDrying extends ContainerAbstract {
 
             } else if (!(index >= INPUT_START && index <= INPUT_END)) {
 
-                if (!this.drying.recipes.getCookingResult(inSlot, this.world)
+                if (!TEDrying.RECIPES.getCookingResult(inSlot, this.world)
                         .isEmpty()) {
 
                     if (!this.mergeItemStack(inSlot, INPUT_START,

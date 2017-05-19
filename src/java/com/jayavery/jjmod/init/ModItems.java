@@ -21,6 +21,7 @@ import com.jayavery.jjmod.items.ItemBlockplacer;
 import com.jayavery.jjmod.items.ItemBow;
 import com.jayavery.jjmod.items.ItemBucket;
 import com.jayavery.jjmod.items.ItemCarcassDecayable;
+import com.jayavery.jjmod.items.ItemCompost;
 import com.jayavery.jjmod.items.ItemEdible;
 import com.jayavery.jjmod.items.ItemEdibleDecayable;
 import com.jayavery.jjmod.items.ItemEdibleSeed;
@@ -29,7 +30,6 @@ import com.jayavery.jjmod.items.ItemHoe;
 import com.jayavery.jjmod.items.ItemHuntingknife;
 import com.jayavery.jjmod.items.ItemJj;
 import com.jayavery.jjmod.items.ItemMachete;
-import com.jayavery.jjmod.items.ItemMushroom;
 import com.jayavery.jjmod.items.ItemPickaxe;
 import com.jayavery.jjmod.items.ItemRice;
 import com.jayavery.jjmod.items.ItemSeed;
@@ -64,6 +64,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
@@ -86,7 +87,8 @@ public class ModItems {
     public static ItemEdible sugar;
     public static ItemEdibleDecayable potatoCooked;
     public static ItemEdibleDecayable egg;
-    public static ItemEdibleDecayable mushroom;
+    public static ItemEdibleSeedDecayable mushroomRed;
+    public static ItemEdibleSeedDecayable mushroomBrown;
     public static ItemEdibleDecayable beefRaw;
     public static ItemEdibleDecayable porkRaw;
     public static ItemEdibleDecayable chickenRaw;
@@ -172,6 +174,8 @@ public class ModItems {
     public static ItemBlockplacer.Heaping looseGravel;
     public static ItemBlockplacer.Heaping looseSand;
     public static ItemBlockplacer.Heaping looseClay;
+    
+    public static ItemCompost compost;
     
     public static ItemJj clay;
 
@@ -392,7 +396,12 @@ public class ModItems {
                 8, 6, 5, FoodType.CARBS, 2));
         register(egg = new ItemEdibleDecayable("egg",
                 5, 5, 6, FoodType.PROTEIN, 4));
-        register(mushroom = new ItemMushroom());
+        register(mushroomRed = new ItemEdibleSeedDecayable("mushroom_red",
+                4, 4, 4, ModBlocks.mushroombabyRed,
+                EnumPlantType.Cave, FoodType.FRUITVEG, 2));
+        register(mushroomBrown = new ItemEdibleSeedDecayable("mushroom_brown", 
+                2, 2, 9, ModBlocks.mushroombabyBrown,
+                EnumPlantType.Cave, FoodType.FRUITVEG, 2));
         register(beefRaw = new ItemEdibleDecayable("beef_raw",
                 3, 6, 5, FoodType.PROTEIN, 1));
         register(porkRaw = new ItemEdibleDecayable("pork_raw",
@@ -430,22 +439,22 @@ public class ModItems {
         register(fishCooked = new ItemEdibleDecayable("fish_cooked",
                 3, 3, 10, FoodType.PROTEIN, 2));
         
-        register(bean = new ItemEdibleSeedDecayable("bean",
-                2, 2F, 10, ModBlocks.bean, FoodType.FRUITVEG, 2));
-        register(pepper = new ItemEdibleSeedDecayable("pepper",
-                3, 3F, 6, ModBlocks.pepper, FoodType.FRUITVEG, 2));
-        register(tomato = new ItemEdibleSeedDecayable("tomato",
-                3, 3F, 7, ModBlocks.tomato, FoodType.FRUITVEG, 2));
-        register(berry = new ItemEdibleSeedDecayable("berry",
-                1, 1F, 20, ModBlocks.berry, FoodType.FRUITVEG, 2));
+        register(bean = new ItemEdibleSeedDecayable("bean", 2, 2F, 10,
+                ModBlocks.bean, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+        register(pepper = new ItemEdibleSeedDecayable("pepper", 3, 3F, 6,
+                ModBlocks.pepper, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+        register(tomato = new ItemEdibleSeedDecayable("tomato", 3, 3F, 7,
+                ModBlocks.tomato, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+        register(berry = new ItemEdibleSeedDecayable("berry", 1, 1F, 20,
+                ModBlocks.berry, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
         
-        register(potato = new ItemEdibleSeedDecayable("potato",
-                7, 7F, 5, ModBlocks.potato, FoodType.CARBS, 4));
-        register(carrot = new ItemEdibleSeedDecayable("carrot",
-                3, 3F, 7, ModBlocks.carrot, FoodType.FRUITVEG, 4,
+        register(potato = new ItemEdibleSeedDecayable("potato", 7, 7F, 5,
+                ModBlocks.potato, EnumPlantType.Crop, FoodType.CARBS, 4));
+        register(carrot = new ItemEdibleSeedDecayable("carrot", 3, 3F, 7,
+                ModBlocks.carrot, EnumPlantType.Crop, FoodType.FRUITVEG, 4,
                 EntityPig.class, EntityRabbit.class));
-        register(beetroot = new ItemEdibleSeedDecayable("beetroot",
-                3, 3F, 6, ModBlocks.beetroot, FoodType.FRUITVEG, 4));
+        register(beetroot = new ItemEdibleSeedDecayable("beetroot", 3, 3F, 6,
+                ModBlocks.beetroot, EnumPlantType.Crop, FoodType.FRUITVEG, 4));
         register(seedPumpkin = new ItemEdibleSeed("seeds_pumpkin",
                 1, 1, 15, ModBlocks.pumpkinCrop, FoodType.PROTEIN));
         
@@ -534,6 +543,8 @@ public class ModItems {
         register(salt = new ItemJj("salt"));
         register(chalk = new ItemJj("chalk"));
         register(clay = new ItemJj("clay", 9));
+        
+        register(compost = new ItemCompost());
 
         register(oreTin = new ItemJj("ore_tin"));
         register(oreCopper = new ItemJj("ore_copper"));

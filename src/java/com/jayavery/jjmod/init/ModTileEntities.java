@@ -6,6 +6,7 @@ import com.jayavery.jjmod.tileentities.TEBeam;
 import com.jayavery.jjmod.tileentities.TEBed;
 import com.jayavery.jjmod.tileentities.TEBox;
 import com.jayavery.jjmod.tileentities.TECarcass;
+import com.jayavery.jjmod.tileentities.TECompost;
 import com.jayavery.jjmod.tileentities.TECraftingArmourer;
 import com.jayavery.jjmod.tileentities.TECraftingCandlemaker;
 import com.jayavery.jjmod.tileentities.TECraftingForge;
@@ -59,6 +60,7 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(TEBed.class, "bed");
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
         GameRegistry.registerTileEntity(TECarcass.class, "carcass");
+        GameRegistry.registerTileEntity(TECompost.class, "compost");
     }
     
     @SideOnly(Side.CLIENT)

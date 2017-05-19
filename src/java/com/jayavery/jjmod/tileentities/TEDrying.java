@@ -10,6 +10,8 @@ import com.jayavery.jjmod.init.ModRecipes;
 import com.jayavery.jjmod.packets.DryingPacketClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -22,12 +24,14 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
             (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
     
     /** Recipes for this drying rack. */
-    public final CookingManager recipes = ModRecipes.DRYING;
+    public static final CookingManager RECIPES = ModRecipes.DRYING;
     
     /** This drying rack's input stacks. */
-    private NonNullList<ItemStack> inputs = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inputs = NonNullList
+            .withSize(2, ItemStack.EMPTY);
     /** This drying rack's output stacks. */
-    private NonNullList<ItemStack> outputs = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> outputs = NonNullList
+            .withSize(2, ItemStack.EMPTY);
     /** Ticks spent drying the current item. */
     private int drySpent = 0;
     /** Total ticks needed to dry the current item. */
@@ -38,7 +42,7 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
 
         Collections.sort(this.inputs, SORTER);
         
-        int newDryEach = this.recipes.getCookingTime(this.inputs.get(0));
+        int newDryEach = RECIPES.getCookingTime(this.inputs.get(0));
         
         if (this.dryEach != newDryEach) {
             
@@ -115,7 +119,7 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
             } else if (this.drySpent == this.dryEach) {
 
                 this.drySpent = 0;
-                this.dryEach = this.recipes.getCookingTime(this.inputs.get(0));
+                this.dryEach = RECIPES.getCookingTime(this.inputs.get(0));
                 this.dryItem();
                 this.markDirty();
             }
@@ -136,7 +140,7 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
             return false;
         }
 
-        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
+        ItemStack result = RECIPES.getCookingResult(this.inputs.get(0),
                 this.world);
 
         if (result.isEmpty()) {
@@ -167,7 +171,7 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
     /** Turns an input into an output. */
     private void dryItem() {
 
-        ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
+        ItemStack result = RECIPES.getCookingResult(this.inputs.get(0),
                 this.world);
 
         for (int i = 0; i < this.outputs.size(); i++) {
@@ -207,7 +211,7 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
         }
     }
     
-    /** Sends an packet to update the progress bars on the Client. */
+    /** Sends a packet to update the progress bars on the client. */
     private void sendProgressPacket() {
         
         if (!this.world.isRemote) {
@@ -215,6 +219,29 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
             ModPackets.NETWORK.sendToAll(new DryingPacketClient(this.drySpent,
                     this.dryEach, this.pos));
         }
+    }
+    
+    /** Required to update GUI on the client. */
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    /** Required to update GUI on the client. */
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        return new SPacketUpdateTileEntity(this.getPos(), 0,
+                this.writeToNBT(new NBTTagCompound()));
+    }
+
+    /** Required to update GUI on the client. */
+    @Override
+    public void onDataPacket(NetworkManager net,
+            SPacketUpdateTileEntity packet) {
+
+        this.readFromNBT(packet.getNbtCompound());
     }
 
     @Override

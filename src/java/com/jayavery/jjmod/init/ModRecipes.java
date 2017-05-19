@@ -271,16 +271,18 @@ public class ModRecipes {
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.shieldWood),
                 " P ", "PPP", " P ", 'P', ModItems.pole);
-   // TODO     WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 2),
-          //      "PPP", "PPP", 'P', ModItems.pole);
-//        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 2),
-//                "  P", " PP", "PPP", 'P', ModItems.pole);
-//        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 2),
-//                "  T", " TT", "TTT", 'T', ModItems.timber);
+        
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallPole, 2),
+                "PPP", "PPP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsPole, 2),
+                "  P", " PP", "PPP", 'P', ModItems.pole);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.stairsWood, 2),
+                "  T", " TT", "TTT", 'T', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorPole),
                 "PP", "PP", "PP", 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.doorWood),
                 "SS", "SS", "SS", 'S', ModItems.timber);
+        
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.box),
                 "PTP", "PPP", 'P', ModItems.pole, 'T', ModItems.tallow);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 8),
@@ -289,6 +291,15 @@ public class ModRecipes {
                 "PPP", 'W', ModItems.wool, 'P', ModItems.pole);
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.bucketEmpty),
                 "P P", " P ", 'P', ModItems.pole);
+        
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.pitchroofClay, 2),
+                "SC ", " SC", "  S", 'S', ModItems.timber, 'C', ModItems.clay);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.frame, 3),
+                "SSS", " S ", 'S', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.vaultFrame, 3),
+                "S  ", " S ", "  S", 'S', ModItems.timber);
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.window, 4),
+                "S S", " G ", "S S", 'S', ModItems.timber, 'G', Blocks.GLASS);
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorPole, 4),
                 "PPP", 'P', ModItems.pole);

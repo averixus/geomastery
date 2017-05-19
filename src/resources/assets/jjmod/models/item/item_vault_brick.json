@@ -1,0 +1,4 @@
+{
+    "model": "jjmod:item",
+    "textures": { "layer0": "jjmod:items/vault_brick" }
+}

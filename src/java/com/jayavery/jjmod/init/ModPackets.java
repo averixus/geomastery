@@ -3,6 +3,7 @@ package com.jayavery.jjmod.init;
 import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.packets.BackpackPacketClient;
 import com.jayavery.jjmod.packets.BoxPacketClient;
+import com.jayavery.jjmod.packets.CompostPacketClient;
 import com.jayavery.jjmod.packets.ContainerPacketClient;
 import com.jayavery.jjmod.packets.ContainerPacketServer;
 import com.jayavery.jjmod.packets.CraftingPacketClient;
@@ -49,5 +50,7 @@ public class ModPackets {
                 YokePacketClient.class, id++, Side.CLIENT);
         NETWORK.registerMessage(BoxPacketClient.Handler.class,
                 BoxPacketClient.class, id++, Side.CLIENT);
+        NETWORK.registerMessage(CompostPacketClient.Handler.class,
+                CompostPacketClient.class, id++, Side.CLIENT);
     }
 }
