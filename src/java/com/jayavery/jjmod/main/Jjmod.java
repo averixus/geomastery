@@ -1,7 +1,9 @@
 package com.jayavery.jjmod.main;
 
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
+import java.io.File;
+import java.util.Set;
+import com.google.common.collect.Sets;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -9,7 +11,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 
 @Mod(modid = Jjmod.MODID, version = Jjmod.VERSION, name = Jjmod.NAME)
 public class Jjmod {
@@ -24,13 +25,15 @@ public class Jjmod {
 
     @Instance
     public static Jjmod instance = new Jjmod();
-
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
 
         // Read config, create + register blocks/items/etc
         proxy.preInit();
     }
+    
+
 
     @EventHandler
     public void init(FMLInitializationEvent e) {

@@ -1,32 +1,32 @@
 {
 "textures": {
-    "brickpave1": "jjmod:blocks/complex/brickpave1",
-    "brickside4": "jjmod:blocks/complex/brickside4",
-    "particle": "jjmod:blocks/complex/brickpave1"
+    "brick1": "jjmod:blocks/complex/brick1",
+    "brick2": "jjmod:blocks/complex/brick2",
+    "brick0": "jjmod:blocks/complex/brick0",
+    "particle": "jjmod:blocks/complex/brick0"
 },
 "elements": [ 
 {
-    "from": [ 3, 0, 3 ],
-    "to": [ 13, 4, 13 ],
+    "from": [ 4, 0, 4 ],
+    "to": [ 12, 4, 12 ],
     "faces": {
-        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#brickpave1" },
-        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#brickpave1" },
-        "north": { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" },
-        "south": { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" },
-        "west":  { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" },
-        "east":  { "uv": [ 3, 12, 13, 16 ], "texture": "#brickside4" }
+        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#brick1", "cullface": "down" },
+        "up":    { "uv": [ 0, 8, 8, 16 ], "texture": "#brick1" },
+        "north": { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0" },
+        "south": { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0" },
+        "west":  { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0" },
+        "east":  { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0" }
     }
 },
 {
-    "from": [ 4, 4, 4 ],
-    "to": [ 12, 16, 12 ],
+    "from": [ 5, 4, 5 ],
+    "to": [ 11, 16, 11 ],
     "faces": {
-        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#brickpave1" },
-        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#brickpave1" },
-        "north": { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" },
-        "south": { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" },
-        "west":  { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" },
-        "east":  { "uv": [ 4, 0, 12, 12 ], "texture": "#brickside4" }
+        "up":    { "uv": [ 5, 5, 11, 11 ], "texture": "#brick0", "cullface": "up" },
+        "north": { "uv": [ 5, 0, 11, 12 ], "texture": "#brick0" },
+        "south": { "uv": [ 5, 0, 11, 12 ], "texture": "#brick0" },
+        "west":  { "uv": [ 5, 0, 11, 12 ], "texture": "#brick0" },
+        "east":  { "uv": [ 5, 0, 11, 12 ], "texture": "#brick0" }
     }
 }
 ]

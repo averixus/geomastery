@@ -11,35 +11,47 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 
+/** TileEntity for compost heap. */
 public class TECompost extends TEContainerAbstract implements ITickable {
 
     /** Total number of ticks to produce each output. */
-    private static final int COMPOST_EACH = 6/*000*/;
+    public static final int COMPOST_EACH = 6000;
+    /** Maximum absolute value of ingredient balance. */
+    public static final int MAX_BALANCE = 72;
+    /** Maximum input fullness. */
+    public static final int MAX_INPUT = 12;
+    /** Balance threshold for quality 5. */
+    private static final int BALANCE_5 = 2;
+    /** Balance threshold for quality 4. */
+    private static final int BALANCE_4 = 12;
+    /** Balance threshold for quality 3. */
+    private static final int BALANCE_3 = 27;
+    /** Balance threshold for quality 2. */
+    private static final int BALANCE_2 = 47;
     
-    /** Ticks until next output is produced. */
-    private int compostLeft = COMPOST_EACH;
+    /** Ticks spend composting next output. */
+    private int compostSpent = 0;
     /** Balance of nitrogen (negative) to carbon (positive). */
     private int balance = 0;
-    /** This compost heap's output stack size. */
-    private int output = 0;
     /** This compost heap's input fullness. */
     private int input = 0;
+    /** This compost heap's output. */
+    public NonNullList<ItemStack> outputs = NonNullList
+            .withSize(1, ItemStack.EMPTY);
 
-    @Override
-    public void dropItems() {
-
-        this.dropItem(this.getOutput());
-    }
-    
-    public static boolean isNitrogen(ItemStack stack) {
+    /** @return Whether this stack is a nitrogen input. */
+    public static boolean isCarbon(ItemStack stack) {
         
         Item item = stack.getItem();
         return item instanceof ItemEdible || item == ModItems.wool ||
                 item == Items.BONE;
     }
     
-    public static boolean isCarbon(ItemStack stack) {
+    /** @return Whether this stack is a carbon input. */
+    public static boolean isNitrogen(ItemStack stack) {
         
         Item item = stack.getItem();
         return item == ModItems.leaves || item == Items.STICK ||
@@ -47,11 +59,42 @@ public class TECompost extends TEContainerAbstract implements ITickable {
                 item == ModItems.thicklog || item == Items.REEDS;
     }
     
-    /** Adds this stack to affect the compost balance. */
+    @Override
+    public void dropItems() {
+
+        this.dropInventory(this.outputs);
+    }
+    
+    /** @return The ticks spent processing the current piece. */
+    public int getCompostSpent() {
+        
+        return this.compostSpent;
+    }
+    
+    /** @return The current output stack. */
+    public ItemStack getOutput() {
+        
+        return this.outputs.get(0);
+    }
+    
+    /** @return The current input fullness. */
+    public int getInput() {
+        
+        return this.input;
+    }
+    
+    /** @return The current ingredient balance. */
+    public int getBalance() {
+        
+        return this.balance;
+    }
+    
+    /** Adds this stack to affect the compost balance and input. */
     public void addInput(ItemStack stack) {
         
         int count = stack.getCount();
         this.input += count;
+        this.input = Math.min(this.input, MAX_INPUT);
         
         if (isNitrogen(stack)) {
             
@@ -61,42 +104,15 @@ public class TECompost extends TEContainerAbstract implements ITickable {
             
             this.balance += count;
         }
-    }
-    
-    /** Reduce the output stack size but the given amount. */
-    public void reduceOutput(int amount) {
         
-        this.output -= amount;
-    }
-    
-    /** @return The ItemStack in the output slot. */
-    public ItemStack getOutput() {
+        this.balance = MathHelper.clamp(this.balance,
+                -MAX_BALANCE, MAX_BALANCE);
         
-        int grade;
-        int absBalance = Math.abs(this.balance);
-        
-        if (absBalance <= 2) {
-            
-            grade = 1;
-            
-        } else if (absBalance <= 12) {
-            
-            grade = 2;
-            
-        } else if (absBalance <= 27) {
-            
-            grade = 3;
-            
-        } else if (absBalance <= 47) {
-            
-            grade = 4;
-            
-        } else {
-            
-            grade = 5;
-        }
-        
-        return new ItemStack(ModItems.compost, this.output, grade);
+        int bal = Math.abs(this.balance);
+        int grade = bal <= BALANCE_5 ? 5 : bal <= BALANCE_4 ?
+                4 : bal <= BALANCE_3 ? 3 : bal <= BALANCE_2 ? 2 : 1;
+        this.outputs.set(0, new ItemStack(ModItems.compost,
+                this.outputs.get(0).getCount(), grade));
     }
     
     @Override
@@ -106,32 +122,35 @@ public class TECompost extends TEContainerAbstract implements ITickable {
             
             return;
         }
-        
-        if (this.output < 12 && this.input > 0) {
-            
-            this.compostLeft--;
-            
-            if (this.compostLeft <= 0) {
                 
-                this.compostLeft = COMPOST_EACH;
-                this.output++;
+        if (this.outputs.get(0).getCount() < 12 && this.input > 0) {
+            
+            this.compostSpent++;
+            
+            if (this.compostSpent >= COMPOST_EACH) {
+                
+                this.compostSpent = 0;
                 this.input--;
                 this.markDirty();
-                this.sendProgressPacket();
+                this.outputs.get(0).grow(1);
             }
             
-        } else if (this.compostLeft < COMPOST_EACH) {
+        } else if (this.compostSpent > 0) {
             
-            this.compostLeft = COMPOST_EACH;
+            this.compostSpent = 0;
         }
+        
+        this.sendProgressPacket();
     }
     
     /** Sets the given values, used for packets. */
-    public void setValues(int input, int output, int balance) {
+    public void setValues(int input, int compostSpent,
+            int balance, ItemStack output) {
         
         this.input = input;
-        this.output = output;
+        this.compostSpent = compostSpent;
         this.balance = balance;
+        this.outputs.set(0, output);
     }
     
     /** Sends a packet to update progress values on the client. */
@@ -140,7 +159,8 @@ public class TECompost extends TEContainerAbstract implements ITickable {
         if (!this.world.isRemote) {
         
             ModPackets.NETWORK.sendToAll(new CompostPacketClient(this.input,
-                    this.output, this.balance, this.pos));
+                    this.compostSpent, this.balance,
+                    this.outputs.get(0), this.pos));
         }
     }
     
@@ -174,8 +194,8 @@ public class TECompost extends TEContainerAbstract implements ITickable {
         
         this.balance = compound.getInteger("balance");
         this.input = compound.getInteger("input");
-        this.output = compound.getInteger("output");
-        this.compostLeft = compound.getInteger("compostLeft");
+        this.outputs.set(0, new ItemStack(compound.getCompoundTag("output")));
+        this.compostSpent = compound.getInteger("compostSpent");
     }
     
     @Override
@@ -185,8 +205,9 @@ public class TECompost extends TEContainerAbstract implements ITickable {
         
         compound.setInteger("balance", this.balance);
         compound.setInteger("input", this.input);
-        compound.setInteger("output", this.output);
-        compound.setInteger("compostLeft", this.compostLeft);
+        compound.setTag("output", this.outputs.get(0)
+                .writeToNBT(new NBTTagCompound()));
+        compound.setInteger("compostSpent", this.compostSpent);
         
         return compound;
     }

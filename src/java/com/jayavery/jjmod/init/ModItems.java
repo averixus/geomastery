@@ -52,6 +52,7 @@ import com.jayavery.jjmod.tileentities.TEFurnaceStone.EnumPartStone;
 import com.jayavery.jjmod.utilities.EquipMaterial;
 import com.jayavery.jjmod.utilities.FoodType;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityChicken;
@@ -174,6 +175,8 @@ public class ModItems {
     public static ItemBlockplacer.Heaping looseGravel;
     public static ItemBlockplacer.Heaping looseSand;
     public static ItemBlockplacer.Heaping looseClay;
+    
+    public static ItemJj glass;
     
     public static ItemCompost compost;
     
@@ -365,6 +368,7 @@ public class ModItems {
     public static ItemBlockplacer.Doubling<BlockSlab> slabBrick;
     
     public static ItemBlockplacer.Doubling<BlockVault> vaultStone;
+    public static ItemBlockplacer.Doubling<BlockVault> vaultBrick;
     
     public static void preInit() {
 
@@ -543,6 +547,8 @@ public class ModItems {
         register(salt = new ItemJj("salt"));
         register(chalk = new ItemJj("chalk"));
         register(clay = new ItemJj("clay", 9));
+        
+        register(glass = new ItemJj("glass", 6));
         
         register(compost = new ItemCompost());
 
@@ -847,6 +853,9 @@ public class ModItems {
         register(vaultStone = new ItemBlockplacer.Doubling<BlockVault>(
                 "vault_stone", 2, SoundType.STONE, ModBlocks.vaultStoneSingle,
                 ModBlocks.vaultStoneDouble));
+        register(vaultBrick = new ItemBlockplacer.Doubling<BlockVault>(
+                "vault_brick", 2, SoundType.STONE, ModBlocks.vaultBrickSingle,
+                ModBlocks.vaultBrickDouble));
                 
         Items.STICK.setMaxStackSize(12);
         Items.BONE.setMaxStackSize(6);
@@ -885,7 +894,20 @@ public class ModItems {
     
     private static void model(Item item) {
         
-        ModelLoader.setCustomModelResourceLocation(item, 0,
-                new ModelResourceLocation(item.getRegistryName(), "inventory"));
+        if (item == compost) {
+            
+            for (int i = 1; i < 6; i++) {
+            
+                ModelLoader.setCustomModelResourceLocation(item, i,
+                        new ModelResourceLocation(item.getRegistryName(),
+                        String.valueOf(i)));
+            }
+            
+        } else {
+        
+            ModelLoader.setCustomModelResourceLocation(item, 0,
+                    new ModelResourceLocation(item.getRegistryName(),
+                    "inventory"));
+        }
     }
 }

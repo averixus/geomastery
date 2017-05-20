@@ -6,6 +6,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+/** Input slot for compost heap. */
 public class SlotCompostInput extends Slot {
 
     /** The compost heap this slot belongs to. */

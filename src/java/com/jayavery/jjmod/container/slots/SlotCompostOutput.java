@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+/** Compost heap output slot. */
 public class SlotCompostOutput extends Slot {
 
     /** The compost heap this slot output is from. */
@@ -26,7 +27,7 @@ public class SlotCompostOutput extends Slot {
     @Override
     public ItemStack getStack() {
         
-        return this.compost.getOutput();
+        return this.compost.outputs.get(0);
     }
     
     @Override
@@ -42,17 +43,9 @@ public class SlotCompostOutput extends Slot {
     }
     
     @Override
-    public ItemStack onTake(EntityPlayer player, ItemStack stack) {
-        
-        this.onSlotChanged();
-        this.compost.reduceOutput(stack.getCount());
-        return stack;
-    }
-    
-    @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.compost.getOutput().splitStack(amount);
+        return this.compost.outputs.get(0).splitStack(amount);
     }
     
     @Override

@@ -15,6 +15,7 @@ import com.jayavery.jjmod.tileentities.TECraftingMason;
 import com.jayavery.jjmod.tileentities.TECraftingSawpit;
 import com.jayavery.jjmod.tileentities.TECraftingTextiles;
 import com.jayavery.jjmod.tileentities.TECraftingWoodworking;
+import com.jayavery.jjmod.tileentities.TECrop;
 import com.jayavery.jjmod.tileentities.TEDrying;
 import com.jayavery.jjmod.tileentities.TEFurnaceCampfire;
 import com.jayavery.jjmod.tileentities.TEFurnaceClay;
@@ -61,6 +62,7 @@ public class ModTileEntities {
         GameRegistry.registerTileEntity(TEBeam.class, "beam");
         GameRegistry.registerTileEntity(TECarcass.class, "carcass");
         GameRegistry.registerTileEntity(TECompost.class, "compost");
+        GameRegistry.registerTileEntity(TECrop.class, "crop");
     }
     
     @SideOnly(Side.CLIENT)

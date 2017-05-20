@@ -4,7 +4,7 @@
     "panels2": "jjmod:blocks/complex/panels2",
     "roofclay3": "jjmod:blocks/complex/roofclay3",
     "roofclay4": "jjmod:blocks/complex/roofclay4",
-    "particle": "jjmod:blocks/complex/roofclay1"
+    "particle": "jjmod:blocks/complex/panels1"
 },
 "elements": [ 
 {
@@ -29,6 +29,18 @@
         "south": { "uv": [ 4, 7, 8, 16 ], "texture": "#panels1" },
         "west":  { "uv": [ 7.5, 7, 8.5, 16 ], "texture": "#panels1" },
         "east":  { "uv": [ 7.5, 7, 8.5, 16 ], "texture": "#panels1" }
+    }
+},
+{
+    "from": [ 9.5, 0, 7.5 ],
+    "to": [ 13.5, 3, 8.5 ],
+    "faces": {
+        "down":  { "uv": [ 8, 8, 4, 7 ], "texture": "#panels1" },
+        "up":    { "uv": [ 9, 7, 13, 8 ], "texture": "#panels1" },
+        "north": { "uv": [ 4, 13, 8, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 8, 13, 12, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 7, 13, 8, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 7, 13, 8, 16 ], "texture": "#panels1" }
     }
 }
 ]

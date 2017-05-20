@@ -1,47 +1,64 @@
 {
 "textures": {
-    "brickpave1": "jjmod:blocks/complex/brickpave1",
-    "brickside4": "jjmod:blocks/complex/brickside4",
-    "brickside3": "jjmod:blocks/complex/brickside3",
-    "bricktop3": "jjmod:blocks/complex/bricktop3",
-    "bricktop1": "jjmod:blocks/complex/bricktop1",
-    "particle": "jjmod:blocks/complex/brickpave1"
+    "brick0": "jjmod:blocks/complex/brick0",
+    "brick2": "jjmod:blocks/complex/brick2",
+    "brick4": "jjmod:blocks/complex/brick4",
+    "particle": "jjmod:blocks/complex/brick0"
 },
 "elements": [ 
+{
+    "from": [ 4, 0, 12 ],
+    "to": [ 12, 4, 16 ],
+    "faces": {
+        "down":  { "uv": [ 8, 16, 0, 12 ], "texture": "#brick4", "cullface": "down" },
+        "up":    { "uv": [ 0, 12, 8, 16 ], "texture": "#brick4" },
+        "north": { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0" },
+        "south": { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0", "cullface": "south" },
+        "west":  { "uv": [ 12, 12, 16, 16 ], "texture": "#brick0" },
+        "east":  { "uv": [ 0, 12, 4, 16 ], "texture": "#brick0" }
+    }
+},
+{
+    "from": [ 5, 4, 11 ],
+    "to": [ 11, 10, 16 ],
+    "faces": {
+        "north": { "uv": [ 5, 6, 11, 12 ], "texture": "#brick0" },
+        "south": { "uv": [ 5, 6, 11, 12 ], "texture": "#brick0", "cullface": "south" },
+        "west":  { "uv": [ 11, 6, 16, 12 ], "texture": "#brick0" },
+        "east":  { "uv": [ 0, 6, 5, 12 ], "texture": "#brick0" }
+    }
+},
 {
     "from": [ 4, 10, 12 ],
     "to": [ 12, 12, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 12 ], "texture": "#bricktop3" },
-        "up":    { "uv": [ 8, 0, 16, 4 ], "texture": "#bricktop1" },
-        "north": { "uv": [ 8, 0, 16, 2 ], "texture": "#brickside3" },
-        "south": { "uv": [ 4, 4, 12, 6 ], "texture": "#brickside3" },
-        "west":  { "uv": [ 12, 0, 16, 2 ], "texture": "#brickside3" },
-        "east":  { "uv": [ 12, 0, 16, 2 ], "texture": "#brickside3" }
+        "down":  { "uv": [ 12, 16, 4, 12 ], "texture": "#stone" },
+        "up":    { "uv": [ 8, 12, 16, 16 ], "texture": "#brick4" },
+        "north": { "uv": [ 4, 4, 12, 6 ], "texture": "#brick0" },
+        "south": { "uv": [ 4, 4, 12, 6 ], "texture": "#brick0", "cullface": "south" },
+        "west":  { "uv": [ 12, 0, 16, 2 ], "texture": "#brick2" },
+        "east":  { "uv": [ 0, 0, 4, 2 ], "texture": "#brick2" }
     }
 },
 {
-    "from": [ 5, 4, 12 ],
-    "to": [ 11, 10, 16 ],
+    "from": [ 5, 10, 11 ],
+    "to": [ 12, 12, 12 ],
     "faces": {
-        "down":  { "uv": [ 11, 16, 5, 12 ], "texture": "#brickpave1" },
-        "up":    { "uv": [ 5, 12, 11, 16 ], "texture": "#brickpave1" },
-        "north": { "uv": [ 5, 6, 11, 12 ], "texture": "#brickside4" },
-        "south": { "uv": [ 5, 6, 11, 12 ], "texture": "#brickside4" },
-        "west":  { "uv": [ 12, 6, 16, 12 ], "texture": "#brickside4" },
-        "east":  { "uv": [ 0, 6, 4, 12 ], "texture": "#brickside4" }
+        "down":  { "uv": [ 11, 12, 4, 11 ], "texture": "#stone" },
+        "up":    { "uv": [ 9, 11, 16, 12 ], "texture": "#brick4" },
+        "north": { "uv": [ 4, 4, 11, 6 ], "texture": "#brick0" },
+        "west":  { "uv": [ 11, 0, 12, 2 ], "texture": "#brick2" },
+        "east":  { "uv": [ 4, 0, 5, 2 ], "texture": "#brick2" }
     }
 },
 {
-    "from": [ 4, 0, 13 ],
-    "to": [ 12, 4, 16 ],
+    "from": [ 4, 10, 11 ],
+    "to": [ 5, 11.9, 12 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 13 ], "texture": "#brickpave1" },
-        "up":    { "uv": [ 4, 13, 12, 16 ], "texture": "#brickpave1" },
-        "north": { "uv": [ 4, 12, 12, 16 ], "texture": "#brickside4" },
-        "south": { "uv": [ 4, 12, 12, 16 ], "texture": "#brickside4" },
-        "west":  { "uv": [ 13, 12, 16, 16 ], "texture": "#brickside4" },
-        "east":  { "uv": [ 0, 12, 3, 16 ], "texture": "#brickside4" }
+        "down":  { "uv": [ 12, 12, 11, 11 ], "texture": "#stone" },
+        "up":    { "uv": [ 8, 11, 9, 12 ], "texture": "#brick4" },
+        "north": { "uv": [ 11, 4, 12, 6 ], "texture": "#brick0" },
+        "west":  { "uv": [ 11, 0, 12, 2 ], "texture": "#brick2" }
     }
 }
 ]

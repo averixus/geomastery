@@ -192,7 +192,8 @@ public class CraftingManager {
             if (recipe.matches(craftMatrix, world) &&
                     recipe instanceof ShapedRecipe) {
 
-                return ((ShapedRecipe) recipe).getAmountsUsed(craftMatrix);
+                return ((ShapedRecipe) recipe)
+                        .getAmountsUsed(craftMatrix, world);
             }
         }
         

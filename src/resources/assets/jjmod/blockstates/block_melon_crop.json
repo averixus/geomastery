@@ -1,23 +1,18 @@
 {
     "forge_marker": 1,
     "variants": {
-        "age": {
-            "0": { "model": "jjmod:stem/0" },
-            "1": { "model": "jjmod:stem/1" },
-            "2": { "model": "jjmod:stem/2" },
-            "3": { "model": "jjmod:stem/3" },
-            "4": { "model": "jjmod:stem/4" },
-            "5": { "model": "jjmod:stem/5" },
-            "6": { "model": "jjmod:stem/6" },
-            "7": { "model": "jjmod:stem/fruit" }
-        },
-        "facing": {
-            "up": {},
-            "west": {},
-            "east": { "y": 180 },
-            "north": { "y": 90 },
-            "south": { "y": 270 }
-        },
+        "age=0,facing=up": { "model": "jjmod:stem/0" },
+        "age=1,facing=up": { "model": "jjmod:stem/1" },
+        "age=2,facing=up": { "model": "jjmod:stem/2" },
+        "age=3,facing=up": { "model": "jjmod:stem/3" },
+        "age=4,facing=up": { "model": "jjmod:stem/4" },
+        "age=5,facing=up": { "model": "jjmod:stem/5" },
+        "age=6,facing=up": { "model": "jjmod:stem/6" },
+        "age=7,facing=up": { "model": "jjmod:stem/7" },
+        "facing=west": { "model": "jjmod:stem/fruit" },
+        "facing=east": { "model": "jjmod:stem/fruit", "y": 180 },
+        "facing=north": { "model": "jjmod:stem/fruit", "y": 90 },
+        "facing=south": { "model": "jjmod:stem/fruit", "y": 270 },
         "inventory": [{}]
     }
 }

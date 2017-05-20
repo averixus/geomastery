@@ -7,11 +7,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemJj;
+import com.jayavery.jjmod.tileentities.TECrop;
 import com.jayavery.jjmod.utilities.IBiomeCheck;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -19,6 +19,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -47,15 +48,17 @@ public abstract class BlockCrop extends BlockNew
     
     /** Chance of death per update tick when in wrong conditions. */
     protected static final float deathChance = 0.5F;
+    /** Growth and harvest multiplier for crops on wet farmland. */
+    protected static final float wetMultiplier = 1.5F;
 
     /** Supplier for the harvested crop Item. */
-    protected Supplier<Item> cropRef;
+    protected final Supplier<Item> cropRef;
     /** Supplier for the planted seed Item. */
-    protected Supplier<Item> seedRef;
+    protected final Supplier<Item> seedRef;
     /** Random function for the crop yield. */
-    protected Function<Random, Integer> yieldRef;
+    protected final Function<Random, Integer> yieldRef;
     /** Chance of growth per update tick. */
-    protected float growthChance;
+    protected final float growthChance;
 
     public BlockCrop(String name, Supplier<Item> cropRef,
             Supplier<Item> seedRef, Function<Random, Integer> yieldRef,
@@ -77,6 +80,18 @@ public abstract class BlockCrop extends BlockNew
             float hardness, ToolType tool) {
 
         this(name, cropRef, cropRef, function, growthChance, hardness, tool);
+    }
+    
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        
+        return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        
+        return new TECrop();
     }
     
     /** Checks validity of position (breaks if invalid),
@@ -108,8 +123,15 @@ public abstract class BlockCrop extends BlockNew
             
         }
         
-        float growthChance = below.isFertile(world, pos.down()) ?
-                this.growthChance : this.growthChance / 2;
+        float growthChance = below.isFertile(world, pos.down()) ? 
+                this.growthChance * wetMultiplier : this.growthChance;
+        
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TECrop) {
+            
+            growthChance *= ((TECrop) tileEntity).getMultiplier();
+        }
 
         if (rand.nextFloat() <= growthChance) {
 
@@ -177,13 +199,23 @@ public abstract class BlockCrop extends BlockNew
         }
         
         World world = (World) blockAccess;
+        
+        float yieldMultiplier = world.getBlockState(pos.down()).getBlock()
+                .isFertile(world, pos.down()) ? wetMultiplier : 1;
                 
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TECrop) {
+            
+            yieldMultiplier *= ((TECrop) tileEntity).getMultiplier();
+        }
+        
         if (state.getValue(AGE) == 7) {
             
             items.add(ItemJj.newStack(this.cropRef.get(),
-                    this.yieldRef.apply(world.rand), world));
+                    (int) (this.yieldRef.apply(world.rand) * yieldMultiplier),
+                    world));
             items.add(ItemJj.newStack(this.seedRef.get(), 2, world));
-            
         }
         
         return items;
@@ -259,7 +291,7 @@ public abstract class BlockCrop extends BlockNew
         public Wheat() {
             
             super("wheat", () -> ModItems.wheat, (rand) -> 0,
-                    0.4F, 0.2F, ToolType.SICKLE);
+                    0.2F, 0.2F, ToolType.SICKLE);
         }
 
         @Override
@@ -279,7 +311,7 @@ public abstract class BlockCrop extends BlockNew
         public Potato() {
             
             super("potato", () -> ModItems.potato, (rand) -> rand.nextInt(3),
-                    0.3F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, ToolType.SICKLE);
         }
         
         @Override
@@ -297,7 +329,7 @@ public abstract class BlockCrop extends BlockNew
         public Pepper() {
             
             super("pepper", () -> ModItems.pepper, (rand) -> 2,
-                    0.3F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, ToolType.SICKLE);
         }
 
         @Override
@@ -316,7 +348,7 @@ public abstract class BlockCrop extends BlockNew
         public Hemp() {
             
             super("hemp", () -> ModItems.twineHemp, () -> ModItems.cuttingHemp,
-                    (rand) -> 1, 0.4F, 0.2F, ToolType.SICKLE);
+                    (rand) -> 1, 0.2F, 0.2F, ToolType.SICKLE);
         }
 
         @Override
@@ -335,7 +367,7 @@ public abstract class BlockCrop extends BlockNew
         public Beetroot() {
             
             super("beetroot", () -> ModItems.beetroot,
-                    (rand) -> rand.nextInt(3), 0.3F, 0.2F, ToolType.SICKLE);
+                    (rand) -> rand.nextInt(3), 0.15F, 0.2F, ToolType.SICKLE);
         }
 
         @Override
@@ -353,7 +385,7 @@ public abstract class BlockCrop extends BlockNew
         public Carrot() {
             
             super("carrot", () -> ModItems.carrot, (rand) -> rand.nextInt(3),
-                    0.3F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, ToolType.SICKLE);
         }
 
         @Override
@@ -371,7 +403,7 @@ public abstract class BlockCrop extends BlockNew
         public Chickpea() {
             
             super("chickpea", () -> ModItems.chickpeas, (rand) -> 1,
-                    0.3F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, ToolType.SICKLE);
         }
 
         @Override
@@ -391,7 +423,7 @@ public abstract class BlockCrop extends BlockNew
         public Cotton() {
             
             super("cotton", () -> ModItems.cotton, () -> ModItems.cuttingCotton,
-                    (rand) -> 1, 0.3F, 0.2F, ToolType.SICKLE);
+                    (rand) -> 1, 0.15F, 0.2F, ToolType.SICKLE);
         }
 
         @Override

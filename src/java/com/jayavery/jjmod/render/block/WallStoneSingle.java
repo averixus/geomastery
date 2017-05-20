@@ -64,7 +64,6 @@ public class WallStoneSingle extends DelayedBakingAbstract {
         
         super("jjmod:blocks/complex/stone1",
                 ModBlocks.wallStoneSingle.getRegistryName());
-        System.out.println("construcing wallstonesingle render " + this);
     }
     
     /** Loads dependent parts and provides the delayed baking model. */

@@ -63,6 +63,10 @@ public class ModRecipes {
     /** Cooking managers for clay furnace and higher furnace levels. */
     private static final CookingManager[] CLAY_PLUS = {CLAY, STONE};
     
+    /** Placeholder item to define when recipes need
+     * to check for rotten decayable items. */
+    public static final Item rot = new Item();
+    
     public static void init() {
 
         setupInventory();
@@ -118,6 +122,8 @@ public class ModRecipes {
                 "C", 'C', ModItems.looseClay);
         INVENTORY.addShapedRecipe(new ItemStack(ModItems.looseClay),
                 "CCC", "CCC", 'C', ModItems.clay);
+        INVENTORY.addShapedRecipe(new ItemStack(ModBlocks.compostheap),
+                "PRP", "PPP", 'P', ModItems.pole, 'R', rot);
         
         for (Item skin : SKINS_ALL) {
             
@@ -299,7 +305,7 @@ public class ModRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.vaultFrame, 3),
                 "S  ", " S ", "  S", 'S', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.window, 4),
-                "S S", " G ", "S S", 'S', ModItems.timber, 'G', Blocks.GLASS);
+                "S S", " G ", "S S", 'S', ModItems.timber, 'G', ModItems.glass);
         
         WOODWORKING.addShapedRecipe(new ItemStack(ModItems.floorPole, 4),
                 "PPP", 'P', ModItems.pole);
@@ -478,7 +484,7 @@ public class ModRecipes {
                 " B", "BB", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(ModItems.vaultStone, 2),
                 "SS", "S ", 'S', ModItems.stoneDressed);
-        MASON.addShapedRecipe(new ItemStack(ModBlocks.vaultBrick, 2),
+        MASON.addShapedRecipe(new ItemStack(ModItems.vaultBrick, 2),
                 "BB", "B ", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(ModItems.slabStone, 2),
                 "SSS", 'S', ModItems.stoneDressed);
@@ -613,6 +619,8 @@ public class ModRecipes {
                 new ItemStack(ModItems.ingotSilver), 300);
         STONE.addCookingRecipe(new ItemStack(ModItems.oreGold),
                 new ItemStack(Items.GOLD_INGOT), 200);
+        STONE.addCookingRecipe(new ItemStack(ModItems.looseSand),
+                new ItemStack(ModItems.glass), 200);
         STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
     }
 

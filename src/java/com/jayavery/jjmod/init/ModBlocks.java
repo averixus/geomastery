@@ -13,7 +13,7 @@ import com.jayavery.jjmod.blocks.BlockBed;
 import com.jayavery.jjmod.blocks.BlockBeehive;
 import com.jayavery.jjmod.blocks.BlockBox;
 import com.jayavery.jjmod.blocks.BlockCarcass;
-import com.jayavery.jjmod.blocks.BlockCompost;
+import com.jayavery.jjmod.blocks.BlockCompostheap;
 import com.jayavery.jjmod.blocks.BlockCraftingKnapping;
 import com.jayavery.jjmod.blocks.BlockCrop;
 import com.jayavery.jjmod.blocks.BlockCropBlockfruit;
@@ -57,7 +57,9 @@ import com.jayavery.jjmod.utilities.IDelayedMultipart;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockStem;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -66,6 +68,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -113,7 +116,7 @@ public class ModBlocks {
 
     public static BlockDrying drying;
     
-    public static BlockCompost compost;
+    public static BlockCompostheap compostheap;
 
     public static BlockFurnaceCampfire furnaceCampfire;
     public static BlockFurnacePotfire furnacePotfire;
@@ -200,7 +203,8 @@ public class ModBlocks {
     
     public static BlockVault vaultStoneSingle;
     public static BlockVault vaultStoneDouble;
-    public static BlockVault vaultBrick;
+    public static BlockVault vaultBrickSingle;
+    public static BlockVault vaultBrickDouble;
     public static BlockVault vaultFrame;
         
     public static BlockDoor doorPole;
@@ -259,7 +263,7 @@ public class ModBlocks {
         
         register(drying = new BlockDrying());
         
-        register(compost = new BlockCompost());
+        register(compostheap = new BlockCompostheap(), true);
 
         register(furnaceCampfire = new BlockFurnaceCampfire());
         register(furnacePotfire = new BlockFurnacePotfire());
@@ -406,9 +410,10 @@ public class ModBlocks {
                 () -> ModItems.vaultStone, false, BlockWeight.HEAVY));
         registerItemless(vaultStoneDouble = new BlockVault("vault_stone_double",
                 () -> ModItems.vaultStone, true, BlockWeight.HEAVY));
-        register(vaultBrick = new BlockVault("vault_brick",
-                () -> Item.getItemFromBlock(vaultBrick),
-                false, BlockWeight.HEAVY), 2);
+        registerItemless(vaultBrickSingle = new BlockVault("vault_brick_single",
+                () -> ModItems.vaultBrick, false, BlockWeight.HEAVY));
+        registerItemless(vaultBrickDouble = new BlockVault("vault_brick_double",
+                () -> ModItems.vaultBrick, true, BlockWeight.HEAVY));
         register(vaultFrame = new BlockVault("vault_frame",
                 () -> Item.getItemFromBlock(vaultFrame),
                 false, BlockWeight.LIGHT), 6);
@@ -564,6 +569,27 @@ public class ModBlocks {
                         IBlockState state) {
                     
                     return loc;
+                }
+            });
+            
+        } else if (block instanceof BlockCropBlockfruit) {
+            
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(
+                        IBlockState state) {
+                    
+                    Map<IProperty<?>, Comparable<?>> map =
+                            Maps.newLinkedHashMap(state.getProperties());
+
+                    if (state.getValue(BlockStem.FACING) != EnumFacing.UP) {
+                        
+                        map.remove(BlockStem.AGE);
+                    }
+
+                    return new ModelResourceLocation(block.getRegistryName(),
+                            this.getPropertyString(map));
                 }
             });
             

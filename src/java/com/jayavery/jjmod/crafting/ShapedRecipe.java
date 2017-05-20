@@ -1,6 +1,9 @@
 package com.jayavery.jjmod.crafting;
 
-import java.util.Arrays;
+import com.jayavery.jjmod.init.ModCaps;
+import com.jayavery.jjmod.init.ModRecipes;
+import com.jayavery.jjmod.items.ItemCarcassDecayable;
+import com.jayavery.jjmod.items.ItemEdibleDecayable;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -22,8 +25,8 @@ public class ShapedRecipe extends ShapedRecipes {
 
             for (int j = 0; j <= inv.getHeight() - this.recipeHeight; j++) {
 
-                if (this.checkMatch(inv, i, j, true) ||
-                        this.checkMatch(inv, i, j, false)) {
+                if (this.checkMatch(inv, i, j, true, world) ||
+                        this.checkMatch(inv, i, j, false, world)) {
 
                     return true;
                 }
@@ -36,18 +39,18 @@ public class ShapedRecipe extends ShapedRecipes {
     /** Gets the position in the crafting grid where this recipe starts.
      * @return An array of 3 ints, {x, y, flipped}: flipped is a 0/1 boolean
      * representing whether the recipe is mirrored. */
-    private int[] getMatchPosition(InventoryCrafting inv) {
+    private int[] getMatchPosition(InventoryCrafting inv, World world) {
         
         for (int i = 0; i <= inv.getWidth() - this.recipeWidth; i++) {
 
             for (int j = 0; j <= inv.getHeight() - this.recipeHeight; j++) {
 
-                if (this.checkMatch(inv, i, j, true)) {
+                if (this.checkMatch(inv, i, j, true, world)) {
 
                     return new int[] {i, j, 1};
                 }
                 
-                if (this.checkMatch(inv, i, j, false)) {
+                if (this.checkMatch(inv, i, j, false, world)) {
                     
                     return new int[] {i, j, 0};
                 }
@@ -60,9 +63,9 @@ public class ShapedRecipe extends ShapedRecipes {
     /** Gets the number of items used from each input in the InventoryCrafting.
      * @return An array of ints corersponding to
      * number of items used from each ItemStack. */
-    public int[] getAmountsUsed(InventoryCrafting inv) {
+    public int[] getAmountsUsed(InventoryCrafting inv, World world) {
         
-        int[] match = getMatchPosition(inv);
+        int[] match = getMatchPosition(inv, world);
         int a = match[0];
         int b = match[1];
         boolean flag = match[2] == 1;
@@ -102,7 +105,7 @@ public class ShapedRecipe extends ShapedRecipes {
      * position and flipped according to flag.
      * @return Whether or not this recipe matches. */
     protected boolean checkMatch(InventoryCrafting inv, int a, int b,
-            boolean flag) {
+            boolean flag, World world) {
 
         for (int i = 0; i < inv.getWidth(); ++i) {
 
@@ -127,8 +130,25 @@ public class ShapedRecipe extends ShapedRecipes {
                 }
 
                 ItemStack inInv = inv.getStackInRowAndColumn(i, j);
-
-                if (inInv != ItemStack.EMPTY || required != ItemStack.EMPTY) {
+                
+                if (required.getItem() == ModRecipes.rot) {
+                    
+                    if (inInv.getItem() instanceof ItemEdibleDecayable ||
+                            inInv.getItem() instanceof ItemCarcassDecayable) {
+                        
+                        if (!inInv.getCapability(ModCaps.CAP_DECAY, null)
+                                .isRot(world)) {
+                            
+                            return false;
+                        }
+                        
+                    } else {
+                        
+                        return false;
+                    }
+                    
+                } else if (inInv != ItemStack.EMPTY ||
+                        required != ItemStack.EMPTY) {
 
                     if (inInv.isEmpty() && !required.isEmpty() ||
                             !inInv.isEmpty() && required.isEmpty()) {

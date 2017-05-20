@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.items.ItemJj;
+import com.jayavery.jjmod.tileentities.TECrop;
 import net.minecraft.block.Block ;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -73,10 +75,21 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         IBlockState newState = state.withProperty(AGE, 0);
         world.setBlockState(pos, newState);
         
+        float yieldMultiplier = world.getBlockState(pos.down()).getBlock()
+                .isFertile(world, pos.down()) ? wetMultiplier : 1;
+                
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TECrop) {
+            
+            yieldMultiplier *= ((TECrop) tileEntity).getMultiplier();
+        }
+        
         if (!world.isRemote) {
             
             spawnAsEntity(world, pos, ItemJj.newStack(this.cropRef.get(),
-                    this.yieldRef.apply(world.rand), world));
+                    (int) (this.yieldRef.apply(world.rand) * yieldMultiplier),
+                    world));
         }
         
         return true;
@@ -113,7 +126,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         public Bean() {
             
-            super("bean", 3, () -> ModItems.bean, (rand) -> 3, 0.4F, 0.2F);
+            super("bean", 3, () -> ModItems.bean, (rand) -> 3, 0.2F, 0.2F);
         }
 
         @Override
@@ -129,7 +142,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         public Tomato() {
             
-            super("tomato", 2, () -> ModItems.tomato, (rand) -> 1, 0.4F, 0.2F);
+            super("tomato", 2, () -> ModItems.tomato, (rand) -> 1, 0.2F, 0.2F);
         }
 
         @Override
@@ -145,7 +158,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         public Berry() {
             
-            super("berry", 2, () -> ModItems.berry, (rand) -> 8, 0.4F, 0.2F);
+            super("berry", 2, () -> ModItems.berry, (rand) -> 8, 0.2F, 0.2F);
         }
 
         @Override

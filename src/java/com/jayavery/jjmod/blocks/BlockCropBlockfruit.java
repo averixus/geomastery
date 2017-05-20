@@ -127,7 +127,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         
         public Pumpkin() {
             
-            super("pumpkin_crop", 0.3F, 0.2F, () -> ModBlocks.pumpkinFruit,
+            super("pumpkin_crop", 0.15F, 0.2F, () -> ModBlocks.pumpkinFruit,
                     () -> ModItems.seedPumpkin);
         }
 
@@ -146,7 +146,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         
         public Melon() {
             
-            super("melon_crop", 0.4F, 0.2F, () -> ModBlocks.melonFruit,
+            super("melon_crop", 0.2F, 0.2F, () -> ModBlocks.melonFruit,
                     () -> ModItems.seedMelon);
         }
 

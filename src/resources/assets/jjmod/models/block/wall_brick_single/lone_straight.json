@@ -1,0 +1,44 @@
+{
+"textures": {
+    "brick0": "jjmod:blocks/complex/brick0",
+    "brick2": "jjmod:blocks/complex/brick2",
+    "brick4": "jjmod:blocks/complex/brick4",
+    "particle": "jjmod:blocks/complex/brick0"
+},
+"elements": [ 
+{
+    "from": [ 4, 0, 0 ],
+    "to": [ 12, 4, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 8, 0 ], "texture": "#brick4", "cullface": "down" },
+        "up":    { "uv": [ 0, 0, 8, 16 ], "texture": "#brick4" },
+        "north": { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0", "cullface": "north" },
+        "south": { "uv": [ 4, 12, 12, 16 ], "texture": "#brick0", "cullface": "south" },
+        "west":  { "uv": [ 0, 12, 16, 16 ], "texture": "#brick0" },
+        "east":  { "uv": [ 0, 12, 16, 16 ], "texture": "#brick0" }
+    }
+},
+{
+    "from": [ 5, 4, 0 ],
+    "to": [ 11, 10, 16 ],
+    "faces": {
+        "north": { "uv": [ 5, 6, 11, 12 ], "texture": "#brick0", "cullface": "north" },
+        "south": { "uv": [ 5, 6, 11, 12 ], "texture": "#brick0", "cullface": "south" },
+        "west":  { "uv": [ 0, 6, 16, 12 ], "texture": "#brick0" },
+        "east":  { "uv": [ 0, 6, 16, 12 ], "texture": "#brick0" }
+    }
+},
+{
+    "from": [ 4, 10, 0 ],
+    "to": [ 12, 12, 16 ],
+    "faces": {
+        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#stone" },
+        "up":    { "uv": [ 8, 0, 16, 16 ], "texture": "#brick4" },
+        "north": { "uv": [ 4, 4, 12, 6 ], "texture": "#brick0", "cullface": "north" },
+        "south": { "uv": [ 4, 4, 12, 6 ], "texture": "#brick0", "cullface": "south" },
+        "west":  { "uv": [ 0, 0, 16, 2 ], "texture": "#brick2" },
+        "east":  { "uv": [ 0, 0, 16, 2 ], "texture": "#brick2" }
+    }
+}
+]
+}

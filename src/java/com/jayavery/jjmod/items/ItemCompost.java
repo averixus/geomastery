@@ -1,9 +1,15 @@
 package com.jayavery.jjmod.items;
 
+import java.util.ArrayList;
+import com.jayavery.jjmod.blocks.BlockCrop;
+import com.jayavery.jjmod.container.ContainerInventory;
+import com.jayavery.jjmod.tileentities.TECrop;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -13,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Compost fertiliser item. */
 public class ItemCompost extends ItemJj {
     
     public ItemCompost() {
@@ -24,19 +31,47 @@ public class ItemCompost extends ItemJj {
     
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        
-        int grade = stack.getMetadata();
-        return super.getUnlocalizedName() + "_grade_" + grade;
+
+        return super.getUnlocalizedName() + "_grade_" + stack.getMetadata();
     }
     
+    /** Applies the stack's fertiliser level to right-clicked crop. */
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn,
-            BlockPos pos, EnumHand hand, EnumFacing facing,
+    public EnumActionResult onItemUse(EntityPlayer player, World world,
+            BlockPos targetPos, EnumHand hand, EnumFacing targetSide,
             float hitX, float hitY, float hitZ) {
         
-        return EnumActionResult.SUCCESS; // TODO fertilise crops
+        if (world.isRemote) {
+            
+            return EnumActionResult.SUCCESS;
+        }
+        
+        ItemStack stack = player.getHeldItem(hand);
+        Block targetBlock = world.getBlockState(targetPos).getBlock();
+        TileEntity tileEntity = world.getTileEntity(targetPos);
+        
+        if (targetBlock instanceof BlockCrop && tileEntity instanceof TECrop) {
+            
+            TECrop tileCrop = (TECrop) tileEntity;
+            
+            if (tileCrop.applyFertiliser(stack.getMetadata())) {
+                
+                world.playEvent(2005, targetPos, 0);
+                
+                if (!player.capabilities.isCreativeMode) {
+                    
+                    stack.shrink(1);
+                    ContainerInventory.updateHand(player, hand);
+                }
+                
+                return EnumActionResult.SUCCESS;
+            }
+        }
+        
+        return EnumActionResult.FAIL;
     }
     
+    /** Variants to put in creative inventory. */
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(Item item, CreativeTabs tab,
@@ -47,5 +82,4 @@ public class ItemCompost extends ItemJj {
             subItems.add(new ItemStack(item, 1, i));
         }
     }
-
 }

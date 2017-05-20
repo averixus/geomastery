@@ -1,4 +1,4 @@
 {
-    "model": "jjmod:item",
+    "parent": "item/generated",
     "textures": { "layer0": "jjmod:items/vault_brick" }
 }
