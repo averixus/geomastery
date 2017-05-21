@@ -244,6 +244,7 @@ tile.jjmod:block_candle_beeswax.name=Beeswax Candle
 tile.jjmod:block_candle_tallow.name=Tallow Candle
 tile.jjmod:block_torch_tallow.name=Tallow Torch
 tile.jjmod:block_torch_tar.name=Tar Torch
+tile.jjmod:block_lamp_clay.name=Clay Lamp
 tile.jjmod:block_carcass_chicken.name=Chicken Carcass
 tile.jjmod:block_carcass_cowpart.name=Cow Carcass Part
 tile.jjmod:block_carcass_pig.name=Pig Carcass

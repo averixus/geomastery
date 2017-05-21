@@ -167,4 +167,21 @@ public abstract class BlockLight extends BlockBuilding {
                 BlockNew.BLIP[(facing.getHorizontalIndex() + 2) % 4];
         }
     }
+    
+    public static class Lamp extends BlockLight {
+        
+        public Lamp(String name) {
+            
+            super(name, 14, -1);
+        }
+        
+        @Override
+        public AxisAlignedBB getBoundingBox(IBlockState state,
+                IBlockAccess world, BlockPos pos) {
+            
+            EnumFacing facing = state.getValue(FACING);
+            return facing == EnumFacing.UP ? BlockNew.CENTRE_FOUR :
+                BlockNew.BLIP[(facing.getHorizontalIndex() + 2) % 4];
+        }
+    }
 }

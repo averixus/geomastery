@@ -98,6 +98,7 @@ public class ModBlocks {
     public static BlockLight candleTallow;
     public static BlockLight torchTallow;
     public static BlockLight torchTar;
+    public static BlockLight lampClay;
 
     public static BlockCarcass carcassChicken;
     public static BlockCarcass carcassCowpart;
@@ -245,6 +246,7 @@ public class ModBlocks {
                 0.02F), 15);
         register(torchTallow = new BlockLight.Torch("torch_tallow", 0.005F), 4);
         register(torchTar = new BlockLight.Torch("torch_tar", 0.02F), 4);
+        register(lampClay = new BlockLight.Lamp("lamp_clay"), 4);
 
         register(carcassChicken = new BlockCarcass.Chicken());
         register(carcassCowpart = new BlockCarcass.Cowpart(), true);

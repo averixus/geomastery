@@ -324,8 +324,9 @@ public class DefaultCapPlayer implements ICapPlayer {
                         .withProperty(BlockInvisibleLight.LIGHT,
                         newLightLevel));
                 this.lastLightPos = newPos;
-                this.lastLightLevel = newLightLevel;
             }
+            
+            this.lastLightLevel = newLightLevel;
         }
     }
     

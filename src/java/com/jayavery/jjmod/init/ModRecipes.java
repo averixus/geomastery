@@ -381,6 +381,9 @@ public class ModRecipes {
                 "B", "B", 'B', ModItems.beeswax);
         CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.torchTallow, 4),
                 "T", "S", 'T', ModItems.tallow, 'S', Items.STICK);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(ModBlocks.lampClay),
+                "H", "T", "C", 'H', ModItems.twineHemp,
+                'T', ModItems.tallow, 'C', ModItems.clay);
     }
 
     /** Adds all recipes to forge. */
