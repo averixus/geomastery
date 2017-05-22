@@ -3,18 +3,21 @@ package com.jayavery.jjmod.blocks;
 import java.util.List;
 import java.util.function.Supplier;
 import com.google.common.collect.Lists;
+import com.jayavery.jjmod.items.ItemBlockplacer;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 /** Paving slab block. */
 public class BlockSlab extends BlockBuilding implements IDoublingBlock {
@@ -22,9 +25,10 @@ public class BlockSlab extends BlockBuilding implements IDoublingBlock {
     /** Whether this is a double block. */
     private final boolean isDouble;
     /** The item dropped by this block. */
-    private final Supplier<Item> item;
+    private final Supplier<ItemBlockplacer.Doubling<BlockSlab>> item;
 
-    public BlockSlab(String name, boolean isDouble, Supplier<Item> item) {
+    public BlockSlab(String name, boolean isDouble,
+            Supplier<ItemBlockplacer.Doubling<BlockSlab>> item) {
         
         super(BlockMaterial.STONE_FURNITURE, name, null, 2F, ToolType.PICKAXE);
         this.isDouble = isDouble;
@@ -40,7 +44,7 @@ public class BlockSlab extends BlockBuilding implements IDoublingBlock {
     @Override
     public boolean shouldDouble(IBlockState state, EnumFacing side) {
         
-        return true;
+        return side == EnumFacing.UP;
     }
     
     @Override
@@ -63,12 +67,31 @@ public class BlockSlab extends BlockBuilding implements IDoublingBlock {
         return this.isDouble() ? FULL_BLOCK_AABB : EIGHT;
     }
 
+    /** Drops handled manually for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
-
+        
         return Lists.newArrayList(new ItemStack(this.item.get(),
                 this.isDouble() ? 2 : 1));
+    }
+    
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world,
+            BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    
+        spawnAsEntity(world, pos, new ItemStack(this.item.get()));
+        
+        if (this.isDouble()) {
+            
+            world.setBlockState(pos, this.item.get().single.getDefaultState());
+            return false;
+            
+        } else {
+            
+            world.setBlockToAir(pos);
+            return true;
+        }
     }
 
     @Override

@@ -1,12 +1,15 @@
 package com.jayavery.jjmod.blocks;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jayavery.jjmod.blocks.BlockVault.EnumShape;
 import com.jayavery.jjmod.blocks.BlockWallLog.EnumStraight;
+import com.jayavery.jjmod.items.ItemBlockplacer;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDelayedMultipart;
 import com.jayavery.jjmod.utilities.IDoublingBlock;
@@ -19,6 +22,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -37,17 +41,23 @@ public class BlockWallComplex extends BlockBuilding
         implements IDoublingBlock, IDelayedMultipart {
         
     public static final UnlistedPropertyEnum<EnumConnection> NORTH =
-            new UnlistedPropertyEnum<EnumConnection>("north", EnumConnection.class);
+            new UnlistedPropertyEnum<EnumConnection>("north",
+            EnumConnection.class);
     public static final UnlistedPropertyEnum<EnumConnection> EAST =
-            new UnlistedPropertyEnum<EnumConnection>("east", EnumConnection.class);
+            new UnlistedPropertyEnum<EnumConnection>("east",
+            EnumConnection.class);
     public static final UnlistedPropertyEnum<EnumConnection> SOUTH =
-            new UnlistedPropertyEnum<EnumConnection>("south", EnumConnection.class);
+            new UnlistedPropertyEnum<EnumConnection>("south",
+            EnumConnection.class);
     public static final UnlistedPropertyEnum<EnumConnection> WEST =
-            new UnlistedPropertyEnum<EnumConnection>("west", EnumConnection.class);
+            new UnlistedPropertyEnum<EnumConnection>("west",
+            EnumConnection.class);
     public static final UnlistedPropertyEnum<EnumPosition> POSITION =
-            new UnlistedPropertyEnum<EnumPosition>("position", EnumPosition.class);
+            new UnlistedPropertyEnum<EnumPosition>("position",
+            EnumPosition.class);
     public static final UnlistedPropertyEnum<EnumStraight> STRAIGHT =
-            new UnlistedPropertyEnum<EnumStraight>("straight", EnumStraight.class);
+            new UnlistedPropertyEnum<EnumStraight>("straight",
+            EnumStraight.class);
     
     /** Convenience map of EnumFacing to connection properties. */
     public static final Map<EnumFacing, UnlistedPropertyEnum<EnumConnection>>
@@ -60,14 +70,15 @@ public class BlockWallComplex extends BlockBuilding
     }
     
     /** The item this block drops. */
-    protected final Supplier<Item> item;
+    protected final Supplier<ItemBlockplacer.Doubling<BlockWallComplex>> item;
     /** Whether this block is double. */
     protected final boolean isDouble;
     /** Delayed multipart loader for this block. */
     protected final Supplier<ICustomModelLoader> loader;
 
     public BlockWallComplex(Material material, String name, float hardness,
-            ToolType harvestTool, boolean isDouble, Supplier<Item> item,
+            ToolType harvestTool, boolean isDouble,
+            Supplier<ItemBlockplacer.Doubling<BlockWallComplex>> item,
             Supplier<ICustomModelLoader> loader) {
         
         super(material, name, CreativeTabs.BUILDING_BLOCKS,
@@ -135,7 +146,10 @@ public class BlockWallComplex extends BlockBuilding
 
         if (blockAbove instanceof BlockWallComplex) {
             
-            hasAbove = this.hasConnection(world, posAbove, direction);
+            hasAbove = this.hasConnection(world, posAbove, direction) ||
+                    world.getBlockState(posAbove.offset(direction))
+                    .getBlock() instanceof BlockVault;
+            
         }
         
         BlockPos posBelow = pos.down();
@@ -349,12 +363,30 @@ public class BlockWallComplex extends BlockBuilding
         }
     }
     
+    /** Drops handled manually for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
         
-        return Lists.newArrayList(new ItemStack(this.item.get(),
-                this.isDouble() ? 2 : 1));
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world,
+            BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    
+        spawnAsEntity(world, pos, new ItemStack(this.item.get()));
+        
+        if (this.isDouble()) {
+            
+            world.setBlockState(pos, this.item.get().single.getDefaultState());
+            return false;
+            
+        } else {
+            
+            world.setBlockToAir(pos);
+            return true;
+        }
     }
     
     @Override

@@ -32,7 +32,7 @@
     "from": [ 4, 0, 4 ],
     "to": [ 12, 3, 12 ],
     "faces": {
-        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick", "cullface": "down" },
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick" },
         "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick2" },
         "north": { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
         "south": { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },

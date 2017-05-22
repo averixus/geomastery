@@ -1,22 +1,24 @@
 package com.jayavery.jjmod.blocks;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jayavery.jjmod.items.ItemBlockplacer;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -44,12 +46,13 @@ public class BlockWallRough extends BlockBuilding implements IDoublingBlock {
     }
     
     /** The item this block drops. */
-    protected final Supplier<Item> item;
+    protected final Supplier<ItemBlockplacer.Doubling<BlockWallRough>> item;
     /** Whether this block is double. */
     protected final boolean isDouble;
     
     public BlockWallRough(Material material, String name, float hardness,
-            ToolType harvestTool, boolean isDouble, Supplier<Item> item) {
+            ToolType harvestTool, boolean isDouble,
+            Supplier<ItemBlockplacer.Doubling<BlockWallRough>> item) {
         
         super(material, name, CreativeTabs.BUILDING_BLOCKS,
                 hardness, harvestTool);
@@ -177,12 +180,30 @@ public class BlockWallRough extends BlockBuilding implements IDoublingBlock {
         }
     }
     
+    /** Drops handled manually for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
 
-        return Lists.newArrayList(new ItemStack(this.item.get(),
-                this.isDouble() ? 2 : 1));
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world,
+            BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    
+        spawnAsEntity(world, pos, new ItemStack(this.item.get()));
+        
+        if (this.isDouble()) {
+            
+            world.setBlockState(pos, this.item.get().single.getDefaultState());
+            return false;
+            
+        } else {
+            
+            world.setBlockToAir(pos);
+            return true;
+        }
     }
 
     @Override

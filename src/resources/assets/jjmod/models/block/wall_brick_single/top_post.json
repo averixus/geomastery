@@ -22,7 +22,7 @@
     "from": [ 5, 0, 5 ],
     "to": [ 11, 14, 11 ],
     "faces": {
-        "down":  { "uv": [ 11, 11, 5, 5 ], "texture": "#brickpavetest", "cullface": "down" },
+        "down":  { "uv": [ 11, 11, 5, 5 ], "texture": "#brickpavetest" },
         "north": { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" },
         "south": { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" },
         "west":  { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" },

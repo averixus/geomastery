@@ -148,7 +148,7 @@ public class BlockPitchroof extends BlockBuilding {
             
         } else {
             
-            for (AxisAlignedBB box : STAIRS_STRAIGHT[facing]) {
+            for (AxisAlignedBB box : STAIRS_STRAIGHT[(facing + 1) % 4]) {
                 
                 addCollisionBoxToList(pos, entityBox, list, box);
             }

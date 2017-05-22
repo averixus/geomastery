@@ -34,7 +34,7 @@
     "from": [ 7, 0, 7 ],
     "to": [ 9, 1, 9 ],
     "faces": {
-        "down":  { "uv": [ 10, 8, 7, 5 ], "texture": "#clay2", "cullface": "down" },
+        "down":  { "uv": [ 10, 8, 7, 5 ], "texture": "#clay2" },
         "north": { "uv": [ 7, 0, 10, 1 ], "texture": "#clay2" },
         "south": { "uv": [ 1, 7, 4, 8 ], "texture": "#clay2" },
         "west":  { "uv": [ 7, 7, 10, 8 ], "texture": "#clay2" },

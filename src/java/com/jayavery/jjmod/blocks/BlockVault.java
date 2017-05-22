@@ -1,9 +1,11 @@
 package com.jayavery.jjmod.blocks;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
+import com.jayavery.jjmod.items.ItemBlockplacer;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDoublingBlock;
@@ -15,6 +17,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -36,8 +39,8 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
     private final boolean isDouble;
     private final BlockWeight weight;
     
-    public BlockVault(String name, Supplier<Item> item, boolean isDouble,
-            BlockWeight weight) {
+    public BlockVault(String name, Supplier<Item> item,
+            boolean isDouble, BlockWeight weight) {
         
         super(BlockMaterial.STONE_FURNITURE, name,
                 CreativeTabs.BUILDING_BLOCKS, 2, ToolType.PICKAXE);
@@ -68,12 +71,32 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
         return this.isDouble;
     }
     
+    /** Drops handled manually for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
         
-        return Lists.newArrayList(new ItemStack(this.item.get(),
-                this.isDouble() ? 2 : 1));
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world,
+            BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    
+        spawnAsEntity(world, pos, new ItemStack(this.item.get()));
+        
+        if (this.isDouble() &&
+                this.item.get() instanceof ItemBlockplacer.Doubling<?>) {
+            
+            world.setBlockState(pos, ((ItemBlockplacer.Doubling<?>) this.item
+                    .get()).single.getDefaultState());
+            return false;
+            
+        } else {
+            
+            world.setBlockToAir(pos);
+            return true;
+        }
     }
     
     @Override

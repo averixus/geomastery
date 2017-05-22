@@ -104,8 +104,8 @@ public abstract class ItemBlockplacer extends ItemJj {
     public static class Doubling<B extends BlockBuilding & IDoublingBlock>
             extends ItemBlockplacer {
         
-        private final B single;
-        private final B duble;
+        public final B single;
+        public final B duble;
         
         public Doubling(String name, int stackSize, SoundType sound,
                 B single, B duble) {
