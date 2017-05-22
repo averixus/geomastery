@@ -94,14 +94,16 @@ public class BlockFlatroof extends BlockBuilding {
             BlockPos feetPos = new BlockPos(living.posX,
                     living.getEntityBoundingBox().minY + 0.5D, living.posZ);
 
-            if (feetPos.equals(pos)) {
+            if (feetPos.equals(pos) && !BlockWeight.getWeight(world
+                    .getBlockState(pos.down()).getBlock())
+                    .canSupport(this.getWeight())) {
             
                 world.destroyBlock(pos, true);
             }
         }
     }
     
-    /** @return Whether the given position is a valid supported thatch block. */
+    /** @return Whether the given position is a valid supported roof block. */
     protected boolean isValidSupport(World world, BlockPos pos) {
         
         boolean isRoof = world.getBlockState(pos).getBlock()

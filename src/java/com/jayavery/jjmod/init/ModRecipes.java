@@ -313,7 +313,7 @@ public class ModRecipes {
                 "TTT", 'T', ModItems.timber);
         WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.flatroofPole, 2), 
                 "TTT", "T T", 'T', ModItems.pole);
-        WOODWORKING.addShapedRecipe(new ItemStack(ModItems.wallLog, 4),
+        WOODWORKING.addShapedRecipe(new ItemStack(ModBlocks.wallLog, 4),
                 "LLL", "LLL", 'L', ModItems.log);
         
         for (Item metal : METALS) {

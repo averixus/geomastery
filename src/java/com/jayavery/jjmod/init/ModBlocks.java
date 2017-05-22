@@ -191,8 +191,7 @@ public class ModBlocks {
     public static BlockWallRough wallRoughDouble; 
     public static BlockWallComplex wallStoneSingle;
     public static BlockWallComplex wallStoneDouble;
-    public static BlockWallLog wallLogSingle; 
-    public static BlockWallLog wallLogDouble; 
+    public static BlockWallLog wallLog; 
     public static BlockWallThin wallPole;
     public static BlockWallThin fence;
     public static BlockWallThin frame;
@@ -390,10 +389,7 @@ public class ModBlocks {
                 new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
                 "wall_stone_double", 3F, ToolType.PICKAXE,
                 true, () -> ModItems.wallStone, WallStoneDouble::new));
-        registerItemless(wallLogSingle =
-                new BlockWallLog("wall_log_single", 1F, false));
-        registerItemless(wallLogDouble =
-                new BlockWallLog("wall_log_double", 3F, true));
+        register(wallLog = new BlockWallLog());
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE), 4);
         register(fence = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
@@ -401,8 +397,10 @@ public class ModBlocks {
         register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "frame", 2F, ToolType.AXE), 6);
         
-        register(stairsBrick = new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, ToolType.PICKAXE), 2);
-        register(stairsStone = new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, ToolType.PICKAXE), 2);
+        register(stairsBrick = new BlockStairsComplex(BlockMaterial
+                .STONE_FURNITURE, "stairs_brick", 3F, ToolType.PICKAXE), 2);
+        register(stairsStone = new BlockStairsComplex(BlockMaterial
+                .STONE_FURNITURE, "stairs_stone", 3F, ToolType.PICKAXE), 2);
         register(stairsWood = new BlockStairsStraight.Joining("stairs_wood",
                 2F), 4);
         register(stairsPole = new BlockStairsStraight.Single("stairs_pole",

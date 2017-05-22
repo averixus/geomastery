@@ -13,6 +13,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -22,37 +23,21 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Crossing log wall block. */
-public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
+public class BlockWallLog extends BlockBuilding {
     
     public static final PropertyEnum<EnumStraight> STRAIGHT =
             PropertyEnum.create("straight", EnumStraight.class);
-    
-    /* Whether this block is double. */
-    protected final boolean isDouble;
         
-    public BlockWallLog(String name, float hardness, boolean isDouble) {
+    public BlockWallLog() {
         
-        super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.BUILDING_BLOCKS,
-                hardness, ToolType.AXE);
-        this.isDouble = isDouble;
+        super(BlockMaterial.WOOD_FURNITURE, "wall_log",
+                CreativeTabs.BUILDING_BLOCKS, 1F, ToolType.AXE);
     }
     
     @Override
     public BlockWeight getWeight() {
         
         return BlockWeight.MEDIUM;
-    }
-    
-    @Override
-    public boolean shouldDouble(IBlockState state, EnumFacing side) {
-        
-        return side != EnumFacing.UP;
-    }
-    
-    @Override
-    public boolean isDouble() {
-        
-        return this.isDouble;
     }
     
     protected boolean hasConnection(IBlockAccess world,
@@ -90,32 +75,24 @@ public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
                 
-        if (this.isDouble()) {
+        switch (this.getActualState(state, world, pos).getValue(STRAIGHT)) {
             
-            return FULL_BLOCK_AABB;
-
-        } else {
-            
-            switch (this.getActualState(state, world, pos).getValue(STRAIGHT)) {
+            case NS:
+                return CENTRE_HALF[1];
                 
-                case NS:
-                    return CENTRE_HALF[1];
-                    
-                case EW:
-                    return CENTRE_HALF[0];
-                    
-                default:
-                    return FULL_BLOCK_AABB;
-            }           
-        }
+            case EW:
+                return CENTRE_HALF[0];
+                
+            default:
+                return FULL_BLOCK_AABB;
+        }  
     }
     
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
 
-        return Lists.newArrayList(new ItemStack(ModItems.wallLog,
-                this.isDouble() ? 2 : 1));
+        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
     }
 
     @Override
@@ -155,8 +132,8 @@ public class BlockWallLog extends BlockBuilding implements IDoublingBlock {
         }
         
         /** @return The EnumStraight for given properties when always straight. */
-        public static EnumStraight getAlwaysStraight(boolean north, boolean east,
-                boolean south, boolean west) {
+        public static EnumStraight getAlwaysStraight(boolean north,
+                boolean east, boolean south, boolean west) {
             
             if ((north || south) && !east && !west) {
                 

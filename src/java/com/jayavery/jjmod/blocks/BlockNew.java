@@ -71,9 +71,12 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0.25,0,0,0.75,0.75,1)};
     /** Beams, indexed by axis. */
     public static final AxisAlignedBB[] BEAM =
-            {new AxisAlignedBB(0.37,0.5,0,0.63,0.9,1),
+            {new AxisAlignedBB(0.37,0.5,0,0.63,1,1),
             new AxisAlignedBB(0,0.5,0.37,1,0.9,0.63)};
-    
+    public static final AxisAlignedBB[] BEAM_THIN =
+            {new AxisAlignedBB(0.43,0.75,0,0.56,1,1),
+            new AxisAlignedBB(0,0.75,0.43,1,1,0.56)};
+            
     // Wall part boxes
     
     public static final AxisAlignedBB CENTRE_POST =

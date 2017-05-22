@@ -1,0 +1,16 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "straight": {
+            "no": { "model": "jjmod:wall_log/cross" },
+            "ns": { "model": "jjmod:wall_log/straight" },
+            "ew": { "model": "jjmod:wall_log/straight", "y": 90 }
+        },
+        "inventory": [{
+            "model": "jjmod:item",
+            "textures": {
+                "layer0": "jjmod:items/wall_log"
+            }
+        }]
+    }
+}

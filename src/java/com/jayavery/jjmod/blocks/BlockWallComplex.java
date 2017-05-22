@@ -214,7 +214,8 @@ public class BlockWallComplex extends BlockBuilding
     }
     
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return state;
     }
@@ -230,9 +231,11 @@ public class BlockWallComplex extends BlockBuilding
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        EnumConnection north = this.connectionType(world, pos, EnumFacing.NORTH);
+        EnumConnection north = this.connectionType(world,
+                pos, EnumFacing.NORTH);
         EnumConnection east = this.connectionType(world, pos, EnumFacing.EAST);
-        EnumConnection south = this.connectionType(world, pos, EnumFacing.SOUTH);
+        EnumConnection south = this.connectionType(world,
+                pos, EnumFacing.SOUTH);
         EnumConnection west = this.connectionType(world, pos, EnumFacing.WEST);
         
         extState = extState.withProperty(NORTH, north);

@@ -242,7 +242,7 @@ public abstract class ItemBlockplacer extends ItemJj {
         /** Minimum length this item's beam structure can span. */
         private int minLength;
         /** Maximm length this item's beam structure can span. */
-        private int maxLength;
+        public int maxLength;
         /** Beam block of this item's structure. */
         private BlockBeam block;
 

@@ -6,13 +6,18 @@ import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.tileentities.TECompost;
 import com.jayavery.jjmod.utilities.BlockMaterial;
+import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -20,6 +25,8 @@ import net.minecraft.world.World;
 
 /** Compost heap block. */
 public class BlockCompostheap extends BlockComplexAbstract {
+    
+    public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     public BlockCompostheap() {
         
@@ -48,9 +55,19 @@ public class BlockCompostheap extends BlockComplexAbstract {
     }
     
     @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos,
+            EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
+            EntityLivingBase placer, EnumHand hand) {
+        
+        return this.getDefaultState().withProperty(FACING,
+                placer.getHorizontalFacing());
+    }
+
+    
+    @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this);
+        return new BlockStateContainer(this, FACING);
     }
     
     @Override
@@ -63,13 +80,14 @@ public class BlockCompostheap extends BlockComplexAbstract {
     @Override
     public int getMetaFromState(IBlockState state) {
         
-        return 0;
+        return state.getValue(FACING).getHorizontalIndex();
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
-        return this.getDefaultState();
+        return this.getDefaultState().withProperty(FACING,
+                EnumFacing.getHorizontal(meta));
     }
     
     @Override

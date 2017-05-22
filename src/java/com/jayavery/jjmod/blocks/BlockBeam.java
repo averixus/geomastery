@@ -263,7 +263,18 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
         EnumAxis axis = extState.getValue(AXIS);
         int ordinal = axis == null ? 0 : axis.ordinal();
         
-        return BEAM[ordinal];
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TEBeam &&
+                ((TEBeam) tileEntity).getItem() != null &&
+                ((TEBeam) tileEntity).getItem().maxLength > 5) {
+        
+            return BEAM[ordinal];
+            
+        } else {
+            
+            return BEAM_THIN[ordinal];
+        }
     }
     
     @Override
@@ -283,7 +294,18 @@ public class BlockBeam extends BlockBuilding implements IDelayedMultipart {
         EnumAxis axis = extState.getValue(AXIS);
         int ordinal = axis == null ? 0 : axis.ordinal();
         
-        addCollisionBoxToList(pos, entityBox, list, BEAM[ordinal]);
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TEBeam &&
+                ((TEBeam) tileEntity).getItem() != null &&
+                ((TEBeam) tileEntity).getItem().maxLength > 5) {
+        
+            addCollisionBoxToList(pos, entityBox, list, BEAM[ordinal]);
+            
+        } else {
+            
+            addCollisionBoxToList(pos, entityBox, list, BEAM_THIN[ordinal]);
+        }
         
         if (extState.getValue(FLOOR) != EnumFloor.NONE) {
             

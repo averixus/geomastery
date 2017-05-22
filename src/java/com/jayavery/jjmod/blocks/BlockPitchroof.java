@@ -117,7 +117,8 @@ public class BlockPitchroof extends BlockBuilding {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         return FULL_BLOCK_AABB;
     }

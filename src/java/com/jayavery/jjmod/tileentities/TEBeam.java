@@ -3,8 +3,8 @@ package com.jayavery.jjmod.tileentities;
 import java.util.function.Supplier;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.init.ModPackets;
+import com.jayavery.jjmod.items.ItemBlockplacer;
 import com.jayavery.jjmod.packets.FloorUpdateClient;
-import com.jayavery.jjmod.utilities.IMultipart;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,10 +24,10 @@ public class TEBeam extends TileEntity {
     /** The floor on this beam block. */
     private EnumFloor floor;
     /** The beam item associated with this block. */
-    private Item item;
+    private ItemBlockplacer.Beam item;
     
     /** Sets the given state information. */
-    public void setState(EnumFacing facing, EnumPartBeam part, Item item) {
+    public void setState(EnumFacing facing, EnumPartBeam part, ItemBlockplacer.Beam item) {
         
         this.facing = facing;
         this.part = part;
@@ -75,7 +75,7 @@ public class TEBeam extends TileEntity {
     }
     
     /** @return The item associated with this beam. */
-    public Item getItem() {
+    public ItemBlockplacer.Beam getItem() {
         
         return this.item;
     }

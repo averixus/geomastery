@@ -353,7 +353,6 @@ public class ModItems {
     public static ItemBlockplacer.Doubling<BlockWallRough> wallMud;
     public static ItemBlockplacer.Doubling<BlockWallRough> wallRough;
     public static ItemBlockplacer.Doubling<BlockWallComplex> wallStone;
-    public static ItemBlockplacer.Doubling<BlockWallLog> wallLog;
     
     public static ItemBlockplacer.Door doorPole;
     public static ItemBlockplacer.Door doorWood;
@@ -826,9 +825,6 @@ public class ModItems {
         register(wallStone = new ItemBlockplacer.Doubling<BlockWallComplex>(
                 "wall_stone", 2, SoundType.STONE, ModBlocks.wallStoneSingle,
                 ModBlocks.wallStoneDouble));
-        register(wallLog = new ItemBlockplacer.Doubling<BlockWallLog>(
-                "wall_log", 2, SoundType.WOOD,ModBlocks.wallLogSingle,
-                ModBlocks.wallLogDouble));
         
         register(doorPole = new ItemBlockplacer.Door(ModBlocks.doorPole,
                 "door_pole"), true);
