@@ -47,10 +47,6 @@ import com.jayavery.jjmod.blocks.BlockWindow;
 import com.jayavery.jjmod.blocks.BlockWood;
 import com.jayavery.jjmod.render.block.BeamThick;
 import com.jayavery.jjmod.render.block.BeamThin;
-import com.jayavery.jjmod.render.block.WallBrickDouble;
-import com.jayavery.jjmod.render.block.WallBrickSingle;
-import com.jayavery.jjmod.render.block.WallStoneDouble;
-import com.jayavery.jjmod.render.block.WallStoneSingle;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDelayedMultipart;
@@ -357,38 +353,7 @@ public class ModBlocks {
         register(seedlingOrange = new BlockSeedling.Orange());
         register(seedlingBanana = new BlockSeedling.Banana());
         
-       registerItemless(wallBrickSingle =
-                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-                "wall_brick_single", 2F, ToolType.PICKAXE,
-                false, () -> ModItems.wallBrick, WallBrickSingle::new));
-        registerItemless(wallBrickDouble =
-                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-                "wall_brick_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallBrick, WallBrickDouble::new)); 
-        registerItemless(wallMudSingle =
-                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
-                "wall_mud_single", 1F, ToolType.PICKAXE,
-                false, () -> ModItems.wallMud));
-        registerItemless(wallMudDouble =
-                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
-                "wall_mud_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallMud));
-        registerItemless(wallRoughSingle =
-                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
-                "wall_rough_single", 1.5F, ToolType.PICKAXE,
-                false, () -> ModItems.wallRough));
-        registerItemless(wallRoughDouble =
-                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
-                "wall_rough_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallRough));
-        registerItemless(wallStoneSingle =
-                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-                "wall_stone_single", 2F, ToolType.PICKAXE,
-                false, () -> ModItems.wallStone, WallStoneSingle::new));
-        registerItemless(wallStoneDouble =
-                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
-                "wall_stone_double", 3F, ToolType.PICKAXE,
-                true, () -> ModItems.wallStone, WallStoneDouble::new));
+        // Register walls in priority order for correct rendering
         register(wallLog = new BlockWallLog());
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE), 4);
@@ -396,6 +361,38 @@ public class ModBlocks {
                 "fence", 2F, ToolType.AXE));
         register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "frame", 2F, ToolType.AXE), 6);
+        registerItemless(wallMudSingle =
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_mud_single", 1F, ToolType.PICKAXE, false,
+                () -> ModItems.wallMud));
+        registerItemless(wallRoughSingle =
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_rough_single", 1.5F, ToolType.PICKAXE,
+                false, () -> ModItems.wallRough));
+        registerItemless(wallBrickSingle =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_brick_single", 2F, ToolType.PICKAXE,
+                false, () -> ModItems.wallBrick));
+        registerItemless(wallStoneSingle =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_stone_single", 2F, ToolType.PICKAXE,
+                false, () -> ModItems.wallStone));
+        registerItemless(wallMudDouble =
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_mud_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallMud));
+        registerItemless(wallRoughDouble =
+                new BlockWallRough(BlockMaterial.STONE_FURNITURE,
+                "wall_rough_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallRough));
+        registerItemless(wallBrickDouble =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_brick_double", 3F, ToolType.PICKAXE,
+                true,  () -> ModItems.wallBrick)); 
+        registerItemless(wallStoneDouble =
+                new BlockWallComplex(BlockMaterial.STONE_FURNITURE,
+                "wall_stone_double", 3F, ToolType.PICKAXE,
+                true, () -> ModItems.wallStone));
         
         register(stairsBrick = new BlockStairsComplex(BlockMaterial
                 .STONE_FURNITURE, "stairs_brick", 3F, ToolType.PICKAXE), 2);

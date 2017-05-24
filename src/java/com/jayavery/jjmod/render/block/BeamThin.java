@@ -23,6 +23,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
+/** Renderer for thin beams. */
 public class BeamThin extends DelayedBakingAbstract {
     
     // Models for all possible parts
@@ -57,8 +58,7 @@ public class BeamThin extends DelayedBakingAbstract {
 
     public BeamThin() {
         
-        super("jjmod:blocks/complex/softwood1",
-                ModBlocks.beamThin.getRegistryName());
+        super(ModBlocks.beamThin.getRegistryName());
     }
 
     @Override
@@ -106,12 +106,14 @@ public class BeamThin extends DelayedBakingAbstract {
         endsEW.put(BlockBeam.BACKBEAM, 180);
         ends.put(EnumAxis.EW, endsEW);
         
-        Map<EnumFloor, Pair<IModel, Integer>> floorsNS = Maps.newEnumMap(EnumFloor.class);
+        Map<EnumFloor, Pair<IModel, Integer>> floorsNS =
+                Maps.newEnumMap(EnumFloor.class);
         floorsNS.put(EnumFloor.POLE, Pair.of(poleMiddle, 90));
         floorsNS.put(EnumFloor.WOOD, Pair.of(woodMiddle, 90));
         middles.put(EnumAxis.NS, floorsNS);
         
-        Map<EnumFloor, Pair<IModel, Integer>> floorsEW = Maps.newEnumMap(EnumFloor.class);
+        Map<EnumFloor, Pair<IModel, Integer>> floorsEW =
+                Maps.newEnumMap(EnumFloor.class);
         floorsEW.put(EnumFloor.POLE, Pair.of(poleMiddle, 0));
         floorsEW.put(EnumFloor.WOOD, Pair.of(woodMiddle, 0));
         middles.put(EnumAxis.EW, floorsEW);
@@ -119,7 +121,8 @@ public class BeamThin extends DelayedBakingAbstract {
         Map<EnumFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
                 floorNSParts = Maps.newEnumMap(EnumFloor.class);
         
-        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleNSParts = Maps.newHashMap();
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleNSParts =
+                Maps.newHashMap();
         poleNSParts.put(BlockBeam.FRONT, Pair.of(poleEnd, 90));
         poleNSParts.put(BlockBeam.BACK, Pair.of(poleEnd, 270));
         poleNSParts.put(BlockBeam.LEFT, Pair.of(poleRight, 90));
@@ -130,7 +133,8 @@ public class BeamThin extends DelayedBakingAbstract {
         poleNSParts.put(BlockBeam.FR, Pair.of(poleCornerLeft, 90));
         floorNSParts.put(EnumFloor.POLE, poleNSParts);
         
-        Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodNSParts = Maps.newHashMap();
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodNSParts =
+                Maps.newHashMap();
         woodNSParts.put(BlockBeam.FRONT, Pair.of(woodEnd, 90));
         woodNSParts.put(BlockBeam.BACK, Pair.of(woodEnd, 270));
         woodNSParts.put(BlockBeam.LEFT, Pair.of(woodLeft, 90));
@@ -144,7 +148,8 @@ public class BeamThin extends DelayedBakingAbstract {
         Map<EnumFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
                 floorEWParts = Maps.newEnumMap(EnumFloor.class);
 
-        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleEWParts = Maps.newHashMap();
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleEWParts =
+                Maps.newHashMap();
         poleEWParts.put(BlockBeam.FRONT, Pair.of(poleEnd, 180));
         poleEWParts.put(BlockBeam.BACK, Pair.of(poleEnd, 0));
         poleEWParts.put(BlockBeam.LEFT, Pair.of(poleLeft, 0));
@@ -155,7 +160,8 @@ public class BeamThin extends DelayedBakingAbstract {
         poleEWParts.put(BlockBeam.FR, Pair.of(poleCornerLeft, 180));
         floorEWParts.put(EnumFloor.POLE, poleEWParts);
         
-        Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodEWParts = Maps.newHashMap();
+        Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodEWParts =
+                Maps.newHashMap();
         woodEWParts.put(BlockBeam.FRONT, Pair.of(woodEnd, 180));
         woodEWParts.put(BlockBeam.BACK, Pair.of(woodEnd, 0));
         woodEWParts.put(BlockBeam.LEFT, Pair.of(woodRight, 0));
@@ -173,23 +179,10 @@ public class BeamThin extends DelayedBakingAbstract {
     }
     
     @Override
-    public List<BakedQuad> getQuads(IBlockState state, EnumFacing facing,
-            long rand) {
+    protected List<BakedQuad> getAllQuads(IBlockState state,
+            EnumFacing facing, long rand) {
 
-        if (!(state instanceof IExtendedBlockState)) {
-            
-            return Collections.emptyList();
-        }
-        
         IExtendedBlockState extState = (IExtendedBlockState) state;
-        ImmutableMap<IUnlistedProperty<?>,Optional<?>> extProps =
-                extState.getUnlistedProperties();
-        
-        if (this.cache.containsKey(extProps)) {
-            
-            return this.cache.get(extProps);
-        }
-        
         List<BakedQuad> result = Lists.newArrayList();
         
         EnumAxis axis = extState.getValue(BlockBeam.AXIS);
@@ -243,7 +236,6 @@ public class BeamThin extends DelayedBakingAbstract {
             }
         }
         
-        this.cache.put(extProps, result);
         return result;
     }
     

@@ -4,12 +4,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jayavery.jjmod.blocks.BlockWall;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -27,31 +30,63 @@ import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Delayed baking cached multipart block model. */
 public abstract class DelayedBakingAbstract
         implements IBakedModel, IModel, ICustomModelLoader {
 
+    /** Cached model quads for states. */
+    protected final Map<Pair<ImmutableMap<IProperty<?>,Comparable<?>>,
+            ImmutableMap<IUnlistedProperty<?>,Optional<?>>>,
+            List<BakedQuad>> cache = Maps.newHashMap();
     /** VertexFormat from the original {@code bake}. */
     protected VertexFormat format;
     /** Texture getter from the original {@code bake}. */
     protected Function<ResourceLocation, TextureAtlasSprite> textureGetter;
-    /** Texture name for this model's breaking particle. */
-    protected final String particle;
     /** Registry name of this model's block. */
     protected final ResourceLocation block;
     /** Textures this model needs to load. */
     protected final List<ResourceLocation> textures = Lists.newArrayList();
-    /** Cached model quads for states. */
-    protected final Map<ImmutableMap<IUnlistedProperty<?>,Optional<?>>, List<BakedQuad>> cache = Maps.newHashMap();
     
-    public DelayedBakingAbstract(String particle, ResourceLocation block) {
+    public DelayedBakingAbstract(ResourceLocation block) {
         
-        this.particle = particle;
         this.block = block;
     }
     
+    /** @return Make the list of quads for this state. */
+    protected abstract List<BakedQuad> getAllQuads(IBlockState state,
+            EnumFacing side, long rand);
+    
+    @Override
+    public List<BakedQuad> getQuads(IBlockState state,
+            EnumFacing side, long rand) {
+        
+        if (!(state instanceof IExtendedBlockState) || 
+                !(state.getBlock() instanceof BlockWall)) {
+            
+            return Collections.emptyList();
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
+        ImmutableMap<IUnlistedProperty<?>,Optional<?>> extProps =
+                extState.getUnlistedProperties();
+        ImmutableMap<IProperty<?>,Comparable<?>> props =
+                extState.getProperties();
+        Pair<ImmutableMap<IProperty<?>,Comparable<?>>,
+                ImmutableMap<IUnlistedProperty<?>,Optional<?>>>
+                pair = Pair.of(props, extProps);
+        
+        if (this.cache.containsKey(pair)) {
+            
+            return this.cache.get(pair);
+        }
+
+        List<BakedQuad> result = this.getAllQuads(state, side, rand);
+        this.cache.put(pair, result);
+        return result;
+    }
     
     /** Adds the quads for the given model with given rotation to the list. */
     protected void addQuads(List<BakedQuad> list, IModel model,
@@ -107,7 +142,7 @@ public abstract class DelayedBakingAbstract
     public TextureAtlasSprite getParticleTexture() {
 
         return Minecraft.getMinecraft().getTextureMapBlocks()
-                .getAtlasSprite(this.particle);
+                .getAtlasSprite(this.textures.get(0).toString());
     }
         
     @Override
