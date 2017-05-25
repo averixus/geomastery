@@ -3,6 +3,7 @@ package com.jayavery.jjmod.render.block;
 import java.util.List;
 import com.google.common.collect.Lists;
 import com.jayavery.jjmod.blocks.BlockWall;
+import com.jayavery.jjmod.blocks.BlockBeam.EnumAxis;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.util.EnumFacing;
@@ -16,10 +17,13 @@ public class WallRendererSingle extends WallRenderer {
     
     private IModel post;
     private IModel side;
-
-    public WallRendererSingle(ResourceLocation block) {
+    
+    private final int baseAngle;
+    
+    public WallRendererSingle(ResourceLocation block, int baseAngle) {
         
         super(block);
+        this.baseAngle = baseAngle;
     }
     
     @Override
@@ -29,19 +33,112 @@ public class WallRendererSingle extends WallRenderer {
         IExtendedBlockState extState = (IExtendedBlockState) state;
         List<BakedQuad> result = Lists.newArrayList();
         
+        // Extract block data
+        
+        BlockWall thisBlock = (BlockWall) extState.getBlock();
+        boolean thisTop = extState.getValue(BlockWall.TOP);
+        boolean thisBot = extState.getValue(BlockWall.BOTTOM);
+        
+        BlockWall northBlock = extState.getValue(BlockWall.NORTH);
+        boolean northPri = thisBlock.compareTo(northBlock) > 0;
+        BlockWall northSide = northPri ? northBlock : thisBlock;
+        boolean northBot = thisBot && extState.getValue(BlockWall.N_BOTTOM);
+
+        BlockWall eastBlock = extState.getValue(BlockWall.EAST);
+        boolean eastPri = thisBlock.compareTo(eastBlock) > 0;
+        BlockWall eastSide = eastPri ? eastBlock : thisBlock;
+        boolean eastBot = thisBot && extState.getValue(BlockWall.E_BOTTOM);
+
+        BlockWall southBlock = extState.getValue(BlockWall.SOUTH);
+        boolean southPri = thisBlock.compareTo(southBlock) > 0;
+        BlockWall southSide = southPri ? southBlock : thisBlock;
+        boolean southBot = thisBot && extState.getValue(BlockWall.S_BOTTOM);
+
+        BlockWall westBlock = extState.getValue(BlockWall.WEST);
+        boolean westPri = thisBlock.compareTo(westBlock) > 0;
+        BlockWall westSide = westPri ? westBlock : thisBlock;
+        boolean westBot = thisBot && extState.getValue(BlockWall.W_BOTTOM);
+        
         // Post
         
         this.addQuads(result, this.post, 0, state, side, rand);
         
         // Sides
         
-        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+        if (northBlock != null) {
             
-            if (extState.getValue(BlockWall.blocks.get(facing)) != null) {
+            boolean northTop = extState.getValue(BlockWall.N_TOP);
+            
+            if (northBlock.isDouble() != thisBlock.isDouble()) {
                 
-                this.addQuads(result, this.side, this.getSideAngle(facing),
-                        state, side, rand);
+                northTop = northPri ? northTop : thisTop;
+                
+            } else {
+                
+                northTop = northTop || thisTop;
             }
+            
+            WallRenderer northRenderer = northSide.getLoader();
+            IModel northModel = northRenderer.getSideModel(northTop, northBot);
+            this.addQuads(result, northModel, northRenderer
+                    .getSideAngle(EnumFacing.NORTH), state, side, rand);
+        }
+        
+        if (eastBlock != null) {
+            
+            boolean eastTop = extState.getValue(BlockWall.E_TOP);
+            
+            if (eastBlock.isDouble() != thisBlock.isDouble()) {
+                
+                eastTop = eastPri ? eastTop : thisTop;
+                
+            } else {
+                
+                eastTop = eastTop || thisTop;
+            }
+            
+            WallRenderer eastRenderer = eastSide.getLoader();
+            IModel eastModel = eastRenderer.getSideModel(eastTop, eastBot);
+            this.addQuads(result, eastModel, eastRenderer
+                    .getSideAngle(EnumFacing.EAST), state, side, rand);
+        }
+        
+        if (southBlock != null) {
+            
+            boolean southTop = extState.getValue(BlockWall.S_TOP);
+            
+            if (southBlock.isDouble() != thisBlock.isDouble()) {
+                
+                southTop = southPri ? southTop : thisTop;
+                
+            } else {
+                
+                southTop = southTop || thisTop;
+            }
+            
+            WallRenderer southRenderer = southSide.getLoader();
+            IModel southModel = southRenderer.getSideModel(southTop, southBot);
+            this.addQuads(result, southModel, southRenderer
+                    .getSideAngle(EnumFacing.SOUTH), state, side, rand);
+        }
+        
+        if (westBlock != null) {
+            
+            boolean westTop = extState.getValue(BlockWall.W_TOP);
+            
+            if (westBlock.isDouble() != thisBlock.isDouble()) {
+                
+                westTop = westPri ? westTop : thisTop;
+                
+            } else {
+                
+                westTop = westTop || thisTop;
+            }
+
+            WallRenderer westRenderer = westSide.getLoader();
+            IModel westModel = westRenderer.getSideModel(westTop, westBot);
+            this.addQuads(result, westModel, westRenderer
+                    .getSideAngle(EnumFacing.WEST), state, side, rand);
         }
         
         return result;
@@ -68,6 +165,6 @@ public class WallRendererSingle extends WallRenderer {
     @Override
     public int getSideAngle(EnumFacing facing) {
         
-        return 90 * facing.getHorizontalIndex();
+        return this.baseAngle + (90 * facing.getHorizontalIndex());
     }
 }

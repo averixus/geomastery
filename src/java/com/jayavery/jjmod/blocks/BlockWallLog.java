@@ -1,18 +1,18 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.List;
+import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import com.jayavery.jjmod.init.ModItems;
+import com.jayavery.jjmod.render.block.WallRenderer;
+import com.jayavery.jjmod.render.block.WallRendererStraight;
 import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
-import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -21,17 +21,37 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.IExtendedBlockState;
 
 /** Crossing log wall block. */
-public class BlockWallLog extends BlockBuilding {
-    
-    public static final PropertyEnum<EnumStraight> STRAIGHT =
-            PropertyEnum.create("straight", EnumStraight.class);
+public class BlockWallLog extends BlockWall {
         
     public BlockWallLog() {
         
-        super(BlockMaterial.WOOD_FURNITURE, "wall_log",
-                CreativeTabs.BUILDING_BLOCKS, 1F, ToolType.AXE);
+        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, ToolType.AXE);
+    }
+    
+    @Override
+    public WallRenderer getLoader() {
+        
+        if (this.renderer == null) {
+            
+            this.renderer = new WallRendererStraight(this.getRegistryName());
+        }
+        
+        return this.renderer;
+    }
+    
+    @Override
+    public boolean isDouble() {
+        
+        return false;
+    }
+    
+    @Override
+    public boolean shouldDouble(IBlockState state, EnumFacing facing) {
+        
+        return false;
     }
     
     @Override
@@ -40,52 +60,48 @@ public class BlockWallLog extends BlockBuilding {
         return BlockWeight.MEDIUM;
     }
     
-    protected boolean hasConnection(IBlockAccess world,
-            BlockPos pos, EnumFacing direction) {
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
+                
+        state = this.getExtendedState(state, world, pos);
         
-        IBlockState state = world.getBlockState(pos.offset(direction));
-        Block block = state.getBlock();
-        
-        if (!(block instanceof BlockBuilding)) {
-        
-            return BlockWeight.getWeight(block) != BlockWeight.NONE;
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return;
         }
         
-        BlockBuilding building = (BlockBuilding) block;
-        return building.shouldConnect(world, state, pos,
-                direction.getOpposite());
-    }
-    
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
+        IExtendedBlockState extState = (IExtendedBlockState) state; 
         
-        boolean north = this.hasConnection(world, pos, EnumFacing.NORTH);
-        boolean east = this.hasConnection(world, pos, EnumFacing.EAST);
-        boolean south = this.hasConnection(world, pos, EnumFacing.SOUTH);
-        boolean west = this.hasConnection(world, pos, EnumFacing.WEST);        
+        addCollisionBoxToList(pos, entityBox, list, CENTRE_POST_THIN);
         
-        state = state.withProperty(STRAIGHT, EnumStraight
-                .getAlwaysStraight(north, east, south, west));
-        
-        return state;
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-                
-        switch (this.getActualState(state, world, pos).getValue(STRAIGHT)) {
+        if (extState.getValue(NORTH) != null) {
             
-            case NS:
-                return CENTRE_HALF[1];
-                
-            case EW:
-                return CENTRE_HALF[0];
-                
-            default:
-                return FULL_BLOCK_AABB;
-        }  
+            addCollisionBoxToList(pos, entityBox, list, BRANCH_NORTH_THIN);
+        }
+        
+        if (extState.getValue(EAST) != null) {
+            
+            addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST_THIN);
+        }
+        
+        if (extState.getValue(SOUTH) != null) {
+            
+            addCollisionBoxToList(pos, entityBox, list, BRANCH_SOUTH_THIN);
+        }
+        
+        if (extState.getValue(WEST) != null) {
+            
+            addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST_THIN);
+        } 
+    }
+    
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
+            BlockPos pos) {
+
+        return CENTRE_POST;
     }
     
     @Override
@@ -93,78 +109,5 @@ public class BlockWallLog extends BlockBuilding {
             IBlockState state, int fortune) {
 
         return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-    }
-
-    @Override
-    public BlockStateContainer createBlockState() {
-
-        return new BlockStateContainer(this, STRAIGHT);
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState();
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return 0;
-    }
-
-    /** Enum defining possible straight directions of walls. */
-    public enum EnumStraight implements IStringSerializable {
-        
-        NO("no"), NS("ns"), EW("ew");
-        
-        private String name;
-        
-        private EnumStraight(String name) {
-            
-            this.name = name;
-        }
-
-        @Override
-        public String getName() {
-
-            return this.name;
-        }
-        
-        /** @return The EnumStraight for given properties when always straight. */
-        public static EnumStraight getAlwaysStraight(boolean north,
-                boolean east, boolean south, boolean west) {
-            
-            if ((north || south) && !east && !west) {
-                
-                return NS;
-                
-            } else if ((east || west) && !north && !south) {
-                
-                return EW;
-                
-            } else {
-                
-                return NO;                
-            }
-        }
-        
-        /** @return The EnumStraight for given properties when only straight. */
-        public static EnumStraight getOnlyStraight(boolean north, boolean east,
-                boolean south, boolean west) {
-            
-            if (north && south && !east && !west) {
-                
-                return NS;
-                
-            } else if (!north && !south && east && west) {
-                
-                return EW;
-                
-            } else {
-                
-                return NO;
-            }
-        }
     }
 }

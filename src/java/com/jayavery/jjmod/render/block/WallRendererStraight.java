@@ -81,7 +81,7 @@ public class WallRendererStraight extends WallRenderer {
     @Override
     protected int getSideAngle(EnumFacing facing) {
         
-        return 90 * facing.getHorizontalIndex();
+        return 180 + (90 * facing.getHorizontalIndex());
     }
     
     /** @return Offset rotation angle for this block's straight models. */

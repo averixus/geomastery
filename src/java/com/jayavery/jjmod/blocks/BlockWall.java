@@ -56,13 +56,13 @@ public abstract class BlockWall extends BlockBuilding
             new UnlistedPropertyBool("w_bottom");
     
     /** Convenience map of facing to walltype properties. */
-    public static final Map<EnumFacing, UnlistedPropertyWall>
+    private static final Map<EnumFacing, UnlistedPropertyWall>
             blocks = Maps.newEnumMap(EnumFacing.class);
     /** Convenience map of facing to top properties. */
-    public static final Map<EnumFacing, UnlistedPropertyBool> tops =
+    private static final Map<EnumFacing, UnlistedPropertyBool> tops =
             Maps.newEnumMap(EnumFacing.class);
     /** Convenience map of facing to bottom propertyies. */
-    public static final Map<EnumFacing, UnlistedPropertyBool> bottoms =
+    private static final Map<EnumFacing, UnlistedPropertyBool> bottoms =
             Maps.newEnumMap(EnumFacing.class);
     static {
         blocks.put(EnumFacing.NORTH, NORTH);

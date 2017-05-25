@@ -23,18 +23,29 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 /** Wall block with no height or thickness variation. */
 public class BlockWallThin extends BlockWall {
     
+    /** Base angle for rendering sides. */
+    private final int baseAngle;
+    
     public BlockWallThin(BlockMaterial material, String name,
             float hardness, ToolType toolType) {
                 
-        super(material, name, hardness, toolType);
+        this(material, name, hardness, toolType, 180);
     }
 
+    public BlockWallThin(BlockMaterial material, String name,
+            float hardness, ToolType toolType, int baseAngle) {
+        
+        super(material, name, hardness, toolType);
+        this.baseAngle = baseAngle;
+    }
+    
     @Override
     public WallRenderer getLoader() {
         
         if (this.renderer == null) {
             
-            this.renderer = new WallRendererSingle(this.getRegistryName());
+            this.renderer = new WallRendererSingle(this.getRegistryName(),
+                    this.baseAngle);
         }
         
         return this.renderer;

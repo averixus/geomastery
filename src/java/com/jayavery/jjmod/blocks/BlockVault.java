@@ -148,29 +148,7 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
         return this.hasValidSide(world, pos, direction) &&
                 this.hasValidSide(world, pos, direction.rotateY());
     }
-    
-    /** Checks whether the vault at the given pos is the centre
-     * corner from three sides, centred on the given direction.
-     * @return Whether this is a centre corner. */
-    private boolean isCentreCorner(IBlockAccess world,
-            BlockPos pos, EnumFacing direction) {
-
-        Block left = world.getBlockState(pos.offset(direction.rotateYCCW()))
-                .getBlock();
-        Block mid = world.getBlockState(pos.offset(direction)).getBlock();
-        Block right = world.getBlockState(pos.offset(direction.rotateY()))
-                .getBlock();
-        
-        boolean leftValid = BlockWeight.getWeight(left)
-                .canSupport(this.getWeight()) || left instanceof BlockVault;
-        boolean midValid = BlockWeight.getWeight(mid)
-                .canSupport(this.getWeight()) || mid instanceof BlockVault;
-        boolean rightValid = BlockWeight.getWeight(right)
-                .canSupport(this.getWeight()) || right instanceof BlockVault;
-        
-        return leftValid && midValid && rightValid;
-    }
-    
+   
     /** Checks whether the vault at the given pos is a lintel
      * in the axis of the given direction.
      * @return Whether this is a lintel. */
@@ -259,16 +237,6 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
             if (this.hasLintel(world, pos, facing)) {
                 
                 state = state.withProperty(SHAPE, EnumShape.LINTEL);
-                state = state.withProperty(FACING, facing);
-                return state;
-            }
-        }
-        
-        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-            
-            if (this.isCentreCorner(world, pos, facing)) {
-                
-                state = state.withProperty(SHAPE, EnumShape.SINGLE);
                 state = state.withProperty(FACING, facing);
                 return state;
             }

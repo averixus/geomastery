@@ -291,6 +291,7 @@ tile.jjmod:block_beehive.name=Beehive
 tile.jjmod:block_melon_fruit.name=Melon
 tile.jjmod:block_pumpkin_fruit.name=Pumpkin
 tile.jjmod:block_compostheap.name=Compost Heap
+tile.jjmod:block_frame.name=Frame
 tile.jjmod:block_vault_frame.name=Frame Vault
 tile.jjmod:block_window.name=Window
 tile.jjmod:block_flatroof_pole.name=Flat Pole Roof

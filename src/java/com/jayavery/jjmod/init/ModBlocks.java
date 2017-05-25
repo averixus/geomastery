@@ -358,7 +358,7 @@ public class ModBlocks {
         register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "wall_pole", 2F, ToolType.AXE), 4);
         register(fence = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
-                "fence", 2F, ToolType.AXE));
+                "fence", 2F, ToolType.AXE, 90));
         register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "frame", 2F, ToolType.AXE), 6);
         registerItemless(wallMudSingle =
@@ -568,6 +568,14 @@ public class ModBlocks {
                     return loc;
                 }
             });
+            
+            if (item instanceof ItemBlock) {
+                
+                ModelLoader.setCustomModelResourceLocation(item, 0,
+                        new ModelResourceLocation(block.getRegistryName(),
+                        "inventory"));
+                
+            }
             
         } else if (block instanceof BlockCropBlockfruit) {
             

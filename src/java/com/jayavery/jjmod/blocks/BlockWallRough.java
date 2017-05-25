@@ -45,7 +45,7 @@ public class BlockWallRough extends BlockWall implements IDoublingBlock {
         
         if (this.renderer == null) {
             
-            this.renderer = new WallRendererSingle(this.getRegistryName());
+            this.renderer = new WallRendererSingle(this.getRegistryName(), 0);
         }
         
         return this.renderer;
