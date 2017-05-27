@@ -68,15 +68,17 @@ public class WallRendererComplex extends WallRenderer {
 
         // Straight models if applicable
         
-        if (!northPri && !southPri && eastSide == null && thisTop &&
-                westSide == null && northBot == southBot == thisBot) {
+        if (!this.isDouble && !northPri && !southPri && thisTop &&
+                eastSide == null && westSide == null &&
+                northBot == southBot == thisBot) {
             
             this.addQuads(result, this.getStraightModel(thisBot),
                     this.getStraightAngle(EnumAxis.NS), state, side, rand);
             return result;
             
-        } else if (!eastPri && !westPri && northSide == null && thisTop &&
-                southSide == null && eastBot == westBot == thisBot) {
+        } else if (!this.isDouble && !eastPri && !westPri && thisTop &&
+                northSide == null && southSide == null &&
+                eastBot == westBot == thisBot) {
             
             this.addQuads(result, this.getStraightModel(thisBot),
                     this.getStraightAngle(EnumAxis.EW), state, side, rand);
