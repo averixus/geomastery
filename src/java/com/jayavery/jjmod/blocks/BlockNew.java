@@ -19,6 +19,8 @@ public class BlockNew extends Block {
     
     public static final AxisAlignedBB TOP_HALF =
             new AxisAlignedBB(0,0.5,0,1,1,1);
+    public static final AxisAlignedBB TOP_FIFTH =
+            new AxisAlignedBB(0,0.8,0,1,1,1);
     public static final AxisAlignedBB FOURTEEN =
             new AxisAlignedBB(0,0,0,1,0.87,1);
     public static final AxisAlignedBB TWELVE =
@@ -184,37 +186,37 @@ public class BlockNew extends Block {
     /** Straight vault arrays, indexed by facing. */
     public static final AxisAlignedBB[][] VAULT_STRAIGHT =
             {{new AxisAlignedBB(0,0.25,0,1,1,0.25),
-            new AxisAlignedBB(0,0.75,0.25,1,1,0.75)},
+            new AxisAlignedBB(0,0.8,0.25,1,1,0.75)},
             {new AxisAlignedBB(0,0.25,0,0.25,1,1),
-            new AxisAlignedBB(0.25,0.75,0,0.75,1,1)},
+            new AxisAlignedBB(0.25,0.8,0,0.75,1,1)},
             {new AxisAlignedBB(0,0.25,0.75,1,1,1),
-            new AxisAlignedBB(0,0.75,0.25,1,1,0.75)},
+            new AxisAlignedBB(0,0.8,0.25,1,1,0.75)},
             {new AxisAlignedBB(0.75,0.25,0,1,1,1),
-            new AxisAlignedBB(0.25,0.75,0,0.75,1,1)}};
+            new AxisAlignedBB(0.25,0.8,0,0.75,1,1)}};
     /** External vault arrays, indexed by facing. */
     public static final AxisAlignedBB[][] VAULT_EXTERNAL =
             {{new AxisAlignedBB(0.75,0.25,0,1,1,0.25),
-            new AxisAlignedBB(0.25,0.75,0,1,1,0.75)},
+            new AxisAlignedBB(0.25,0.8,0,1,1,0.75)},
             {new AxisAlignedBB(0,0.25,0,0.25,1,0.25),
-            new AxisAlignedBB(0,0.75,0,0.75,1,0.75)},
+            new AxisAlignedBB(0,0.8,0,0.75,1,0.75)},
             {new AxisAlignedBB(0,0.25,0.75,0.25,1,1),
-            new AxisAlignedBB(0,0.75,0.25,0.75,1,1)},
+            new AxisAlignedBB(0,0.8,0.25,0.75,1,1)},
             {new AxisAlignedBB(0.75,0.25,0.75,1,1,1),
-            new AxisAlignedBB(0.25,0.75,0.25,1,1,1)}};
+            new AxisAlignedBB(0.25,0.8,0.25,1,1,1)}};
     /** Internal vault arrays, indexed by facing. */
     public static final AxisAlignedBB[][] VAULT_INTERNAL =
             {{new AxisAlignedBB(0,0.25,0,1,1,0.25),
             new AxisAlignedBB(0,0.25,0.25,0.25,1,1),
-            new AxisAlignedBB(0.25,0.75,0.25,1,0,0)},
+            new AxisAlignedBB(0.25,0.8,0.25,1,0,0)},
             {new AxisAlignedBB(0,0.25,0,0.25,1,1),
             new AxisAlignedBB(0.25,0.25,0.75,1,1,1),
-            new AxisAlignedBB(0.25,0.75,0,0,0,0.75)},
+            new AxisAlignedBB(0.25,0.8,0,0,0,0.75)},
             {new AxisAlignedBB(0,0.25,0.75,1,1,1),
             new AxisAlignedBB(0.75,0.25,0,1,1,0.75),
-            new AxisAlignedBB(0,0.75,1,0.75,0,0.75)},
+            new AxisAlignedBB(0,0.8,1,0.75,0,0.75)},
             {new AxisAlignedBB(0.75,0.25,0,1,1,1),
             new AxisAlignedBB(0,0.25,0,0.75,1,0.25),
-            new AxisAlignedBB(1,0.75,0.25,0.75,0,1)}};
+            new AxisAlignedBB(1,0.8,0.25,0.75,0,1)}};
     
     // Rotating doors
     

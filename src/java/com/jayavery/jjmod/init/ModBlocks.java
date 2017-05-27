@@ -355,10 +355,10 @@ public class ModBlocks {
         
         // Register walls in priority order for correct rendering
         register(wallLog = new BlockWallLog());
-        register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
-                "wall_pole", 2F, ToolType.AXE), 4);
         register(fence = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "fence", 2F, ToolType.AXE, 90));
+        register(wallPole = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
+                "wall_pole", 2F, ToolType.AXE), 4);
         register(frame = new BlockWallThin(BlockMaterial.WOOD_FURNITURE,
                 "frame", 2F, ToolType.AXE), 6);
         registerItemless(wallMudSingle =
