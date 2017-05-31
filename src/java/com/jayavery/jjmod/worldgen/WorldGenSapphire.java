@@ -16,7 +16,7 @@ public class WorldGenSapphire extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        return 1;
+        return this.rand.nextInt(2) + 1;
     }
 
     @Override

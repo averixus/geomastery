@@ -15,7 +15,7 @@ public class WorldGenEmerald extends WorldGenStone {
     @Override
     protected int getVeinSize() {
 
-        return this.rand.nextInt(59) + 1;
+        return this.rand.nextInt(39) + 1;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class WorldGenRedstone extends WorldGenStone {
     @Override
     protected boolean shouldGenBlock() {
 
-        if (this.rand.nextFloat() < 0.5) {
+        if (this.rand.nextFloat() < 0.2) {
 
             return true;
         }

@@ -10,7 +10,7 @@ public class WorldGenIron extends WorldGenStone {
 
     public WorldGenIron(World world, Random rand) {
 
-        super(world, rand, Blocks.IRON_ORE.getDefaultState(), 20, 45, 10, 1);
+        super(world, rand, Blocks.IRON_ORE.getDefaultState(), 15, 50, 20, 1);
     }
 
     @Override
