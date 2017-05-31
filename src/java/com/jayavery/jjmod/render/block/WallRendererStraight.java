@@ -73,7 +73,7 @@ public class WallRendererStraight extends WallRenderer {
     }
 
     @Override
-    protected IModel getSideModel(boolean isTop, boolean isBottom) {
+    protected IModel getConnectedSide(boolean isTop, boolean isBottom) {
         
         return this.side;
     }

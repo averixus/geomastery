@@ -1,6 +1,7 @@
 package com.jayavery.jjmod.blocks;
 
 import java.util.List;
+import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import com.jayavery.jjmod.main.GuiHandler.GuiList;
 import com.jayavery.jjmod.main.Jjmod;
@@ -11,6 +12,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -52,6 +54,23 @@ public class BlockCompostheap extends BlockComplexAbstract {
             IBlockAccess world, BlockPos pos) {
         
         return FULL_BLOCK_AABB;
+    }
+    
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
+        
+        EnumFacing facing = state.getValue(FACING);
+        int index = facing.getHorizontalIndex();
+        
+        for (int i = 0; i < 4; i++) {
+            
+            if (i != index) {
+                
+                addCollisionBoxToList(pos, entityBox, list, SIDE[i]);
+            }
+        }
     }
     
     @Override

@@ -8,6 +8,7 @@ import com.jayavery.jjmod.utilities.BlockMaterial;
 import com.jayavery.jjmod.utilities.BlockWeight;
 import com.jayavery.jjmod.utilities.IDoublingBlock;
 import com.jayavery.jjmod.utilities.ToolType;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,15 @@ public class BlockSlab extends BlockBuilding implements IDoublingBlock {
     @Override
     public BlockWeight getWeight() {
 
-        return BlockWeight.MEDIUM;
+        return BlockWeight.LIGHT;
+    }
+    
+    @Override
+    public boolean isValid(World world, BlockPos pos) {
+        
+        Block blockBelow = world.getBlockState(pos.down()).getBlock();
+        BlockWeight weightBelow = BlockWeight.getWeight(blockBelow);
+        return weightBelow.canSupport(BlockWeight.MEDIUM);
     }
     
     @Override

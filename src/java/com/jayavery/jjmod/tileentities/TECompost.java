@@ -1,17 +1,22 @@
 package com.jayavery.jjmod.tileentities;
 
+import java.util.List;
 import com.jayavery.jjmod.init.ModItems;
 import com.jayavery.jjmod.init.ModPackets;
 import com.jayavery.jjmod.items.ItemEdible;
 import com.jayavery.jjmod.packets.CompostPacketClient;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 
 /** TileEntity for compost heap. */
@@ -138,6 +143,23 @@ public class TECompost extends TEContainerAbstract implements ITickable {
         } else if (this.compostSpent > 0) {
             
             this.compostSpent = 0;
+        }
+        
+        double x = this.pos.getX();
+        double y = this.pos.getY();
+        double z = this.pos.getZ();
+                        
+        for (EntityItem item : this.world.<EntityItem>getEntitiesWithinAABB(
+                EntityItem.class, new AxisAlignedBB(x, y, z,
+                x + 1D, y + 1.5D, z + 1D), EntitySelectors.IS_ALIVE)) {
+                
+            ItemStack stack = item.getEntityItem();
+            
+            if (isCarbon(stack) || isNitrogen(stack)) {
+                
+                this.addInput(stack);
+                item.setDead();
+            }
         }
         
         this.sendProgressPacket();

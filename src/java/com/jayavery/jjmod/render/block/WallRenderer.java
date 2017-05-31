@@ -45,17 +45,25 @@ public abstract class WallRenderer extends DelayedBakingAbstract {
     }
 
     /** @return Model for this wall's side with given properties. */
-    protected abstract IModel getSideModel(boolean isTop, boolean isBottom);
+    protected abstract IModel getConnectedSide(boolean isTop,
+            boolean isBottom);
     /** @return Offset rotation angle for this block's side models. */
     protected abstract int getSideAngle(EnumFacing facing);
     
-    /** @return A model whose name begins with this block's name. */
+    /** Loads a model whose name begins with this block's name.
+     * @return The model or null if it failed to load. */
     protected IModel model(String name) {
         
         String path = this.block.toString().replace("block_", "block/");
-        return ModelLoaderRegistry.getModelOrLogError(
-                new ResourceLocation(path + name),
-                "Error loading model for delayed multipart wall "
-                + path + name + "!"); 
+        
+        try {
+            
+            return ModelLoaderRegistry.getModel(
+                    new ResourceLocation(path + name));
+       
+        } catch (Exception e) {
+            
+            return null;
+        } 
     }
 }

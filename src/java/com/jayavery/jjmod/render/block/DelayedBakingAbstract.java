@@ -91,13 +91,16 @@ public abstract class DelayedBakingAbstract
     /** Adds the quads for the given model with given rotation to the list. */
     protected void addQuads(List<BakedQuad> list, IModel model,
             int yRotate, IBlockState state, EnumFacing side, long rand) {
+        
+        if (model == null) {
+            
+            return;
+        }
 
         TRSRTransformation transform = new TRSRTransformation(ModelRotation
                 .getModelRotation(0, yRotate));
-
         IBakedModel baked = model.bake(transform, this.format,
                 this.textureGetter);
-
         list.addAll(baked.getQuads(state, side, rand));
     }
     

@@ -15,6 +15,7 @@ import com.jayavery.jjmod.main.Jjmod;
 import com.jayavery.jjmod.render.RenderFallingTreeBlock;
 import com.jayavery.jjmod.render.projectile.RenderArrowFactory;
 import com.jayavery.jjmod.render.projectile.RenderSpearFactory;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;

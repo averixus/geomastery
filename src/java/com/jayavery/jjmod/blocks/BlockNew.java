@@ -63,6 +63,12 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0.5,0,0,1,1,0.5),
             new AxisAlignedBB(0.5,0,0.5,1,1,1),
             new AxisAlignedBB(0,0,0.5,0.5,1,1)};
+    /** Whole sides, indexed by facing. */
+    public static final AxisAlignedBB[] SIDE = 
+            {new AxisAlignedBB(0,0,0,1,1,0.1),
+            new AxisAlignedBB(0.9,0,0,1,1,1),
+            new AxisAlignedBB(0,0,0.9,1,1,1),
+            new AxisAlignedBB(0,0,0,0.1,1,1)};
     /** Centre halves, indexed by axis. */
     public static final AxisAlignedBB[] CENTRE_HALF =
         {new AxisAlignedBB(0,0,0.25,1,1,0.75),
@@ -185,11 +191,11 @@ public class BlockNew extends Block {
     
     /** Straight vault arrays, indexed by facing. */
     public static final AxisAlignedBB[][] VAULT_STRAIGHT =
-            {{new AxisAlignedBB(0,0.25,0,1,1,0.25),
+            {{new AxisAlignedBB(0,0.25,0.75,1,1,1),
             new AxisAlignedBB(0,0.8,0.25,1,1,0.75)},
             {new AxisAlignedBB(0,0.25,0,0.25,1,1),
             new AxisAlignedBB(0.25,0.8,0,0.75,1,1)},
-            {new AxisAlignedBB(0,0.25,0.75,1,1,1),
+            {new AxisAlignedBB(0,0.25,0,1,1,0.25),
             new AxisAlignedBB(0,0.8,0.25,1,1,0.75)},
             {new AxisAlignedBB(0.75,0.25,0,1,1,1),
             new AxisAlignedBB(0.25,0.8,0,0.75,1,1)}};

@@ -25,7 +25,7 @@
     "faces": {
         "down":  { "uv": [ 16, 13.5, 0, 0 ], "texture": "#stone2" },
         "up":    { "uv": [ 0, 0, 16, 13.5 ], "texture": "#stone2", "cullface": "up" },
-        "north": { "uv": [ 0, 12.5, 16, 16 ], "texture": "#stonebrick", "cullface": "north" },
+        "north": { "uv": [ 0, 12.5, 16, 16 ], "texture": "#stonebrick" },
         "south": { "uv": [ 0, 12.5, 16, 16 ], "texture": "#stonebrick" },
         "west":  { "uv": [ 0, 12.5, 13.5, 16 ], "texture": "#stone2", "cullface": "west" },
         "east":  { "uv": [ 2.5, 12.5, 16, 16 ], "texture": "#stone2", "cullface": "east" }
@@ -37,6 +37,7 @@
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 9.5 ], "texture": "#stone2" },
         "up":    { "uv": [ 0, 9.5, 16, 16 ], "texture": "#stone2", "cullface": "up" },
+        "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#stonebrick", "cullface": "north" },
         "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#stonebrick" },
         "west":  { "uv": [ 9.5, 0, 16, 4 ], "texture": "#stonebrick", "cullface": "west" },
         "east":  { "uv": [ 0, 0, 6.5, 4 ], "texture": "#stonebrick", "cullface": "east" }
@@ -49,7 +50,7 @@
     "faces": {
         "down":  { "uv": [ 16, 10.5, 0, 3 ], "texture": "#stone2" },
         "up":    { "uv": [ 0, 3, 16, 10.5 ], "texture": "#stone2", "cullface": "up" },
-        "north": { "uv": [ 0, 9, 16, 12.5 ], "texture": "#stonebrick", "cullface": "north" },
+        "north": { "uv": [ 0, 9, 16, 12.5 ], "texture": "#stonebrick" },
         "south": { "uv": [ 0, 9, 16, 12.5 ], "texture": "#stonebrick" },
         "west":  { "uv": [ 3, 9, 10.5, 12.5 ], "texture": "#stone2", "cullface": "west" },
         "east":  { "uv": [ 5.5, 9, 13, 12.5 ], "texture": "#stone2", "cullface": "east" }
@@ -57,7 +58,7 @@
 },
 {
     "from": [ -0.01, 0, -5 ],
-    "to": [ 16.01, 16, 0 ],
+    "to": [ 16.01, 15.99, 0 ],
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 11 ], "texture": "#stone2", "cullface": "north" },
         "up":    { "uv": [ 0, 11, 16, 16 ], "texture": "#stone2", "cullface": "north" },

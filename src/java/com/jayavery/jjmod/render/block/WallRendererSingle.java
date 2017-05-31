@@ -17,6 +17,7 @@ public class WallRendererSingle extends WallRenderer {
     
     private IModel post;
     private IModel side;
+    private IModel unconnected = null;
     
     private final int baseAngle;
     
@@ -79,9 +80,15 @@ public class WallRendererSingle extends WallRenderer {
             }
             
             WallRenderer northRenderer = northSide.getLoader();
-            IModel northModel = northRenderer.getSideModel(northTop, northBot);
+            IModel northModel = northRenderer
+                    .getConnectedSide(northTop, northBot);
             this.addQuads(result, northModel, northRenderer
                     .getSideAngle(EnumFacing.NORTH), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.NORTH), state, side, rand);
         }
         
         if (eastBlock != null) {
@@ -98,9 +105,14 @@ public class WallRendererSingle extends WallRenderer {
             }
             
             WallRenderer eastRenderer = eastSide.getLoader();
-            IModel eastModel = eastRenderer.getSideModel(eastTop, eastBot);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.EAST), state, side, rand);
         }
         
         if (southBlock != null) {
@@ -117,9 +129,14 @@ public class WallRendererSingle extends WallRenderer {
             }
             
             WallRenderer southRenderer = southSide.getLoader();
-            IModel southModel = southRenderer.getSideModel(southTop, southBot);
+            IModel southModel = southRenderer.getConnectedSide(southTop, southBot);
             this.addQuads(result, southModel, southRenderer
                     .getSideAngle(EnumFacing.SOUTH), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.SOUTH), state, side, rand);
         }
         
         if (westBlock != null) {
@@ -136,9 +153,14 @@ public class WallRendererSingle extends WallRenderer {
             }
 
             WallRenderer westRenderer = westSide.getLoader();
-            IModel westModel = westRenderer.getSideModel(westTop, westBot);
+            IModel westModel = westRenderer.getConnectedSide(westTop, westBot);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.WEST), state, side, rand);
         }
         
         return result;
@@ -149,6 +171,7 @@ public class WallRendererSingle extends WallRenderer {
         
         this.post = this.model("/post");
         this.side = this.model("/side");
+        this.unconnected = this.model("/unconnected");
         
         this.textures.addAll(this.post.getTextures());
         this.textures.addAll(this.side.getTextures());
@@ -157,7 +180,7 @@ public class WallRendererSingle extends WallRenderer {
     }
     
     @Override
-    public IModel getSideModel(boolean isTop, boolean isBottom) {
+    public IModel getConnectedSide(boolean isTop, boolean isBottom) {
         
         return this.side;
     }

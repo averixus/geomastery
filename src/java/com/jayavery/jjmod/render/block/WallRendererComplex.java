@@ -106,7 +106,8 @@ public class WallRendererComplex extends WallRenderer {
             }
             
             WallRenderer northRenderer = northSide.getLoader();
-            IModel northModel = northRenderer.getSideModel(northTop, northBot);
+            IModel northModel = northRenderer
+                    .getConnectedSide(northTop, northBot);
             this.addQuads(result, northModel, northRenderer
                     .getSideAngle(EnumFacing.NORTH), state, side, rand);
         }
@@ -125,7 +126,7 @@ public class WallRendererComplex extends WallRenderer {
             }
             
             WallRenderer eastRenderer = eastSide.getLoader();
-            IModel eastModel = eastRenderer.getSideModel(eastTop, eastBot);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
         }
@@ -144,7 +145,8 @@ public class WallRendererComplex extends WallRenderer {
             }
             
             WallRenderer southRenderer = southSide.getLoader();
-            IModel southModel = southRenderer.getSideModel(southTop, southBot);
+            IModel southModel = southRenderer
+                    .getConnectedSide(southTop, southBot);
             this.addQuads(result, southModel, southRenderer
                     .getSideAngle(EnumFacing.SOUTH), state, side, rand);
         }
@@ -163,7 +165,7 @@ public class WallRendererComplex extends WallRenderer {
             }
 
             WallRenderer westRenderer = westSide.getLoader();
-            IModel westModel = westRenderer.getSideModel(westTop, westBot);
+            IModel westModel = westRenderer.getConnectedSide(westTop, westBot);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
         }
@@ -208,7 +210,7 @@ public class WallRendererComplex extends WallRenderer {
     }
 
     @Override
-    public IModel getSideModel(boolean isTop, boolean isBottom) {
+    public IModel getConnectedSide(boolean isTop, boolean isBottom) {
         
         return isBottom ? isTop ? this.sideLone : this.sideBottom :
                 isTop ? this.sideTop : this.sideMiddle;
