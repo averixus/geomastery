@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": { "model": "geomastery:basket" },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": {
+                "layer0": "geomastery:items/basket"
+            }
+        }]
+    }
+}

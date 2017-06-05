@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "facing=north,shape=single": { "model": "geomastery:vault_brick_single/single" },
+        "facing=east,shape=single": { "model": "geomastery:vault_brick_single/single", "y": 90 },
+        "facing=south,shape=single": { "model": "geomastery:vault_brick_single/single", "y": 180},
+        "facing=west,shape=single": { "model": "geomastery:vault_brick_single/single", "y": 270 },
+        "facing=north,shape=internal": { "model": "geomastery:vault_brick_single/internal" },
+        "facing=east,shape=internal": { "model": "geomastery:vault_brick_single/internal", "y": 90 },
+        "facing=south,shape=internal": { "model": "geomastery:vault_brick_single/internal", "y": 180},
+        "facing=west,shape=internal": { "model": "geomastery:vault_brick_single/internal", "y": 270 },
+        "facing=north,shape=external": { "model": "geomastery:vault_brick_single/external", "y": 90 },
+        "facing=east,shape=external": { "model": "geomastery:vault_brick_single/external", "y": 180 },
+        "facing=south,shape=external": { "model": "geomastery:vault_brick_single/external", "y": 270},
+        "facing=west,shape=external": { "model": "geomastery:vault_brick_single/external" },
+        "facing=north,shape=lintel": { "model": "geomastery:vault_brick_single/lintel" },
+        "facing=east,shape=lintel": { "model": "geomastery:vault_brick_single/lintel", "y": 90 },
+        "facing=south,shape=lintel": { "model": "geomastery:vault_brick_single/lintel", "y": 180},
+        "facing=west,shape=lintel": { "model": "geomastery:vault_brick_single/lintel", "y": 270 },
+        "inventory": { "model": "geomastery:air" }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "half_slab",
+        "textures": {
+            "bottom": "geomastery:blocks/solids/chicken",
+            "top": "geomastery:blocks/solids/chicken",
+            "side": "geomastery:blocks/solids/chicken"
+        } 
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}]
+    }
+}

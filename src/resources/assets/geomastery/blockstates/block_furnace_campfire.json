@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": [{ "model": "geomastery:furnace_campfire" }],
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/furnace_campfire" }
+        }]
+    }
+}

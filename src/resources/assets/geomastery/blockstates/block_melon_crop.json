@@ -1,0 +1,18 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "age=0,facing=up": { "model": "geomastery:stem/0" },
+        "age=1,facing=up": { "model": "geomastery:stem/1" },
+        "age=2,facing=up": { "model": "geomastery:stem/2" },
+        "age=3,facing=up": { "model": "geomastery:stem/3" },
+        "age=4,facing=up": { "model": "geomastery:stem/4" },
+        "age=5,facing=up": { "model": "geomastery:stem/5" },
+        "age=6,facing=up": { "model": "geomastery:stem/6" },
+        "age=7,facing=up": { "model": "geomastery:stem/7" },
+        "facing=west": { "model": "geomastery:stem/fruit" },
+        "facing=east": { "model": "geomastery:stem/fruit", "y": 180 },
+        "facing=north": { "model": "geomastery:stem/fruit", "y": 90 },
+        "facing=south": { "model": "geomastery:stem/fruit", "y": 270 },
+        "inventory": [{}]
+    }
+}

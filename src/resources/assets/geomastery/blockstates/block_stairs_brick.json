@@ -1,0 +1,25 @@
+{
+    "variants": {
+        "facing=east,shape=straight":  { "model": "geomastery:stairs_brick/straight", "y": 270 },
+        "facing=west,shape=straight":  { "model": "geomastery:stairs_brick/straight", "y": 90 },
+        "facing=south,shape=straight": { "model": "geomastery:stairs_brick/straight" },
+        "facing=north,shape=straight": { "model": "geomastery:stairs_brick/straight", "y": 180 },
+        "facing=east,shape=outer_right":  { "model": "geomastery:stairs_brick/external", "y": 270 },
+        "facing=west,shape=outer_right":  { "model": "geomastery:stairs_brick/external", "y": 90 },
+        "facing=south,shape=outer_right": { "model": "geomastery:stairs_brick/external" },
+        "facing=north,shape=outer_right": { "model": "geomastery:stairs_brick/external", "y": 180 },
+        "facing=east,shape=outer_left":  { "model": "geomastery:stairs_brick/external", "y": 180 },
+        "facing=west,shape=outer_left":  { "model": "geomastery:stairs_brick/external" },
+        "facing=south,shape=outer_left": { "model": "geomastery:stairs_brick/external", "y": 270 },
+        "facing=north,shape=outer_left": { "model": "geomastery:stairs_brick/external", "y": 90 },
+        "facing=east,shape=inner_right":  { "model": "geomastery:stairs_brick/internal", "y": 180 },
+        "facing=west,shape=inner_right":  { "model": "geomastery:stairs_brick/internal" },
+        "facing=south,shape=inner_right": { "model": "geomastery:stairs_brick/internal", "y": 270 },
+        "facing=north,shape=inner_right": { "model": "geomastery:stairs_brick/internal", "y": 90 },
+        "facing=east,shape=inner_left":  { "model": "geomastery:stairs_brick/internal", "y": 90 },
+        "facing=west,shape=inner_left":  { "model": "geomastery:stairs_brick/internal", "y": 270 },
+        "facing=south,shape=inner_left": { "model": "geomastery:stairs_brick/internal", "y": 180 },
+        "facing=north,shape=inner_left": { "model": "geomastery:stairs_brick/internal" },
+        "inventory": { "model": "geomastery:stairs_brick/straight" }
+    }
+}

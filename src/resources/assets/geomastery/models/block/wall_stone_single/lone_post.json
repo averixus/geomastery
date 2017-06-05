@@ -1,0 +1,44 @@
+{
+"textures": {
+    "stone2": "geomastery:blocks/complex/stone2",
+    "stonebrick": "geomastery:blocks/complex/stonebrick",
+    "stonebrick2": "geomastery:blocks/complex/stonebrick2",
+    "particle": "geomastery:blocks/complex/stonebrick"
+},
+"elements": [ 
+{
+    "from": [ 4, 15, 4 ],
+    "to": [ 12, 16, 12 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stone2" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stone2" },
+        "north": { "uv": [ 4, 0, 12, 1 ], "texture": "#stone2" },
+        "south": { "uv": [ 4, 0, 12, 1 ], "texture": "#stone2" },
+        "west":  { "uv": [ 4, 0, 12, 1 ], "texture": "#stone2" },
+        "east":  { "uv": [ 4, 0, 12, 1 ], "texture": "#stone2" }
+    }
+},
+{
+    "from": [ 5, 3, 5 ],
+    "to": [ 11, 15, 11 ],
+    "faces": {
+        "north": { "uv": [ 5, 1, 11, 13 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 5, 1, 11, 13 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 5, 1, 11, 13 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 5, 1, 11, 13 ], "texture": "#stonebrick" }
+    }
+},
+{
+    "from": [ 4, 0, 4 ],
+    "to": [ 12, 3, 12 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick2" },
+        "north": { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 4, 13, 12, 16 ], "texture": "#stonebrick" }
+    }
+}
+]
+}

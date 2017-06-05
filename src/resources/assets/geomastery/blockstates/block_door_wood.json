@@ -1,0 +1,37 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "sbc": { "model": "geomastery:door_wood/bottom_single_closed" },
+            "stc": { "model": "geomastery:door_wood/top_single_closed" },
+            "rbc": { "model": "geomastery:door_wood/bottom_right_closed" },
+            "rtc": { "model": "geomastery:door_wood/top_right_closed" },
+            "lbc": { "model": "geomastery:door_wood/bottom_left_closed" },
+            "ltc": { "model": "geomastery:door_wood/top_left_closed" },
+            "sbo": { "model": "geomastery:door_wood/bottom_single_open" },
+            "sto": { "model": "geomastery:door_wood/top_single_open" },
+            "rbo": { "model": "geomastery:door_wood/bottom_right_open" },
+            "rto": { "model": "geomastery:door_wood/top_right_open" },
+            "lbo": { "model": "geomastery:door_wood/bottom_left_open" },
+            "lto": { "model": "geomastery:door_wood/top_left_open" }
+        },
+        "vault": {
+            "none": {},
+            "left": { "submodel": { "leftvault": { "model": "geomastery:door_vault/left", "y": 90 } } },
+            "right": { "submodel": { "rightvault": { "model": "geomastery:door_vault/right", "y": 270 } } }
+        },
+        "facing": {
+            "north": {"y": 90},
+            "east": {"y": 180},
+            "south": {"y": 270},
+            "west": {}
+        },
+        "open": {
+            "true": {}, "false": {}
+        },
+        "top": {
+            "true": {}, "false": {}
+        },
+        "inventory": [{}]
+    }
+}

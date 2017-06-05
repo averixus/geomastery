@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing=up": { "model": "geomastery:torch_tar/up" },
+        "facing=east": { "model": "geomastery:torch_tar/side", "y": 270 },
+        "facing=south": { "model": "geomastery:torch_tar/side" },
+        "facing=west": { "model": "geomastery:torch_tar/side", "y": 90 },
+        "facing=north": { "model": "geomastery:torch_tar/side", "y": 180 },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/torch_tar" }
+        }]
+    }
+}

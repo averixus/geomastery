@@ -1,0 +1,46 @@
+{
+"textures": {
+    "spruce1": "geomastery:blocks/complex/spruce1",
+    "logwall1": "geomastery:blocks/complex/logwall1",
+    "spruce2": "geomastery:blocks/complex/spruce2",
+    "particle": "geomastery:blocks/complex/spruce1"
+},
+"elements": [ 
+{
+    "from": [ 6, 3, 0 ],
+    "to": [ 10, 5, 16 ],
+    "faces": {
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 14, 10, 16 ], "texture": "#logwall1" },
+        "south": { "uv": [ 6, 14, 10, 16 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 11, 16, 13 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 11, 16, 13 ], "texture": "#spruce2" }
+    }
+},
+{
+    "from": [ 6, 9, 0 ],
+    "to": [ 10, 11, 16 ],
+    "faces": {
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 6, 0, 10, 2 ], "texture": "#logwall1" },
+        "south": { "uv": [ 6, 0, 10, 2 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 5, 16, 7 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 5, 16, 7 ], "texture": "#spruce2" }
+    }
+},
+{
+    "from": [ 4, 5, 0 ],
+    "to": [ 12, 9, 16 ],
+    "faces": {
+        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#spruce1" },
+        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#spruce1" },
+        "north": { "uv": [ 4, 10, 12, 14 ], "texture": "#logwall1" },
+        "south": { "uv": [ 4, 10, 12, 14 ], "texture": "#logwall1" },
+        "west":  { "uv": [ 0, 7, 16, 11 ], "texture": "#spruce2" },
+        "east":  { "uv": [ 0, 7, 16, 11 ], "texture": "#spruce2" }
+    }
+}
+]
+}

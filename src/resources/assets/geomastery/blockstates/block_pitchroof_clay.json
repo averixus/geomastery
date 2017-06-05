@@ -1,0 +1,205 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/pitchroof_clay" }    
+        }],
+        "facing": {
+            "north": {"y": 90},
+            "east": {"y": 180},
+            "south": {"y": 270},
+            "west": {}
+        },
+        "shape": {
+            "tl": {
+                "submodel": {
+                    "tlmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "tltop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "tlleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "tltopleft": { "model": "geomastery:pitchroof_clay/straight_top_left" },
+                    "tlmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "tc": {
+                "submodel": {
+                    "tcmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "tctop": { "model": "geomastery:pitchroof_clay/straight_top" }
+                }
+            },
+            "tr": {
+                "submodel": {
+                    "trmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "trtop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "trright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "trtopright": { "model": "geomastery:pitchroof_clay/straight_top_right" },
+                    "trmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "ml": {
+                "submodel": {
+                    "mlmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "mlleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "mlmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "mc": {
+                "submodel": {
+                    "mcmain": { "model": "geomastery:pitchroof_clay/straight" }
+                }
+            },
+            "mr": {
+                "submodel": {
+                    "mrmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "mrright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "mrmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "bl": {
+                "submodel": {
+                    "blmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "blbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" },
+                    "blleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "blbottomleft": { "model": "geomastery:pitchroof_clay/straight_bottom_left" },
+                    "blmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "bc": {
+                "submodel": {
+                    "bcmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "bcbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" }
+                }
+            },
+            "br": {
+                "submodel": {
+                    "brmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "brbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" },
+                    "brright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "brbottomright": { "model": "geomastery:pitchroof_clay/straight_bottom_right" },
+                    "brmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "st": {
+                "submodel": {
+                    "stmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "sttop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "stleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "stright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "sttopleft": { "model": "geomastery:pitchroof_clay/straight_top_left" },
+                    "sttopright": { "model": "geomastery:pitchroof_clay/straight_top_right" },
+                    "stmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "sm": {
+                "submodel": {
+                    "smmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "smleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "smright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "smmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "sb": {
+                "submodel": {
+                    "sbmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "sbleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "sbright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "sbbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" },
+                    "sbbottomleft": { "model": "geomastery:pitchroof_clay/straight_bottom_left" },
+                    "sbbottomright": { "model": "geomastery:pitchroof_clay/straight_bottom_right" },
+                    "sbmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "sl": {
+                "submodel": {
+                    "slmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "slleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "sltop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "slbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" },
+                    "sltopleft": { "model": "geomastery:pitchroof_clay/straight_top_left" },
+                    "slbottomleft": { "model": "geomastery:pitchroof_clay/straight_bottom_left" },
+                    "slmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "sc": {
+                "submodel": {
+                    "scmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "sctop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "scbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" }
+                }
+            },
+            "sr": {
+                "submodel": {
+                    "srmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "srright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "srtop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "srbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" },
+                    "srtopright": { "model": "geomastery:pitchroof_clay/straight_top_right" },
+                    "srbottomright": { "model": "geomastery:pitchroof_clay/straight_bottom_right" },
+                    "srmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "ss": {
+                "submodel": {
+                    "ssmain": { "model": "geomastery:pitchroof_clay/straight" },
+                    "ssright": { "model": "geomastery:pitchroof_clay/straight_right" },
+                    "ssleft": { "model": "geomastery:pitchroof_clay/straight_left" },
+                    "sstop": { "model": "geomastery:pitchroof_clay/straight_top" },
+                    "ssbottom": { "model": "geomastery:pitchroof_clay/straight_bottom" },
+                    "sstopright": { "model": "geomastery:pitchroof_clay/straight_top_right" },
+                    "sstopleft": { "model": "geomastery:pitchroof_clay/straight_top_left" },
+                    "ssbottomright": { "model": "geomastery:pitchroof_clay/straight_bottom_right" },
+                    "ssbottomleft": { "model": "geomastery:pitchroof_clay/straight_bottom_left" },
+                    "ssmid": { "model": "geomastery:pitchroof_clay/straight_leftright" }
+                }
+            },
+            "it": {
+                "submodel": {
+                    "itmain": { "model": "geomastery:pitchroof_clay/internal", "y": 270 },
+                    "ittop": { "model": "geomastery:pitchroof_clay/internal_top", "y": 270 }
+                }
+            },
+            "im": {
+                "submodel": {
+                    "immain": { "model": "geomastery:pitchroof_clay/internal", "y": 270 }
+                }
+            },
+            "ib": {
+                "submodel": {
+                    "ibmain": { "model": "geomastery:pitchroof_clay/internal", "y": 270 },
+                    "ibbottom": { "model": "geomastery:pitchroof_clay/internal_bottom", "y": 270 }
+                }
+            },
+            "is": {
+                "submodel": {
+                    "ismain": { "model": "geomastery:pitchroof_clay/internal", "y": 270 },
+                    "istop": { "model": "geomastery:pitchroof_clay/internal_top", "y": 270 },
+                    "isbottom": { "model": "geomastery:pitchroof_clay/internal_bottom", "y": 270 }
+                }
+            },
+            "et": {
+                "submodel": {
+                    "etmain": { "model": "geomastery:pitchroof_clay/external" },
+                    "ettop": { "model": "geomastery:pitchroof_clay/external_top" }
+                }
+            },
+            "em": {
+                "submodel": {
+                    "emmain": { "model": "geomastery:pitchroof_clay/external" }
+                }
+            },
+            "eb": {
+                "submodel": {
+                    "ebmain": { "model": "geomastery:pitchroof_clay/external" },
+                    "ebbottom": { "model": "geomastery:pitchroof_clay/external_bottom" }
+                }
+            },
+            "es": {
+                "submodel": {
+                    "esmain": { "model": "geomastery:pitchroof_clay/external" },
+                    "estop": { "model": "geomastery:pitchroof_clay/external_top" },
+                    "esbottom": { "model": "geomastery:pitchroof_clay/external_bottom" }
+                }
+            }
+        }
+    }
+}

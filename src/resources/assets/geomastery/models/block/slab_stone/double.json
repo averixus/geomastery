@@ -1,0 +1,21 @@
+{
+"textures": {
+    "stonepave": "geomastery:blocks/complex/stonepave",
+    "stoneside": "geomastery:blocks/complex/stoneside",
+    "particle": "geomastery:blocks/complex/stonepave"
+},
+"elements": [ 
+{
+    "from": [ 0, 0, 0 ],
+    "to": [ 16, 16, 16 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#stonepave" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#stonepave" },
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#stoneside" },
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#stoneside" },
+        "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#stoneside" },
+        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#stoneside" }
+    }
+}
+]
+}

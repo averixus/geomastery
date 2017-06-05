@@ -1,0 +1,61 @@
+{
+"textures": {
+    "fire": "geomastery:blocks/complex/fire",
+    "bark": "blocks/log_oak",
+    "particle": "blocks/log_oak"
+},
+"elements": [ 
+{
+    "from": [ 8, 2.6875, 2.5 ],
+    "to": [ 9, 10.6875, 3.5 ],
+    "rotation": { "origin": [ 8, 10.6875, 2.5 ], "axis": "x", "angle": 22.5 },
+    "faces": {
+        "down":  { "uv": [ 8, 2, 7, 1 ], "texture": "#bark" },
+        "up":    { "uv": [ 8, 1, 9, 2 ], "texture": "#bark" },
+        "north": { "uv": [ 7, 5, 8, 13 ], "texture": "#bark" },
+        "south": { "uv": [ 8, 5, 9, 13 ], "texture": "#bark" },
+        "west":  { "uv": [ 1, 5, 2, 13 ], "texture": "#bark" },
+        "east":  { "uv": [ 14, 5, 15, 13 ], "texture": "#bark" }
+    }
+},
+{
+    "from": [ 8, 10.9375, 2.375 ],
+    "to": [ 9, 12.9375, 5.375 ],
+    "rotation": { "origin": [ 8, 12.9375, 2.375 ], "axis": "x", "angle": 22.5 },
+    "faces": {
+        "down":  { "uv": [ 7, 13, 6, 10 ], "texture": "#fire" },
+        "up":    { "uv": [ 6, 10, 7, 13 ], "texture": "#fire" },
+        "north": { "uv": [ 7, 6, 8, 8 ], "texture": "#fire" },
+        "south": { "uv": [ 5, 9, 6, 11 ], "texture": "#fire" },
+        "west":  { "uv": [ 7, 5, 10, 7 ], "texture": "#fire" },
+        "east":  { "uv": [ 7, 5, 10, 7 ], "texture": "#fire" }
+    }
+},
+{
+    "from": [ 9, 10.5625, 3.3125 ],
+    "to": [ 10, 12.5625, 4.3125 ],
+    "rotation": { "origin": [ 9, 12.5625, 3.3125 ], "axis": "x", "angle": 22.5 },
+    "faces": {
+        "down":  { "uv": [ 6, 10, 5, 9 ], "texture": "#fire" },
+        "up":    { "uv": [ 5, 9, 6, 10 ], "texture": "#fire" },
+        "north": { "uv": [ 5, 9, 6, 11 ], "texture": "#fire" },
+        "south": { "uv": [ 5, 9, 6, 11 ], "texture": "#fire" },
+        "west":  { "uv": [ 5, 9, 6, 11 ], "texture": "#fire" },
+        "east":  { "uv": [ 5, 9, 6, 11 ], "texture": "#fire" }
+    }
+},
+{
+    "from": [ 7, 10.5625, 3.3125 ],
+    "to": [ 8, 12.5625, 4.3125 ],
+    "rotation": { "origin": [ 7, 12.5625, 3.3125 ], "axis": "x", "angle": 22.5 },
+    "faces": {
+        "down":  { "uv": [ 7, 11, 6, 10 ], "texture": "#fire" },
+        "up":    { "uv": [ 6, 10, 7, 11 ], "texture": "#fire" },
+        "north": { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" },
+        "south": { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" },
+        "west":  { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" },
+        "east":  { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" }
+    }
+}
+]
+}

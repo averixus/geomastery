@@ -1,0 +1,6 @@
+{
+    "parent": "item/bow",
+    "textures": {
+        "layer0": "geomastery:items/bow_war_pulling_1"
+    }
+}

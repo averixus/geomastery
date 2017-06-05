@@ -1,0 +1,20 @@
+{
+"textures": {
+    "stonebrick": "geomastery:blocks/complex/stonebrick",
+    "particle": "geomastery:blocks/complex/stonebrick"
+},
+"elements": [ 
+{
+    "from": [ 5, 0, 5 ],
+    "to": [ 11, 16, 11 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#stonebrick" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#stonebrick" },
+        "north": { "uv": [ 4, 0, 12, 16 ], "texture": "#stonebrick" },
+        "south": { "uv": [ 4, 0, 12, 16 ], "texture": "#stonebrick" },
+        "west":  { "uv": [ 4, 0, 12, 16 ], "texture": "#stonebrick" },
+        "east":  { "uv": [ 4, 0, 12, 16 ], "texture": "#stonebrick" }
+    }
+}
+]
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/crop",
+    "textures": {
+        "crop": "geomastery:blocks/plants/rice_base",
+        "particle": "geomastery:blocks/plants/rice_base"
+    }
+}

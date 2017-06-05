@@ -1,0 +1,49 @@
+package jayavery.geomastery.capabilities;
+
+import jayavery.geomastery.main.GeoCaps;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+
+public class ProviderCapPlayer
+        implements ICapabilitySerializable<NBTTagCompound> {
+    
+    private final ICapPlayer instance;
+    
+    public ProviderCapPlayer(ICapPlayer instance) {
+        
+        this.instance = instance;
+    }
+    
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing side) {
+        
+        return capability == GeoCaps.CAP_PLAYER;
+    }
+    
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing side) {
+        
+        if (capability == GeoCaps.CAP_PLAYER) {
+            
+            return (T) this.instance;
+        }
+        
+        return null;
+    }
+    
+    @Override
+    public NBTTagCompound serializeNBT() {
+        
+        return this.instance.serializeNBT();
+    }
+    
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+        
+        this.instance.deserializeNBT(nbt);
+    }
+
+}

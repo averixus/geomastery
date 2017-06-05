@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all"
+  },
+  "variants": {
+    "normal": [
+      { "textures": { "all": "geomastery:blocks/solids/rubble1" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble2" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble3" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble4" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble5" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble6" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble7" } },
+      { "textures": { "all": "geomastery:blocks/solids/rubble8" } }
+    ],
+    "inventory": 
+      [ { "textures": { "all": "geomastery:blocks/solids/rubble1" } } ]
+  }
+}

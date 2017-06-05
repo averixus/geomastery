@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "geomastery:items/pork_cooked"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "rot": 1
+            },
+            "model": "geomastery:item/item_rot"
+        }
+    ]
+}

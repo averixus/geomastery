@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "geomastery:antler" },
+        "inventory": { "model": "geomastery:antler" }
+    }
+}

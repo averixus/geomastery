@@ -1,0 +1,33 @@
+{
+"textures": {
+    "softwood1": "geomastery:blocks/complex/softwood1",
+    "spruce1": "geomastery:blocks/complex/spruce1",
+    "particle": "geomastery:blocks/complex/softwood1"
+},
+"elements": [ 
+{
+    "from": [ -8, 15, -8 ],
+    "to": [ -5, 15.95, 0 ],
+    "faces": {
+        "down":  { "uv": [ 16, 8, 13, 0 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 0, 0, 3, 8 ], "texture": "#spruce1" },
+        "north": { "uv": [ 13, 0, 16, 1 ], "texture": "#spruce1" },
+        "south": { "uv": [ 0, 0, 3, 1 ], "texture": "#spruce1" },
+        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#spruce1" },
+        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#spruce1" }
+    }
+},
+{
+    "from": [ -4, 15, -8 ],
+    "to": [ -1, 15.95, 0 ],
+    "faces": {
+        "down":  { "uv": [ 11, 8, 8, 0 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 5, 0, 8, 8 ], "texture": "#spruce1" },
+        "north": { "uv": [ 8, 0, 11, 1 ], "texture": "#spruce1" },
+        "south": { "uv": [ 5, 0, 8, 1 ], "texture": "#spruce1" },
+        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#spruce1" },
+        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#spruce1" }
+    }
+}
+]
+}

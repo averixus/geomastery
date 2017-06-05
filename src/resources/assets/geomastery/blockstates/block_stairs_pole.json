@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=north": { "model": "geomastery:stairs_pole", "y": 180 },
+        "facing=east": { "model": "geomastery:stairs_pole", "y": 270 },
+        "facing=south": { "model": "geomastery:stairs_pole" },
+        "facing=west": { "model": "geomastery:stairs_pole", "y": 90 },
+        "inventory": { "model": "geomastery:stairs_pole" }
+    }
+}

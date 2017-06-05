@@ -1,0 +1,29 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "geomastery:fence/post",
+        "uvlock": true
+    },
+    "variants": {
+        "north": {
+            "true": { "submodel": { "northside": { "model": "geomastery:fence/side", "y": 270 } } },
+            "false": {}
+        },
+        "east": {
+            "true": { "submodel": { "eastside": { "model": "geomastery:fence/side" } } },
+            "false": {}
+        },
+        "south": {
+            "true": { "submodel": { "southside": { "model": "geomastery:fence/side", "y": 90 } } },
+            "false": {}
+        },
+        "west": {
+            "true": { "submodel": { "westside": { "model": "geomastery:fence/side", "y": 180 } } },
+            "false": {}
+        },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/fence" }
+        }]
+    }
+}

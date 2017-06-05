@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=north": { "model": "geomastery:melon", "y": 90 },
+        "facing=east": { "model": "geomastery:melon", "y": 180 },
+        "facing=south": { "model": "geomastery:melon", "y": 270 },
+        "facing=west": { "model": "geomastery:melon" },
+        "inventory": { "model": "geomastery:melon" }
+    }
+}

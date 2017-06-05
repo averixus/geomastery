@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "bl": { "model": "geomastery:furnace_stone/bl" },
+            "bm": { "model": "geomastery:furnace_stone/bm" },
+            "br": { "model": "geomastery:furnace_stone/br" },
+            "tl": { "model": "geomastery:furnace_stone/tl" },
+            "tm": { "model": "geomastery:furnace_stone/tm" },
+            "tr": { "model": "geomastery:furnace_stone/tr" } 
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
+    }
+}
