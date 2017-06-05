@@ -32,10 +32,10 @@ public class BlockWallHeaping extends BlockWall implements IDoublingBlock {
     protected final boolean isDouble;
     
     public BlockWallHeaping(Material material, String name, float hardness,
-            ToolType harvestTool, boolean isDouble,
+            ToolType harvestTool, boolean isDouble, int sideAngle,
             Supplier<ItemBlockplacer.Doubling<BlockWallHeaping>> item) {
         
-        super(material, name, hardness, harvestTool);
+        super(material, name, hardness, harvestTool, sideAngle);
         this.item = item;
         this.isDouble = isDouble;
     }

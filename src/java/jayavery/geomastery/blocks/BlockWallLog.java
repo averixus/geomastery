@@ -26,7 +26,7 @@ public class BlockWallLog extends BlockWall {
         
     public BlockWallLog() {
         
-        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, ToolType.AXE);
+        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, ToolType.AXE, 0);
     }
     
     @Override

@@ -35,7 +35,7 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
             ToolType harvestTool, boolean isDouble,
             Supplier<ItemBlockplacer.Doubling<BlockWallComplex>> item) {
         
-        super(material, name, hardness, harvestTool);
+        super(material, name, hardness, harvestTool, 0);
         this.item = item;
         this.isDouble = isDouble;
     }

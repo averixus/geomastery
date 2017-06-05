@@ -24,9 +24,9 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 public class BlockWallThin extends BlockWall {
 
     public BlockWallThin(BlockMaterial material, String name,
-            float hardness, ToolType toolType) {
+            float hardness, ToolType toolType, int sideAngle) {
                 
-        super(material, name, hardness, toolType);
+        super(material, name, hardness, toolType, sideAngle);
     }
     
     @Override

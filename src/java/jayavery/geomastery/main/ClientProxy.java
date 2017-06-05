@@ -161,7 +161,7 @@ public class ClientProxy implements IProxy {
         // Single wall delayed baking models
         for (BlockWall block : GeoBlocks.RENDER_SINGLE) {
             
-            WallRenderer render = new WallRendererSingle(block.getRegistryName(), 0);
+            WallRenderer render = new WallRendererSingle(block.getRegistryName(), block.getSideAngle());
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }

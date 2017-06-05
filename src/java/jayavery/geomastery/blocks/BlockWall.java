@@ -81,12 +81,21 @@ public abstract class BlockWall extends BlockBuilding
     /** This block's model priority. */
     protected final int priority;
     
+    /** This block's side model angle. */
+    protected final int sideAngle;
+    
     public BlockWall(Material material, String name, float hardness,
-            ToolType harvestTool) {
+            ToolType harvestTool, int sideAngle) {
         
         super(material, name, CreativeTabs.BUILDING_BLOCKS,
                 hardness, harvestTool);
         this.priority = counter++;
+        this.sideAngle = sideAngle;
+    }
+    
+    public int getSideAngle() {
+        
+        return this.sideAngle;
     }
     
     @Override

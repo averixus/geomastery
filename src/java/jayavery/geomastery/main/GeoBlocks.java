@@ -207,15 +207,15 @@ public class GeoBlocks {
     
     // Walls (in rendering priority order)
     public static Block wallLog =                              make(new BlockWallLog(), RENDER_STRAIGHT, DELAYED_BAKE); 
-    public static Block fence =                                make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "fence", 2F, ToolType.AXE), RENDER_SINGLE, DELAYED_BAKE);
-    public static Block wallPole =                             make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, ToolType.AXE), 4, RENDER_SINGLE, DELAYED_BAKE);
-    public static Block frame =                                make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, ToolType.AXE), 6, RENDER_SINGLE, DELAYED_BAKE);
-    public static BlockWallHeaping wallMudSingle =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_single", 1F, ToolType.PICKAXE, false, () -> GeoItems.wallMud), RENDER_SINGLE, DELAYED_BAKE);
-    public static BlockWallHeaping wallRoughSingle =   makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough_single", 1.5F, ToolType.PICKAXE, false, () -> GeoItems.wallRough), RENDER_SINGLE, DELAYED_BAKE);
+    public static Block fence =                                make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "fence", 2F, ToolType.AXE, 90), RENDER_SINGLE, DELAYED_BAKE);
+    public static Block wallPole =                             make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, ToolType.AXE, 180), 4, RENDER_SINGLE, DELAYED_BAKE);
+    public static Block frame =                                make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, ToolType.AXE, 180), 6, RENDER_SINGLE, DELAYED_BAKE);
+    public static BlockWallHeaping wallMudSingle =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_single", 1F, ToolType.PICKAXE, false, 0, () -> GeoItems.wallMud), RENDER_SINGLE, DELAYED_BAKE);
+    public static BlockWallHeaping wallRoughSingle =   makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough_single", 1.5F, ToolType.PICKAXE, false, 0, () -> GeoItems.wallRough), RENDER_SINGLE, DELAYED_BAKE);
     public static BlockWallComplex wallBrickSingle =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_brick_single", 2F, ToolType.PICKAXE, false, () -> GeoItems.wallBrick), RENDER_COMPLEX, DELAYED_BAKE); 
     public static BlockWallComplex wallStoneSingle =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_stone_single", 2F, ToolType.PICKAXE, false, () -> GeoItems.wallStone), RENDER_COMPLEX, DELAYED_BAKE);
-    public static BlockWallHeaping wallMudDouble =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_double", 3F, ToolType.PICKAXE, true, () -> GeoItems.wallMud), RENDER_SINGLE, DELAYED_BAKE); 
-    public static BlockWallHeaping wallRoughDouble =   makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough_double", 3F, ToolType.PICKAXE, true, () -> GeoItems.wallRough), RENDER_SINGLE, DELAYED_BAKE); 
+    public static BlockWallHeaping wallMudDouble =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_double", 3F, ToolType.PICKAXE, true, 0, () -> GeoItems.wallMud), RENDER_SINGLE, DELAYED_BAKE); 
+    public static BlockWallHeaping wallRoughDouble =   makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough_double", 3F, ToolType.PICKAXE, true, 0, () -> GeoItems.wallRough), RENDER_SINGLE, DELAYED_BAKE); 
     public static BlockWallComplex wallBrickDouble =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_brick_double", 3F, ToolType.PICKAXE, true,  () -> GeoItems.wallBrick), RENDER_COMPLEX, DELAYED_BAKE); 
     public static BlockWallComplex wallStoneDouble =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_stone_double", 3F, ToolType.PICKAXE, true, () -> GeoItems.wallStone), RENDER_COMPLEX, DELAYED_BAKE);
     

@@ -24,7 +24,7 @@ public class SlotBackpack extends Slot {
         this.player = player;
         this.playerCap = player.getCapability(GeoCaps.CAP_PLAYER,
                 null);
-        this.backgroundName = Geomastery.MODID + "gui/backpack_slot";
+        this.backgroundName = Geomastery.MODID + ":gui/backpack_slot";
     }
     
     @Override
