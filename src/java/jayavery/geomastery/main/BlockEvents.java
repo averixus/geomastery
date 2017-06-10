@@ -114,9 +114,9 @@ public class BlockEvents {
                         baseChance = 0.03F;
                 }
                 
-                fallState = GeoBlocks.rubble.getDefaultState();
+                fallState = GeoBlocks.RUBBLE.getDefaultState();
                 
-            } else if (block == GeoBlocks.salt || block == GeoBlocks.chalk) {
+            } else if (block == GeoBlocks.SALT || block == GeoBlocks.CHALK) {
                 
                 baseChance = 0.06F;
                 
@@ -126,7 +126,7 @@ public class BlockEvents {
                 baseChance = 0.03F;
                 
             } else if (block == Blocks.DIRT || block == Blocks.GRASS ||
-                    block == Blocks.CLAY || block == GeoBlocks.rubble) {
+                    block == Blocks.CLAY || block == GeoBlocks.RUBBLE) {
 
                 baseChance = 1F;
                 
@@ -223,7 +223,7 @@ public class BlockEvents {
             
             if (world.rand.nextInt(4) == 0) {
             
-                event.getDrops().add(new ItemStack(GeoItems.leaves));
+                event.getDrops().add(new ItemStack(GeoItems.LEAVES));
             }
 
             if (world.rand.nextInt(4) == 0) {
@@ -244,8 +244,8 @@ public class BlockEvents {
             event.getDrops().clear();
             int rand = world.rand.nextInt(6);
             event.getDrops().add(new ItemStack(rand == 0 ?
-                    GeoItems.thicklog : rand == 1 ?
-                    GeoItems.log : GeoItems.pole));
+                    GeoItems.THICKLOG : rand == 1 ?
+                    GeoItems.LOG : GeoItems.POLE));
         }
 
         if (block instanceof BlockDirt || block instanceof BlockGrass) {
@@ -258,7 +258,7 @@ public class BlockEvents {
                 
             } else {
 
-                event.getDrops().add(new ItemStack(GeoItems.looseDirt));
+                event.getDrops().add(new ItemStack(GeoItems.LOOSE_DIRT));
             }
         }
         
@@ -286,7 +286,7 @@ public class BlockEvents {
         if (block == Blocks.GOLD_ORE) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(GeoItems.oreGold));
+            event.getDrops().add(new ItemStack(GeoItems.ORE_GOLD));
         }
         
         if (block == Blocks.EMERALD_ORE) {
@@ -298,19 +298,19 @@ public class BlockEvents {
         if (block == Blocks.IRON_ORE) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(GeoItems.oreIron));
+            event.getDrops().add(new ItemStack(GeoItems.ORE_IRON));
         }
 
         if (block instanceof BlockStone) {
 
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(GeoItems.rubble, 1));
+            event.getDrops().add(new ItemStack(GeoItems.RUBBLE, 1));
         }
         
         if (block == Blocks.SAND) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(GeoItems.looseSand, 1));
+            event.getDrops().add(new ItemStack(GeoItems.LOOSE_SAND, 1));
         }
         
         if (block == Blocks.GRAVEL) {
@@ -323,14 +323,14 @@ public class BlockEvents {
                 
             } else {
                 
-                event.getDrops().add(new ItemStack(GeoItems.looseGravel));
+                event.getDrops().add(new ItemStack(GeoItems.LOOSE_GRAVEL));
             }
         }
         
         if (block == Blocks.CLAY) {
             
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(GeoItems.looseClay));
+            event.getDrops().add(new ItemStack(GeoItems.LOOSE_CLAY));
         }
         
         if (block == Blocks.BROWN_MUSHROOM ||
@@ -338,7 +338,7 @@ public class BlockEvents {
             
             event.getDrops().clear();
             event.getDrops().add(ItemSimple
-                    .newStack(GeoItems.mushroomBrown, 1, world));
+                    .newStack(GeoItems.MUSHROOM_BROWN, 1, world));
         }
         
         if (block == Blocks.RED_MUSHROOM ||
@@ -346,7 +346,7 @@ public class BlockEvents {
             
             event.getDrops().clear();
             event.getDrops().add(ItemSimple
-                    .newStack(GeoItems.mushroomRed, 1, world));
+                    .newStack(GeoItems.MUSHROOM_RED, 1, world));
         }
     }
     

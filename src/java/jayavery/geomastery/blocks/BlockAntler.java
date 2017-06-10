@@ -18,6 +18,6 @@ public class BlockAntler extends BlockBush {
     public Item getItemDropped(IBlockState state,
             Random rand, int fortune) {
 
-        return GeoItems.shovelAntler;
+        return GeoItems.SHOVEL_ANTLER;
     }
 }

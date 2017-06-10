@@ -36,7 +36,7 @@ public class SlotYoke extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return stack.getItem() == GeoItems.yoke;
+        return stack.getItem() == GeoItems.YOKE;
     }
     
     @Override

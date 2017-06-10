@@ -36,13 +36,13 @@ public class EntitySpearFlint extends EntityProjectile {
     @Override
     public ItemStack getArrowStack() {
 
-        if (this.durability + 1 >= GeoItems.spearFlint.getMaxDamage()) {
+        if (this.durability + 1 >= GeoItems.SPEAR_FLINT.getMaxDamage()) {
             
             return null;
             
         } else {
             
-            return new ItemStack(GeoItems.spearFlint, 1, this.durability);
+            return new ItemStack(GeoItems.SPEAR_FLINT, 1, this.durability);
         }
     }
     

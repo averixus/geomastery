@@ -13,7 +13,7 @@ public class WorldGenMelon extends WorldGenCrop {
 
     public WorldGenMelon(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.melonCrop.getFullgrown(), 6, 4);
+        super(world, rand, GeoBlocks.MELON_CROP.getFullgrown(), 6, 4);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class WorldGenMelon extends WorldGenCrop {
         }
         
         this.world.setBlockState(crop, this.crop);
-        this.world.setBlockState(fruit, GeoBlocks.melonFruit.getDefaultState()
+        this.world.setBlockState(fruit, GeoBlocks.MELON_FRUIT.getDefaultState()
                 .withProperty(BlockFruit.FACING, fruitOffset.getOpposite()));
         return true;
     }

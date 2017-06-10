@@ -34,13 +34,13 @@ public class EntitySpearSteel extends EntityProjectile {
     @Override
     public ItemStack getArrowStack() {
 
-        if (this.durability + 1 >= GeoItems.spearSteel.getMaxDamage()) {
+        if (this.durability + 1 >= GeoItems.SPEAR_STEEL.getMaxDamage()) {
             
             return null;
             
         } else {
             
-            return new ItemStack(GeoItems.spearSteel, 1, this.durability + 1);
+            return new ItemStack(GeoItems.SPEAR_STEEL, 1, this.durability + 1);
         }
     }
     

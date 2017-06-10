@@ -46,7 +46,7 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
             
             if (this == FM) {
                     
-                return new ItemStack(GeoItems.craftingMason);
+                return new ItemStack(GeoItems.CRAFTING_MASON);
                 
             } else {
                 
@@ -78,7 +78,7 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.craftingMason;
+            BlockBuilding block = GeoBlocks.CRAFTING_MASON;
             boolean broken = !block.isValid(world, pos);
             
             switch (this) {
@@ -165,7 +165,7 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
                 BlockPos posFR = posFM.offset(facing.rotateY());
                 BlockPos posBR = posFR.offset(facing);
                 
-                BlockBuilding block = GeoBlocks.craftingMason;
+                BlockBuilding block = GeoBlocks.CRAFTING_MASON;
                 BlockPos[] positions = {posFM, posFL, posBM, posFR, posBR};
                 boolean valid = true;
                 

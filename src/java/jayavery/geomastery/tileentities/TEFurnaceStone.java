@@ -53,7 +53,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EnumPartStone> {
             
             if (this == BL) {
                 
-                return new ItemStack(GeoItems.furnaceStone);
+                return new ItemStack(GeoItems.FURNACE_STONE);
                 
             } else {
                 
@@ -86,7 +86,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EnumPartStone> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.furnaceStone;
+            BlockBuilding block = GeoBlocks.FURNACE_STONE;
             Block below = world.getBlockState(pos.down()).getBlock();
             boolean broken = !BlockWeight.getWeight(below)
                     .canSupport(block.getWeight()) && below != block;
@@ -175,7 +175,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EnumPartStone> {
                 BlockPos posTM = posBM.up();
                 BlockPos posTR = posBR.up();
                 
-                BlockBuilding block = GeoBlocks.furnaceStone;
+                BlockBuilding block = GeoBlocks.FURNACE_STONE;
                 BlockPos[] basePositions = {posBM, posBL, posBR};
                 BlockPos[] upperPositions = {posTL, posTM, posTR};
                 boolean valid = true;

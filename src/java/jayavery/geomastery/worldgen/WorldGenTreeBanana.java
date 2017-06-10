@@ -11,7 +11,7 @@ public class WorldGenTreeBanana extends WorldGenTree {
 
     public WorldGenTreeBanana(World world, Random rand, boolean isSapling) {
         
-        super(world, rand, isSapling, 20, 6, GeoBlocks.seedlingBanana);
+        super(world, rand, isSapling, 20, 6, GeoBlocks.SEEDLING_BANANA);
     }
     
     @Override
@@ -36,7 +36,7 @@ public class WorldGenTreeBanana extends WorldGenTree {
         
         for (BlockPos trunk : trunks) {
             
-            this.setBlock(trunk, GeoBlocks.woodBanana.getDefaultState());
+            this.setBlock(trunk, GeoBlocks.WOOD_BANANA.getDefaultState());
         }
         
         ArrayList<BlockPos> leaves = new ArrayList<BlockPos>();
@@ -62,7 +62,7 @@ public class WorldGenTreeBanana extends WorldGenTree {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.leafBanana.getDefaultState());
+                this.setBlock(leaf, GeoBlocks.LEAF_BANANA.getDefaultState());
             }
         }
         

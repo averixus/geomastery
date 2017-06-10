@@ -165,8 +165,8 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             
             IBlockState newState = state.withProperty(AGE, 0);
             world.setBlockState(pos, newState);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.honey, 4));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.beeswax));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.HONEY, 4));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.BEESWAX));
             
             return true;
         }
@@ -181,8 +181,8 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
         
         if (state.getValue(AGE) == 3) {
             
-            items.add(new ItemStack(GeoItems.beeswax));
-            items.add(new ItemStack(GeoItems.honey, 4));
+            items.add(new ItemStack(GeoItems.BEESWAX));
+            items.add(new ItemStack(GeoItems.HONEY, 4));
         }
         
         return items;

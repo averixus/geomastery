@@ -9,6 +9,6 @@ public class WorldGenWheat extends WorldGenCrop {
 
     public WorldGenWheat(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.wheat.getFullgrown(), 10, 7);
+        super(world, rand, GeoBlocks.WHEAT.getFullgrown(), 10, 7);
     }
 }

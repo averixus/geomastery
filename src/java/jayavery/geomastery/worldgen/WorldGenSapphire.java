@@ -9,7 +9,7 @@ public class WorldGenSapphire extends WorldGenStone {
 
     public WorldGenSapphire(World world, Random rand) {
 
-        super(world, rand, GeoBlocks.lodeSapphire.getDefaultState(),
+        super(world, rand, GeoBlocks.LODE_SAPPHIRE.getDefaultState(),
                 80, 120, 30, 1);
     }
 

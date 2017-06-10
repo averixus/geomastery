@@ -36,7 +36,7 @@ public class SlotBackpack extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return stack.getItem() == GeoItems.backpack;
+        return stack.getItem() == GeoItems.BACKPACK;
     }
     
     @Override

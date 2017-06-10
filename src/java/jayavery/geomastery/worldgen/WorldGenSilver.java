@@ -9,7 +9,7 @@ public class WorldGenSilver extends WorldGenStone {
 
     public WorldGenSilver(World world, Random rand) {
 
-        super(world, rand, GeoBlocks.oreSilver.getDefaultState(), 10, 60, 10, 1);
+        super(world, rand, GeoBlocks.ORE_SILVER.getDefaultState(), 10, 60, 10, 1);
     }
 
     @Override

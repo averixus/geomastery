@@ -9,7 +9,7 @@ public class WorldGenFireopal extends WorldGenStone {
 
     public WorldGenFireopal(World world, Random rand) {
 
-        super(world, rand, GeoBlocks.lodeFireopal.getDefaultState(),
+        super(world, rand, GeoBlocks.LODE_FIREOPAL.getDefaultState(),
                 5, 15, 2, 1);
     }
 

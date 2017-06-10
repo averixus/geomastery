@@ -53,7 +53,7 @@ public class BlockFurnacePotfire extends BlockComplexAbstract {
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
         
-        return Lists.newArrayList(new ItemStack(GeoItems.potClay));
+        return Lists.newArrayList(new ItemStack(GeoItems.POT_CLAY));
     }
 
     @Override

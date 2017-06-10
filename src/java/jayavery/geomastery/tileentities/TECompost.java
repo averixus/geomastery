@@ -49,7 +49,7 @@ public class TECompost extends TEContainerAbstract implements ITickable {
     public static boolean isCarbon(ItemStack stack) {
         
         Item item = stack.getItem();
-        return item instanceof ItemEdible || item == GeoItems.wool ||
+        return item instanceof ItemEdible || item == GeoItems.WOOL ||
                 item == Items.BONE;
     }
     
@@ -57,9 +57,9 @@ public class TECompost extends TEContainerAbstract implements ITickable {
     public static boolean isNitrogen(ItemStack stack) {
         
         Item item = stack.getItem();
-        return item == GeoItems.leaves || item == Items.STICK ||
-                item == GeoItems.log || item == GeoItems.pole ||
-                item == GeoItems.thicklog || item == Items.REEDS;
+        return item == GeoItems.LEAVES || item == Items.STICK ||
+                item == GeoItems.LOG || item == GeoItems.POLE ||
+                item == GeoItems.THICKLOG || item == Items.REEDS;
     }
     
     @Override
@@ -114,7 +114,7 @@ public class TECompost extends TEContainerAbstract implements ITickable {
         int bal = Math.abs(this.balance);
         int grade = bal <= BALANCE_5 ? 5 : bal <= BALANCE_4 ?
                 4 : bal <= BALANCE_3 ? 3 : bal <= BALANCE_2 ? 2 : 1;
-        this.outputs.set(0, new ItemStack(GeoItems.compost,
+        this.outputs.set(0, new ItemStack(GeoItems.COMPOST,
                 this.outputs.get(0).getCount(), grade));
     }
     

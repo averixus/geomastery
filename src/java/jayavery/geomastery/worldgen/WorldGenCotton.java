@@ -9,6 +9,6 @@ public class WorldGenCotton extends WorldGenCrop {
 
     public WorldGenCotton(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.cotton.getFullgrown(), 30, 5);
+        super(world, rand, GeoBlocks.COTTON.getFullgrown(), 30, 5);
     }
 }

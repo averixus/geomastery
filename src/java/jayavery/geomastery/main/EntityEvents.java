@@ -45,31 +45,31 @@ public class EntityEvents {
 
             event.getDrops().clear();
             entity.entityDropItem(ItemSimple
-                    .newStack(GeoItems.carcassPig, 1, world), 0);
+                    .newStack(GeoItems.CARCASS_PIG, 1, world), 0);
 
         } else if (entity instanceof EntityCow) {
 
             event.getDrops().clear();
             entity.entityDropItem(ItemSimple
-                    .newStack(GeoItems.carcassCowpart, 4, world), 0);
+                    .newStack(GeoItems.CARCASS_COWPART, 4, world), 0);
             
         } else if (entity instanceof EntitySheep) {
 
             event.getDrops().clear();
             entity.entityDropItem(ItemSimple
-                    .newStack(GeoItems.carcassSheep, 1, world), 0);
+                    .newStack(GeoItems.CARCASS_SHEEP, 1, world), 0);
 
         } else if (entity instanceof EntityChicken) {
 
             event.getDrops().clear();
             entity.entityDropItem(ItemSimple
-                    .newStack(GeoItems.carcassChicken, 1, world), 0);
+                    .newStack(GeoItems.CARCASS_CHICKEN, 1, world), 0);
 
         } else if (entity instanceof EntityRabbit) {
 
             event.getDrops().clear();
             entity.entityDropItem(ItemSimple
-                    .newStack(GeoItems.carcassRabbit, 1, world), 0);
+                    .newStack(GeoItems.CARCASS_RABBIT, 1, world), 0);
             
         } else if (entity instanceof EntityMob) {
             

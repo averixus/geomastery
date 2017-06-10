@@ -10,6 +10,6 @@ public class WorldGenBeetroot extends WorldGenCrop {
 
     public WorldGenBeetroot(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.beetroot.getFullgrown(), 20, 3);
+        super(world, rand, GeoBlocks.BEETROOT.getFullgrown(), 20, 3);
     }
 }

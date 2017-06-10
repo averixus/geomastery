@@ -126,7 +126,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         public Bean() {
             
-            super("bean", 3, () -> GeoItems.bean, (rand) -> 3, 0.2F, 0.2F);
+            super("bean", 3, () -> GeoItems.BEAN, (rand) -> 3, 0.2F, 0.2F);
         }
 
         @Override
@@ -142,7 +142,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         public Tomato() {
             
-            super("tomato", 2, () -> GeoItems.tomato, (rand) -> 1, 0.2F, 0.2F);
+            super("tomato", 2, () -> GeoItems.TOMATO, (rand) -> 1, 0.2F, 0.2F);
         }
 
         @Override
@@ -158,7 +158,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         public Berry() {
             
-            super("berry", 2, () -> GeoItems.berry, (rand) -> 8, 0.2F, 0.2F);
+            super("berry", 2, () -> GeoItems.BERRY, (rand) -> 8, 0.2F, 0.2F);
         }
 
         @Override

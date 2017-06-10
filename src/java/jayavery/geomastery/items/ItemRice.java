@@ -63,7 +63,7 @@ public class ItemRice extends ItemBlockplacer {
                     stateCheck.getValue(BlockLiquid.LEVEL) == 0 &&
                     Blocks.WATER.modifyAcceleration(world, posCheck,
                     null, Vec3d.ZERO).equals(Vec3d.ZERO);
-            boolean rice = blockCheck == GeoBlocks.riceBase;
+            boolean rice = blockCheck == GeoBlocks.RICE_BASE;
             
             if (!sideSolid && !validWater && !rice) {
             
@@ -72,8 +72,8 @@ public class ItemRice extends ItemBlockplacer {
         }
         
         // Place crops
-        world.setBlockState(target, GeoBlocks.riceBase.getDefaultState());
-        world.setBlockState(above, GeoBlocks.riceTop.getDefaultState());
+        world.setBlockState(target, GeoBlocks.RICE_BASE.getDefaultState());
+        world.setBlockState(above, GeoBlocks.RICE_TOP.getDefaultState());
         
         return true;
     }

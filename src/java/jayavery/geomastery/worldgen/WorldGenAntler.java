@@ -39,7 +39,7 @@ public class WorldGenAntler extends WorldGenAbstract {
             if (y != -1) {
                 
                 this.world.setBlockState(new BlockPos(x, y, z),
-                        GeoBlocks.antler.getDefaultState());
+                        GeoBlocks.ANTLER.getDefaultState());
             }
         } 
     }

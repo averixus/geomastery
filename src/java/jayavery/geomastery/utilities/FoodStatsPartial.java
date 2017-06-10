@@ -143,15 +143,17 @@ public class FoodStatsPartial extends FoodStats {
 
         this.food = hunger;
     }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void setFoodSaturationLevel(float saturation) {
-
+    
+    public void setSaturationLevel(float saturation) {
+        
         this.saturation = saturation;
     }
-    
+
     /** Unused from super */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void setFoodSaturationLevel(float saturation) {}
+    
     @Override
     public void onUpdate(EntityPlayer player) {}
     

@@ -54,10 +54,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
+/** Client-side proxy. */
 public class ClientProxy implements IProxy {
-
-    /** Gui event handler instance. */
-    public static final GuiEvents GUI = new GuiEvents();
     
     /** Map of wall blocks to renderers. */
     public static final Map<BlockWall, WallRenderer> WALL_RENDERS = Maps.newHashMap();
@@ -80,10 +78,10 @@ public class ClientProxy implements IProxy {
         }
         
         // Normal ItemBlock models
-        for (Entry<Block, Item> entry : GeoBlocks.ITEM_MAP.entrySet()) {
+        for (Item item : GeoBlocks.ITEM_MAP.values()) {
             
-            ModelLoader.setCustomModelResourceLocation(entry.getValue(), 0,
-                    new ModelResourceLocation(entry.getKey().getRegistryName(),
+            ModelLoader.setCustomModelResourceLocation(item, 0,
+                    new ModelResourceLocation(item.getRegistryName(),
                     "inventory"));
         }
         
@@ -135,7 +133,7 @@ public class ClientProxy implements IProxy {
         }
         
         // Invsible light
-        ModelLoader.setCustomStateMapper(GeoBlocks.invisibleLight,
+        ModelLoader.setCustomStateMapper(GeoBlocks.INVISIBLE_LIGHT,
                 (b) -> Collections.emptyMap());
         
         // Beam delayed baking models
@@ -169,6 +167,8 @@ public class ClientProxy implements IProxy {
     
     @Override
     public void preInit() {
+        
+        MinecraftForge.EVENT_BUS.register(new GuiEvents());
                 
         // Entity renders
         render(EntitySpearWood.class, RenderSpearFactory.SPEAR_WOOD);
@@ -186,8 +186,6 @@ public class ClientProxy implements IProxy {
         
         // Tileentity renders
         ClientRegistry.bindTileEntitySpecialRenderer(TEBox.class, new TileEntityBoxRenderer());
-
-        MinecraftForge.EVENT_BUS.register(GUI);
         
         // Custom state mapper and mesh definition for tar
         BlockFluidBase tarBlock = GeoBlocks.tar;
@@ -211,14 +209,10 @@ public class ClientProxy implements IProxy {
     }
 
     @Override
-    public void init() {
-
-    }
+    public void init() {}
 
     @Override
-    public void postInit() {
-
-    }
+    public void postInit() {}
     
     @Override
     public EntityPlayer getClientPlayer() {

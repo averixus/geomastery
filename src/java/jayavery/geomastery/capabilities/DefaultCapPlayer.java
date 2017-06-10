@@ -114,12 +114,12 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         int rows = 0;
 
-        if (this.backpack.getItem() == GeoItems.backpack) {
+        if (this.backpack.getItem() == GeoItems.BACKPACK) {
 
             rows += 1;
         }
 
-        if (this.yoke.getItem() == GeoItems.yoke) {
+        if (this.yoke.getItem() == GeoItems.YOKE) {
 
             rows += 2;
         }
@@ -178,7 +178,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         return !GeoBlocks.OFFHAND_ONLY.contains(this.player
                 .getHeldItemOffhand().getItem()) &&
-                this.yoke.getItem() != GeoItems.yoke;
+                this.yoke.getItem() != GeoItems.YOKE;
     }
     
     @Override
@@ -237,7 +237,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             }
             
             food.setFoodLevel(Math.max(food.getFoodLevel() - SLEEP_COST, 0));
-            food.setFoodSaturationLevel(0);
+            food.setSaturationLevel(0);
             this.sendFoodPacket(entry.getKey());
         }
     }
@@ -318,7 +318,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             if (this.player.world.isAirBlock(newPos) && newLightLevel > 0) {
                 
                 this.player.world.setBlockState(newPos,
-                        GeoBlocks.invisibleLight.getDefaultState()
+                        GeoBlocks.INVISIBLE_LIGHT.getDefaultState()
                         .withProperty(BlockInvisibleLight.LIGHT,
                         newLightLevel));
                 this.lastLightPos = newPos;
@@ -501,9 +501,9 @@ public class DefaultCapPlayer implements ICapPlayer {
                         
                         fireVar = Math.max(fireVar, heat);
                         
-                    } else if (block == GeoBlocks.torchTallow ||
-                            block == GeoBlocks.torchTar ||
-                            block == GeoBlocks.invisibleLight) {
+                    } else if (block == GeoBlocks.TORCH_TALLOW ||
+                            block == GeoBlocks.TORCH_TAR ||
+                            block == GeoBlocks.INVISIBLE_LIGHT) {
 
                         double distance = Math.ceil(Math.sqrt((x * x) +
                                 (y * y) + (z * z)));
@@ -596,12 +596,12 @@ public class DefaultCapPlayer implements ICapPlayer {
             speed -= 2;
         }
         
-        if (this.backpack.getItem() == GeoItems.backpack) {
+        if (this.backpack.getItem() == GeoItems.BACKPACK) {
             
             speed -= 0.5;
         }
         
-        if (this.yoke.getItem() == GeoItems.yoke) {
+        if (this.yoke.getItem() == GeoItems.YOKE) {
             
             speed -= 1.5;
         }

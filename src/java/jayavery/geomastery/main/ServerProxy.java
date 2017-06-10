@@ -22,18 +22,18 @@ public class ServerProxy implements IProxy {
     @Override
     public EntityPlayer getClientPlayer() {
         
-        throw new RuntimeException("Tried to get Client player on Server side");
+        throw new RuntimeException("Tried to get Client player on Server!");
     }
     
     @Override
     public World getClientWorld() {
         
-        throw new RuntimeException("Tried to get Client world on Server side");
+        throw new RuntimeException("Tried to get Client world on Server!");
     }
     
     @Override
     public void addMinecraftRunnable(Runnable task) {
         
-        throw new RuntimeException("Tried to add Minecraft Runnable on Server side");
+        throw new RuntimeException("Tried to add Client Runnable on Server!");
     }
 }

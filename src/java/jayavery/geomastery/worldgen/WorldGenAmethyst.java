@@ -9,7 +9,7 @@ public class WorldGenAmethyst extends WorldGenStone {
 
     public WorldGenAmethyst(World world, Random rand) {
 
-        super(world, rand, GeoBlocks.lodeAmethyst.getDefaultState(),
+        super(world, rand, GeoBlocks.LODE_AMETHYST.getDefaultState(),
                 90, 256, 20, 1);
     }
 

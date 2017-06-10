@@ -48,7 +48,7 @@ public class TECraftingWoodworking extends
             
             if (this == FM) {
                 
-                return new ItemStack(GeoItems.craftingWoodworking);
+                return new ItemStack(GeoItems.CRAFTING_WOODWORKING);
                 
             } else {
                 
@@ -83,7 +83,7 @@ public class TECraftingWoodworking extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.craftingWoodworking;
+            BlockBuilding block = GeoBlocks.CRAFTING_WOODWORKING;
             Block below = world.getBlockState(pos.down()).getBlock();
             boolean broken = !BlockWeight.getWeight(below)
                     .canSupport(block.getWeight());
@@ -189,7 +189,7 @@ public class TECraftingWoodworking extends
                 BlockPos posBR = posBM.offset(facing.rotateY());
                 BlockPos posFR = posBR.offset(facing.getOpposite());
                 
-                BlockBuilding block = GeoBlocks.craftingWoodworking;
+                BlockBuilding block = GeoBlocks.CRAFTING_WOODWORKING;
                 BlockPos[] positions = {posFM, posFL, posBL,
                         posBM, posBR, posFR};
                 boolean valid = true;

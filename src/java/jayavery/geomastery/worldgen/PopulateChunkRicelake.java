@@ -18,9 +18,9 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
     /** Water block state. */
     private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
     /** Rice base block state. */
-    private static final IBlockState base = GeoBlocks.riceBase.getDefaultState();
+    private static final IBlockState base = GeoBlocks.RICE_BASE.getDefaultState();
     /** Rice top block state. */
-    private static final IBlockState top = GeoBlocks.riceTop.getDefaultState();
+    private static final IBlockState top = GeoBlocks.RICE_TOP.getDefaultState();
 
     public PopulateChunkRicelake(World world, Random rand) {
         

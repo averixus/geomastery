@@ -46,7 +46,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
 
             if (this == T) {
                 
-                return new ItemStack(GeoItems.craftingArmourer);
+                return new ItemStack(GeoItems.CRAFTING_ARMOURER);
                 
             } else {
                 
@@ -75,7 +75,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.craftingArmourer;
+            BlockBuilding block = GeoBlocks.CRAFTING_ARMOURER;
             boolean broken = !block.isValid(world, pos);
             
             switch (this) {
@@ -168,7 +168,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
                 BlockPos posT = posL.up();
                 BlockPos posR = posM.offset(facing.rotateY());
                 
-                BlockBuilding block = GeoBlocks.craftingArmourer;
+                BlockBuilding block = GeoBlocks.CRAFTING_ARMOURER;
                 BlockPos[] basePositions = {posM, posL, posR};
                 BlockPos[] upperPositions = {posT};
                 boolean valid = true;

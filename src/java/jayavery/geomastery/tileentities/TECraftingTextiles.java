@@ -46,7 +46,7 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
             
             if (this == FRONT) {
                 
-                return new ItemStack(GeoItems.craftingTextiles);
+                return new ItemStack(GeoItems.CRAFTING_TEXTILES);
                 
             } else {
                 
@@ -71,7 +71,7 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.craftingTextiles;
+            BlockBuilding block = GeoBlocks.CRAFTING_TEXTILES;
             Block below = world.getBlockState(pos.down()).getBlock();
             boolean broken = !BlockWeight.getWeight(below)
                     .canSupport(block.getWeight());
@@ -112,7 +112,7 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
                 BlockPos frontPos = pos;
                 BlockPos backPos = frontPos.offset(facing);
                 
-                BlockBuilding block = GeoBlocks.craftingTextiles;
+                BlockBuilding block = GeoBlocks.CRAFTING_TEXTILES;
                 BlockPos[] positions = {frontPos, backPos};
                 boolean valid = true;
                 

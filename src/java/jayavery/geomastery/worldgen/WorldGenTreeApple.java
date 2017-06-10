@@ -13,7 +13,7 @@ public class WorldGenTreeApple extends WorldGenTree {
 
     public WorldGenTreeApple(World world, Random rand, boolean isSapling) {
         
-        super(world, rand, isSapling, 30, 5, GeoBlocks.seedlingApple);
+        super(world, rand, isSapling, 30, 5, GeoBlocks.SEEDLING_APPLE);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class WorldGenTreeApple extends WorldGenTree {
         
         for (BlockPos trunk : trunks) {
             
-            this.setBlock(trunk, GeoBlocks.woodApple.getDefaultState());
+            this.setBlock(trunk, GeoBlocks.WOOD_APPLE.getDefaultState());
         }
         
         ArrayList<BlockPos> leaves = new ArrayList<BlockPos>();
@@ -74,7 +74,7 @@ public class WorldGenTreeApple extends WorldGenTree {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
                 
-                this.setBlock(leaf, GeoBlocks.leafApple.getDefaultState());
+                this.setBlock(leaf, GeoBlocks.LEAF_APPLE.getDefaultState());
             }
         }
         

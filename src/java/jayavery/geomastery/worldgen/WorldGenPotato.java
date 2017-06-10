@@ -9,6 +9,6 @@ public class WorldGenPotato extends WorldGenCrop {
 
     public WorldGenPotato(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.potato.getFullgrown(), 20, 5);
+        super(world, rand, GeoBlocks.POTATO.getFullgrown(), 20, 5);
     }
 }

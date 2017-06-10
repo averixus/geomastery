@@ -28,6 +28,6 @@ public class EntityArrowSteel extends EntityProjectile {
     @Override
     protected ItemStack getArrowStack() {
 
-        return new ItemStack(GeoItems.arrowSteel);
+        return new ItemStack(GeoItems.ARROW_STEEL);
     }
 }

@@ -36,13 +36,13 @@ public class EntitySpearWood extends EntityProjectile {
     @Override
     public ItemStack getArrowStack() {
 
-        if (this.durability + 1 >= GeoItems.spearWood.getMaxDamage()) {
+        if (this.durability + 1 >= GeoItems.SPEAR_WOOD.getMaxDamage()) {
             
             return null;
             
         } else {
             
-            return new ItemStack(GeoItems.spearWood, 1, this.durability);
+            return new ItemStack(GeoItems.SPEAR_WOOD, 1, this.durability);
         }
     }
     

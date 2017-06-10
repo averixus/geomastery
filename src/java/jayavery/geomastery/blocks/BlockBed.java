@@ -329,7 +329,7 @@ public abstract class BlockBed extends BlockBuilding {
 
         public Simple() {
             
-            super("bed_simple", 2F, 2F, () -> GeoItems.bedSimple);
+            super("bed_simple", 2F, 2F, () -> GeoItems.BED_SIMPLE);
         }
 
         @Override
@@ -388,7 +388,7 @@ public abstract class BlockBed extends BlockBuilding {
         
         public Wool() {
             
-            super("bed_wool", 2F, 0.66F, () -> GeoItems.bedWool);
+            super("bed_wool", 2F, 0.66F, () -> GeoItems.BED_WOOL);
         }
         
         @Override
@@ -410,7 +410,7 @@ public abstract class BlockBed extends BlockBuilding {
         
         public Cotton() {
             
-            super("bed_cotton", 2F, 0.66F, () -> GeoItems.bedCotton);
+            super("bed_cotton", 2F, 0.66F, () -> GeoItems.BED_COTTON);
         }
         
         @Override

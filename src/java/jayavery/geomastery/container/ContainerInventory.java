@@ -195,7 +195,7 @@ public class ContainerInventory extends ContainerAbstract {
     
     /** Attempts to put the ItemStack into this container.
      * @return The ItemStack left over. */
-    public ItemStack add(ItemStack stack) {
+    private ItemStack add(ItemStack stack) {
 
         if (!stack.isEmpty()) {
             
@@ -434,7 +434,7 @@ public class ContainerInventory extends ContainerAbstract {
             }
         }
 
-        if (slotItem == GeoItems.backpack && !this.inventorySlots
+        if (slotItem == GeoItems.BACKPACK && !this.inventorySlots
                 .get(BACKPACK_I).getHasStack()) {
 
             if (!this.mergeItemStack(slotStack, BACKPACK_I,
@@ -444,7 +444,7 @@ public class ContainerInventory extends ContainerAbstract {
             }
         }
 
-        if (slotItem == GeoItems.yoke && !this.inventorySlots.get(YOKE_I)
+        if (slotItem == GeoItems.YOKE && !this.inventorySlots.get(YOKE_I)
                 .getHasStack()) {
 
             if (!this.mergeItemStack(slotStack, YOKE_I,

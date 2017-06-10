@@ -28,6 +28,6 @@ public class EntityArrowFlint extends EntityProjectile {
     @Override
     protected ItemStack getArrowStack() {
 
-        return new ItemStack(GeoItems.arrowFlint);
+        return new ItemStack(GeoItems.ARROW_FLINT);
     }
 }

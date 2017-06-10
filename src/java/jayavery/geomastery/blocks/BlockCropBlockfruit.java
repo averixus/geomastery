@@ -127,8 +127,8 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         
         public Pumpkin() {
             
-            super("pumpkin_crop", 0.15F, 0.2F, () -> GeoBlocks.pumpkinFruit,
-                    () -> GeoItems.seedPumpkin);
+            super("pumpkin_crop", 0.15F, 0.2F, () -> GeoBlocks.PUMPKIN_FRUIT,
+                    () -> GeoItems.SEED_PUMPKIN);
         }
 
         @Override
@@ -146,8 +146,8 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         
         public Melon() {
             
-            super("melon_crop", 0.2F, 0.2F, () -> GeoBlocks.melonFruit,
-                    () -> GeoItems.seedMelon);
+            super("melon_crop", 0.2F, 0.2F, () -> GeoBlocks.MELON_FRUIT,
+                    () -> GeoItems.SEED_MELON);
         }
 
         @Override

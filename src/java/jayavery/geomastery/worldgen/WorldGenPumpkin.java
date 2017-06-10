@@ -13,7 +13,7 @@ public class WorldGenPumpkin extends WorldGenCrop {
 
     public WorldGenPumpkin(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.pumpkinCrop.getFullgrown(), 4, 3);
+        super(world, rand, GeoBlocks.PUMPKIN_CROP.getFullgrown(), 4, 3);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class WorldGenPumpkin extends WorldGenCrop {
         }
         
         this.world.setBlockState(crop, this.crop);
-        this.world.setBlockState(fruit, GeoBlocks.pumpkinFruit.getDefaultState()
+        this.world.setBlockState(fruit, GeoBlocks.PUMPKIN_FRUIT.getDefaultState()
                 .withProperty(BlockFruit.FACING, fruitOffset.getOpposite()));
         return true;
     }

@@ -10,7 +10,7 @@ public class WorldGenSalt extends WorldGenStone {
 
     public WorldGenSalt(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.salt.getDefaultState(), 20, 60, 1, 0.5);
+        super(world, rand, GeoBlocks.SALT.getDefaultState(), 20, 60, 1, 0.5);
     }
 
     @Override

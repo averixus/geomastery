@@ -9,6 +9,6 @@ public class WorldGenPepper extends WorldGenCrop {
 
     public WorldGenPepper(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.pepper.getFullgrown(), 30, 3);
+        super(world, rand, GeoBlocks.PEPPER.getFullgrown(), 30, 3);
     }
 }

@@ -9,6 +9,6 @@ public class WorldGenCarrot extends WorldGenCrop {
 
     public WorldGenCarrot(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.carrot.getFullgrown(), 20, 4);
+        super(world, rand, GeoBlocks.CARROT.getFullgrown(), 20, 4);
     }
 }

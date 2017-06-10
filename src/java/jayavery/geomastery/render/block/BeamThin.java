@@ -59,7 +59,7 @@ public class BeamThin extends DelayedBakingAbstract {
 
     public BeamThin() {
         
-        super(GeoBlocks.beamThin.getRegistryName());
+        super(GeoBlocks.BEAM_THIN.getRegistryName());
     }
 
     @Override

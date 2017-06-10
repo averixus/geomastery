@@ -9,6 +9,6 @@ public class WorldGenBerry extends WorldGenCrop {
 
     public WorldGenBerry(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.berry.getFullgrown(), 10, 8);
+        super(world, rand, GeoBlocks.BERRY.getFullgrown(), 10, 8);
     }
 }

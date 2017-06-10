@@ -28,6 +28,6 @@ public class EntityArrowCopper extends EntityProjectile {
     @Override
     protected ItemStack getArrowStack() {
 
-        return new ItemStack(GeoItems.arrowCopper);
+        return new ItemStack(GeoItems.ARROW_COPPER);
     }
 }

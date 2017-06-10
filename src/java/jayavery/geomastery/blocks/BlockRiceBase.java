@@ -72,7 +72,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unusued) {
         
-        if ((world.getBlockState(pos.up()).getBlock() != GeoBlocks.riceTop) ||
+        if ((world.getBlockState(pos.up()).getBlock() != GeoBlocks.RICE_TOP) ||
                 !this.canStay(world, pos)) {
             
             world.setBlockState(pos, Blocks.WATER.getDefaultState());
@@ -112,7 +112,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
                     stateCheck.getValue(BlockLiquid.LEVEL) == 0 &&
                     Blocks.WATER.modifyAcceleration(world, posCheck,
                     null, Vec3d.ZERO).equals(Vec3d.ZERO);
-            boolean rice = blockCheck == GeoBlocks.riceBase;
+            boolean rice = blockCheck == GeoBlocks.RICE_BASE;
             
             if (!sideSolid && !validWater && !rice) {
             

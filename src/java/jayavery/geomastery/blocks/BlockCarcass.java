@@ -158,13 +158,13 @@ public abstract class BlockCarcass extends BlockBuilding {
         
         public Chicken() {
             
-            super("carcass_chicken", 1F, 1, () -> GeoItems.carcassChicken);
+            super("carcass_chicken", 1F, 1, () -> GeoItems.CARCASS_CHICKEN);
         }
         
         @Override
         protected void spawnDrops(World world, BlockPos pos, long age) {
             
-            ItemStack meat = new ItemStack(GeoItems.chickenRaw, 2);
+            ItemStack meat = new ItemStack(GeoItems.CHICKEN_RAW, 2);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             
             spawnAsEntity(world, pos, meat);
@@ -177,20 +177,20 @@ public abstract class BlockCarcass extends BlockBuilding {
         
         public Sheep() {
             
-            super("carcass_sheep", 1F, 2, () -> GeoItems.carcassSheep);
+            super("carcass_sheep", 1F, 2, () -> GeoItems.CARCASS_SHEEP);
         }
         
         @Override
         protected void spawnDrops(World world, BlockPos pos, long age) {
             
-            ItemStack meat = new ItemStack(GeoItems.muttonRaw, 3);
+            ItemStack meat = new ItemStack(GeoItems.MUTTON_RAW, 3);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             
             spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.skinSheep, 4));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.SKIN_SHEEP, 4));
             spawnAsEntity(world, pos, new ItemStack(Items.BONE, 3));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.tallow));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.wool, 3));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.TALLOW));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.WOOL, 3));
         }
     }
     
@@ -198,19 +198,19 @@ public abstract class BlockCarcass extends BlockBuilding {
 
         public Cowpart() {
             
-            super("carcass_cowpart", 2F, 2, () -> GeoItems.carcassCowpart);
+            super("carcass_cowpart", 2F, 2, () -> GeoItems.CARCASS_COWPART);
         }
         
         @Override
         protected void spawnDrops(World world, BlockPos pos, long age) {
             
-            ItemStack meat = new ItemStack(GeoItems.beefRaw, 5);
+            ItemStack meat = new ItemStack(GeoItems.BEEF_RAW, 5);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             
             spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.skinCow, 6));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.SKIN_COW, 6));
             spawnAsEntity(world, pos, new ItemStack(Items.BONE, 5));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.tallow));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.TALLOW));
         }
     }
     
@@ -218,19 +218,19 @@ public abstract class BlockCarcass extends BlockBuilding {
 
         public Pig() {
             
-            super("carcass_pig", 1F, 2, () -> GeoItems.carcassPig);
+            super("carcass_pig", 1F, 2, () -> GeoItems.CARCASS_PIG);
         }
         
         @Override
         protected void spawnDrops(World world, BlockPos pos, long age) {
             
-            ItemStack meat = new ItemStack(GeoItems.porkRaw, 4);
+            ItemStack meat = new ItemStack(GeoItems.PORK_RAW, 4);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             
             spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.skinPig, 5));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.SKIN_PIG, 5));
             spawnAsEntity(world, pos, new ItemStack(Items.BONE, 4));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.tallow));
+            spawnAsEntity(world, pos, new ItemStack(GeoItems.TALLOW));
         }
     }
     
@@ -238,13 +238,13 @@ public abstract class BlockCarcass extends BlockBuilding {
 
         public Rabbit() {
             
-            super("carcass_rabbit", 1F, 2, () -> GeoItems.carcassRabbit);
+            super("carcass_rabbit", 1F, 2, () -> GeoItems.CARCASS_RABBIT);
         }
         
         @Override
         protected void spawnDrops(World world, BlockPos pos, long age) {
             
-            ItemStack meat = new ItemStack(GeoItems.rabbitRaw);
+            ItemStack meat = new ItemStack(GeoItems.RABBIT_RAW);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             
             spawnAsEntity(world, pos, meat);

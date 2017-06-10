@@ -10,7 +10,7 @@ public class WorldGenRuby extends WorldGenStone {
 
     public WorldGenRuby(World world, Random rand) {
 
-        super(world, rand, GeoBlocks.lodeRuby.getDefaultState(), 0, 256, 1, 1);
+        super(world, rand, GeoBlocks.LODE_RUBY.getDefaultState(), 0, 256, 1, 1);
     }
 
     @Override

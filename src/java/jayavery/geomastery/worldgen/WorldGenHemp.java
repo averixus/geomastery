@@ -9,6 +9,6 @@ public class WorldGenHemp extends WorldGenCrop {
 
     public WorldGenHemp(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.hemp.getFullgrown(), 30, 3);
+        super(world, rand, GeoBlocks.HEMP.getFullgrown(), 30, 3);
     }
 }

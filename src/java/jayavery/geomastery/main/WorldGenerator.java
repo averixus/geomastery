@@ -108,15 +108,12 @@ public class WorldGenerator implements IWorldGenerator {
         new WorldGenGold(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenIron(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenLapis(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenRedstone(world, rand)
-                .generateChunk(xFromChunk, zFromChunk);
+        new WorldGenRedstone(world, rand).generateChunk(xFromChunk, zFromChunk);
         
         new WorldGenCopper(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenFireopal(world, rand)
-                .generateChunk(xFromChunk, zFromChunk);
+        new WorldGenFireopal(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenRuby(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenSapphire(world, rand)
-                .generateChunk(xFromChunk, zFromChunk);
+        new WorldGenSapphire(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenSilver(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenTin(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenAmethyst(world, rand).generateChunk(xFromChunk, zFromChunk);
@@ -146,14 +143,10 @@ public class WorldGenerator implements IWorldGenerator {
         
         new WorldGenBeehive(world, rand).generateChunk(xFromChunk, zFromChunk);
         
-        new WorldGenTreeApple(world, rand, false)
-                .generateChunk(xFromChunk, zFromChunk);
-        new WorldGenTreePear(world, rand, false)
-                .generateChunk(xFromChunk, zFromChunk);
-        new WorldGenTreeOrange(world, rand, false)
-                .generateChunk(xFromChunk, zFromChunk);
-        new WorldGenTreeBanana(world, rand, false)
-                .generateChunk(xFromChunk, zFromChunk);
+        new WorldGenTreeApple(world, rand, false).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenTreePear(world, rand, false).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenTreeOrange(world, rand, false).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenTreeBanana(world, rand, false).generateChunk(xFromChunk, zFromChunk);
         
     }
 
@@ -178,7 +171,7 @@ public class WorldGenerator implements IWorldGenerator {
         }
     }
     
-    /** Intercepts structure generation. */
+    /** Alters vanilla structure generation. */
     @SubscribeEvent
     public void cancelVillage(InitMapGenEvent event) {
         

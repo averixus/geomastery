@@ -9,6 +9,6 @@ public class WorldGenTomato extends WorldGenCrop {
 
     public WorldGenTomato(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.tomato.getFullgrown(), 20, 7);
+        super(world, rand, GeoBlocks.TOMATO.getFullgrown(), 20, 7);
     }
 }

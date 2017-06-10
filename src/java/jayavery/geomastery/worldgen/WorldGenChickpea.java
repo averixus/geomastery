@@ -10,6 +10,6 @@ public class WorldGenChickpea extends WorldGenCrop {
 
     public WorldGenChickpea(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.chickpea.getFullgrown(), 20, 4);
+        super(world, rand, GeoBlocks.CHICKPEA.getFullgrown(), 20, 4);
     }
 }

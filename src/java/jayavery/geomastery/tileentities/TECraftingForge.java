@@ -46,7 +46,7 @@ public class TECraftingForge extends TECraftingAbstract<EnumPartForge> {
             
             if (this == FM) {
                 
-                return new ItemStack(GeoItems.craftingForge);
+                return new ItemStack(GeoItems.CRAFTING_FORGE);
                 
             } else {
                 
@@ -79,7 +79,7 @@ public class TECraftingForge extends TECraftingAbstract<EnumPartForge> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.craftingForge;
+            BlockBuilding block = GeoBlocks.CRAFTING_FORGE;
             boolean broken = !block.isValid(world, pos);
             
             switch (this) {
@@ -186,7 +186,7 @@ public class TECraftingForge extends TECraftingAbstract<EnumPartForge> {
                 BlockPos posBR = posBM.offset(facing.rotateY());
                 BlockPos posFR = posBR.offset(facing.getOpposite());
                 
-                BlockBuilding block = GeoBlocks.craftingForge;
+                BlockBuilding block = GeoBlocks.CRAFTING_FORGE;
                 BlockPos[] positions = {posFM, posFL, posBL,
                         posBM, posBR, posFR};
                 boolean valid = true;

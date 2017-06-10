@@ -84,6 +84,7 @@ public class PlayerEvents {
         
         if (player.inventoryContainer instanceof ContainerPlayer &&
                 !player.capabilities.isCreativeMode) {
+            
             player.inventoryContainer =
                     new ContainerInventory(player, player.world);
             player.openContainer = player.inventoryContainer;
@@ -94,7 +95,6 @@ public class PlayerEvents {
             player.inventoryContainer = new ContainerPlayer(player.inventory,
                     !player.world.isRemote, player);
             player.openContainer = player.inventoryContainer;
-
         }
     
         if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
@@ -111,12 +111,6 @@ public class PlayerEvents {
         
         EntityPlayer player = event.getEntityPlayer();
         
-        if (player.capabilities.isCreativeMode ||
-                !(player.inventoryContainer instanceof ContainerInventory)) {
-            
-            return;
-        }
-        
         ItemStack stack = event.getItem().getEntityItem();
         Item item = stack.getItem();
         
@@ -124,14 +118,13 @@ public class PlayerEvents {
         if (item instanceof ItemEgg) {
             
             int count = stack.getCount();
-            stack = ItemSimple.newStack(GeoItems.egg, count, player.world);
+            stack = ItemSimple.newStack(GeoItems.EGG, count, player.world);
         }
 
         if (player.getCapability(GeoCaps.CAP_PLAYER, null)
                 .canPickup(item)) {
             
-            stack = ((ContainerInventory) player.inventoryContainer)
-                    .add(stack);
+            stack = ContainerInventory.add(player, stack);
         }
 
         if (stack.isEmpty()) {
@@ -175,7 +168,7 @@ public class PlayerEvents {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (!(block instanceof BlockBed)) {
+        if (!(block instanceof BlockBed) || world.isRemote) {
 
             return;
         }
@@ -234,8 +227,7 @@ public class PlayerEvents {
     public void playerDrops(PlayerDropsEvent event) {
         
         EntityPlayer player = event.getEntityPlayer();
-        ICapPlayer capPlayer = player
-                .getCapability(GeoCaps.CAP_PLAYER, null);
+        ICapPlayer capPlayer = player.getCapability(GeoCaps.CAP_PLAYER, null);
         World world = player.world;
         double x = player.posX;
         double y = player.posY;

@@ -14,7 +14,7 @@ public class GuiBox extends GuiContainerAbstract {
         
         super(container, "Box");
         this.texture = new ResourceLocation(Geomastery.MODID,
-                "jtextures/gui/box_" +
+                "textures/gui/box_" +
                 container.capability.getInventoryRows() + ".png");
     }
 

@@ -101,7 +101,7 @@ public class ItemBow extends ItemSimple {
 
             if (player.capabilities.isCreativeMode) {
 
-                ammo = new ItemStack(GeoItems.arrowSteel);
+                ammo = new ItemStack(GeoItems.ARROW_STEEL);
 
             } else {
 

@@ -56,7 +56,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
             
             if (this == F) {
                 
-                return new ItemStack(GeoItems.craftingSawpit);
+                return new ItemStack(GeoItems.CRAFTING_SAWPIT);
                 
             } else {
                 
@@ -94,7 +94,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
                 EnumFacing facing) {
             
             boolean broken = false;
-            BlockBuilding block = GeoBlocks.craftingSawpit;
+            BlockBuilding block = GeoBlocks.CRAFTING_SAWPIT;
             
             switch (this) {
                 
@@ -223,7 +223,7 @@ public class TECraftingSawpit extends TECraftingAbstract<EnumPartSawpit> {
             
             if (this == F) {
                 
-                BlockBuilding placeBlock = GeoBlocks.craftingSawpit;
+                BlockBuilding placeBlock = GeoBlocks.CRAFTING_SAWPIT;
                 IBlockState placeState = placeBlock.getDefaultState();
                 
                 BlockPos posF = pos;

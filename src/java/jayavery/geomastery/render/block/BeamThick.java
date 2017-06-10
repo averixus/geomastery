@@ -61,7 +61,7 @@ public class BeamThick extends DelayedBakingAbstract {
 
     public BeamThick() {
         
-        super(GeoBlocks.beamThick.getRegistryName());
+        super(GeoBlocks.BEAM_THICK.getRegistryName());
     }
 
     @Override

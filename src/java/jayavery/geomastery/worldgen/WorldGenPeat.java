@@ -24,7 +24,7 @@ public class WorldGenPeat extends WorldGenAbstract {
         super(world, rand);
         this.minHeight = 75;
         this.maxHeight = 90;
-        this.block = GeoBlocks.peat.getDefaultState();
+        this.block = GeoBlocks.PEAT.getDefaultState();
     }
     
     @Override

@@ -131,7 +131,7 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 ItemStack inInv = inv.getStackInRowAndColumn(i, j);
                 
-                if (required.getItem() == GeoRecipes.rot) {
+                if (required.getItem() == GeoRecipes.ROT) {
                     
                     if (inInv.getItem() instanceof ItemEdibleDecayable ||
                             inInv.getItem() instanceof ItemCarcassDecayable) {

@@ -9,6 +9,6 @@ public class WorldGenBean extends WorldGenCrop {
 
     public WorldGenBean(World world, Random rand) {
         
-        super(world, rand, GeoBlocks.bean.getFullgrown(), 30, 5);
+        super(world, rand, GeoBlocks.BEAN.getFullgrown(), 30, 5);
     }
 }

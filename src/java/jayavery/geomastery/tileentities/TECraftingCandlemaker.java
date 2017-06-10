@@ -46,7 +46,7 @@ public class TECraftingCandlemaker extends
             
             if (this == FRONT) {
                 
-                return new ItemStack(GeoItems.craftingCandlemaker);
+                return new ItemStack(GeoItems.CRAFTING_CANDLEMAKER);
                 
             } else {
                 
@@ -71,7 +71,7 @@ public class TECraftingCandlemaker extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.craftingCandlemaker;
+            BlockBuilding block = GeoBlocks.CRAFTING_CANDLEMAKER;
             boolean broken = !block.isValid(world, pos);
             
             if (this == FRONT) {
@@ -109,7 +109,7 @@ public class TECraftingCandlemaker extends
                 BlockPos posFront = pos;
                 BlockPos posBack = posFront.offset(facing);
                 
-                BlockBuilding block = GeoBlocks.craftingCandlemaker;
+                BlockBuilding block = GeoBlocks.CRAFTING_CANDLEMAKER;
                 BlockPos[] positions = {posFront, posBack};
                 boolean valid = true;
                 

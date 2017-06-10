@@ -50,11 +50,9 @@ public abstract class EntityProjectile extends EntityArrow {
             
             if (this.pickupStatus == EntityArrow.PickupStatus.ALLOWED &&
                     !player.capabilities.isCreativeMode) {
-                
-                ItemStack remaining = ((ContainerInventory) player
-                        .inventoryContainer).add(this.getArrowStack());
-           
-                if (!remaining.isEmpty()) {
+                           
+                if (!ContainerInventory.add(player,
+                        this.getArrowStack()).isEmpty()) {
                     
                     pickup = false;
                 }

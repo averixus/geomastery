@@ -40,13 +40,13 @@ public class WorldGenBeehive extends WorldGenAbstract {
             if (y != -1) {
                 
                 BlockPos hive = new BlockPos(x, y, z);
-                IBlockState state = GeoBlocks.beehive.getDefaultState();
+                IBlockState state = GeoBlocks.BEEHIVE.getDefaultState();
                 
                 for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
                         
                     state = state.withProperty(BlockBeehive.FACING, facing);
                     
-                    if (GeoBlocks.beehive.canStay(this.world, hive, state)) {
+                    if (GeoBlocks.BEEHIVE.canStay(this.world, hive, state)) {
 
                         this.world.setBlockState(hive, state);
                         return;

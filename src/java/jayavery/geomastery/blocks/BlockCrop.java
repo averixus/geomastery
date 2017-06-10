@@ -290,7 +290,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Wheat() {
             
-            super("wheat", () -> GeoItems.wheat, (rand) -> 0,
+            super("wheat", () -> GeoItems.WHEAT, (rand) -> 0,
                     0.2F, 0.2F, ToolType.SICKLE);
         }
 
@@ -310,7 +310,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Potato() {
             
-            super("potato", () -> GeoItems.potato, (rand) -> rand.nextInt(3),
+            super("potato", () -> GeoItems.POTATO, (rand) -> rand.nextInt(3),
                     0.15F, 0.2F, ToolType.SICKLE);
         }
         
@@ -328,7 +328,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Pepper() {
             
-            super("pepper", () -> GeoItems.pepper, (rand) -> 2,
+            super("pepper", () -> GeoItems.PEPPER, (rand) -> 2,
                     0.15F, 0.2F, ToolType.SICKLE);
         }
 
@@ -347,7 +347,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Hemp() {
             
-            super("hemp", () -> GeoItems.twineHemp, () -> GeoItems.cuttingHemp,
+            super("hemp", () -> GeoItems.TWINE_HEMP, () -> GeoItems.CUTTING_HEMP,
                     (rand) -> 1, 0.2F, 0.2F, ToolType.SICKLE);
         }
 
@@ -366,7 +366,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Beetroot() {
             
-            super("beetroot", () -> GeoItems.beetroot,
+            super("beetroot", () -> GeoItems.BEETROOT,
                     (rand) -> rand.nextInt(3), 0.15F, 0.2F, ToolType.SICKLE);
         }
 
@@ -384,7 +384,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Carrot() {
             
-            super("carrot", () -> GeoItems.carrot, (rand) -> rand.nextInt(3),
+            super("carrot", () -> GeoItems.CARROT, (rand) -> rand.nextInt(3),
                     0.15F, 0.2F, ToolType.SICKLE);
         }
 
@@ -402,7 +402,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Chickpea() {
             
-            super("chickpea", () -> GeoItems.chickpeas, (rand) -> 1,
+            super("chickpea", () -> GeoItems.CHICKPEAS, (rand) -> 1,
                     0.15F, 0.2F, ToolType.SICKLE);
         }
 
@@ -422,7 +422,7 @@ public abstract class BlockCrop extends BlockNew
         
         public Cotton() {
             
-            super("cotton", () -> GeoItems.cotton, () -> GeoItems.cuttingCotton,
+            super("cotton", () -> GeoItems.COTTON, () -> GeoItems.CUTTING_COTTON,
                     (rand) -> 1, 0.15F, 0.2F, ToolType.SICKLE);
         }
 

@@ -64,7 +64,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
      * @return Whether this block stayed. */
     private boolean checkStay(World world, IBlockState state, BlockPos pos) {
         
-        if (world.getBlockState(pos.down()).getBlock() != GeoBlocks.riceBase) {
+        if (world.getBlockState(pos.down()).getBlock() != GeoBlocks.RICE_BASE) {
             
             world.setBlockToAir(pos); 
             
@@ -97,11 +97,11 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
         
         if (state.getValue(AGE) == 7) {
 
-            items.add(new ItemStack(GeoItems.rice, 2));
+            items.add(new ItemStack(GeoItems.RICE, 2));
             
         } else {
             
-            items.add(new ItemStack(GeoItems.rice, 1));
+            items.add(new ItemStack(GeoItems.RICE, 1));
         }
         
         return items;

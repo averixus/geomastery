@@ -75,7 +75,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.3";
+    public static final String VERSION = "1.3.1";
     public static final String NAME = "Geomastery";
 
     @SidedProxy(clientSide = "jayavery.geomastery.main.ClientProxy", serverSide = "jayavery.geomastery.main.ServerProxy")
@@ -84,7 +84,6 @@ public class Geomastery {
     @Instance
     public static Geomastery instance = new Geomastery();
     
-    /** Network channel for sending packets. */
     public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(Geomastery.MODID);
 
     @SubscribeEvent
@@ -104,9 +103,9 @@ public class Geomastery {
             event.getRegistry().register(item);
         }
         
-        for (Entry<Block, Item> entry : GeoBlocks.ITEM_MAP.entrySet()) {
-            
-            event.getRegistry().register(entry.getValue());
+        for (Item item : GeoBlocks.ITEM_MAP.values()) {
+
+            event.getRegistry().register(item);
         }
     }
     
@@ -232,7 +231,8 @@ public class Geomastery {
     }
     
     /** Helper for registering tileentities. */
-    private static void tileentity(Class<? extends TileEntity> clas,String id) {
+    private static void tileentity(Class<? extends TileEntity> clas,
+            String id) {
         
         GameRegistry.registerTileEntity(clas, id);
     }

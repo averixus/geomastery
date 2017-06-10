@@ -46,7 +46,7 @@ public class ItemShears extends ItemToolAbstract {
             if (target.isShearable(stack, entity.world, pos)) {
                 
                 target.onSheared(stack, entity.world, pos, 0);
-                entity.dropItem(GeoItems.wool,
+                entity.dropItem(GeoItems.WOOL,
                         this.yield.apply(entity.world.rand));
                 
                 stack.damageItem(1, entity);

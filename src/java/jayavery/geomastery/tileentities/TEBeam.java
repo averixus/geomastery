@@ -160,8 +160,8 @@ public class TEBeam extends TileEntity {
     public enum EnumFloor implements IStringSerializable {
         
         NONE("none", () -> Items.AIR),
-        POLE("pole", () -> GeoItems.floorPole),
-        WOOD("wood", () -> GeoItems.floorWood);
+        POLE("pole", () -> GeoItems.FLOOR_POLE),
+        WOOD("wood", () -> GeoItems.FLOOR_WOOD);
         
         private String name;
         private Supplier<Item> item;
