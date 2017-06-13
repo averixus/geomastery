@@ -220,8 +220,8 @@ public class GeoItems {
     
     public static final Item CLAY = make(new ItemSimple("clay", 9));
     
-    public static final Item MUDBRICKS =    make(new ItemSimple("mudbricks"));
-    public static final Item DRESSEDSTONE = make(new ItemSimple("dressedstone", 1));
+    public static final Item MUDBRICKS =    make(new ItemSimple("mudbricks", 2));
+    public static final Item DRESSEDSTONE = make(new ItemSimple("dressedstone", 2));
 
     public static final Item PEAT_DRY = make(new ItemSimple("peat_dry"));
     public static final Item PEAT_WET = make(new ItemSimple("peat_wet"));

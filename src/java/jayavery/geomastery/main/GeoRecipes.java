@@ -163,15 +163,15 @@ public class GeoRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.DOOR_WOOD), "SS", "SS", "SS", 'S', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.BOX), "PTP", "PPP", 'P', GeoItems.POLE, 'T', GeoItems.TALLOW);
         WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 8), "P P", "PPP", "P P", 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.BED_SIMPLE), "WWW", "PPP", 'W', GeoItems.WOOL, 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.PITCHROOF_CLAY, 2), "SC ", " SC", "  S", 'S', GeoItems.TIMBER, 'C', GeoItems.CLAY);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.BED_SIMPLE), "CCC", "WWW", "PPP", 'C', GeoItems.COTTON, 'W', GeoItems.WOOL, 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.PITCHROOF_CLAY, 2), "SC ", " SC", "  S", 'S', GeoItems.TIMBER, 'C', GeoItems.LOOSE_CLAY);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FRAME, 3), "SSS", " S ", 'S', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_FRAME, 3), "S  ", " S ", "  S", 'S', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WINDOW, 4), "S S", " G ", "S S", 'S', GeoItems.TIMBER, 'G', GeoItems.GLASS);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.FLOOR_POLE, 4), "PPP", 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.FLOOR_WOOD, 4), "TTT", 'T', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FLATROOF_POLE, 2), "TTT", "T T", 'T', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_LOG, 4), "LLL", "LLL", 'L', GeoItems.LOG);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_LOG, 4), "L", "L", 'L', GeoItems.LOG);
         
         for (Item metal : METALS) {
             
@@ -269,8 +269,8 @@ public class GeoRecipes {
         MASON.addShapedRecipe(new ItemStack(GeoItems.VAULT_BRICK, 2), "BB", "B ", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_STONE, 2), "SSS", 'S', GeoItems.DRESSEDSTONE);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_BRICK, 2), "BBB", 'B', Items.BRICK);
-        MASON.addShapelessRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), GeoItems.RUBBLE);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), "RR", "RR", 'R', GeoItems.RUBBLE);
+        MASON.addShapelessRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), GeoItems.RUBBLE, GeoItems.RUBBLE, GeoItems.RUBBLE, GeoItems.RUBBLE);
+      //  MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), "RR", "RR", 'R', GeoItems.RUBBLE);
     }
 
     /** Adds all recipes to armourer. */
