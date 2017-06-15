@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Copyright (C) 2017 Jay Avery
+ * 
+ * This file is part of Geomastery. Geomastery is free software: distributed
+ * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
+ ******************************************************************************/
 package jayavery.geomastery.main;
 
 import jayavery.geomastery.utilities.IProxy;
@@ -32,7 +38,7 @@ public class ServerProxy implements IProxy {
     }
     
     @Override
-    public void addMinecraftRunnable(Runnable task) {
+    public void addClientRunnable(Runnable task) {
         
         throw new RuntimeException("Tried to add Client Runnable on Server!");
     }

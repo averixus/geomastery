@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Copyright (C) 2017 Jay Avery
+ * 
+ * This file is part of Geomastery. Geomastery is free software: distributed
+ * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
+ ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
 import jayavery.geomastery.blocks.BlockFlatroof;
@@ -52,10 +58,11 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         }
         
         boolean update = false;
+        EnumExposure exposure = this.getExposure();
         
         if (this.world.getWorldTime() % 24000L == 0) {
 
-            if (this.getExposure() == EnumExposure.EXPOSED) {
+            if (exposure == EnumExposure.EXPOSED) {
                 
                 this.durability--;
                 update = true;
@@ -63,8 +70,6 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         }
         
         if (this.world.isRaining() && !this.isRaining) {
-
-            EnumExposure exposure = this.getExposure();
             
             if (exposure == EnumExposure.EXPOSED) {
             

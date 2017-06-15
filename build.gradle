@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.3.2-mc1.11.2"
+version = "1.0.0-mc1.11.2"
 group = "jayavery.geomastery" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Geomastery"
 
@@ -21,6 +21,10 @@ sourceSets {
         java { srcDirs = ["$projectDir/src/java"] }
         resources { srcDirs = ["$projectDir/src/resources"] }
     }
+}
+
+jar {
+    from "COPYING.txt"
 }
 
 srcCompat = JavaVersion.VERSION_1_8

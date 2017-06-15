@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Copyright (C) 2017 Jay Avery
+ * 
+ * This file is part of Geomastery. Geomastery is free software: distributed
+ * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
+ ******************************************************************************/
 package jayavery.geomastery.main;
 
 import java.util.Collections;
@@ -227,7 +233,7 @@ public class ClientProxy implements IProxy {
     }
     
     @Override
-    public void addMinecraftRunnable(Runnable task) {
+    public void addClientRunnable(Runnable task) {
         
         Minecraft.getMinecraft().addScheduledTask(task);
     }

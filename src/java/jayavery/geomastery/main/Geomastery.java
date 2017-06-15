@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Copyright (C) 2017 Jay Avery
+ * 
+ * This file is part of Geomastery. Geomastery is free software: distributed
+ * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
+ ******************************************************************************/
 package jayavery.geomastery.main;
 
 import java.util.Map.Entry;
@@ -70,21 +76,26 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Geomastery.MODID, version = Geomastery.VERSION, name = Geomastery.NAME)
+@Mod(modid = Geomastery.MODID, version = Geomastery.VERSION, name = Geomastery.NAME, acceptedMinecraftVersions = Geomastery.MC_VER, acceptableRemoteVersions = Geomastery.REM_VER, updateJSON = Geomastery.UPDATE)
 @EventBusSubscriber
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.3.2";
+    public static final String VERSION = "1.0.0";
     public static final String NAME = "Geomastery";
-
-    @SidedProxy(clientSide = "jayavery.geomastery.main.ClientProxy", serverSide = "jayavery.geomastery.main.ServerProxy")
+    public static final String MC_VER = "1.11.2-13.20.0.2228";
+    public static final String REM_VER = "1.0.0";
+    public static final String UPDATE = "";
+    public static final String SERVER_PROXY = "jayavery.geomastery.main.ServerProxy";
+    public static final String CLIENT_PROXY = "jayavery.geomastery.main.ClientProxy";
+    
+    public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+    
+    @SidedProxy(clientSide = CLIENT_PROXY, serverSide = SERVER_PROXY)
     public static IProxy proxy;
 
     @Instance
     public static Geomastery instance = new Geomastery();
-    
-    public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(Geomastery.MODID);
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {

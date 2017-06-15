@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Copyright (C) 2017 Jay Avery
+ * 
+ * This file is part of Geomastery. Geomastery is free software: distributed
+ * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
+ ******************************************************************************/
 package jayavery.geomastery.packets;
 
 import io.netty.buffer.ByteBuf;
@@ -42,7 +48,7 @@ public class CPacketTemp implements IMessage {
         public IMessage onMessage(CPacketTemp message,
                 MessageContext ctx) {
             
-            Geomastery.proxy.addMinecraftRunnable(() -> processMessage(message));
+            Geomastery.proxy.addClientRunnable(() -> processMessage(message));
             return null;
         }
         
