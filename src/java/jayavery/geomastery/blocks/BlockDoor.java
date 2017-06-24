@@ -117,7 +117,7 @@ public class BlockDoor extends BlockBuilding {
         }
     }
     
-    /** Checks position (breaks if invalid) and toggles door open. */
+    /** Toggles door open. */
     @Override
     public boolean onBlockActivated(World world, BlockPos thisPos,
             IBlockState thisState, EntityPlayer player, EnumHand hand,
@@ -127,20 +127,17 @@ public class BlockDoor extends BlockBuilding {
                 thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
-        if (otherState.getBlock() != this) {
+        if (otherState.getBlock() != this || world.isRemote) {
             
             return false;
         }
-         
-        if (!world.isRemote) {
             
-            thisState = thisState.cycleProperty(OPEN);
-            world.setBlockState(thisPos, thisState);
-            world.setBlockState(otherPos, otherState
-                    .withProperty(OPEN, thisState.getValue(OPEN)));
-            world.playEvent(player, thisState.getValue(OPEN) ?
-                    1006 : 1012, thisPos, 0);
-        }
+        thisState = thisState.cycleProperty(OPEN);
+        world.setBlockState(thisPos, thisState);
+        world.setBlockState(otherPos, otherState
+                .withProperty(OPEN, thisState.getValue(OPEN)));
+        world.playEvent(player, thisState.getValue(OPEN) ?
+                1006 : 1012, thisPos, 0);
         
         return true;
     }
@@ -164,11 +161,7 @@ public class BlockDoor extends BlockBuilding {
                 spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
             }
             
-        } /*else if (otherState.getValue(OPEN) != thisState.getValue(OPEN)) {
-            
-            thisState = thisState.withProperty(OPEN, otherState.getValue(OPEN));
-            world.setBlockState(thisPos, thisState);
-        }*/
+        }
     }
     
     @Override
