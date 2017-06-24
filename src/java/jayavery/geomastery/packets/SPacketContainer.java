@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the ContainerInventory on the Server. */
+/** Packet for client->server player inventory slot syncing. */
 public class SPacketContainer implements IMessage {
 
     /** Index of the slot in the container. */

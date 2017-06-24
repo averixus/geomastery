@@ -21,7 +21,7 @@ import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketBackpack;
-import jayavery.geomastery.packets.CPacketFood;
+import jayavery.geomastery.packets.CPacketHunger;
 import jayavery.geomastery.packets.CPacketTemp;
 import jayavery.geomastery.packets.CPacketYoke;
 import jayavery.geomastery.tileentities.TEFurnaceAbstract;
@@ -43,9 +43,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
+/** ICapPlayer implementation. */
 public class DefaultCapPlayer implements ICapPlayer {
     
     /** Ticks the player stays wet for after being in water. */
@@ -316,7 +318,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         int newLightLevel = Math.max(offhandLight, mainhandLight);
         
-        if (!this.lastLightPos.equals(newPos) ||
+        if ((!this.lastLightPos.equals(newPos) &&
+                (this.lastLightLevel > 0 || newLightLevel > 0)) ||
                 this.lastLightLevel != newLightLevel) {
             
             this.player.world.setBlockToAir(this.lastLightPos);
@@ -327,10 +330,10 @@ public class DefaultCapPlayer implements ICapPlayer {
                         GeoBlocks.INVISIBLE_LIGHT.getDefaultState()
                         .withProperty(BlockInvisibleLight.LIGHT,
                         newLightLevel));
-                this.lastLightPos = newPos;
             }
             
             this.lastLightLevel = newLightLevel;
+            this.lastLightPos = newPos;
         }
     }
     
@@ -364,28 +367,28 @@ public class DefaultCapPlayer implements ICapPlayer {
         float timeVar = 0;
         long time = world.getWorldTime() % 24000;
         
-        if (time > 3000 && time <= 6000) {
-            // 9 til 12 am
-            timeVar = 0.5F;
+        if (time > 3000 && time <= 6000) { // 9 til 12 am
             
-        } else if (time > 6000 && time <= 9000) {
-            // 12 til 3pm
+            timeVar = 0.5F; 
+            
+        } else if (time > 6000 && time <= 9000) { // 12 til 3pm
+            
             timeVar = 1;
             
-        } else if (time > 9000 && time <= 12000) {
-            // 3 til 6pm
+        } else if (time > 9000 && time <= 12000) { // 3 til 6pm
+            
             timeVar = 0.5F;
             
-        } else if (time > 15000 && time <= 18000) {
-            // 9 til 12pm
+        } else if (time > 15000 && time <= 18000) { // 9 til 12pm
+            
             timeVar = -0.5F;
             
-        } else if (time > 18000 && time <= 21000) {
-            // 12 til 3am
+        } else if (time > 18000 && time <= 21000) { // 12 til 3am
+            
             timeVar = -1;
             
-        } else if (time > 21000) {
-            // 3 til 6am
+        } else if (time > 21000) { // 3 til 6am
+            
             timeVar = -0.5F;
         }
         
@@ -645,7 +648,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Remove pickups that are timed out. */
     private void tickPickup() {
         
-        Iterator<Entry<Item, Long>> iterator = this.delays.entrySet().iterator();
+        Iterator<Entry<Item, Long>> iterator =
+                this.delays.entrySet().iterator();
         
         while (iterator.hasNext()) {
             
@@ -677,10 +681,10 @@ public class DefaultCapPlayer implements ICapPlayer {
         this.sendYokePacket(this.yoke);
     }
     
-    /** Sends a packet to the client to update the FoodType hunger level. */
+    /** Sends a packet to the client to update the FoodType's hunger level. */
     private void sendFoodPacket(FoodType type) {
         
-        Geomastery.NETWORK.sendTo(new CPacketFood(type,
+        Geomastery.NETWORK.sendTo(new CPacketHunger(type,
                 this.typesMap.get(type).getFoodLevel()),
                 (EntityPlayerMP) this.player);
     }

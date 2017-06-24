@@ -9,6 +9,7 @@ package jayavery.geomastery.utilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+/** Implemented for client and server proxy. */
 public interface IProxy {
 
     /** Called on {@code ModelRegistryEvent}. */

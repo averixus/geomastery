@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the drying rack progress bar on the Client. */
+/** Packet for server->client drying rack data syncing. */
 public class CPacketDrying implements IMessage {
 
     /** Dry each value of the drying rack. */

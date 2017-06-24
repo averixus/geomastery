@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Render class for falling tree blocks. */
+/** Renderer for falling tree blocks. */
 @SideOnly(Side.CLIENT)
 public class RenderFallingTreeBlock extends Render<FallingTreeBlock> {
 

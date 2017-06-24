@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+/** Flint spear projectile entity. */
 public class EntitySpearFlint extends EntityProjectile {
     
     /** Damager done by this spear. */
@@ -57,7 +58,7 @@ public class EntitySpearFlint extends EntityProjectile {
         
        super.onHit(raytraceResultIn);
        
-       if (this.isDead) {
+       if (!this.world.isRemote && this.isDead) {
 
            EntitySpearFlint replace = new EntitySpearFlint(this.world,
                    this.posX, this.posY, this.posZ);

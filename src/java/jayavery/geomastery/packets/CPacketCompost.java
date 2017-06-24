@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update compost heap values on the client. */
+/** Packet for server->client compost heap data syncing. */
 public class CPacketCompost implements IMessage {
     
     /** Input fullness of the compost heap. */

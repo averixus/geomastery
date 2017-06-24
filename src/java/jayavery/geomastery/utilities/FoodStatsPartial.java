@@ -16,7 +16,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** FoodStats class for single food type. */
+/** FoodStats for single food type. */
 public class FoodStatsPartial extends FoodStats {
     
     /** Ticks between healing or damaging from hunger. */
@@ -155,11 +155,12 @@ public class FoodStatsPartial extends FoodStats {
         this.saturation = saturation;
     }
 
-    /** Unused from super */
+    /** Unused from super. */
     @Override
     @SideOnly(Side.CLIENT)
     public void setFoodSaturationLevel(float saturation) {}
     
+    /** Unused from super. */
     @Override
     public void onUpdate(EntityPlayer player) {}
     

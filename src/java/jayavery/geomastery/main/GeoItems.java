@@ -68,6 +68,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.EnumPlantType;
 
+/** Stores and registers all new Geomastery items. */
 public class GeoItems {
     
     /** All new items. */
@@ -120,8 +121,8 @@ public class GeoItems {
     public static final Item PEPPER =         make(new ItemEdibleSeedDecayable("pepper", 3, 3F, 6, GeoBlocks.PEPPER, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
     public static final Item TOMATO =         make(new ItemEdibleSeedDecayable("tomato", 3, 3F, 7, GeoBlocks.TOMATO, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
     public static final Item BERRY =          make(new ItemEdibleSeedDecayable("berry", 1, 1F, 20, GeoBlocks.BERRY, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
-    public static final Item CARROT =         make(new ItemEdibleSeedDecayable("potato", 7, 7F, 5, GeoBlocks.POTATO, EnumPlantType.Crop, FoodType.CARBS, 4));
-    public static final Item POTATO =         make(new ItemEdibleSeedDecayable("carrot", 3, 3F, 7, GeoBlocks.CARROT, EnumPlantType.Crop, FoodType.FRUITVEG, 4, EntityPig.class, EntityRabbit.class));
+    public static final Item POTATO =         make(new ItemEdibleSeedDecayable("potato", 7, 7F, 5, GeoBlocks.POTATO, EnumPlantType.Crop, FoodType.CARBS, 4));
+    public static final Item CARROT =         make(new ItemEdibleSeedDecayable("carrot", 3, 3F, 7, GeoBlocks.CARROT, EnumPlantType.Crop, FoodType.FRUITVEG, 4, EntityPig.class, EntityRabbit.class));
     public static final Item BEETROOT =       make(new ItemEdibleSeedDecayable("beetroot", 3, 3F, 6, GeoBlocks.BEETROOT, EnumPlantType.Crop, FoodType.FRUITVEG, 4));
         
     // Non-decaying inedible seeds

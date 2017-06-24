@@ -8,6 +8,7 @@ package jayavery.geomastery.utilities;
 
 import net.minecraftforge.common.property.IUnlistedProperty;
 
+/** Unlisted property for boolean. */
 public class UnlistedPropertyBool implements IUnlistedProperty<Boolean> {
 
     private final String name;

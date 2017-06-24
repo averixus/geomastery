@@ -8,6 +8,7 @@ package jayavery.geomastery.utilities;
 
 import net.minecraftforge.common.property.IUnlistedProperty;
 
+/** Unlisted property for any enum. */
 public class UnlistedPropertyEnum<E extends Enum<E>>
         implements IUnlistedProperty<E> {
 

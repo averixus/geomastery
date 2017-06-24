@@ -49,7 +49,7 @@ public class BlockBeam extends BlockBuilding {
             new UnlistedPropertyBool("backbeam");
     public static final UnlistedPropertyEnum<EnumFloor> FLOOR =
             new UnlistedPropertyEnum<EnumFloor>
-    ("floor", TEBeam.EnumFloor.class);
+            ("floor", TEBeam.EnumFloor.class);
     public static final UnlistedPropertyBool LEFT =
             new UnlistedPropertyBool("left");
     public static final UnlistedPropertyBool RIGHT =

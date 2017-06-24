@@ -46,7 +46,7 @@ public class BlockDoor extends BlockBuilding {
             PropertyEnum.create("vault", VaultAbove.class);
     
     /** Supplier for the door item. */
-    protected Supplier<Item> item;
+    private final Supplier<Item> item;
 
     public BlockDoor(String name, Supplier<Item> item) {
         
@@ -131,13 +131,17 @@ public class BlockDoor extends BlockBuilding {
             
             return false;
         }
+         
+        if (!world.isRemote) {
+            
+            thisState = thisState.cycleProperty(OPEN);
+            world.setBlockState(thisPos, thisState);
+            world.setBlockState(otherPos, otherState
+                    .withProperty(OPEN, thisState.getValue(OPEN)));
+            world.playEvent(player, thisState.getValue(OPEN) ?
+                    1006 : 1012, thisPos, 0);
+        }
         
-        thisState = thisState.cycleProperty(OPEN);
-        world.setBlockState(thisPos, thisState);
-        world.setBlockState(otherPos, otherState
-                .withProperty(OPEN, thisState.getValue(OPEN)));
-        world.playEvent(player, thisState.getValue(OPEN) ?
-                1006 : 1012, thisPos, 0);
         return true;
     }
     
@@ -152,7 +156,7 @@ public class BlockDoor extends BlockBuilding {
         
         if (otherState.getBlock() != this ||
                 !this.isValid(world, thisPos)) {
-            
+
             world.setBlockToAir(thisPos);
             
             if (thisState.getValue(TOP)) {
@@ -160,11 +164,11 @@ public class BlockDoor extends BlockBuilding {
                 spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
             }
             
-        } else if (otherState.getValue(OPEN) != thisState.getValue(OPEN)) {
+        } /*else if (otherState.getValue(OPEN) != thisState.getValue(OPEN)) {
             
             thisState = thisState.withProperty(OPEN, otherState.getValue(OPEN));
             world.setBlockState(thisPos, thisState);
-        }
+        }*/
     }
     
     @Override

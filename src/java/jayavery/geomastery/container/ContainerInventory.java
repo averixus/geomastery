@@ -101,9 +101,9 @@ public class ContainerInventory extends ContainerAbstract {
     /** Texture for the current background of this container. */
     private ResourceLocation background;
     /** Inventory for the craft grid. */
-    public InventoryCrafting craftMatrix;
+    public final InventoryCrafting craftMatrix;
     /** Inventory for the craft result. */
-    public IInventory craftResult = new InventoryCraftResult();
+    public final IInventory craftResult = new InventoryCraftResult();
 
     public ContainerInventory(EntityPlayer player, World world) {
 
@@ -152,7 +152,7 @@ public class ContainerInventory extends ContainerAbstract {
     }
     
     /** Rebuilds the correct number of main inventory slots. */
-    public void refresh() {
+    private void refresh() {
         
         // Remove old slots
         int j = this.inventorySlots.size() - 1;
@@ -174,7 +174,7 @@ public class ContainerInventory extends ContainerAbstract {
             
             if (!drop.isEmpty()) {
             
-                if (this.mergeItemStack(drop, this.hotStart,
+                if (!this.mergeItemStack(drop, this.hotStart,
                         this.invEnd + 1, true)) {
                     
                     this.player.dropItem(drop, false);
@@ -396,7 +396,7 @@ public class ContainerInventory extends ContainerAbstract {
                     .get(HEAD_I).getHasStack()) {
 
                 if (!this.mergeItemStack(slotStack,
-                        HEAD_I, HEAD_I + 1, true)) {
+                        HEAD_I, HEAD_I + 1, false)) {
 
                     result = ItemStack.EMPTY;
                 }
@@ -405,7 +405,7 @@ public class ContainerInventory extends ContainerAbstract {
                     !this.inventorySlots.get(CHEST_I).getHasStack()) {
 
                 if (!this.mergeItemStack(slotStack, CHEST_I,
-                        CHEST_I + 1, true)) {
+                        CHEST_I + 1, false)) {
 
                     result = ItemStack.EMPTY;
                 }
@@ -414,7 +414,7 @@ public class ContainerInventory extends ContainerAbstract {
                     !this.inventorySlots.get(LEGS_I).getHasStack()) {
 
                 if (!this.mergeItemStack(slotStack,
-                        LEGS_I, LEGS_I + 1, true)) {
+                        LEGS_I, LEGS_I + 1, false)) {
 
                     result = ItemStack.EMPTY;
                 }
@@ -423,7 +423,7 @@ public class ContainerInventory extends ContainerAbstract {
                     !this.inventorySlots.get(FEET_I).getHasStack()) {
 
                 if (!this.mergeItemStack(slotStack,
-                        FEET_I, FEET_I + 1, true)) {
+                        FEET_I, FEET_I + 1, false)) {
 
                     result = ItemStack.EMPTY;
                 }
@@ -434,7 +434,7 @@ public class ContainerInventory extends ContainerAbstract {
                 !this.inventorySlots.get(OFFHAND_I).getHasStack()) {
 
             if (!this.mergeItemStack(slotStack,
-                    OFFHAND_I, OFFHAND_I + 1, true)) {
+                    OFFHAND_I, OFFHAND_I + 1, false)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -444,7 +444,7 @@ public class ContainerInventory extends ContainerAbstract {
                 .get(BACKPACK_I).getHasStack()) {
 
             if (!this.mergeItemStack(slotStack, BACKPACK_I,
-                    BACKPACK_I + 1, true)) {
+                    BACKPACK_I + 1, false)) {
                 
                 result = ItemStack.EMPTY;
             }
@@ -454,7 +454,7 @@ public class ContainerInventory extends ContainerAbstract {
                 .getHasStack()) {
 
             if (!this.mergeItemStack(slotStack, YOKE_I,
-                    YOKE_I + 1, true)) {
+                    YOKE_I + 1, false)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -466,13 +466,13 @@ public class ContainerInventory extends ContainerAbstract {
             
             if (GeoBlocks.OFFHAND_ONLY.contains(slotItem) &&
                     !this.mergeItemStack(slotStack, OFFHAND_I,
-                    OFFHAND_I + 1, true)) {
+                    OFFHAND_I + 1, false)) {
                 
                 fail = true;
                 
             } else if (!GeoBlocks.OFFHAND_ONLY.contains(slotItem) &&
                     !this.mergeItemStack(slotStack, this.hotStart,
-                    this.invEnd + 1, true)) {
+                    this.invEnd + 1, false)) {
 
                 fail = true;
                 
@@ -502,7 +502,7 @@ public class ContainerInventory extends ContainerAbstract {
         } else if (index >= this.hotStart && index <= this.hotEnd) {
 
             if (!this.mergeItemStack(slotStack, this.invStart,
-                    this.invEnd + 1, true)) {
+                    this.invEnd + 1, false)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -510,7 +510,7 @@ public class ContainerInventory extends ContainerAbstract {
         } else if (index >= this.invStart && index <= this.invEnd) {
 
             if (!this.mergeItemStack(slotStack, this.hotStart,
-                    this.hotEnd + 1, true)) {
+                    this.hotEnd + 1, false)) {
 
                 result = ItemStack.EMPTY;
             }
@@ -539,7 +539,7 @@ public class ContainerInventory extends ContainerAbstract {
         
         if (!(player.inventoryContainer instanceof ContainerInventory)) {
             
-            return stack;
+            return ItemStack.EMPTY;
         }
         
         ContainerInventory inv = (ContainerInventory) player.inventoryContainer;

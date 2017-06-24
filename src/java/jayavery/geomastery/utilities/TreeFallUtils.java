@@ -38,6 +38,7 @@ public class TreeFallUtils {
             new BlockPos(1, 1, -1), new BlockPos(1, 0, 0),
             new BlockPos(1, 1, 0), new BlockPos(1, 0, 1)};
     
+    /** Upper limit for number of blocks which can be felled in one action. */
     private static final int HARD_MAX = 150;
     
     /** Surroundings array for leaf decay checking. */

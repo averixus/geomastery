@@ -18,7 +18,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
-/** Class to populate a chunk with a rice lake. */
+/** Worldgenerator to populate a chunk with a rice lake. */
 public class PopulateChunkRicelake extends WorldGenAbstract {
         
     /** Water block state. */

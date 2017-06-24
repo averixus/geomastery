@@ -32,7 +32,7 @@ public abstract class BlockBuilding extends BlockNew {
     }
     
     /** Checks whether this block is valid in the given position.
-     * Only called by {@code ItemBlock}s.
+     * Only called by vanilla {@code ItemBlock}s.
      * @return Whether the block can be placed. */
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
@@ -53,7 +53,7 @@ public abstract class BlockBuilding extends BlockNew {
 
     /** @return Whether this position is valid for this block. Default
      * implementation requires the block below to be same weight or heavier,
-     * or the same block (allows for multiblock structures).*/
+     * or the same block (allowing for multiblock structures).*/
     public boolean isValid(World world, BlockPos pos) {
         
         Block blockBelow = world.getBlockState(pos.down()).getBlock();

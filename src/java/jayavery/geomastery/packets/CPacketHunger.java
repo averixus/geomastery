@@ -16,17 +16,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the player's Food levels on the Client. */
-public class CPacketFood implements IMessage {
+/** Packet for server->client player hunger syncing. */
+public class CPacketHunger implements IMessage {
     
     /** The food type. */
     protected FoodType type;
     /** The hunger level. */
     protected int hunger;
     
-    public CPacketFood() {}
+    public CPacketHunger() {}
     
-    public CPacketFood(FoodType type, int hunger) {
+    public CPacketHunger(FoodType type, int hunger) {
         
         this.type = type;
         this.hunger = hunger;
@@ -47,17 +47,17 @@ public class CPacketFood implements IMessage {
     }
     
     public static class Handler
-            implements IMessageHandler<CPacketFood, IMessage> {
+            implements IMessageHandler<CPacketHunger, IMessage> {
         
         @Override
-        public IMessage onMessage(CPacketFood message,
+        public IMessage onMessage(CPacketHunger message,
                 MessageContext ctx) {
             
             Geomastery.proxy.addClientRunnable(() -> processMessage(message));
             return null;
         }
         
-        public void processMessage(CPacketFood message) {
+        public void processMessage(CPacketHunger message) {
             
             EntityPlayer player = Geomastery.proxy.getClientPlayer();
             ((DefaultCapPlayer) player.getCapability(GeoCaps.CAP_PLAYER, null))

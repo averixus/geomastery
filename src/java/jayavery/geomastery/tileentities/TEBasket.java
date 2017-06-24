@@ -13,6 +13,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+/** TileEntity for basket block. */
 public class TEBasket extends TileEntity {
 
     /** The basket inventory. */

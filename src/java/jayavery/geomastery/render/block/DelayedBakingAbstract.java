@@ -41,7 +41,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Delayed baking cached multipart block model. */
+/** Abstract superclass for delayed baking cached multipart block models. */
 @SideOnly(Side.CLIENT)
 public abstract class DelayedBakingAbstract
         implements IBakedModel, IModel, ICustomModelLoader {
@@ -72,8 +72,7 @@ public abstract class DelayedBakingAbstract
     public List<BakedQuad> getQuads(IBlockState state,
             EnumFacing side, long rand) {
         
-        if (!(state instanceof IExtendedBlockState) || 
-                !(state.getBlock() instanceof BlockWall)) {
+        if (!(state instanceof IExtendedBlockState)) {
             
             return Collections.emptyList();
         }

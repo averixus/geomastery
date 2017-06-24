@@ -13,6 +13,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+/** Stores and registers all Geomastery recipes and crafting/cooking managers. */
 public class GeoRecipes {
 
     public static final CraftingManager INVENTORY = new CraftingManager();
@@ -141,7 +142,7 @@ public class GeoRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.AXE_COPPER), "H", "P", "P", 'H', GeoItems.AXEHEAD_COPPER, 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.HOE_COPPER), "H", "P", "P", 'H', GeoItems.HOEHEAD_COPPER, 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.SICKLE_COPPER), "B", "P", 'B', GeoItems.SICKLEBLADE_COPPER, 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.SHOVEL_COPPER), "HPP", 'H', GeoItems.SHOVELHEAD_COPPER, 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.SHOVEL_COPPER), "H", "P", "P", 'H', GeoItems.SHOVELHEAD_COPPER, 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.ARROW_COPPER, 5), "A", "S", "F", 'A', GeoItems.ARROWHEAD_COPPER, 'S', Items.STICK, 'F', Items.FEATHER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.HUNTINGKNIFE_BRONZE), "B", "P", 'B', GeoItems.KNIFEBLADE_BRONZE, 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.MACHETE_BRONZE), "B", "P", 'B', GeoItems.MACHETEBLADE_BRONZE, 'P', GeoItems.POLE);
@@ -178,6 +179,7 @@ public class GeoRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.FLOOR_WOOD, 4), "TTT", 'T', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FLATROOF_POLE, 2), "TTT", "T T", 'T', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_LOG, 4), "L", "L", 'L', GeoItems.LOG);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FENCE, 4), "PPP", " P ", 'P', GeoItems.POLE);
         
         for (Item metal : METALS) {
             

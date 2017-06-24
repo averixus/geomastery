@@ -18,7 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Render class for spear entities. */
+/** Renderer for spear entities. */
 @SideOnly(Side.CLIENT)
 public class RenderSpear extends Render<EntityArrow> {
 

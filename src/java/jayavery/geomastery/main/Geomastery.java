@@ -6,7 +6,8 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
-import java.util.Map.Entry;
+import java.util.Map;
+import com.google.common.collect.Lists;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.entities.projectile.EntityArrowBronze;
 import jayavery.geomastery.entities.projectile.EntityArrowCopper;
@@ -25,7 +26,7 @@ import jayavery.geomastery.packets.CPacketContainer;
 import jayavery.geomastery.packets.CPacketCrafting;
 import jayavery.geomastery.packets.CPacketDrying;
 import jayavery.geomastery.packets.CPacketFloor;
-import jayavery.geomastery.packets.CPacketFood;
+import jayavery.geomastery.packets.CPacketHunger;
 import jayavery.geomastery.packets.CPacketFurnace;
 import jayavery.geomastery.packets.CPacketTemp;
 import jayavery.geomastery.packets.CPacketYoke;
@@ -68,26 +69,33 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.IForgeRegistry;
+import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
+import net.minecraftforge.fml.common.versioning.Restriction;
+import net.minecraftforge.fml.common.versioning.VersionRange;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Geomastery.MODID, version = Geomastery.VERSION, name = Geomastery.NAME, acceptedMinecraftVersions = Geomastery.MC_VER, acceptableRemoteVersions = Geomastery.REM_VER, updateJSON = Geomastery.UPDATE)
+/** Main Geomastery mod class. */
+@Mod(modid = Geomastery.MODID, version = Geomastery.VERSION, name = Geomastery.NAME, acceptedMinecraftVersions = Geomastery.MC_VER, updateJSON = Geomastery.UPDATE)
 @EventBusSubscriber
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.0-a1";
     public static final String NAME = "Geomastery";
     public static final String MC_VER = "1.11.2-13.20.0.2228";
-    public static final String REM_VER = "1.0.0";
-    public static final String UPDATE = "";
+    public static final String UPDATE = "https://gist.githubusercontent.com/JayAvery/97013d9f3a4d3dd904fb608899d9eadd/raw/";
     public static final String SERVER_PROXY = "jayavery.geomastery.main.ServerProxy";
     public static final String CLIENT_PROXY = "jayavery.geomastery.main.ClientProxy";
+    
+    public static final VersionRange COMPATIBLE_RANGE = VersionRange.newRange(null, Lists.newArrayList(new Restriction(new DefaultArtifactVersion(VERSION), true, new DefaultArtifactVersion(VERSION), true)));
     
     public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
     
@@ -99,25 +107,17 @@ public class Geomastery {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-                
-        for (Block block : GeoBlocks.BLOCKS) {
-            
-            event.getRegistry().register(block);
-        }
+              
+        IForgeRegistry<Block> registry = event.getRegistry();
+        GeoBlocks.BLOCKS.forEach(registry::register);
     }
     
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
-        for (Item item : GeoItems.ITEMS) {
-            
-            event.getRegistry().register(item);
-        }
-        
-        for (Item item : GeoBlocks.ITEM_MAP.values()) {
-
-            event.getRegistry().register(item);
-        }
+        IForgeRegistry<Item> registry = event.getRegistry();
+        GeoItems.ITEMS.forEach(registry::register);
+        GeoBlocks.ITEM_MAP.values().forEach(registry::register);
     }
     
     @SubscribeEvent
@@ -161,7 +161,7 @@ public class Geomastery {
         sPacket(SPacketContainer.Handler.class, SPacketContainer.class);
         cPacket(CPacketContainer.Handler.class, CPacketContainer.class);
         cPacket(CPacketTemp.Handler.class, CPacketTemp.class);
-        cPacket(CPacketFood.Handler.class, CPacketFood.class);
+        cPacket(CPacketHunger.Handler.class, CPacketHunger.class);
         cPacket(CPacketFloor.Handler.class, CPacketFloor.class);
         cPacket(CPacketDrying.Handler.class, CPacketDrying.class);
         cPacket(CPacketFurnace.Handler.class, CPacketFurnace.class);
@@ -211,6 +211,17 @@ public class Geomastery {
     public static void postInit(FMLPostInitializationEvent e) {
 
         proxy.postInit();
+    }
+    
+    @NetworkCheckHandler
+    public static boolean networkCheck(Map<String, String> mods, Side side) {
+        
+        if (mods.containsKey(MODID)) {
+            
+            return COMPATIBLE_RANGE.containsVersion(new DefaultArtifactVersion(mods.get(MODID)));
+        }
+        
+        return false;
     }
     
     private static int entityID = 0;

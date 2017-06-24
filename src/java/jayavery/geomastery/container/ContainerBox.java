@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-/** Container for box. Mostly duplicate of chest with 18 slots. */
+/** Container for box. */
 public class ContainerBox extends ContainerAbstract {
     
     /** Y-position of the start of the box grid. */
@@ -84,7 +84,7 @@ public class ContainerBox extends ContainerAbstract {
             if (index >= HOT_START && index <= this.invEnd) {
                 
                 if (!this.mergeItemStack(slotStack,
-                        this.boxStart, this.boxEnd + 1, true)) {
+                        this.boxStart, this.boxEnd + 1, false)) {
                     
                     return ItemStack.EMPTY;
                 }
@@ -92,7 +92,7 @@ public class ContainerBox extends ContainerAbstract {
             } else if (index >= this.boxStart && index <= this.boxEnd) {
                 
                 if (!this.mergeItemStack(slotStack,
-                        HOT_START, this.invEnd + 1, true)) {
+                        HOT_START, this.invEnd + 1, false)) {
                     
                     return ItemStack.EMPTY;
                 }

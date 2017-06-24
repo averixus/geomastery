@@ -87,6 +87,6 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
      * @return Whether this item can be picked up. */
     public boolean canPickup(Item item);
 
-    /** Send all necessary update packets to the client. */
+    /** Send all necessary initial update packets to the client. */
     public void syncAll();
 }

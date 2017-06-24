@@ -20,9 +20,9 @@ import net.minecraft.item.ItemStack;
 public class SlotYoke extends Slot {
     
     /** The player capability of this slot. */
-    private ICapPlayer capability;
+    private final ICapPlayer capability;
     /** The player who owns this slot. */
-    private EntityPlayer player;
+    private final EntityPlayer player;
     
     public SlotYoke(EntityPlayer player, int x, int y) {
         
@@ -61,7 +61,7 @@ public class SlotYoke extends Slot {
     @Override
     public void onSlotChanged() {
         
-        ((ContainerInventory) this.player.inventoryContainer).refresh();
+        ContainerInventory.refresh(this.player);
     }
     
     @Override

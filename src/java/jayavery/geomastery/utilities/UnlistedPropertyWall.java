@@ -9,6 +9,7 @@ package jayavery.geomastery.utilities;
 import jayavery.geomastery.blocks.BlockWall;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
+/** Unlisted property for a BlockWall type. */
 public class UnlistedPropertyWall implements IUnlistedProperty<BlockWall> {
 
     private final String name;

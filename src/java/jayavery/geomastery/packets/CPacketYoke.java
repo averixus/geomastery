@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/** Packet for server->client player yoke slot syncing. */
 public class CPacketYoke implements IMessage {
 
     /** The stakc in the yoke slot. */

@@ -12,6 +12,7 @@ import jayavery.geomastery.blocks.BlockBuilding;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
     
+/** Building block weight categories. */
 public enum BlockWeight {
         
     HEAVY, MEDIUM, LIGHT, NONE;
@@ -46,7 +47,7 @@ public enum BlockWeight {
         return this != NONE && this.compareTo(other) <= 0;
     }
     
-    /** Gets the weight of the given block. */
+    /** @return The weight of the given block. */
     public static BlockWeight getWeight(Block block) {
         
         if (block instanceof BlockBuilding) {

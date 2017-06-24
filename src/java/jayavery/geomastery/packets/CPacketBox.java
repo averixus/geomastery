@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the box lid angle on the Client. */
+/** Packet for server->client box lid angle syncing. */
 public class CPacketBox implements IMessage {
     
     /** Angle of the lid. */

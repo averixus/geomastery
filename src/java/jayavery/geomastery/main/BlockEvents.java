@@ -7,14 +7,14 @@
 package jayavery.geomastery.main;
 
 import jayavery.geomastery.blocks.BlockSolid;
-import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.items.ItemAxe;
-import jayavery.geomastery.items.ItemSimple;
 import jayavery.geomastery.items.ItemPickaxe;
+import jayavery.geomastery.items.ItemSimple;
 import jayavery.geomastery.utilities.TreeFallUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFalling;
+import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -254,7 +254,8 @@ public class BlockEvents {
                     GeoItems.LOG : GeoItems.POLE));
         }
 
-        if (block instanceof BlockDirt || block instanceof BlockGrass) {
+        if (block instanceof BlockDirt || block instanceof BlockGrass ||
+                block instanceof BlockFarmland) {
 
             event.getDrops().clear();
             
@@ -339,20 +340,24 @@ public class BlockEvents {
             event.getDrops().add(new ItemStack(GeoItems.LOOSE_CLAY));
         }
         
-        if (block == Blocks.BROWN_MUSHROOM ||
-                block == Blocks.BROWN_MUSHROOM_BLOCK) {
+        if (block == Blocks.BROWN_MUSHROOM) {
             
             event.getDrops().clear();
             event.getDrops().add(ItemSimple
                     .newStack(GeoItems.MUSHROOM_BROWN, 1, world));
         }
         
-        if (block == Blocks.RED_MUSHROOM ||
-                block == Blocks.RED_MUSHROOM_BLOCK) {
+        if (block == Blocks.RED_MUSHROOM) {
             
             event.getDrops().clear();
             event.getDrops().add(ItemSimple
                     .newStack(GeoItems.MUSHROOM_RED, 1, world));
+        }
+        
+        if (block == Blocks.RED_MUSHROOM_BLOCK ||
+                block == Blocks.BROWN_MUSHROOM_BLOCK) {
+            
+            event.getDrops().clear();
         }
     }
     

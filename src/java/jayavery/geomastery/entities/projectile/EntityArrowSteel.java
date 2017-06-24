@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+/** Steel arrow projectile entity. */
 public class EntityArrowSteel extends EntityProjectile {
 
     /** Damager done by this arrow. */

@@ -38,11 +38,11 @@ import net.minecraft.world.biome.BiomeSwamp;
 public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
     
     /** WorldGenerator factory for this tree. */
-    private ITreeGenFactory treeGenFactory;
+    private final ITreeGenFactory treeGenFactory;
     /** Chanc of growth per update tick. */
-    private float growthChance;
+    private final float growthChance;
     /** Chance of death per update tick if invalid position. */
-    private float deathChance = 0.5F;
+    private final float deathChance = 0.5F;
 
     public BlockSeedling(String name, ITreeGenFactory treeGenFactory,
             float growthChance) {

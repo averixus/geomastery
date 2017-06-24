@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 
-/** Container for Basket. Mostly duplicate of Chest with 9 slots. */
+/** Container for basket. */
 public class ContainerBasket extends ContainerAbstract {
     
     /** Y-position of the start of the basket grid. */
@@ -72,7 +72,7 @@ public class ContainerBasket extends ContainerAbstract {
             if (index >= HOT_START && index <= this.invEnd) {
                 
                 if (!this.mergeItemStack(slotStack,
-                        this.basketStart, this.basketEnd + 1, true)) {
+                        this.basketStart, this.basketEnd + 1, false)) {
                     
                     return ItemStack.EMPTY;
                 }
@@ -80,7 +80,7 @@ public class ContainerBasket extends ContainerAbstract {
             } else if (index >= this.basketStart && index <= this.basketEnd) {
                 
                 if (!this.mergeItemStack(slotStack,
-                        HOT_START, this.invEnd + 1, true)) {
+                        HOT_START, this.invEnd + 1, false)) {
                     
                     return ItemStack.EMPTY;
                 }

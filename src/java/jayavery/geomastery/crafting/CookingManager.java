@@ -13,9 +13,7 @@ import jayavery.geomastery.main.GeoCaps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-/**
- * Smelting recipe and fuel manager.
- */
+/** Smelting recipe and fuel manager. */
 public class CookingManager {
 
     /** Map of inputs to outputs. */

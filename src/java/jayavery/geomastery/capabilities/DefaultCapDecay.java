@@ -12,12 +12,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+/** ICapDecay implementation. */
 public class DefaultCapDecay implements ICapDecay {
     
+    /** Ticks in one game day. */
     private static final int DAY_TICKS = 24000;
+    /** Number of stages decay is divided into. */
     private static final int MAX_STAGE = 10;
         
+    /** Number of ticks in a single decay stage. */
     private int stageSize;
+    /** World time when this item was created. */
     private long birthTime;
     
     public DefaultCapDecay(int maxDays) {

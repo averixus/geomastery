@@ -12,6 +12,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
+/** ICapDecay storage. */
 public class StorageCapDecay implements IStorage<ICapDecay> {
 
     @Override

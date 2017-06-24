@@ -86,7 +86,6 @@ public abstract class BlockWall extends BlockBuilding
     
     /** This block's model priority. */
     protected final int priority;
-    
     /** This block's side model angle. */
     protected final int sideAngle;
     

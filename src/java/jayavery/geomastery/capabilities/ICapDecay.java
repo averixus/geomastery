@@ -27,8 +27,9 @@ public interface ICapDecay extends INBTSerializable<NBTTagCompound> {
     /** Sets the size of one age stage in ticks to the given value. */
     public void setStageSize(int stageSize);
     
-    /** Sets the current age in ticks to the given value. */
-    public void setBirthTime(long age);
+    /** Sets the birth time to approximately the given value,
+     * rounded down according to shelflife. */
+    public void setBirthTime(long birthTime);
 
     /** @return Whether the item is older than its shelf life. */
     public boolean isRot(World world);

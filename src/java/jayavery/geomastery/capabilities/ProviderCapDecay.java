@@ -13,9 +13,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
+/** ICapDecay provider. */
 public class ProviderCapDecay
         implements ICapabilitySerializable<NBTTagCompound> {
 
+    /** The capability instance. */
     private final ICapDecay instance;
     
     public ProviderCapDecay(ICapDecay instance) {

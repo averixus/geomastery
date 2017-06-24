@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update changed beam floors on the Client. */
+/** Packet for server->client beam floor syncing. */
 public class CPacketFloor implements IMessage {
     
     /** The floor type of the beam. */

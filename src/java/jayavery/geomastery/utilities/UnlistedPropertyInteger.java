@@ -8,6 +8,7 @@ package jayavery.geomastery.utilities;
 
 import net.minecraftforge.common.property.IUnlistedProperty;
 
+/** Unlisted property for integer. */
 public class UnlistedPropertyInteger implements IUnlistedProperty<Integer> {
 
     private final String name;

@@ -18,17 +18,6 @@ import net.minecraft.world.World;
 /** Abstract superclass for furnace containers. */
 public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
 
-    /** X-position of flame in the GUI. */
-    public int fireX;
-    /** Y-position of flame in the GUI. */
-    public int fireY = 36;
-    /** X-position of progress arrow in the GUI. */
-    public int arrowX;
-    /** Y-position of progress arrow in the GUI. */
-    public int arrowY = 34;
-    /** Number of input, fuel, and output slots. */
-    public int size;
-    
     /** Y-position of start of input slots. */
     protected static final int INPUT_Y = 17;
     /** Y-position of start of fuel slots. */
@@ -36,6 +25,17 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
 
     /** Index of first input slot. */
     protected static final int INPUT_START = 0;
+    
+    /** X-position of flame in the GUI. */
+    public int fireX;
+    /** Y-position of flame in the GUI. */
+    public final int fireY = 36;
+    /** X-position of progress arrow in the GUI. */
+    public int arrowX;
+    /** Y-position of progress arrow in the GUI. */
+    public final int arrowY = 34;
+    /** Number of input, fuel, and output slots. */
+    public final int size;
     
     /** Index of last input slot. */
     protected final int inputEnd;
@@ -59,7 +59,7 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     /** The furnace TileEntity for this container. */
     public final TEFurnaceAbstract<?> furnace;
     /** The position of this container. */
-    protected BlockPos pos;
+    protected final BlockPos pos;
 
     public ContainerFurnaceAbstract(EntityPlayer player, World world,
             TEFurnaceAbstract<?> furnace, BlockPos pos) {
@@ -146,7 +146,7 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
             if (index >= this.outputStart && index <= this.outputEnd) {
 
                 if (!this.mergeItemStack(inSlot, this.hotStart,
-                        this.invEnd + 1, true)) {
+                        this.invEnd + 1, false)) {
 
                     return ItemStack.EMPTY;
                 }
@@ -156,19 +156,19 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
             } else if (!(index >= INPUT_START && index <= this.inputEnd) &&
                     !(index >= this.fuelStart && index <= this.fuelEnd)) {
 
-                if (!this.furnace.recipes.getCookingResult(inSlot, this.world)
-                        .isEmpty()) {
+                if (this.furnace.recipes.getFuelTime(inSlot) > 0) {
 
-                    if (!this.mergeItemStack(inSlot, INPUT_START,
-                            this.inputEnd + 1, false)) {
+                    if (!this.mergeItemStack(inSlot, this.fuelStart,
+                            this.fuelEnd + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }
 
-                } else if (this.furnace.recipes.getFuelTime(inSlot) > 0) {
+                } else if (!this.furnace.recipes.getCookingResult(inSlot,
+                        this.world).isEmpty()) {
 
-                    if (!this.mergeItemStack(inSlot, this.fuelStart,
-                            this.fuelEnd + 1, false)) {
+                    if (!this.mergeItemStack(inSlot, INPUT_START,
+                            this.inputEnd + 1, false)) {
 
                         return ItemStack.EMPTY;
                     }

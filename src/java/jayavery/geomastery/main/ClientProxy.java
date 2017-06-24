@@ -177,18 +177,18 @@ public class ClientProxy implements IProxy {
         MinecraftForge.EVENT_BUS.register(new GuiEvents());
                 
         // Entity renders
-        render(EntitySpearWood.class, RenderSpearFactory.SPEAR_WOOD);
-        render(EntitySpearFlint.class, RenderSpearFactory.SPEAR_FLINT);
-        render(EntitySpearCopper.class, RenderSpearFactory.SPEAR_COPPER);
-        render(EntitySpearBronze.class, RenderSpearFactory.SPEAR_BRONZE);
-        render(EntitySpearSteel.class, RenderSpearFactory.SPEAR_STEEL);
-        render(EntityArrowWood.class, RenderArrowFactory.ARROW_WOOD);
-        render(EntityArrowFlint.class, RenderArrowFactory.ARROW_FLINT);
-        render(EntityArrowCopper.class, RenderArrowFactory.ARROW_COPPER);
-        render(EntityArrowBronze.class, RenderArrowFactory.ARROW_BRONZE);
-        render(EntityArrowSteel.class, RenderArrowFactory.ARROW_STEEL);
-        render(FallingTreeBlock.Leaves.class, RenderFallingTreeBlock::new);
-        render(FallingTreeBlock.Trunk.class, RenderFallingTreeBlock::new);
+        entity(EntitySpearWood.class, RenderSpearFactory.SPEAR_WOOD);
+        entity(EntitySpearFlint.class, RenderSpearFactory.SPEAR_FLINT);
+        entity(EntitySpearCopper.class, RenderSpearFactory.SPEAR_COPPER);
+        entity(EntitySpearBronze.class, RenderSpearFactory.SPEAR_BRONZE);
+        entity(EntitySpearSteel.class, RenderSpearFactory.SPEAR_STEEL);
+        entity(EntityArrowWood.class, RenderArrowFactory.ARROW_WOOD);
+        entity(EntityArrowFlint.class, RenderArrowFactory.ARROW_FLINT);
+        entity(EntityArrowCopper.class, RenderArrowFactory.ARROW_COPPER);
+        entity(EntityArrowBronze.class, RenderArrowFactory.ARROW_BRONZE);
+        entity(EntityArrowSteel.class, RenderArrowFactory.ARROW_STEEL);
+        entity(FallingTreeBlock.Leaves.class, RenderFallingTreeBlock::new);
+        entity(FallingTreeBlock.Trunk.class, RenderFallingTreeBlock::new);
         
         // Tileentity renders
         ClientRegistry.bindTileEntitySpecialRenderer(TEBox.class, new TileEntityBoxRenderer());
@@ -239,7 +239,7 @@ public class ClientProxy implements IProxy {
     }
     
     /** Helper for registering entity renders. */
-    private static <E extends Entity> void render(Class<E> clas,
+    private static <E extends Entity> void entity(Class<E> clas,
             IRenderFactory<? super E> renderer) {
         
         RenderingRegistry.registerEntityRenderingHandler(clas, renderer);

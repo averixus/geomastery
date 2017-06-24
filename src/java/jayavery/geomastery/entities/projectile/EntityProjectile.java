@@ -13,7 +13,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-/** Abstract superclass for Arrow and Spear entities. */
+/** Abstract superclass for arrow and spear projectile entities. */
 public abstract class EntityProjectile extends EntityArrow {
     
     /** Velocity modifier for war bow. */

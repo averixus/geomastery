@@ -53,9 +53,9 @@ public abstract class BlockCrop extends BlockNew
             PropertyInteger.create("age", 0, 7);
     
     /** Chance of death per update tick when in wrong conditions. */
-    protected static final float deathChance = 0.5F;
+    protected static final float DEATH_CHANCE = 0.5F;
     /** Growth and harvest multiplier for crops on wet farmland. */
-    protected static final float wetMultiplier = 1.5F;
+    protected static final float WET_MULTIPLIER = 1.5F;
 
     /** Supplier for the harvested crop Item. */
     protected final Supplier<Item> cropRef;
@@ -114,7 +114,7 @@ public abstract class BlockCrop extends BlockNew
         Block below = world.getBlockState(pos.down()).getBlock();
         
         if (!this.canGrow(world, pos, state) &&
-                rand.nextFloat() <= deathChance) {
+                rand.nextFloat() <= DEATH_CHANCE) {
 
             
             if (below == Blocks.FARMLAND || below == Blocks.GRASS ||
@@ -130,7 +130,7 @@ public abstract class BlockCrop extends BlockNew
         }
         
         float growthChance = below.isFertile(world, pos.down()) ? 
-                this.growthChance * wetMultiplier : this.growthChance;
+                this.growthChance * WET_MULTIPLIER : this.growthChance;
         
         TileEntity tileEntity = world.getTileEntity(pos);
         
@@ -207,7 +207,7 @@ public abstract class BlockCrop extends BlockNew
         World world = (World) blockAccess;
         
         float yieldMultiplier = world.getBlockState(pos.down()).getBlock()
-                .isFertile(world, pos.down()) ? wetMultiplier : 1;
+                .isFertile(world, pos.down()) ? WET_MULTIPLIER : 1;
                 
         TileEntity tileEntity = world.getTileEntity(pos);
         
@@ -353,7 +353,8 @@ public abstract class BlockCrop extends BlockNew
         
         public Hemp() {
             
-            super("hemp", () -> GeoItems.TWINE_HEMP, () -> GeoItems.CUTTING_HEMP,
+            super("hemp", () -> GeoItems.TWINE_HEMP,
+                    () -> GeoItems.CUTTING_HEMP,
                     (rand) -> 1, 0.2F, 0.2F, ToolType.SICKLE);
         }
 

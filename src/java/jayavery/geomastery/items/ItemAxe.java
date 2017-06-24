@@ -25,8 +25,7 @@ public class ItemAxe extends ItemToolAbstract {
     /** Set of vanilla blocks to harvest. */
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(new Block[]
             {Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.LADDER,
-            Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE, Blocks.LEAVES,
-            Blocks.LEAVES2});
+            Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE});
 
     public ItemAxe(String name, ToolMaterial material) {
 

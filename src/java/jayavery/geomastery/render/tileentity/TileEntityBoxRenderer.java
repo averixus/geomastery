@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-/** Render class for box block. */
+/** Renderer for box block. */
 public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
 
     /** Texture for box .*/

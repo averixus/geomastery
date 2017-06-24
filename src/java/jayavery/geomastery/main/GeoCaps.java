@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-/** Stores and registers capabilities and handle related events. */
+/** Stores and registers capabilities and handles related events. */
 public class GeoCaps {
     
     /** Player capability. */

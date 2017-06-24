@@ -18,7 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Render class for custom arrow entities. */
+/** Renderer for custom arrow entities. */
 @SideOnly(Side.CLIENT)
 public class RenderArrow extends Render<EntityArrow> {
 

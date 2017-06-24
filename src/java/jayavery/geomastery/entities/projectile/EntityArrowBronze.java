@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+/** Bronze arrow projectile entity. */
 public class EntityArrowBronze extends EntityProjectile {
 
     /** Damager done by this arrow. */

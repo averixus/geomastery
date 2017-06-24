@@ -6,7 +6,7 @@
 "elements": [ 
 {
     "from": [ 4, 8, 2 ],
-    "to": [ 12, 16, 14 ],
+    "to": [ 12, 16.01, 14 ],
     "faces": {
         "down":  { "uv": [ 12, 14, 4, 2 ], "texture": "#mudbrick" },
         "up":    { "uv": [ 4, 2, 12, 14 ], "texture": "#mudbrick" },
@@ -18,7 +18,7 @@
 },
 {
     "from": [ 2, 8, 4 ],
-    "to": [ 4, 16, 12 ],
+    "to": [ 4, 16.01, 12 ],
     "faces": {
         "down":  { "uv": [ 14, 12, 12, 4 ], "texture": "#mudbrick" },
         "up":    { "uv": [ 2, 4, 4, 12 ], "texture": "#mudbrick" },
@@ -30,7 +30,7 @@
 },
 {
     "from": [ 12, 8, 4 ],
-    "to": [ 14, 16, 12 ],
+    "to": [ 14, 16.01, 12 ],
     "faces": {
         "down":  { "uv": [ 4, 12, 2, 4 ], "texture": "#mudbrick" },
         "up":    { "uv": [ 12, 4, 14, 12 ], "texture": "#mudbrick" },

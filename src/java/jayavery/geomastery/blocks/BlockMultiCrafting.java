@@ -53,7 +53,9 @@ public abstract class BlockMultiCrafting<E extends Enum<E> & IMultipart>
     public static final PropertyDirection FACING = PropertyDirection
             .create("facing", EnumFacing.Plane.HORIZONTAL);
     
+    /** Supplier for this block's tileentity. */
     private final Supplier<? extends TileEntity> te;
+    /** Ordinal for the master block of this multipart. */
     private final int ordinal;
         
     public BlockMultiCrafting(String name, BlockMaterial material,

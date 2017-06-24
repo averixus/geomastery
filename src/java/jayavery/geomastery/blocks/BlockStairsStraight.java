@@ -34,7 +34,6 @@ public abstract class BlockStairsStraight extends BlockBuilding {
 
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-
     public BlockStairsStraight(String name, float hardness) {
         
         super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.BUILDING_BLOCKS,

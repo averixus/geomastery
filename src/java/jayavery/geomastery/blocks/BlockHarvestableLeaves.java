@@ -36,11 +36,11 @@ public class BlockHarvestableLeaves extends BlockLeaves {
             PropertyInteger.create("age", 0, 7);
     
     /** Supplier for fruit item. */
-    private Supplier<Item> fruitRef;
+    private final Supplier<Item> fruitRef;
     /** Supplier for seedling block. */
-    private Supplier<Block> seedlingRef;
+    private final Supplier<Block> seedlingRef;
     /** Chance of growth per update tick. */
-    private float growthChance;
+    private final float growthChance;
     
     public BlockHarvestableLeaves(String name, Supplier<Item> itemRef,
             Supplier<Block> seedlingRef, float growthChance) {
@@ -108,6 +108,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         
         if (age != 7) {
 
+            world.setBlockState(pos, state.withProperty(AGE, 7));
             return false;
             
         } else {

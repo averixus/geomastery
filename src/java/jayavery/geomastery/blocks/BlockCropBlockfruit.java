@@ -45,9 +45,9 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
     public static final PropertyDirection FACING = BlockTorch.FACING;
     
     /** Supplier for fruit block. */
-    protected Supplier<BlockFruit> fruit;
+    protected final Supplier<BlockFruit> fruit;
     /** Supplier for the seed item. */
-    protected Supplier<Item> seed;
+    protected final Supplier<Item> seed;
 
     public BlockCropBlockfruit(String name, float growthChance, float hardness,
             Supplier<BlockFruit> fruit, Supplier<Item> seed) {

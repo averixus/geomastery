@@ -24,7 +24,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
-/** Handler for Gui and player input related events. */
+/** Handler for GUI and player input related events. */
 public class GuiEvents {
     
     /** Texture for the carbs food icons. */

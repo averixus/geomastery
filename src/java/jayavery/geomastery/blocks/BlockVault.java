@@ -40,8 +40,11 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
     public static final PropertyDirection FACING =
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
+    /** Supplier for this block's dropped item. */
     private final Supplier<Item> item;
+    /** Whether this block is double. */
     private final boolean isDouble;
+    /** Building block weight. */
     private final BlockWeight weight;
     
     public BlockVault(String name, Supplier<Item> item,

@@ -49,7 +49,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     /** Chance of growth per update tick. */
-    private float chance = 0.2F;
+    private static final float CHANCE = 0.2F;
     
     public BlockBeehive() {
         
@@ -71,7 +71,7 @@ public class BlockBeehive extends BlockNew implements IBiomeCheck {
             return;
         }
         
-        if (rand.nextFloat() <= this.chance) {
+        if (rand.nextFloat() <= CHANCE) {
             
             int oldAge = state.getValue(AGE);
             int newAge = (oldAge + 1) > 3 ? 3 : (oldAge + 1);

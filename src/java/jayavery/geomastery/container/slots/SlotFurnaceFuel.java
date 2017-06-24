@@ -11,6 +11,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+/** Container inventory slot for furnace fuels. */
 public class SlotFurnaceFuel extends Slot {
 
     /** The furnace this slot draws inventory from. */

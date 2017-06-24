@@ -13,9 +13,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
+/** ICapPlayer provider. */
 public class ProviderCapPlayer
         implements ICapabilitySerializable<NBTTagCompound> {
     
+    /** The capability instance. */
     private final ICapPlayer instance;
     
     public ProviderCapPlayer(ICapPlayer instance) {

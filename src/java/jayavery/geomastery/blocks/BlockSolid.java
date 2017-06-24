@@ -24,12 +24,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Simple solid block. */
+/** Simple solid block for ores etc. */
 public class BlockSolid extends BlockBuilding {
     
+    /** This block's dropped item. */
     private final Supplier<Item> item;
-    private int maxDropped;
-    private BlockWeight weight;
+    /** Maximum number of dropped items for randomising. */
+    private final int maxDropped;
+    /** Building block weight. */
+    private final BlockWeight weight;
 
     public BlockSolid(Material material, String name, float hardness,
             BlockWeight weight, Supplier<Item> item,

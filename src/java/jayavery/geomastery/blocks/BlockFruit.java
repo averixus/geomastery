@@ -31,8 +31,9 @@ public class BlockFruit extends BlockNew {
             PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     /** Supplier for the fruit item. */
-    private Supplier<Item> fruit;
-    private Supplier<Item> seed;
+    private final Supplier<Item> fruit;
+    /** Supplier for the seed item. */
+    private final Supplier<Item> seed;
     
     public BlockFruit(String name, Supplier<Item> item, Supplier<Item> seed) {
         

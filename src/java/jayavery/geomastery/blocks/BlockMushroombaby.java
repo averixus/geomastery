@@ -15,10 +15,13 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** Baby mushroom block. */
 public class BlockMushroombaby extends BlockMushroom {
     
+    /** Chance of growth per random tick. */
     private static final float GROWTH_CHANCE = 0.2F;
     
+    /** The adult block this grows into. */
     private final Block adult;
     
     public BlockMushroombaby(String name, Block adult) {

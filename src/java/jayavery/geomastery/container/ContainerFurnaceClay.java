@@ -55,13 +55,13 @@ public class ContainerFurnaceClay extends ContainerFurnaceAbstract {
     @Override
     protected void buildOutput() {
 
-        for (int x = 0; x < 2; x++) {
+        for (int col = 0; col < 2; col++) {
             
-            for (int y = 0; y < 2; y++) {
+            for (int row = 0; row < 2; row++) {
                 
                 this.addSlotToContainer(new SlotFurnaceOutput(this.furnace,
-                        ((2 * y) + x), OUTPUT_X + (x * SLOT_SIZE),
-                        OUTPUT_Y + (y * SLOT_SIZE)));
+                        ((2 * row) + col), OUTPUT_X + (col * SLOT_SIZE),
+                        OUTPUT_Y + (row * SLOT_SIZE)));
             }
         }  
     }

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+/** Copper spear projectile entity. */
 public class EntitySpearCopper extends EntityProjectile {
     
     /** Damage done by this spear. */
@@ -55,7 +56,7 @@ public class EntitySpearCopper extends EntityProjectile {
         
        super.onHit(raytraceResultIn);
        
-       if (this.isDead) {
+       if (!this.world.isRemote && this.isDead) {
 
            EntitySpearCopper replace = new EntitySpearCopper(this.world,
                    this.posX, this.posY, this.posZ);

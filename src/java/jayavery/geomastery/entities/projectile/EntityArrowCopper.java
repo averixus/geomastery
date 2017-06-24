@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+/** Copper arrow projectile entity. */
 public class EntityArrowCopper extends EntityProjectile {
     
     /** Damager done by this arrow. */

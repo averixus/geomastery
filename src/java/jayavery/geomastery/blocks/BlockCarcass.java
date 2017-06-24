@@ -36,9 +36,9 @@ import net.minecraft.world.World;
 public abstract class BlockCarcass extends BlockBuilding {
     
     /** Shelf life of this carcass in days. */
-    protected int shelfLife;
+    protected final int shelfLife;
     /** Supplier for the dropped item. */
-    protected Supplier<ItemCarcassDecayable> item;
+    protected final Supplier<ItemCarcassDecayable> item;
 
     public BlockCarcass(String name, float hardness, int shelfLife,
             Supplier<ItemCarcassDecayable> item) {

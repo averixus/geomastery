@@ -89,7 +89,7 @@ public class ContainerCompost extends ContainerAbstract {
             if (index == OUTPUT_I) {
                 
                 if (!this.mergeItemStack(inSlot, HOT_START,
-                        this.invEnd + 1, true)) {
+                        this.invEnd + 1, false)) {
                     
                     return ItemStack.EMPTY;
                 }

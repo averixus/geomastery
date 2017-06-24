@@ -20,9 +20,9 @@ import net.minecraft.item.ItemStack;
 public class SlotBackpack extends Slot {
     
     /** The player capability of this slot. */
-    private ICapPlayer playerCap;
+    private final ICapPlayer playerCap;
     /** The player who owns this slot. */
-    private EntityPlayer player;
+    private final EntityPlayer player;
     
     public SlotBackpack(EntityPlayer player, int x, int y) {
         

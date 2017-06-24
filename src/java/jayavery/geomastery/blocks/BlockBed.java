@@ -45,9 +45,9 @@ public abstract class BlockBed extends BlockBuilding {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     /** This bed's item. */
-    protected Supplier<Item> itemRef;
+    protected final Supplier<Item> itemRef;
     /** The amount to heal the player when sleeping in this bed. */
-    protected float healAmount;
+    protected final float healAmount;
 
     public BlockBed(String name, float hardness, float healAmount,
             Supplier<Item> itemRef) {

@@ -29,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+/** Pitched roof block. */
 public class BlockPitchroof extends BlockBuilding {
 
     public static final PropertyDirection FACING = BlockHorizontal.FACING;

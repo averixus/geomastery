@@ -134,8 +134,8 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
     public void onEntityCollidedWithBlock(World world, BlockPos pos,
             IBlockState state, Entity entity) {
         
-        entity.motionX *= 0.4D;
-        entity.motionZ *= 0.4D;
+        entity.motionX *= 0.6D;
+        entity.motionZ *= 0.6D;
     }
 
     @Override

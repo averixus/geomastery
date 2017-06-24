@@ -31,13 +31,13 @@ public abstract class ContainerAbstract extends Container {
     protected static final int INV_X = 8;
 
     /** The player who owns this container. */
-    protected EntityPlayer player;
+    protected final EntityPlayer player;
     /** The player capability of this container. */
-    public ICapPlayer capability;
+    public final ICapPlayer capability;
     /** The player inventory of this container. */
-    protected InventoryPlayer playerInv;
+    protected final InventoryPlayer playerInv;
     /** The world of this container. */
-    protected World world;
+    protected final World world;
 
     public ContainerAbstract(EntityPlayer player, World world) {
 
@@ -58,13 +58,13 @@ public abstract class ContainerAbstract extends Container {
         InventoryCrafting craftMatrix =
                 new InventoryCrafting(this, columns, rows);
         
-        for (int j = 0; j < rows; j++) {
+        for (int row = 0; row < rows; row++) {
 
-            for (int i = 0; i < columns; i++) {
+            for (int col = 0; col < columns; col++) {
                 
                 this.addSlotToContainer(new Slot(craftMatrix,
-                        j * columns + i, startX + (i * SLOT_SIZE),
-                        startY + (j * SLOT_SIZE)));
+                        row * columns + col, startX + (col * SLOT_SIZE),
+                        startY + (row * SLOT_SIZE)));
             }
         }
 
@@ -74,10 +74,10 @@ public abstract class ContainerAbstract extends Container {
     /** Builds a row of inventory slots for the hotbar. */
     protected void buildHotbar() {
 
-        for (int m = 0; m < ROW_LENGTH; m++) {
+        for (int slot = 0; slot < ROW_LENGTH; slot++) {
 
             this.addSlotToContainer(new SlotIInventory(this.playerInv,
-                    m, getInvX(m), HOT_Y));
+                    slot, getInvX(slot), HOT_Y));
         }
     }
     
@@ -95,13 +95,13 @@ public abstract class ContainerAbstract extends Container {
             return invIndex;
         }
 
-        for (int k = 0; k < this.capability.getInventoryRows(); k++) {
+        for (int row = 0; row < this.capability.getInventoryRows(); row++) {
 
-            for (int l = 0; l < ROW_LENGTH; l++) {
+            for (int col = 0; col < ROW_LENGTH; col++) {
 
                 this.addSlotToContainer(new SlotIInventory(
                         this.playerInv, ++invIndex + ROW_LENGTH,
-                        getInvX(l), getInvY(invertRowIndex(k))));
+                        getInvX(col), getInvY(invertRowIndex(row))));
             }
         }
         

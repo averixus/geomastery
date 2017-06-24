@@ -48,7 +48,7 @@ public class ContainerDrying extends ContainerAbstract {
     /** Drying rack TileEntity of this container. */
     public final TEDrying drying;
     /** Position of this container. */
-    private BlockPos pos;
+    private final BlockPos pos;
 
     public ContainerDrying(EntityPlayer player, World world,
             TEDrying drying, BlockPos pos) {
@@ -124,7 +124,7 @@ public class ContainerDrying extends ContainerAbstract {
             if (index >= OUTPUT_START && index <= OUTPUT_END) {
 
                 if (!this.mergeItemStack(inSlot, HOT_START,
-                        this.invEnd + 1, true)) {
+                        this.invEnd + 1, false)) {
 
                     return ItemStack.EMPTY;
                 }

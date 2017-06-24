@@ -15,10 +15,10 @@ import net.minecraft.util.FoodStats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Wrapper for the player FoodStats object,
- * to add functions from ICapPlayer. */
+/** Wrapper for the player FoodStats object, to link to ICapPlayer. */
 public class FoodStatsWrapper extends FoodStats {
     
+    /** The player owning this FoodStats. */
     private EntityPlayer player;
     
     public FoodStatsWrapper(EntityPlayer player) {
@@ -57,38 +57,38 @@ public class FoodStatsWrapper extends FoodStats {
         return false;
     }
     
-    /** Only used to check whether updates need to be sent */
+    /** Only used to check whether vanilla packets need to be sent */
     @Override
     public float getSaturationLevel() {
         
         return 5.0F;
     }
     
-    /** Used for most eating */
+    /** Used for most vanilla eating. */
     @Override
     public void addStats(ItemFood item, ItemStack stack) {}
     
-    /** Only used for eating vanilla cake */
+    /** Only used for eating vanilla cake. */
     @Override
     public void addStats(int hunger, float saturation) {}
     
-    /** Update is all executed in event */
+    /** Used for vanilla update. */
     @Override
     public void onUpdate(EntityPlayer player) {}
     
-    /** All data is stored in the capability */
+    /** Used to store vanilla data. */
     @Override
     public void readNBT(NBTTagCompound nbt) {}
     
-    /** All data is stored in the capability */
+    /** Used to store vanilla data. */
     @Override
     public void writeNBT(NBTTagCompound nbt) {}
     
-    /** Only used to process updates */
+    /** Only used to process vanilla packets. */
     @Override
     public void setFoodLevel(int hunger) {}
     
-    /** Only used to process updates */
+    /** Only used to process vanilla packets. */
     @Override
     @SideOnly(Side.CLIENT)
     public void setFoodSaturationLevel(float saturation) {} 

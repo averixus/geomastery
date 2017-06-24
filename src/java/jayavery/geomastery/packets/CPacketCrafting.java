@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the crafting device durability bar on the Client. */
+/** Packet for server->client crafting device durability syncing. */
 public class CPacketCrafting implements IMessage {
 
     /** Durability of this crafting device. */

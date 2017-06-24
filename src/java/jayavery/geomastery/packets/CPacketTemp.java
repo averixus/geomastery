@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to update the player temperature icon on the Client. */
+/** Packet for server->client player temperature syncing. */
 public class CPacketTemp implements IMessage {
     
     /** The temperature stage. */

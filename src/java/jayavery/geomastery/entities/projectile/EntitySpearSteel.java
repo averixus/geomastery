@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+/** Steel spear projectile entity. */
 public class EntitySpearSteel extends EntityProjectile {
     
     /** Damager done by this spear. */
@@ -55,7 +56,7 @@ public class EntitySpearSteel extends EntityProjectile {
         
        super.onHit(raytraceResultIn);
        
-       if (this.isDead) {
+       if (!this.world.isRemote && this.isDead) {
 
            EntitySpearSteel replace = new EntitySpearSteel(this.world,
                    this.posX, this.posY, this.posZ);

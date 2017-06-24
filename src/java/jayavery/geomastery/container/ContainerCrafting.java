@@ -23,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Container for Crafting devices. */
+/** Container for crafting devices. */
 public class ContainerCrafting extends ContainerAbstract {
 
     /** X-position of the output slot. */
@@ -56,15 +56,15 @@ public class ContainerCrafting extends ContainerAbstract {
     private final int outputI;
 
     /** Inventory of the craft grid. */
-    private InventoryCrafting craftMatrix;
+    private final InventoryCrafting craftMatrix;
     /** Inventory of the craft output. */
-    private IInventory craftResult = new InventoryCraftResult();
+    private final IInventory craftResult = new InventoryCraftResult();
     /** Crafting manager of this crafter. */
-    private CraftingManager craftManager;
+    private final CraftingManager craftManager;
     /** Position of this crafter. */    
-    private BlockPos pos;
+    private final BlockPos pos;
     /** TileEntity of this crafter. */
-    public TECraftingAbstract<?> tile;
+    public final TECraftingAbstract<?> tile;
 
     public ContainerCrafting(EntityPlayer player, World world, BlockPos pos,
             CraftingManager craftManager, TECraftingAbstract<?> tile) {
@@ -171,7 +171,7 @@ public class ContainerCrafting extends ContainerAbstract {
 
                 if (!GeoBlocks.OFFHAND_ONLY.contains(slotStack) &&
                         !this.mergeItemStack(slotStack, HOT_START,
-                        this.invEnd + 1, true)) {
+                        this.invEnd + 1, false)) {
 
                     return ItemStack.EMPTY;
                     
@@ -185,7 +185,7 @@ public class ContainerCrafting extends ContainerAbstract {
             } else if (index >= HOT_START && index <= HOT_END) {
 
                 if (!this.mergeItemStack(slotStack, INV_START,
-                        this.invEnd + 1, true)) {
+                        this.invEnd + 1, false)) {
 
                     return ItemStack.EMPTY;
                 }
@@ -193,7 +193,7 @@ public class ContainerCrafting extends ContainerAbstract {
             } else if (index >= INV_START && index <= this.invEnd) {
 
                 if (!this.mergeItemStack(slotStack, HOT_START,
-                        HOT_END + 1, true)) {
+                        HOT_END + 1, false)) {
 
                     return ItemStack.EMPTY;
                 }
@@ -201,7 +201,7 @@ public class ContainerCrafting extends ContainerAbstract {
             } else if (index >= this.craftStart && index <= this.craftEnd) {
 
                 if (!this.mergeItemStack(slotStack, HOT_START,
-                        this.invEnd + 1, true)) {
+                        this.invEnd + 1, false)) {
 
                     return ItemStack.EMPTY;
                 }

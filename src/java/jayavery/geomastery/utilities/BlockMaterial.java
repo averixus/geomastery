@@ -10,46 +10,27 @@ import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 
-/** Custom Block Materials. */
+/** Custom block materials. */
 public class BlockMaterial extends Material {
     
     /** Wooden furniture material. */
-    public static final BlockMaterial WOOD_FURNITURE =
-            new BlockMaterial(MapColor.WOOD, true, false,
-            true, true, false, true, false);
+    public static final BlockMaterial WOOD_FURNITURE =          new BlockMaterial(MapColor.WOOD, true, false, true, true, false, true, false);
     /** Wooden furniture material harvestable by hand. */
-    public static final BlockMaterial WOOD_HANDHARVESTABLE =
-            new BlockMaterial(MapColor.WOOD, true, true,
-            true, true, false, true, false);
+    public static final BlockMaterial WOOD_HANDHARVESTABLE =    new BlockMaterial(MapColor.WOOD, true, true, true, true, false, true, false);
     /** Stone furniture material. */
-    public static final BlockMaterial STONE_FURNITURE =
-            new BlockMaterial(MapColor.STONE, true, false,
-            false, true, false, true, false);
+    public static final BlockMaterial STONE_FURNITURE =         new BlockMaterial(MapColor.STONE, true, false, false, true, false, true, false);
     /** Stone furniture material harvestable by hand. */
-    public static final BlockMaterial STONE_HANDHARVESTABLE =
-            new BlockMaterial(MapColor.STONE, true, true,
-            false, true, false, true, false);
-    /** Water plant material (has to be 'solid' in order to
-     * render properly next to water). */
-    public static final BlockMaterial WATER_PLANT =
-            new BlockMaterial(MapColor.WATER, true, true,
-            false, true, false, true, true);
+    public static final BlockMaterial STONE_HANDHARVESTABLE =   new BlockMaterial(MapColor.STONE, true, true, false, true, false, true, false);
+    /** Water plant material (has to be 'solid' in order to render properly next to water). */
+    public static final BlockMaterial WATER_PLANT =             new BlockMaterial(MapColor.WATER, true, true, false, true, false, true, true);
     /** Carcass material. */
-    public static final BlockMaterial CARCASS =
-            new BlockMaterial(MapColor.BROWN, true, true,
-            true, true, false, false, false);
-    /** Soild material. */
-    public static final BlockMaterial SOIL =
-            new BlockMaterial(MapColor.DIRT, true, true,
-            false, false, false, false, false);
-    /** Tar material. */
-    public static final BlockMaterial TAR =
-            new BlockMaterial(MapColor.BLACK, false, false,
-            false, true, true, false, true);
+    public static final BlockMaterial CARCASS =                 new BlockMaterial(MapColor.BROWN, true, true, true, true, false, false, false);
+    /** Soil material. */
+    public static final BlockMaterial SOIL =                    new BlockMaterial(MapColor.DIRT, true, true, false, false, false, false, false);
+    /** Tar fluid material. */
+    public static final BlockMaterial TAR =                     new BlockMaterial(MapColor.BLACK, false, false, false, true, true, false, true);
     /** Blockfruit material. */
-    public static final BlockMaterial FRUIT =
-            new BlockMaterial(MapColor.GREEN, false, true,
-            true, true, false, false, false);
+    public static final BlockMaterial FRUIT =                   new BlockMaterial(MapColor.GREEN, false, true, true, true, false, false, false);
     
     /** Whether this material is solid. */
     private boolean isSolid;

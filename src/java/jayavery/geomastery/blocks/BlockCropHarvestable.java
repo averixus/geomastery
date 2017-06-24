@@ -37,7 +37,7 @@ import net.minecraft.world.biome.BiomeSavanna;
 public abstract class BlockCropHarvestable extends BlockCrop {
     
     /** Maximum permitted height for this crop. */
-    protected int maxHeight;
+    protected final int maxHeight;
 
     public BlockCropHarvestable(String name, int maxHeight,
             Supplier<Item> cropRef, Function<Random, Integer> yieldRef,
@@ -82,7 +82,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         world.setBlockState(pos, newState);
         
         float yieldMultiplier = world.getBlockState(pos.down()).getBlock()
-                .isFertile(world, pos.down()) ? wetMultiplier : 1;
+                .isFertile(world, pos.down()) ? WET_MULTIPLIER : 1;
                 
         TileEntity tileEntity = world.getTileEntity(pos);
         

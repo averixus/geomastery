@@ -39,7 +39,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-/** Handler for Gui and Container opening. */
+/** Handler for GUI and container opening. */
 public class GuiHandler implements IGuiHandler {
 
     @Override

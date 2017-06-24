@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Abstract class for rendering walls which can connect to each other. */
+/** Abstract superclass for rendering walls which can connect to each other. */
 @SideOnly(Side.CLIENT)
 public abstract class WallRenderer extends DelayedBakingAbstract {
    
