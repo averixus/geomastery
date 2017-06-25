@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Renderer for thin beams. */
 @SideOnly(Side.CLIENT)
-public class BeamThin extends DelayedBakingAbstract {
+public class RenderBeamThin extends RenderDelayedBakingAbstract {
     
     // Models for all possible parts
     protected static IModel thinMiddle;
@@ -63,7 +63,7 @@ public class BeamThin extends DelayedBakingAbstract {
     protected static Map<EnumAxis, Map<EnumFloor, Map<UnlistedPropertyBool,
             Pair<IModel, Integer>>>> surrounds = Maps.newEnumMap(EnumAxis.class);
 
-    public BeamThin() {
+    public RenderBeamThin() {
         
         super(GeoBlocks.BEAM_THIN.getRegistryName());
     }

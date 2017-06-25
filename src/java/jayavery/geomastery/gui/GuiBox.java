@@ -6,7 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.gui;
 
-import jayavery.geomastery.container.ContainerBox;
+import jayavery.geomastery.container.ContainerStorage.Box;
 import jayavery.geomastery.main.Geomastery;
 import net.minecraft.util.ResourceLocation;
 
@@ -16,7 +16,7 @@ public class GuiBox extends GuiContainerAbstract {
     /** Texture of this gui. */
     private final ResourceLocation texture;
     
-    public GuiBox(ContainerBox container) {
+    public GuiBox(Box container) {
         
         super(container, "Box");
         this.texture = new ResourceLocation(Geomastery.MODID,

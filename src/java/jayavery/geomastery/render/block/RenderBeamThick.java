@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Renderer for thick beams. */
 @SideOnly(Side.CLIENT)
-public class BeamThick extends DelayedBakingAbstract {
+public class RenderBeamThick extends RenderDelayedBakingAbstract {
     
     // Models for all possible parts
     protected static IModel thickMiddle;
@@ -65,7 +65,7 @@ public class BeamThick extends DelayedBakingAbstract {
             Maps.newEnumMap(EnumAxis.class);
 
 
-    public BeamThick() {
+    public RenderBeamThick() {
         
         super(GeoBlocks.BEAM_THICK.getRegistryName());
     }

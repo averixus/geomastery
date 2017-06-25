@@ -43,7 +43,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Abstract superclass for delayed baking cached multipart block models. */
 @SideOnly(Side.CLIENT)
-public abstract class DelayedBakingAbstract
+public abstract class RenderDelayedBakingAbstract
         implements IBakedModel, IModel, ICustomModelLoader {
 
     /** Cached model quads for states. */
@@ -59,7 +59,7 @@ public abstract class DelayedBakingAbstract
     /** Textures this model needs to load. */
     protected final List<ResourceLocation> textures = Lists.newArrayList();
     
-    public DelayedBakingAbstract(ResourceLocation block) {
+    public RenderDelayedBakingAbstract(ResourceLocation block) {
         
         this.block = block;
     }

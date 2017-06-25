@@ -8,7 +8,6 @@ package jayavery.geomastery.main;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 import com.google.common.collect.Maps;
 import jayavery.geomastery.blocks.BlockCropBlockfruit;
 import jayavery.geomastery.blocks.BlockHarvestableLeaves;
@@ -25,16 +24,17 @@ import jayavery.geomastery.entities.projectile.EntitySpearFlint;
 import jayavery.geomastery.entities.projectile.EntitySpearSteel;
 import jayavery.geomastery.entities.projectile.EntitySpearWood;
 import jayavery.geomastery.render.RenderFallingTreeBlock;
-import jayavery.geomastery.render.block.BeamThick;
-import jayavery.geomastery.render.block.BeamThin;
-import jayavery.geomastery.render.block.WallRenderer;
-import jayavery.geomastery.render.block.WallRendererComplex;
-import jayavery.geomastery.render.block.WallRendererSingle;
-import jayavery.geomastery.render.block.WallRendererStraight;
+import jayavery.geomastery.render.block.RenderBeamThick;
+import jayavery.geomastery.render.block.RenderBeamThin;
+import jayavery.geomastery.render.block.RenderWallAbstract;
+import jayavery.geomastery.render.block.RenderWallComplex;
+import jayavery.geomastery.render.block.RenderWallSingle;
+import jayavery.geomastery.render.block.RenderWallStraight;
 import jayavery.geomastery.render.projectile.RenderArrowFactory;
 import jayavery.geomastery.render.projectile.RenderSpearFactory;
-import jayavery.geomastery.render.tileentity.TileEntityBoxRenderer;
-import jayavery.geomastery.tileentities.TEBox;
+import jayavery.geomastery.render.tileentity.RenderBox;
+import jayavery.geomastery.render.tileentity.RenderChest;
+import jayavery.geomastery.tileentities.TEStorage;
 import jayavery.geomastery.utilities.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
@@ -64,7 +64,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class ClientProxy implements IProxy {
     
     /** Map of wall blocks to renderers. */
-    public static final Map<BlockWall, WallRenderer> WALL_RENDERS = Maps.newHashMap();
+    public static final Map<BlockWall, RenderWallAbstract> WALL_RENDERS = Maps.newHashMap();
     
     @Override
     public void registerModels() {
@@ -143,13 +143,13 @@ public class ClientProxy implements IProxy {
                 (b) -> Collections.emptyMap());
         
         // Beam delayed baking models
-        ModelLoaderRegistry.registerLoader(new BeamThin());
-        ModelLoaderRegistry.registerLoader(new BeamThick());
+        ModelLoaderRegistry.registerLoader(new RenderBeamThin());
+        ModelLoaderRegistry.registerLoader(new RenderBeamThick());
         
         // Straight wall delayed baking models
         for (BlockWall block : GeoBlocks.RENDER_STRAIGHT) {
             
-            WallRenderer render = new WallRendererStraight(block.getRegistryName());
+            RenderWallAbstract render = new RenderWallStraight(block.getRegistryName());
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }
@@ -157,7 +157,7 @@ public class ClientProxy implements IProxy {
         // Complex wall delayed baking models
         for (BlockWall block : GeoBlocks.RENDER_COMPLEX) {
             
-            WallRenderer render = new WallRendererComplex(block.getRegistryName(), block.isDouble());
+            RenderWallAbstract render = new RenderWallComplex(block.getRegistryName(), block.isDouble());
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }
@@ -165,7 +165,7 @@ public class ClientProxy implements IProxy {
         // Single wall delayed baking models
         for (BlockWall block : GeoBlocks.RENDER_SINGLE) {
             
-            WallRenderer render = new WallRendererSingle(block.getRegistryName(), block.getSideAngle());
+            RenderWallAbstract render = new RenderWallSingle(block.getRegistryName(), block.getSideAngle());
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }
@@ -191,7 +191,8 @@ public class ClientProxy implements IProxy {
         entity(FallingTreeBlock.Trunk.class, RenderFallingTreeBlock::new);
         
         // Tileentity renders
-        ClientRegistry.bindTileEntitySpecialRenderer(TEBox.class, new TileEntityBoxRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Box.class, new RenderBox());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Chest.class, new RenderChest());
         
         // Custom state mapper and mesh definition for tar
         BlockFluidBase tarBlock = GeoBlocks.tar;

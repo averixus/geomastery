@@ -10,8 +10,6 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.blocks.BlockWall;
 import jayavery.geomastery.main.ClientProxy;
-import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.blocks.BlockBeam.EnumAxis;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.util.EnumFacing;
@@ -21,26 +19,20 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Renderer for complex wall blocks. */
+/** Renderer for single wall blocks. */
 @SideOnly(Side.CLIENT)
-public class WallRendererComplex extends WallRenderer {
+public class RenderWallSingle extends RenderWallAbstract {
     
-    private IModel postTop;
-    private IModel postBottom;
-    private IModel postMiddle;
-    private IModel postLone;
-    private IModel sideTop;
-    private IModel sideBottom;
-    private IModel sideMiddle;
-    private IModel sideLone;
-    private IModel straightTop;
-    private IModel straightLone;
-    private final boolean isDouble;
+    private IModel post;
+    private IModel side;
+    private IModel unconnected = null;
     
-    public WallRendererComplex(ResourceLocation block, boolean isDouble) {
+    private final int baseAngle;
+    
+    public RenderWallSingle(ResourceLocation block, int baseAngle) {
         
         super(block);
-        this.isDouble = isDouble;
+        this.baseAngle = baseAngle;
     }
     
     @Override
@@ -75,30 +67,10 @@ public class WallRendererComplex extends WallRenderer {
         boolean westPri = thisBlock.compareTo(westBlock) > 0;
         BlockWall westSide = westPri ? westBlock : thisBlock;
         boolean westBot = thisBot && extState.getValue(BlockWall.W_BOTTOM);
-
-        // Straight models if applicable
-        
-        if (!this.isDouble && !northPri && !southPri && thisTop &&
-                eastSide == null && westSide == null &&
-                northBot == southBot == thisBot) {
-            
-            this.addQuads(result, this.getStraightModel(thisBot),
-                    this.getStraightAngle(EnumAxis.NS), state, side, rand);
-            return result;
-            
-        } else if (!this.isDouble && !eastPri && !westPri && thisTop &&
-                northSide == null && southSide == null &&
-                eastBot == westBot == thisBot) {
-            
-            this.addQuads(result, this.getStraightModel(thisBot),
-                    this.getStraightAngle(EnumAxis.EW), state, side, rand);
-            return result;
-        }
         
         // Post
         
-        this.addQuads(result, this.getPostModel(thisTop, thisBot),
-                0, state, side, rand);
+        this.addQuads(result, this.post, 0, state, side, rand);
         
         // Sides
         
@@ -115,11 +87,16 @@ public class WallRendererComplex extends WallRenderer {
                 northTop = northTop || thisTop;
             }
             
-            WallRenderer northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
+            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
             IModel northModel = northRenderer
                     .getConnectedSide(northTop, northBot);
             this.addQuads(result, northModel, northRenderer
                     .getSideAngle(EnumFacing.NORTH), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.NORTH), state, side, rand);
         }
         
         if (eastBlock != null) {
@@ -135,10 +112,15 @@ public class WallRendererComplex extends WallRenderer {
                 eastTop = eastTop || thisTop;
             }
             
-            WallRenderer eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
+            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
             IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.EAST), state, side, rand);
         }
         
         if (southBlock != null) {
@@ -154,11 +136,15 @@ public class WallRendererComplex extends WallRenderer {
                 southTop = southTop || thisTop;
             }
             
-            WallRenderer southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
-            IModel southModel = southRenderer
-                    .getConnectedSide(southTop, southBot);
+            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
+            IModel southModel = southRenderer.getConnectedSide(southTop, southBot);
             this.addQuads(result, southModel, southRenderer
                     .getSideAngle(EnumFacing.SOUTH), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.SOUTH), state, side, rand);
         }
         
         if (westBlock != null) {
@@ -174,10 +160,15 @@ public class WallRendererComplex extends WallRenderer {
                 westTop = westTop || thisTop;
             }
 
-            WallRenderer westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
+            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
             IModel westModel = westRenderer.getConnectedSide(westTop, westBot);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
+            
+        } else {
+            
+            this.addQuads(result, this.unconnected,
+                    this.getSideAngle(EnumFacing.WEST), state, side, rand);
         }
         
         return result;
@@ -186,68 +177,25 @@ public class WallRendererComplex extends WallRenderer {
     @Override
     public IModel loadModel(ResourceLocation rl) {
         
-        // Load part models
+        this.post = this.model("/post");
+        this.side = this.model("/side");
+        this.unconnected = this.model("/unconnected");
         
-        this.postTop = this.model("/top_post");
-        this.postBottom = this.model("/bottom_post");
-        this.postMiddle = this.model("/middle_post");
-        this.postLone = this.model("/lone_post");
-        this.sideTop = this.model("/top_side");
-        this.sideBottom = this.model("/bottom_side");
-        this.sideMiddle = this.model("/middle_side");
-        this.sideLone = this.model("/lone_side");
-        
-        // Prepare texture dependencies list
-         
-        for (IModel model : new IModel[] {this.postTop, this.postBottom,
-                this.postMiddle, this.postLone, this.sideTop, this.sideBottom,
-                this.sideMiddle, this.sideLone}) {
-            
-            this.textures.addAll(model.getTextures());
-        }
-        
-        // Prepare models and textures for straight walls
-        
-        if (!this.isDouble) {
-            
-            this.straightLone = this.model("/lone_straight");
-            this.straightTop = this.model("/top_straight");
-            this.textures.addAll(this.straightLone.getTextures());
-            this.textures.addAll(this.straightTop.getTextures());
-        }
+        this.textures.addAll(this.post.getTextures());
+        this.textures.addAll(this.side.getTextures());
         
         return this;
     }
-
+    
     @Override
     public IModel getConnectedSide(boolean isTop, boolean isBottom) {
         
-        return isBottom ? isTop ? this.sideLone : this.sideBottom :
-                isTop ? this.sideTop : this.sideMiddle;
+        return this.side;
     }
     
     @Override
     public int getSideAngle(EnumFacing facing) {
-
-        return (90 * facing.getHorizontalIndex());
-    }
-    
-    /** @return Model for this wall's post with given properties. */
-    protected IModel getPostModel(boolean isTop, boolean isBottom) {
         
-        return isBottom ? isTop ? this.postLone : this.postBottom :
-            isTop ? this.postTop : this.postMiddle;
-    }
-    
-    /** @return Model for this straight through wall with given properties. */
-    public IModel getStraightModel(boolean isBottom) {
-        
-        return isBottom ? this.straightLone : this.straightTop;
-    }
-    
-    /** @return Offset rotation angle for this block's straight models. */
-    public int getStraightAngle(EnumAxis axis) {
-        
-        return axis == EnumAxis.NS ? 0 : 90;
+        return this.baseAngle + (90 * facing.getHorizontalIndex());
     }
 }

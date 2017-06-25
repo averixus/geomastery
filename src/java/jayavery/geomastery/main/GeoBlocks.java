@@ -17,6 +17,7 @@ import jayavery.geomastery.blocks.BlockBed;
 import jayavery.geomastery.blocks.BlockBeehive;
 import jayavery.geomastery.blocks.BlockBox;
 import jayavery.geomastery.blocks.BlockCarcass;
+import jayavery.geomastery.blocks.BlockChest;
 import jayavery.geomastery.blocks.BlockCompostheap;
 import jayavery.geomastery.blocks.BlockCraftingKnapping;
 import jayavery.geomastery.blocks.BlockCrop;
@@ -143,6 +144,7 @@ public class GeoBlocks {
     public static final Block COMPOSTHEAP =        make(new BlockCompostheap(), true);
     public static final Block FURNACE_CAMPFIRE =   make(new BlockFurnaceCampfire());
     public static final Block FURNACE_POTFIRE =    make(new BlockFurnacePotfire());
+    public static final Block CHEST =              make(new BlockChest());
     public static final Block BASKET =             make(new BlockBasket());
     public static final Block BOX =                make(new BlockBox());
     

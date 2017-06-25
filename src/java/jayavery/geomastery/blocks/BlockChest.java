@@ -28,15 +28,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/** Box block. */
-public class BlockBox extends BlockComplexAbstract {
-
-    private static final AxisAlignedBB BOX =
-            new AxisAlignedBB(0.25,0,0.25,0.75,0.56,0.75);
+/** Chest block. */
+public class BlockChest extends BlockComplexAbstract {
     
-    public BlockBox() {
+    public BlockChest() {
         
-        super("box", BlockMaterial.WOOD_HANDHARVESTABLE, 5, null);
+        super("chest", BlockMaterial.WOOD_HANDHARVESTABLE, 5, null);
         this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
     
@@ -53,7 +50,7 @@ public class BlockBox extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Geomastery.instance, GuiList.BOX.ordinal(),
+            player.openGui(Geomastery.instance, GuiList.CHEST.ordinal(),
                     world, x, y, z);
         }
         
@@ -63,14 +60,14 @@ public class BlockBox extends BlockComplexAbstract {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
 
-        return new TEStorage.Box();
+        return new TEStorage.Chest();
     }
     
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess source, BlockPos pos) {
         
-        return BOX;
+        return FULL_BLOCK_AABB;
     }
     
     @Override

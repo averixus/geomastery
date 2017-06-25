@@ -10,7 +10,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.main.GuiHandler.GuiList;
-import jayavery.geomastery.tileentities.TEBasket;
+import jayavery.geomastery.tileentities.TEStorage;
 import jayavery.geomastery.utilities.BlockMaterial;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -57,7 +57,7 @@ public class BlockBasket extends BlockComplexAbstract {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         
-        return new TEBasket();
+        return new TEStorage.Basket();
     }
     
     @Override

@@ -7,24 +7,26 @@
 package jayavery.geomastery.render.tileentity;
 
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TEBox;
+import jayavery.geomastery.tileentities.TEStorage;
+import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-/** Renderer for box block. */
-public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
+/** Renderer for chest block. */
+public class RenderChest
+        extends TileEntitySpecialRenderer<TEStorage.Chest> {
 
-    /** Texture for box .*/
+    /** Texture for chest. */
     private static final ResourceLocation TEXTURE = new
-            ResourceLocation(Geomastery.MODID, "textures/entity/box.png");
-    
-    private ModelBox model = new ModelBox();
+            ResourceLocation(Geomastery.MODID, "textures/entity/chest.png");
+    /** Model for chest. */
+    private ModelChest model = new ModelChest();
     
     @Override
-    public void renderTileEntityAt(TEBox te, double x, double y,
+    public void renderTileEntityAt(TEStorage.Chest te, double x, double y,
             double z, float ticks, int destroyStage) {
-                
+        
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
@@ -34,7 +36,8 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F, 1.0F, 1.0F);
+            GlStateManager.scale(4.0F, 4.0F, 1.0F);
+            GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
             GlStateManager.matrixMode(5888);
             
         } else {
@@ -47,25 +50,24 @@ public class TileEntityBoxRenderer extends TileEntitySpecialRenderer<TEBox> {
         
         if (destroyStage < 0) {
             
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.color(1F, 1F, 1F, 1F);
         }
         
-        GlStateManager.translate((float)x, (float)y + 1.0F, (float)z + 1.0F);
-        GlStateManager.scale(1.0F, -1.0F, -1.0F);
+        GlStateManager.translate(x, y + 1F, z + 1F);
+        GlStateManager.scale(1F, -1F, -1F);
         GlStateManager.translate(0.5F, 0.5F, 0.5F);
         
-        GlStateManager.rotate(20F, 0.0F, 1.0F, 0.0F);
+        // TODO: first param is y-axis rotation in degrees
+        GlStateManager.rotate(0F, 0F, 1F, 0F);
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
         float angle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * ticks;
         angle = 1.0F - angle;
         angle = 1.0F - angle * angle * angle;
-        this.model.lid1.rotateAngleX = -(angle * ((float)Math.PI / 2F));
-        this.model.lid2.rotateAngleX = angle * ((float)Math.PI / 2F);
-        this.model.knob.rotateAngleX = this.model.lid1.rotateAngleX;
+        this.model.chestLid.rotateAngleX = -(angle * ((float) Math.PI / 2F));
         this.model.renderAll();
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color(1F, 1F, 1F, 1F);
         
         if (destroyStage >= 0) {
             

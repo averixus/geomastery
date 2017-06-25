@@ -20,7 +20,7 @@ import jayavery.geomastery.entities.projectile.EntitySpearFlint;
 import jayavery.geomastery.entities.projectile.EntitySpearSteel;
 import jayavery.geomastery.entities.projectile.EntitySpearWood;
 import jayavery.geomastery.packets.CPacketBackpack;
-import jayavery.geomastery.packets.CPacketBox;
+import jayavery.geomastery.packets.CPacketLid;
 import jayavery.geomastery.packets.CPacketCompost;
 import jayavery.geomastery.packets.CPacketContainer;
 import jayavery.geomastery.packets.CPacketCrafting;
@@ -34,7 +34,7 @@ import jayavery.geomastery.packets.SPacketContainer;
 import jayavery.geomastery.tileentities.TEBasket;
 import jayavery.geomastery.tileentities.TEBeam;
 import jayavery.geomastery.tileentities.TEBed;
-import jayavery.geomastery.tileentities.TEBox;
+import jayavery.geomastery.tileentities.TEStorage;
 import jayavery.geomastery.tileentities.TECarcass;
 import jayavery.geomastery.tileentities.TECompost;
 import jayavery.geomastery.tileentities.TECraftingArmourer;
@@ -168,7 +168,7 @@ public class Geomastery {
         cPacket(CPacketCrafting.Handler.class, CPacketCrafting.class);
         cPacket(CPacketBackpack.Handler.class, CPacketBackpack.class);
         cPacket(CPacketYoke.Handler.class, CPacketYoke.class);
-        cPacket(CPacketBox.Handler.class, CPacketBox.class);
+        cPacket(CPacketLid.Handler.class, CPacketLid.class);
         cPacket(CPacketCompost.Handler.class, CPacketCompost.class);
         
         // Tileentities
@@ -185,8 +185,9 @@ public class Geomastery {
         tileentity(TECraftingKnapping.class, "crafting_knapping");
         tileentity(TECraftingTextiles.class, "crafting_textiles");
         tileentity(TEDrying.class, "drying");
-        tileentity(TEBox.class, "box");
-        tileentity(TEBasket.class, "basket");
+        tileentity(TEStorage.Chest.class, "chest");
+        tileentity(TEStorage.Box.class, "box");
+        tileentity(TEStorage.Basket.class, "basket");
         tileentity(TEBed.class, "bed");
         tileentity(TEBeam.class, "beam");
         tileentity(TECarcass.class, "carcass");
@@ -229,9 +230,9 @@ public class Geomastery {
     /** Helper for registering entities. */
     private static void entity(String name, Class<? extends Entity> clas) {
         
-        EntityRegistry.registerModEntity(new ResourceLocation(Geomastery.MODID,
-                name), clas, name, entityID++,
-                Geomastery.instance, 80, 3, true);
+        String id = Geomastery.MODID + ":" + name;
+        EntityRegistry.registerModEntity(new ResourceLocation(id), clas,
+                id, entityID++, Geomastery.instance, 80, 3, true);
     }
     
     private static int packetID = 0;
@@ -256,6 +257,6 @@ public class Geomastery {
     private static void tileentity(Class<? extends TileEntity> clas,
             String id) {
         
-        GameRegistry.registerTileEntity(clas, id);
+        GameRegistry.registerTileEntity(clas, Geomastery.MODID + ":" + id);
     }
 }

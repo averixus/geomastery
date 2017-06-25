@@ -15,9 +15,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Abstract superclass for rendering walls which can connect to each other. */
 @SideOnly(Side.CLIENT)
-public abstract class WallRenderer extends DelayedBakingAbstract {
+public abstract class RenderWallAbstract extends RenderDelayedBakingAbstract {
    
-    public WallRenderer(ResourceLocation block) {
+    public RenderWallAbstract(ResourceLocation block) {
 
         super(block);
     }

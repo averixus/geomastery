@@ -6,27 +6,28 @@
  ******************************************************************************/
 package jayavery.geomastery.gui;
 
-import jayavery.geomastery.container.ContainerStorage.Basket;
+import jayavery.geomastery.container.ContainerStorage;
+import jayavery.geomastery.container.ContainerStorage.Chest;
 import jayavery.geomastery.main.Geomastery;
 import net.minecraft.util.ResourceLocation;
 
-/** Gui for basket container. */
-public class GuiBasket extends GuiContainerAbstract {
-    
+/** Gui for chest container. */
+public class GuiChest extends GuiContainerAbstract {
+
     /** Texture of this gui. */
     private final ResourceLocation texture;
     
-    public GuiBasket(Basket container) {
+    public GuiChest(Chest container) {
         
-        super(container, "Basket");
-        this.texture = new ResourceLocation(Geomastery.MODID, 
-                "textures/gui/basket_" +
+        super(container, "Chest");
+        this.texture = new ResourceLocation(Geomastery.MODID,
+                "textures/gui/chest_" +
                 container.capability.getInventoryRows() + ".png");
     }
-
+    
     @Override
     protected ResourceLocation getTexture() {
-
+        
         return this.texture;
     }
 }

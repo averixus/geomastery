@@ -8,7 +8,7 @@ package jayavery.geomastery.packets;
 
 import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TEBox;
+import jayavery.geomastery.tileentities.TEStorage;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /** Packet for server->client box lid angle syncing. */
-public class CPacketBox implements IMessage {
+public class CPacketLid implements IMessage {
     
     /** Angle of the lid. */
     protected float lidAngle;
@@ -30,9 +30,9 @@ public class CPacketBox implements IMessage {
     /** Z co-ordinate. */
     protected int z;
     
-    public CPacketBox() {}
+    public CPacketLid() {}
     
-    public CPacketBox(float lidAngle, float prevLidAngle, BlockPos pos) {
+    public CPacketLid(float lidAngle, float prevLidAngle, BlockPos pos) {
         
         this.lidAngle = lidAngle;
         this.prevLidAngle = prevLidAngle;
@@ -62,24 +62,24 @@ public class CPacketBox implements IMessage {
     }
     
     public static class Handler
-            implements IMessageHandler<CPacketBox, IMessage> {
+            implements IMessageHandler<CPacketLid, IMessage> {
         
         @Override
-        public IMessage onMessage(CPacketBox message, MessageContext ctx) {
+        public IMessage onMessage(CPacketLid message, MessageContext ctx) {
             
             Geomastery.proxy.addClientRunnable(() -> processMessage(message));
             return null;
         }
         
-        public void processMessage(CPacketBox message) {
+        public void processMessage(CPacketLid message) {
             
             World world = Geomastery.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new
                     BlockPos(message.x, message.y, message.z));
             
-            if (tileEntity instanceof TEBox) {
+            if (tileEntity instanceof TEStorage) {
                 
-                TEBox tileBox = (TEBox) tileEntity;
+                TEStorage tileBox = (TEStorage) tileEntity;
                 tileBox.setAngles(message.lidAngle, message.prevLidAngle);
             }
         }

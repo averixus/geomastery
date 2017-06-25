@@ -6,8 +6,6 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
-import jayavery.geomastery.container.ContainerBasket;
-import jayavery.geomastery.container.ContainerBox;
 import jayavery.geomastery.container.ContainerCompost;
 import jayavery.geomastery.container.ContainerCrafting;
 import jayavery.geomastery.container.ContainerDrying;
@@ -15,15 +13,15 @@ import jayavery.geomastery.container.ContainerFurnaceClay;
 import jayavery.geomastery.container.ContainerFurnaceSingle;
 import jayavery.geomastery.container.ContainerFurnaceStone;
 import jayavery.geomastery.container.ContainerInventory;
+import jayavery.geomastery.container.ContainerStorage;
 import jayavery.geomastery.gui.GuiBasket;
 import jayavery.geomastery.gui.GuiBox;
+import jayavery.geomastery.gui.GuiChest;
 import jayavery.geomastery.gui.GuiCompost;
 import jayavery.geomastery.gui.GuiCrafting;
 import jayavery.geomastery.gui.GuiDrying;
 import jayavery.geomastery.gui.GuiFurnace;
 import jayavery.geomastery.gui.GuiInventory;
-import jayavery.geomastery.tileentities.TEBasket;
-import jayavery.geomastery.tileentities.TEBox;
 import jayavery.geomastery.tileentities.TECompost;
 import jayavery.geomastery.tileentities.TECraftingAbstract;
 import jayavery.geomastery.tileentities.TEDrying;
@@ -32,12 +30,12 @@ import jayavery.geomastery.tileentities.TEFurnaceCampfire;
 import jayavery.geomastery.tileentities.TEFurnaceClay;
 import jayavery.geomastery.tileentities.TEFurnacePotfire;
 import jayavery.geomastery.tileentities.TEFurnaceStone;
+import jayavery.geomastery.tileentities.TEStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 /** Handler for GUI and container opening. */
 public class GuiHandler implements IGuiHandler {
@@ -157,16 +155,22 @@ public class GuiHandler implements IGuiHandler {
             return new ContainerInventory(player, world);
         }
         
+        if (ID == GuiList.CHEST.ordinal()) {
+            
+            return new ContainerStorage.Chest(player, world,
+                    pos, (TEStorage) te);
+        }
+        
         if (ID == GuiList.BOX.ordinal()) {
             
-            return new ContainerBox(player, world, pos, (TEBox) te);
+            return new ContainerStorage.Box(player, world,
+                    pos, (TEStorage) te);
         }
         
         if (ID == GuiList.BASKET.ordinal()) {
             
-            return new ContainerBasket(player, pos, world, ((TEBasket) te)
-                    .getCapability(CapabilityItemHandler
-                    .ITEM_HANDLER_CAPABILITY, null));
+            return new ContainerStorage.Basket(player, world,
+                    pos,(TEStorage) te);
         }
         
         if (ID == GuiList.COMPOST.ordinal()) {
@@ -297,16 +301,22 @@ public class GuiHandler implements IGuiHandler {
             return new GuiInventory(new ContainerInventory(player, world));
         }
         
+        if (ID == GuiList.CHEST.ordinal()) {
+            
+            return new GuiChest(new ContainerStorage.Chest(player, world,
+                    pos, (TEStorage) te));
+        }
+        
         if (ID == GuiList.BOX.ordinal()) {
             
-            return new GuiBox(new ContainerBox(player, world, pos, (TEBox) te));
+            return new GuiBox(new ContainerStorage.Box(player, world,
+                    pos, (TEStorage) te));
         }
         
         if (ID == GuiList.BASKET.ordinal()) {
             
-            return new GuiBasket(new ContainerBasket(player, pos,
-                    world, ((TEBasket) te).getCapability(CapabilityItemHandler
-                    .ITEM_HANDLER_CAPABILITY, null)));
+            return new GuiBasket(new ContainerStorage.Basket(player, world,
+                    pos, (TEStorage) te));
         }
         
         if (ID == GuiList.COMPOST.ordinal()) {
@@ -335,6 +345,7 @@ public class GuiHandler implements IGuiHandler {
         STONE("Stone Furnace"),
         DRYING("Drying Rack"),
         INVENTORY("Inventory"),
+        CHEST("Chest"),
         BOX("Box"),
         BASKET("Basket"),
         COMPOST("Compost Heap");

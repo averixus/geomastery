@@ -21,13 +21,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Renderer for straight wall blocks. */
 @SideOnly(Side.CLIENT)
-public class WallRendererStraight extends WallRenderer {
+public class RenderWallStraight extends RenderWallAbstract {
     
     private IModel straight;
     private IModel cross;
     private IModel side;
     
-    public WallRendererStraight(ResourceLocation block) {
+    public RenderWallStraight(ResourceLocation block) {
         
         super(block);
     }

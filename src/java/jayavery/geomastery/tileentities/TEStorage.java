@@ -7,63 +7,92 @@
 package jayavery.geomastery.tileentities;
 
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.packets.CPacketBox;
+import jayavery.geomastery.packets.CPacketLid;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-/** TileEntity for box block. */
-public class TEBox extends TileEntity implements ITickable {
+/** Abstract superclass for storage TE. */
+public abstract class TEStorage extends TileEntity implements ITickable {
     
-    /** The box inventory. */
-    private final ItemStackHandler inv = new ItemStackHandler(18);
+    /** Y co-ordinate for inventory in container. */
+    protected int containerY;
+    /** The storage inventory. */
+    protected NonNullList<ItemStack> inv;
     /** The current lid angle. */
     public float lidAngle;
     /** The last tick lid angle. */
     public float prevLidAngle;
-    /** The number of players viewing this box. */
+    /** The number of players viewing this storage. */
     public int users;
     
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public TEStorage(int slots, int containerY) {
         
-        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
-                (T) this.inv : super.getCapability(capability, facing);
+        this.inv = NonNullList.withSize(slots, ItemStack.EMPTY);
+        this.containerY = containerY;
     }
     
-    @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        
-        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ?
-                true : super.hasCapability(capability, facing);
-    }
-    
+    /** Sets this storage lid angles. */
     public void setAngles(float lidAngle, float prevLidAngle) {
         
         this.lidAngle = lidAngle;
         this.prevLidAngle = prevLidAngle;
     }
     
+    /** Sets the given slot of this inventory. */
+    public void setInventory(ItemStack stack, int index) {
+        
+        this.inv.set(index, stack);
+        this.markDirty();
+    }
+    
+    /** @return The given slot of this inventory. */
+    public ItemStack getInventory(int index) {
+        
+        return this.inv.get(index);
+    }
+    
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         
         super.readFromNBT(compound);
-        this.inv.deserializeNBT(compound.getCompoundTag("inventory"));
+        
+        for (int i = 0; i < this.inv.size(); i++) {
+            
+            this.setInventory(new ItemStack(compound
+                    .getCompoundTag("inv" + i)), i);
+        }
     }
     
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         
         super.writeToNBT(compound);
-        compound.setTag("inventory", this.inv.serializeNBT());
+
+        for (int i = 0; i < this.inv.size(); i++) {
+            
+            compound.setTag("inv" + i, this.getInventory(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
+
         return compound;
+    }
+    
+    /** @return The number of slots in this inventory. */
+    public int getSlots() {
+        
+        return this.inv.size();
+    }
+    
+    /** @return The number of rows in this inventory. */
+    public int getRows() {
+        
+        return this.inv.size() / 9;
     }
     
     /** Updates animation and sound states. */
@@ -126,6 +155,12 @@ public class TEBox extends TileEntity implements ITickable {
         }
     }
     
+    /** Gets the container Y co-ordinate for this inventory. */
+    public int getInvY() {
+        
+        return this.containerY;
+    }
+    
     /** Removes a user. */
     public void open() {
         
@@ -143,8 +178,38 @@ public class TEBox extends TileEntity implements ITickable {
         
         if (!this.world.isRemote) {
 
-            Geomastery.NETWORK.sendToAll(new CPacketBox(this.lidAngle,
+            Geomastery.NETWORK.sendToAll(new CPacketLid(this.lidAngle,
                     this.prevLidAngle, this.pos));
+        }
+    }
+    
+    /** Basket implementation. */
+    public static class Basket extends TEStorage {
+        
+        public Basket() {
+            
+            super(9, 36);
+        }
+        
+        @Override
+        public void update() {}
+    }
+    
+    /** Box implementation. */
+    public static class Box extends TEStorage {
+        
+        public Box() {
+            
+            super(18, 26);
+        }
+    }
+    
+    /** Chest implementation. */
+    public static class Chest extends TEStorage {
+        
+        public Chest() {
+            
+            super(27, 18);
         }
     }
 }

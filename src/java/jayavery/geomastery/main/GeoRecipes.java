@@ -183,7 +183,7 @@ public class GeoRecipes {
         
         for (Item metal : METALS) {
             
-            WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CHEST), "SSS", "SMS", "SSS", 'S', GeoItems.TIMBER, 'M', metal);
+            WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.CHEST), "SSS", "SMS", "SSS", 'S', GeoItems.TIMBER, 'M', metal);
         }
     }
 
