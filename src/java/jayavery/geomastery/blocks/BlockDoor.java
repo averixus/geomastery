@@ -127,7 +127,7 @@ public class BlockDoor extends BlockBuilding {
                 thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
-        if (otherState.getBlock() != this || world.isRemote) {
+        if (otherState.getBlock() != this /*|| world.isRemote*/) { // TODO try without isRemote check?
             
             return false;
         }
@@ -227,11 +227,7 @@ public class BlockDoor extends BlockBuilding {
         
         IBlockState state = this.getDefaultState();
         
-        if ((meta & 8) > 0) {
-            
-            state = state.withProperty(OPEN, true);
-        } 
-            
+        state = state.withProperty(OPEN, ((meta & 8) > 0));
         state = state.withProperty(TOP, ((meta & 4) > 0));
         state = state.withProperty(FACING, EnumFacing.getHorizontal(meta));
         return state;
