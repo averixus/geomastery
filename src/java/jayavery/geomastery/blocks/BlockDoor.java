@@ -127,7 +127,7 @@ public class BlockDoor extends BlockBuilding {
                 thisPos.down() : thisPos.up();
         IBlockState otherState = world.getBlockState(otherPos);
         
-        if (otherState.getBlock() != this /*|| world.isRemote*/) { // TODO try without isRemote check?
+        if (otherState.getBlock() != this) {
             
             return false;
         }
@@ -160,7 +160,6 @@ public class BlockDoor extends BlockBuilding {
                 
                 spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
             }
-            
         }
     }
     
