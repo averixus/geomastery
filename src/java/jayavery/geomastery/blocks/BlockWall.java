@@ -8,6 +8,7 @@ package jayavery.geomastery.blocks;
 
 import java.util.Map;
 import com.google.common.collect.Maps;
+import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.IDoublingBlock;
 import jayavery.geomastery.utilities.ToolType;
 import jayavery.geomastery.utilities.UnlistedPropertyBool;
@@ -141,6 +142,22 @@ public abstract class BlockWall extends BlockBuilding
                 
                 isTop = offsetState.getValue(TOP);
                 isBottom = offsetState.getValue(BOTTOM);
+                
+            } else if (offsetBlock instanceof BlockBuilding &&
+                    ((BlockBuilding) offsetBlock).shouldConnect(world,
+                    offsetState, offsetPos, facing.getOpposite())){
+                
+                offsetBlock = state.getBlock();
+                isTop = state.getValue(TOP);
+                isBottom = state.getValue(BOTTOM);
+                
+            } else if (!(offsetBlock instanceof BlockBuilding) &&
+                    BlockWeight.getWeight(offsetBlock)
+                    .canSupport(this.getWeight())) {
+                
+                offsetBlock = state.getBlock();
+                isTop = state.getValue(TOP);
+                isBottom = state.getValue(BOTTOM);
                 
             } else {
                 

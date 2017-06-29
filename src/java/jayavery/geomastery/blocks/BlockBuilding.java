@@ -52,8 +52,7 @@ public abstract class BlockBuilding extends BlockNew {
     }
 
     /** @return Whether this position is valid for this block. Default
-     * implementation requires the block below to be same weight or heavier,
-     * or the same block (allowing for multiblock structures).*/
+     * implementation requires the block below to be same weight or heavier .*/
     public boolean isValid(World world, BlockPos pos) {
         
         Block blockBelow = world.getBlockState(pos.down()).getBlock();

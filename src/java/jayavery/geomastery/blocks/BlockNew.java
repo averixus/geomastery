@@ -123,6 +123,16 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0.57,0,0.43,1,1,0.57);
     public static final AxisAlignedBB BRANCH_SOUTH_THIN =
             new AxisAlignedBB(0.43,0,0,0.57,1,0.43);
+    public static final AxisAlignedBB CENTRE_POST_THIN_TALL =
+            new AxisAlignedBB(0.43,0,0.43,0.57,1.5,0.57);
+    public static final AxisAlignedBB BRANCH_WEST_THIN_TALL =
+            new AxisAlignedBB(0,0,0.43,0.43,1.5,0.57);
+    public static final AxisAlignedBB BRANCH_NORTH_THIN_TALL =
+            new AxisAlignedBB(0.43,0,0.57,0.57,1.5,1);
+    public static final AxisAlignedBB BRANCH_EAST_THIN_TALL =
+            new AxisAlignedBB(0.57,0,0.43,1,1.5,0.57);
+    public static final AxisAlignedBB BRANCH_SOUTH_THIN_TALL =
+            new AxisAlignedBB(0.43,0,0,0.57,1.5,0.43);
 
     // Rotating stairs in groups
     

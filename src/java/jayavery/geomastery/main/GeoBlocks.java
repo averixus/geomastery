@@ -46,6 +46,7 @@ import jayavery.geomastery.blocks.BlockTar;
 import jayavery.geomastery.blocks.BlockVault;
 import jayavery.geomastery.blocks.BlockWall;
 import jayavery.geomastery.blocks.BlockWallComplex;
+import jayavery.geomastery.blocks.BlockWallFence;
 import jayavery.geomastery.blocks.BlockWallHeaping;
 import jayavery.geomastery.blocks.BlockWallLog;
 import jayavery.geomastery.blocks.BlockWallThin;
@@ -216,7 +217,7 @@ public class GeoBlocks {
     
     // Walls (in rendering priority order)
     public static final Block WALL_LOG =                       make(new BlockWallLog(), RENDER_STRAIGHT, DELAYED_BAKE); 
-    public static final Block FENCE =                          make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "fence", 2F, ToolType.AXE, 90), RENDER_SINGLE, DELAYED_BAKE);
+    public static final Block FENCE =                          make(new BlockWallFence(BlockMaterial.WOOD_FURNITURE, "fence", 2F, ToolType.AXE, 90), RENDER_SINGLE, DELAYED_BAKE);
     public static final Block WALL_POLE =                      make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, ToolType.AXE, 180), 4, RENDER_SINGLE, DELAYED_BAKE);
     public static final Block FRAME =                          make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, ToolType.AXE, 180), 6, RENDER_SINGLE, DELAYED_BAKE);
     public static final BlockWallHeaping WALL_MUD_SINGLE =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_single", 1F, ToolType.PICKAXE, false, 0, () -> GeoItems.WALL_MUD), RENDER_SINGLE, DELAYED_BAKE);
