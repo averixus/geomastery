@@ -64,10 +64,10 @@ public abstract class BlockLight extends BlockBuilding {
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unused) {
-            
+        
         if (!BlockWeight.getWeight(world.getBlockState(pos
                 .offset(state.getValue(FACING)))
-                .getBlock()).canSupport(BlockWeight.MEDIUM)) {
+                .getBlock()).canSupport(BlockWeight.NONE)) {
 
             world.destroyBlock(pos, true);
         }
@@ -80,7 +80,7 @@ public abstract class BlockLight extends BlockBuilding {
             
             if (BlockWeight.getWeight(world.getBlockState(pos
                     .offset(facing)).getBlock())
-                    .canSupport(BlockWeight.LIGHT)) {
+                    .canSupport(BlockWeight.NONE)) {
                 
                 return true;
             }
@@ -114,7 +114,7 @@ public abstract class BlockLight extends BlockBuilding {
             int meta, EntityLivingBase placer) {
         
         if (BlockWeight.getWeight(world.getBlockState(pos.offset(side
-                .getOpposite())).getBlock()).canSupport(BlockWeight.MEDIUM)) {
+                .getOpposite())).getBlock()).canSupport(BlockWeight.NONE)) {
             
             return this.getDefaultState().withProperty(FACING,
                     side.getOpposite());
@@ -125,7 +125,7 @@ public abstract class BlockLight extends BlockBuilding {
                 
                 if (BlockWeight.getWeight(world.getBlockState(pos
                         .offset(facing)).getBlock())
-                        .canSupport(BlockWeight.MEDIUM)) {
+                        .canSupport(BlockWeight.NONE)) {
                     
                     return this.getDefaultState().withProperty(FACING, facing);
                 }

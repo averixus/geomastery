@@ -322,7 +322,11 @@ public class DefaultCapPlayer implements ICapPlayer {
                 (this.lastLightLevel > 0 || newLightLevel > 0)) ||
                 this.lastLightLevel != newLightLevel) {
             
-            this.player.world.setBlockToAir(this.lastLightPos);
+            if (this.player.world.getBlockState(this.lastLightPos).getBlock()
+                    == GeoBlocks.INVISIBLE_LIGHT) {
+                
+                this.player.world.setBlockToAir(this.lastLightPos);
+            }
 
             if (this.player.world.isAirBlock(newPos) && newLightLevel > 0) {
                 

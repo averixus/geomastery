@@ -71,43 +71,19 @@ public class WorldGenerator implements IWorldGenerator {
             World world, IChunkGenerator chunkGenerator,
             IChunkProvider chunkProvider) {
 
-        switch (world.provider.getDimension()) {
+        if (world.provider.getDimension() == 0) {
 
-            case -1: {
-
-                generateNetherChunk(world, rand, chunkScaleX * 16,
-                        chunkScaleZ * 16);
-                break;
-            }
-
-            case 0: {
-
-                if (!(chunkGenerator instanceof ChunkProviderFlat)) {
-                    
-                    generateOverworldChunk(world, rand, chunkScaleX * 16,
-                        chunkScaleZ * 16);
-                }
+            if (!(chunkGenerator instanceof ChunkProviderFlat)) {
                 
-                break;
-            }
-
-            case 1: {
-
-                generateEndChunk(world, rand, chunkScaleX * 16,
-                        chunkScaleZ * 16);
-                break;
+                generateOverworldChunk(world, rand, chunkScaleX * 16,
+                    chunkScaleZ * 16);
             }
         }
     }
 
-    private void generateNetherChunk(World world, Random rand, int xFromChunk,
-            int zFromChunk) {
-
-    }
-
     private void generateOverworldChunk(World world, Random rand,
             int xFromChunk, int zFromChunk) {
-        
+
         new WorldGenCoal(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenDiamond(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenEmerald(world, rand).generateChunk(xFromChunk, zFromChunk);
@@ -154,10 +130,6 @@ public class WorldGenerator implements IWorldGenerator {
         new WorldGenTreeOrange(world, rand, false).generateChunk(xFromChunk, zFromChunk);
         new WorldGenTreeBanana(world, rand, false).generateChunk(xFromChunk, zFromChunk);
         
-    }
-
-    private void generateEndChunk(World world, Random rand, int x, int z) {
-
     }
     
     /** Alters vanilla chunk populating. */

@@ -45,7 +45,7 @@ public class BlockSlab extends BlockBuilding implements IDoublingBlock {
     @Override
     public BlockWeight getWeight() {
 
-        return BlockWeight.LIGHT;
+        return this.isDouble() ? BlockWeight.LIGHT : BlockWeight.NONE;
     }
     
     @Override

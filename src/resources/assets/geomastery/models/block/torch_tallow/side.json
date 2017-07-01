@@ -2,6 +2,7 @@
 "textures": {
     "fire": "geomastery:blocks/complex/fire",
     "bark": "blocks/log_oak",
+    "bellows": "geomastery:blocks/complex/bellows",
     "particle": "blocks/log_oak"
 },
 "elements": [ 
@@ -55,6 +56,30 @@
         "south": { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" },
         "west":  { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" },
         "east":  { "uv": [ 3, 3, 4, 5 ], "texture": "#fire" }
+    }
+},
+{
+    "from": [ 7, 5, -7 ],
+    "to": [ 8, 6, 2 ],
+    "faces": {
+        "down":  { "uv": [ 9, 9, 8, 0 ], "texture": "#bellows" },
+        "up":    { "uv": [ 7, 0, 8, 9 ], "texture": "#bellows" },
+        "north": { "uv": [ 6, 7, 7, 8 ], "texture": "#bellows" },
+        "south": { "uv": [ 5, 7, 6, 8 ], "texture": "#bellows" },
+        "west":  { "uv": [ 0, 7, 9, 8 ], "texture": "#bellows" },
+        "east":  { "uv": [ 1, 7, 10, 8 ], "texture": "#bellows" }
+    }
+},
+{
+    "from": [ 7, 8, -7 ],
+    "to": [ 8, 9, 3 ],
+    "faces": {
+        "down":  { "uv": [ 9, 10, 8, 0 ], "texture": "#bellows" },
+        "up":    { "uv": [ 7, 0, 8, 10 ], "texture": "#bellows" },
+        "north": { "uv": [ 8, 7, 9, 8 ], "texture": "#bellows" },
+        "south": { "uv": [ 7, 7, 8, 8 ], "texture": "#bellows" },
+        "west":  { "uv": [ 0, 7, 10, 8 ], "texture": "#bellows" },
+        "east":  { "uv": [ 0, 7, 10, 8 ], "texture": "#bellows" }
     }
 }
 ]
