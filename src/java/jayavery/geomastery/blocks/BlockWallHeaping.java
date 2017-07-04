@@ -160,7 +160,8 @@ public class BlockWallHeaping extends BlockWall implements IDoublingBlock {
         
         if (this.isDouble()) {
             
-            world.setBlockState(pos, this.item.get().single.getDefaultState());
+            world.setBlockState(pos, this.item.get()
+                    .single.get().getDefaultState());
             return false;
             
         } else {

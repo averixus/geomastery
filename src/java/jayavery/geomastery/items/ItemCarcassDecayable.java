@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import jayavery.geomastery.blocks.BlockCarcass;
 import jayavery.geomastery.capabilities.DefaultCapDecay;
@@ -35,9 +36,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemCarcassDecayable extends ItemBlockplacer {
 
     /** The block for this item. */
-    private final BlockCarcass block;
+    private final Supplier<BlockCarcass> block;
     
-    public ItemCarcassDecayable(String name, BlockCarcass block) {
+    public ItemCarcassDecayable(String name, Supplier<BlockCarcass> block) {
         
         super(name, 1, CreativeTabs.FOOD, SoundType.CLOTH);
         this.block = block;
@@ -95,7 +96,7 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
             NBTTagCompound nbt) {
         
         return new ProviderCapDecay(new
-                DefaultCapDecay(this.block.getShelfLife()));
+                DefaultCapDecay(this.block.get().getShelfLife()));
     }
     
     /** Attempts to place this item's carcass block. */
@@ -108,7 +109,7 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         Block block = state.getBlock();
             
         if (!block.isReplaceable(world, placePos) ||
-                !this.block.isValid(world, placePos)) {
+                !this.block.get().isValid(world, placePos)) {
             
             return false;
         }
@@ -123,7 +124,7 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
             return false;
         }
         
-        IBlockState placeState = this.block.getDefaultState();
+        IBlockState placeState = this.block.get().getDefaultState();
         world.setBlockState(placePos, placeState);
         ((TECarcass) world.getTileEntity(placePos))
                 .setData(decayCap.getBirthTime(), decayCap.getStageSize());

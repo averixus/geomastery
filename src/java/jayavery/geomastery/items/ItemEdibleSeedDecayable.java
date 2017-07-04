@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.function.Supplier;
 import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.block.Block;
@@ -27,13 +28,13 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
         implements IPlantable {
     
     /** This item's crop block. */
-    private final Block crop;
+    private final Supplier<Block> crop;
     /** This item's plant type. */
     private final EnumPlantType plantType;
 
     @SafeVarargs
     public ItemEdibleSeedDecayable(String name, int hunger, float saturation,
-            int stackSize, Block crop, EnumPlantType plantType,
+            int stackSize, Supplier<Block> crop, EnumPlantType plantType,
             FoodType foodType, int shelfLife,
             Class<? extends EntityAnimal>... animalEaters) {
 
@@ -56,7 +57,7 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
                 state.getBlock().canSustainPlant(state, world,
                 pos, EnumFacing.UP, this) && world.isAirBlock(pos.up())) {
             
-            world.setBlockState(pos.up(), this.crop.getDefaultState());
+            world.setBlockState(pos.up(), this.crop.get().getDefaultState());
             
             if (!player.capabilities.isCreativeMode) {
             
@@ -83,6 +84,6 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         
-        return this.crop.getDefaultState();
+        return this.crop.get().getDefaultState();
     }
 }

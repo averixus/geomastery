@@ -105,7 +105,8 @@ public class PlayerEvents {
     
         if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
             
-            Geomastery.LOG.info("Replacing vanilla player foodstats");
+            Geomastery.LOG.info("Replacing {}'s vanilla foodstats",
+                    player.getName());
             ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
                     new FoodStatsWrapper(player),
                     "foodStats", "field_71100_bB");

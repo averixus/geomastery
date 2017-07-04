@@ -7,7 +7,7 @@
 package jayavery.geomastery.items;
 
 import java.util.ArrayList;
-import java.util.function.BiPredicate;
+import java.util.function.Supplier;
 import jayavery.geomastery.blocks.BlockBeam;
 import jayavery.geomastery.blocks.BlockBuilding;
 import jayavery.geomastery.blocks.BlockDoor;
@@ -110,11 +110,11 @@ public abstract class ItemBlockplacer extends ItemSimple {
     public static class Doubling <B extends BlockBuilding & IDoublingBlock>
             extends ItemBlockplacer {
         
-        public final B single;
-        public final B duble;
+        public final Supplier<B> single;
+        public final Supplier<B> duble;
         
         public Doubling(String name, int stackSize, SoundType sound,
-                B single, B duble) {
+                Supplier<B> single, Supplier<B> duble) {
             
             super(name, stackSize, CreativeTabs.BUILDING_BLOCKS, sound);
             this.single = single;
@@ -128,12 +128,15 @@ public abstract class ItemBlockplacer extends ItemSimple {
             
             IBlockState targetState = world.getBlockState(targetPos);
             Block targetBlock = targetState.getBlock();
+            
+            B single = this.single.get();
+            B duble = this.duble.get();
 
-            if (targetBlock == this.single && this.single
+            if (targetBlock == single && single
                     .shouldDouble(targetState.getActualState(world, targetPos),
-                    targetSide) && this.duble.isValid(world, targetPos)) {
+                    targetSide) && duble.isValid(world, targetPos)) {
                 
-                world.setBlockState(targetPos, this.duble.getDefaultState());
+                world.setBlockState(targetPos, duble.getDefaultState());
            
             } else {
                 
@@ -142,12 +145,12 @@ public abstract class ItemBlockplacer extends ItemSimple {
                 targetBlock = targetState.getBlock();
                 
                 if (!targetBlock.isReplaceable(world, targetPos) ||
-                        !this.single.isValid(world, targetPos)) {
+                        !single.isValid(world, targetPos)) {
                     
                     return false;
                 }
                 
-                world.setBlockState(targetPos, this.single.getDefaultState());
+                world.setBlockState(targetPos, single.getDefaultState());
             }
             
             return true;
@@ -156,9 +159,9 @@ public abstract class ItemBlockplacer extends ItemSimple {
     
     public static class Heaping extends ItemBlockplacer {
         
-        private final Block block;
+        private final Supplier<Block> block;
         
-        public Heaping(String name, SoundType sound, Block block) {
+        public Heaping(String name, SoundType sound, Supplier<Block> block) {
             
             super(name, 1, CreativeTabs.BUILDING_BLOCKS, sound);
             this.block = block;
@@ -198,7 +201,7 @@ public abstract class ItemBlockplacer extends ItemSimple {
                 }
             }
             
-            world.setBlockState(posPlace, this.block.getDefaultState());
+            world.setBlockState(posPlace, this.block.get().getDefaultState());
             return true;
         }
     }
@@ -206,9 +209,9 @@ public abstract class ItemBlockplacer extends ItemSimple {
     public static class Door extends ItemBlockplacer {
         
         /** The door block of this item. */
-        private BlockDoor block;
+        private Supplier<BlockDoor> block;
         
-        public Door(BlockDoor block, String name) {
+        public Door(Supplier<BlockDoor> block, String name) {
             
             super(name, 1, CreativeTabs.DECORATIONS, SoundType.WOOD);
             this.block = block;
@@ -226,12 +229,12 @@ public abstract class ItemBlockplacer extends ItemSimple {
                     
             if (!bottomBlock.isReplaceable(world, bottomPos) ||
                     !topBlock.isReplaceable(world, topPos) ||
-                    !this.block.isValid(world, bottomPos)) {
+                    !this.block.get().isValid(world, bottomPos)) {
             
                 return false;
             }
             
-            IBlockState placeState = this.block.getDefaultState()
+            IBlockState placeState = this.block.get().getDefaultState()
                     .withProperty(BlockDoor.FACING, placeFacing)
                     .withProperty(BlockDoor.OPEN, false)
                     .withProperty(BlockDoor.TOP, false);
@@ -250,9 +253,9 @@ public abstract class ItemBlockplacer extends ItemSimple {
         /** Maximm length this item's beam structure can span. */
         public int maxLength;
         /** Beam block of this item's structure. */
-        private BlockBeam block;
+        private Supplier<BlockBeam> block;
 
-        public Beam(String name, BlockBeam block,
+        public Beam(String name, Supplier<BlockBeam> block,
                 int minLength, int maxLength) {
             
             super(name, 1, CreativeTabs.BUILDING_BLOCKS, SoundType.WOOD);
@@ -292,10 +295,12 @@ public abstract class ItemBlockplacer extends ItemSimple {
             
             // Check validity of supports and length
             
+            BlockBeam block = this.block.get();
+            
             boolean frontValid = BlockWeight.getWeight(frontEnd)
-                    .canSupport(this.block.getWeight());
+                    .canSupport(block.getWeight());
             boolean backValid = BlockWeight.getWeight(backEnd)
-                    .canSupport(this.block.getWeight());
+                    .canSupport(block.getWeight());
             
             if (length < this.minLength || length > this.maxLength ||
                     !frontValid || !backValid) {
@@ -318,7 +323,7 @@ public abstract class ItemBlockplacer extends ItemSimple {
             }
             
             // Place blocks
-            IBlockState state = this.block.getDefaultState();
+            IBlockState state = block.getDefaultState();
             
             world.setBlockState(posBack, state);
             world.setBlockState(posFront, state);
