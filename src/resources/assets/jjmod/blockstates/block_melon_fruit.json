@@ -1,9 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "jjmod:melon", "y": 90 },
-        "facing=east": { "model": "jjmod:melon", "y": 180 },
-        "facing=south": { "model": "jjmod:melon", "y": 270 },
-        "facing=west": { "model": "jjmod:melon" },
-        "inventory": { "model": "jjmod:melon" }
-    }
-}

@@ -1,0 +1,44 @@
+{
+"textures": {
+    "roughstone": "geomastery:blocks/complex/roughstone",
+    "particle": "geomastery:blocks/complex/roughstone"
+},
+"elements": [ 
+{
+    "from": [ 5, 11, 5 ],
+    "to": [ 11, 16.01, 11 ],
+    "faces": {
+        "down":  { "uv": [ 11, 11, 5, 5 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 5, 5, 11, 11 ], "texture": "#roughstone" },
+        "north": { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstone" },
+        "south": { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 5, 0, 11, 5 ], "texture": "#roughstone" }
+    }
+},
+{
+    "from": [ 4, 6, 4 ],
+    "to": [ 12, 11, 12 ],
+    "faces": {
+        "down":  { "uv": [ 12, 12, 4, 4 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 4, 4, 12, 12 ], "texture": "#roughstone" },
+        "north": { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstone" },
+        "south": { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 4, 5, 12, 10 ], "texture": "#roughstone" }
+    }
+},
+{
+    "from": [ 3, 0, 3 ],
+    "to": [ 13, 6, 13 ],
+    "faces": {
+        "down":  { "uv": [ 13, 13, 3, 3 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 3, 3, 13, 13 ], "texture": "#roughstone" },
+        "north": { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstone" },
+        "south": { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 3, 10, 13, 16 ], "texture": "#roughstone" }
+    }
+}
+]
+}

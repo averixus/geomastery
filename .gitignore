@@ -3,7 +3,7 @@
 !.gitignore
 !gradlew*
 !/gradle/
-!/LICENSE.txt
+!/COPYING.txt
 !/README.md
 !build.gradle
 !/textures/

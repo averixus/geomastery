@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "crop",
+        "textures": { "crop": "geomastery:blocks/plants/pepper0" }
+    },
+    "variants": {
+        "age": {
+            "0": {},
+            "1": {},
+            "2": { "textures": { "crop": "geomastery:blocks/plants/pepper1" } },
+            "3": { "textures": { "crop": "geomastery:blocks/plants/pepper1" } },
+            "4": { "textures": { "crop": "geomastery:blocks/plants/pepper2" } },
+            "5": { "textures": { "crop": "geomastery:blocks/plants/pepper2" } },
+            "6": { "textures": { "crop": "geomastery:blocks/plants/pepper2" } },
+            "7": { "textures": { "crop": "geomastery:blocks/plants/pepper3" } }
+        },
+        "inventory": [{}]
+    }
+}

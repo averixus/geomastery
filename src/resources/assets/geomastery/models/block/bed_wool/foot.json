@@ -1,0 +1,56 @@
+{
+"textures": {
+    "wool": "geomastery:blocks/complex/wool",
+    "particle": "geomastery:blocks/complex/wool"
+},
+"elements": [ 
+{
+    "from": [ 1, 2, 2 ],
+    "to": [ 16, 3, 14 ],
+    "faces": {
+        "down":  { "uv": [ 15, 14, 0, 2 ], "texture": "#wool" },
+        "up":    { "uv": [ 1, 2, 16, 14 ], "texture": "#wool" },
+        "north": { "uv": [ 0, 13, 15, 14 ], "texture": "#wool" },
+        "south": { "uv": [ 1, 13, 16, 14 ], "texture": "#wool" },
+        "west":  { "uv": [ 2, 13, 14, 14 ], "texture": "#wool" },
+        "east":  { "uv": [ 2, 13, 14, 14 ], "texture": "#wool" }
+    }
+},
+{
+    "from": [ 1, 0, 1 ],
+    "to": [ 16, 2, 2 ],
+    "faces": {
+        "down":  { "uv": [ 15, 2, 0, 1 ], "texture": "#wool" },
+        "up":    { "uv": [ 1, 1, 16, 2 ], "texture": "#wool" },
+        "north": { "uv": [ 0, 14, 15, 16 ], "texture": "#wool" },
+        "south": { "uv": [ 1, 14, 16, 16 ], "texture": "#wool" },
+        "west":  { "uv": [ 1, 14, 2, 16 ], "texture": "#wool" },
+        "east":  { "uv": [ 14, 14, 15, 16 ], "texture": "#wool" }
+    }
+},
+{
+    "from": [ 1, 0, 14 ],
+    "to": [ 16, 2, 15 ],
+    "faces": {
+        "down":  { "uv": [ 15, 15, 0, 14 ], "texture": "#wool" },
+        "up":    { "uv": [ 1, 14, 16, 15 ], "texture": "#wool" },
+        "north": { "uv": [ 0, 14, 15, 16 ], "texture": "#wool" },
+        "south": { "uv": [ 1, 14, 16, 16 ], "texture": "#wool" },
+        "west":  { "uv": [ 14, 14, 15, 16 ], "texture": "#wool" },
+        "east":  { "uv": [ 1, 14, 2, 16 ], "texture": "#wool" }
+    }
+},
+{
+    "from": [ 0, 0, 1 ],
+    "to": [ 1, 2, 15 ],
+    "faces": {
+        "down":  { "uv": [ 16, 15, 15, 1 ], "texture": "#wool" },
+        "up":    { "uv": [ 0, 1, 1, 15 ], "texture": "#wool" },
+        "north": { "uv": [ 15, 14, 16, 16 ], "texture": "#wool" },
+        "south": { "uv": [ 0, 14, 1, 16 ], "texture": "#wool" },
+        "west":  { "uv": [ 1, 14, 15, 16 ], "texture": "#wool" },
+        "east":  { "uv": [ 1, 14, 15, 16 ], "texture": "#wool" }
+    }
+}
+]
+}

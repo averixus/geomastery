@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "bl": { "model": "geomastery:crafting_woodworking/bl" },
+            "bm": { "model": "geomastery:crafting_woodworking/bm" },
+            "br": { "model": "geomastery:crafting_woodworking/br" },
+            "fl": { "model": "geomastery:crafting_woodworking/fl" },
+            "fm": { "model": "geomastery:crafting_woodworking/fm" },
+            "fr": { "model": "geomastery:crafting_woodworking/fr" }
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
+    }
+}

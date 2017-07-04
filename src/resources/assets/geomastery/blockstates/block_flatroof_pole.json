@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": { "model": "geomastery:flatroof_pole" },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": {
+                "layer0": "geomastery:items/flatroof_pole"
+            }
+        }]
+    }
+}

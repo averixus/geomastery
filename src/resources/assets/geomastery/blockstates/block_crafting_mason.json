@@ -1,0 +1,19 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "bm": { "model": "geomastery:crafting_mason/bm" },
+            "br": { "model": "geomastery:crafting_mason/br" },
+            "fl": { "model": "geomastery:crafting_mason/fl" },
+            "fm": { "model": "geomastery:crafting_mason/fm" },
+            "fr": { "model": "geomastery:crafting_mason/fr" }
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "inventory": [{}]
+    }
+}

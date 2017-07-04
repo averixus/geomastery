@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": [{ "model": "geomastery:drying" }],
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/drying" }
+        }]
+    }
+}

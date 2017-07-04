@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing=down": { "model": "geomastery:candle_tallow/up" },
+        "facing=west": { "model": "geomastery:candle_tallow/side" },
+        "facing=north": { "model": "geomastery:candle_tallow/side", "y": 90 },
+        "facing=east": { "model": "geomastery:candle_tallow/side", "y": 180 },
+        "facing=south": { "model": "geomastery:candle_tallow/side", "y": 270 },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/candle_tallow" }
+        }]
+    }
+}

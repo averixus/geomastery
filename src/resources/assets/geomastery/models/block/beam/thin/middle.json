@@ -1,0 +1,20 @@
+{
+"textures": {
+    "softwood1": "geomastery:blocks/complex/softwood1",
+    "particle": "geomastery:blocks/complex/softwood1"
+},
+"elements": [ 
+{
+    "from": [ 0, 12, 7 ],
+    "to": [ 16, 15.9, 9 ],
+    "faces": {
+        "down":  { "uv": [ 16, 9, 0, 7 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 0, 7, 16, 9 ], "texture": "#softwood1" },
+        "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#softwood1" },
+        "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#softwood1" },
+        "west":  { "uv": [ 7, 0, 9, 4 ], "texture": "#softwood1" },
+        "east":  { "uv": [ 7, 0, 9, 4 ], "texture": "#softwood1" }
+    }
+}
+]
+}

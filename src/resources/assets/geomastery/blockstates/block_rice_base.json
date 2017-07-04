@@ -1,0 +1,23 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "normal": [{
+            "custom": {
+                "base": "geomastery:block_rice_base#base",
+                "Mipped Cutout": "geomastery:block_rice_base#base",
+                "Translucent": "geomastery:block_rice_base#trans"
+            }
+        }],
+        "base": [{
+            "model": "geomastery:rice/base"
+        }],
+        "trans": [{
+            "model": "geomastery:rice/water"
+        }],
+        "inventory": [{}]
+    }
+}

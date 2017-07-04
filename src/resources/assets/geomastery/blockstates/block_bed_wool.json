@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "foot": { "model": "geomastery:bed_wool/foot" },
+            "head": { "model": "geomastery:bed_wool/head" }
+        },
+        "facing": {
+            "north": { "y": 270 },
+            "east": {},
+            "south": { "y": 90 },
+            "west": { "y": 180 }
+        },
+        "occupied": {
+            "false": {},
+            "true": {}
+        },
+        "inventory": [{}]
+    }
+}

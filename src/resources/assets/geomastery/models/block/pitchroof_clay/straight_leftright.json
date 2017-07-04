@@ -1,0 +1,47 @@
+{
+"textures": {
+    "panels1": "geomastery:blocks/complex/panels1",
+    "panels2": "geomastery:blocks/complex/panels2",
+    "roofclay3": "geomastery:blocks/complex/roofclay3",
+    "roofclay4": "geomastery:blocks/complex/roofclay4",
+    "particle": "geomastery:blocks/complex/panels1"
+},
+"elements": [ 
+{
+    "from": [ 0, 0, 7.5 ],
+    "to": [ 4, 13, 8.5 ],
+    "faces": {
+        "down":  { "uv": [ 16, 8, 12, 7 ], "texture": "#panels1" },
+        "up":    { "uv": [ 0, 6, 4, 7 ], "texture": "#panels1" },
+        "north": { "uv": [ 12, 3, 16, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 0, 3, 4, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 7, 3, 8, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 7, 3, 8, 16 ], "texture": "#panels1" }
+    }
+},
+{
+    "from": [ 4, 0, 7.5 ],
+    "to": [ 8, 9, 8.5 ],
+    "faces": {
+        "down":  { "uv": [ 12, 8.5, 8, 7.5 ], "texture": "#panels1" },
+        "up":    { "uv": [ 4, 7.5, 8, 8.5 ], "texture": "#panels1" },
+        "north": { "uv": [ 8, 7, 12, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 4, 7, 8, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 7.5, 7, 8.5, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 7.5, 7, 8.5, 16 ], "texture": "#panels1" }
+    }
+},
+{
+    "from": [ 9.5, 0, 7.5 ],
+    "to": [ 13.5, 3, 8.5 ],
+    "faces": {
+        "down":  { "uv": [ 8, 8, 4, 7 ], "texture": "#panels1" },
+        "up":    { "uv": [ 9, 7, 13, 8 ], "texture": "#panels1" },
+        "north": { "uv": [ 4, 13, 8, 16 ], "texture": "#panels1" },
+        "south": { "uv": [ 8, 13, 12, 16 ], "texture": "#panels1" },
+        "west":  { "uv": [ 7, 13, 8, 16 ], "texture": "#panels1" },
+        "east":  { "uv": [ 7, 13, 8, 16 ], "texture": "#panels1" }
+    }
+}
+]
+}

@@ -1,0 +1,16 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "geomastery:blocks/solids/chicken",
+        "top": "geomastery:blocks/solids/chicken",
+        "side": "geomastery:blocks/solids/chicken"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "rot": 1
+            },
+            "model": "geomastery:item/item_rot"
+        }
+    ] 
+}

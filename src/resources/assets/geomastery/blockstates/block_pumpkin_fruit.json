@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=north": { "model": "geomastery:pumpkin", "y": 90 },
+        "facing=east": { "model": "geomastery:pumpkin", "y": 180 },
+        "facing=south": { "model": "geomastery:pumpkin", "y": 270 },
+        "facing=west": { "model": "geomastery:pumpkin" },
+        "inventory": { "model": "geomastery:pumpkin" }
+    }
+}

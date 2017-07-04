@@ -1,0 +1,24 @@
+{
+"textures": {
+    "panels1": "geomastery:blocks/complex/panels1",
+    "panels2": "geomastery:blocks/complex/panels2",
+    "roofclay3": "geomastery:blocks/complex/roofclay3",
+    "roofclay4": "geomastery:blocks/complex/roofclay4",
+    "particle": "geomastery:blocks/complex/roofclay1"
+},
+"elements": [ 
+{
+    "from": [ 0, 17, -1 ],
+    "to": [ 2, 18, 0 ],
+    "shade": false,
+    "faces": {
+        "down":  { "uv": [ 16, 1, 14, 0 ], "texture": "#roofclay3" },
+        "up":    { "uv": [ 0, 0, 2, 1 ], "texture": "#roofclay3" },
+        "north": { "uv": [ 14, 15, 16, 16 ], "texture": "#roofclay3" },
+        "south": { "uv": [ 0, 15, 2, 16 ], "texture": "#roofclay3" },
+        "west":  { "uv": [ 0, 15, 1, 16 ], "texture": "#roofclay3" },
+        "east":  { "uv": [ 15, 15, 16, 16 ], "texture": "#roofclay3" }
+    }
+}
+]
+}

@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "fl": { "submodel": { "t1": { "model": "geomastery:crafting_sawpit/fl", "y": 270 } } },
+            "l": { "submodel": { "t2": { "model": "geomastery:crafting_sawpit/fm", "y": 270 } } },
+            "m": { "submodel": { "t3": { "model": "geomastery:crafting_sawpit/fm", "y": 270 } } },
+            "r": { "submodel": { "t4": { "model": "geomastery:crafting_sawpit/r", "y": 90 } } },
+            "fr": { "submodel": { "t5": { "model": "geomastery:crafting_sawpit/fr", "y": 90 } } },
+            "f": { "submodel": { "t6": { "model": "geomastery:crafting_sawpit/f", "y": 270 } } }
+        },
+        "facing": {
+            "north": {},
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
+        "inventory": [{}]
+    }
+}

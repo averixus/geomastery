@@ -1,0 +1,14 @@
+{
+    "parent": "geomastery:item/item_spear_abstract",
+    "textures": {
+        "layer0": "geomastery:items/spear_copper"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "pulling": 1
+            },
+            "model": "geomastery:item/item_spear_copper_pulling"
+        }
+    ]
+}

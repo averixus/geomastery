@@ -1,0 +1,17 @@
+{
+    "variants": {
+        "connection=none,facing=north": { "model": "geomastery:stairs_wood/none", "y": 180 },
+        "connection=none,facing=east": { "model": "geomastery:stairs_wood/none", "y": 270 },
+        "connection=none,facing=south": { "model": "geomastery:stairs_wood/none" },
+        "connection=none,facing=west": { "model": "geomastery:stairs_wood/none", "y": 90 },
+        "connection=left,facing=north": { "model": "geomastery:stairs_wood/left", "y": 180 },
+        "connection=left,facing=east": { "model": "geomastery:stairs_wood/left", "y": 270 },
+        "connection=left,facing=south": { "model": "geomastery:stairs_wood/left" },
+        "connection=left,facing=west": { "model": "geomastery:stairs_wood/left", "y": 90 },
+        "connection=right,facing=north": { "model": "geomastery:stairs_wood/right", "y": 180 },
+        "connection=right,facing=east": { "model": "geomastery:stairs_wood/right", "y": 270 },
+        "connection=right,facing=south": { "model": "geomastery:stairs_wood/right" },
+        "connection=right,facing=west": { "model": "geomastery:stairs_wood/right", "y": 90 },
+        "inventory": { "model": "geomastery:stairs_wood/none" }
+    }
+}

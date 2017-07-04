@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": { "model": "geomastery:crafting_knapping" },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/crafting_knapping" }
+        }]
+    }
+}

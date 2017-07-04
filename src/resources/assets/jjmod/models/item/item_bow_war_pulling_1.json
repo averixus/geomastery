@@ -1,6 +1,0 @@
-{
-    "parent": "item/bow",
-    "textures": {
-        "layer0": "jjmod:items/bow_war_pulling_1"
-    }
-}

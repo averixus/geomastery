@@ -1,0 +1,33 @@
+{
+"textures": {
+    "brick1": "geomastery:blocks/complex/brick1",
+    "brick2": "geomastery:blocks/complex/brick2",
+    "brick0": "geomastery:blocks/complex/brick0",
+    "particle": "geomastery:blocks/complex/brick0"
+},
+"elements": [ 
+{
+    "from": [ 4, 14, 4 ],
+    "to": [ 12, 16.01, 12 ],
+    "faces": {
+        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#brick1" },
+        "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#brick1" },
+        "north": { "uv": [ 5, 0, 13, 2 ], "texture": "#brick2" },
+        "south": { "uv": [ 5, 0, 13, 2 ], "texture": "#brick2" },
+        "west":  { "uv": [ 4, 0, 12, 2 ], "texture": "#brick2" },
+        "east":  { "uv": [ 4, 0, 12, 2 ], "texture": "#brick2" }
+    }
+},
+{
+    "from": [ 5, 0, 5 ],
+    "to": [ 11, 14, 11 ],
+    "faces": {
+        "down":  { "uv": [ 11, 11, 5, 5 ], "texture": "#brickpavetest" },
+        "north": { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" },
+        "south": { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" },
+        "west":  { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" },
+        "east":  { "uv": [ 5, 2, 11, 16 ], "texture": "#brick0" }
+    }
+}
+]
+}

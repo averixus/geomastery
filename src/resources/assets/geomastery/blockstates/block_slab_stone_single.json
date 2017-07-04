@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "geomastery:slab_stone/single" },
+        "inventory": { "model": "geomastery:slab_stone/single" }
+    }
+}

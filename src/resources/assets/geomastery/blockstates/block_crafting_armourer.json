@@ -1,0 +1,18 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "part": {
+            "t": { "model": "geomastery:crafting_armourer/t" },
+            "l": { "model": "geomastery:crafting_armourer/l" },
+            "m": { "model": "geomastery:crafting_armourer/m" },
+            "r": { "model": "geomastery:crafting_armourer/r" }
+        },
+        "facing": {
+            "north": {},
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
+        "inventory": [{}]
+    }
+}
