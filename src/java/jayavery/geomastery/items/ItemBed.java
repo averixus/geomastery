@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.function.Supplier;
 import jayavery.geomastery.blocks.BlockBed;
 import jayavery.geomastery.blocks.BlockBed.EnumPartBed;
 import jayavery.geomastery.tileentities.TEBed;
@@ -22,9 +23,9 @@ import net.minecraft.world.World;
 public class ItemBed extends ItemBlockplacer {
         
     /** The block type this item places. */
-    private final BlockBed bed;
+    private final Supplier<BlockBed> bed;
 
-    public ItemBed(String name, BlockBed bed) {
+    public ItemBed(String name, Supplier<BlockBed> bed) {
         
         super(name, 1, CreativeTabs.DECORATIONS, SoundType.CLOTH);
         this.bed = bed;
@@ -43,10 +44,12 @@ public class ItemBed extends ItemBlockplacer {
         IBlockState stateHead = world.getBlockState(posHead);
         Block blockHead = stateHead.getBlock();
         
+        BlockBed bedBlock = this.bed.get();
+        
         boolean validFoot = blockFoot.isReplaceable(world, posFoot) &&
-                this.bed.isValid(world, posFoot);
+                bedBlock.isValid(world, posFoot);
         boolean validHead = blockHead.isReplaceable(world, posHead) &&
-                this.bed.isValid(world, posHead);
+                bedBlock.isValid(world, posHead);
         
         if (!validFoot || !validHead) {
             
@@ -55,7 +58,7 @@ public class ItemBed extends ItemBlockplacer {
         
         int usesLeft = stack.getMaxDamage() - stack.getItemDamage();
         
-        IBlockState placeFoot = this.bed.getDefaultState()
+        IBlockState placeFoot = bedBlock.getDefaultState()
                 .withProperty(BlockBed.OCCUPIED, false)
                 .withProperty(BlockBed.FACING, placeFacing)
                 .withProperty(BlockBed.PART, EnumPartBed.FOOT);
@@ -66,8 +69,8 @@ public class ItemBed extends ItemBlockplacer {
         world.setBlockState(posHead, placeHead);
         world.setBlockState(posFoot, placeFoot);
         
-        TEBed bed = (TEBed) world.getTileEntity(posFoot);
-        bed.setUsesLeft(usesLeft);
+        TEBed bedTE = (TEBed) world.getTileEntity(posFoot);
+        bedTE.setUsesLeft(usesLeft);
         
         return true;
     }

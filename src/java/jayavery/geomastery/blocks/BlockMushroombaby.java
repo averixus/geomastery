@@ -7,6 +7,7 @@
 package jayavery.geomastery.blocks;
 
 import java.util.Random;
+import java.util.function.Supplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMushroom;
 import net.minecraft.block.state.IBlockState;
@@ -22,9 +23,9 @@ public class BlockMushroombaby extends BlockMushroom {
     private static final float GROWTH_CHANCE = 0.2F;
     
     /** The adult block this grows into. */
-    private final Block adult;
+    private final Supplier<Block> adult;
     
-    public BlockMushroombaby(String name, Block adult) {
+    public BlockMushroombaby(String name, Supplier<Block> adult) {
         
         super();
         this.adult = adult;
@@ -37,7 +38,7 @@ public class BlockMushroombaby extends BlockMushroom {
         
         if (rand.nextFloat() < GROWTH_CHANCE) {
             
-            world.setBlockState(pos, this.adult.getDefaultState());
+            world.setBlockState(pos, this.adult.get().getDefaultState());
         }
     }
     

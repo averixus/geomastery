@@ -105,52 +105,52 @@ public class GeoItems {
     public static final Item FISH_COOKED =         make(new ItemEdibleDecayable("fish_cooked", 3, 3, 10, FoodType.PROTEIN, 2));
     
     // Decaying carcasses
-    public static final ItemCarcassDecayable CARCASS_COWPART = make(new ItemCarcassDecayable("carcass_cowpart", GeoBlocks.CARCASS_COWPART), true);
-    public static final ItemCarcassDecayable CARCASS_PIG =     make(new ItemCarcassDecayable("carcass_pig", GeoBlocks.CARCASS_PIG), true);
-    public static final ItemCarcassDecayable CARCASS_CHICKEN = make(new ItemCarcassDecayable("carcass_chicken", GeoBlocks.CARCASS_CHICKEN));
-    public static final ItemCarcassDecayable CARCASS_SHEEP =   make(new ItemCarcassDecayable("carcass_sheep", GeoBlocks.CARCASS_SHEEP), true);
-    public static final ItemCarcassDecayable CARCASS_RABBIT =  make(new ItemCarcassDecayable("carcass_rabbit", GeoBlocks.CARCASS_RABBIT));
+    public static final ItemCarcassDecayable CARCASS_COWPART = make(new ItemCarcassDecayable("carcass_cowpart", () -> GeoBlocks.CARCASS_COWPART), true);
+    public static final ItemCarcassDecayable CARCASS_PIG =     make(new ItemCarcassDecayable("carcass_pig", () -> GeoBlocks.CARCASS_PIG), true);
+    public static final ItemCarcassDecayable CARCASS_CHICKEN = make(new ItemCarcassDecayable("carcass_chicken", () -> GeoBlocks.CARCASS_CHICKEN));
+    public static final ItemCarcassDecayable CARCASS_SHEEP =   make(new ItemCarcassDecayable("carcass_sheep", () -> GeoBlocks.CARCASS_SHEEP), true);
+    public static final ItemCarcassDecayable CARCASS_RABBIT =  make(new ItemCarcassDecayable("carcass_rabbit", () -> GeoBlocks.CARCASS_RABBIT));
     
     // Non-decaying edible seeds
-    public static final Item SEED_PUMPKIN = make(new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, GeoBlocks.PUMPKIN_CROP, FoodType.PROTEIN));
+    public static final Item SEED_PUMPKIN = make(new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, () -> GeoBlocks.PUMPKIN_CROP, FoodType.PROTEIN));
     
     // Decaying edible seeds
-    public static final Item MUSHROOM_RED =   make(new ItemEdibleSeedDecayable("mushroom_red", 4, 4, 4, GeoBlocks.MUSHROOMBABY_RED, EnumPlantType.Cave, FoodType.FRUITVEG, 2));
-    public static final Item MUSHROOM_BROWN = make(new ItemEdibleSeedDecayable("mushroom_brown", 2, 2, 9, GeoBlocks.MUSHROOMBABY_BROWN, EnumPlantType.Cave, FoodType.FRUITVEG, 2));
-    public static final Item BEAN =           make(new ItemEdibleSeedDecayable("bean", 2, 2F, 10, GeoBlocks.BEAN, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
-    public static final Item PEPPER =         make(new ItemEdibleSeedDecayable("pepper", 3, 3F, 6, GeoBlocks.PEPPER, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
-    public static final Item TOMATO =         make(new ItemEdibleSeedDecayable("tomato", 3, 3F, 7, GeoBlocks.TOMATO, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
-    public static final Item BERRY =          make(new ItemEdibleSeedDecayable("berry", 1, 1F, 20, GeoBlocks.BERRY, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
-    public static final Item POTATO =         make(new ItemEdibleSeedDecayable("potato", 7, 7F, 5, GeoBlocks.POTATO, EnumPlantType.Crop, FoodType.CARBS, 4));
-    public static final Item CARROT =         make(new ItemEdibleSeedDecayable("carrot", 3, 3F, 7, GeoBlocks.CARROT, EnumPlantType.Crop, FoodType.FRUITVEG, 4, EntityPig.class, EntityRabbit.class));
-    public static final Item BEETROOT =       make(new ItemEdibleSeedDecayable("beetroot", 3, 3F, 6, GeoBlocks.BEETROOT, EnumPlantType.Crop, FoodType.FRUITVEG, 4));
+    public static final Item MUSHROOM_RED =   make(new ItemEdibleSeedDecayable("mushroom_red", 4, 4, 4, () -> GeoBlocks.MUSHROOMBABY_RED, EnumPlantType.Cave, FoodType.FRUITVEG, 2));
+    public static final Item MUSHROOM_BROWN = make(new ItemEdibleSeedDecayable("mushroom_brown", 2, 2, 9, () -> GeoBlocks.MUSHROOMBABY_BROWN, EnumPlantType.Cave, FoodType.FRUITVEG, 2));
+    public static final Item BEAN =           make(new ItemEdibleSeedDecayable("bean", 2, 2F, 10, () -> GeoBlocks.BEAN, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+    public static final Item PEPPER =         make(new ItemEdibleSeedDecayable("pepper", 3, 3F, 6, () -> GeoBlocks.PEPPER, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+    public static final Item TOMATO =         make(new ItemEdibleSeedDecayable("tomato", 3, 3F, 7, () -> GeoBlocks.TOMATO, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+    public static final Item BERRY =          make(new ItemEdibleSeedDecayable("berry", 1, 1F, 20, () -> GeoBlocks.BERRY, EnumPlantType.Crop, FoodType.FRUITVEG, 2));
+    public static final Item POTATO =         make(new ItemEdibleSeedDecayable("potato", 7, 7F, 5, () -> GeoBlocks.POTATO, EnumPlantType.Crop, FoodType.CARBS, 4));
+    public static final Item CARROT =         make(new ItemEdibleSeedDecayable("carrot", 3, 3F, 7, () -> GeoBlocks.CARROT, EnumPlantType.Crop, FoodType.FRUITVEG, 4, EntityPig.class, EntityRabbit.class));
+    public static final Item BEETROOT =       make(new ItemEdibleSeedDecayable("beetroot", 3, 3F, 6, () -> GeoBlocks.BEETROOT, EnumPlantType.Crop, FoodType.FRUITVEG, 4));
         
     // Non-decaying inedible seeds
-    public static final Item CHICKPEAS =      make(new ItemSeed("chickpeas", 10, GeoBlocks.CHICKPEA));
-    public static final Item CUTTING_COTTON = make(new ItemSeed("cutting_cotton", 1, GeoBlocks.COTTON));
-    public static final Item CUTTING_HEMP =   make(new ItemSeed("cutting_hemp", 1, GeoBlocks.HEMP));
-    public static final Item WHEAT =          make(new ItemSeed("wheat", 10, GeoBlocks.WHEAT, EntityCow.class, EntitySheep.class, EntityChicken.class));
-    public static final Item SEED_MELON =     make(new ItemSeed("seeds_melon", 15, GeoBlocks.MELON_CROP));
+    public static final Item CHICKPEAS =      make(new ItemSeed("chickpeas", 10, () -> GeoBlocks.CHICKPEA));
+    public static final Item CUTTING_COTTON = make(new ItemSeed("cutting_cotton", 1, () -> GeoBlocks.COTTON));
+    public static final Item CUTTING_HEMP =   make(new ItemSeed("cutting_hemp", 1, () -> GeoBlocks.HEMP));
+    public static final Item WHEAT =          make(new ItemSeed("wheat", 10, () -> GeoBlocks.WHEAT, EntityCow.class, EntitySheep.class, EntityChicken.class));
+    public static final Item SEED_MELON =     make(new ItemSeed("seeds_melon", 15, () -> GeoBlocks.MELON_CROP));
     
     // Rice
     public static final Item RICE = make(new ItemRice());
 
     // Beds
-    public static final Item BED_LEAF =    make(new ItemBed("bed_leaf", GeoBlocks.BED_LEAF), true);
-    public static final Item BED_COTTON =  make(new ItemBed("bed_cotton", GeoBlocks.BED_COTTON));
-    public static final Item BED_WOOL =    make(new ItemBed("bed_wool", GeoBlocks.BED_WOOL));
-    public static final Item BED_SIMPLE =  make(new ItemBed("bed_simple", GeoBlocks.BED_SIMPLE), true);
+    public static final Item BED_LEAF =    make(new ItemBed("bed_leaf", () -> GeoBlocks.BED_LEAF), true);
+    public static final Item BED_COTTON =  make(new ItemBed("bed_cotton", () -> GeoBlocks.BED_COTTON));
+    public static final Item BED_WOOL =    make(new ItemBed("bed_wool", () -> GeoBlocks.BED_WOOL));
+    public static final Item BED_SIMPLE =  make(new ItemBed("bed_simple", () -> GeoBlocks.BED_SIMPLE), true);
 
     // Carry items
     public static final Item BACKPACK =   make(new ItemSimple("backpack", 1, CreativeTabs.TRANSPORTATION));
     public static final Item YOKE =       make(new ItemSimple("yoke", 1, CreativeTabs.TRANSPORTATION));
 
     // Loose heaping blockplacers
-    public static final Item LOOSE_DIRT =     make(new ItemBlockplacer.Heaping("loose_dirt", SoundType.GROUND, Blocks.DIRT));
-    public static final Item LOOSE_GRAVEL =   make(new ItemBlockplacer.Heaping("loose_gravel", SoundType.GROUND, Blocks.GRAVEL));
-    public static final Item LOOSE_SAND =     make(new ItemBlockplacer.Heaping("loose_sand", SoundType.SAND, Blocks.SAND));
-    public static final Item LOOSE_CLAY =     make(new ItemBlockplacer.Heaping("loose_clay", SoundType.GROUND, Blocks.CLAY));
-    public static final Item RUBBLE =         make(new ItemBlockplacer.Heaping("rubble", SoundType.GROUND, GeoBlocks.RUBBLE));
+    public static final Item LOOSE_DIRT =     make(new ItemBlockplacer.Heaping("loose_dirt", SoundType.GROUND, () -> Blocks.DIRT));
+    public static final Item LOOSE_GRAVEL =   make(new ItemBlockplacer.Heaping("loose_gravel", SoundType.GROUND, () -> Blocks.GRAVEL));
+    public static final Item LOOSE_SAND =     make(new ItemBlockplacer.Heaping("loose_sand", SoundType.SAND, () -> Blocks.SAND));
+    public static final Item LOOSE_CLAY =     make(new ItemBlockplacer.Heaping("loose_clay", SoundType.GROUND, () -> Blocks.CLAY));
+    public static final Item RUBBLE =         make(new ItemBlockplacer.Heaping("rubble", SoundType.GROUND, () -> GeoBlocks.RUBBLE));
     
     // Multipart blockplacers
     public static final Item CRAFTING_CANDLEMAKER =    make(new ItemBlockplacer.Multipart<EnumPartCandlemaker>("crafting_candlemaker", EnumPartCandlemaker.FRONT, SoundType.WOOD), true);
@@ -164,24 +164,24 @@ public class GeoItems {
     public static final Item FURNACE_STONE =           make(new ItemBlockplacer.Multipart<EnumPartStone>("furnace_stone", EnumPartStone.BM, SoundType.STONE), true);
 
     // Doubling blockplacers
-    public static final ItemBlockplacer.Doubling<BlockWallComplex> WALL_BRICK = make(new ItemBlockplacer.Doubling<BlockWallComplex>("wall_brick", 2, SoundType.STONE, GeoBlocks.WALL_BRICK_SINGLE, GeoBlocks.WALL_BRICK_DOUBLE)); 
-    public static final ItemBlockplacer.Doubling<BlockWallHeaping> WALL_MUD =   make(new ItemBlockplacer.Doubling<BlockWallHeaping>("wall_mud", 2, SoundType.GROUND, GeoBlocks.WALL_MUD_SINGLE, GeoBlocks.WALL_MUD_DOUBLE));
-    public static final ItemBlockplacer.Doubling<BlockWallHeaping> WALL_ROUGH = make(new ItemBlockplacer.Doubling<BlockWallHeaping>("wall_rough", 2, SoundType.STONE, GeoBlocks.WALL_ROUGH_SINGLE, GeoBlocks.WALL_ROUGH_DOUBLE));
-    public static final ItemBlockplacer.Doubling<BlockWallComplex> WALL_STONE = make(new ItemBlockplacer.Doubling<BlockWallComplex>("wall_stone", 2, SoundType.STONE, GeoBlocks.WALL_STONE_SINGLE, GeoBlocks.WALL_STONE_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockWallComplex> WALL_BRICK = make(new ItemBlockplacer.Doubling<BlockWallComplex>("wall_brick", 2, SoundType.STONE, () -> GeoBlocks.WALL_BRICK_SINGLE, () -> GeoBlocks.WALL_BRICK_DOUBLE)); 
+    public static final ItemBlockplacer.Doubling<BlockWallHeaping> WALL_MUD =   make(new ItemBlockplacer.Doubling<BlockWallHeaping>("wall_mud", 2, SoundType.GROUND, () -> GeoBlocks.WALL_MUD_SINGLE, () -> GeoBlocks.WALL_MUD_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockWallHeaping> WALL_ROUGH = make(new ItemBlockplacer.Doubling<BlockWallHeaping>("wall_rough", 2, SoundType.STONE, () -> GeoBlocks.WALL_ROUGH_SINGLE, () -> GeoBlocks.WALL_ROUGH_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockWallComplex> WALL_STONE = make(new ItemBlockplacer.Doubling<BlockWallComplex>("wall_stone", 2, SoundType.STONE, () -> GeoBlocks.WALL_STONE_SINGLE, () -> GeoBlocks.WALL_STONE_DOUBLE));
     
-    public static final ItemBlockplacer.Doubling<BlockSlab> SLAB_STONE = make(new ItemBlockplacer.Doubling<BlockSlab>("slab_stone", 2, SoundType.STONE, GeoBlocks.SLAB_STONE_SINGLE, GeoBlocks.SLAB_STONE_DOUBLE));
-    public static final ItemBlockplacer.Doubling<BlockSlab> SLAB_BRICK = make(new ItemBlockplacer.Doubling<BlockSlab>("slab_brick", 2, SoundType.STONE, GeoBlocks.SLAB_BRICK_SINGLE, GeoBlocks.SLAB_BRICK_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockSlab> SLAB_STONE = make(new ItemBlockplacer.Doubling<BlockSlab>("slab_stone", 2, SoundType.STONE, () -> GeoBlocks.SLAB_STONE_SINGLE, () -> GeoBlocks.SLAB_STONE_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockSlab> SLAB_BRICK = make(new ItemBlockplacer.Doubling<BlockSlab>("slab_brick", 2, SoundType.STONE, () -> GeoBlocks.SLAB_BRICK_SINGLE, () -> GeoBlocks.SLAB_BRICK_DOUBLE));
     
-    public static final ItemBlockplacer.Doubling<BlockVault> VAULT_STONE = make(new ItemBlockplacer.Doubling<BlockVault>("vault_stone", 2, SoundType.STONE, GeoBlocks.VAULT_STONE_SINGLE, GeoBlocks.VAULT_STONE_DOUBLE));
-    public static final ItemBlockplacer.Doubling<BlockVault> VAULT_BRICK = make(new ItemBlockplacer.Doubling<BlockVault>("vault_brick", 2, SoundType.STONE, GeoBlocks.VAULT_BRICK_SINGLE, GeoBlocks.VAULT_BRICK_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockVault> VAULT_STONE = make(new ItemBlockplacer.Doubling<BlockVault>("vault_stone", 2, SoundType.STONE, () -> GeoBlocks.VAULT_STONE_SINGLE, () -> GeoBlocks.VAULT_STONE_DOUBLE));
+    public static final ItemBlockplacer.Doubling<BlockVault> VAULT_BRICK = make(new ItemBlockplacer.Doubling<BlockVault>("vault_brick", 2, SoundType.STONE, () -> GeoBlocks.VAULT_BRICK_SINGLE, () -> GeoBlocks.VAULT_BRICK_DOUBLE));
     
     // Door blockplacers
-    public static final Item DOOR_POLE = make(new ItemBlockplacer.Door(GeoBlocks.DOOR_POLE, "door_pole"), true);
-    public static final Item DOOR_WOOD = make(new ItemBlockplacer.Door(GeoBlocks.DOOR_WOOD, "door_wood"), true);
+    public static final Item DOOR_POLE = make(new ItemBlockplacer.Door(() -> GeoBlocks.DOOR_POLE, "door_pole"), true);
+    public static final Item DOOR_WOOD = make(new ItemBlockplacer.Door(() -> GeoBlocks.DOOR_WOOD, "door_wood"), true);
     
     // Beam blockplacers
-    public static final Item BEAM_LONG =  make(new ItemBlockplacer.Beam("beam_long", GeoBlocks.BEAM_THICK, 4, 8));
-    public static final Item BEAM_SHORT = make(new ItemBlockplacer.Beam("beam_short", GeoBlocks.BEAM_THIN, 2, 4));
+    public static final Item BEAM_LONG =  make(new ItemBlockplacer.Beam("beam_long", () -> GeoBlocks.BEAM_THICK, 4, 8));
+    public static final Item BEAM_SHORT = make(new ItemBlockplacer.Beam("beam_short", () -> GeoBlocks.BEAM_THIN, 2, 4));
     
     // Floor blockplacers
     public static final Item FLOOR_POLE = make(new ItemBlockplacer.Floor(6, EnumFloor.POLE));

@@ -174,8 +174,8 @@ public class GeoBlocks {
     public static final Block RICE_TOP =  makeItemless(new BlockRiceTop());
     
     // Baby mushrooms
-    public static final Block MUSHROOMBABY_BROWN =   makeItemless(new BlockMushroombaby("mushroombaby_brown", Blocks.BROWN_MUSHROOM));
-    public static final Block MUSHROOMBABY_RED = makeItemless(new BlockMushroombaby("mushroombaby_red", Blocks.RED_MUSHROOM));
+    public static final Block MUSHROOMBABY_BROWN =   makeItemless(new BlockMushroombaby("mushroombaby_brown", () -> Blocks.BROWN_MUSHROOM));
+    public static final Block MUSHROOMBABY_RED = makeItemless(new BlockMushroombaby("mushroombaby_red", () -> Blocks.RED_MUSHROOM));
     
     // Seedlings
     public static final BlockSeedling SEEDLING_APPLE =  make(new BlockSeedling.Apple());

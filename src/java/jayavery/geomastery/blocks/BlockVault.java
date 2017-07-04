@@ -97,7 +97,7 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
                 this.item.get() instanceof ItemBlockplacer.Doubling<?>) {
             
             world.setBlockState(pos, ((ItemBlockplacer.Doubling<?>) this.item
-                    .get()).single.getDefaultState());
+                    .get()).single.get().getDefaultState());
             return false;
             
         } else {
