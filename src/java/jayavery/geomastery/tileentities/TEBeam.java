@@ -89,11 +89,11 @@ public class TEBeam extends TileEntity {
     
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        
+        // FIX
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing.getHorizontalIndex());
-        compound.setInteger("part", this.part.ordinal());
-        compound.setInteger("floor", this.floor.ordinal());
+        compound.setInteger("facing", this.facing == null ? 0 : this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part == null ? 0 : this.part.ordinal());
+        compound.setInteger("floor", this.floor == null ? 0 : this.floor.ordinal());
         return compound;
     }
     

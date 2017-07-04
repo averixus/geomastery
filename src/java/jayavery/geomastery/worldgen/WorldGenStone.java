@@ -8,6 +8,7 @@ package jayavery.geomastery.worldgen;
 
 import java.util.Random;
 import com.google.common.base.Predicate;
+import jayavery.geomastery.main.Geomastery;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;

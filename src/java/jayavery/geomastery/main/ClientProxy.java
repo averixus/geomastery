@@ -69,7 +69,7 @@ public class ClientProxy implements IProxy {
     @Override
     public void registerModels() {
         
-        // Normal Item models
+        Geomastery.LOG.info("Registering item models");
         for (Item item : GeoItems.ITEMS) {
             
             NonNullList<ItemStack> stacks = NonNullList.create();
@@ -83,70 +83,53 @@ public class ClientProxy implements IProxy {
             }
         }
         
-        // Normal ItemBlock models
-        for (Item item : GeoBlocks.ITEM_MAP.values()) {
-            
-            ModelLoader.setCustomModelResourceLocation(item, 0,
-                    new ModelResourceLocation(item.getRegistryName(),
-                    "inventory"));
-        }
-        
-        // Set leaf transparency
+        Geomastery.LOG.info("Setting leaves transparency");
         boolean fancy = Minecraft.getMinecraft().gameSettings.fancyGraphics;
         for (BlockHarvestableLeaves block : GeoBlocks.LEAVES) {
             
             block.setGraphicsLevel(fancy);
         }
         
-        // Custom state mapper for blockfruit crops
+        Geomastery.LOG.info("Registering blockfruit crop custom state mappers");
         for (BlockCropBlockfruit block : GeoBlocks.CROP_BLOCKFRUIT) {
             
             ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
                 
                 @Override
-                protected ModelResourceLocation getModelResourceLocation(
-                        IBlockState state) {
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
                     
-                    Map<IProperty<?>, Comparable<?>> map =
-                            Maps.newLinkedHashMap(state.getProperties());
+                    Map<IProperty<?>, Comparable<?>> map = Maps.newLinkedHashMap(state.getProperties());
 
                     if (state.getValue(BlockStem.FACING) != EnumFacing.UP) {
                         
                         map.remove(BlockStem.AGE);
                     }
 
-                    return new ModelResourceLocation(block.getRegistryName(),
-                            this.getPropertyString(map));
+                    return new ModelResourceLocation(block.getRegistryName(), this.getPropertyString(map));
                 }
             });
         }
         
-        // Custom state mapper for delayed baking models
+        Geomastery.LOG.info("Registering delayed baking custom state mappers");
         for (Block block : GeoBlocks.DELAYED_BAKE) {
             
-            ModelResourceLocation loc = new ModelResourceLocation(block
-                    .getRegistryName(), "delayedbake");
+            ModelResourceLocation loc = new ModelResourceLocation(block.getRegistryName(), "delayedbake");
 
             ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
                 
                 @Override
-                protected ModelResourceLocation getModelResourceLocation(
-                        IBlockState state) {
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
                     
                     return loc;
                 }
             });
         }
         
-        // Invsible light
-        ModelLoader.setCustomStateMapper(GeoBlocks.INVISIBLE_LIGHT,
-                (b) -> Collections.emptyMap());
-        
-        // Beam delayed baking models
+        Geomastery.LOG.info("Registering beam model loaders");
         ModelLoaderRegistry.registerLoader(new RenderBeamThin());
         ModelLoaderRegistry.registerLoader(new RenderBeamThick());
         
-        // Straight wall delayed baking models
+        Geomastery.LOG.info("Registering straight wall model loaders");
         for (BlockWall block : GeoBlocks.RENDER_STRAIGHT) {
             
             RenderWallAbstract render = new RenderWallStraight(block.getRegistryName());
@@ -154,7 +137,7 @@ public class ClientProxy implements IProxy {
             WALL_RENDERS.put(block, render);
         }
         
-        // Complex wall delayed baking models
+        Geomastery.LOG.info("Registering complex wall model loaders");
         for (BlockWall block : GeoBlocks.RENDER_COMPLEX) {
             
             RenderWallAbstract render = new RenderWallComplex(block.getRegistryName(), block.isDouble());
@@ -162,7 +145,7 @@ public class ClientProxy implements IProxy {
             WALL_RENDERS.put(block, render);
         }
         
-        // Single wall delayed baking models
+        Geomastery.LOG.info("Registering single wall model loaders");
         for (BlockWall block : GeoBlocks.RENDER_SINGLE) {
             
             RenderWallAbstract render = new RenderWallSingle(block.getRegistryName(), block.getSideAngle());
@@ -174,9 +157,10 @@ public class ClientProxy implements IProxy {
     @Override
     public void preInit() {
         
+        Geomastery.LOG.info("Registering client event handler");
         MinecraftForge.EVENT_BUS.register(new GuiEvents());
                 
-        // Entity renders
+        Geomastery.LOG.info("Registering entity renderers");
         entity(EntitySpearWood.class, RenderSpearFactory.SPEAR_WOOD);
         entity(EntitySpearFlint.class, RenderSpearFactory.SPEAR_FLINT);
         entity(EntitySpearCopper.class, RenderSpearFactory.SPEAR_COPPER);
@@ -190,11 +174,11 @@ public class ClientProxy implements IProxy {
         entity(FallingTreeBlock.Leaves.class, RenderFallingTreeBlock::new);
         entity(FallingTreeBlock.Trunk.class, RenderFallingTreeBlock::new);
         
-        // Tileentity renders
+        Geomastery.LOG.info("Registering tileentity renderers");
         ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Box.class, new RenderBox());
         ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Chest.class, new RenderChest());
         
-        // Custom state mapper and mesh definition for tar
+        Geomastery.LOG.info("Registering tar state mapper and model loader");
         BlockFluidBase tarBlock = GeoBlocks.tar;
         ResourceLocation tarRegistry = tarBlock.getRegistryName();
         ModelResourceLocation tarLoc = new ModelResourceLocation(

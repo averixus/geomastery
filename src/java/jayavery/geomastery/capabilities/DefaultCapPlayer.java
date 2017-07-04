@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import jayavery.geomastery.blocks.BlockInvisibleLight;
-import jayavery.geomastery.blocks.BlockLight;
 import jayavery.geomastery.items.ItemEdible;
 import jayavery.geomastery.main.GeoBiomes;
 import jayavery.geomastery.main.GeoBlocks;
@@ -40,10 +38,8 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -75,11 +71,6 @@ public class DefaultCapPlayer implements ICapPlayer {
     
     /** Current walk speed. */
     private SpeedStage speedStage = null;
-    
-    /** Previous light source position. */
-    private BlockPos lastLightPos = new BlockPos(-1, -1, -1);
-    /** Previous held item light level. */
-    private int lastLightLevel = 0;
     
     /** Backpack slot. */
     private ItemStack backpack = ItemStack.EMPTY;
@@ -270,8 +261,6 @@ public class DefaultCapPlayer implements ICapPlayer {
             return;
         }
             
-        this.tickLight();
-
         for (Entry<FoodType, FoodStatsPartial> entry :
                 this.typesMap.entrySet()) {
             
@@ -290,55 +279,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         this.tickSpeed();
         this.tickPickup();
-    }
-    
-    /** Place and remove invisible light blocks if the
-     * player is carrying a moving light source. */
-    private void tickLight() {
-        
-        BlockPos newPos = new BlockPos(this.player.getPositionEyes(1F));
-        
-        int offhandLight = 0;
-        int mainhandLight = 0;
-        
-        Block mainhandHeld = Block.getBlockFromItem(this.player
-                .getHeldItem(EnumHand.MAIN_HAND).getItem());
-        Block offhandHeld = Block.getBlockFromItem(this.player
-                .getHeldItem(EnumHand.OFF_HAND).getItem());
-        
-        if (mainhandHeld instanceof BlockLight) {
-            
-            mainhandLight = ((BlockLight) mainhandHeld).getLightLevel();
-        }
-        
-        if (offhandHeld instanceof BlockLight) {
-            
-            offhandLight = ((BlockLight) offhandHeld).getLightLevel();
-        }
-        
-        int newLightLevel = Math.max(offhandLight, mainhandLight);
-        
-        if ((!this.lastLightPos.equals(newPos) &&
-                (this.lastLightLevel > 0 || newLightLevel > 0)) ||
-                this.lastLightLevel != newLightLevel) {
-            
-            if (this.player.world.getBlockState(this.lastLightPos).getBlock()
-                    == GeoBlocks.INVISIBLE_LIGHT) {
-                
-                this.player.world.setBlockToAir(this.lastLightPos);
-            }
-
-            if (this.player.world.isAirBlock(newPos) && newLightLevel > 0) {
-                
-                this.player.world.setBlockState(newPos,
-                        GeoBlocks.INVISIBLE_LIGHT.getDefaultState()
-                        .withProperty(BlockInvisibleLight.LIGHT,
-                        newLightLevel));
-            }
-            
-            this.lastLightLevel = newLightLevel;
-            this.lastLightPos = newPos;
-        }
     }
     
     /** Calculate the player's temperature.
@@ -515,8 +455,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                         fireVar = Math.max(fireVar, heat);
                         
                     } else if (block == GeoBlocks.TORCH_TALLOW ||
-                            block == GeoBlocks.TORCH_TAR ||
-                            block == GeoBlocks.INVISIBLE_LIGHT) {
+                            block == GeoBlocks.TORCH_TAR) {
 
                         double distance = Math.ceil(Math.sqrt((x * x) +
                                 (y * y) + (z * z)));

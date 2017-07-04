@@ -114,14 +114,14 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
         this.part = this.partByOrdinal(compound.getInteger("part"));
     }
 
-    /** Required to update rendering on the Client. */
+    /** Required to update rendering on the client. */
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Required to update rendering on the Client. */
+    /** Required to update rendering on the client. */
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -129,7 +129,7 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    /** Required to update rendering on the Client. */
+    /** Required to update rendering on the client. */
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

@@ -30,13 +30,13 @@ import jayavery.geomastery.blocks.BlockFruit;
 import jayavery.geomastery.blocks.BlockFurnaceCampfire;
 import jayavery.geomastery.blocks.BlockFurnacePotfire;
 import jayavery.geomastery.blocks.BlockHarvestableLeaves;
-import jayavery.geomastery.blocks.BlockInvisibleLight;
 import jayavery.geomastery.blocks.BlockLight;
 import jayavery.geomastery.blocks.BlockMultiCrafting;
 import jayavery.geomastery.blocks.BlockMushroombaby;
 import jayavery.geomastery.blocks.BlockPitchroof;
 import jayavery.geomastery.blocks.BlockRiceBase;
 import jayavery.geomastery.blocks.BlockRiceTop;
+import jayavery.geomastery.blocks.BlockRubble;
 import jayavery.geomastery.blocks.BlockSeedling;
 import jayavery.geomastery.blocks.BlockSlab;
 import jayavery.geomastery.blocks.BlockSolid;
@@ -75,9 +75,6 @@ public class GeoBlocks {
     /** Items which are restricted to the offhand slot. */
     public static final Set<Item> OFFHAND_ONLY = Sets.newHashSet();
     
-    /** All which have ItemBlocks. */
-    public static final Map<Block, Item> ITEM_MAP = Maps.newHashMap();
-    
     /** Leaves which need to set transparency. */
     public static final Set<BlockHarvestableLeaves> LEAVES = Sets.newHashSet();
     
@@ -109,22 +106,12 @@ public class GeoBlocks {
     // Antler
     public static final Block ANTLER = makeItemless(new BlockAntler());
     
-    // Beehive
-    public static final BlockBeehive BEEHIVE = make(new BlockBeehive());
-
-    // Lights
-    public static final Block CANDLE_BEESWAX = make(new BlockLight.Candle("candle_beeswax", 0.005F), 15);
-    public static final Block CANDLE_TALLOW =  make(new BlockLight.Candle("candle_tallow", 0.02F), 15);
-    public static final Block TORCH_TALLOW =   make(new BlockLight.Torch("torch_tallow", 0.005F), 4);
-    public static final Block TORCH_TAR =      make(new BlockLight.Torch("torch_tar", 0.02F), 4);
-    public static final Block LAMP_CLAY =      make(new BlockLight.Lamp("lamp_clay"), 4);
-
     // Carcasses
-    public static final BlockCarcass CARCASS_CHICKEN =    make(new BlockCarcass.Chicken());
-    public static final BlockCarcass CARCASS_COWPART =    make(new BlockCarcass.Cowpart(), true);
-    public static final BlockCarcass CARCASS_PIG =        make(new BlockCarcass.Pig(), true);
-    public static final BlockCarcass CARCASS_SHEEP =      make(new BlockCarcass.Sheep(), true);
-    public static final BlockCarcass CARCASS_RABBIT =     make(new BlockCarcass.Rabbit());
+    public static final BlockCarcass CARCASS_CHICKEN =    makeItemless(new BlockCarcass.Chicken());
+    public static final BlockCarcass CARCASS_COWPART =    makeItemless(new BlockCarcass.Cowpart());
+    public static final BlockCarcass CARCASS_PIG =        makeItemless(new BlockCarcass.Pig());
+    public static final BlockCarcass CARCASS_SHEEP =      makeItemless(new BlockCarcass.Sheep());
+    public static final BlockCarcass CARCASS_RABBIT =     makeItemless(new BlockCarcass.Rabbit());
 
     // Multiblock crafting devices
     public static final BlockMultiCrafting.Candlemaker CRAFTING_CANDLEMAKER =      makeItemless(new BlockMultiCrafting.Candlemaker());
@@ -138,6 +125,16 @@ public class GeoBlocks {
     // Multiblock furnaces
     public static final BlockMultiCrafting.Clay FURNACE_CLAY =   makeItemless(new BlockMultiCrafting.Clay());
     public static final BlockMultiCrafting.Stone FURNACE_STONE = makeItemless(new BlockMultiCrafting.Stone());
+    
+    // Beehive
+    public static final BlockBeehive BEEHIVE = make(new BlockBeehive());
+
+    // Lights
+    public static final Block CANDLE_BEESWAX = make(new BlockLight.Candle("candle_beeswax", 0.005F), 15);
+    public static final Block CANDLE_TALLOW =  make(new BlockLight.Candle("candle_tallow", 0.02F), 15);
+    public static final Block TORCH_TALLOW =   make(new BlockLight.Torch("torch_tallow", 0.005F), 4);
+    public static final Block TORCH_TAR =      make(new BlockLight.Torch("torch_tar", 0.02F), 4);
+    public static final Block LAMP_CLAY =      make(new BlockLight.Lamp("lamp_clay"), 4);
     
     // Single complex blocks
     public static final Block CRAFTING_KNAPPING =  make(new BlockCraftingKnapping());
@@ -213,7 +210,7 @@ public class GeoBlocks {
     public static final Block PEAT =  make(new BlockSolid(BlockMaterial.SOIL, "peat", 0.5F, BlockWeight.MEDIUM, () -> GeoItems.PEAT_WET, 1, ToolType.SHOVEL));
     
     // Rubble
-    public static final Block RUBBLE = makeItemless(new BlockSolid(Material.ROCK, "rubble", 1F, BlockWeight.HEAVY, () -> GeoItems.RUBBLE, 1, ToolType.SHOVEL));
+    public static final Block RUBBLE = makeItemless(new BlockRubble());
     
     // Walls (in rendering priority order)
     public static final Block WALL_LOG =                       make(new BlockWallLog(), RENDER_STRAIGHT, DELAYED_BAKE); 
@@ -263,9 +260,6 @@ public class GeoBlocks {
     public static final BlockSlab SLAB_BRICK_SINGLE = makeItemless(new BlockSlab("slab_brick_single", false, () -> GeoItems.SLAB_BRICK));
     public static final BlockSlab SLAB_BRICK_DOUBLE = makeItemless(new BlockSlab("slab_brick_double", true, () -> GeoItems.SLAB_BRICK));
     
-    // Invisible light
-    public static final Block INVISIBLE_LIGHT = makeItemless(new BlockInvisibleLight());
-    
     // Flat roofs
     public static final Block FLATROOF_POLE = make(new BlockFlatroof("flatroof_pole", 1F, ToolType.AXE), 4);
     
@@ -275,9 +269,11 @@ public class GeoBlocks {
     /** Adjusts vanilla blocks, register fluids. */
     public static void preInit() {
         
+        Geomastery.LOG.info("Registering fluids");
         FluidRegistry.registerFluid(tarFluid);
         GameRegistry.register(tar = makeItemless(new BlockTar()));
                 
+        Geomastery.LOG.info("Altering vanilla block properties");
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
         Blocks.DIRT.setHarvestLevel("shovel", 1);
@@ -324,7 +320,7 @@ public class GeoBlocks {
             set.add(block);
         }
         
-        ITEM_MAP.put(block, item);
+        GeoItems.ITEMS.add(item);
         BLOCKS.add(block);
         return block;
     }

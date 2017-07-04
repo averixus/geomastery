@@ -105,6 +105,7 @@ public class PlayerEvents {
     
         if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
             
+            Geomastery.LOG.info("Replacing vanilla player foodstats");
             ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
                     new FoodStatsWrapper(player),
                     "foodStats", "field_71100_bB");
@@ -154,9 +155,7 @@ public class PlayerEvents {
         long time = player.world.getWorldTime();
         
         ContainerInventory.updateHand(player, EnumHand.MAIN_HAND);
-        player.getCapability(GeoCaps.CAP_PLAYER, null)
-                .addDelay(item, time);
-        
+        player.getCapability(GeoCaps.CAP_PLAYER, null).addDelay(item, time);
     }
 
     /** Adds behaviour when player wakes up from a bed. */

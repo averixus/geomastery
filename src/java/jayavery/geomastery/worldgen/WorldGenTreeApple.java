@@ -34,11 +34,11 @@ public class WorldGenTreeApple extends WorldGenTree {
         
         for (BlockPos trunk : trunks) {
             
-            Block check = this.world.getBlockState(trunk).getBlock();
+            Block found = this.world.getBlockState(trunk).getBlock();
             
-            if (!check.isReplaceable(this.world, trunk) &&
-                    !(check instanceof BlockSeedling)) {
-
+            if (!(found instanceof BlockSeedling) &&
+                    !found.isReplaceable(this.world, trunk)) {
+                
                 return false;
             }
         }

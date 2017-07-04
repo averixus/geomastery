@@ -8,6 +8,7 @@ package jayavery.geomastery.tileentities;
 
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketLid;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -83,6 +84,20 @@ public abstract class TEStorage extends TileEntity implements ITickable {
         return compound;
     }
     
+    /** Drop inventory items when block is broken. */
+    public void dropItems() {
+        
+        for (ItemStack stack : this.inv) {
+            
+            if (!stack.isEmpty()) {
+                
+                this.world.spawnEntity(new EntityItem(this.world,
+                        this.pos.getX(), this.pos.getY(),
+                        this.pos.getZ(), stack));
+            }
+        }
+    }
+    
     /** @return The number of slots in this inventory. */
     public int getSlots() {
         
@@ -153,6 +168,12 @@ public abstract class TEStorage extends TileEntity implements ITickable {
             
             this.sendAnglePacket();
         }
+    }
+    
+    @Override
+    public boolean canRenderBreaking() {
+        
+        return true;
     }
     
     /** Gets the container Y co-ordinate for this inventory. */

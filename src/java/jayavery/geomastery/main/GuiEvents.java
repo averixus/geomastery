@@ -181,8 +181,7 @@ public class GuiEvents {
     private static void drawAirBubbles(EntityPlayer player,
             int centreX, int resHeight) {
         
-        Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(icons);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(icons);
         GlStateManager.enableBlend();
         int left = centreX + airOffsetX;
         int top = resHeight + airOffsetY;
@@ -208,33 +207,28 @@ public class GuiEvents {
         GlStateManager.enableBlend();
         int left = centreX + foodOffsetX;
         int top = resHeight + foodOffsetY;
-        ICapPlayer playerCap = player.getCapability(GeoCaps
-                .CAP_PLAYER, null);
+        ICapPlayer playerCap = player.getCapability(GeoCaps.CAP_PLAYER, null);
         
         int carbsHunger = playerCap.foodLevel(FoodType.CARBS);
-        Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(carbsTexture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(carbsTexture);
         
         for (int i = 0; i < 10; i++) {
             
             int idx = i * 2 + 1;
             int x = left - i * iconSpacing;
             
-            Gui.drawModalRectWithCustomSizedTexture(x, top,
-                    foodBackgroundX, 0, iconSize, iconSize,
-                    foodSizeX, foodSizeY);
+            Gui.drawModalRectWithCustomSizedTexture(x, top, foodBackgroundX, 0,
+                    iconSize, iconSize, foodSizeX, foodSizeY);
             
             if (idx < carbsHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top,
-                        foodFullX, 0, iconSize, iconSize,
-                        foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, foodFullX, 0,
+                        iconSize, iconSize, foodSizeX, foodSizeY);
                 
             } else if (idx == carbsHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top,
-                        foodPartialX, 0, iconSize, iconSize,
-                        foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, foodPartialX, 0,
+                        iconSize, iconSize, foodSizeX, foodSizeY);
             }
         }
         
@@ -248,21 +242,18 @@ public class GuiEvents {
             int idx = i * 2 + 1;
             int x = left - i * iconSpacing;
             
-            Gui.drawModalRectWithCustomSizedTexture(x, top,
-                    foodBackgroundX, 0, iconSize, iconSize,
-                    foodSizeX, foodSizeY);
+            Gui.drawModalRectWithCustomSizedTexture(x, top, foodBackgroundX, 0,
+                    iconSize, iconSize, foodSizeX, foodSizeY);
             
             if (idx < fruitvegHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top,
-                        foodFullX, 0, iconSize, iconSize,
-                        foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, foodFullX, 0,
+                        iconSize, iconSize, foodSizeX, foodSizeY);
                 
             } else if (idx == fruitvegHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top,
-                        foodPartialX, 0, iconSize, iconSize,
-                        foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, foodPartialX, 0,
+                        iconSize, iconSize, foodSizeX, foodSizeY);
             }
         }
         
@@ -276,21 +267,18 @@ public class GuiEvents {
             int idx = i * 2 + 1;
             int x = left - i * iconSpacing;
             
-            Gui.drawModalRectWithCustomSizedTexture(x, top,
-                    foodBackgroundX, 0, iconSize, iconSize,
-                    foodSizeX, foodSizeY);
+            Gui.drawModalRectWithCustomSizedTexture(x, top, foodBackgroundX, 0,
+                    iconSize, iconSize, foodSizeX, foodSizeY);
             
             if (idx < proteinHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top,
-                        foodFullX, 0, iconSize, iconSize,
-                        foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, foodFullX, 0,
+                        iconSize, iconSize, foodSizeX, foodSizeY);
                 
             } else if (idx == proteinHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top,
-                        foodPartialX, 0, iconSize, iconSize,
-                        foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, foodPartialX, 0,
+                        iconSize, iconSize, foodSizeX, foodSizeY);
             }
         }
     }

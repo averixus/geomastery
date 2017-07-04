@@ -15,11 +15,11 @@ import net.minecraft.item.ItemStack;
 public class InvLocation {
     
     /** The inventory type of this location. */
-    private InvType type;
+    private final InvType type;
     /** The index of this location. */
-    private int index;
+    private final int index;
     /** The player of this location. */
-    private EntityPlayer player;
+    private final EntityPlayer player;
     
     public InvLocation(EntityPlayer player, InvType type, int index) {
         

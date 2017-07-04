@@ -15,7 +15,7 @@ public class WorldGenTin extends WorldGenStone {
 
     public WorldGenTin(World world, Random rand) {
 
-        super(world, rand, GeoBlocks.ORE_TIN.getDefaultState(), 30, 120, 20, 1);
+        super(world, rand, GeoBlocks.ORE_TIN.getDefaultState(), 30, 120, 40, 1);
     }
 
     @Override

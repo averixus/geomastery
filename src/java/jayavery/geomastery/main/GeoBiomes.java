@@ -34,6 +34,7 @@ public class GeoBiomes {
     
     public static void init() {
         
+        Geomastery.LOG.info("Creating biome temperature map");
         for (ResourceLocation key : Biome.REGISTRY.getKeys()) {
             
             Biome biome = Biome.REGISTRY.getObject(key);

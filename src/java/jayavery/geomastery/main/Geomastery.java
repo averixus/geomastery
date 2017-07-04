@@ -7,6 +7,8 @@
 package jayavery.geomastery.main;
 
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.entities.projectile.EntityArrowBronze;
@@ -52,6 +54,7 @@ import jayavery.geomastery.tileentities.TEFurnaceClay;
 import jayavery.geomastery.tileentities.TEFurnacePotfire;
 import jayavery.geomastery.tileentities.TEFurnaceStone;
 import jayavery.geomastery.utilities.IProxy;
+import jline.internal.Log;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -88,7 +91,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.0.0-a2";
+    public static final String VERSION = "1.0.0";
     public static final String NAME = "Geomastery";
     public static final String MC_VER = "1.11.2-13.20.0.2228";
     public static final String UPDATE = "https://gist.githubusercontent.com/JayAvery/97013d9f3a4d3dd904fb608899d9eadd/raw/";
@@ -99,6 +102,8 @@ public class Geomastery {
     
     public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
     
+    public static final Logger LOG = LogManager.getLogger(MODID);
+    
     @SidedProxy(clientSide = CLIENT_PROXY, serverSide = SERVER_PROXY)
     public static IProxy proxy;
 
@@ -108,6 +113,7 @@ public class Geomastery {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
               
+        LOG.info("Registering blocks");
         IForgeRegistry<Block> registry = event.getRegistry();
         GeoBlocks.BLOCKS.forEach(registry::register);
     }
@@ -115,13 +121,13 @@ public class Geomastery {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
+        LOG.info("Registering items");
         IForgeRegistry<Item> registry = event.getRegistry();
         GeoItems.ITEMS.forEach(registry::register);
-        GeoBlocks.ITEM_MAP.values().forEach(registry::register);
     }
     
     @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
+    public static void registerModels(ModelRegistryEvent e) {
         
         proxy.registerModels();
     }
@@ -129,21 +135,24 @@ public class Geomastery {
     /** Registers everything other than blocks and items. */
     @EventHandler
     public static void preInit(FMLPreInitializationEvent e) {
-
+        
         GeoBlocks.preInit();
         GeoItems.preInit();
         GeoCaps.preInit();
+        proxy.preInit();
                 
-        // Event handlers
+        LOG.info("Registering world generator");
         WorldGenerator worldgen = new WorldGenerator();
         GameRegistry.registerWorldGenerator(worldgen, 0);
         MinecraftForge.TERRAIN_GEN_BUS.register(worldgen);
         MinecraftForge.ORE_GEN_BUS.register(worldgen);
+        
+        LOG.info("Registering common event handlers");
         MinecraftForge.EVENT_BUS.register(new BlockEvents());
         MinecraftForge.EVENT_BUS.register(new EntityEvents());
         MinecraftForge.EVENT_BUS.register(new PlayerEvents());
         
-        // Entities
+        LOG.info("Registering entities");
         entity("spear_wood", EntitySpearWood.class);
         entity("spear_flint", EntitySpearFlint.class);
         entity("spear_copper", EntitySpearCopper.class);
@@ -157,7 +166,7 @@ public class Geomastery {
         entity("falling_trunk", FallingTreeBlock.Trunk.class);
         entity("falling_leaves", FallingTreeBlock.Leaves.class);
         
-        // Packets
+        LOG.info("Registering packets");
         sPacket(SPacketContainer.Handler.class, SPacketContainer.class);
         cPacket(CPacketContainer.Handler.class, CPacketContainer.class);
         cPacket(CPacketTemp.Handler.class, CPacketTemp.class);
@@ -171,7 +180,7 @@ public class Geomastery {
         cPacket(CPacketLid.Handler.class, CPacketLid.class);
         cPacket(CPacketCompost.Handler.class, CPacketCompost.class);
         
-        // Tileentities
+        LOG.info("Registering tileentities");
         tileentity(TEFurnaceCampfire.class, "furnace_campfire");
         tileentity(TEFurnacePotfire.class, "furnace_potfire");
         tileentity(TEFurnaceClay.class, "furnace_clay");
@@ -193,8 +202,6 @@ public class Geomastery {
         tileentity(TECarcass.class, "carcass");
         tileentity(TECompost.class, "compost");
         tileentity(TECrop.class, "crop");
-        
-        proxy.preInit();
     }
 
     @EventHandler
@@ -202,10 +209,10 @@ public class Geomastery {
         
         GeoBiomes.init();
         GeoRecipes.init();
-
-        NetworkRegistry.INSTANCE.registerGuiHandler(Geomastery.instance, new GuiHandler());
-        
         proxy.init();
+        
+        LOG.info("Registering GUI handler");
+        NetworkRegistry.INSTANCE.registerGuiHandler(Geomastery.instance, new GuiHandler());
     }
 
     @EventHandler
@@ -219,9 +226,17 @@ public class Geomastery {
         
         if (mods.containsKey(MODID)) {
             
-            return COMPATIBLE_RANGE.containsVersion(new DefaultArtifactVersion(mods.get(MODID)));
+            if (COMPATIBLE_RANGE.containsVersion(new DefaultArtifactVersion(mods.get(MODID)))) {
+                
+                LOG.info("{} version {} compatible with version {} {}, allowing connection", MODID, VERSION, mods.get(MODID), side);
+                return true;
+            }
+            
+            LOG.info("{} version {} not compatible with version {} {}, denying connection", MODID, VERSION, mods.get(MODID), side);
+            return false;
         }
         
+        LOG.info("{} not found on {}, denying connection", MODID, side);
         return false;
     }
     

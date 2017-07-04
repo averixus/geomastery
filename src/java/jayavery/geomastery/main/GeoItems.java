@@ -106,9 +106,9 @@ public class GeoItems {
     
     // Decaying carcasses
     public static final ItemCarcassDecayable CARCASS_COWPART = make(new ItemCarcassDecayable("carcass_cowpart", GeoBlocks.CARCASS_COWPART), true);
-    public static final ItemCarcassDecayable CARCASS_PIG =     make(new ItemCarcassDecayable("carcass_pig", GeoBlocks.CARCASS_PIG));
+    public static final ItemCarcassDecayable CARCASS_PIG =     make(new ItemCarcassDecayable("carcass_pig", GeoBlocks.CARCASS_PIG), true);
     public static final ItemCarcassDecayable CARCASS_CHICKEN = make(new ItemCarcassDecayable("carcass_chicken", GeoBlocks.CARCASS_CHICKEN));
-    public static final ItemCarcassDecayable CARCASS_SHEEP =   make(new ItemCarcassDecayable("carcass_sheep", GeoBlocks.CARCASS_SHEEP));
+    public static final ItemCarcassDecayable CARCASS_SHEEP =   make(new ItemCarcassDecayable("carcass_sheep", GeoBlocks.CARCASS_SHEEP), true);
     public static final ItemCarcassDecayable CARCASS_RABBIT =  make(new ItemCarcassDecayable("carcass_rabbit", GeoBlocks.CARCASS_RABBIT));
     
     // Non-decaying edible seeds
@@ -243,7 +243,6 @@ public class GeoItems {
     public static final Item ORE_GOLD =   make(new ItemSimple("ore_gold"));
     
     public static final Item POT_CLAY =  make(new ItemSimple("pot_clay"));
-    public static final Item POT_METAL = make(new ItemSimple("pot_metal"));
     
     public static final Item ARROWHEAD_BRONZE = make(new ItemSimple("arrowhead_bronze", 20));
     public static final Item ARROWHEAD_COPPER = make(new ItemSimple("arrowhead_copper", 20));
@@ -397,6 +396,7 @@ public class GeoItems {
     /** Adjust vanilla items. */
     public static void preInit() {
         
+        Geomastery.LOG.info("Adjusting vanilla item properties");
         Items.STICK.setMaxStackSize(12);
         Items.BONE.setMaxStackSize(6);
         Items.FLINT.setMaxStackSize(6);
@@ -410,8 +410,6 @@ public class GeoItems {
     /** Put the constructed item into the modelling set
      * and the offhand-only set if applicable. */
     private static <I extends Item> I make(I item, boolean isOffhandOnly) {
-
-      //  GameRegistry.register(item);
         
         if (isOffhandOnly) {
             

@@ -45,6 +45,7 @@ public class GeoCaps {
 
     public static void preInit() {
 
+        Geomastery.LOG.info("Registering capabilities");
         CapabilityManager.INSTANCE.register(ICapDecay.class,
                 new StorageCapDecay(), DefaultCapDecay.class);
         CapabilityManager.INSTANCE.register(ICapPlayer.class,

@@ -8,7 +8,9 @@ package jayavery.geomastery.worldgen;
 
 import java.util.ArrayList;
 import java.util.Random;
+import jayavery.geomastery.blocks.BlockSeedling;
 import jayavery.geomastery.main.GeoBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -33,8 +35,10 @@ public class WorldGenTreeBanana extends WorldGenTree {
         
         for (BlockPos trunk : trunks) {
             
-            if (!this.world.getBlockState(trunk).getBlock()
-                    .isReplaceable(this.world, trunk)) {
+            Block found = this.world.getBlockState(trunk).getBlock();
+            
+            if (!(found instanceof BlockSeedling) &&
+                    !found.isReplaceable(this.world, trunk)) {
                 
                 return false;
             }

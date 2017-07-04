@@ -28,18 +28,20 @@ public class ServerProxy implements IProxy {
     @Override
     public EntityPlayer getClientPlayer() {
         
-        throw new RuntimeException("Tried to get Client player on Server!");
+        Geomastery.LOG.error("Tried to get client player on server side!");
+        throw new RuntimeException("Tried to get client player on server side!");
     }
     
     @Override
     public World getClientWorld() {
         
-        throw new RuntimeException("Tried to get Client world on Server!");
+        Geomastery.LOG.error("Tried to get client world on server side!");
+        throw new RuntimeException("Tried to get client world on server side!");
     }
     
     @Override
     public void addClientRunnable(Runnable task) {
         
-        throw new RuntimeException("Tried to add Client Runnable on Server!");
+        Geomastery.LOG.error("Tried to add client runnable on server side, runnable will not be executed!", new RuntimeException());
     }
 }

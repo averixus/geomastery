@@ -254,6 +254,7 @@ tile.geomastery:block_furnace_campfire.name=Campfire
 tile.geomastery:block_furnace_potfire.name=Pot Fire
 tile.geomastery:block_drying.name=Drying Rack
 tile.geomastery:block_box.name=Box
+tile.geomastery:block_chest.name=Chest
 tile.geomastery:block_basket.name=Basket
 tile.geomastery:block_wood_apple.name=Apple Wood
 tile.geomastery:block_wood_banana.name=Banana Wood

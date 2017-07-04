@@ -27,6 +27,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Chest block. */
 public class BlockChest extends BlockComplexAbstract {
@@ -68,6 +70,13 @@ public class BlockChest extends BlockComplexAbstract {
             IBlockAccess source, BlockPos pos) {
         
         return FULL_BLOCK_AABB;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean hasCustomBreakingProgress(IBlockState state) {
+        
+        return true;
     }
     
     @Override

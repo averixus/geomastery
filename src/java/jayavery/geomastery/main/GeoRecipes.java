@@ -50,6 +50,7 @@ public class GeoRecipes {
     
     public static void init() {
 
+        Geomastery.LOG.info("Setting up crafting and cooking recipes");
         setupInventory();
         setupKnapping();
         setupWoodworking();
@@ -87,7 +88,8 @@ public class GeoRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CLAY, 6), "C", 'C', GeoItems.LOOSE_CLAY);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.LOOSE_CLAY), "CCC", "CCC", 'C', GeoItems.CLAY);
         INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.COMPOSTHEAP), "PRP", "PPP", 'P', GeoItems.POLE, 'R', ROT);
-        
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_POTFIRE), "SPS", "SSS", 'S', Items.STICK, 'P', GeoItems.POT_CLAY);
+
         for (Item skin : SKINS) {
             
             INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.BASKET), "SHS", " S ", 'S', Items.STICK, 'H', skin);
@@ -106,11 +108,6 @@ public class GeoRecipes {
                 
                 INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_FORGE), "MNS", "PPP", 'M', metal, 'N', metal2, 'S', GeoItems.RUBBLE, 'P', GeoItems.POLE);
             }
-        }
-        
-        for (Item pot : new Item[] {GeoItems.POT_CLAY, GeoItems.POT_METAL}) {
-            
-            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_POTFIRE), "SPS", "SSS", 'S', Items.STICK, 'P', pot);
         }
     }
 
@@ -231,8 +228,6 @@ public class GeoRecipes {
         FORGE.addShapedRecipe(new ItemStack(GeoItems.SHEARS_COPPER), "C ", "CC", 'C', GeoItems.INGOT_COPPER);
         FORGE.addShapedRecipe(new ItemStack(GeoItems.SHEARS_BRONZE), "T ", "CC", 'T', GeoItems.INGOT_TIN, 'C', GeoItems.INGOT_COPPER);
         FORGE.addShapedRecipe(new ItemStack(GeoItems.SHEARS_STEEL), "S ", "SS", 'S', GeoItems.INGOT_STEEL);
-        FORGE.addShapedRecipe(new ItemStack(GeoItems.POT_METAL), "M M", " M ", 'M', GeoItems.INGOT_COPPER);
-        FORGE.addShapedRecipe(new ItemStack(GeoItems.POT_METAL), "M M", " M ", 'M', GeoItems.INGOT_STEEL);
         FORGE.addShapedRecipe(new ItemStack(GeoItems.KNIFEBLADE_COPPER, 2), "M", "M", 'M', GeoItems.INGOT_COPPER);
         FORGE.addShapedRecipe(new ItemStack(GeoItems.MACHETEBLADE_COPPER), "MMM", 'M', GeoItems.INGOT_COPPER);
         FORGE.addShapedRecipe(new ItemStack(GeoItems.PICKHEAD_COPPER), " M ", "MMM", " M ", 'M', GeoItems.INGOT_COPPER);
@@ -278,7 +273,6 @@ public class GeoRecipes {
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_STONE, 2), "SSS", 'S', GeoItems.DRESSEDSTONE);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_BRICK, 2), "BBB", 'B', Items.BRICK);
         MASON.addShapelessRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), GeoItems.RUBBLE, GeoItems.RUBBLE, GeoItems.RUBBLE, GeoItems.RUBBLE);
-      //  MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), "RR", "RR", 'R', GeoItems.RUBBLE);
     }
 
     /** Adds all recipes to armourer. */
@@ -303,8 +297,8 @@ public class GeoRecipes {
         
         SAWPIT.addShapelessRecipe(new ItemStack(GeoItems.TIMBER, 3), GeoItems.THICKLOG);
         SAWPIT.addShapedRecipe(new ItemStack(GeoItems.TIMBER, 3), "LLL", 'L', GeoItems.LOG);
-        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_SHORT), "LLL", "L  ", 'L', GeoItems.LOG);
-        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_LONG), "TTT", "TTT", "TT ", 'T', GeoItems.THICKLOG);
+        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_SHORT), "LL", 'L', GeoItems.LOG);
+        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_LONG), "TTT", 'T', GeoItems.THICKLOG);
     }
 
     /** Adds all recipes to campfire and higher levels. */

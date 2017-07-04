@@ -27,6 +27,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Box block. */
 public class BlockBox extends BlockComplexAbstract {
@@ -71,6 +73,13 @@ public class BlockBox extends BlockComplexAbstract {
             IBlockAccess source, BlockPos pos) {
         
         return BOX;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean hasCustomBreakingProgress(IBlockState state) {
+        
+        return true;
     }
     
     @Override

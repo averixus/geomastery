@@ -35,7 +35,7 @@ public class RenderBox
             this.bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F, 1.0F, 1.0F);
+            GlStateManager.scale(4.0F, 4.0F, 1.0F);
             GlStateManager.matrixMode(5888);
             
         } else {

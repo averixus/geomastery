@@ -10,7 +10,7 @@ import java.util.Collections;
 import javax.annotation.Nullable;
 import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.entities.projectile.EntityProjectile;
-import jayavery.geomastery.utilities.ITripleFunction;
+import jayavery.geomastery.utilities.IProjectileFactory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,15 +28,15 @@ import net.minecraft.world.World;
 /** Abstract superclass for spear tool items. */
 public class ItemSpear extends ItemToolAbstract {
     
-    private ITripleFunction<World, EntityLivingBase, Integer,
-            EntityProjectile> entityProducer;
+    /** Factory for spear projectile entity. */
+    private IProjectileFactory factory;
 
-    public ItemSpear(String name, ToolMaterial material, ITripleFunction<World,
-            EntityLivingBase, Integer, EntityProjectile> entityProducer) {
+    public ItemSpear(String name, ToolMaterial material,
+            IProjectileFactory factory) {
 
         super(3F, -3.1F, material, Collections.emptySet());
         ItemSimple.setupItem(this, name, 1, CreativeTabs.COMBAT);
-        this.entityProducer = entityProducer;
+        this.factory = factory;
         
         // Check whether spear is being charged for the model
         this.addPropertyOverride(new ResourceLocation("pulling"),
@@ -63,7 +63,7 @@ public class ItemSpear extends ItemToolAbstract {
     protected void throwSpear(World world, EntityPlayer player,
             float velocity, int durability) {
         
-        EntityProjectile thrown = this.entityProducer.apply(world,
+        EntityProjectile thrown = this.factory.create(world,
                 player, durability);
         thrown.setAim(player, player.rotationPitch, player.rotationYaw,
                 0, velocity, 1F);

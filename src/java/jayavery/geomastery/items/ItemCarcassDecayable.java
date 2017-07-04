@@ -96,7 +96,6 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         
         return new ProviderCapDecay(new
                 DefaultCapDecay(this.block.getShelfLife()));
-
     }
     
     /** Attempts to place this item's carcass block. */

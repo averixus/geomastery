@@ -6,9 +6,14 @@
  ******************************************************************************/
 package jayavery.geomastery.utilities;
 
-/** Functional interface which takes three inputs to produce one output. */
+import jayavery.geomastery.entities.projectile.EntityProjectile;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.world.World;
+
+/** Functional interface for EntityProjectile constructor. */
 @FunctionalInterface
-public interface ITripleFunction<A, B, C, T> {
+public interface IProjectileFactory {
     
-    public T apply(A a, B b, C c);
+    public EntityProjectile create(World world, EntityLivingBase thrower,
+            int durability);
 }

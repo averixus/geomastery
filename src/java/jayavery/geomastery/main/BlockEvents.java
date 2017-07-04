@@ -23,6 +23,7 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -281,7 +282,7 @@ public class BlockEvents {
             event.getDrops().clear();
             event.getDrops().add(new ItemStack(Items.DYE,
                     world.rand.nextInt(5) + 1,
-                    EnumDyeColor.BLUE.getMetadata()));
+                    EnumDyeColor.BLUE.getDyeDamage()));
         }
         
         if (block == Blocks.DIAMOND_ORE) {

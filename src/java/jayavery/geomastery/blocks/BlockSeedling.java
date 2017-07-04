@@ -49,6 +49,7 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS,
                 1F, ToolType.SHOVEL);
+        this.setTickRandomly(true); // TEST just added?
         this.treeGenFactory = treeGenFactory;
         this.growthChance = growthChance;
     }
