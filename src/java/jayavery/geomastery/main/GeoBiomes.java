@@ -13,7 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeBeach;
 import net.minecraft.world.biome.BiomeDesert;
+import net.minecraft.world.biome.BiomeEnd;
 import net.minecraft.world.biome.BiomeForest;
+import net.minecraft.world.biome.BiomeHell;
 import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.biome.BiomeJungle;
 import net.minecraft.world.biome.BiomeMesa;
@@ -25,6 +27,7 @@ import net.minecraft.world.biome.BiomeSavanna;
 import net.minecraft.world.biome.BiomeSnow;
 import net.minecraft.world.biome.BiomeSwamp;
 import net.minecraft.world.biome.BiomeTaiga;
+import net.minecraft.world.biome.BiomeVoid;
 
 /** Stores and calculates Geomastery temperatures of vanilla biomes. */
 public class GeoBiomes {
@@ -55,82 +58,75 @@ public class GeoBiomes {
         if (biome == Biomes.MUTATED_ICE_FLATS) {
             
             return -4;
-        }
-        
-        if (biome instanceof BiomeSnow) {
+            
+        } else if (biome instanceof BiomeSnow) {
             
             return -3;
-        }
-        
-        if (biome == Biomes.FROZEN_RIVER) {
+            
+        } else if (biome == Biomes.FROZEN_RIVER) {
             
             return -2;
-        }
-        
-        if (biome == Biomes.COLD_TAIGA || biome == Biomes.COLD_TAIGA_HILLS ||
+            
+        } else if (biome == Biomes.COLD_TAIGA ||
+                biome == Biomes.COLD_TAIGA_HILLS ||
                 biome == Biomes.MUTATED_TAIGA_COLD) {
             
             return -1;
-        }
-        
-        if (biome == Biomes.COLD_BEACH) {
+            
+        } else if (biome == Biomes.COLD_BEACH) {
             
             return -0.5F;
-        }
-        
-        if (biome instanceof BiomeHills ||
-                biome instanceof BiomeTaiga) {
+            
+        } else if (biome instanceof BiomeHills || biome instanceof BiomeTaiga ||
+                biome instanceof BiomeVoid || biome instanceof BiomeEnd) {
             
             return 0;
-        }
-        
-        if (biome == Biomes.STONE_BEACH) {
+            
+        } else if (biome == Biomes.STONE_BEACH) {
             
             return 0.5F;
-        }
-        
-        if (biome == Biomes.BIRCH_FOREST ||
+            
+        } else if (biome == Biomes.BIRCH_FOREST ||
                 biome == Biomes.BIRCH_FOREST_HILLS) {
             
             return 1;
-        }
-        
-        if (biome instanceof BiomeOcean || biome instanceof BiomeForest
+            
+        } else if (biome instanceof BiomeOcean || biome instanceof BiomeForest
                 || biome instanceof BiomeRiver) {
             
             return 2;
-        }
-        
-        if (biome instanceof BiomePlains) {
+            
+        } else if (biome instanceof BiomePlains) {
             
             return 2.5F;
-        }
-        
-        if (biome instanceof BiomeSwamp || biome instanceof BiomeBeach) {
+            
+        } else if (biome instanceof BiomeSwamp || biome instanceof BiomeBeach) {
             
             return 3;
-        }
-        
-        if (biome instanceof BiomeMushroomIsland) {
+            
+        } else if (biome instanceof BiomeMushroomIsland) {
 
             return 4;
-        }
-        
-        if (biome instanceof BiomeJungle) {
+            
+        } else if (biome instanceof BiomeJungle) {
             
             return 4.5F;
-        }
-        
-        if (biome instanceof BiomeSavanna) {
+            
+        } else if (biome instanceof BiomeSavanna) {
             
             return 5;
-        }
-        
-        if (biome instanceof BiomeDesert || biome instanceof BiomeMesa) {
+            
+        } else if (biome instanceof BiomeDesert || biome instanceof BiomeMesa ||
+                biome instanceof BiomeHell) {
             
             return 6;
-        }
+            
+        } else {
 
-        return 1;
+            float base = biome.getTemperature();
+            float converted = (base - 1) * 10;
+            Geomastery.LOG.info("Unsupported biome {} has had its temperature set to {}", biome.getBiomeName(), converted);
+            return converted;
+        }
     }
 }

@@ -103,15 +103,8 @@ public class BlockHarvestableLeaves extends BlockLeaves {
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
             EnumFacing side, float hitX, float hitY, float hitZ) {
-        
-        int age = state.getValue(AGE);
-        
-        if (age != 7) {
-
-            world.setBlockState(pos, state.withProperty(AGE, 7));
-            return false;
-            
-        } else {
+                
+        if (state.getValue(AGE) == 7) {
 
             IBlockState newState = state.withProperty(AGE, 0);
             world.setBlockState(pos, newState);
@@ -133,6 +126,8 @@ public class BlockHarvestableLeaves extends BlockLeaves {
             
             return true;
         }
+        
+        return false;
     } 
     
     @Override
