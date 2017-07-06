@@ -166,8 +166,8 @@ public class GeoBlocks {
     public static final BlockCropBlockfruit PUMPKIN_CROP = makeItemless(new BlockCropBlockfruit.Pumpkin(), CROP_BLOCKFRUIT);
     
     // Block fruits
-    public static final BlockFruit PUMPKIN_FRUIT = make(new BlockFruit("melon_fruit", () -> GeoItems.MELON, () -> GeoItems.SEED_MELON));
-    public static final BlockFruit MELON_FRUIT =   make(new BlockFruit("pumpkin_fruit", () -> GeoItems.PUMPKIN, () -> GeoItems.SEED_PUMPKIN));
+    public static final BlockFruit MELON_FRUIT = make(new BlockFruit("melon_fruit", () -> GeoItems.MELON, () -> GeoItems.SEED_MELON));
+    public static final BlockFruit PUMPKIN_FRUIT =   make(new BlockFruit("pumpkin_fruit", () -> GeoItems.PUMPKIN, () -> GeoItems.SEED_PUMPKIN));
     
     // Rice
     public static final Block RICE_BASE = makeItemless(new BlockRiceBase());
