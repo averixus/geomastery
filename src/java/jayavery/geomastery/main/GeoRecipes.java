@@ -337,7 +337,7 @@ public class GeoRecipes {
 
         for (CookingManager recipes : CLAY_PLUS) {
             
-            recipes.addCookingRecipe(new ItemStack(GeoItems.WHEAT), new ItemStack(Items.BREAD), 60);
+            recipes.addCookingRecipe(new ItemStack(GeoItems.WHEAT), new ItemStack(GeoItems.BREAD), 60);
             recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_COPPER), new ItemStack(GeoItems.INGOT_COPPER), 300);
             recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_TIN), new ItemStack(GeoItems.INGOT_TIN), 300);
             recipes.addCookingRecipe(new ItemStack(GeoItems.POLE), new ItemStack(Items.COAL, 1, 1),60);
