@@ -17,11 +17,11 @@ import net.minecraft.world.World;
 public class CookingManager {
 
     /** Map of inputs to outputs. */
-    private final Map<ItemStack, ItemStack> recipes;
+    public final Map<ItemStack, ItemStack> recipes;
     /** Map of inputs to cooking times. */
     private final Map<ItemStack, Integer> cookingTimes;
     /** Map of fuels to burning times. */
-    private final Map<ItemStack, Integer> fuels;
+    public final Map<ItemStack, Integer> fuels;
     /** Multiplier for cooking times. */
     private final int multiplier;
 

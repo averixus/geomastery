@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import jayavery.geomastery.container.ContainerAbstract;
 import jayavery.geomastery.container.ContainerCrafting;
+import jayavery.geomastery.container.ContainerFurnaceAbstract;
 import mezz.jei.JustEnoughItems;
 import mezz.jei.api.gui.IGuiIngredient;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -25,39 +27,56 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class CraftingTransferHandler<C extends ContainerCrafting> implements IRecipeTransferHandler<C> {
+public abstract class ContainerTransferHandler<C extends ContainerAbstract> implements IRecipeTransferHandler<C> {
 
-    private final Class<C> container;
+    private final Class<C> clas;
     
-    public CraftingTransferHandler(Class<C> container) {
+    public ContainerTransferHandler(Class<C> clas) {
         
-        this.container = container;
+        this.clas = clas;
     }
     
-    public static <T extends ContainerCrafting> CraftingTransferHandler<T> create(Class<T> clas) {
+    public static <T extends ContainerCrafting> ContainerTransferHandler.Crafting<T> craft(Class<T> clas) {
         
-        return new CraftingTransferHandler<T>(clas);
+        return new ContainerTransferHandler.Crafting<T>(clas);
+    }
+    
+    public static <T extends ContainerFurnaceAbstract> ContainerTransferHandler.Fuel<T> fuel(Class<T> clas) {
+        
+        return new ContainerTransferHandler.Fuel<T>(clas);
+    }
+    
+    public static <T extends ContainerFurnaceAbstract> ContainerTransferHandler.Cooking<T> cook(Class<T> clas) {
+        
+        return new ContainerTransferHandler.Cooking<T>(clas);
     }
     
     @Override
     public Class<C> getContainerClass() {
         
-        return this.container;
+        return this.clas;
     }
+    
+    protected abstract int getInvStart(C container);
+    protected abstract int getInvEnd(C container);
+    protected abstract int getCraftStart(C container);
+    protected abstract int getCraftEnd(C container);
     
     @Override
     public IRecipeTransferError transferRecipe(C container, IRecipeLayout recipeLayout, EntityPlayer player, boolean maxTransfer, boolean doTransfer) {
         
         Map<Integer, Slot> inventory = Maps.newHashMap();
         
-        for (int i = ContainerCrafting.HOT_START; i <= container.invEnd; i++) {
+        for (int i = this.getInvStart(container);
+                i <= this.getInvEnd(container); i++) {
             
             inventory.put(i, container.getSlot(i));
         }
         
         Map<Integer, Slot> crafting = Maps.newHashMap();
         
-        for (int i = container.craftStart; i <= container.craftEnd; i++) {
+        for (int i = this.getCraftStart(container);
+                i <= this.getCraftEnd(container); i++) {
             
             crafting.put(i, container.getSlot(i));
         }
@@ -128,5 +147,101 @@ public class CraftingTransferHandler<C extends ContainerCrafting> implements IRe
         }
         
         return null;
+    }
+    
+    public static class Crafting<C extends ContainerCrafting> extends ContainerTransferHandler<C> {
+
+        public Crafting(Class<C> clas) {
+            
+            super(clas);
+        }
+
+        @Override
+        protected int getInvStart(C container) {
+
+            return ContainerCrafting.HOT_START;
+        }
+
+        @Override
+        protected int getInvEnd(C container) {
+
+            return container.invEnd;
+        }
+
+        @Override
+        protected int getCraftStart(C container) {
+
+            return container.craftStart;
+        }
+
+        @Override
+        protected int getCraftEnd(C container) {
+
+            return container.craftEnd;
+        }
+    }
+    
+    public static class Fuel<C extends ContainerFurnaceAbstract> extends ContainerTransferHandler<C> {
+
+        public Fuel(Class<C> clas) {
+            
+            super(clas);
+        }
+
+        @Override
+        protected int getInvStart(C container) {
+
+            return container.hotStart;
+        }
+
+        @Override
+        protected int getInvEnd(C container) {
+
+            return container.invEnd;
+        }
+
+        @Override
+        protected int getCraftStart(C container) {
+
+            return container.fuelStart;
+        }
+
+        @Override
+        protected int getCraftEnd(C container) {
+
+            return container.fuelEnd;
+        }
+    }
+    
+    public static class Cooking<C extends ContainerFurnaceAbstract> extends ContainerTransferHandler<C> {
+
+        public Cooking(Class<C> clas) {
+            
+            super(clas);
+        }
+
+        @Override
+        protected int getInvStart(C container) {
+
+            return container.hotStart;
+        }
+
+        @Override
+        protected int getInvEnd(C container) {
+
+            return container.invEnd;
+        }
+
+        @Override
+        protected int getCraftStart(C container) {
+
+            return ContainerFurnaceAbstract.INPUT_START;
+        }
+
+        @Override
+        protected int getCraftEnd(C container) {
+
+            return container.inputEnd;
+        }
     }
 }

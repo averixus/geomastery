@@ -24,7 +24,7 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     protected static final int FUEL_Y = 53;
 
     /** Index of first input slot. */
-    protected static final int INPUT_START = 0;
+    public static final int INPUT_START = 0;
     
     /** X-position of flame in the GUI. */
     public int fireX;
@@ -38,23 +38,23 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     public final int size;
     
     /** Index of last input slot. */
-    protected final int inputEnd;
+    public final int inputEnd;
     /** Index of first fuel slot. */
-    protected final int fuelStart;
+    public final int fuelStart;
     /** Index of last fuel slot. */
-    protected final int fuelEnd;
+    public final int fuelEnd;
     /** Index of first output slot. */
     protected final int outputStart;
     /** Index of last output slot. */
     protected final int outputEnd;
     /** Index of first hotbar slot. */
-    protected final int hotStart;
+    public final int hotStart;
     /** Index of last hotbar slot. */
     protected final int hotEnd;
     /** Index of first inventory slot. */
     protected final int invStart;
     /** Index of last inventory slot. */
-    protected final int invEnd;
+    public final int invEnd;
 
     /** The furnace TileEntity for this container. */
     public final TEFurnaceAbstract<?> furnace;
