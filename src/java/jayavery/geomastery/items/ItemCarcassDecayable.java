@@ -21,9 +21,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -149,6 +151,14 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         }
         
         return super.getItemStackDisplayName(stack);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+        
+        list.add(ItemSimple.newStack(this, 1, Geomastery.proxy.getClientWorld()));    
+        list.add(ItemSimple.rottenStack(this, 1));
     }
     
     /** Makes this item always show a durability bar. */

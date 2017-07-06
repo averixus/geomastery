@@ -48,8 +48,23 @@ public class ItemSimple extends Item {
         
         if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
             
+            long birth = world == null ? 0 : world.getTotalWorldTime();
+            stack.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(birth);
+        }
+        
+        return stack;
+    }
+    
+    /** @return A new stack of the item with a decay capability
+     * set to {@code Long.MIN_VALUE} if applicable. */
+    public static ItemStack rottenStack(Item item, int count) {
+        
+        ItemStack stack = new ItemStack(item, count);
+        
+        if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
+            
             stack.getCapability(GeoCaps.CAP_DECAY, null)
-                    .setBirthTime(world.getTotalWorldTime());
+                    .setBirthTime(-100000);
         }
         
         return stack;

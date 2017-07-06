@@ -1,4 +1,14 @@
 {
     "parent": "item/generated",
-    "textures": { "layer0": "geomastery:items/mushroom_brown" }
+    "textures": {
+        "layer0": "geomastery:items/mushroom_brown"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "rot": 1
+            },
+            "model": "geomastery:item/item_rot"
+        }
+    ]
 }
