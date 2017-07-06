@@ -12,7 +12,16 @@ import jayavery.geomastery.container.slots.SlotCrafting;
 import jayavery.geomastery.crafting.CraftingManager;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoCaps;
+import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.tileentities.TECraftingAbstract;
+import jayavery.geomastery.tileentities.TECraftingArmourer;
+import jayavery.geomastery.tileentities.TECraftingCandlemaker;
+import jayavery.geomastery.tileentities.TECraftingForge;
+import jayavery.geomastery.tileentities.TECraftingKnapping;
+import jayavery.geomastery.tileentities.TECraftingMason;
+import jayavery.geomastery.tileentities.TECraftingSawpit;
+import jayavery.geomastery.tileentities.TECraftingTextiles;
+import jayavery.geomastery.tileentities.TECraftingWoodworking;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
@@ -24,7 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Container for crafting devices. */
-public class ContainerCrafting extends ContainerAbstract {
+public abstract class ContainerCrafting extends ContainerAbstract {
 
     /** X-position of the output slot. */
     private static final int OUTPUT_X = 124;
@@ -40,18 +49,18 @@ public class ContainerCrafting extends ContainerAbstract {
     private static final int CRAFT_ROWS = 3;
 
     /** Index of the start of player hotbar. */
-    private static final int HOT_START = 0;
+    public static final int HOT_START = 0;
     /** Index of the end of player hotbar. */
     private static final int HOT_END = 8;
     /** Index of the start of player inventory. */
     private static final int INV_START = 9;
 
     /** Index of the end of player inventory. */
-    private final int invEnd;
+    public final int invEnd;
     /** Index of the start of craft grid. */
-    private final int craftStart;
+    public final int craftStart;
     /** Index of the end of craft grid. */
-    private final int craftEnd;
+    public final int craftEnd;
     /** Index of the output slot. */
     private final int outputI;
 
@@ -226,5 +235,77 @@ public class ContainerCrafting extends ContainerAbstract {
 
         return slot.inventory != this.craftResult &&
                 super.canMergeSlot(stack, slot);
+    }
+    
+    public static class Knapping extends ContainerCrafting {
+
+        public Knapping(EntityPlayer player, World world, BlockPos pos,
+                TECraftingKnapping tile) {
+            
+            super(player, world, pos, GeoRecipes.KNAPPING, tile);
+        }    
+    }
+    
+    public static class Candlemaker extends ContainerCrafting {
+        
+        public Candlemaker(EntityPlayer player, World world, BlockPos pos,
+                TECraftingCandlemaker tile) {
+            
+            super(player, world, pos, GeoRecipes.CANDLEMAKER, tile);
+        }
+    }
+    
+    public static class Forge extends ContainerCrafting {
+        
+        public Forge(EntityPlayer player, World world, BlockPos pos,
+                TECraftingForge tile) {
+            
+            super(player, world, pos, GeoRecipes.FORGE, tile);
+        }
+    }
+    
+    public static class Mason extends ContainerCrafting {
+        
+        public Mason(EntityPlayer player, World world, BlockPos pos,
+                TECraftingMason tile) {
+            
+            super(player, world, pos, GeoRecipes.MASON, tile);
+        }
+    }
+    
+    public static class Sawpit extends ContainerCrafting {
+        
+        public Sawpit(EntityPlayer player, World world, BlockPos pos,
+                TECraftingSawpit tile) {
+            
+            super(player, world, pos, GeoRecipes.SAWPIT, tile);
+        }
+    }
+    
+    public static class Textiles extends ContainerCrafting {
+        
+        public Textiles(EntityPlayer player, World world, BlockPos pos,
+                TECraftingTextiles tile) {
+            
+            super(player, world, pos, GeoRecipes.TEXTILES, tile);
+        }
+    }
+    
+    public static class Woodworking extends ContainerCrafting {
+        
+        public Woodworking(EntityPlayer player, World world, BlockPos pos,
+                TECraftingWoodworking tile) {
+            
+            super(player, world, pos, GeoRecipes.WOODWORKING, tile);
+        }
+    }
+    
+    public static class Armourer extends ContainerCrafting {
+        
+        public Armourer(EntityPlayer player, World world, BlockPos pos,
+                TECraftingArmourer tile) {
+        
+            super(player, world, pos, GeoRecipes.ARMOURER, tile);
+        }
     }
 }

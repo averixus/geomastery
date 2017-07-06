@@ -24,6 +24,14 @@ import jayavery.geomastery.gui.GuiFurnace;
 import jayavery.geomastery.gui.GuiInventory;
 import jayavery.geomastery.tileentities.TECompost;
 import jayavery.geomastery.tileentities.TECraftingAbstract;
+import jayavery.geomastery.tileentities.TECraftingArmourer;
+import jayavery.geomastery.tileentities.TECraftingCandlemaker;
+import jayavery.geomastery.tileentities.TECraftingForge;
+import jayavery.geomastery.tileentities.TECraftingKnapping;
+import jayavery.geomastery.tileentities.TECraftingMason;
+import jayavery.geomastery.tileentities.TECraftingSawpit;
+import jayavery.geomastery.tileentities.TECraftingTextiles;
+import jayavery.geomastery.tileentities.TECraftingWoodworking;
 import jayavery.geomastery.tileentities.TEDrying;
 import jayavery.geomastery.tileentities.TEFurnaceAbstract;
 import jayavery.geomastery.tileentities.TEFurnaceCampfire;
@@ -49,72 +57,69 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.KNAPPING.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
-            return new ContainerCrafting(player, world, pos,
-                    GeoRecipes.KNAPPING, crafting);
+            TECraftingKnapping crafting = (TECraftingKnapping) te;
+            return new ContainerCrafting.Knapping(player, world, pos, crafting);
         }
 
         if (ID == GuiList.WOODWORKING.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingWoodworking crafting = (TECraftingWoodworking) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.WOODWORKING, crafting);
+            crafting = (TECraftingWoodworking) world.getTileEntity(master);
+            return new ContainerCrafting.Woodworking(player, world, master,
+                    crafting);
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingTextiles crafting = (TECraftingTextiles) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.TEXTILES, crafting);
+            crafting = (TECraftingTextiles) world.getTileEntity(master);
+            return new ContainerCrafting.Textiles(player, world, master,
+                    crafting);
         }
 
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingCandlemaker crafting = (TECraftingCandlemaker) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.CANDLEMAKER, crafting);
+            crafting = (TECraftingCandlemaker) world.getTileEntity(master);
+            return new ContainerCrafting.Candlemaker(player, world, master,
+                    crafting);
         }
 
         if (ID == GuiList.FORGE.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingForge crafting = (TECraftingForge) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.FORGE, crafting);
+            crafting = (TECraftingForge) world.getTileEntity(master);
+            return new ContainerCrafting.Forge(player, world, master, crafting);
         }
 
         if (ID == GuiList.MASON.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingMason crafting = (TECraftingMason) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.MASON, crafting);
+            crafting = (TECraftingMason) world.getTileEntity(master);
+            return new ContainerCrafting.Mason(player, world, master, crafting);
         }
         
         if (ID == GuiList.SAWPIT.ordinal()) {
             
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingSawpit crafting = (TECraftingSawpit) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.SAWPIT, crafting);
+            crafting = (TECraftingSawpit) world.getTileEntity(master);
+            return new ContainerCrafting.Sawpit(player, world, master,
+                    crafting);
         }
         
         if (ID == GuiList.ARMOURER.ordinal()) {
             
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingArmourer crafting = (TECraftingArmourer) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new ContainerCrafting(player, world, master,
-                    GeoRecipes.ARMOURER, crafting);
+            crafting = (TECraftingArmourer) world.getTileEntity(master);
+            return new ContainerCrafting.Armourer(player, world, master,
+                    crafting);
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
@@ -190,74 +195,72 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.KNAPPING.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.KNAPPING, crafting), GuiList.KNAPPING.name);
+            TECraftingKnapping crafting = (TECraftingKnapping) te;
+            return new GuiCrafting(new ContainerCrafting.Knapping(player, world,
+                    pos, crafting), GuiList.KNAPPING.name);
         }
 
         if (ID == GuiList.WOODWORKING.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingWoodworking crafting = (TECraftingWoodworking) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.WOODWORKING, crafting),
-                    GuiList.WOODWORKING.name);
+            crafting = (TECraftingWoodworking) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Woodworking(player,
+                    world, pos, crafting), GuiList.WOODWORKING.name);
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingTextiles crafting = (TECraftingTextiles) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.TEXTILES, crafting), GuiList.TEXTILES.name);
+            crafting = (TECraftingTextiles) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Textiles(player, world,
+                    pos, crafting), GuiList.TEXTILES.name);
         }
 
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingCandlemaker crafting = (TECraftingCandlemaker) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.CANDLEMAKER, crafting),
-                    GuiList.CANDLEMAKER.name);
+            crafting = (TECraftingCandlemaker) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Candlemaker(player, world,
+                    pos, crafting), GuiList.CANDLEMAKER.name);
         }
 
         if (ID == GuiList.FORGE.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingForge crafting = (TECraftingForge) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.FORGE, crafting), GuiList.FORGE.name);
+            crafting = (TECraftingForge) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Forge(player, world,
+                    pos, crafting), GuiList.FORGE.name);
         }
 
         if (ID == GuiList.MASON.ordinal()) {
 
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingMason crafting = (TECraftingMason) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.MASON, crafting), GuiList.MASON.name);
+            crafting = (TECraftingMason) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Mason(player, world,
+                    pos, crafting), GuiList.MASON.name);
         }
         
         if (ID == GuiList.ARMOURER.ordinal()) {
             
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingArmourer crafting = (TECraftingArmourer) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.ARMOURER, crafting), GuiList.ARMOURER.name);
+            crafting = (TECraftingArmourer) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Armourer(player, world,
+                    pos, crafting), GuiList.ARMOURER.name);
         }
         
         if (ID == GuiList.SAWPIT.ordinal()) {
             
-            TECraftingAbstract<?> crafting = (TECraftingAbstract<?>) te;
+            TECraftingSawpit crafting = (TECraftingSawpit) te;
             BlockPos master = crafting.getMaster();
-            crafting = (TECraftingAbstract<?>) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting(player, world,
-                    pos, GeoRecipes.SAWPIT, crafting), GuiList.SAWPIT.name);
+            crafting = (TECraftingSawpit) world.getTileEntity(master);
+            return new GuiCrafting(new ContainerCrafting.Sawpit(player, world,
+                    pos, crafting), GuiList.SAWPIT.name);
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
