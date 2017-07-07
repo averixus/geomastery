@@ -53,6 +53,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     private static final int WATER_MAX = 3600;
     /** Ticks between taking damage from temperature. */
     private static final int DAMAGE_MAX = 200;
+    /** Tick count for hit of temperature damage. */
+    private static final int DAMAGE_TIME = 160;
     /** Default walk speed actual value. */
     private static final float DEFAULT_SPEED = 4.3F;
     /** Inventory slots in a row. */
@@ -499,11 +501,15 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         // Define stage
         this.tempStage = TempStage.fromTemp(temp);
+        
+        if (this.damageTimer == DAMAGE_TIME) {
+            
+            this.player.attackEntityFrom(DamageSource.GENERIC, 1);  
+        }
 
         if ((this.tempStage == TempStage.HOT ||
                 this.tempStage == TempStage.COLD) && this.damageTimer == 0) {
 
-            this.player.attackEntityFrom(DamageSource.GENERIC, 1);
             this.damageTimer = DAMAGE_MAX;
             
         } else if (this.damageTimer > 0) {
