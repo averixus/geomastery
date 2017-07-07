@@ -1,7 +1,5 @@
 # Geomastery
 
-Geomastery is a mod for Minecraft survival mode which makes the early game harder and slower, while improving on the simulation of real-world ancient technology development.
-
 #### **Overview**
 
 Geomastery is a mod for Minecraft survival mode which makes the early game harder and slower, while improving on the simulation of real-world ancient technology development.
