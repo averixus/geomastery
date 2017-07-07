@@ -213,7 +213,7 @@ public class GeoBlocks {
     public static final Block RUBBLE = makeItemless(new BlockRubble());
     
     // Walls (in rendering priority order)
-    public static final Block WALL_LOG =                       make(new BlockWallLog(), RENDER_STRAIGHT, DELAYED_BAKE); 
+    public static final Block WALL_LOG =                       make(new BlockWallLog(), 4, RENDER_STRAIGHT, DELAYED_BAKE); 
     public static final Block FENCE =                          make(new BlockWallFence(BlockMaterial.WOOD_FURNITURE, "fence", 2F, ToolType.AXE, 90), RENDER_SINGLE, DELAYED_BAKE);
     public static final Block WALL_POLE =                      make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, ToolType.AXE, 180), 4, RENDER_SINGLE, DELAYED_BAKE);
     public static final Block FRAME =                          make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, ToolType.AXE, 180), 6, RENDER_SINGLE, DELAYED_BAKE);

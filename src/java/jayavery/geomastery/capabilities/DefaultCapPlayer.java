@@ -6,6 +6,8 @@
  ******************************************************************************/
 package jayavery.geomastery.capabilities;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +21,7 @@ import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketBackpack;
+import jayavery.geomastery.packets.CPacketDebug;
 import jayavery.geomastery.packets.CPacketHunger;
 import jayavery.geomastery.packets.CPacketTemp;
 import jayavery.geomastery.packets.CPacketYoke;
@@ -68,6 +71,10 @@ public class DefaultCapPlayer implements ICapPlayer {
     private int wetTimer = 0;
     /** Temperature stage. */
     private TempStage tempStage = TempStage.OK;
+    /** Temperature debug text. */
+    private List<String> debug = Lists.newArrayList();
+    /** Decimal format for temperatures. */
+    private DecimalFormat temp = new DecimalFormat("+0.00;-0.00");
     
     /** Current walk speed. */
     private SpeedStage speedStage = null;
@@ -284,6 +291,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Calculate the player's temperature.
      * @return Whether the TempStage has changed. */
     private boolean tickTemperature() {
+        
+        this.debug.clear();
                 
         TempStage oldStage = this.tempStage;
         float temp = 0;
@@ -295,6 +304,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         Biome biome = world.getBiomeForCoordsBody(playerPos);
         float biomeVar = GeoBiomes.getTemp(biome);
         temp += biomeVar;
+        this.debug.add("Biome base temp: " + this.temp.format(biomeVar));
         
         // Altitude
         float heightVar = 0;
@@ -306,6 +316,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += heightVar;
+        this.debug.add("Altitude var: " + this.temp.format(heightVar));
         
         // Time of day
         float timeVar = 0;
@@ -344,6 +355,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += timeVar;
+        this.debug.add("Time var: " + this.temp.format(timeVar));
                 
         // Cave climate
         boolean isCave = true;
@@ -373,6 +385,8 @@ public class DefaultCapPlayer implements ICapPlayer {
         if (isCave) {
             
             temp = 0;
+            this.debug.clear();
+            this.debug.add("Cave base temp: " + 0);
         }
 
         // Wetness
@@ -390,6 +404,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
 
         temp += waterVar;
+        this.debug.add("Water var: " + this.temp.format(waterVar));
 
         // Clothing
         float clothesVar = 0;
@@ -417,6 +432,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += clothesVar;
+        this.debug.add("Clothing var: " + this.temp.format(clothesVar));
 
         // Heating blocks
         double fireVar = 0;
@@ -479,6 +495,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += fireVar;
+        this.debug.add("Heat block var: " + this.temp.format(fireVar));
 
         // Define stage
         this.tempStage = TempStage.fromTemp(temp);
@@ -494,7 +511,16 @@ public class DefaultCapPlayer implements ICapPlayer {
             this.damageTimer--;
         }
         
+        this.debug.add("Final temp: " + this.temp.format(temp));
+        this.sendDebugPacket();
+        
         return oldStage != this.tempStage;
+    }
+    
+    @Override
+    public List<String> getDebug() {
+        
+        return this.debug;
     }
         
     /** Heal the player if possible, using up fullest FoodTypes first. */
@@ -655,6 +681,13 @@ public class DefaultCapPlayer implements ICapPlayer {
                 (EntityPlayerMP) this.player);
     }
     
+    /** Sends a packet to the client to update debug info. */
+    private void sendDebugPacket() {
+        
+        Geomastery.NETWORK.sendTo(new CPacketDebug(this.debug),
+                (EntityPlayerMP) this.player);
+    }
+    
     /** Receive a packet on the client to update the FoodType hunger level. */
     public void processFoodPacket(FoodType type, int hunger) {
         
@@ -665,6 +698,12 @@ public class DefaultCapPlayer implements ICapPlayer {
     public void processTempPacket(TempStage stage) {
         
         this.tempStage = stage;
+    }
+    
+    /** Receive a packet on the client to update the debug info. */
+    public void processDebugPacket(List<String> debug) {
+        
+        this.debug = debug;
     }
 
     @Override

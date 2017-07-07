@@ -130,11 +130,22 @@ public class GuiEvents {
         }
     }
     
+    @SubscribeEvent
+    public void renderDebug(RenderGameOverlayEvent.Text event) {
+        
+        if (Minecraft.getMinecraft().gameSettings.showDebugInfo) {
+            
+            EntityPlayer player = Geomastery.proxy.getClientPlayer();
+            event.getRight().add("");
+            event.getRight().addAll(player.getCapability(GeoCaps.CAP_PLAYER, null).getDebug());
+        }
+    }
+    
     /** Alters HUD rendering. */
     @SubscribeEvent
     public void renderGameOverlay(RenderGameOverlayEvent.Pre event) {
         
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = Geomastery.proxy.getClientPlayer();
         int centreX = event.getResolution().getScaledWidth() / 2;
         int resHeight = event.getResolution().getScaledHeight();
         

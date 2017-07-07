@@ -26,6 +26,7 @@ import jayavery.geomastery.packets.CPacketLid;
 import jayavery.geomastery.packets.CPacketCompost;
 import jayavery.geomastery.packets.CPacketContainer;
 import jayavery.geomastery.packets.CPacketCrafting;
+import jayavery.geomastery.packets.CPacketDebug;
 import jayavery.geomastery.packets.CPacketDrying;
 import jayavery.geomastery.packets.CPacketFloor;
 import jayavery.geomastery.packets.CPacketHunger;
@@ -179,6 +180,7 @@ public class Geomastery {
         cPacket(CPacketYoke.Handler.class, CPacketYoke.class);
         cPacket(CPacketLid.Handler.class, CPacketLid.class);
         cPacket(CPacketCompost.Handler.class, CPacketCompost.class);
+        cPacket(CPacketDebug.Handler.class, CPacketDebug.class);
         
         LOG.info("Registering tileentities");
         tileentity(TEFurnaceCampfire.class, "furnace_campfire");
