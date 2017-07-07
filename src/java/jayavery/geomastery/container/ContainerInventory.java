@@ -83,20 +83,20 @@ public class ContainerInventory extends ContainerAbstract {
     /** Index of the yoke slot. */
     private static final int YOKE_I = 6;
     /** Index of the first craft grid slot. */
-    private static final int CRAFT_START = 7;
+    public static final int CRAFT_START = 7;
     
     /** Index of the last craft grid slot. */
-    private final int craftEnd;
+    public final int craftEnd;
     /** Index of the output slot. */
     private final int outputI;
     /** Index of the first hotbar slot. */
-    private final int hotStart;
+    public final int hotStart;
     /** Index of the last hotbar slot. */
     private final int hotEnd;
     /** Index of the first inventory slot. */
     private final int invStart;
     /** Index of the last inventory slot. */
-    private int invEnd;
+    public int invEnd;
 
     /** Texture for the current background of this container. */
     private ResourceLocation background;
@@ -333,6 +333,7 @@ public class ContainerInventory extends ContainerAbstract {
     @Override
     public void onCraftMatrixChanged(IInventory craftMatrix) {
 
+        super.onCraftMatrixChanged(this.craftMatrix);
         ItemStack stack = GeoRecipes.INVENTORY
                 .findMatchingRecipe(this.craftMatrix, this.world);
         this.craftResult.setInventorySlotContents(0, stack);

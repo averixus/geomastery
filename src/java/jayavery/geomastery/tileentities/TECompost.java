@@ -6,8 +6,11 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
+import jayavery.geomastery.crafting.CompostManager;
+import jayavery.geomastery.crafting.CompostManager.CompostType;
 import jayavery.geomastery.items.ItemEdible;
 import jayavery.geomastery.main.GeoItems;
+import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketCompost;
 import net.minecraft.entity.item.EntityItem;
@@ -43,30 +46,13 @@ public class TECompost extends TEContainerAbstract implements ITickable {
     
     /** Ticks spend composting next output. */
     private int compostSpent = 0;
-    /** Balance of nitrogen (negative) to carbon (positive). */
+    /** Balance of dry (negative) to wet (positive). */
     private int balance = 0;
     /** This compost heap's input fullness. */
     private int input = 0;
     /** This compost heap's output. */
     public NonNullList<ItemStack> outputs = NonNullList
             .withSize(1, ItemStack.EMPTY);
-
-    /** @return Whether this stack is a nitrogen input. */
-    public static boolean isCarbon(ItemStack stack) {
-        
-        Item item = stack.getItem();
-        return item instanceof ItemEdible || item == GeoItems.WOOL ||
-                item == Items.BONE;
-    }
-    
-    /** @return Whether this stack is a carbon input. */
-    public static boolean isNitrogen(ItemStack stack) {
-        
-        Item item = stack.getItem();
-        return item == GeoItems.LEAVES || item == Items.STICK ||
-                item == GeoItems.LOG || item == GeoItems.POLE ||
-                item == GeoItems.THICKLOG || item == Items.REEDS;
-    }
     
     @Override
     public void dropItems() {
@@ -105,11 +91,13 @@ public class TECompost extends TEContainerAbstract implements ITickable {
         this.input += count;
         this.input = Math.min(this.input, MAX_INPUT);
         
-        if (isNitrogen(stack)) {
+        CompostType type = GeoRecipes.COMPOST.getType(stack);
+        
+        if (type == CompostType.DRY) {
             
             this.balance -= count;
             
-        } else if (isCarbon(stack)) {
+        } else if (type == CompostType.WET) {
             
             this.balance += count;
         }
@@ -159,7 +147,7 @@ public class TECompost extends TEContainerAbstract implements ITickable {
                 
             ItemStack stack = item.getEntityItem();
             
-            if (isCarbon(stack) || isNitrogen(stack)) {
+            if (GeoRecipes.COMPOST.getType(stack) != null) {
                 
                 this.addInput(stack);
                 item.setDead();

@@ -246,7 +246,7 @@ public class GeoItems {
     
     public static final Item ARROWHEAD_BRONZE = make(new ItemSimple("arrowhead_bronze", 20));
     public static final Item ARROWHEAD_COPPER = make(new ItemSimple("arrowhead_copper", 20));
-    public static final Item ARROWHEAT_FLINT =  make(new ItemSimple("arrowhead_flint", 20));
+    public static final Item ARROWHEAD_FLINT =  make(new ItemSimple("arrowhead_flint", 20));
     public static final Item ARROWHEAD_STEEL =  make(new ItemSimple("arrowhead_steel", 20));
     
     public static final Item AXEHEAD_BRONZE = make(new ItemSimple("axehead_bronze", 2));

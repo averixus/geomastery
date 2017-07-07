@@ -27,7 +27,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EnumPartStone> {
 
     public TEFurnaceStone() {
 
-        super(GeoRecipes.STONE, 6);
+        super(GeoRecipes.STONE_ALL, 6);
     }
     
     @Override

@@ -113,7 +113,7 @@ public class BlockFurnacePotfire extends BlockComplexAbstract {
 
         if (!world.isRemote) {
             
-            player.openGui(Geomastery.instance, GuiList.COOKFIRE.ordinal(),
+            player.openGui(Geomastery.instance, GuiList.POTFIRE.ordinal(),
                     world, x, y, z);
         }
         

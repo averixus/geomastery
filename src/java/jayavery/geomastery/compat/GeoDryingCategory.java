@@ -8,26 +8,29 @@ package jayavery.geomastery.compat;
 
 import jayavery.geomastery.main.Geomastery;
 import mezz.jei.api.gui.IDrawable;
+import mezz.jei.api.gui.IDrawableAnimated;
+import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.plugins.vanilla.furnace.FurnaceRecipeCategory;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-public class GeoCampfireRecipeCategory extends FurnaceRecipeCategory<IRecipeWrapper> {
+public class GeoDryingCategory extends BlankRecipeCategory<DryingRecipe.Wrapper> {
 
-    private final String name;
-    private final String id;
     private final IDrawable background;
+    private final IDrawableAnimated arrow;
+    private final String name = "Drying Rack";
+    private final String id = "geomastery:drying";
     
-    public GeoCampfireRecipeCategory(String name, String id) {
+    public GeoDryingCategory() {
         
-        super(GeoJei.guiHelper);
-        this.name = name;
-        this.id = id;
-        this.background = GeoJei.guiHelper.createDrawable(new ResourceLocation(Geomastery.MODID, "textures/gui/furnace1_0.png"), 54, 16, 83, 54);
+        ResourceLocation res = new ResourceLocation(Geomastery.MODID, "textures/gui/drying_0.png");
+        this.background = GeoJei.guiHelper.createDrawable(res, 48, 34, 82, 18);
+        
+        IDrawableStatic arrowStatic = GeoJei.guiHelper.createDrawable(res, 176, 14, 24, 17);
+        this.arrow = GeoJei.guiHelper.createAnimatedDrawable(arrowStatic, 200, IDrawableAnimated.StartDirection.LEFT, false);
     }
     
     @Override
@@ -39,16 +42,15 @@ public class GeoCampfireRecipeCategory extends FurnaceRecipeCategory<IRecipeWrap
     @Override
     public void drawExtras(Minecraft minecraft) {
         
-        this.flame.draw(minecraft, 2, 20);
-        this.arrow.draw(minecraft, 24, 18);
+        this.arrow.draw(minecraft, 29, 0);
     }
     
     @Override
-    public void setRecipe(IRecipeLayout layout, IRecipeWrapper wrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout layout, DryingRecipe.Wrapper wrapper, IIngredients ingredients) {
         
         IGuiItemStackGroup stacks = layout.getItemStacks();
         stacks.init(0, true, 0, 0);
-        stacks.init(2, false, 60, 18);
+        stacks.init(1, false, 64, 0);
         stacks.set(ingredients);
     }
     
@@ -67,6 +69,6 @@ public class GeoCampfireRecipeCategory extends FurnaceRecipeCategory<IRecipeWrap
     @Override
     public String getModName() {
         
-        return Geomastery.MODID;
+        return Geomastery.NAME;
     }
 }

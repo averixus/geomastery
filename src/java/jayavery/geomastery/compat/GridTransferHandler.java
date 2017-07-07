@@ -12,8 +12,11 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import jayavery.geomastery.container.ContainerAbstract;
+import jayavery.geomastery.container.ContainerCompost;
 import jayavery.geomastery.container.ContainerCrafting;
+import jayavery.geomastery.container.ContainerDrying;
 import jayavery.geomastery.container.ContainerFurnaceAbstract;
+import jayavery.geomastery.container.ContainerInventory;
 import mezz.jei.JustEnoughItems;
 import mezz.jei.api.gui.IGuiIngredient;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -27,30 +30,30 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public abstract class ContainerTransferHandler<C extends ContainerAbstract> implements IRecipeTransferHandler<C> {
+public abstract class GridTransferHandler<C extends ContainerAbstract> implements IRecipeTransferHandler<C> {
 
     private final Class<C> clas;
     
-    public ContainerTransferHandler(Class<C> clas) {
+    public GridTransferHandler(Class<C> clas) {
         
         this.clas = clas;
     }
     
-    public static <T extends ContainerCrafting> ContainerTransferHandler.Crafting<T> craft(Class<T> clas) {
+    public static <T extends ContainerCrafting> GridTransferHandler.Crafting<T> craft(Class<T> clas) {
         
-        return new ContainerTransferHandler.Crafting<T>(clas);
+        return new GridTransferHandler.Crafting<T>(clas);
     }
     
-    public static <T extends ContainerFurnaceAbstract> ContainerTransferHandler.Fuel<T> fuel(Class<T> clas) {
+    public static GridTransferHandler.Inventory inv() {
         
-        return new ContainerTransferHandler.Fuel<T>(clas);
+        return new GridTransferHandler.Inventory();
     }
     
-    public static <T extends ContainerFurnaceAbstract> ContainerTransferHandler.Cooking<T> cook(Class<T> clas) {
+    public static GridTransferHandler.Compost comp() {
         
-        return new ContainerTransferHandler.Cooking<T>(clas);
+        return new GridTransferHandler.Compost();
     }
-    
+
     @Override
     public Class<C> getContainerClass() {
         
@@ -149,7 +152,39 @@ public abstract class ContainerTransferHandler<C extends ContainerAbstract> impl
         return null;
     }
     
-    public static class Crafting<C extends ContainerCrafting> extends ContainerTransferHandler<C> {
+    public static class Inventory extends GridTransferHandler<ContainerInventory> {
+        
+        public Inventory() {
+            
+            super(ContainerInventory.class);
+        }
+        
+        @Override
+        protected int getInvStart(ContainerInventory container) {
+            
+            return container.hotStart;
+        }
+        
+        @Override
+        protected int getInvEnd(ContainerInventory container) {
+            
+            return container.invEnd;
+        }
+        
+        @Override
+        protected int getCraftStart(ContainerInventory container) {
+            
+            return ContainerInventory.CRAFT_START;
+        }
+        
+        @Override
+        protected int getCraftEnd(ContainerInventory container) {
+            
+            return container.craftEnd;
+        }
+    }
+    
+    public static class Crafting<C extends ContainerCrafting> extends GridTransferHandler<C> {
 
         public Crafting(Class<C> clas) {
             
@@ -181,67 +216,35 @@ public abstract class ContainerTransferHandler<C extends ContainerAbstract> impl
         }
     }
     
-    public static class Fuel<C extends ContainerFurnaceAbstract> extends ContainerTransferHandler<C> {
-
-        public Fuel(Class<C> clas) {
+    public static class Compost extends GridTransferHandler<ContainerCompost> {
+        
+        public Compost() {
             
-            super(clas);
+            super(ContainerCompost.class);
         }
-
+        
         @Override
-        protected int getInvStart(C container) {
-
-            return container.hotStart;
+        protected int getInvStart(ContainerCompost container) {
+            
+            return ContainerCompost.HOT_START;
         }
-
+        
         @Override
-        protected int getInvEnd(C container) {
-
+        protected int getInvEnd(ContainerCompost container) {
+            
             return container.invEnd;
         }
-
+        
         @Override
-        protected int getCraftStart(C container) {
-
-            return container.fuelStart;
-        }
-
-        @Override
-        protected int getCraftEnd(C container) {
-
-            return container.fuelEnd;
-        }
-    }
-    
-    public static class Cooking<C extends ContainerFurnaceAbstract> extends ContainerTransferHandler<C> {
-
-        public Cooking(Class<C> clas) {
+        protected int getCraftStart(ContainerCompost container) {
             
-            super(clas);
+            return ContainerCompost.INPUT_I;
         }
-
+        
         @Override
-        protected int getInvStart(C container) {
-
-            return container.hotStart;
-        }
-
-        @Override
-        protected int getInvEnd(C container) {
-
-            return container.invEnd;
-        }
-
-        @Override
-        protected int getCraftStart(C container) {
-
-            return ContainerFurnaceAbstract.INPUT_START;
-        }
-
-        @Override
-        protected int getCraftEnd(C container) {
-
-            return container.inputEnd;
+        protected int getCraftEnd(ContainerCompost container) {
+            
+            return ContainerCompost.INPUT_I;
         }
     }
 }

@@ -48,7 +48,7 @@ public class ItemSimple extends Item {
         
         if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
             
-            long birth = world == null ? 0 : world.getTotalWorldTime();
+            long birth = world == null ? -1 : world.getTotalWorldTime();
             stack.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(birth);
         }
         

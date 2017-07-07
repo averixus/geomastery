@@ -21,6 +21,6 @@ public class TEFurnaceCampfire extends TEFurnaceSingleAbstract {
 
     public TEFurnaceCampfire() {
 
-        super(GeoRecipes.CAMPFIRE);
+        super(GeoRecipes.CAMPFIRE_ALL);
     }
 }

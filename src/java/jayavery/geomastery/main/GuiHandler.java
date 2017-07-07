@@ -124,13 +124,13 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
-            return new ContainerFurnaceSingle(player, world,
+            return new ContainerFurnaceSingle.Camp(player, world,
                     (TEFurnaceAbstract<?>) te, pos);
         }
 
-        if (ID == GuiList.COOKFIRE.ordinal()) {
+        if (ID == GuiList.POTFIRE.ordinal()) {
 
-            return new ContainerFurnaceSingle(player, world,
+            return new ContainerFurnaceSingle.Pot(player, world,
                     (TEFurnaceAbstract<?>) te, pos);
         }
 
@@ -157,7 +157,7 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.INVENTORY.ordinal()) {
 
-            return new ContainerInventory(player, world);
+            return player.inventoryContainer;
         }
         
         if (ID == GuiList.CHEST.ordinal()) {
@@ -265,14 +265,14 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceSingle(player, world,
+            return new GuiFurnace(new ContainerFurnaceSingle.Camp(player, world,
                     (TEFurnaceCampfire) te, pos), GuiList.CAMPFIRE.name);
         }
 
-        if (ID == GuiList.COOKFIRE.ordinal()) {
+        if (ID == GuiList.POTFIRE.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceSingle(player, world,
-                    (TEFurnacePotfire) te, pos), GuiList.COOKFIRE.name);
+            return new GuiFurnace(new ContainerFurnaceSingle.Pot(player, world,
+                    (TEFurnacePotfire) te, pos), GuiList.POTFIRE.name);
         }
 
         if (ID == GuiList.CLAY.ordinal()) {
@@ -301,7 +301,7 @@ public class GuiHandler implements IGuiHandler {
 
         if (ID == GuiList.INVENTORY.ordinal()) {
 
-            return new GuiInventory(new ContainerInventory(player, world));
+            return new GuiInventory((ContainerInventory) player.inventoryContainer);
         }
         
         if (ID == GuiList.CHEST.ordinal()) {
@@ -343,7 +343,7 @@ public class GuiHandler implements IGuiHandler {
         SAWPIT("Sawpit"),
         ARMOURER("Armourer's Workshop"),
         CAMPFIRE("Campfire"),
-        COOKFIRE("Campfire with Pot"),
+        POTFIRE("Campfire with Pot"),
         CLAY("Clay Oven"),
         STONE("Stone Furnace"),
         DRYING("Drying Rack"),

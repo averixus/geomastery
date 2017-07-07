@@ -28,22 +28,22 @@ public class ContainerDrying extends ContainerAbstract {
     private static final int OUTPUT_X = 113;
 
     /** Index of first input slot. */
-    private static final int INPUT_START = 0;
+    public static final int INPUT_START = 0;
     /** Index of last input slot. */
-    private static final int INPUT_END = 1;
+    public static final int INPUT_END = 1;
     /** Index of first output slot. */
     private static final int OUTPUT_START = 2;
     /** Index of last output slot. */
     private static final int OUTPUT_END = 3;
     /** Index of first hotbar slot. */
-    private static final int HOT_START = 4;
+    public static final int HOT_START = 4;
     /** Index of last hotbar slot. */
     private static final int HOT_END = 12;
     /** Index of first inventory slot. */
     private static final int INV_START = 13;
 
     /** Index of last inventory slot. */
-    private final int invEnd;
+    public final int invEnd;
 
     /** Drying rack TileEntity of this container. */
     public final TEDrying drying;

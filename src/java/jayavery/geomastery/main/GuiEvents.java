@@ -8,6 +8,7 @@ package jayavery.geomastery.main;
 
 import jayavery.geomastery.capabilities.ICapPlayer;
 import jayavery.geomastery.container.ContainerInventory;
+import jayavery.geomastery.main.GuiHandler.GuiList;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -100,10 +101,14 @@ public class GuiEvents {
                 net.minecraft.client.gui.inventory.GuiInventory &&
                 player.inventoryContainer instanceof ContainerInventory) {
 
-            event.setGui(new
-                    jayavery.geomastery.gui.GuiInventory((ContainerInventory)
-                    player.inventoryContainer));
+            event.setCanceled(true);
+            player.openGui(Geomastery.instance, GuiList.INVENTORY.ordinal(), player.world, 0, 0, 0);
         }
+        
+
+        //event.setGui(new
+        //        jayavery.geomastery.gui.GuiInventory((ContainerInventory)
+        //        player.inventoryContainer));
     }
     
     /** Alters behaviour when keys are pressed. */

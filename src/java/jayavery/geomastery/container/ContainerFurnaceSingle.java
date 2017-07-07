@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Container for single-slot furnaces. */
-public class ContainerFurnaceSingle extends ContainerFurnaceAbstract {
+public abstract class ContainerFurnaceSingle extends ContainerFurnaceAbstract {
 
     /** X-position of start of input slots. */
     private static final int INPUT_X = 56;
@@ -51,5 +51,25 @@ public class ContainerFurnaceSingle extends ContainerFurnaceAbstract {
 
         this.addSlotToContainer(new SlotFurnaceOutput(this.furnace, 0,
                 OUTPUT_X, OUTPUT_Y));
+    }
+    
+    /** Campfire identifying class. */
+    public static class Camp extends ContainerFurnaceSingle {
+        
+        public Camp(EntityPlayer player, World world,
+                TEFurnaceAbstract<?> furnace, BlockPos pos) {
+            
+            super(player, world, furnace, pos);
+        }
+    }
+    
+    /** Pot fire identifying class. */
+    public static class Pot extends ContainerFurnaceSingle {
+        
+        public Pot(EntityPlayer player, World world,
+                TEFurnaceAbstract<?> furnace, BlockPos pos) {
+            
+            super(player, world, furnace, pos);
+        }
     }
 }

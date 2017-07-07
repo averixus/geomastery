@@ -6,8 +6,12 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
+import java.util.stream.Collectors;
+import jayavery.geomastery.crafting.CompostManager;
 import jayavery.geomastery.crafting.CookingManager;
 import jayavery.geomastery.crafting.CraftingManager;
+import jayavery.geomastery.items.ItemEdibleDecayable;
+import jayavery.geomastery.items.ItemSimple;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -26,27 +30,37 @@ public class GeoRecipes {
     public static final CraftingManager ARMOURER = new CraftingManager();
     public static final CraftingManager SAWPIT = new CraftingManager();
     
-    public static final CookingManager CAMPFIRE = new CookingManager(3);
-    public static final CookingManager COOKFIRE = new CookingManager(3);
-    public static final CookingManager CLAY = new CookingManager(2);
-    public static final CookingManager STONE = new CookingManager(1);
+    // To use for recipe checks
+    public static final CookingManager CAMPFIRE_ALL = new CookingManager(3);
+    public static final CookingManager POTFIRE_ALL = new CookingManager(3);
+    public static final CookingManager CLAY_ALL = new CookingManager(2);
+    public static final CookingManager STONE_ALL = new CookingManager(1);
+    
+    // To define minimum recipe levels, e.g. for JEI
+    public static final CookingManager CAMPFIRE_ONLY = new CookingManager(3);
+    public static final CookingManager POTFIRE_ONLY = new CookingManager(3);
+    public static final CookingManager CLAY_ONLY = new CookingManager(2);
+    public static final CookingManager STONE_ONLY = new CookingManager(1);
 
     public static final CookingManager DRYING = new CookingManager(1);
+    
+    public static final CompostManager COMPOST = new CompostManager();
 
     /** All metals usable in crafting for reference in multiple recipes. */
     private static final Item[] METALS = {GeoItems.INGOT_COPPER, GeoItems.INGOT_TIN, GeoItems.INGOT_STEEL};
     /** All skins for reference in multiple recipes. */
     private static final Item[] SKINS = {GeoItems.SKIN_BEAR, GeoItems.SKIN_COW, GeoItems.SKIN_PIG, GeoItems.SKIN_SHEEP, GeoItems.SKIN_WOLF};
+    /** All items that can be rot. */
+    private static final Item[] ROTTABLES = GeoItems.ITEMS.stream().filter((i) -> i instanceof ItemEdibleDecayable).collect(Collectors.toSet()).toArray(new Item[0]);
     
     /** Cooking managers for campfire and higher furnace levels. */
-    private static final CookingManager[] CAMPFIRE_PLUS = {CAMPFIRE, COOKFIRE, CLAY, STONE};
+    private static final CookingManager[] CAMPFIRE_PLUS = {CAMPFIRE_ONLY, CAMPFIRE_ALL, POTFIRE_ALL, CLAY_ALL, STONE_ALL};
     /** Cooking managers for cookfire and higher furnace levels. */
-    private static final CookingManager[] COOKFIRE_PLUS = {COOKFIRE, CLAY, STONE};
+    private static final CookingManager[] POTFIRE_PLUS = {POTFIRE_ONLY, POTFIRE_ALL, CLAY_ALL, STONE_ALL};
     /** Cooking managers for clay furnace and higher furnace levels. */
-    private static final CookingManager[] CLAY_PLUS = {CLAY, STONE};
-    
-    /** Placeholder item to define when recipes need any rotten item. */
-    public static final Item ROT = new Item();
+    private static final CookingManager[] CLAY_PLUS = {CLAY_ONLY, CLAY_ALL, STONE_ALL};
+    /** Cooking managers for stone furnace only. */
+    private static final CookingManager[] STONE_PLUS = {STONE_ONLY, STONE_ALL};
     
     public static void init() {
 
@@ -65,6 +79,7 @@ public class GeoRecipes {
         setupClay();
         setupStone();
         setupDrying();
+        setupCompost();
     }
     
     /** Adds all recipes to inventory. */
@@ -87,8 +102,12 @@ public class GeoRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.WALL_MUD, 2), "M", "M", 'M', GeoItems.MUDBRICKS);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CLAY, 6), "C", 'C', GeoItems.LOOSE_CLAY);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.LOOSE_CLAY), "CCC", "CCC", 'C', GeoItems.CLAY);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.COMPOSTHEAP), "PRP", "PPP", 'P', GeoItems.POLE, 'R', ROT);
         INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_POTFIRE), "SPS", "SSS", 'S', Items.STICK, 'P', GeoItems.POT_CLAY);
+        
+        for (Item rottable : ROTTABLES) {
+            
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.COMPOSTHEAP), "PRP", "PPP", 'P', GeoItems.POLE, 'R', ItemSimple.rottenStack(rottable, 1));
+        }
 
         for (Item skin : SKINS) {
             
@@ -119,9 +138,9 @@ public class GeoRecipes {
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.PICKAXE_FLINT),  "F", "S", "S", 'F', GeoItems.PICKHEAD_FLINT, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.SHEARS_FLINT), "F ", "FF", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.SPEAR_FLINT), "F", "S", "S", 'F', GeoItems.SPEARHEAD_FLINT, 'S', Items.STICK);
-        KNAPPING.addShapedRecipe(new ItemStack(GeoItems.ARROW_FLINT, 5), "F", "S", "E", 'F', GeoItems.ARROWHEAT_FLINT, 'S', Items.STICK, 'E', Items.FEATHER);
+        KNAPPING.addShapedRecipe(new ItemStack(GeoItems.ARROW_FLINT, 5), "F", "S", "E", 'F', GeoItems.ARROWHEAD_FLINT, 'S', Items.STICK, 'E', Items.FEATHER);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.WALL_ROUGH, 2), "R", "R", 'R', GeoItems.RUBBLE);
-        KNAPPING.addShapedRecipe(new ItemStack(GeoItems.ARROWHEAT_FLINT), "F", 'F', Items.FLINT);
+        KNAPPING.addShapedRecipe(new ItemStack(GeoItems.ARROWHEAD_FLINT), "F", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.AXEHEAD_FLINT), "F ", "FF", "F ", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.PICKHEAD_FLINT), " F ", "FFF", " F ", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.SPEARHEAD_FLINT), " F ", " F ", "F F", 'F', Items.FLINT);
@@ -323,7 +342,7 @@ public class GeoRecipes {
     /** Adds all recipes to cookfire and higher levels. */
     private static void setupCookfire() {
 
-        for (CookingManager recipes : COOKFIRE_PLUS) {
+        for (CookingManager recipes : POTFIRE_PLUS) {
             
             recipes.addCookingRecipe(new ItemStack(Items.REEDS), new ItemStack(GeoItems.SUGAR), 60);
             recipes.addCookingRecipe(new ItemStack(GeoItems.CHICKPEAS), new ItemStack(GeoItems.CHICKPEAS_BOILED), 60);
@@ -351,12 +370,15 @@ public class GeoRecipes {
 
     /** Adds all recipes to stone furnace and higher levels. */
     private static void setupStone() {
+        
+        for (CookingManager recipes : STONE_PLUS) {
 
-        STONE.addCookingRecipe(new ItemStack(GeoItems.ORE_IRON), new ItemStack(GeoItems.INGOT_STEEL), 400);
-        STONE.addCookingRecipe(new ItemStack(GeoItems.ORE_SILVER), new ItemStack(GeoItems.INGOT_SILVER), 300);
-        STONE.addCookingRecipe(new ItemStack(GeoItems.ORE_GOLD), new ItemStack(Items.GOLD_INGOT), 200);
-        STONE.addCookingRecipe(new ItemStack(GeoItems.LOOSE_SAND), new ItemStack(GeoItems.GLASS), 200);
-        STONE.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
+            recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_IRON), new ItemStack(GeoItems.INGOT_STEEL), 400);
+            recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_SILVER), new ItemStack(GeoItems.INGOT_SILVER), 300);
+            recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_GOLD), new ItemStack(Items.GOLD_INGOT), 200);
+            recipes.addCookingRecipe(new ItemStack(GeoItems.LOOSE_SAND), new ItemStack(GeoItems.GLASS), 200);
+            recipes.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
+        }
     }
 
     /** Adds all recipes to drying rack. */
@@ -369,5 +391,13 @@ public class GeoRecipes {
             
             DRYING.addCookingRecipe(new ItemStack(skin), new ItemStack(Items.LEATHER), 4000);
         }
+    }
+    
+    /** Adds all recipes to compost heap. */
+    private static void setupCompost() {
+        
+        COMPOST.addWet(GeoItems.ITEMS.stream().filter((i) -> i instanceof ItemEdibleDecayable).map(ItemStack::new).collect(Collectors.toSet()).toArray(new ItemStack[0]));
+        COMPOST.addWet(new ItemStack(GeoItems.WOOL), new ItemStack(Items.BONE));
+        COMPOST.addDry(new ItemStack(GeoItems.LEAVES), new ItemStack(Items.STICK), new ItemStack(GeoItems.LOG), new ItemStack(GeoItems.POLE), new ItemStack(GeoItems.THICKLOG), new ItemStack(Items.REEDS));
     }
 }

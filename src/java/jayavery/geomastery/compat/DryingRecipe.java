@@ -11,21 +11,31 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
-public class CookingRecipeWrapper extends BlankRecipeWrapper {
+public class DryingRecipe {
     
-    private final ItemStack input;
-    private final ItemStack output;
+    final ItemStack input;
+    final ItemStack output;
     
-    public CookingRecipeWrapper(Entry<ItemStack, ItemStack> entry) {
+    public DryingRecipe(Entry<ItemStack, ItemStack> entry) {
         
         this.input = entry.getKey();
         this.output = entry.getValue();
     }
     
-    @Override
-    public void getIngredients(IIngredients ingredients) {
+    public static class Wrapper extends BlankRecipeWrapper {
         
-        ingredients.setInput(ItemStack.class, this.input);
-        ingredients.setOutput(ItemStack.class, this.output);
+        private final DryingRecipe recipe;
+        
+        public Wrapper(DryingRecipe recipe) {
+            
+            this.recipe = recipe;
+        }
+        
+        @Override
+        public void getIngredients(IIngredients ingredients) {
+            
+            ingredients.setInput(ItemStack.class, this.recipe.input);
+            ingredients.setOutput(ItemStack.class, this.recipe.output);
+        }
     }
 }

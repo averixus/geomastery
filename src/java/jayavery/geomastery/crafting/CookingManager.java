@@ -41,6 +41,7 @@ public class CookingManager {
         this.cookingTimes.put(input, cookTime * this.multiplier);
     }
     
+    /** Adds a fuel. */
     public void addFuel(ItemStack fuel, int time) {
         
         this.fuels.put(fuel, time);

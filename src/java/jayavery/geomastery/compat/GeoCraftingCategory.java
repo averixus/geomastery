@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2017 Jay Avery
+  * Copyright (C) 2017 Jay Avery
  * 
  * This file is part of Geomastery. Geomastery is free software: distributed
  * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
@@ -10,12 +10,12 @@ import jayavery.geomastery.main.Geomastery;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.plugins.vanilla.crafting.CraftingRecipeCategory;
 
-public class GeoCraftingRecipeCategory extends CraftingRecipeCategory {
+public class GeoCraftingCategory extends CraftingRecipeCategory {
 
     private final String id;
     private final String name;
     
-    public GeoCraftingRecipeCategory(IGuiHelper guiHelper, String id, String name) {
+    public GeoCraftingCategory(IGuiHelper guiHelper, String id, String name) {
         
         super(guiHelper);
         this.id = id;
@@ -37,6 +37,6 @@ public class GeoCraftingRecipeCategory extends CraftingRecipeCategory {
     @Override
     public String getModName() {
         
-        return Geomastery.MODID;
+        return Geomastery.NAME;
     }
 }

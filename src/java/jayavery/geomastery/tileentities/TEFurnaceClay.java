@@ -27,7 +27,7 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
 
     public TEFurnaceClay() {
 
-        super(GeoRecipes.CLAY, 4);
+        super(GeoRecipes.CLAY_ALL, 4);
     }
     
     @Override

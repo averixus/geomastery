@@ -13,6 +13,6 @@ public class TEFurnacePotfire extends TEFurnaceSingleAbstract {
 
     public TEFurnacePotfire() {
 
-        super(GeoRecipes.COOKFIRE);
+        super(GeoRecipes.POTFIRE_ALL);
     }
 }

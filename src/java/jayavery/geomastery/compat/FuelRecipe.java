@@ -17,34 +17,41 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class FuelRecipeWrapper extends BlankRecipeWrapper {
+public class FuelRecipe {
 
-    private final ItemStack fuel;
-    private final int time;
-    private final String level;
-    private final IDrawableAnimated flame;
+    final ItemStack fuel;
+    final String level;
+    final IDrawableAnimated flame;
     
-    public FuelRecipeWrapper(Pair<Entry<ItemStack, Integer>, String> pair) {
+    public FuelRecipe(ItemStack fuel, String level) {
         
-        this.fuel = pair.getLeft().getKey();
-        this.time = pair.getLeft().getValue();
-        this.level = pair.getRight();
+        this.fuel = fuel;
+        this.level = level;
         ResourceLocation furnaceBackgroundLocation = new ResourceLocation("minecraft", "textures/gui/container/furnace.png");
         IDrawableStatic flameDrawable = GeoJei.guiHelper.createDrawable(furnaceBackgroundLocation, 176, 0, 14, 14);
         this.flame = GeoJei.guiHelper.createAnimatedDrawable(flameDrawable, 200, IDrawableAnimated.StartDirection.TOP, true);
     }
     
-    @Override
-    public void getIngredients(IIngredients ingredients) {
-
-        ingredients.setInput(ItemStack.class, this.fuel);
-    }
-    
-    @Override
-    public void drawInfo(Minecraft minecraft, int width, int height, int mouseX, int mouseY) {
+    public static class Wrapper extends BlankRecipeWrapper {
         
-        this.flame.draw(minecraft, 2, 0);
-        minecraft.fontRendererObj.drawString("Minimum furnace level: " + this.level, 24, 8, Color.gray.getRGB());
-        minecraft.fontRendererObj.drawString("Base burn time: " + (this.time / 20) + "s", 24, 18, Color.gray.getRGB());
+        private final FuelRecipe recipe;
+        
+        public Wrapper(FuelRecipe recipe) {
+            
+            this.recipe = recipe;
+        }
+    
+        @Override
+        public void getIngredients(IIngredients ingredients) {
+    
+            ingredients.setInput(ItemStack.class, this.recipe.fuel);
+        }
+        
+        @Override
+        public void drawInfo(Minecraft minecraft, int width, int height, int mouseX, int mouseY) {
+            
+            this.recipe.flame.draw(minecraft, 2, 0);
+            minecraft.fontRendererObj.drawString("Min: " + this.recipe.level, 24, 4, Color.gray.getRGB());
+        }
     }
 }

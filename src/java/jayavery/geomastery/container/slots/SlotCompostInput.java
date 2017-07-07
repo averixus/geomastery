@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.container.slots;
 
+import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.tileentities.TECompost;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -27,8 +28,7 @@ public class SlotCompostInput extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-        return TECompost.isNitrogen(stack) ||
-                TECompost.isCarbon(stack);
+        return GeoRecipes.COMPOST.getType(stack) != null;
     }
     
     @Override

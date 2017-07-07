@@ -9,6 +9,7 @@ package jayavery.geomastery.container;
 import jayavery.geomastery.blocks.BlockComplexAbstract;
 import jayavery.geomastery.container.slots.SlotCompostInput;
 import jayavery.geomastery.container.slots.SlotCompostOutput;
+import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.tileentities.TECompost;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -27,18 +28,18 @@ public class ContainerCompost extends ContainerAbstract {
     private static final int OUTPUT_X = 134;
     
     /** Index of input slot. */
-    private static final int INPUT_I = 0;
+    public static final int INPUT_I = 0;
     /** Index of output slot. */
     private static final int OUTPUT_I = 1;
     /** Index of first hotbar slot. */
-    private static final int HOT_START = 2;
+    public static final int HOT_START = 2;
     /** Index of last hotbar slot. */
     private static final int HOT_END = 10;
     /** Index of first inventory slot. */
     private static final int INV_START = 11;
     
     /** Index of last inventory slot. */
-    private final int invEnd;
+    public final int invEnd;
     /** Drying rack TileEntity of this container. */
     public final TECompost compost;
     /** Position of this container. */
@@ -96,8 +97,7 @@ public class ContainerCompost extends ContainerAbstract {
                 
             } else if (index != INPUT_I) {
                 
-                if (TECompost.isCarbon(inSlot) ||
-                        TECompost.isNitrogen(inSlot)) {
+                if (GeoRecipes.COMPOST.getType(inSlot) != null) {
                     
                     if (!this.mergeItemStack(inSlot,
                             INPUT_I, INPUT_I + 1, false)) {

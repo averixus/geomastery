@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  * Copyright (C) 2017 Jay Avery
  * 
  * This file is part of Geomastery. Geomastery is free software: distributed
@@ -137,23 +138,7 @@ public class ShapedRecipe extends ShapedRecipes {
 
                 ItemStack inInv = inv.getStackInRowAndColumn(i, j);
                 
-                if (required.getItem() == GeoRecipes.ROT) {
-                    
-                    if (inInv.getItem() instanceof ItemEdibleDecayable ||
-                            inInv.getItem() instanceof ItemCarcassDecayable) {
-                        
-                        if (!inInv.getCapability(GeoCaps.CAP_DECAY, null)
-                                .isRot(world)) {
-                            
-                            return false;
-                        }
-                        
-                    } else {
-                        
-                        return false;
-                    }
-                    
-                } else if (inInv != ItemStack.EMPTY ||
+                if (inInv != ItemStack.EMPTY ||
                         required != ItemStack.EMPTY) {
 
                     if (inInv.isEmpty() && !required.isEmpty() ||
@@ -164,6 +149,15 @@ public class ShapedRecipe extends ShapedRecipes {
 
                     if (required.getItem() != inInv.getItem()) {
 
+                        return false;
+                    }
+                    
+                    if (required.hasCapability(GeoCaps.CAP_DECAY, null) &&
+                            inInv.hasCapability(GeoCaps.CAP_DECAY, null) &&
+                            (required.getCapability(GeoCaps.CAP_DECAY, null)
+                            .isRot(world) != inInv.getCapability(GeoCaps
+                            .CAP_DECAY, null).isRot(world))) {
+                        
                         return false;
                     }
 
