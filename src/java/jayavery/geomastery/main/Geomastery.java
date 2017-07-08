@@ -25,6 +25,7 @@ import jayavery.geomastery.packets.CPacketBackpack;
 import jayavery.geomastery.packets.CPacketCompost;
 import jayavery.geomastery.packets.CPacketContainer;
 import jayavery.geomastery.packets.CPacketCrafting;
+import jayavery.geomastery.packets.CPacketDebug;
 import jayavery.geomastery.packets.CPacketDrying;
 import jayavery.geomastery.packets.CPacketFloor;
 import jayavery.geomastery.packets.CPacketFurnace;
@@ -90,7 +91,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.0.1-a1";
+    public static final String VERSION = "1.0.2";
     public static final String NAME = "Geomastery";
     public static final String MC_VER = "1.11.2-13.20.0.2228";
     public static final String UPDATE = "https://gist.githubusercontent.com/JayAvery/97013d9f3a4d3dd904fb608899d9eadd/raw/";
@@ -179,6 +180,7 @@ public class Geomastery {
         cPacket(CPacketYoke.Handler.class, CPacketYoke.class);
         cPacket(CPacketLid.Handler.class, CPacketLid.class);
         cPacket(CPacketCompost.Handler.class, CPacketCompost.class);
+        cPacket(CPacketDebug.Handler.class, CPacketDebug.class);
         
         LOG.info("Registering tileentities");
         tileentity(TEFurnaceCampfire.class, "furnace_campfire");

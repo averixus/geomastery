@@ -4,10 +4,11 @@
  * This file is part of Geomastery. Geomastery is free software: distributed
  * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
  ******************************************************************************/
-package jayavery.geomastery.compat;
+package jayavery.geomastery.compat.jei;
 
 import java.util.List;
 import jayavery.geomastery.main.Geomastery;
+import jayavery.geomastery.main.GuiHandler.GuiList;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -18,26 +19,51 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GeoInventoryCategory extends BlankRecipeCategory<IRecipeWrapper> {
+/** Category for Geomastery inventory crafting recipes. */
+public class GeoInventoryCategory
+        extends BlankRecipeCategory<GeoCraftingCategory.Wrapper> {
 
+    /** Location of background image. */
+    private static final ResourceLocation BG_RES = new ResourceLocation(
+            Geomastery.MODID, "textures/gui/inventory_0.png");
+    /** X position of background image. */
+    private static final int BG_X = 79;
+    /** Y position of background image. */
+    private static final int BG_Y = 17;
+    /** Width of background image. */
+    private static final int BG_WIDTH = 92;
+    /** Height of background image. */
+    private static final int BG_HEIGHT = 36;
+    
+    /** Location of icon image. */
+    private static final ResourceLocation ICON_RES = new ResourceLocation(
+            Geomastery.MODID, "textures/logo_small.jpg");
+    /** Start position of icon image. */
+    private static final int ICON_START = 0;
+    /** Size of icon image. */
+    private static final int ICON_SIZE = 14;
+    
+    /** Recipe tab name. */
+    private final String name = GuiList.INVENTORY.name;
+    /** Internal unique id. */
+    private final String uid = Geomastery.MODID + ":inventory";
+    /** Background image. */
     private final IDrawable background;
+    /** Recipe tab icon. */
     private final IDrawable icon;
-    private final String name = "Inventory";
-    private final String id = "geomastery:inventory";
-    private final ICraftingGridHelper gridHelper;
     
     public GeoInventoryCategory() {
         
-        ResourceLocation res = new ResourceLocation(Geomastery.MODID, "textures/gui/inventory_0.png");
-        this.background = GeoJei.guiHelper.createDrawable(res, 79, 17, 92, 36);
-        this.icon = GeoJei.guiHelper.createDrawable(new ResourceLocation(Geomastery.MODID, "textures/logo_small.jpg"), 0, 0, 14, 14, 14, 14);
-        this.gridHelper = GeoJei.guiHelper.createCraftingGridHelper(0, 1);
+        this.background = GeoJei.guiHelper.createDrawable(BG_RES,
+                BG_X, BG_Y, BG_WIDTH, BG_HEIGHT);
+        this.icon = GeoJei.guiHelper.createDrawable(ICON_RES, ICON_START,
+                ICON_START, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
     }
     
     @Override
     public String getUid() {
         
-        return this.id;
+        return this.uid;
     }
     
     @Override
@@ -65,7 +91,8 @@ public class GeoInventoryCategory extends BlankRecipeCategory<IRecipeWrapper> {
     }
     
     @Override
-    public void setRecipe(IRecipeLayout layout, IRecipeWrapper wrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout layout,
+            GeoCraftingCategory.Wrapper wrapper, IIngredients ingredients) {
         
         IGuiItemStackGroup stacks = layout.getItemStacks();        
         stacks.init(6, false, 74, 10);
@@ -80,6 +107,5 @@ public class GeoInventoryCategory extends BlankRecipeCategory<IRecipeWrapper> {
         }
         
         stacks.set(ingredients);
-        
     }
 }

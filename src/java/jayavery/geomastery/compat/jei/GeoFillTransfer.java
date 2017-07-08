@@ -4,7 +4,7 @@
  * This file is part of Geomastery. Geomastery is free software: distributed
  * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
  ******************************************************************************/
-package jayavery.geomastery.compat;
+package jayavery.geomastery.compat.jei;
 
 import jayavery.geomastery.container.ContainerAbstract;
 import jayavery.geomastery.container.ContainerDrying;
@@ -19,28 +19,36 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
-public abstract class FillTransferHandler<C extends ContainerAbstract> implements IRecipeTransferHandler<C> {
+/** Transfer handler for Geomastery filling containers. */
+public abstract class GeoFillTransfer<C extends ContainerAbstract>
+        implements IRecipeTransferHandler<C> {
 
+    /* The class this transfer applies to. */
     private final Class<C> clas;
     
-    public FillTransferHandler(Class<C> clas) {
+    public GeoFillTransfer(Class<C> clas) {
         
         this.clas = clas;
     }
     
-    public static <T extends ContainerFurnaceAbstract> FillTransferHandler.Fuel<T> fuel(Class<T> clas) {
+    /** Fuel transfer object factory. */
+    public static <T extends ContainerFurnaceAbstract> GeoFillTransfer.Fuel<T>
+            fuel(Class<T> clas) {
         
-        return new FillTransferHandler.Fuel<T>(clas);
+        return new GeoFillTransfer.Fuel<T>(clas);
     }
     
-    public static <T extends ContainerFurnaceAbstract> FillTransferHandler.Cooking<T> cook(Class<T> clas) {
+    /** Cooking transfer object factory. */
+    public static <T extends ContainerFurnaceAbstract> GeoFillTransfer.Cooking<T>
+            cook(Class<T> clas) {
         
-        return new FillTransferHandler.Cooking<T>(clas);
+        return new GeoFillTransfer.Cooking<T>(clas);
     }
     
-    public static FillTransferHandler.Drying dry() {
+    /** Drying transfer object factory. */
+    public static GeoFillTransfer.Drying dry() {
         
-        return new FillTransferHandler.Drying();
+        return new GeoFillTransfer.Drying();
     }
     
     @Override
@@ -49,22 +57,32 @@ public abstract class FillTransferHandler<C extends ContainerAbstract> implement
         return this.clas;
     }
     
+    /** @return Start index of the inventory to draw from. */
     protected abstract int getInvStart(C container);
+    /** @return End index of the inventory to draw from. */
     protected abstract int getInvEnd(C container);
+    /** @return Start index of the inventory to fill. */
     protected abstract int getInputStart(C container);
+    /** @return End index of the inventory to fill. */
     protected abstract int getInputEnd(C container);
     
     @Override
-    public IRecipeTransferError transferRecipe(C container, IRecipeLayout layout, EntityPlayer player, boolean maxTransfer, boolean doTransfer) {
+    public IRecipeTransferError transferRecipe(C container,
+            IRecipeLayout layout, EntityPlayer player,
+            boolean maxTransfer, boolean doTransfer) {
         
-        ItemStack input = layout.getItemStacks().getGuiIngredients().values().stream().filter((i) -> i.isInput()).findAny().get().getDisplayedIngredient();
+        ItemStack input = layout.getItemStacks().getGuiIngredients().values()
+                .stream().filter((i) -> i.isInput()).findAny()
+                .get().getDisplayedIngredient();
         
+        // Search for a valid input
         int foundInput = -1;
         
         for (int i = this.getInvStart(container);
                 i <= this.getInvEnd(container); i++) {
             
-            if (GeoJei.stackHelper.isEquivalent(container.getSlot(i).getStack(), input)) {
+            if (GeoJei.stackHelper.isEquivalent(container
+                    .getSlot(i).getStack(), input)) {
                 
                 foundInput = i;
                 break;
@@ -73,10 +91,12 @@ public abstract class FillTransferHandler<C extends ContainerAbstract> implement
         
         if (foundInput == -1) {
             
-            String message = Translator.translateToLocal("jei.tooltip.error.recipe.transfer.missing");
+            String message = Translator.translateToLocal(
+                    "jei.tooltip.error.recipe.transfer.missing");
             return GeoJei.transferHelper.createUserErrorWithTooltip(message);
         }
         
+        // Search for an empty space to fill
         int foundSpace = -1;
         
         for (int i = this.getInputStart(container);
@@ -92,19 +112,23 @@ public abstract class FillTransferHandler<C extends ContainerAbstract> implement
         
         if (foundSpace == -1) {
             
-            String message = Translator.translateToLocal("jei.tooltip.error.recipe.transfer.inventory.full");
+            String message = Translator.translateToLocal(
+                    "jei.tooltip.error.recipe.transfer.inventory.full");
             return GeoJei.transferHelper.createUserErrorWithTooltip(message);
         }
 
         if (doTransfer) {
             
-            Geomastery.NETWORK.sendToServer(new SPacketJei(foundSpace, foundInput, maxTransfer));
+            Geomastery.NETWORK.sendToServer(new SPacketJei(foundSpace,
+                    foundInput, maxTransfer));
         }
         
         return null;
     }
     
-    public static class Fuel<C extends ContainerFurnaceAbstract> extends FillTransferHandler<C> {
+    /** Furnace container transfer handler for fuels. */
+    public static class Fuel<C extends ContainerFurnaceAbstract>
+            extends GeoFillTransfer<C> {
 
         public Fuel(Class<C> clas) {
             
@@ -136,7 +160,9 @@ public abstract class FillTransferHandler<C extends ContainerAbstract> implement
         }
     }
     
-    public static class Cooking<C extends ContainerFurnaceAbstract> extends FillTransferHandler<C> {
+    /** Furnace container transfer handler for cooking inputs. */
+    public static class Cooking<C extends ContainerFurnaceAbstract>
+            extends GeoFillTransfer<C> {
 
         public Cooking(Class<C> clas) {
             
@@ -168,7 +194,8 @@ public abstract class FillTransferHandler<C extends ContainerAbstract> implement
         }
     }
     
-    public static class Drying extends FillTransferHandler<ContainerDrying> {
+    /** Drying container transfer handler. */
+    public static class Drying extends GeoFillTransfer<ContainerDrying> {
         
         public Drying() {
             

@@ -4,7 +4,7 @@
  * This file is part of Geomastery. Geomastery is free software: distributed
  * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
  ******************************************************************************/
-package jayavery.geomastery.compat;
+package jayavery.geomastery.compat.jei;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,28 +30,35 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public abstract class GridTransferHandler<C extends ContainerAbstract> implements IRecipeTransferHandler<C> {
+/** Transfer handler for Geomastery crafting grid containers. */
+public abstract class GeoGridTransfer<C extends ContainerAbstract>
+        implements IRecipeTransferHandler<C> {
 
+    /** The class this transfer handler applies to. */
     private final Class<C> clas;
     
-    public GridTransferHandler(Class<C> clas) {
+    public GeoGridTransfer(Class<C> clas) {
         
         this.clas = clas;
     }
     
-    public static <T extends ContainerCrafting> GridTransferHandler.Crafting<T> craft(Class<T> clas) {
+    /** Crafting transfer object factory. */
+    public static <T extends ContainerCrafting> GeoGridTransfer.Crafting<T>
+            craft(Class<T> clas) {
         
-        return new GridTransferHandler.Crafting<T>(clas);
+        return new GeoGridTransfer.Crafting<T>(clas);
     }
     
-    public static GridTransferHandler.Inventory inv() {
+    /** Inventory transfer object factory. */
+    public static GeoGridTransfer.Inventory inv() {
         
-        return new GridTransferHandler.Inventory();
+        return new GeoGridTransfer.Inventory();
     }
     
-    public static GridTransferHandler.Compost comp() {
+    /** Compost transfer object factory. */
+    public static GeoGridTransfer.Compost comp() {
         
-        return new GridTransferHandler.Compost();
+        return new GeoGridTransfer.Compost();
     }
 
     @Override
@@ -60,14 +67,22 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
         return this.clas;
     }
     
+    /** @return Start index of the inventory to draw from. */
     protected abstract int getInvStart(C container);
+    /** @return End index of the inventory to draw from. */
     protected abstract int getInvEnd(C container);
+    /** @return Start index of the crafting grid to fill. */
     protected abstract int getCraftStart(C container);
+    /** @return End index of the crafting grid to fill. */
     protected abstract int getCraftEnd(C container);
     
     @Override
-    public IRecipeTransferError transferRecipe(C container, IRecipeLayout recipeLayout, EntityPlayer player, boolean maxTransfer, boolean doTransfer) {
+    public IRecipeTransferError transferRecipe(C container,
+            IRecipeLayout layout, EntityPlayer player,
+            boolean maxTransfer, boolean doTransfer) {
         
+        // Mostly copied from JEI default, tweaked for variable sized grids
+
         Map<Integer, Slot> inventory = Maps.newHashMap();
         
         for (int i = this.getInvStart(container);
@@ -85,17 +100,19 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
         }
         
         int inputs = 0;
-        IGuiItemStackGroup recipeStacks = recipeLayout.getItemStacks();
+        IGuiItemStackGroup recipeStacks = layout.getItemStacks();
         
-        for (IGuiIngredient<ItemStack> ingredient : recipeStacks.getGuiIngredients().values()) {
+        for (IGuiIngredient<ItemStack> ingredient : recipeStacks
+                .getGuiIngredients().values()) {
             
-            if (ingredient.isInput() && !ingredient.getAllIngredients().isEmpty()) {
+            if (ingredient.isInput() && !ingredient
+                    .getAllIngredients().isEmpty()) {
                 
                 inputs++;
             }
         }
         
-        Map<Integer, ItemStack> availableStacks = Maps.newHashMap();
+        Map<Integer, ItemStack> available = Maps.newHashMap();
         int filledSlots = 0;
         int emptySlots = 0;
         
@@ -106,7 +123,7 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
             if (!stack.isEmpty()) {
                 
                 filledSlots++;
-                availableStacks.put(slot.slotNumber, stack.copy());
+                available.put(slot.slotNumber, stack.copy());
             }
         }
         
@@ -116,7 +133,7 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
             
             if (!stack.isEmpty()) {
                 
-                availableStacks.put(slot.slotNumber, stack.copy());
+                available.put(slot.slotNumber, stack.copy());
                 
             } else {
                 
@@ -126,16 +143,20 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
         
         if (filledSlots - inputs > emptySlots) {
             
-            String message = Translator.translateToLocal("jei.tooltip.error.recipe.transfer.inventory.full");
+            String message = Translator.translateToLocal(
+                    "jei.tooltip.error.recipe.transfer.inventory.full");
             return GeoJei.transferHelper.createUserErrorWithTooltip(message);
         }
         
-        MatchingItemsResult matchResult = GeoJei.stackHelper.getMatchingItems(availableStacks, recipeStacks.getGuiIngredients());
+        MatchingItemsResult match = GeoJei.stackHelper
+                .getMatchingItems(available, recipeStacks.getGuiIngredients());
         
-        if (matchResult.missingItems.size() > 0) {
+        if (match.missingItems.size() > 0) {
             
-            String message = Translator.translateToLocal("jei.tooltip.error.recipe.transfer.missing");
-            return GeoJei.transferHelper.createUserErrorForSlots(message, matchResult.missingItems);
+            String message = Translator.translateToLocal(
+                    "jei.tooltip.error.recipe.transfer.missing");
+            return GeoJei.transferHelper.createUserErrorForSlots(message,
+                    match.missingItems);
         }
         
         List<Integer> craftSlots = Lists.newArrayList(crafting.keySet());
@@ -145,14 +166,16 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
         
         if (doTransfer) {
             
-            PacketRecipeTransfer packet = new PacketRecipeTransfer(matchResult.matchingItems, craftSlots, invSlots, maxTransfer);
+            PacketRecipeTransfer packet = new PacketRecipeTransfer(
+                    match.matchingItems, craftSlots, invSlots, maxTransfer);
             JustEnoughItems.getProxy().sendPacketToServer(packet);
         }
         
         return null;
     }
     
-    public static class Inventory extends GridTransferHandler<ContainerInventory> {
+    /** Inventory container transfer handler. */
+    public static class Inventory extends GeoGridTransfer<ContainerInventory> {
         
         public Inventory() {
             
@@ -184,7 +207,9 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
         }
     }
     
-    public static class Crafting<C extends ContainerCrafting> extends GridTransferHandler<C> {
+    /** Crafting container transfer handler. */
+    public static class Crafting<C extends ContainerCrafting>
+            extends GeoGridTransfer<C> {
 
         public Crafting(Class<C> clas) {
             
@@ -216,7 +241,8 @@ public abstract class GridTransferHandler<C extends ContainerAbstract> implement
         }
     }
     
-    public static class Compost extends GridTransferHandler<ContainerCompost> {
+    /** Compost heap container transfer handler. */
+    public static class Compost extends GeoGridTransfer<ContainerCompost> {
         
         public Compost() {
             

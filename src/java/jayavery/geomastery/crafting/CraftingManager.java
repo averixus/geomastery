@@ -24,11 +24,11 @@ import net.minecraft.world.World;
 public class CraftingManager {
 
     /** List of recipes. */
-    private final List<IRecipe> recipes;
+    private final List<ShapedRecipe> recipes;
 
     public CraftingManager() {
 
-        this.recipes = Lists.<IRecipe>newArrayList();
+        this.recipes = Lists.<ShapedRecipe>newArrayList();
     }
 
     /** Adds a grid shaped recipe. */
@@ -115,38 +115,6 @@ public class CraftingManager {
         return recipe;
     }
 
-    /** Adds a shapeless recipes. */
-    public void addShapelessRecipe(ItemStack stack,
-            Object... recipeComponents) {
-
-        List<ItemStack> list = Lists.<ItemStack>newArrayList();
-
-        for (Object object : recipeComponents) {
-
-            if (object instanceof ItemStack) {
-
-                list.add(((ItemStack) object).copy());
-
-            } else if (object instanceof Item) {
-
-                list.add(new ItemStack((Item) object));
-
-            } else {
-
-                if (!(object instanceof Block)) {
-
-                    throw new IllegalArgumentException(
-                            "Invalid shapeless recipe: unknown type "
-                            + object.getClass().getName() + "!");
-                }
-
-                list.add(new ItemStack((Block) object));
-            }
-        }
-
-        this.recipes.add(new ShapelessRecipes(stack, list));
-    }
-
     /** Gets the output recipe for the InventoryCrafting. 
      * @return The ItemStack result of the recipe. */
     public ItemStack findMatchingRecipe(InventoryCrafting craftMatrix,
@@ -208,7 +176,7 @@ public class CraftingManager {
         return result;
     }
 
-    public List<IRecipe> getRecipeList() {
+    public List<ShapedRecipe> getRecipeList() {
 
         return this.recipes;
     }

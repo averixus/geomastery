@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.capabilities;
 
+import java.util.List;
 import jayavery.geomastery.items.ItemEdible;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.item.Item;
@@ -89,4 +90,7 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
 
     /** Send all necessary initial update packets to the client. */
     public void syncAll();
+
+    /** @return A list of info to be added to the debug screen. */
+    public List<String> getDebug();
 }

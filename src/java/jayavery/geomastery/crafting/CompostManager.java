@@ -9,24 +9,23 @@ package jayavery.geomastery.crafting;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import net.minecraft.item.ItemStack;
 
 /** Compost ingredient manager. */
 public class CompostManager {
     
-    /** Map of ingredients to types. */
-    public final Map<ItemStack, CompostType> recipes;
+    /** Set of wet ingredients. */
+    public final Set<ItemStack> wet;
+    /** Set of dry ingredients. */
+    public final Set<ItemStack> dry;
     
     public CompostManager() {
         
-        this.recipes = Maps.newHashMap();
-    }
-    
-    /** Adds an ingredient type. */
-    public void addRecipe(ItemStack stack, CompostType type) {
-        
-        this.recipes.put(stack, type);
+        this.wet = Sets.newHashSet();
+        this.dry = Sets.newHashSet();
     }
 
     /** Adds a wet type ingredient. */
@@ -34,7 +33,7 @@ public class CompostManager {
         
         for (ItemStack stack : stacks) {
             
-            this.addRecipe(stack, CompostType.WET);
+            this.wet.add(stack);
         }
     }
     
@@ -43,18 +42,26 @@ public class CompostManager {
         
         for (ItemStack stack : stacks) {
             
-            this.addRecipe(stack, CompostType.DRY);
+            this.dry.add(stack);
         }
     }
     
     /** @return The type of the given ingredient. */
     public CompostType getType(ItemStack stack) {
         
-        for (Entry<ItemStack, CompostType> entry : this.recipes.entrySet()) {
+        for (ItemStack wet : this.wet) {
             
-            if (ItemStack.areItemsEqual(stack, entry.getKey())) {
+            if (ItemStack.areItemsEqual(stack, wet)) {
                 
-                return entry.getValue();
+                return CompostType.WET;
+            }
+        }
+        
+        for (ItemStack dry : this.dry) {
+            
+            if (ItemStack.areItemsEqual(stack, dry)) {
+                
+                return CompostType.DRY;
             }
         }
         
@@ -64,20 +71,14 @@ public class CompostManager {
     /** Types of compost ingredient. */
     public static enum CompostType {
         
-        WET("Wet", new Color(0, 120, 0)), DRY("Dry", new Color(120, 70, 20));
-        
-        private final String name;
+        WET(new Color(0, 120, 0)), DRY(new Color(120, 70, 20));
+
+        /** Colour for GUI uses. */
         private final Color colour;
         
-        private CompostType(String name, Color colour) {
+        private CompostType(Color colour) {
             
-            this.name = name;
             this.colour = colour;
-        }
-        
-        public String getName() {
-            
-            return this.name;
         }
         
         public Color getColour() {

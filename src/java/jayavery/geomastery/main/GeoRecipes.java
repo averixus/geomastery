@@ -291,7 +291,7 @@ public class GeoRecipes {
         MASON.addShapedRecipe(new ItemStack(GeoItems.VAULT_BRICK, 2), "BB", "B ", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_STONE, 2), "SSS", 'S', GeoItems.DRESSEDSTONE);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_BRICK, 2), "BBB", 'B', Items.BRICK);
-        MASON.addShapelessRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), GeoItems.RUBBLE, GeoItems.RUBBLE, GeoItems.RUBBLE, GeoItems.RUBBLE);
+        MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 1), "RR", 'R', GeoItems.RUBBLE);
     }
 
     /** Adds all recipes to armourer. */
@@ -314,7 +314,7 @@ public class GeoRecipes {
     /** Adds all recipes to sawpit. */
     private static void setupSawpit() {
         
-        SAWPIT.addShapelessRecipe(new ItemStack(GeoItems.TIMBER, 3), GeoItems.THICKLOG);
+        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.TIMBER, 3), "T", 'T', GeoItems.THICKLOG);
         SAWPIT.addShapedRecipe(new ItemStack(GeoItems.TIMBER, 3), "LLL", 'L', GeoItems.LOG);
         SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_SHORT), "LL", 'L', GeoItems.LOG);
         SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_LONG), "TTT", 'T', GeoItems.THICKLOG);
@@ -346,9 +346,10 @@ public class GeoRecipes {
             
             recipes.addCookingRecipe(new ItemStack(Items.REEDS), new ItemStack(GeoItems.SUGAR), 60);
             recipes.addCookingRecipe(new ItemStack(GeoItems.CHICKPEAS), new ItemStack(GeoItems.CHICKPEAS_BOILED), 60);
-            recipes.addCookingRecipe(new ItemStack(GeoItems.WHEAT), new ItemStack(GeoItems.WHEAT_BOILED), 60);
             recipes.addCookingRecipe(new ItemStack(GeoItems.RICE), new ItemStack(GeoItems.RICE_BOILED), 60);
         }
+        
+        POTFIRE_ONLY.addCookingRecipe(new ItemStack(GeoItems.WHEAT), new ItemStack(GeoItems.WHEAT_BOILED), 60);
     }
 
     /** Adds all recipes to clay furnace and higher levels. */
