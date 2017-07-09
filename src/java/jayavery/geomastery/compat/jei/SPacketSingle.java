@@ -4,7 +4,7 @@
  * This file is part of Geomastery. Geomastery is free software: distributed
  * under the GNU Affero General Public License (<http://www.gnu.org/licenses/>).
  ******************************************************************************/
-package jayavery.geomastery.packets;
+package jayavery.geomastery.compat.jei;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.Container;
@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to transfer one slot in filling containers, JEI use only. */
-public class SPacketJei implements IMessage {
+/** Packet to transfer one slot in filling containers. */
+public class SPacketSingle implements IMessage {
     
     /** The input slot to move into. */
     int space;
@@ -24,9 +24,9 @@ public class SPacketJei implements IMessage {
     /** Whether to transfer the whole stack. */
     boolean max;
     
-    public SPacketJei() {}
+    public SPacketSingle() {}
     
-    public SPacketJei(int space, int input, boolean max) {
+    public SPacketSingle(int space, int input, boolean max) {
         
         this.space = space;
         this.input = input;
@@ -50,10 +50,10 @@ public class SPacketJei implements IMessage {
     }
     
     public static class Handler implements
-            IMessageHandler<SPacketJei, IMessage> {
+            IMessageHandler<SPacketSingle, IMessage> {
         
         @Override
-        public IMessage onMessage(SPacketJei message,
+        public IMessage onMessage(SPacketSingle message,
                 MessageContext ctx) {
             
             ctx.getServerHandler().playerEntity.getServer()
@@ -61,7 +61,7 @@ public class SPacketJei implements IMessage {
             return null;
         }
         
-        public void processMessage(SPacketJei message,
+        public void processMessage(SPacketSingle message,
                 MessageContext ctx) {
             
             Container container = ctx.getServerHandler()

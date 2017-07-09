@@ -9,29 +9,64 @@ package jayavery.geomastery.compat.jei;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.compat.jei.GeoCraftingCategory.Wrapper;
 import jayavery.geomastery.crafting.ShapedRecipe;
 import jayavery.geomastery.main.Geomastery;
-import mezz.jei.api.IGuiHelper;
+import mezz.jei.api.gui.ICraftingGridHelper;
+import mezz.jei.api.gui.IDrawable;
+import mezz.jei.api.gui.IGuiItemStackGroup;
+import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
-import mezz.jei.plugins.vanilla.crafting.CraftingRecipeCategory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import scala.actors.threadpool.Arrays;
 
 /** Category for Geomastery crafting recipes. */
-public class GeoCraftingCategory extends CraftingRecipeCategory {
+public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
 
+    /** Location of background image. */
+    private static final ResourceLocation BG_RES = new ResourceLocation(
+            "minecraft", "textures/gui/container/crafting_table.png");
+    /** X position of background image. */
+    private static final int BG_X = 29;
+    /** Y position of background image. */
+    private static final int BG_Y = 16;
+    /** Width of background image. */
+    private static final int BG_WIDTH = 116;
+    /** Height of background image. */
+     private static final int BG_HEIGHT = 54;
+     
+     /** Index of input slot. */
+     private static final int IN_I = 1;
+     /** Index of output slot. */
+     private static final int OUT_I = 0;
+    
     /** Recipe tab name. */
     private final String name;
     /** Internal unique id. */
     private final String uid;
+    /** Background image. */
+    private final IDrawable background;
+    /** Crafting grid helper. */
+    private final ICraftingGridHelper gridHelper;
     
     public GeoCraftingCategory(String name, String uid) {
         
-        super(GeoJei.guiHelper);
+        this.background = GeoJei.guiHelper.createDrawable(BG_RES,
+                BG_X, BG_Y, BG_WIDTH, BG_HEIGHT);
+        this.gridHelper = GeoJei.guiHelper
+                .createCraftingGridHelper(IN_I, OUT_I);
         this.uid = uid;
         this.name = name;
+    }
+    
+    @Override
+    public IDrawable getBackground() {
+        
+        return this.background;
     }
     
     @Override
@@ -50,6 +85,32 @@ public class GeoCraftingCategory extends CraftingRecipeCategory {
     public String getModName() {
         
         return Geomastery.NAME;
+    }
+    
+    @Override
+    public void setRecipe(IRecipeLayout layout, Wrapper wrapper,
+            IIngredients ingredients) {
+        
+        // Mostly copied from JEI's CraftingRecipeCategory
+        
+        IGuiItemStackGroup stacks = layout.getItemStacks();
+        stacks.init(OUT_I, false, 94, 18);
+
+        for (int y = 0; y < 3; ++y) {
+            
+            for (int x = 0; x < 3; ++x) {
+                
+                int index = IN_I + x + (y * 3);
+                stacks.init(index, true, x * 18, y * 18);
+            }
+        }
+
+        List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
+        List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
+
+        this.gridHelper.setInputs(stacks, inputs, wrapper.getWidth(),
+                wrapper.getHeight());
+        stacks.set(OUT_I, outputs.get(0));
     }
     
     /** Recipe containing a group of matching shaped recipes. */

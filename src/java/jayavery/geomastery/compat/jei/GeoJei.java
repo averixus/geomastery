@@ -13,21 +13,11 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.container.ContainerCrafting.Armourer;
-import jayavery.geomastery.container.ContainerCrafting.Candlemaker;
-import jayavery.geomastery.container.ContainerCrafting.Forge;
-import jayavery.geomastery.container.ContainerCrafting.Knapping;
-import jayavery.geomastery.container.ContainerCrafting.Mason;
-import jayavery.geomastery.container.ContainerCrafting.Sawpit;
-import jayavery.geomastery.container.ContainerCrafting.Textiles;
-import jayavery.geomastery.container.ContainerCrafting.Woodworking;
 import jayavery.geomastery.container.ContainerCrafting;
-import jayavery.geomastery.container.ContainerFurnaceAbstract;
 import jayavery.geomastery.container.ContainerFurnaceClay;
 import jayavery.geomastery.container.ContainerFurnaceSingle;
 import jayavery.geomastery.container.ContainerFurnaceStone;
 import jayavery.geomastery.crafting.CompostManager.CompostType;
-import jayavery.geomastery.crafting.CookingManager;
 import jayavery.geomastery.crafting.CraftingManager;
 import jayavery.geomastery.crafting.ShapedRecipe;
 import jayavery.geomastery.items.ItemCarcassDecayable;
@@ -44,13 +34,13 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.ISubtypeRegistry.ISubtypeInterpreter;
 import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
-import mezz.jei.startup.StackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 
 /** JEI plugin for Geomastery. */
 @JEIPlugin
@@ -59,7 +49,7 @@ public class GeoJei extends BlankModPlugin {
     // Helpers stored for convenience 
     static IGuiHelper guiHelper;
     static IRecipeTransferHandlerHelper transferHelper;
-    static StackHelper stackHelper;
+    static IStackHelper stackHelper;
     
     // All categories for access
     static GeoCompostCategory compost;
@@ -109,13 +99,13 @@ public class GeoJei extends BlankModPlugin {
     public void register(IModRegistry registry) {
         
         transferHelper = registry.getJeiHelpers().recipeTransferHandlerHelper();
-        stackHelper = (StackHelper) registry.getJeiHelpers().getStackHelper();
+        stackHelper = registry.getJeiHelpers().getStackHelper();
         IRecipeTransferRegistry transfers = registry.getRecipeTransferRegistry();
         
         Geomastery.LOG.info("JEI: Registering compost recipes");
         registry.handleRecipes(GeoCompostCategory.Recipe.class, GeoCompostCategory.Wrapper::new, compost.getUid());
         registry.addRecipeCatalyst(new ItemStack(GeoBlocks.COMPOSTHEAP), compost.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.comp(), compost.getUid());
+        transfers.addRecipeTransferHandler(GeoTransferInfo.comp());
         registry.addRecipes(Lists.newArrayList(new GeoCompostCategory.Recipe(GeoRecipes.COMPOST.wet, CompostType.WET), new GeoCompostCategory.Recipe(GeoRecipes.COMPOST.dry, CompostType.DRY)), compost.getUid());
 
         Geomastery.LOG.info("JEI: Registering cooking recipes");
@@ -157,7 +147,7 @@ public class GeoJei extends BlankModPlugin {
         
         Geomastery.LOG.info("JEI: Registering inventory recipes");
         registry.handleRecipes(GeoCraftingCategory.Recipe.class, GeoCraftingCategory.Wrapper::new, inventory.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.inv(), inventory.getUid());
+        transfers.addRecipeTransferHandler(GeoTransferInfo.inv());
         registry.addRecipes(getRecipes(GeoRecipes.INVENTORY), inventory.getUid());
         
         Geomastery.LOG.info("JEI: Registering crafting recipes");
@@ -179,14 +169,15 @@ public class GeoJei extends BlankModPlugin {
         registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_TEXTILES), textiles.getUid());
         registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_WOODWORKING), woodworking.getUid());
 
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Armourer.class), armourer.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Candlemaker.class), candlemaker.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Forge.class), forge.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Knapping.class), knapping.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Mason.class), mason.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Sawpit.class), sawpit.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Textiles.class), textiles.getUid());
-        transfers.addRecipeTransferHandler(GeoGridTransfer.craft(ContainerCrafting.Woodworking.class), woodworking.getUid());
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Armourer.class, armourer.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Candlemaker.class, candlemaker.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Forge.class, forge.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Knapping.class, knapping.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Knapping.class, knapping.getUid()));
+         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Mason.class, mason.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Sawpit.class, sawpit.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Textiles.class, textiles.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Woodworking.class, woodworking.getUid()));
         
         registry.addRecipes(getRecipes(GeoRecipes.ARMOURER), armourer.getUid());
         registry.addRecipes(getRecipes(GeoRecipes.CANDLEMAKER), candlemaker.getUid());

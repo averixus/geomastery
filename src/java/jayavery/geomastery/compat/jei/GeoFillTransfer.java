@@ -10,7 +10,6 @@ import jayavery.geomastery.container.ContainerAbstract;
 import jayavery.geomastery.container.ContainerDrying;
 import jayavery.geomastery.container.ContainerFurnaceAbstract;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.packets.SPacketJei;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
@@ -19,7 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
-/** Transfer handler for Geomastery filling containers. */
+/** Recipe transfer handler for Geomastery filling containers. */
 public abstract class GeoFillTransfer<C extends ContainerAbstract>
         implements IRecipeTransferHandler<C> {
 
@@ -119,7 +118,7 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
 
         if (doTransfer) {
             
-            Geomastery.NETWORK.sendToServer(new SPacketJei(foundSpace,
+            Geomastery.NETWORK.sendToServer(new SPacketSingle(foundSpace,
                     foundInput, maxTransfer));
         }
         

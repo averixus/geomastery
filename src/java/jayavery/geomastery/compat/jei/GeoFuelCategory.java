@@ -15,16 +15,18 @@ import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
-import mezz.jei.config.Constants;
-import mezz.jei.plugins.vanilla.furnace.FurnaceRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 /** Category for Geomastery fuel recipes. */
-public class GeoFuelCategory extends FurnaceRecipeCategory<Wrapper> {
+public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
 
+    /** Location of background image. */
+    private static final ResourceLocation BG_RES = new ResourceLocation(
+            Geomastery.MODID, "textures/gui/furnace1_0.png");
     /** X position of background image. */
     private static final int BG_X = 55;
     /** Y position of background image. */
@@ -37,6 +39,15 @@ public class GeoFuelCategory extends FurnaceRecipeCategory<Wrapper> {
     private static final int PAD_ALL = 0;
     /** Padding for right side. */
     private static final int PAD_RIGHT = 80;
+    
+    /** X position of flame and arrow origin. */
+    private static final int FLAME_ORIG_X = 176;
+    /** Y position of flame origin. */
+    private static final int FLAME_ORIG_Y = 0;
+    /** Size of flame. */
+    private static final int FLAME_SIZE = 14;
+    /** Ticks for flame animation to last. */
+    private static final int FLAME_TICKS = 300;
     
     /** X position of icon image. */
     private static final int ICON_X = 215;
@@ -63,16 +74,21 @@ public class GeoFuelCategory extends FurnaceRecipeCategory<Wrapper> {
     private final String uid = Geomastery.MODID + ":fuel";
     /** Backgound image. */
     private final IDrawable background;
+    /** Flame animation. */
+    private final IDrawableAnimated flame;
     /** Recipe tab icon. */
     private final IDrawableStatic icon;
     
     public GeoFuelCategory() {
         
-        super(GeoJei.guiHelper);
-        this.background = GeoJei.guiHelper.createDrawable(
-                this.backgroundLocation, BG_X, BG_Y, BG_WIDTH, BG_HEIGHT,
+        this.background = GeoJei.guiHelper.createDrawable(BG_RES,
+                BG_X, BG_Y, BG_WIDTH, BG_HEIGHT,
                 PAD_ALL, PAD_ALL, PAD_ALL, PAD_RIGHT);
-        this.icon = GeoJei.guiHelper.createDrawable(this.backgroundLocation,
+        IDrawableStatic flame = GeoJei.guiHelper.createDrawable(BG_RES,
+                FLAME_ORIG_X, FLAME_ORIG_Y, FLAME_SIZE, FLAME_SIZE);
+        this.flame = GeoJei.guiHelper.createAnimatedDrawable(flame, FLAME_TICKS,
+                IDrawableAnimated.StartDirection.TOP, true);
+        this.icon = GeoJei.guiHelper.createDrawable(BG_RES,
                 ICON_X, ICON_Y, ICON_SIZE, ICON_SIZE);
     }
     

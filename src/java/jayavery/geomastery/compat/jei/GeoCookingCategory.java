@@ -11,17 +11,19 @@ import java.util.Map.Entry;
 import jayavery.geomastery.compat.jei.GeoCookingCategory.Wrapper;
 import jayavery.geomastery.main.Geomastery;
 import mezz.jei.api.gui.IDrawable;
+import mezz.jei.api.gui.IDrawableAnimated;
+import mezz.jei.api.gui.IDrawableStatic;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
-import mezz.jei.plugins.vanilla.furnace.FurnaceRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 /** Category for Geomastery cooking recipes. */
-public class GeoCookingCategory extends FurnaceRecipeCategory<Wrapper> {
+public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
 
     /** Location of background image. */
     private static final ResourceLocation BG_RES = new ResourceLocation(
@@ -34,6 +36,23 @@ public class GeoCookingCategory extends FurnaceRecipeCategory<Wrapper> {
     private static final int BG_WIDTH = 83;
     /** Height of background image. */
     private static final int BG_HEIGHT = 54;
+    
+    /** X position of flame and arrow origin. */
+    private static final int ANIM_ORIG_X = 176;
+    /** Y position of flame origin. */
+    private static final int FLAME_ORIG_Y = 0;
+    /** Size of flame. */
+    private static final int FLAME_SIZE = 14;
+    /** Ticks for flame animation to last. */
+    private static final int FLAME_TICKS = 300;
+    /** Y position of arrow origin. */
+    private static final int ARROW_ORIG_Y = 14;
+    /** Width of arrow. */
+    private static final int ARROW_WIDTH = 24;
+    /** Height of arrow. */
+    private static final int ARROW_HEIGHT = 17;
+    /** Ticks for arrow animation to last. */
+    private static final int ARROW_TICKS = 200;
     
     /** X position of flame animation. */
     private static final int FLAME_X = 2;
@@ -61,12 +80,23 @@ public class GeoCookingCategory extends FurnaceRecipeCategory<Wrapper> {
     private final String uid = Geomastery.MODID + ":cooking";
     /** Background image. */
     private final IDrawable background;
+    /** Flame animation. */
+    private final IDrawableAnimated flame;
+    /** Arrow animation. */
+    private final IDrawableAnimated arrow;
     
     public GeoCookingCategory() {
         
-        super(GeoJei.guiHelper);
         this.background = GeoJei.guiHelper.createDrawable(BG_RES, 
                 BG_X, BG_Y, BG_WIDTH, BG_HEIGHT);
+        IDrawableStatic flame = GeoJei.guiHelper.createDrawable(BG_RES,
+                ANIM_ORIG_X, FLAME_ORIG_Y, FLAME_SIZE, FLAME_SIZE);
+        this.flame = GeoJei.guiHelper.createAnimatedDrawable(flame, FLAME_TICKS,
+                IDrawableAnimated.StartDirection.TOP, true);
+        IDrawableStatic arrow = GeoJei.guiHelper.createDrawable(BG_RES,
+                ANIM_ORIG_X, ARROW_ORIG_Y, ARROW_WIDTH, ARROW_HEIGHT);
+        this.arrow = GeoJei.guiHelper.createAnimatedDrawable(arrow, ARROW_TICKS,
+                IDrawableAnimated.StartDirection.LEFT, false);
     }
     
     @Override

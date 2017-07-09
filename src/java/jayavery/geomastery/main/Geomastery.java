@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.compat.jei.SPacketSingle;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.entities.projectile.EntityArrowBronze;
 import jayavery.geomastery.entities.projectile.EntityArrowCopper;
@@ -34,7 +35,6 @@ import jayavery.geomastery.packets.CPacketLid;
 import jayavery.geomastery.packets.CPacketTemp;
 import jayavery.geomastery.packets.CPacketYoke;
 import jayavery.geomastery.packets.SPacketContainer;
-import jayavery.geomastery.packets.SPacketJei;
 import jayavery.geomastery.tileentities.TEBeam;
 import jayavery.geomastery.tileentities.TEBed;
 import jayavery.geomastery.tileentities.TECarcass;
@@ -63,6 +63,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -168,7 +169,6 @@ public class Geomastery {
         
         LOG.info("Registering packets");
         sPacket(SPacketContainer.Handler.class, SPacketContainer.class);
-        sPacket(SPacketJei.Handler.class, SPacketJei.class);
         cPacket(CPacketContainer.Handler.class, CPacketContainer.class);
         cPacket(CPacketTemp.Handler.class, CPacketTemp.class);
         cPacket(CPacketHunger.Handler.class, CPacketHunger.class);
@@ -181,6 +181,12 @@ public class Geomastery {
         cPacket(CPacketLid.Handler.class, CPacketLid.class);
         cPacket(CPacketCompost.Handler.class, CPacketCompost.class);
         cPacket(CPacketDebug.Handler.class, CPacketDebug.class);
+
+        if (Loader.isModLoaded("jei")) {
+            
+            LOG.info("Registering JEI packets");
+            sPacket(SPacketSingle.Handler.class, SPacketSingle.class);
+        }
         
         LOG.info("Registering tileentities");
         tileentity(TEFurnaceCampfire.class, "furnace_campfire");
