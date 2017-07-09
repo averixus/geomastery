@@ -41,20 +41,13 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
     private static final int PAD_RIGHT = 80;
     
     /** X position of flame and arrow origin. */
-    private static final int FLAME_ORIG_X = 176;
+    private static final int FLAME_ORIG_X = 190;
     /** Y position of flame origin. */
     private static final int FLAME_ORIG_Y = 0;
     /** Size of flame. */
     private static final int FLAME_SIZE = 14;
     /** Ticks for flame animation to last. */
     private static final int FLAME_TICKS = 300;
-    
-    /** X position of icon image. */
-    private static final int ICON_X = 215;
-    /** Y position of icon image. */
-    private static final int ICON_Y = 0;
-    /** Width and height of icon image. */
-    private static final int ICON_SIZE = 14;
     
     /** X position of flame animation. */
     private static final int FLAME_X = 2;
@@ -84,12 +77,10 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
         this.background = GeoJei.guiHelper.createDrawable(BG_RES,
                 BG_X, BG_Y, BG_WIDTH, BG_HEIGHT,
                 PAD_ALL, PAD_ALL, PAD_ALL, PAD_RIGHT);
-        IDrawableStatic flame = GeoJei.guiHelper.createDrawable(BG_RES,
-                FLAME_ORIG_X, FLAME_ORIG_Y, FLAME_SIZE, FLAME_SIZE);
-        this.flame = GeoJei.guiHelper.createAnimatedDrawable(flame, FLAME_TICKS,
-                IDrawableAnimated.StartDirection.TOP, true);
         this.icon = GeoJei.guiHelper.createDrawable(BG_RES,
-                ICON_X, ICON_Y, ICON_SIZE, ICON_SIZE);
+                FLAME_ORIG_X, FLAME_ORIG_Y, FLAME_SIZE, FLAME_SIZE);
+        this.flame = GeoJei.guiHelper.createAnimatedDrawable(this.icon,
+                FLAME_TICKS, IDrawableAnimated.StartDirection.TOP, true);
     }
     
     @Override
@@ -158,7 +149,7 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
         /** X position of level string. */
         private static final int STRING_X = 24;
         /** Y position of level string. */
-        private static final int STRING_Y = 4;
+        private static final int STRING_Y = 10;
         /** Colour of level string. */
         private static final int GREY = Color.gray.getRGB();
         

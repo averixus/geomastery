@@ -13,9 +13,7 @@ import jayavery.geomastery.main.Geomastery;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
-import mezz.jei.util.Translator;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
 /** Recipe transfer handler for Geomastery filling containers. */
@@ -90,9 +88,8 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
         
         if (foundInput == -1) {
             
-            String message = Translator.translateToLocal(
-                    "jei.tooltip.error.recipe.transfer.missing");
-            return GeoJei.transferHelper.createUserErrorWithTooltip(message);
+            return GeoJei.transferHelper
+                    .createUserErrorWithTooltip("Ingredients missing");
         }
         
         // Search for an empty space to fill
@@ -111,9 +108,8 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
         
         if (foundSpace == -1) {
             
-            String message = Translator.translateToLocal(
-                    "jei.tooltip.error.recipe.transfer.inventory.full");
-            return GeoJei.transferHelper.createUserErrorWithTooltip(message);
+            return GeoJei.transferHelper
+                    .createUserErrorWithTooltip("No space to add ingredients");
         }
 
         if (doTransfer) {

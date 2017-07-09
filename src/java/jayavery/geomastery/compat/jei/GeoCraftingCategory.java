@@ -7,6 +7,7 @@
 package jayavery.geomastery.compat.jei;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.compat.jei.GeoCraftingCategory.Wrapper;
@@ -22,7 +23,6 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import scala.actors.threadpool.Arrays;
 
 /** Category for Geomastery crafting recipes. */
 public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {

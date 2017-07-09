@@ -111,6 +111,9 @@ public class GeoJei extends BlankModPlugin {
         Geomastery.LOG.info("JEI: Registering cooking recipes");
         registry.handleRecipes(GeoCookingCategory.Recipe.class, GeoCookingCategory.Wrapper::new, cooking.getUid());
         registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_POTFIRE), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_CLAY), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_STONE), cooking.getUid());
 
         transfers.addRecipeTransferHandler(GeoFillTransfer.cook(ContainerFurnaceSingle.Camp.class), cooking.getUid());
         transfers.addRecipeTransferHandler(GeoFillTransfer.cook(ContainerFurnaceSingle.Pot.class), cooking.getUid());
@@ -126,6 +129,10 @@ public class GeoJei extends BlankModPlugin {
         
         Geomastery.LOG.info("JEI: Registering fuel recipes");
         registry.handleRecipes(GeoFuelCategory.Recipe.class, GeoFuelCategory.Wrapper::new, fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_POTFIRE), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_CLAY), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_STONE), fuel.getUid());
         
         transfers.addRecipeTransferHandler(GeoFillTransfer.fuel(ContainerFurnaceSingle.Camp.class), fuel.getUid());
         transfers.addRecipeTransferHandler(GeoFillTransfer.fuel(ContainerFurnaceSingle.Pot.class), fuel.getUid());
@@ -174,7 +181,7 @@ public class GeoJei extends BlankModPlugin {
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Forge.class, forge.getUid()));
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Knapping.class, knapping.getUid()));
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Knapping.class, knapping.getUid()));
-         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Mason.class, mason.getUid()));
+        transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Mason.class, mason.getUid()));
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Sawpit.class, sawpit.getUid()));
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Textiles.class, textiles.getUid()));
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Woodworking.class, woodworking.getUid()));
