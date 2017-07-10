@@ -166,7 +166,7 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
         }
     }
     
-    /** Drops handled manually for double->single breaking. */
+    /** Drops handled manually to account for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {

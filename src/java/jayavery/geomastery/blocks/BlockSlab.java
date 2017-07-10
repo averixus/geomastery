@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.blocks;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import com.google.common.collect.Lists;
@@ -82,13 +83,12 @@ public class BlockSlab extends BlockBuilding implements IDoublingBlock {
         return this.isDouble() ? FULL_BLOCK_AABB : EIGHT;
     }
 
-    /** Drops handled manually for double->single breaking. */
+    /** Drops are handled manually to account for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune) {
         
-        return Lists.newArrayList(new ItemStack(this.item.get(),
-                this.isDouble() ? 2 : 1));
+        return Collections.emptyList();
     }
     
     @Override
