@@ -75,7 +75,7 @@ public class GeoRecipes {
         setupArmourer();
         setupSawpit();
         setupCampfire();
-        setupCookfire();
+        setupPotfire();
         setupClay();
         setupStone();
         setupDrying();
@@ -340,7 +340,7 @@ public class GeoRecipes {
     }
 
     /** Adds all recipes to cookfire and higher levels. */
-    private static void setupCookfire() {
+    private static void setupPotfire() {
 
         for (CookingManager recipes : POTFIRE_PLUS) {
             
@@ -349,7 +349,7 @@ public class GeoRecipes {
             recipes.addCookingRecipe(new ItemStack(GeoItems.RICE), new ItemStack(GeoItems.RICE_BOILED), 60);
         }
         
-        POTFIRE_ONLY.addCookingRecipe(new ItemStack(GeoItems.WHEAT), new ItemStack(GeoItems.WHEAT_BOILED), 60);
+        POTFIRE_ALL.addCookingRecipe(new ItemStack(GeoItems.WHEAT), new ItemStack(GeoItems.WHEAT_BOILED), 60);
     }
 
     /** Adds all recipes to clay furnace and higher levels. */
