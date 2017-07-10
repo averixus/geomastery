@@ -69,21 +69,7 @@ public class GeoJei extends BlankModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         
-        guiHelper = registry.getJeiHelpers().getGuiHelper();
         Geomastery.LOG.info("JEI: Registering recipe categories");
-        compost = new GeoCompostCategory();
-        cooking = new GeoCookingCategory();
-        fuel = new GeoFuelCategory();
-        drying = new GeoDryingCategory();
-        inventory = new GeoInventoryCategory();
-        armourer = new GeoCraftingCategory(GuiList.ARMOURER.name, Geomastery.MODID + ":armourer");
-        candlemaker = new GeoCraftingCategory(GuiList.CANDLEMAKER.name, Geomastery.MODID + ":candlemaker");
-        forge = new GeoCraftingCategory(GuiList.FORGE.name, Geomastery.MODID + ":forge");
-        knapping = new GeoCraftingCategory(GuiList.KNAPPING.name, Geomastery.MODID + ":knapping");
-        mason = new GeoCraftingCategory(GuiList.MASON.name, Geomastery.MODID + ":mason");
-        sawpit = new GeoCraftingCategory(GuiList.SAWPIT.name, Geomastery.MODID + ":sawpit");
-        textiles = new GeoCraftingCategory(GuiList.TEXTILES.name, Geomastery.MODID + ":textiles");
-        woodworking = new GeoCraftingCategory(GuiList.WOODWORKING.name, Geomastery.MODID + ":woodworking");
         registry.addRecipeCategories(compost, cooking, fuel, drying, inventory, armourer, candlemaker, forge, knapping, mason, sawpit, textiles, woodworking);
     }
     
@@ -100,7 +86,22 @@ public class GeoJei extends BlankModPlugin {
         
         transferHelper = registry.getJeiHelpers().recipeTransferHandlerHelper();
         stackHelper = registry.getJeiHelpers().getStackHelper();
+        guiHelper = registry.getJeiHelpers().getGuiHelper();
         IRecipeTransferRegistry transfers = registry.getRecipeTransferRegistry();
+        
+        compost = new GeoCompostCategory();
+        cooking = new GeoCookingCategory();
+        fuel = new GeoFuelCategory();
+        drying = new GeoDryingCategory();
+        inventory = new GeoInventoryCategory();
+        armourer = new GeoCraftingCategory(GuiList.ARMOURER.name, Geomastery.MODID + ":armourer");
+        candlemaker = new GeoCraftingCategory(GuiList.CANDLEMAKER.name, Geomastery.MODID + ":candlemaker");
+        forge = new GeoCraftingCategory(GuiList.FORGE.name, Geomastery.MODID + ":forge");
+        knapping = new GeoCraftingCategory(GuiList.KNAPPING.name, Geomastery.MODID + ":knapping");
+        mason = new GeoCraftingCategory(GuiList.MASON.name, Geomastery.MODID + ":mason");
+        sawpit = new GeoCraftingCategory(GuiList.SAWPIT.name, Geomastery.MODID + ":sawpit");
+        textiles = new GeoCraftingCategory(GuiList.TEXTILES.name, Geomastery.MODID + ":textiles");
+        woodworking = new GeoCraftingCategory(GuiList.WOODWORKING.name, Geomastery.MODID + ":woodworking");
         
         Geomastery.LOG.info("JEI: Registering compost recipes");
         registry.handleRecipes(GeoCompostCategory.Recipe.class, GeoCompostCategory.Wrapper::new, compost.getUid());
