@@ -128,7 +128,7 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
         
         Block block = world.getBlockState(pos.offset(direction)).getBlock();
         return BlockWeight.getWeight(block).canSupport(this.getWeight()) &&
-                !(block instanceof BlockVault);
+                !(block instanceof BlockVault) && !(block instanceof BlockBeam);
     }
     
     /** @return Whether the vault at the given pos is an external corner. */
