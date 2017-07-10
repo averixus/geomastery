@@ -11,12 +11,12 @@ import com.google.common.collect.Lists;
 import jayavery.geomastery.utilities.BlockMaterial;
 import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.ToolType;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -94,7 +94,8 @@ public class BlockFlatroof extends BlockBuilding {
     public void onEntityCollidedWithBlock(World world, BlockPos pos,
             IBlockState state, Entity entity) {
         
-        if (entity instanceof EntityLivingBase) {
+        if (entity instanceof EntityLivingBase &&
+                !(entity instanceof EntityAmbientCreature)) {
             
             EntityLivingBase living = (EntityLivingBase) entity;
             BlockPos feetPos = new BlockPos(living.posX,
