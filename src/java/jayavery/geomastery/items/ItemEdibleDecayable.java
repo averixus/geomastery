@@ -6,12 +6,14 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.List;
 import javax.annotation.Nullable;
 import jayavery.geomastery.capabilities.DefaultCapDecay;
 import jayavery.geomastery.capabilities.ICapDecay;
 import jayavery.geomastery.capabilities.ICapPlayer;
 import jayavery.geomastery.capabilities.ProviderCapDecay;
 import jayavery.geomastery.main.GeoCaps;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
@@ -28,6 +30,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -144,11 +147,36 @@ public class ItemEdibleDecayable extends ItemEdible {
         return super.getItemStackDisplayName(stack);
     }
     
+    /** Adds this item's food type to the tooltip if config. */
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
         
-        list.add(ItemSimple.newStack(this, 1, Geomastery.proxy.getClientWorld()));    
+        if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
+            
+            ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY,
+                    null);
+            decayCap.updateFromNBT(stack.getTagCompound());
+            
+            if (!decayCap.isRot(Geomastery.proxy.getClientWorld())) {
+            
+                if (GeoConfig.foodTooltips) {
+                    
+                    tooltip.add(I18n.translateToLocal("geomastery.foodtooltip."
+                            + this.type.toString().toLowerCase()));
+                }
+            }
+        }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab,
+            NonNullList<ItemStack> list) {
+        
+        list.add(ItemSimple.newStack(this, 1,
+                Geomastery.proxy.getClientWorld()));    
         list.add(ItemSimple.rottenStack(this, 1));
     }
     
@@ -159,9 +187,21 @@ public class ItemEdibleDecayable extends ItemEdible {
         return true;
     }
     
-    /** Makes this item always show a full durability bar. */
+    /** Makes this item show a full durability bar unless config otherwise. */
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
+        
+        if (GeoConfig.foodDurability) {
+            
+            if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
+                
+                ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY,
+                        null);
+                decayCap.updateFromNBT(stack.getTagCompound());
+                return 1F - decayCap.getFraction(Geomastery.proxy
+                        .getClientWorld());
+            }
+        }
         
         return 0;
     }

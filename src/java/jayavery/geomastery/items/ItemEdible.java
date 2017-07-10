@@ -6,11 +6,12 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.List;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import jayavery.geomastery.capabilities.ICapPlayer;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.main.GeoCaps;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,7 +24,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Food items with food type. */
 public class ItemEdible extends ItemFood {
@@ -91,6 +95,19 @@ public class ItemEdible extends ItemFood {
         
         return stack;
 
+    }
+    
+    /** Adds this item's food type to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.foodTooltips) {
+            
+            tooltip.add(I18n.translateToLocal("geomastery.foodtooltip." +
+                    this.type.toString().toLowerCase()));
+        }
     }
     
     /** Breeds or grows the right-clicked animal if applicable. */

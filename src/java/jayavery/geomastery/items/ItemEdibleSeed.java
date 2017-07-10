@@ -6,8 +6,10 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.List;
 import java.util.function.Supplier;
 import jayavery.geomastery.container.ContainerInventory;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -17,10 +19,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Food item which plants a crop. */
 public class ItemEdibleSeed extends ItemEdible implements IPlantable {
@@ -60,6 +65,25 @@ public class ItemEdibleSeed extends ItemEdible implements IPlantable {
         } else {
             
             return EnumActionResult.FAIL;
+        }
+    }
+    
+    /** Adds this item's food type and valid biomes to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.foodTooltips) {
+            
+            tooltip.add(I18n.translateToLocal("geomastery.foodtooltip." +
+                    this.type.toString().toLowerCase()));
+        }
+        
+        if (GeoConfig.cropBiomes) {
+
+            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
+                    ".biomes"));
         }
     }
     

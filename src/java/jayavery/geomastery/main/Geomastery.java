@@ -62,7 +62,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -105,6 +107,8 @@ public class Geomastery {
     
     public static final Logger LOG = LogManager.getLogger(MODID);
     
+    public static Configuration config;
+    
     @SidedProxy(clientSide = CLIENT_PROXY, serverSide = SERVER_PROXY)
     public static IProxy proxy;
 
@@ -137,6 +141,8 @@ public class Geomastery {
     @EventHandler
     public static void preInit(FMLPreInitializationEvent e) {
         
+        config = new Configuration(e.getSuggestedConfigurationFile());
+        GeoConfig.syncConfig(config);
         GeoBlocks.preInit();
         GeoItems.preInit();
         GeoCaps.preInit();
@@ -246,6 +252,17 @@ public class Geomastery {
         
         LOG.info("{} not found on {}, denying connection", MODID, side);
         return false;
+    }
+    
+
+    @SubscribeEvent
+    public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent
+            event) {
+
+        if (event.getModID().equals(MODID)) {
+
+            GeoConfig.syncConfig(config);
+        }
     }
     
     private static int entityID = 0;

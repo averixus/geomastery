@@ -13,6 +13,7 @@ import jayavery.geomastery.capabilities.DefaultCapDecay;
 import jayavery.geomastery.capabilities.ICapDecay;
 import jayavery.geomastery.capabilities.ProviderCapDecay;
 import jayavery.geomastery.main.GeoCaps;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.tileentities.TECarcass;
 import net.minecraft.block.Block;
@@ -155,9 +156,11 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
     
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(Item item, CreativeTabs tab,
+            NonNullList<ItemStack> list) {
         
-        list.add(ItemSimple.newStack(this, 1, Geomastery.proxy.getClientWorld()));    
+        list.add(ItemSimple.newStack(this, 1,
+                Geomastery.proxy.getClientWorld()));    
         list.add(ItemSimple.rottenStack(this, 1));
     }
     
@@ -168,9 +171,21 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         return true;
     }
     
-    /** Makes this item always show a full durability bar. */
+    /** Makes this item show a full durability bar unless config otherwise. */
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
+        
+        if (GeoConfig.foodDurability) {
+            
+            if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
+                
+                ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY,
+                        null);
+                decayCap.updateFromNBT(stack.getTagCompound());
+                return 1F - decayCap.getFraction(Geomastery.proxy
+                        .getClientWorld());
+            }
+        }
         
         return 0;
     }
@@ -183,7 +198,8 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
             
             ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY, null);
             decayCap.updateFromNBT(stack.getTagCompound());
-            float fraction = decayCap.getFraction(Geomastery.proxy.getClientWorld());
+            float fraction = decayCap.getFraction(Geomastery.proxy
+                    .getClientWorld());
             return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
         }
         

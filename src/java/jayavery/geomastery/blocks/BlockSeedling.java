@@ -6,7 +6,9 @@
  ******************************************************************************/
 package jayavery.geomastery.blocks;
 
+import java.util.List;
 import java.util.Random;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.IBiomeCheck;
 import jayavery.geomastery.utilities.ITreeGenFactory;
 import jayavery.geomastery.utilities.ToolType;
@@ -17,10 +19,13 @@ import jayavery.geomastery.worldgen.WorldGenTreePear;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -33,6 +38,8 @@ import net.minecraft.world.biome.BiomeOcean;
 import net.minecraft.world.biome.BiomePlains;
 import net.minecraft.world.biome.BiomeSavanna;
 import net.minecraft.world.biome.BiomeSwamp;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Seedling blocks. */
 public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
@@ -91,6 +98,19 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
             
             this.treeGenFactory.makeTreeGen(world, rand, true)
                     .generateTree(pos);
+        }
+    }
+    
+    /** Adds this item's valid biomes to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.cropBiomes) {
+
+            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
+                    ".biomes"));
         }
     }
     

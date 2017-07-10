@@ -6,8 +6,10 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import java.util.List;
 import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.main.GeoBlocks;
+import jayavery.geomastery.main.GeoConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
@@ -21,7 +23,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Rice seed item. */
 public class ItemRice extends ItemBlockplacer {
@@ -82,5 +87,18 @@ public class ItemRice extends ItemBlockplacer {
         world.setBlockState(above, GeoBlocks.RICE_TOP.getDefaultState());
         
         return true;
+    }
+    
+    /** Adds this item's valid biomes to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.cropBiomes) {
+
+            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
+                    ".biomes"));
+        }
     }
 }
