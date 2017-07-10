@@ -50,10 +50,9 @@ public class ContainerDrying extends ContainerAbstract {
     /** Position of this container. */
     private final BlockPos pos;
 
-    public ContainerDrying(EntityPlayer player, World world,
-            TEDrying drying, BlockPos pos) {
+    public ContainerDrying(EntityPlayer player, TEDrying drying, BlockPos pos) {
 
-        super(player, world);
+        super(player);
         this.drying = drying;
         this.pos = pos;
 

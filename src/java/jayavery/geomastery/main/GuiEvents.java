@@ -101,21 +101,20 @@ public class GuiEvents {
                 net.minecraft.client.gui.inventory.GuiInventory &&
                 player.inventoryContainer instanceof ContainerInventory) {
 
-            event.setCanceled(true);
-            player.openGui(Geomastery.instance, GuiList.INVENTORY.ordinal(), player.world, 0, 0, 0);
-        }
+          //  event.setCanceled(true);
+          //  player.openGui(Geomastery.instance, GuiList.INVENTORY.ordinal(), player.world, 0, 0, 0);
         
-
-        //event.setGui(new
-        //        jayavery.geomastery.gui.GuiInventory((ContainerInventory)
-        //        player.inventoryContainer));
+            event.setGui(new
+                    jayavery.geomastery.gui.GuiInventory((ContainerInventory)
+                    player.inventoryContainer));
+        }
     }
     
     /** Alters behaviour when keys are pressed. */
     @SubscribeEvent
     public void keyInput(KeyInputEvent event) {
 
-        Minecraft mc = Minecraft.getMinecraft();
+    /*    Minecraft mc = Minecraft.getMinecraft();
         
         if (!mc.player.isSpectator() &&
                 !mc.player.capabilities.isCreativeMode &&
@@ -132,7 +131,7 @@ public class GuiEvents {
             }
 
             inv.swapHands();
-        }
+        }*/
     }
     
     @SubscribeEvent

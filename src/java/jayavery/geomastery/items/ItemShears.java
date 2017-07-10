@@ -9,18 +9,19 @@ package jayavery.geomastery.items;
 import java.util.Collections;
 import java.util.Random;
 import java.util.function.Function;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.main.GeoItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IShearable;
 
 /** Shears tool item. */
-public class ItemShears extends ItemToolAbstract {
+public class ItemShears extends ItemTool {
     
     /** Random function for wool yield using these shears. */
     private Function<Random, Integer> yield;
@@ -56,7 +57,6 @@ public class ItemShears extends ItemToolAbstract {
                         this.yield.apply(entity.world.rand));
                 
                 stack.damageItem(1, entity);
-                ContainerInventory.updateHand(player, hand);
             }
             
             return true;

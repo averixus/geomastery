@@ -76,7 +76,6 @@ public abstract class ItemBlockplacer extends ItemSimple {
             if (!player.capabilities.isCreativeMode) {
                 
                 stack.shrink(1);
-                ContainerInventory.updateHand(player, hand);
             }
             
             return EnumActionResult.SUCCESS;

@@ -8,28 +8,17 @@ package jayavery.geomastery.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.container.ContainerInventory;
-import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 /** Hoe tool item. */
-public class ItemHoe extends ItemToolAbstract {
+public class ItemHoe extends ItemTool {
 
     /** Set of vanilla blocks to harvest. */
     private static final Set<Block> EFFECTIVE_ON =
@@ -51,7 +40,6 @@ public class ItemHoe extends ItemToolAbstract {
         if (!player.world.isRemote) {
             
             stack.damageItem(1, player);
-            ContainerInventory.updateHand(player, player.getActiveHand());
             
             Block block = player.world.getBlockState(pos).getBlock();
             

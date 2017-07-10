@@ -53,7 +53,6 @@ public class ItemEdibleSeed extends ItemEdible implements IPlantable {
             if (!player.capabilities.isCreativeMode) {
                 
                 stack.shrink(1);
-                ContainerInventory.updateHand(player, hand);
             }
             
             return EnumActionResult.SUCCESS;

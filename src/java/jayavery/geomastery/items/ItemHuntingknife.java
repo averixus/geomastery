@@ -9,9 +9,11 @@ package jayavery.geomastery.items;
 import java.util.Collections;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemTool;
 
 /** Hunting knife tool item. */
-public class ItemHuntingknife extends ItemToolAbstract {
+public class ItemHuntingknife extends ItemTool {
 
     public ItemHuntingknife(String name, ToolMaterial material) {
 

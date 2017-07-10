@@ -39,13 +39,13 @@ public abstract class ContainerAbstract extends Container {
     /** The world of this container. */
     protected final World world;
 
-    public ContainerAbstract(EntityPlayer player, World world) {
+    public ContainerAbstract(EntityPlayer player) {
 
         this.player = player;
         this.capability = player
                 .getCapability(GeoCaps.CAP_PLAYER, null);
         this.playerInv = player.inventory;
-        this.world = world;
+        this.world = player.world;
 
     }
 

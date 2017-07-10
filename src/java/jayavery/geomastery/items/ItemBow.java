@@ -137,18 +137,7 @@ public class ItemBow extends ItemSimple {
         if (!player.capabilities.isCreativeMode) {
 
             ammo.shrink(1);
-            
-            if (ammoSlot.getType() == InvType.OFFHAND) {
-            
-                ContainerInventory.updateHand(player, EnumHand.OFF_HAND);
-                
-            } else {
-            
-                ContainerInventory.updateInventory(player, ammoSlot.getIndex());
-            }
-            
             stack.damageItem(1, player);
-            ContainerInventory.updateHand(player, player.getActiveHand());
         }
     }
 

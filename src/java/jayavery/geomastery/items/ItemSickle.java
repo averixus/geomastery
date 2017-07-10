@@ -9,9 +9,11 @@ package jayavery.geomastery.items;
 import java.util.Collections;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemTool;
 
 /** Sickle tool item. */
-public class ItemSickle extends ItemToolAbstract {
+public class ItemSickle extends ItemTool {
 
     public ItemSickle(String name, ToolMaterial material) {
 

@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
-import jayavery.geomastery.compat.jei.SPacketSingle;
+import jayavery.geomastery.compat.jei.SGeoPacketSingle;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.entities.projectile.EntityArrowBronze;
 import jayavery.geomastery.entities.projectile.EntityArrowCopper;
@@ -168,7 +168,7 @@ public class Geomastery {
         entity("falling_leaves", FallingTreeBlock.Leaves.class);
         
         LOG.info("Registering packets");
-        sPacket(SPacketContainer.Handler.class, SPacketContainer.class);
+        sPacket(SPacketContainer.Handler.class, SPacketContainer.class); // TEST
         cPacket(CPacketContainer.Handler.class, CPacketContainer.class);
         cPacket(CPacketTemp.Handler.class, CPacketTemp.class);
         cPacket(CPacketHunger.Handler.class, CPacketHunger.class);
@@ -185,7 +185,7 @@ public class Geomastery {
         if (Loader.isModLoaded("jei")) {
             
             LOG.info("Registering JEI packets");
-            sPacket(SPacketSingle.Handler.class, SPacketSingle.class);
+            sPacket(SGeoPacketSingle.Handler.class, SGeoPacketSingle.class);
         }
         
         LOG.info("Registering tileentities");

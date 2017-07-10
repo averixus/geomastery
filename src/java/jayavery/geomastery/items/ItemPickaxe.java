@@ -12,9 +12,11 @@ import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemTool;
 
 /** Pickaxe tool item. */
-public class ItemPickaxe extends ItemToolAbstract {
+public class ItemPickaxe extends ItemTool {
 
     /** Set of vanilla blocks to harvest. */
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(

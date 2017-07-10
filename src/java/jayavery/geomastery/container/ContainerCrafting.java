@@ -75,10 +75,10 @@ public abstract class ContainerCrafting extends ContainerAbstract {
     /** TileEntity of this crafter. */
     public final TECraftingAbstract<?> tile;
 
-    public ContainerCrafting(EntityPlayer player, World world, BlockPos pos,
+    public ContainerCrafting(EntityPlayer player, BlockPos pos,
             CraftingManager craftManager, TECraftingAbstract<?> tile) {
 
-        super(player, world);
+        super(player);
         this.craftManager = craftManager;
         this.pos = pos;
         this.tile = tile;
@@ -239,73 +239,73 @@ public abstract class ContainerCrafting extends ContainerAbstract {
     
     public static class Knapping extends ContainerCrafting {
 
-        public Knapping(EntityPlayer player, World world, BlockPos pos,
+        public Knapping(EntityPlayer player, BlockPos pos,
                 TECraftingKnapping tile) {
             
-            super(player, world, pos, GeoRecipes.KNAPPING, tile);
+            super(player, pos, GeoRecipes.KNAPPING, tile);
         }    
     }
     
     public static class Candlemaker extends ContainerCrafting {
         
-        public Candlemaker(EntityPlayer player, World world, BlockPos pos,
+        public Candlemaker(EntityPlayer player, BlockPos pos,
                 TECraftingCandlemaker tile) {
             
-            super(player, world, pos, GeoRecipes.CANDLEMAKER, tile);
+            super(player, pos, GeoRecipes.CANDLEMAKER, tile);
         }
     }
     
     public static class Forge extends ContainerCrafting {
         
-        public Forge(EntityPlayer player, World world, BlockPos pos,
+        public Forge(EntityPlayer player, BlockPos pos,
                 TECraftingForge tile) {
             
-            super(player, world, pos, GeoRecipes.FORGE, tile);
+            super(player, pos, GeoRecipes.FORGE, tile);
         }
     }
     
     public static class Mason extends ContainerCrafting {
         
-        public Mason(EntityPlayer player, World world, BlockPos pos,
+        public Mason(EntityPlayer player, BlockPos pos,
                 TECraftingMason tile) {
             
-            super(player, world, pos, GeoRecipes.MASON, tile);
+            super(player, pos, GeoRecipes.MASON, tile);
         }
     }
     
     public static class Sawpit extends ContainerCrafting {
         
-        public Sawpit(EntityPlayer player, World world, BlockPos pos,
+        public Sawpit(EntityPlayer player, BlockPos pos,
                 TECraftingSawpit tile) {
             
-            super(player, world, pos, GeoRecipes.SAWPIT, tile);
+            super(player, pos, GeoRecipes.SAWPIT, tile);
         }
     }
     
     public static class Textiles extends ContainerCrafting {
         
-        public Textiles(EntityPlayer player, World world, BlockPos pos,
+        public Textiles(EntityPlayer player, BlockPos pos,
                 TECraftingTextiles tile) {
             
-            super(player, world, pos, GeoRecipes.TEXTILES, tile);
+            super(player, pos, GeoRecipes.TEXTILES, tile);
         }
     }
     
     public static class Woodworking extends ContainerCrafting {
         
-        public Woodworking(EntityPlayer player, World world, BlockPos pos,
+        public Woodworking(EntityPlayer player, BlockPos pos,
                 TECraftingWoodworking tile) {
             
-            super(player, world, pos, GeoRecipes.WOODWORKING, tile);
+            super(player, pos, GeoRecipes.WOODWORKING, tile);
         }
     }
     
     public static class Armourer extends ContainerCrafting {
         
-        public Armourer(EntityPlayer player, World world, BlockPos pos,
+        public Armourer(EntityPlayer player, BlockPos pos,
                 TECraftingArmourer tile) {
         
-            super(player, world, pos, GeoRecipes.ARMOURER, tile);
+            super(player, pos, GeoRecipes.ARMOURER, tile);
         }
     }
 }

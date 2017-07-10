@@ -24,10 +24,10 @@ public abstract class ContainerFurnaceSingle extends ContainerFurnaceAbstract {
     /** Y-position of start of output slots. */
     private static final int OUTPUT_Y = 35;
     
-    public ContainerFurnaceSingle(EntityPlayer player, World world,
+    public ContainerFurnaceSingle(EntityPlayer player, 
             TEFurnaceAbstract<?> furnace, BlockPos pos) {
         
-        super(player, world, furnace, pos);
+        super(player, furnace, pos);
         this.fireX = 56;
         this.arrowX = 79;
     }
@@ -56,20 +56,20 @@ public abstract class ContainerFurnaceSingle extends ContainerFurnaceAbstract {
     /** Campfire identifying class. */
     public static class Camp extends ContainerFurnaceSingle {
         
-        public Camp(EntityPlayer player, World world,
-                TEFurnaceAbstract<?> furnace, BlockPos pos) {
+        public Camp(EntityPlayer player, TEFurnaceAbstract<?> furnace,
+                BlockPos pos) {
             
-            super(player, world, furnace, pos);
+            super(player, furnace, pos);
         }
     }
     
     /** Pot fire identifying class. */
     public static class Pot extends ContainerFurnaceSingle {
         
-        public Pot(EntityPlayer player, World world,
-                TEFurnaceAbstract<?> furnace, BlockPos pos) {
+        public Pot(EntityPlayer player, TEFurnaceAbstract<?> furnace,
+                BlockPos pos) {
             
-            super(player, world, furnace, pos);
+            super(player, furnace, pos);
         }
     }
 }

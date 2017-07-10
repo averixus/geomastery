@@ -24,10 +24,10 @@ public class ContainerFurnaceStone extends ContainerFurnaceAbstract {
     /** Y-position of start of output slots. */
     private static final int OUTPUT_Y = 17;
     
-    public ContainerFurnaceStone(EntityPlayer player, World world,
+    public ContainerFurnaceStone(EntityPlayer player,
             TEFurnaceAbstract<?> furnace, BlockPos pos) {
         
-        super(player, world, furnace, pos);
+        super(player, furnace, pos);
         this.arrowX = 111;
         this.fireX = 96;
     }

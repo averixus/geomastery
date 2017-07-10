@@ -86,7 +86,6 @@ public class ItemEdible extends ItemFood {
             if (!player.capabilities.isCreativeMode) {
                 
                 stack.shrink(1);
-                ContainerInventory.updateHand(player, player.getActiveHand());
             }
         }
         
@@ -113,7 +112,6 @@ public class ItemEdible extends ItemFood {
                 if (!player.capabilities.isCreativeMode) {
                     
                     stack.shrink(1);
-                    ContainerInventory.updateHand(player, hand);
                 }
                 
                 animal.setInLove(player);
@@ -125,7 +123,6 @@ public class ItemEdible extends ItemFood {
                 if (!player.capabilities.isCreativeMode) {
                     
                     stack.shrink(1);
-                    ContainerInventory.updateHand(player, hand);
                 }
                 
                 animal.ageUp((int)(((float)-animal.getGrowingAge() / 20) *

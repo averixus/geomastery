@@ -45,10 +45,10 @@ public class ContainerCompost extends ContainerAbstract {
     /** Position of this container. */
     private final BlockPos pos;
     
-    public ContainerCompost(EntityPlayer player, World world,
-            BlockPos pos, TECompost compost) {
+    public ContainerCompost(EntityPlayer player, BlockPos pos,
+            TECompost compost) {
         
-        super(player, world);
+        super(player);
         this.compost = compost;
         this.pos = pos;
         

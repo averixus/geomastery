@@ -58,7 +58,7 @@ public class GuiHandler implements IGuiHandler {
         if (ID == GuiList.KNAPPING.ordinal()) {
 
             TECraftingKnapping crafting = (TECraftingKnapping) te;
-            return new ContainerCrafting.Knapping(player, world, pos, crafting);
+            return new ContainerCrafting.Knapping(player, pos, crafting);
         }
 
         if (ID == GuiList.WOODWORKING.ordinal()) {
@@ -66,8 +66,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingWoodworking crafting = (TECraftingWoodworking) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingWoodworking) world.getTileEntity(master);
-            return new ContainerCrafting.Woodworking(player, world, master,
-                    crafting);
+            return new ContainerCrafting.Woodworking(player, master, crafting);
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
@@ -75,8 +74,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingTextiles crafting = (TECraftingTextiles) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingTextiles) world.getTileEntity(master);
-            return new ContainerCrafting.Textiles(player, world, master,
-                    crafting);
+            return new ContainerCrafting.Textiles(player, master, crafting);
         }
 
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
@@ -84,8 +82,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingCandlemaker crafting = (TECraftingCandlemaker) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingCandlemaker) world.getTileEntity(master);
-            return new ContainerCrafting.Candlemaker(player, world, master,
-                    crafting);
+            return new ContainerCrafting.Candlemaker(player, master, crafting);
         }
 
         if (ID == GuiList.FORGE.ordinal()) {
@@ -93,7 +90,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingForge crafting = (TECraftingForge) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingForge) world.getTileEntity(master);
-            return new ContainerCrafting.Forge(player, world, master, crafting);
+            return new ContainerCrafting.Forge(player, master, crafting);
         }
 
         if (ID == GuiList.MASON.ordinal()) {
@@ -101,7 +98,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingMason crafting = (TECraftingMason) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingMason) world.getTileEntity(master);
-            return new ContainerCrafting.Mason(player, world, master, crafting);
+            return new ContainerCrafting.Mason(player, master, crafting);
         }
         
         if (ID == GuiList.SAWPIT.ordinal()) {
@@ -109,8 +106,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingSawpit crafting = (TECraftingSawpit) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingSawpit) world.getTileEntity(master);
-            return new ContainerCrafting.Sawpit(player, world, master,
-                    crafting);
+            return new ContainerCrafting.Sawpit(player, master, crafting);
         }
         
         if (ID == GuiList.ARMOURER.ordinal()) {
@@ -118,19 +114,18 @@ public class GuiHandler implements IGuiHandler {
             TECraftingArmourer crafting = (TECraftingArmourer) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingArmourer) world.getTileEntity(master);
-            return new ContainerCrafting.Armourer(player, world, master,
-                    crafting);
+            return new ContainerCrafting.Armourer(player, master, crafting);
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
-            return new ContainerFurnaceSingle.Camp(player, world,
+            return new ContainerFurnaceSingle.Camp(player,
                     (TEFurnaceAbstract<?>) te, pos);
         }
 
         if (ID == GuiList.POTFIRE.ordinal()) {
 
-            return new ContainerFurnaceSingle.Pot(player, world,
+            return new ContainerFurnaceSingle.Pot(player,
                     (TEFurnaceAbstract<?>) te, pos);
         }
 
@@ -139,7 +134,7 @@ public class GuiHandler implements IGuiHandler {
             TEFurnaceClay furnace = (TEFurnaceClay) te;
             BlockPos master = furnace.getMaster();
             furnace = (TEFurnaceClay) world.getTileEntity(master);
-            return new ContainerFurnaceClay(player, world, furnace, master);
+            return new ContainerFurnaceClay(player, furnace, master);
         }
 
         if (ID == GuiList.STONE.ordinal()) {
@@ -147,40 +142,32 @@ public class GuiHandler implements IGuiHandler {
             TEFurnaceStone furnace = (TEFurnaceStone) te;
             BlockPos master = furnace.getMaster();
             furnace = (TEFurnaceStone) world.getTileEntity(master);
-            return new ContainerFurnaceStone(player, world, furnace, master);
+            return new ContainerFurnaceStone(player, furnace, master);
         }
 
         if (ID == GuiList.DRYING.ordinal()) {
 
-            return new ContainerDrying(player, world, (TEDrying) te, pos);
-        }
-
-        if (ID == GuiList.INVENTORY.ordinal()) {
-
-            return player.inventoryContainer;
+            return new ContainerDrying(player, (TEDrying) te, pos);
         }
         
         if (ID == GuiList.CHEST.ordinal()) {
             
-            return new ContainerStorage.Chest(player, world,
-                    pos, (TEStorage) te);
+            return new ContainerStorage.Chest(player, pos, (TEStorage) te);
         }
         
         if (ID == GuiList.BOX.ordinal()) {
             
-            return new ContainerStorage.Box(player, world,
-                    pos, (TEStorage) te);
+            return new ContainerStorage.Box(player, pos, (TEStorage) te);
         }
         
         if (ID == GuiList.BASKET.ordinal()) {
             
-            return new ContainerStorage.Basket(player, world,
-                    pos,(TEStorage) te);
+            return new ContainerStorage.Basket(player, pos,(TEStorage) te);
         }
         
         if (ID == GuiList.COMPOST.ordinal()) {
             
-            return new ContainerCompost(player, world, pos, (TECompost) te);
+            return new ContainerCompost(player, pos, (TECompost) te);
         }
 
         return null;
@@ -196,7 +183,7 @@ public class GuiHandler implements IGuiHandler {
         if (ID == GuiList.KNAPPING.ordinal()) {
 
             TECraftingKnapping crafting = (TECraftingKnapping) te;
-            return new GuiCrafting(new ContainerCrafting.Knapping(player, world,
+            return new GuiCrafting(new ContainerCrafting.Knapping(player,
                     pos, crafting), GuiList.KNAPPING.name);
         }
 
@@ -206,7 +193,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingWoodworking) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Woodworking(player,
-                    world, pos, crafting), GuiList.WOODWORKING.name);
+                    pos, crafting), GuiList.WOODWORKING.name);
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
@@ -214,7 +201,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingTextiles crafting = (TECraftingTextiles) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingTextiles) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting.Textiles(player, world,
+            return new GuiCrafting(new ContainerCrafting.Textiles(player,
                     pos, crafting), GuiList.TEXTILES.name);
         }
 
@@ -223,7 +210,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingCandlemaker crafting = (TECraftingCandlemaker) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingCandlemaker) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting.Candlemaker(player, world,
+            return new GuiCrafting(new ContainerCrafting.Candlemaker(player,
                     pos, crafting), GuiList.CANDLEMAKER.name);
         }
 
@@ -232,7 +219,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingForge crafting = (TECraftingForge) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingForge) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting.Forge(player, world,
+            return new GuiCrafting(new ContainerCrafting.Forge(player,
                     pos, crafting), GuiList.FORGE.name);
         }
 
@@ -241,7 +228,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingMason crafting = (TECraftingMason) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingMason) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting.Mason(player, world,
+            return new GuiCrafting(new ContainerCrafting.Mason(player,
                     pos, crafting), GuiList.MASON.name);
         }
         
@@ -250,7 +237,7 @@ public class GuiHandler implements IGuiHandler {
             TECraftingArmourer crafting = (TECraftingArmourer) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingArmourer) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting.Armourer(player, world,
+            return new GuiCrafting(new ContainerCrafting.Armourer(player,
                     pos, crafting), GuiList.ARMOURER.name);
         }
         
@@ -259,19 +246,19 @@ public class GuiHandler implements IGuiHandler {
             TECraftingSawpit crafting = (TECraftingSawpit) te;
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingSawpit) world.getTileEntity(master);
-            return new GuiCrafting(new ContainerCrafting.Sawpit(player, world,
+            return new GuiCrafting(new ContainerCrafting.Sawpit(player,
                     pos, crafting), GuiList.SAWPIT.name);
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceSingle.Camp(player, world,
+            return new GuiFurnace(new ContainerFurnaceSingle.Camp(player,
                     (TEFurnaceCampfire) te, pos), GuiList.CAMPFIRE.name);
         }
 
         if (ID == GuiList.POTFIRE.ordinal()) {
 
-            return new GuiFurnace(new ContainerFurnaceSingle.Pot(player, world,
+            return new GuiFurnace(new ContainerFurnaceSingle.Pot(player,
                     (TEFurnacePotfire) te, pos), GuiList.POTFIRE.name);
         }
 
@@ -280,7 +267,7 @@ public class GuiHandler implements IGuiHandler {
             TEFurnaceClay furnace = (TEFurnaceClay) te;
             BlockPos master = furnace.getMaster();
             furnace = (TEFurnaceClay) world.getTileEntity(master);
-            return new GuiFurnace(new ContainerFurnaceClay(player, world,
+            return new GuiFurnace(new ContainerFurnaceClay(player,
                     furnace, master), GuiList.CLAY.name);
         }
 
@@ -289,43 +276,38 @@ public class GuiHandler implements IGuiHandler {
             TEFurnaceStone furnace = (TEFurnaceStone) te;
             BlockPos master = furnace.getMaster();
             furnace = (TEFurnaceStone) world.getTileEntity(master);
-            return new GuiFurnace(new ContainerFurnaceStone(player, world,
+            return new GuiFurnace(new ContainerFurnaceStone(player,
                     furnace, master), GuiList.STONE.name);
         }
 
         if (ID == GuiList.DRYING.ordinal()) {
 
             return new GuiDrying(new ContainerDrying(player,
-                    world, (TEDrying) te, pos));
-        }
-
-        if (ID == GuiList.INVENTORY.ordinal()) {
-
-            return new GuiInventory((ContainerInventory) player.inventoryContainer);
+                    (TEDrying) te, pos));
         }
         
         if (ID == GuiList.CHEST.ordinal()) {
             
-            return new GuiChest(new ContainerStorage.Chest(player, world,
+            return new GuiChest(new ContainerStorage.Chest(player,
                     pos, (TEStorage) te));
         }
         
         if (ID == GuiList.BOX.ordinal()) {
             
-            return new GuiBox(new ContainerStorage.Box(player, world,
+            return new GuiBox(new ContainerStorage.Box(player,
                     pos, (TEStorage) te));
         }
         
         if (ID == GuiList.BASKET.ordinal()) {
             
-            return new GuiBasket(new ContainerStorage.Basket(player, world,
+            return new GuiBasket(new ContainerStorage.Basket(player,
                     pos, (TEStorage) te));
         }
         
         if (ID == GuiList.COMPOST.ordinal()) {
             
             return new GuiCompost(new ContainerCompost(player,
-                    world, pos, (TECompost) te));
+                    pos, (TECompost) te));
         }
 
         return null;
@@ -347,7 +329,6 @@ public class GuiHandler implements IGuiHandler {
         CLAY("Clay Oven"),
         STONE("Stone Furnace"),
         DRYING("Drying Rack"),
-        INVENTORY("Inventory"),
         CHEST("Chest"),
         BOX("Box"),
         BASKET("Basket"),

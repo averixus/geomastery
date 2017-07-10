@@ -15,6 +15,7 @@ import jayavery.geomastery.capabilities.ProviderCapPlayer;
 import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.items.ItemShield;
 import jayavery.geomastery.items.ItemSimple;
+import jayavery.geomastery.packets.SPacketContainer;
 import jayavery.geomastery.tileentities.TEBed;
 import jayavery.geomastery.utilities.FoodStatsWrapper;
 import net.minecraft.block.Block;
@@ -22,6 +23,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemEgg;
@@ -89,12 +91,16 @@ public class PlayerEvents {
         player.getCapability(GeoCaps.CAP_PLAYER, null).tick();
         
         if (player.inventoryContainer instanceof ContainerPlayer &&
-                !player.capabilities.isCreativeMode) {
+                !player.capabilities.isCreativeMode &&
+                !(player instanceof EntityPlayerMP)) {
             
-            player.inventoryContainer =
-                    new ContainerInventory(player, player.world);
+            Geomastery.LOG.info("Replacing {}'s inventory container",
+                    player.getName());
+            player.inventoryContainer = new ContainerInventory(player);
             player.openContainer = player.inventoryContainer;
+            Geomastery.NETWORK.sendToServer(new SPacketContainer());
             
+                        
         } else if (player.inventoryContainer instanceof ContainerInventory &&
                 player.capabilities.isCreativeMode) {
             
@@ -155,7 +161,6 @@ public class PlayerEvents {
         Item item = event.getEntityItem().getEntityItem().getItem();
         long time = player.world.getWorldTime();
         
-        ContainerInventory.updateHand(player, EnumHand.MAIN_HAND);
         player.getCapability(GeoCaps.CAP_PLAYER, null).addDelay(item, time);
     }
 
@@ -218,11 +223,8 @@ public class PlayerEvents {
                 if (attackVec.dotProduct(playerVec) < 0.0D &&
                         event.getAmount() >= 3) {
                     
-                    EnumHand hand = player.getActiveHand();
                     player.getActiveItemStack().damageItem(1 +
                             MathHelper.floor(event.getAmount()), player);
-                    
-                    ContainerInventory.updateHand(player, hand);
                 }
             }
         }

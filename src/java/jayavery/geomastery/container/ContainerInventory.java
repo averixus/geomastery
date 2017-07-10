@@ -14,8 +14,6 @@ import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.packets.CPacketContainer;
-import jayavery.geomastery.packets.SPacketContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
@@ -31,7 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 /** Container for player inventory. */
 public class ContainerInventory extends ContainerAbstract {
@@ -105,10 +102,9 @@ public class ContainerInventory extends ContainerAbstract {
     /** Inventory for the craft result. */
     public final IInventory craftResult = new InventoryCraftResult();
 
-    public ContainerInventory(EntityPlayer player, World world) {
+    public ContainerInventory(EntityPlayer player) {
 
-        super(player, world);
-        this.player.openContainer = this;
+        super(player);
         
         // Equipment slots
         this.addSlotToContainer(new SlotArmour(this.playerInv,
@@ -149,6 +145,7 @@ public class ContainerInventory extends ContainerAbstract {
         
         this.refresh();
         this.onCraftMatrixChanged(this.craftMatrix);
+        this.detectAndSendChanges();
     }
     
     /** Rebuilds the correct number of main inventory slots. */
@@ -156,6 +153,7 @@ public class ContainerInventory extends ContainerAbstract {
         
         // Remove old slots
         int j = this.inventorySlots.size() - 1;
+        
         while (j >= this.invStart) {
 
             this.inventorySlots.remove(j);
@@ -293,7 +291,6 @@ public class ContainerInventory extends ContainerAbstract {
             }
             
             inv.set(0, added);
-            updateHand(this.player, EnumHand.OFF_HAND);
         }
         
         return stack;
@@ -324,7 +321,6 @@ public class ContainerInventory extends ContainerAbstract {
             }
             
             inv.set(slot, added);
-            updateInventory(this.player, slot);
         }
         
         return stack;
@@ -362,7 +358,6 @@ public class ContainerInventory extends ContainerAbstract {
                 if (!stack.isEmpty()) {
 
                     player.dropItem(stack, false);
-                    this.updateContainer(CRAFT_START + i);
                 }
             }
         }
@@ -520,18 +515,6 @@ public class ContainerInventory extends ContainerAbstract {
         slot.onSlotChanged();
         return result;
     }
-
-    /** Swaps the mainhand and offhand items (as pressing F). */
-    public void swapHands() {
-
-        ItemStack toMove =
-                this.playerInv.mainInventory.get(this.playerInv.currentItem);
-        this.playerInv.mainInventory.set(this.playerInv.currentItem,
-                this.playerInv.offHandInventory.get(0));
-        this.playerInv.offHandInventory.set(0, toMove);
-        updateHand(this.player, EnumHand.MAIN_HAND);
-        updateHand(this.player, EnumHand.OFF_HAND);
-    }
     
     /** Attempts to add the stack to the given player if their
      * inventory container is an instance of this class.
@@ -547,40 +530,6 @@ public class ContainerInventory extends ContainerAbstract {
         return inv.add(stack);
     }
     
-    /** Updates the given hand of the player if their inventory container is
-     * an instance of this class. */
-    public static void updateHand(EntityPlayer player, EnumHand hand) {
-        
-        if (!(player.inventoryContainer instanceof ContainerInventory)) {
-            
-            return;
-        }
-            
-        ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
-        
-        if (hand == EnumHand.MAIN_HAND) {
-            
-            inv.updateContainer(player.inventory.currentItem + inv.hotStart);
-            
-        } else {
-            
-            inv.updateContainer(OFFHAND_I);
-        }
-    }
-    
-    /** Updates the given index in the player's main inventory if their
-     * inventory container is an instance of this class. */
-    public static void updateInventory(EntityPlayer player, int index) {
-        
-        if (!(player.inventoryContainer instanceof ContainerInventory)) {
-            
-            return;
-        }
-            
-        ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
-        inv.updateContainer(index + inv.hotStart);
-    }
-    
     /** Refreshes the player's inventory container size
      * if it is an instance of this class. */
     public static void refresh(EntityPlayer player) {
@@ -592,28 +541,5 @@ public class ContainerInventory extends ContainerAbstract {
         
         ContainerInventory inv = (ContainerInventory) player.inventoryContainer;
         inv.refresh();
-    }
-
-    /** Sends a packet to update the index slot of this container. */
-    private void updateContainer(int slot) {
-
-        if (slot >= this.inventorySlots.size()) {
-            
-            return;
-        }
-        
-        ItemStack stack = this.inventorySlots.get(slot).getStack();
-
-        if (this.player instanceof EntityPlayerMP) {
-
-            Geomastery.NETWORK
-                    .sendTo(new CPacketContainer(slot, stack),
-                    (EntityPlayerMP) this.player);
-
-        } else {
-
-            Geomastery.NETWORK
-                    .sendToServer(new SPacketContainer(slot, stack));
-        }
     }
 }

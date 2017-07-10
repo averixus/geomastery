@@ -62,7 +62,6 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
             if (!player.capabilities.isCreativeMode) {
             
                 stack.shrink(1);
-                ContainerInventory.updateHand(player, hand);
             }
             
             return EnumActionResult.SUCCESS;

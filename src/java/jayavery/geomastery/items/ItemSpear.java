@@ -8,7 +8,6 @@ package jayavery.geomastery.items;
 
 import java.util.Collections;
 import javax.annotation.Nullable;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.entities.projectile.EntityProjectile;
 import jayavery.geomastery.utilities.IProjectileFactory;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,7 +16,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -26,7 +27,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 /** Abstract superclass for spear tool items. */
-public class ItemSpear extends ItemToolAbstract {
+public class ItemSpear extends ItemTool {
     
     /** Factory for spear projectile entity. */
     private IProjectileFactory factory;
@@ -97,8 +98,6 @@ public class ItemSpear extends ItemToolAbstract {
                     if (!player.capabilities.isCreativeMode) {
                         
                         stack.shrink(1);
-                        ContainerInventory.updateHand(player, 
-                                player.getActiveHand());
                     }
                 }
 

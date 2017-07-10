@@ -61,10 +61,10 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     /** The position of this container. */
     protected final BlockPos pos;
 
-    public ContainerFurnaceAbstract(EntityPlayer player, World world,
+    public ContainerFurnaceAbstract(EntityPlayer player,
             TEFurnaceAbstract<?> furnace, BlockPos pos) {
 
-        super(player, world);
+        super(player);
         this.furnace = furnace;
         this.pos = pos;
         this.size = furnace.size();

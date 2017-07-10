@@ -35,10 +35,10 @@ public class ContainerStorage extends ContainerAbstract {
     /** Position of the storage block. */
     private final BlockPos pos;
 
-    public ContainerStorage(EntityPlayer player, World world,
-            BlockPos pos, TEStorage storage, int storageY) {
+    public ContainerStorage(EntityPlayer player, BlockPos pos,
+            TEStorage storage, int storageY) {
         
-        super(player, world);
+        super(player);
         this.storage = storage;
         this.pos = pos;
         this.storageY = storageY;
@@ -123,30 +123,27 @@ public class ContainerStorage extends ContainerAbstract {
     /** Basket implementation. */
     public static class Basket extends ContainerStorage {
         
-        public Basket(EntityPlayer player, World world,
-                BlockPos pos, TEStorage storage) {
+        public Basket(EntityPlayer player, BlockPos pos, TEStorage storage) {
             
-            super(player, world, pos, storage, 36);
+            super(player, pos, storage, 36);
         }
     }
     
     /** Box implementation. */
     public static class Box extends ContainerStorage {
         
-        public Box(EntityPlayer player, World world,
-                BlockPos pos, TEStorage storage) {
+        public Box(EntityPlayer player, BlockPos pos, TEStorage storage) {
             
-            super(player, world, pos, storage, 26);
+            super(player, pos, storage, 26);
         }
     }
     
     /** Chest implementation. */
     public static class Chest extends ContainerStorage {
         
-        public Chest(EntityPlayer player, World world,
-                BlockPos pos, TEStorage storage) {
+        public Chest(EntityPlayer player, BlockPos pos, TEStorage storage) {
             
-            super(player, world, pos, storage, 18);
+            super(player, pos, storage, 18);
         }
     }
 }

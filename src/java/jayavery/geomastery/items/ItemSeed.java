@@ -61,7 +61,6 @@ public class ItemSeed extends ItemSimple implements IPlantable {
             if (!player.capabilities.isCreativeMode) {
                 
                 stack.shrink(1);
-                ContainerInventory.updateHand(player, hand);
             }
             
             return EnumActionResult.SUCCESS;
@@ -105,7 +104,6 @@ public class ItemSeed extends ItemSimple implements IPlantable {
                 if (!player.capabilities.isCreativeMode) {
                     
                     stack.shrink(1);
-                    ContainerInventory.updateHand(player, hand);
                 }
                 
                 animal.setInLove(player);
@@ -117,7 +115,6 @@ public class ItemSeed extends ItemSimple implements IPlantable {
                 if (!player.capabilities.isCreativeMode) {
                     
                     stack.shrink(1);
-                    ContainerInventory.updateHand(player, hand);
                 }
                 
                 animal.ageUp((int)(((float)-animal.getGrowingAge() / 20) *

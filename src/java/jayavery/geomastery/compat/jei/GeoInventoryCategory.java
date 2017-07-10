@@ -44,7 +44,7 @@ public class GeoInventoryCategory
     private static final int ICON_SIZE = 14;
     
     /** Recipe tab name. */
-    private final String name = GuiList.INVENTORY.name;
+    private final String name = "Inventory";
     /** Internal unique id. */
     private final String uid = Geomastery.MODID + ":inventory";
     /** Background image. */

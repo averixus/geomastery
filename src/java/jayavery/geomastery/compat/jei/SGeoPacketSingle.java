@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet to transfer one slot in filling containers. */
-public class SPacketSingle implements IMessage {
+/** Packet to transfer one recipe slot in Geomastery filling containers. */
+public class SGeoPacketSingle implements IMessage {
     
     /** The input slot to move into. */
     int space;
@@ -24,9 +24,9 @@ public class SPacketSingle implements IMessage {
     /** Whether to transfer the whole stack. */
     boolean max;
     
-    public SPacketSingle() {}
+    public SGeoPacketSingle() {}
     
-    public SPacketSingle(int space, int input, boolean max) {
+    public SGeoPacketSingle(int space, int input, boolean max) {
         
         this.space = space;
         this.input = input;
@@ -50,10 +50,10 @@ public class SPacketSingle implements IMessage {
     }
     
     public static class Handler implements
-            IMessageHandler<SPacketSingle, IMessage> {
+            IMessageHandler<SGeoPacketSingle, IMessage> {
         
         @Override
-        public IMessage onMessage(SPacketSingle message,
+        public IMessage onMessage(SGeoPacketSingle message,
                 MessageContext ctx) {
             
             ctx.getServerHandler().playerEntity.getServer()
@@ -61,7 +61,7 @@ public class SPacketSingle implements IMessage {
             return null;
         }
         
-        public void processMessage(SPacketSingle message,
+        public void processMessage(SGeoPacketSingle message,
                 MessageContext ctx) {
             
             Container container = ctx.getServerHandler()

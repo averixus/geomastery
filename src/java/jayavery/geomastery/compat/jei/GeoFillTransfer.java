@@ -114,7 +114,7 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
 
         if (doTransfer) {
             
-            Geomastery.NETWORK.sendToServer(new SPacketSingle(foundSpace,
+            Geomastery.NETWORK.sendToServer(new SGeoPacketSingle(foundSpace,
                     foundInput, maxTransfer));
         }
         

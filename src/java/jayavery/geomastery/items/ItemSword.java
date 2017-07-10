@@ -8,9 +8,11 @@ package jayavery.geomastery.items;
 
 import java.util.Collections;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemTool;
 
 /** Sword tool item. */
-public class ItemSword extends ItemToolAbstract {
+public class ItemSword extends ItemTool {
 
     public ItemSword(String name, ToolMaterial material) {
 
