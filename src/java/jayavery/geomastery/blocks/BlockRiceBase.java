@@ -7,6 +7,7 @@
 package jayavery.geomastery.blocks;
 
 import java.util.Random;
+import javax.annotation.Nullable;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.utilities.BlockMaterial;
@@ -16,10 +17,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -72,6 +76,15 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         
         return false;
     }
+    
+    /** Turn straight to water when broken. */
+    @Override
+   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos,
+           EntityPlayer player, boolean willHarvest) {
+        
+       return world.setBlockState(pos, Blocks.WATER.getDefaultState(),
+               world.isRemote ? 11 : 3);
+   }
     
     /** Check position and break if invalid. */
     @Override
