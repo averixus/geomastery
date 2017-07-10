@@ -291,7 +291,7 @@ public class GeoRecipes {
         MASON.addShapedRecipe(new ItemStack(GeoItems.VAULT_BRICK, 2), "BB", "B ", 'B', Items.BRICK);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_STONE, 2), "SSS", 'S', GeoItems.DRESSEDSTONE);
         MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_BRICK, 2), "BBB", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 1), "RR", 'R', GeoItems.RUBBLE);
+        MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), "RR", "RR", 'R', GeoItems.RUBBLE);
     }
 
     /** Adds all recipes to armourer. */
