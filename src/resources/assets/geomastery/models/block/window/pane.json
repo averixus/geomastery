@@ -2,7 +2,8 @@
 "textures": {
     "panels1": "geomastery:blocks/complex/panels1",
     "panels2": "geomastery:blocks/complex/panels2",
-    "glass": "geomastery:blocks/solids/glass"
+    "glass": "geomastery:blocks/solids/glass",
+    "particle": "geomastery:blocks/solids/panels1"
 },
 "elements": [ 
 {
