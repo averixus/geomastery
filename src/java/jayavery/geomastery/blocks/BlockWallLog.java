@@ -66,28 +66,21 @@ public class BlockWallLog extends BlockWall {
         }
         
         IExtendedBlockState extState = (IExtendedBlockState) state; 
-        
         addCollisionBoxToList(pos, entityBox, list, CENTRE_POST_THIN);
         
-        if (extState.getValue(NORTH) != null) {
+        if (extState.getValue(NORTH) != null ||
+                extState.getValue(SOUTH) != null) {
             
             addCollisionBoxToList(pos, entityBox, list, BRANCH_NORTH_THIN);
-        }
-        
-        if (extState.getValue(EAST) != null) {
-            
-            addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST_THIN);
-        }
-        
-        if (extState.getValue(SOUTH) != null) {
-            
             addCollisionBoxToList(pos, entityBox, list, BRANCH_SOUTH_THIN);
         }
         
-        if (extState.getValue(WEST) != null) {
+        if (extState.getValue(EAST) != null ||
+                extState.getValue(WEST) != null) {
             
+            addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST_THIN);
             addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST_THIN);
-        } 
+        }
     }
     
     @Override

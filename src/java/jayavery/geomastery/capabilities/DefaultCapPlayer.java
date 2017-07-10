@@ -501,18 +501,22 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         // Define stage
         this.tempStage = TempStage.fromTemp(temp);
-        
-        if (this.damageTimer == DAMAGE_TIME) {
-            
-            this.player.attackEntityFrom(DamageSource.GENERIC, 1);  
-        }
 
         if ((this.tempStage == TempStage.HOT ||
-                this.tempStage == TempStage.COLD) && this.damageTimer == 0) {
-
-            this.damageTimer = DAMAGE_MAX;
+                this.tempStage == TempStage.COLD)) {
             
-        } else if (this.damageTimer > 0) {
+            if (this.damageTimer == 0) {
+
+                this.damageTimer = DAMAGE_MAX;
+                
+            } else if (this.damageTimer == DAMAGE_TIME) {
+                
+                this.player.attackEntityFrom(DamageSource.GENERIC, 1);  
+            }
+            
+        } 
+        
+        if (this.damageTimer > 0) {
 
             this.damageTimer--;
         }
