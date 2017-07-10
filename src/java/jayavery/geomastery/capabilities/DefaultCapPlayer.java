@@ -314,7 +314,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         if (belowSea != 0) {
 
-            heightVar += belowSea / 12F;
+            heightVar += belowSea / 20F;
         }
         
         temp += heightVar;
@@ -423,11 +423,11 @@ public class DefaultCapPlayer implements ICapPlayer {
                             || armor.getArmorMaterial() ==
                             EquipMaterial.FUR_APPAREL) {
 
-                        clothesVar += 0.5;
+                        clothesVar += 0.7;
                         
                     } else {
 
-                        clothesVar += 0.25;
+                        clothesVar += 0.4;
                     }
                 }
             }
@@ -468,7 +468,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                         double distance = Math.ceil(Math.sqrt((x * x) +
                                 (y * y) + (z * z)));
                         
-                        double heat = 4 - distance;
+                        double heat = 4 * (1 - (distance / 8));
                         
                         fireVar = Math.max(fireVar, heat);
                         
@@ -478,7 +478,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                         double distance = Math.ceil(Math.sqrt((x * x) +
                                 (y * y) + (z * z)));
                         
-                        double heat = 2 - distance;
+                        double heat = 2 * (1 - (distance / 4));
                         
                         fireVar = Math.max(fireVar, heat);
                         
@@ -488,7 +488,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                         double distance = Math.ceil(Math.sqrt((x * x) +
                                 (y * y) + (z * z)));
                         
-                        double heat = 11 - distance;
+                        double heat = 10 * (1 - (distance / 20));
                         
                         fireVar = Math.max(fireVar, heat);
                     }
