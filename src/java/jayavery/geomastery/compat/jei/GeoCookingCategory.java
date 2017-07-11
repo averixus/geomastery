@@ -21,6 +21,7 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery cooking recipes. */
 public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
@@ -74,8 +75,8 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
     /** Y position of output slot. */
     private static final int OUT_Y = 18;
     
-    /** Recipe tab name. */
-    private final String name = "Cooking";
+    /** Recipe tab unlocalised name. */
+    private final String name = Geomastery.MODID + ":jeicategory.cooking";
     /** Internal unique id. */
     private final String uid = Geomastery.MODID + ":cooking";
     /** Background image. */
@@ -131,7 +132,7 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getTitle() {
         
-        return this.name;
+        return I18n.translateToLocal(this.name);
     }
     
     @Override

@@ -300,9 +300,9 @@ tile.geomastery:block_flatroof_pole.name=Flat Pole Roof
 tile.geomastery:block_pitchroof_clay.name=Pitched Clay Roof
 tile.oreDiamond.name=Diamond Lode
 
-geomastery.foodtooltip.protein=Food type: Protein
-geomastery.foodtooltip.fruitveg=Food type: Fruit/Veg
-geomastery.foodtooltip.carbs=Food type: Carbs
+geomastery:foodtype.protein=Food type: Protein
+geomastery:foodtype.fruitveg=Food type: Fruit/Veg
+geomastery:foodtype.carbs=Food type: Carbs
 
 item.geomastery:item_seeds_pumpkin.biomes=Valid biomes: Taiga, Cold Taiga, Hills, Forest, Plains, Jungle, River, Beach
 item.geomastery:item_mushroom_red.biomes=Grow in dark place
@@ -325,7 +325,29 @@ tile.geomastery:block_seedling_orange.biomes=Valid biomes: Jungle, Savanna, Dese
 tile.geomastery:block_seedling_banana.biomes=Valid biomes: Jungle, Swamp, Mushroom Island
 tile.geomastery:block_seedling_apple.biomes=Valid biomes: Forest, Plains, River, Beach
 
-geomastery.config.foodTooltips=Show the food type in the item tooltip
-geomastery.config.foodDurability=Show the item's decay level with the filled proportion of durability bar as well as colour
-geomastery.config.cropBiomes=Show the biomes where a crop can grow in the item tooltip
-geomastery.config.hideVanilla=Hide unusued and inaccessible vanilla items from creative inventory (and JEI)
+geomastery:config.food_tooltips=Show the food type in the item tooltip
+geomastery:config.food_durability=Show the item's decay level with the filled proportion of durability bar as well as colour
+geomastery:config.crop_biomes=Show the biomes where a crop can grow in the item tooltip
+geomastery:config.hide_vanilla=Hide unusued and inaccessible vanilla items from Just Enough Items
+
+geomastery:container.basket=Basket
+geomastery:container.box=Box
+geomastery:container.chest=Chest
+geomastery:container.compost=Compost Heap
+geomastery:container.drying=Drying Rack
+geomastery:container.inventory=Inventory
+geomastery:container.knapping=Knapping Block
+geomastery:container.woodworking=Woodworking Bench
+geomastery:container.textiles=Textiles Table
+geomastery:container.candlemaker=Candlemaker's Bench
+geomastery:container.forge=Forge
+geomastery:container.mason=Mason's Workshop
+geomastery:container.sawpit=Sawpit
+geomastery:container.armourer=Armourer
+geomastery:container.campfire=Campfire
+geomastery:container.potfire=Pot Fire
+geomastery:container.clay=Clay Oven
+geomastery:container.stone=Stone Furnace
+
+geomastery:jeicategory.cooking=Cooking
+geomastery:jeicategory.fuel=Fuel

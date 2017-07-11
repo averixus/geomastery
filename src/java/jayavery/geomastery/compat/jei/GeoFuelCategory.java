@@ -20,6 +20,7 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery fuel recipes. */
 public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
@@ -61,8 +62,8 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
     /** Y position of input slot. */
     private static final int IN_Y = 14;
     
-    /** Recipe tab name. */
-    private final String name = "Fuel";
+    /** Recipe tab unlocalised name. */
+    private final String name = Geomastery.MODID + ":jeicategory.fuel";
     /** Internal unique id. */
     private final String uid = Geomastery.MODID + ":fuel";
     /** Backgound image. */
@@ -119,7 +120,7 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getTitle() {
         
-        return this.name;
+        return I18n.translateToLocal(this.name);
     }
     
     @Override

@@ -184,7 +184,7 @@ public class GuiHandler implements IGuiHandler {
 
             TECraftingKnapping crafting = (TECraftingKnapping) te;
             return new GuiCrafting(new ContainerCrafting.Knapping(player,
-                    pos, crafting), GuiList.KNAPPING.name);
+                    pos, crafting), GuiList.KNAPPING.toString().toLowerCase());
         }
 
         if (ID == GuiList.WOODWORKING.ordinal()) {
@@ -193,7 +193,8 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingWoodworking) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Woodworking(player,
-                    pos, crafting), GuiList.WOODWORKING.name);
+                    pos, crafting),
+                    GuiList.WOODWORKING.toString().toLowerCase());
         }
 
         if (ID == GuiList.TEXTILES.ordinal()) {
@@ -202,7 +203,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingTextiles) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Textiles(player,
-                    pos, crafting), GuiList.TEXTILES.name);
+                    pos, crafting), GuiList.TEXTILES.toString().toLowerCase());
         }
 
         if (ID == GuiList.CANDLEMAKER.ordinal()) {
@@ -211,7 +212,8 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingCandlemaker) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Candlemaker(player,
-                    pos, crafting), GuiList.CANDLEMAKER.name);
+                    pos, crafting),
+                    GuiList.CANDLEMAKER.toString().toLowerCase());
         }
 
         if (ID == GuiList.FORGE.ordinal()) {
@@ -220,7 +222,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingForge) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Forge(player,
-                    pos, crafting), GuiList.FORGE.name);
+                    pos, crafting), GuiList.FORGE.toString().toLowerCase());
         }
 
         if (ID == GuiList.MASON.ordinal()) {
@@ -229,7 +231,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingMason) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Mason(player,
-                    pos, crafting), GuiList.MASON.name);
+                    pos, crafting), GuiList.MASON.toString().toLowerCase());
         }
         
         if (ID == GuiList.ARMOURER.ordinal()) {
@@ -238,7 +240,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingArmourer) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Armourer(player,
-                    pos, crafting), GuiList.ARMOURER.name);
+                    pos, crafting), GuiList.ARMOURER.toString().toLowerCase());
         }
         
         if (ID == GuiList.SAWPIT.ordinal()) {
@@ -247,19 +249,21 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = crafting.getMaster();
             crafting = (TECraftingSawpit) world.getTileEntity(master);
             return new GuiCrafting(new ContainerCrafting.Sawpit(player,
-                    pos, crafting), GuiList.SAWPIT.name);
+                    pos, crafting), GuiList.SAWPIT.toString().toLowerCase());
         }
 
         if (ID == GuiList.CAMPFIRE.ordinal()) {
 
             return new GuiFurnace(new ContainerFurnaceSingle.Camp(player,
-                    (TEFurnaceCampfire) te, pos), GuiList.CAMPFIRE.name);
+                    (TEFurnaceCampfire) te, pos),
+                    GuiList.CAMPFIRE.toString().toLowerCase());
         }
 
         if (ID == GuiList.POTFIRE.ordinal()) {
 
             return new GuiFurnace(new ContainerFurnaceSingle.Pot(player,
-                    (TEFurnacePotfire) te, pos), GuiList.POTFIRE.name);
+                    (TEFurnacePotfire) te, pos),
+                    GuiList.POTFIRE.toString().toLowerCase());
         }
 
         if (ID == GuiList.CLAY.ordinal()) {
@@ -268,7 +272,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = furnace.getMaster();
             furnace = (TEFurnaceClay) world.getTileEntity(master);
             return new GuiFurnace(new ContainerFurnaceClay(player,
-                    furnace, master), GuiList.CLAY.name);
+                    furnace, master), GuiList.CLAY.toString().toLowerCase());
         }
 
         if (ID == GuiList.STONE.ordinal()) {
@@ -277,7 +281,7 @@ public class GuiHandler implements IGuiHandler {
             BlockPos master = furnace.getMaster();
             furnace = (TEFurnaceStone) world.getTileEntity(master);
             return new GuiFurnace(new ContainerFurnaceStone(player,
-                    furnace, master), GuiList.STONE.name);
+                    furnace, master), GuiList.STONE.toString().toLowerCase());
         }
 
         if (ID == GuiList.DRYING.ordinal()) {
@@ -316,29 +320,22 @@ public class GuiHandler implements IGuiHandler {
     /** Gui types for fixed index and name. */
     public static enum GuiList {
 
-        KNAPPING("Knapping Block"),
-        WOODWORKING("Woodworking Bench"),
-        TEXTILES("Textiles Table"),
-        CANDLEMAKER("Candlemaker's Bench"),
-        FORGE("Forge"),
-        MASON("Mason's Workshop"),
-        SAWPIT("Sawpit"),
-        ARMOURER("Armourer's Workshop"),
-        CAMPFIRE("Campfire"),
-        POTFIRE("Campfire with Pot"),
-        CLAY("Clay Oven"),
-        STONE("Stone Furnace"),
-        DRYING("Drying Rack"),
-        CHEST("Chest"),
-        BOX("Box"),
-        BASKET("Basket"),
-        COMPOST("Compost Heap");
-
-        public final String name;
-
-        private GuiList(String name) {
-
-            this.name = name;
-        }
+        KNAPPING,
+        WOODWORKING,
+        TEXTILES,
+        CANDLEMAKER,
+        FORGE,
+        MASON,
+        SAWPIT,
+        ARMOURER,
+        CAMPFIRE,
+        POTFIRE,
+        CLAY,
+        STONE,
+        DRYING,
+        CHEST,
+        BOX,
+        BASKET,
+        COMPOST;
     }
 }

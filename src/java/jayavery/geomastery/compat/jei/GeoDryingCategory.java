@@ -21,6 +21,7 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery drying recipes. */
 public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
@@ -64,8 +65,8 @@ public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
     /** Y position of output slot. */
     private static final int OUT_Y = 0;
     
-    /** Recipe tab name. */
-    private final String name = GuiList.DRYING.name;
+    /** Recipe tab unlocalised name. */
+    private final String name = Geomastery.MODID + ":container.drying";
     /** Internal unique id. */
     private final String uid = Geomastery.MODID + ":drying";
     /** Background image. */
@@ -114,7 +115,7 @@ public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getTitle() {
         
-        return this.name;
+        return I18n.translateToLocal(this.name);
     }
     
     @Override

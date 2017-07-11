@@ -27,6 +27,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery compost recipes. */
 public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
@@ -84,8 +85,8 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
     /** Y position of slots. */
     private static final int SLOT_Y = 10;
 
-    /** Recipe tab name. */
-    private final String name = GuiList.COMPOST.name;
+    /** Recipe tab unlocalised name. */
+    private final String name = Geomastery.MODID + ":container.compost";
     /** Internal unique id. */
     private final String uid = Geomastery.MODID + ":compost";
     /** Background image. */
@@ -142,7 +143,7 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getTitle() {
         
-        return this.name;
+        return I18n.translateToLocal(this.name);
     }
     
     @Override

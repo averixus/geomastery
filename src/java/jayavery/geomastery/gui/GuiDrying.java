@@ -23,7 +23,7 @@ public class GuiDrying extends GuiContainerAbstract {
 
     public GuiDrying(ContainerDrying container) {
 
-        super(container, "Drying Rack");
+        super(container, "drying");
         this.texture = new ResourceLocation(Geomastery.MODID,
                 "textures/gui/drying_" +
                 container.capability.getInventoryRows() + ".png");

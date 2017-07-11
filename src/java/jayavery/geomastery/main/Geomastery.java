@@ -62,6 +62,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -107,7 +109,7 @@ public class Geomastery {
     
     public static final Logger LOG = LogManager.getLogger(MODID);
     
-    public static Configuration config;
+  //  public static Configuration config;
     
     @SidedProxy(clientSide = CLIENT_PROXY, serverSide = SERVER_PROXY)
     public static IProxy proxy;
@@ -141,9 +143,9 @@ public class Geomastery {
     @EventHandler
     public static void preInit(FMLPreInitializationEvent e) {
         
-        config = new Configuration(e.getSuggestedConfigurationFile());
-        GeoConfig.syncConfig(config);
-        GeoConfig.preInit();
+     //   config = new Configuration(e.getSuggestedConfigurationFile());
+       // GeoConfig.syncConfig(config);
+     //   GeoConfig.preInit();
         GeoBlocks.preInit();
         GeoItems.preInit();
         GeoCaps.preInit();
@@ -259,10 +261,10 @@ public class Geomastery {
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent
             event) {
-
+        System.out.println("on config changed event");
         if (event.getModID().equals(MODID)) {
-
-            GeoConfig.syncConfig(config);
+            System.out.println("on config changed");
+            ConfigManager.load(MODID, Config.Type.INSTANCE);
         }
     }
     

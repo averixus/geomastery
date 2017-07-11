@@ -96,7 +96,7 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
             
                 if (GeoConfig.foodTooltips) {
                     
-                    tooltip.add(I18n.translateToLocal("geomastery.foodtooltip."
+                    tooltip.add(I18n.translateToLocal("geomastery:foodtype."
                             + this.type.toString().toLowerCase()));
                 }
                 

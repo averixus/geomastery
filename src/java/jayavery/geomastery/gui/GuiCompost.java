@@ -56,7 +56,7 @@ public class GuiCompost extends GuiContainerAbstract {
 
     public GuiCompost(ContainerCompost container) {
         
-        super(container, "Compost Heap");
+        super(container, "compost");
         this.texture = new ResourceLocation(Geomastery.MODID, 
                 "textures/gui/compost_" +
                 container.capability.getInventoryRows() + ".png");

@@ -23,6 +23,7 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery crafting recipes. */
 public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
@@ -44,7 +45,7 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
      /** Index of output slot. */
      private static final int OUT_I = 0;
     
-    /** Recipe tab name. */
+    /** Recipe tab unlocalised name. */
     private final String name;
     /** Internal unique id. */
     private final String uid;
@@ -53,14 +54,14 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
     /** Crafting grid helper. */
     private final ICraftingGridHelper gridHelper;
     
-    public GeoCraftingCategory(String name, String uid) {
+    public GeoCraftingCategory(String name) {
         
         this.background = GeoJei.guiHelper.createDrawable(BG_RES,
                 BG_X, BG_Y, BG_WIDTH, BG_HEIGHT);
         this.gridHelper = GeoJei.guiHelper
                 .createCraftingGridHelper(IN_I, OUT_I);
-        this.uid = uid;
-        this.name = name;
+        this.uid = Geomastery.MODID + ":" + name;
+        this.name = Geomastery.MODID + ":container." + name;
     }
     
     @Override
@@ -78,7 +79,7 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getTitle() {
         
-        return this.name;
+        return I18n.translateToLocal(this.name);
     }
     
     @Override

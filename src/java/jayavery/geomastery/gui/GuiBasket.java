@@ -18,7 +18,7 @@ public class GuiBasket extends GuiContainerAbstract {
     
     public GuiBasket(Basket container) {
         
-        super(container, "Basket");
+        super(container, "basket");
         this.texture = new ResourceLocation(Geomastery.MODID, 
                 "textures/gui/basket_" +
                 container.capability.getInventoryRows() + ".png");

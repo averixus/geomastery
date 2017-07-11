@@ -25,7 +25,7 @@ public class GuiInventory extends GuiContainerAbstract {
 
     public GuiInventory(ContainerInventory container) {
 
-        super(container, "Inventory");
+        super(container, "inventory");
         this.allowUserInput = true;
     }
     

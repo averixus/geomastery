@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Abstract superclass for gui containers. */
 public abstract class GuiContainerAbstract extends GuiContainer {
@@ -52,13 +53,13 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     /** Height of crafting durability bar. */
     protected static final int DURABILITY_HEIGHT = 52;
     
-    /** Name of this container. */
+    /** Unlocalised name of this container. */
     protected final String name;
     
     public GuiContainerAbstract(Container container, String name) {
         
         super(container);
-        this.name = name;
+        this.name = "geomastery:container." + name;
     }
     
     /** @return The texture for this container. */
@@ -67,9 +68,10 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         
-        int stringWidth = this.fontRendererObj.getStringWidth(this.name);
+        String name = I18n.translateToLocal(this.name);
+        int stringWidth = this.fontRendererObj.getStringWidth(name);
         int start = this.xSize / 2 - stringWidth / 2;
-        this.fontRendererObj.drawString(this.name, start, 6, TEXT_COLOUR);
+        this.fontRendererObj.drawString(name, start, 6, TEXT_COLOUR);
     }
     
     @Override

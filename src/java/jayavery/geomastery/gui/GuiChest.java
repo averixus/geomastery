@@ -19,7 +19,7 @@ public class GuiChest extends GuiContainerAbstract {
     
     public GuiChest(Chest container) {
         
-        super(container, "Chest");
+        super(container, "chest");
         this.texture = new ResourceLocation(Geomastery.MODID,
                 "textures/gui/chest_" +
                 container.capability.getInventoryRows() + ".png");

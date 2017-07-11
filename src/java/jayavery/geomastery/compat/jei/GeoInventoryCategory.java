@@ -18,6 +18,7 @@ import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery inventory crafting recipes. */
 public class GeoInventoryCategory
@@ -43,8 +44,8 @@ public class GeoInventoryCategory
     /** Size of icon image. */
     private static final int ICON_SIZE = 14;
     
-    /** Recipe tab name. */
-    private final String name = "Inventory";
+    /** Recipe tab unlocalised name. */
+    private final String name = Geomastery.MODID + ":container.inventory";
     /** Internal unique id. */
     private final String uid = Geomastery.MODID + ":inventory";
     /** Background image. */
@@ -69,7 +70,7 @@ public class GeoInventoryCategory
     @Override
     public String getTitle() {
         
-        return this.name;
+        return I18n.translateToLocal(this.name);
     }
     
     @Override
