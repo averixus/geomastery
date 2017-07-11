@@ -143,6 +143,7 @@ public class Geomastery {
         
         config = new Configuration(e.getSuggestedConfigurationFile());
         GeoConfig.syncConfig(config);
+        GeoConfig.preInit();
         GeoBlocks.preInit();
         GeoItems.preInit();
         GeoCaps.preInit();

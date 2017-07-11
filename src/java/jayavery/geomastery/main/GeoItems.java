@@ -7,6 +7,7 @@
 package jayavery.geomastery.main;
 
 import java.util.Set;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import jayavery.geomastery.blocks.BlockSlab;
 import jayavery.geomastery.blocks.BlockVault;
@@ -57,6 +58,7 @@ import jayavery.geomastery.utilities.EquipMaterial;
 import jayavery.geomastery.utilities.FoodType;
 import net.minecraft.block.SoundType;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;

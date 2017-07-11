@@ -328,3 +328,4 @@ tile.geomastery:block_seedling_apple.biomes=Valid biomes: Forest, Plains, River,
 geomastery.config.foodTooltips=Show the food type in the item tooltip
 geomastery.config.foodDurability=Show the item's decay level with the filled proportion of durability bar as well as colour
 geomastery.config.cropBiomes=Show the biomes where a crop can grow in the item tooltip
+geomastery.config.hideVanilla=Hide unusued and inaccessible vanilla items from creative inventory (and JEI)

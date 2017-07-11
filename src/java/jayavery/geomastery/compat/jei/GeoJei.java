@@ -24,6 +24,7 @@ import jayavery.geomastery.items.ItemCarcassDecayable;
 import jayavery.geomastery.items.ItemEdibleDecayable;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoCaps;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.main.Geomastery;
@@ -34,7 +35,7 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.ISubtypeRegistry.ISubtypeInterpreter;
 import mezz.jei.api.JEIPlugin;
-import mezz.jei.api.gui.ICraftingGridHelper;
+import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
@@ -101,6 +102,7 @@ public class GeoJei extends BlankModPlugin {
         transferHelper = registry.getJeiHelpers().recipeTransferHandlerHelper();
         stackHelper = registry.getJeiHelpers().getStackHelper();
         IRecipeTransferRegistry transfers = registry.getRecipeTransferRegistry();
+        IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
         
         Geomastery.LOG.info("JEI: Registering compost recipes");
         registry.handleRecipes(GeoCompostCategory.Recipe.class, GeoCompostCategory.Wrapper::new, compost.getUid());
@@ -194,6 +196,13 @@ public class GeoJei extends BlankModPlugin {
         registry.addRecipes(getRecipes(GeoRecipes.SAWPIT), sawpit.getUid());
         registry.addRecipes(getRecipes(GeoRecipes.TEXTILES), textiles.getUid());
         registry.addRecipes(getRecipes(GeoRecipes.WOODWORKING), woodworking.getUid());
+        
+        if (GeoConfig.hideVanilla) {
+            
+            Geomastery.LOG.info("JEI: Blacklisting vanilla items");
+            GeoConfig.vanillaItems.forEach((i) -> blacklist.addIngredientToBlacklist(new ItemStack(i)));
+            GeoConfig.vanillaBlocks.forEach((b) -> blacklist.addIngredientToBlacklist(new ItemStack(b)));
+        }
     }
     
     /** @return A collection of recipes, combining duplicated outputs. */
