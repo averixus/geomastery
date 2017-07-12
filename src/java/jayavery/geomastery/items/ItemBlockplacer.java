@@ -7,11 +7,15 @@
 package jayavery.geomastery.items;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 import jayavery.geomastery.blocks.BlockBeam;
 import jayavery.geomastery.blocks.BlockBuilding;
 import jayavery.geomastery.blocks.BlockDoor;
-import jayavery.geomastery.container.ContainerInventory;
+import jayavery.geomastery.blocks.BlockSlab;
+import jayavery.geomastery.blocks.BlockVault;
+import jayavery.geomastery.blocks.BlockWallHeaping;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.tileentities.TEBeam;
 import jayavery.geomastery.tileentities.TEBeam.EnumFloor;
 import jayavery.geomastery.tileentities.TEBeam.EnumPartBeam;
@@ -31,7 +35,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Items which place blocks more complex than {@code ItemBlock}. */
 public abstract class ItemBlockplacer extends ItemSimple {
@@ -96,6 +103,21 @@ public abstract class ItemBlockplacer extends ItemSimple {
             this.placePart = placePart;
         }
         
+        /** Adds this item's build reqs to the tooltip if config. */
+        @SideOnly(Side.CLIENT)
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.translateToLocal(
+                        "geomastery:buildreq.multipart"));
+                tooltip.add(I18n.translateToLocal(BlockWeight.NONE.build()));
+                tooltip.add(I18n.translateToLocal(BlockWeight.NONE.support()));
+            }
+        }
+        
         @Override
         protected boolean place(World world, BlockPos targetPos,
                 EnumFacing targetSide, EnumFacing placeFacing,
@@ -118,6 +140,46 @@ public abstract class ItemBlockplacer extends ItemSimple {
             super(name, stackSize, CreativeTabs.BUILDING_BLOCKS, sound);
             this.single = single;
             this.duble = duble; 
+        }
+        
+        /** Adds this item's build reqs to the tooltip if config. */
+        @SideOnly(Side.CLIENT)
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.translateToLocal(
+                        "geomastery:buildreq.doubling"));
+                
+                if (this.single.get() instanceof BlockSlab) {
+                    
+                    tooltip.add(I18n.translateToLocal(
+                            BlockWeight.MEDIUM.build()));
+                    tooltip.add(I18n.translateToLocal(
+                            "geomastery:buildreq.slab"));
+                    
+                } else {
+                
+                    if (this.single.get() instanceof BlockVault) {
+                        
+                        tooltip.add(I18n.translateToLocal(
+                                "geomastery:buildreq.vault"));
+                        
+                    } else if (this.single.get() instanceof BlockWallHeaping) {
+                        
+                        tooltip.add(I18n.translateToLocal(
+                                "geomastery:buildreq.heapwall"));
+                        
+                    }
+                    
+                    tooltip.add(I18n.translateToLocal(this.single.get()
+                            .getWeight().build()));
+                    tooltip.add(I18n.translateToLocal(this.single.get()
+                            .getWeight().support()));
+                }
+            }
         }
         
         @Override
@@ -164,6 +226,22 @@ public abstract class ItemBlockplacer extends ItemSimple {
             
             super(name, 1, CreativeTabs.BUILDING_BLOCKS, sound);
             this.block = block;
+        }
+        
+        /** Adds this item's build reqs to the tooltip if config. */
+        @SideOnly(Side.CLIENT)
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.translateToLocal(
+                        "geomastery:buildreq.heaping"));
+                tooltip.add(I18n.translateToLocal(BlockWeight.MEDIUM.build()));
+                tooltip.add(I18n.translateToLocal(BlockWeight
+                        .getWeight(this.block.get()).support()));
+            }
         }
         
         @Override
@@ -215,6 +293,23 @@ public abstract class ItemBlockplacer extends ItemSimple {
             super(name, 1, CreativeTabs.DECORATIONS, SoundType.WOOD);
             this.block = block;
         }
+        
+        /** Adds this item's build reqs to the tooltip if config. */
+        @SideOnly(Side.CLIENT)
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.translateToLocal(
+                        "geomastery:buildreq.multipart"));
+                tooltip.add(I18n.translateToLocal(this.block.get()
+                        .getWeight().build()));
+                tooltip.add(I18n.translateToLocal(this.block.get()
+                        .getWeight().support()));
+            }
+        }
 
         @Override
         protected boolean place(World world, BlockPos targetPos,
@@ -261,6 +356,22 @@ public abstract class ItemBlockplacer extends ItemSimple {
             this.minLength = minLength;
             this.maxLength = maxLength;
             this.block = block;
+        }
+        
+        /** Adds this item's build reqs to the tooltip if config. */
+        @SideOnly(Side.CLIENT)
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.translateToLocal(
+                        "geomastery:buildreq.multipart"));
+                tooltip.add(I18n.translateToLocal("geomastery:buildreq.beam"));
+                tooltip.add(I18n.translateToLocal(BlockWeight.LIGHT.support()));
+
+            }
         }
         
         /** Builds a beam structure. */
@@ -358,6 +469,19 @@ public abstract class ItemBlockplacer extends ItemSimple {
             super("floor_" + floor.getName(), stackSize,
                     CreativeTabs.DECORATIONS, SoundType.WOOD);
             this.floor = floor;
+        }
+        
+        /** Adds this item's build reqs to the tooltip if config. */
+        @SideOnly(Side.CLIENT)
+        @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.translateToLocal(
+                        "geomastery:buildreq.floor"));
+            }
         }
         
         /** Attempts to apply this floor to the targested block. */

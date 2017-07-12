@@ -100,7 +100,7 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
                             + this.type.toString().toLowerCase()));
                 }
                 
-                if (GeoConfig.cropBiomes) {
+                if (GeoConfig.cropTooltips) {
 
                     tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()
                             + ".biomes"));

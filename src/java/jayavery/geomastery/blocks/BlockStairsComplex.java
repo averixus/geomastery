@@ -9,6 +9,7 @@ package jayavery.geomastery.blocks;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.block.BlockHorizontal;
@@ -22,13 +23,17 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Complex adaptive stairs block. */
 public class BlockStairsComplex extends BlockBuilding {
@@ -44,11 +49,24 @@ public class BlockStairsComplex extends BlockBuilding {
         super(material, name, CreativeTabs.BUILDING_BLOCKS,
                 hardness, tool);
     }
+    
+    /** Adds this item's build reqs to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.translateToLocal(BlockWeight.HEAVY.build()));
+            tooltip.add(net.minecraft.client.resources.I18n.format(BlockWeight.NONE.support()));
+        }
+    }
 
     @Override
     public BlockWeight getWeight() {
         
-        return BlockWeight.HEAVY;
+        return BlockWeight.NONE;
     }
     
     @Override

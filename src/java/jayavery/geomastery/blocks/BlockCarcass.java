@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import jayavery.geomastery.capabilities.ICapDecay;
-import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.items.ItemCarcassDecayable;
 import jayavery.geomastery.items.ItemHuntingknife;
+import jayavery.geomastery.main.GeoCaps;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.tileentities.TECarcass;
 import jayavery.geomastery.utilities.BlockMaterial;
@@ -31,6 +32,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Carcass blocks. */
 public abstract class BlockCarcass extends BlockBuilding {
@@ -120,6 +123,18 @@ public abstract class BlockCarcass extends BlockBuilding {
     public TileEntity createTileEntity(World worldIn, IBlockState state) {
 
         return new TECarcass();
+    }
+    
+    /** Adds this block's build reqs to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            
+        }
     }
     
     /** Check position and break if invalid. */

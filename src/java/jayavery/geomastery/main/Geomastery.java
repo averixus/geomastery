@@ -257,13 +257,12 @@ public class Geomastery {
         return false;
     }
     
-
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent.OnConfigChangedEvent
             event) {
-        System.out.println("on config changed event");
+
         if (event.getModID().equals(MODID)) {
-            System.out.println("on config changed");
+
             ConfigManager.load(MODID, Config.Type.INSTANCE);
         }
     }

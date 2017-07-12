@@ -17,6 +17,31 @@ public enum BlockWeight {
         
     HEAVY, MEDIUM, LIGHT, NONE;
     
+    /** Unlocalised string for required support tooltip. */
+    private final String build;
+    /** Unlocalised string for provided support tooltip. */
+    private final String support;
+    
+    private BlockWeight() {
+        
+        this.build = "geomastery:buildreq.build." +
+                this.toString().toLowerCase();
+        this.support = "geomastery:buildreq.support." +
+                this.toString().toLowerCase();
+    }
+    
+    /** @return Unlocalised string for required support tooltip. */
+    public String build() {
+        
+        return this.build;
+    }
+    
+    /** @return Unlocalised string for provided support tooltip. */
+    public String support() {
+        
+        return this.support;
+    }
+    
     /** Map of vanilla block weights. */
     public static Map<Block, BlockWeight> BLOCK_WEIGHTS = Maps.newHashMap();
     static {

@@ -7,6 +7,7 @@
 package jayavery.geomastery.blocks;
 
 import java.util.List;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.block.Block;
@@ -14,13 +15,17 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Abstract superclass for weighted building blocks. */
 public abstract class BlockBuilding extends BlockNew {
@@ -58,6 +63,20 @@ public abstract class BlockBuilding extends BlockNew {
         Block blockBelow = world.getBlockState(pos.down()).getBlock();
         BlockWeight weightBelow = BlockWeight.getWeight(blockBelow);
         return weightBelow.canSupport(this.getWeight());
+    }
+    
+    /** Adds this block's build reqs to the tooltip if config. Default
+     * implementation uses getWeight for build and support. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+        
+            tooltip.add(I18n.translateToLocal(this.getWeight().build()));
+            tooltip.add(I18n.translateToLocal(this.getWeight().support()));
+        }
     }
     
     /** @return The weight this block can support. */

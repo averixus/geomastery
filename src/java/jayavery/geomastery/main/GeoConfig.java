@@ -30,11 +30,11 @@ public class GeoConfig {
     public static boolean foodDurability = false;
 
     @Comment("Show the biomes where a crop can grow in the item tooltip")
-    public static boolean cropBiomes = true;
+    public static boolean cropTooltips = true;
 
     @Comment("Hide unusued and inaccessible vanilla items from Just Enough Items")
     public static boolean hideVanilla = true;
     
     @Comment("Show simple building block requirements in the item tooltip")
-    public static boolean buildReqs = true;
+    public static boolean buildTooltips = true;
 }

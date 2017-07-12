@@ -238,6 +238,7 @@ item.geomastery:item_compost_grade_2.name=Poor Compost
 item.geomastery:item_compost_grade_3.name=Moderate Compost
 item.geomastery:item_compost_grade_4.name=Rich Compost
 item.geomastery:item_compost_grade_5.name=Very Rich Compost
+
 item.brick.name=Bricks
 
 tile.geomastery:block_candle_beeswax.name=Beeswax Candle
@@ -298,6 +299,7 @@ tile.geomastery:block_vault_frame.name=Frame Vault
 tile.geomastery:block_window.name=Window
 tile.geomastery:block_flatroof_pole.name=Flat Pole Roof
 tile.geomastery:block_pitchroof_clay.name=Pitched Clay Roof
+
 tile.oreDiamond.name=Diamond Lode
 
 geomastery:foodtype.protein=Food type: Protein
@@ -325,11 +327,6 @@ tile.geomastery:block_seedling_orange.biomes=Valid biomes: Jungle, Savanna, Dese
 tile.geomastery:block_seedling_banana.biomes=Valid biomes: Jungle, Swamp, Mushroom Island
 tile.geomastery:block_seedling_apple.biomes=Valid biomes: Forest, Plains, River, Beach
 
-geomastery:config.food_tooltips=Show the food type in the item tooltip
-geomastery:config.food_durability=Show the item's decay level with the filled proportion of durability bar as well as colour
-geomastery:config.crop_biomes=Show the biomes where a crop can grow in the item tooltip
-geomastery:config.hide_vanilla=Hide unusued and inaccessible vanilla items from Just Enough Items
-
 geomastery:container.basket=Basket
 geomastery:container.box=Box
 geomastery:container.chest=Chest
@@ -351,3 +348,24 @@ geomastery:container.stone=Stone Furnace
 
 geomastery:jeicategory.cooking=Cooking
 geomastery:jeicategory.fuel=Fuel
+
+geomastery:buildreq.multipart=Multipart structure
+geomastery:buildreq.doubling=Doubling block
+geomastery:buildreq.heaping=Heaping block
+geomastery:buildreq.beam=Support needed: Light or more at each end
+geomastery:buildreq.floor=Adds floor to beam block
+geomastery:buildreq.vault=Build on the side of valid support
+geomastery:buildreq.heapwall=Heaping wall
+geomastery:buildreq.fence=Weights supported: other fence only
+geomastery:buildreq.slab=Weight supported: Light or less, only when doubled
+geomastery:buildreq.flatroof=Support needed: Light or more, or connected to nearby supported roof
+
+geomastery:buildreq.build.none=Support weights needed: Light or more
+geomastery:buildreq.build.light=Support weights needed: Light or more
+geomastery:buildreq.build.medium=Support weights needed: Medium or more
+geomastery:buildreq.build.heavy=Support weights needed: Heavy
+
+geomastery:buildreq.support.none=Weights supported: None
+geomastery:buildreq.support.light=Weights supported: Light or less
+geomastery:buildreq.support.medium=Weights supported: Medium or less
+geomastery:buildreq.support.heavy=Weights supported: Heavy or less

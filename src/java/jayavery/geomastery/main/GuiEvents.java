@@ -6,15 +6,20 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
+import jayavery.geomastery.blocks.BlockBuilding;
 import jayavery.geomastery.capabilities.ICapPlayer;
 import jayavery.geomastery.container.ContainerInventory;
-import jayavery.geomastery.main.GuiHandler.GuiList;
+import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.FoodType;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -22,8 +27,8 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 /** Handler for GUI and player input related events. */
 public class GuiEvents {
@@ -100,9 +105,6 @@ public class GuiEvents {
         if (event.getGui() instanceof
                 net.minecraft.client.gui.inventory.GuiInventory &&
                 player.inventoryContainer instanceof ContainerInventory) {
-
-          //  event.setCanceled(true);
-          //  player.openGui(Geomastery.instance, GuiList.INVENTORY.ordinal(), player.world, 0, 0, 0);
         
             event.setGui(new
                     jayavery.geomastery.gui.GuiInventory((ContainerInventory)
@@ -110,30 +112,25 @@ public class GuiEvents {
         }
     }
     
-    /** Alters behaviour when keys are pressed. */
+    /** Adds block weight to vanilla tooltips if config. */
     @SubscribeEvent
-    public void keyInput(KeyInputEvent event) {
-
-    /*    Minecraft mc = Minecraft.getMinecraft();
+    public void addTooltips(ItemTooltipEvent event) {
         
-        if (!mc.player.isSpectator() &&
-                !mc.player.capabilities.isCreativeMode &&
-                mc.gameSettings.keyBindSwapHands.isPressed()) {
-           
-            ContainerInventory inv =
-                    (ContainerInventory) mc.player.inventoryContainer;
+        if (GeoConfig.buildTooltips) {
             
-            if (!mc.player.inventory.offHandInventory.get(0).isEmpty() &&
-                    GeoBlocks.OFFHAND_ONLY.contains(mc.player.inventory
-                    .offHandInventory.get(0).getItem())) {
-                
-                return;
+            Item item = event.getItemStack().getItem();
+            Block block = Block.getBlockFromItem(item);
+            
+            if (item instanceof ItemBlock &&
+                    !(block instanceof BlockBuilding)) {
+            
+                event.getToolTip().add(I18n.format(BlockWeight
+                        .getWeight(block).support()));
             }
-
-            inv.swapHands();
-        }*/
+        }
     }
     
+    /** Adds temperature information to debug screen. */
     @SubscribeEvent
     public void renderDebug(RenderGameOverlayEvent.Text event) {
         
@@ -141,7 +138,8 @@ public class GuiEvents {
             
             EntityPlayer player = Geomastery.proxy.getClientPlayer();
             event.getRight().add("");
-            event.getRight().addAll(player.getCapability(GeoCaps.CAP_PLAYER, null).getDebug());
+            event.getRight().addAll(player.getCapability(GeoCaps.CAP_PLAYER,
+                    null).getDebug());
         }
     }
     

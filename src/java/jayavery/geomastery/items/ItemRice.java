@@ -95,7 +95,7 @@ public class ItemRice extends ItemBlockplacer {
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
-        if (GeoConfig.cropBiomes) {
+        if (GeoConfig.cropTooltips) {
 
             tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
                     ".biomes"));

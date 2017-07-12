@@ -9,15 +9,18 @@ package jayavery.geomastery.blocks;
 import java.util.List;
 import java.util.Random;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockMaterial;
 import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -36,6 +39,19 @@ public class BlockFlatroof extends BlockBuilding {
         
         super(BlockMaterial.WOOD_HANDHARVESTABLE, name,
                 CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
+    }
+    
+    /** Adds this block's build reqs to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(net.minecraft.client.resources.I18n.format("geomastery:buildreq.flatroof"));
+            tooltip.add(I18n.format(BlockWeight.NONE.support()));
+        }
     }
     
     @Override

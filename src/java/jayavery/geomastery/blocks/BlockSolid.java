@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.ToolType;
 import net.minecraft.block.material.Material;
@@ -17,12 +18,16 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Simple solid block for ores etc. */
 public class BlockSolid extends BlockBuilding {
@@ -42,6 +47,18 @@ public class BlockSolid extends BlockBuilding {
         this.item = item;
         this.maxDropped = maxDropped;
         this.weight = weight;
+    }
+    
+    /** No build reqs, creative-only block type. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(net.minecraft.client.resources.I18n.format(this.getWeight().support()));
+        }
     }
 
     @Override

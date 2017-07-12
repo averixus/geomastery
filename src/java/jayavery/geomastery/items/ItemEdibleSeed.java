@@ -80,7 +80,7 @@ public class ItemEdibleSeed extends ItemEdible implements IPlantable {
                     this.type.toString().toLowerCase()));
         }
         
-        if (GeoConfig.cropBiomes) {
+        if (GeoConfig.cropTooltips) {
 
             tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
                     ".biomes"));

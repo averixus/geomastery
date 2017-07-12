@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import jayavery.geomastery.items.ItemBlockplacer;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockMaterial;
 import jayavery.geomastery.utilities.BlockWeight;
 import jayavery.geomastery.utilities.IDoublingBlock;
@@ -29,8 +30,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Vault block. */
 public class BlockVault extends BlockBuilding implements IDoublingBlock {
@@ -55,6 +59,20 @@ public class BlockVault extends BlockBuilding implements IDoublingBlock {
         this.item = item == null ? () -> Item.getItemFromBlock(this) : item;
         this.isDouble = isDouble;
         this.weight = weight;
+    }
+    
+    /** Adds this block's build reqs to the tooltip if config. */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.translateToLocal("geomastery:buildreq.vault"));
+            tooltip.add(I18n.translateToLocal(this.getWeight().build()));
+            tooltip.add(I18n.translateToLocal(this.getWeight().support()));
+        }
     }
     
     @Override
