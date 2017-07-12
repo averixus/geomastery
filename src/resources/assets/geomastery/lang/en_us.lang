@@ -346,9 +346,6 @@ geomastery:container.potfire=Pot Fire
 geomastery:container.clay=Clay Oven
 geomastery:container.stone=Stone Furnace
 
-geomastery:jeicategory.cooking=Cooking
-geomastery:jeicategory.fuel=Fuel
-
 geomastery:buildreq.multipart=Multipart structure
 geomastery:buildreq.doubling=Doubling block
 geomastery:buildreq.heaping=Heaping block
@@ -369,3 +366,17 @@ geomastery:buildreq.support.none=Weights supported: None
 geomastery:buildreq.support.light=Weights supported: Light or less
 geomastery:buildreq.support.medium=Weights supported: Medium or less
 geomastery:buildreq.support.heavy=Weights supported: Heavy or less
+
+geomastery:config.foodTooltips=Food type tooltips
+geomastery:config.foodTooltips.tooltip=Show the food type in the item tooltip
+geomastery:config.foodDurability=Food durability bad
+geomastery:config.foodDurability.tooltip=Show the item's decay level with the filled proportion of durability bar as well as colour
+geomastery:config.cropTooltips=Crop biome tooltips
+geomastery:config.cropTooltips.tooltip=Show the biomes where a crop can grow in the item's tooltip
+geomastery:config.hideVanilla=Hide vanilla from JEI
+geomastery:config.hideVanilla.tooltip=Hide unused and inaccessible vanilla items from Just Enough Items
+geomastery:config.buildTooltips=Building block tooltips
+geomastery:config.buildTooltips.tooltip=Show building block requirements in the item's tooltip
+
+geomastery:jeicategory.cooking=Cooking
+geomastery:jeicategory.fuel=Fuel
