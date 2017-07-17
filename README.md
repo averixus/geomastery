@@ -44,6 +44,7 @@ We have plans to develop Geomastery much further. Our highest priorities at the 
 
 #### **Compatibility**
 
-Geomastery is compatible with Just Enough Items for viewing and using recipes of all kinds.
+* Geomastery is compatible with Just Enough Items for viewing and using recipes of all kinds.
+* Some people have had an issue with blocks being invisible when using Optifine - please report this to Optifine, it is a closed-source coremod and there's nothing we can do about their incompatibilities.
 
 So far, we have not made intentional efforts to be compatible with any gameplay mods. We've thought of Geomastery more like a modpack all of its own. It changes many fundamental aspects of the game (and has plans to change many more!), so it might be hard or impossible to make compatible with other major game-changing mods, and it's not a priority for us at the moment. That said, if you do find it compatible with other mods and/or want to include it in a modpack, feel free as long as you credit us properly!
