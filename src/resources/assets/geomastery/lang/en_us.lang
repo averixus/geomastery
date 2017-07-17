@@ -383,6 +383,10 @@ geomastery:config.hideVanilla=Hide vanilla from JEI
 geomastery:config.hideVanilla.tooltip=Hide unused and inaccessible vanilla items from Just Enough Items
 geomastery:config.buildTooltips=Building block tooltips
 geomastery:config.buildTooltips.tooltip=Show building block requirements in the item's tooltip
+geomastery:config.addCrafting=Vanilla crafting table
+geomastery:config.addCrafting.tooltip=Add vanilla crafting table recipe, with all recipes removed by default
+geomastery:config.buildMessages=Building messages
+geomastery:config.buildMessages.tooltip=Send helpful chat message when a block is placed in an invalid location
 
 geomastery:jeicat.cooking=Cooking
 geomastery:jeicat.fuel=Fuel

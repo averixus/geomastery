@@ -39,6 +39,7 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
     public ItemCarcassDecayable(BlockCarcass block, int stackSize) {
         
         super(block, stackSize);
+        this.setCreativeTab(CreativeTabs.FOOD);
         this.shelfLife = block.getShelfLife();
         this.addPropertyOverride(new ResourceLocation("rot"),
                 new IItemPropertyGetter() {

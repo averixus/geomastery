@@ -35,12 +35,12 @@ public abstract class ItemPlacing extends Item {
     }
     
     /** Constructor using owned block. */
-    public ItemPlacing(Block block, int stackSize) {
+    public ItemPlacing(Block block, int stackSize, CreativeTabs tab) {
         
         this.setRegistryName(block.getRegistryName());
         this.setUnlocalizedName(block.getRegistryName().toString());
         this.setMaxStackSize(stackSize);
-        this.setCreativeTab(block.getCreativeTabToDisplayOn());
+        this.setCreativeTab(tab);
     }
     
     /** Attempt to build the structure.
@@ -106,7 +106,7 @@ public abstract class ItemPlacing extends Item {
         public Building(BlockBuildingAbstract<? extends ItemPlacing> block,
                 int stackSize) {
             
-            super(block, stackSize);
+            super(block, stackSize, CreativeTabs.BUILDING_BLOCKS);
             this.block = block;
         }
 

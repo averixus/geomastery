@@ -39,9 +39,10 @@ public class ItemLooseplacing extends ItemPlacing {
     }
     
     /** Constructor using owned block. */
-    public ItemLooseplacing(BlockBuildingAbstract<?> block, int stackSize) {
+    public ItemLooseplacing(BlockBuildingAbstract<?> block, int stackSize,
+            CreativeTabs tab) {
         
-        super(block, stackSize);
+        super(block, stackSize, tab);
         this.block = () -> block;
     }
 

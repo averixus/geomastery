@@ -32,7 +32,8 @@ public class BlockRubble extends BlockBuildingAbstract<ItemLooseplacing> {
     @Override
     public ItemLooseplacing createItem(int stackSize) {
         
-        return new ItemLooseplacing(this, stackSize);
+        return new ItemLooseplacing(this, stackSize,
+                CreativeTabs.BUILDING_BLOCKS);
     }
     
     @Override
