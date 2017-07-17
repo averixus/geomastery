@@ -403,6 +403,6 @@ public class GeoRecipes {
         
         COMPOST.addWet(GeoItems.ITEMS.stream().filter((i) -> i instanceof ItemEdibleDecayable).map(ItemStack::new).collect(Collectors.toSet()).toArray(new ItemStack[0]));
         COMPOST.addWet(new ItemStack(GeoItems.WOOL), new ItemStack(Items.BONE));
-        COMPOST.addDry(new ItemStack(GeoItems.LEAVES), new ItemStack(Items.STICK), new ItemStack(GeoItems.LOG), new ItemStack(GeoItems.POLE), new ItemStack(GeoItems.THICKLOG), new ItemStack(Items.REEDS));
+        COMPOST.addDry(new ItemStack(GeoItems.LEAVES), new ItemStack(Items.STICK), new ItemStack(GeoItems.LOG), new ItemStack(GeoItems.POLE), new ItemStack(GeoItems.THICKLOG), new ItemStack(Items.REEDS), new ItemStack(Blocks.RED_FLOWER), new ItemStack(Blocks.YELLOW_FLOWER));
     }
 }
