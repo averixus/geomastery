@@ -96,14 +96,14 @@ import net.minecraftforge.fml.relauncher.Side;
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.1.2-a1";
+    public static final String VERSION = "2.0.0";
     public static final String NAME = "Geomastery";
     public static final String MC_VER = "1.11.2-13.20.1.2386";
     public static final String UPDATE = "https://gist.githubusercontent.com/JayAvery/97013d9f3a4d3dd904fb608899d9eadd/raw/";
     public static final String SERVER_PROXY = "jayavery.geomastery.main.ServerProxy";
     public static final String CLIENT_PROXY = "jayavery.geomastery.main.ClientProxy";
     
-    public static final VersionRange COMPATIBLE_RANGE = VersionRange.newRange(null, Lists.newArrayList(new Restriction(new DefaultArtifactVersion("1.0.0"), true, new DefaultArtifactVersion(VERSION), true)));
+    public static final VersionRange COMPATIBLE_RANGE = VersionRange.newRange(null, Lists.newArrayList(new Restriction(new DefaultArtifactVersion("2.0.0"), true, new DefaultArtifactVersion(VERSION), true)));
     
     public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
     
