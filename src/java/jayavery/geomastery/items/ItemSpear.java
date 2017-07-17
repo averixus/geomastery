@@ -16,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ActionResult;
@@ -58,6 +57,12 @@ public class ItemSpear extends ItemTool {
                 }
             }
         });
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
     
     /** Creates this spear's thrown entity. */

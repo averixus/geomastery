@@ -9,6 +9,7 @@ package jayavery.geomastery.gui;
 import jayavery.geomastery.container.ContainerStorage;
 import jayavery.geomastery.container.ContainerStorage.Chest;
 import jayavery.geomastery.main.Geomastery;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for chest container. */
@@ -19,7 +20,7 @@ public class GuiChest extends GuiContainerAbstract {
     
     public GuiChest(Chest container) {
         
-        super(container, "chest");
+        super(container, Lang.CONTAINER_CHEST);
         this.texture = new ResourceLocation(Geomastery.MODID,
                 "textures/gui/chest_" +
                 container.capability.getInventoryRows() + ".png");

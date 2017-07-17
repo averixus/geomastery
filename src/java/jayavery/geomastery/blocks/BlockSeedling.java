@@ -9,15 +9,17 @@ package jayavery.geomastery.blocks;
 import java.util.List;
 import java.util.Random;
 import jayavery.geomastery.main.GeoConfig;
+import jayavery.geomastery.utilities.EToolType;
 import jayavery.geomastery.utilities.IBiomeCheck;
 import jayavery.geomastery.utilities.ITreeGenFactory;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.Lang;
 import jayavery.geomastery.worldgen.WorldGenTreeApple;
 import jayavery.geomastery.worldgen.WorldGenTreeBanana;
 import jayavery.geomastery.worldgen.WorldGenTreeOrange;
 import jayavery.geomastery.worldgen.WorldGenTreePear;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
@@ -25,7 +27,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -55,7 +56,7 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
             float growthChance) {
         
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS,
-                1F, ToolType.SHOVEL);
+                1F, EToolType.SHOVEL);
         this.setTickRandomly(true); // TEST just added?
         this.treeGenFactory = treeGenFactory;
         this.growthChance = growthChance;
@@ -75,7 +76,6 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         return NULL_AABB;
     }
     
-    /** Grow or die according to chance. */
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
@@ -101,7 +101,6 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         }
     }
     
-    /** Adds this item's valid biomes to the tooltip if config. */
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
@@ -109,11 +108,12 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         
         if (GeoConfig.cropTooltips) {
 
-            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
-                    ".biomes"));
+            tooltip.add(I18n.format(this.getUnlocalizedName() +
+                    Lang.BIOMES));
         }
     }
     
+    /** Pear sapling block. */
     public static class Pear extends BlockSeedling {
         
         public Pear() {
@@ -132,6 +132,7 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         }
     }
     
+    /** Orange sapling block. */
     public static class Orange extends BlockSeedling {
         
         public Orange() {
@@ -148,6 +149,7 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         }
     }
     
+    /** Banana sapling block. */
     public static class Banana extends BlockSeedling {
         
         public Banana() {
@@ -164,6 +166,7 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         }
     }
     
+    /** Apple sapling block. */
     public static class Apple extends BlockSeedling {
         
         public Apple() {

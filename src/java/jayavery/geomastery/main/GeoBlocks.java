@@ -6,37 +6,32 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
-import java.util.Map;
 import java.util.Set;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import jayavery.geomastery.blocks.BlockAntler;
-import jayavery.geomastery.blocks.BlockBasket;
 import jayavery.geomastery.blocks.BlockBeam;
 import jayavery.geomastery.blocks.BlockBed;
 import jayavery.geomastery.blocks.BlockBeehive;
-import jayavery.geomastery.blocks.BlockBox;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
 import jayavery.geomastery.blocks.BlockCarcass;
-import jayavery.geomastery.blocks.BlockChest;
-import jayavery.geomastery.blocks.BlockCompostheap;
-import jayavery.geomastery.blocks.BlockCraftingKnapping;
+import jayavery.geomastery.blocks.BlockContainerFacing;
+import jayavery.geomastery.blocks.BlockContainerMulti;
+import jayavery.geomastery.blocks.BlockContainerSingle;
 import jayavery.geomastery.blocks.BlockCrop;
 import jayavery.geomastery.blocks.BlockCropBlockfruit;
 import jayavery.geomastery.blocks.BlockCropHarvestable;
 import jayavery.geomastery.blocks.BlockDoor;
-import jayavery.geomastery.blocks.BlockDrying;
 import jayavery.geomastery.blocks.BlockFlatroof;
 import jayavery.geomastery.blocks.BlockFruit;
-import jayavery.geomastery.blocks.BlockFurnaceCampfire;
-import jayavery.geomastery.blocks.BlockFurnacePotfire;
 import jayavery.geomastery.blocks.BlockHarvestableLeaves;
+import jayavery.geomastery.blocks.BlockLadder;
 import jayavery.geomastery.blocks.BlockLight;
-import jayavery.geomastery.blocks.BlockMultiCrafting;
 import jayavery.geomastery.blocks.BlockMushroombaby;
 import jayavery.geomastery.blocks.BlockPitchroof;
 import jayavery.geomastery.blocks.BlockRiceBase;
 import jayavery.geomastery.blocks.BlockRiceTop;
 import jayavery.geomastery.blocks.BlockRubble;
+import jayavery.geomastery.blocks.BlockSawpit;
 import jayavery.geomastery.blocks.BlockSeedling;
 import jayavery.geomastery.blocks.BlockSlab;
 import jayavery.geomastery.blocks.BlockSolid;
@@ -44,6 +39,7 @@ import jayavery.geomastery.blocks.BlockStairsComplex;
 import jayavery.geomastery.blocks.BlockStairsStraight;
 import jayavery.geomastery.blocks.BlockTar;
 import jayavery.geomastery.blocks.BlockVault;
+import jayavery.geomastery.blocks.BlockVaultDoubling;
 import jayavery.geomastery.blocks.BlockWall;
 import jayavery.geomastery.blocks.BlockWallComplex;
 import jayavery.geomastery.blocks.BlockWallFence;
@@ -52,9 +48,10 @@ import jayavery.geomastery.blocks.BlockWallLog;
 import jayavery.geomastery.blocks.BlockWallThin;
 import jayavery.geomastery.blocks.BlockWindow;
 import jayavery.geomastery.blocks.BlockWood;
+import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -93,58 +90,59 @@ public class GeoBlocks {
     /** Single walls which need delayed baking models. */
     public static final Set<BlockWall> RENDER_SINGLE = Sets.newHashSet();
     
+    /** Heaping walls which need delayed baking mdoels. */
+    public static final Set<BlockWall> RENDER_HEAPING = Sets.newHashSet();
+    
     // Fluids
     public static Fluid tarFluid = new Fluid("fluid_tar", new ResourceLocation(Geomastery.MODID, "blocks/liquids/tar_still"), new ResourceLocation(Geomastery.MODID, "blocks/liquids/tar_flowing")).setViscosity(10000);
     public static BlockFluidBase tar;
     
     // Beds
-    public static final BlockBed BED_LEAF =   makeItemless(new BlockBed.Leaf());
-    public static final BlockBed BED_COTTON = makeItemless(new BlockBed.Cotton());
-    public static final BlockBed BED_WOOL =   makeItemless(new BlockBed.Wool());
-    public static final BlockBed BED_SIMPLE = makeItemless(new BlockBed.Simple());
+    public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf());
+    public static final BlockBed BED_COTTON = makeItemBuilding(new BlockBed.Cotton());
+    public static final BlockBed BED_WOOL =   makeItemBuilding(new BlockBed.Wool());
+    public static final BlockBed BED_SIMPLE = makeItemBuilding(new BlockBed.Simple());
     
     // Antler
     public static final Block ANTLER = makeItemless(new BlockAntler());
     
-    // Carcasses
-    public static final BlockCarcass CARCASS_CHICKEN =    makeItemless(new BlockCarcass.Chicken());
-    public static final BlockCarcass CARCASS_COWPART =    makeItemless(new BlockCarcass.Cowpart());
-    public static final BlockCarcass CARCASS_PIG =        makeItemless(new BlockCarcass.Pig());
-    public static final BlockCarcass CARCASS_SHEEP =      makeItemless(new BlockCarcass.Sheep());
-    public static final BlockCarcass CARCASS_RABBIT =     makeItemless(new BlockCarcass.Rabbit());
-
-    // Multiblock crafting devices
-    public static final BlockMultiCrafting.Candlemaker CRAFTING_CANDLEMAKER =      makeItemless(new BlockMultiCrafting.Candlemaker());
-    public static final BlockMultiCrafting.Forge CRAFTING_FORGE =                  makeItemless(new BlockMultiCrafting.Forge());
-    public static final BlockMultiCrafting.Mason CRAFTING_MASON =                  makeItemless(new BlockMultiCrafting.Mason());
-    public static final BlockMultiCrafting.Textiles CRAFTING_TEXTILES =            makeItemless(new BlockMultiCrafting.Textiles());
-    public static final BlockMultiCrafting.Woodworking CRAFTING_WOODWORKING =      makeItemless(new BlockMultiCrafting.Woodworking());
-    public static final BlockMultiCrafting.Armourer CRAFTING_ARMOURER =            makeItemless(new BlockMultiCrafting.Armourer());
-    public static final BlockMultiCrafting.Sawpit CRAFTING_SAWPIT =                makeItemless(new BlockMultiCrafting.Sawpit());
-    
-    // Multiblock furnaces
-    public static final BlockMultiCrafting.Clay FURNACE_CLAY =   makeItemless(new BlockMultiCrafting.Clay());
-    public static final BlockMultiCrafting.Stone FURNACE_STONE = makeItemless(new BlockMultiCrafting.Stone());
-    
     // Beehive
-    public static final BlockBeehive BEEHIVE = make(new BlockBeehive());
-
-    // Lights
-    public static final Block CANDLE_BEESWAX = make(new BlockLight.Candle("candle_beeswax", 0.005F), 15);
-    public static final Block CANDLE_TALLOW =  make(new BlockLight.Candle("candle_tallow", 0.02F), 15);
-    public static final Block TORCH_TALLOW =   make(new BlockLight.Torch("torch_tallow", 0.005F), 4);
-    public static final Block TORCH_TAR =      make(new BlockLight.Torch("torch_tar", 0.02F), 4);
-    public static final Block LAMP_CLAY =      make(new BlockLight.Lamp("lamp_clay"), 4);
+    public static final BlockBeehive BEEHIVE = makeItemBlock(new BlockBeehive());
     
+    // Carcasses
+    public static final BlockCarcass CARCASS_CHICKEN =    makeItemBuilding(new BlockCarcass.Chicken());
+    public static final BlockCarcass CARCASS_COWPART =    makeItemBuilding(new BlockCarcass.Cowpart());
+    public static final BlockCarcass CARCASS_PIG =        makeItemBuilding(new BlockCarcass.Pig());
+    public static final BlockCarcass CARCASS_SHEEP =      makeItemBuilding(new BlockCarcass.Sheep());
+    public static final BlockCarcass CARCASS_RABBIT =     makeItemBuilding(new BlockCarcass.Rabbit());
+
+    // Multiblock complex devices
+    public static final BlockContainerMulti.Candlemaker CRAFTING_CANDLEMAKER =      makeItemBuilding(new BlockContainerMulti.Candlemaker());
+    public static final BlockContainerMulti.Forge CRAFTING_FORGE =                  makeItemBuilding(new BlockContainerMulti.Forge());
+    public static final BlockContainerMulti.Mason CRAFTING_MASON =                  makeItemBuilding(new BlockContainerMulti.Mason());
+    public static final BlockContainerMulti.Textiles CRAFTING_TEXTILES =            makeItemBuilding(new BlockContainerMulti.Textiles());
+    public static final BlockContainerMulti.Woodworking CRAFTING_WOODWORKING =      makeItemBuilding(new BlockContainerMulti.Woodworking());
+    public static final BlockContainerMulti.Armourer CRAFTING_ARMOURER =            makeItemBuilding(new BlockContainerMulti.Armourer());
+    public static final BlockSawpit CRAFTING_SAWPIT =                               makeItemBuilding(new BlockSawpit());
+    public static final BlockContainerMulti.Clay FURNACE_CLAY =                     makeItemBuilding(new BlockContainerMulti.Clay());
+    public static final BlockContainerMulti.Stone FURNACE_STONE =                   makeItemBuilding(new BlockContainerMulti.Stone());
+
     // Single complex blocks
-    public static final Block CRAFTING_KNAPPING =  make(new BlockCraftingKnapping());
-    public static final Block DRYING =             make(new BlockDrying());
-    public static final Block COMPOSTHEAP =        make(new BlockCompostheap(), true);
-    public static final Block FURNACE_CAMPFIRE =   make(new BlockFurnaceCampfire());
-    public static final Block FURNACE_POTFIRE =    make(new BlockFurnacePotfire());
-    public static final Block CHEST =              make(new BlockChest());
-    public static final Block BASKET =             make(new BlockBasket());
-    public static final Block BOX =                make(new BlockBox());
+    public static final BlockBuildingAbstract<?> CRAFTING_KNAPPING =  makeItemBuilding(new BlockContainerSingle.Knapping());
+    public static final BlockBuildingAbstract<?> DRYING =             makeItemBuilding(new BlockContainerSingle.Drying());
+    public static final BlockBuildingAbstract<?> COMPOSTHEAP =        makeItemBuilding(new BlockContainerFacing.Compostheap(), true);
+    public static final BlockBuildingAbstract<?> FURNACE_CAMPFIRE =   makeItemBuilding(new BlockContainerSingle.Campfire());
+    public static final BlockBuildingAbstract<?> FURNACE_POTFIRE =    makeItemBuilding(new BlockContainerSingle.Potfire());
+    public static final BlockBuildingAbstract<?> CHEST =              makeItemBuilding(new BlockContainerFacing.Chest());
+    public static final BlockBuildingAbstract<?> BASKET =             makeItemBuilding(new BlockContainerSingle.Basket());
+    public static final BlockBuildingAbstract<?> BOX =                makeItemBuilding(new BlockContainerSingle.Box());
+    
+    // Lights
+    public static final BlockBuildingAbstract<?> CANDLE_BEESWAX = makeItemBuilding(new BlockLight.Candle("candle_beeswax", 0.005F, 15));
+    public static final BlockBuildingAbstract<?> CANDLE_TALLOW =  makeItemBuilding(new BlockLight.Candle("candle_tallow", 0.02F, 15));
+    public static final BlockBuildingAbstract<?> TORCH_TALLOW =   makeItemBuilding(new BlockLight.Torch("torch_tallow", 0.005F, 4));
+    public static final BlockBuildingAbstract<?> TORCH_TAR =      makeItemBuilding(new BlockLight.Torch("torch_tar", 0.02F, 4));
+    public static final BlockBuildingAbstract<?> LAMP_CLAY =      makeItemBuilding(new BlockLight.Lamp("lamp_clay", 4));
     
     // Single crops
     public static final BlockCrop CHICKPEA =  makeItemless(new BlockCrop.Chickpea());
@@ -166,105 +164,100 @@ public class GeoBlocks {
     public static final BlockCropBlockfruit PUMPKIN_CROP = makeItemless(new BlockCropBlockfruit.Pumpkin(), CROP_BLOCKFRUIT);
     
     // Block fruits
-    public static final BlockFruit MELON_FRUIT = make(new BlockFruit("melon_fruit", () -> GeoItems.MELON, () -> GeoItems.SEED_MELON));
-    public static final BlockFruit PUMPKIN_FRUIT =   make(new BlockFruit("pumpkin_fruit", () -> GeoItems.PUMPKIN, () -> GeoItems.SEED_PUMPKIN));
+    public static final BlockFruit MELON_FRUIT = makeItemBlock(new BlockFruit("melon_fruit", () -> GeoItems.MELON, () -> GeoItems.SEED_MELON));
+    public static final BlockFruit PUMPKIN_FRUIT =   makeItemBlock(new BlockFruit("pumpkin_fruit", () -> GeoItems.PUMPKIN, () -> GeoItems.SEED_PUMPKIN));
     
     // Rice
     public static final Block RICE_BASE = makeItemless(new BlockRiceBase());
     public static final Block RICE_TOP =  makeItemless(new BlockRiceTop());
     
     // Baby mushrooms
-    public static final Block MUSHROOMBABY_BROWN =   makeItemless(new BlockMushroombaby("mushroombaby_brown", () -> Blocks.BROWN_MUSHROOM));
-    public static final Block MUSHROOMBABY_RED = makeItemless(new BlockMushroombaby("mushroombaby_red", () -> Blocks.RED_MUSHROOM));
+    public static final Block MUSHROOMBABY_BROWN =  makeItemless(new BlockMushroombaby("mushroombaby_brown", () -> Blocks.BROWN_MUSHROOM));
+    public static final Block MUSHROOMBABY_RED =    makeItemless(new BlockMushroombaby("mushroombaby_red", () -> Blocks.RED_MUSHROOM));
     
     // Seedlings
-    public static final BlockSeedling SEEDLING_APPLE =  make(new BlockSeedling.Apple());
-    public static final BlockSeedling SEEDLING_PEAR =   make(new BlockSeedling.Pear());
-    public static final BlockSeedling SEEDLING_ORANGE = make(new BlockSeedling.Orange());
-    public static final BlockSeedling SEEDLING_BANANA = make(new BlockSeedling.Banana());
+    public static final BlockSeedling SEEDLING_APPLE =  makeItemBlock(new BlockSeedling.Apple());
+    public static final BlockSeedling SEEDLING_PEAR =   makeItemBlock(new BlockSeedling.Pear());
+    public static final BlockSeedling SEEDLING_ORANGE = makeItemBlock(new BlockSeedling.Orange());
+    public static final BlockSeedling SEEDLING_BANANA = makeItemBlock(new BlockSeedling.Banana());
     
     // Leaves
-    public static final BlockHarvestableLeaves LEAF_APPLE =  make(new BlockHarvestableLeaves("leaf_apple", () -> GeoItems.APPLE, () -> SEEDLING_APPLE, 0.05F), LEAVES);
-    public static final BlockHarvestableLeaves LEAF_BANANA = make(new BlockHarvestableLeaves("leaf_banana", () -> GeoItems.BANANA, () -> SEEDLING_BANANA, 0.15F), LEAVES);
-    public static final BlockHarvestableLeaves LEAF_PEAR =   make(new BlockHarvestableLeaves("leaf_pear", () -> GeoItems.PEAR, () -> SEEDLING_PEAR, 0.05F), LEAVES);
-    public static final BlockHarvestableLeaves LEAF_ORANGE = make(new BlockHarvestableLeaves("leaf_orange", () -> GeoItems.ORANGE, () -> SEEDLING_ORANGE, 0.1F), LEAVES);
+    public static final BlockHarvestableLeaves LEAF_APPLE =  makeItemBlock(new BlockHarvestableLeaves("leaf_apple", () -> GeoItems.APPLE, () -> SEEDLING_APPLE, 0.05F), LEAVES);
+    public static final BlockHarvestableLeaves LEAF_BANANA = makeItemBlock(new BlockHarvestableLeaves("leaf_banana", () -> GeoItems.BANANA, () -> SEEDLING_BANANA, 0.15F), LEAVES);
+    public static final BlockHarvestableLeaves LEAF_PEAR =   makeItemBlock(new BlockHarvestableLeaves("leaf_pear", () -> GeoItems.PEAR, () -> SEEDLING_PEAR, 0.05F), LEAVES);
+    public static final BlockHarvestableLeaves LEAF_ORANGE = makeItemBlock(new BlockHarvestableLeaves("leaf_orange", () -> GeoItems.ORANGE, () -> SEEDLING_ORANGE, 0.1F), LEAVES);
     
     // Logs
-    public static final Block WOOD_APPLE =  make(new BlockWood("wood_apple", 2F));
-    public static final Block WOOD_BANANA = make(new BlockWood("wood_banana", 1F));
-    public static final Block WOOD_PEAR =   make(new BlockWood("wood_pear", 2F));
-    public static final Block WOOD_ORANGE = make(new BlockWood("wood_orange", 2F));
+    public static final Block WOOD_APPLE =  makeItemBlock(new BlockWood("wood_apple", 2F));
+    public static final Block WOOD_BANANA = makeItemBlock(new BlockWood("wood_banana", 1F));
+    public static final Block WOOD_PEAR =   makeItemBlock(new BlockWood("wood_pear", 2F));
+    public static final Block WOOD_ORANGE = makeItemBlock(new BlockWood("wood_orange", 2F));
 
     // Ores
-    public static final Block LODE_AMETHYST =  make(new BlockSolid(Material.ROCK, "lode_amethyst", 4F, BlockWeight.HEAVY, () -> GeoItems.AMETHYST, 2, ToolType.PICKAXE));
-    public static final Block LODE_FIREOPAL =  make(new BlockSolid(Material.ROCK, "lode_fireopal", 4F, BlockWeight.HEAVY, () -> GeoItems.FIREOPAL, 5, ToolType.PICKAXE));
-    public static final Block LODE_RUBY =      make(new BlockSolid(Material.ROCK, "lode_ruby", 4F, BlockWeight.HEAVY, () -> GeoItems.RUBY, 3, ToolType.PICKAXE));
-    public static final Block LODE_SAPPHIRE =  make(new BlockSolid(Material.ROCK, "lode_sapphire", 4F, BlockWeight.HEAVY, () -> GeoItems.SAPPHIRE, 8, ToolType.PICKAXE));
-    public static final Block ORE_COPPER =     make(new BlockSolid(Material.ROCK, "ore_copper", 3F, BlockWeight.HEAVY, () -> GeoItems.ORE_COPPER, 1, ToolType.PICKAXE));
-    public static final Block ORE_SILVER =     make(new BlockSolid(Material.ROCK, "ore_silver", 3F, BlockWeight.HEAVY, () -> GeoItems.ORE_SILVER, 1, ToolType.PICKAXE));
-    public static final Block ORE_TIN =        make(new BlockSolid(Material.ROCK, "ore_tin", 3F, BlockWeight.HEAVY, () -> GeoItems.ORE_TIN, 1, ToolType.PICKAXE));
+    public static final Block LODE_AMETHYST =  makeItemBlock(new BlockSolid(Material.ROCK, "lode_amethyst", 4F, () -> GeoItems.AMETHYST, 2, EToolType.PICKAXE));
+    public static final Block LODE_FIREOPAL =  makeItemBlock(new BlockSolid(Material.ROCK, "lode_fireopal", 4F, () -> GeoItems.FIREOPAL, 5, EToolType.PICKAXE));
+    public static final Block LODE_RUBY =      makeItemBlock(new BlockSolid(Material.ROCK, "lode_ruby", 4F, () -> GeoItems.RUBY, 3, EToolType.PICKAXE));
+    public static final Block LODE_SAPPHIRE =  makeItemBlock(new BlockSolid(Material.ROCK, "lode_sapphire", 4F, () -> GeoItems.SAPPHIRE, 8, EToolType.PICKAXE));
+    public static final Block ORE_COPPER =     makeItemBlock(new BlockSolid(Material.ROCK, "ore_copper", 3F, () -> GeoItems.ORE_COPPER, 1, EToolType.PICKAXE));
+    public static final Block ORE_SILVER =     makeItemBlock(new BlockSolid(Material.ROCK, "ore_silver", 3F, () -> GeoItems.ORE_SILVER, 1, EToolType.PICKAXE));
+    public static final Block ORE_TIN =        makeItemBlock(new BlockSolid(Material.ROCK, "ore_tin", 3F, () -> GeoItems.ORE_TIN, 1, EToolType.PICKAXE));
     
     // Rocks
-    public static final Block SALT =  make(new BlockSolid(Material.ROCK, "salt", 1F, BlockWeight.MEDIUM, () -> GeoItems.SALT, 1, ToolType.PICKAXE));
-    public static final Block CHALK = make(new BlockSolid(Material.ROCK, "chalk", 3F, BlockWeight.MEDIUM, () -> GeoItems.CHALK, 1, ToolType.PICKAXE));
-    public static final Block PEAT =  make(new BlockSolid(BlockMaterial.SOIL, "peat", 0.5F, BlockWeight.MEDIUM, () -> GeoItems.PEAT_WET, 1, ToolType.SHOVEL));
+    public static final Block SALT =  makeItemBlock(new BlockSolid(Material.ROCK, "salt", 1F, () -> GeoItems.SALT, 1, EToolType.PICKAXE));
+    public static final Block CHALK = makeItemBlock(new BlockSolid(Material.ROCK, "chalk", 3F, () -> GeoItems.CHALK, 1, EToolType.PICKAXE));
+    public static final Block PEAT =  makeItemBlock(new BlockSolid(BlockMaterial.SOIL, "peat", 0.5F, () -> GeoItems.PEAT_WET, 1, EToolType.SHOVEL));
     
     // Rubble
-    public static final Block RUBBLE = makeItemless(new BlockRubble());
+    public static final BlockBuildingAbstract<?> RUBBLE = makeItemBuilding(new BlockRubble());
     
     // Walls (in rendering priority order)
-    public static final Block WALL_LOG =                       make(new BlockWallLog(), 4, RENDER_STRAIGHT, DELAYED_BAKE); 
-    public static final Block FENCE =                          make(new BlockWallFence(BlockMaterial.WOOD_FURNITURE, "fence", 2F, ToolType.AXE, 90), RENDER_SINGLE, DELAYED_BAKE);
-    public static final Block WALL_POLE =                      make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, ToolType.AXE, 180), 4, RENDER_SINGLE, DELAYED_BAKE);
-    public static final Block FRAME =                          make(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, ToolType.AXE, 180), 6, RENDER_SINGLE, DELAYED_BAKE);
-    public static final BlockWallHeaping WALL_MUD_SINGLE =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_single", 1F, ToolType.PICKAXE, false, 0, () -> GeoItems.WALL_MUD), RENDER_SINGLE, DELAYED_BAKE);
-    public static final BlockWallHeaping WALL_ROUGH_SINGLE =   makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough_single", 1.5F, ToolType.PICKAXE, false, 0, () -> GeoItems.WALL_ROUGH), RENDER_SINGLE, DELAYED_BAKE);
-    public static final BlockWallComplex WALL_BRICK_SINGLE =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_brick_single", 2F, ToolType.PICKAXE, false, () -> GeoItems.WALL_BRICK), RENDER_COMPLEX, DELAYED_BAKE); 
-    public static final BlockWallComplex WALL_STONE_SINGLE =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_stone_single", 2F, ToolType.PICKAXE, false, () -> GeoItems.WALL_STONE), RENDER_COMPLEX, DELAYED_BAKE);
-    public static final BlockWallHeaping WALL_MUD_DOUBLE =     makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud_double", 3F, ToolType.PICKAXE, true, 0, () -> GeoItems.WALL_MUD), RENDER_SINGLE, DELAYED_BAKE); 
-    public static final BlockWallHeaping WALL_ROUGH_DOUBLE =   makeItemless(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough_double", 3F, ToolType.PICKAXE, true, 0, () -> GeoItems.WALL_ROUGH), RENDER_SINGLE, DELAYED_BAKE); 
-    public static final BlockWallComplex WALL_BRICK_DOUBLE =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_brick_double", 3F, ToolType.PICKAXE, true,  () -> GeoItems.WALL_BRICK), RENDER_COMPLEX, DELAYED_BAKE); 
-    public static final BlockWallComplex WALL_STONE_DOUBLE =   makeItemless(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_stone_double", 3F, ToolType.PICKAXE, true, () -> GeoItems.WALL_STONE), RENDER_COMPLEX, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> WALL_LOG =     makeItemBuilding(new BlockWallLog(), RENDER_STRAIGHT, DELAYED_BAKE); 
+    public static final BlockBuildingAbstract<?> FENCE =        makeItemBuilding(new BlockWallFence(), RENDER_SINGLE, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> WALL_POLE =    makeItemBuilding(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, 180, 4), RENDER_SINGLE, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> FRAME =        makeItemBuilding(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, 180, 6), RENDER_SINGLE, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> WALL_MUD =     makeItemBuilding(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud", 1F, 0), RENDER_HEAPING, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> WALL_ROUGH =   makeItemBuilding(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough", 1.5F, 0), RENDER_HEAPING, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> WALL_BRICK =   makeItemBuilding(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_brick", 2F), RENDER_COMPLEX, DELAYED_BAKE); 
+    public static final BlockBuildingAbstract<?> WALL_STONE =   makeItemBuilding(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_stone", 2F), RENDER_COMPLEX, DELAYED_BAKE);
     
     // Complex stairs
-    public static final Block STAIRS_BRICK = make(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, ToolType.PICKAXE), 2);
-    public static final Block STAIRS_STONE = make(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, ToolType.PICKAXE), 2);
+    public static final BlockBuildingAbstract<?> STAIRS_BRICK = makeItemBuilding(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, 2));
+    public static final BlockBuildingAbstract<?> STAIRS_STONE = makeItemBuilding(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, 2));
     
     // Double joining stairs
-    public static final Block STAIRS_WOOD = make(new BlockStairsStraight.Joining("stairs_wood", 2F), 4);
+    public static final BlockBuildingAbstract<?> STAIRS_WOOD = makeItemBuilding(new BlockStairsStraight.Joining("stairs_wood", 2F, 4));
     
     // Single stairs
-    public static final Block STAIRS_POLE = make(new BlockStairsStraight.Single("stairs_pole", 2F), 4);
+    public static final BlockBuildingAbstract<?> STAIRS_POLE = makeItemBuilding(new BlockStairsStraight.Single("stairs_pole", 2F, 4));
     
     // Vaults
-    public static final BlockVault VAULT_STONE_SINGLE = makeItemless(new BlockVault("vault_stone_single", () -> GeoItems.VAULT_STONE, false, BlockWeight.HEAVY));
-    public static final BlockVault VAULT_STONE_DOUBLE = makeItemless(new BlockVault("vault_stone_double", () -> GeoItems.VAULT_STONE, true, BlockWeight.HEAVY));
-    public static final BlockVault VAULT_BRICK_SINGLE = makeItemless(new BlockVault("vault_brick_single", () -> GeoItems.VAULT_BRICK, false, BlockWeight.HEAVY));
-    public static final BlockVault VAULT_BRICK_DOUBLE = makeItemless(new BlockVault("vault_brick_double", () -> GeoItems.VAULT_BRICK, true, BlockWeight.HEAVY));
-    public static final BlockVault VAULT_FRAME =        make(new BlockVault("vault_frame", () -> null, false, BlockWeight.LIGHT), 6);
+    public static final BlockVault VAULT_BRICK =        makeItemBuilding(new BlockVaultDoubling("vault_brick", EBlockWeight.HEAVY, 2));
+    public static final BlockVault VAULT_STONE =        makeItemBuilding(new BlockVaultDoubling("vault_stone", EBlockWeight.HEAVY, 2));
+    public static final BlockVault VAULT_FRAME =        makeItemBuilding(new BlockVault("vault_frame", BlockMaterial.WOOD_FURNITURE, EBlockWeight.LIGHT, 6));
         
     // Doors
-    public static final BlockDoor DOOR_POLE = makeItemless(new BlockDoor("door_pole", () -> GeoItems.DOOR_POLE));
-    public static final BlockDoor DOOR_WOOD = makeItemless(new BlockDoor("door_wood", () -> GeoItems.DOOR_WOOD));
+    public static final BlockDoor DOOR_POLE = makeItemBuilding(new BlockDoor("door_pole"));
+    public static final BlockDoor DOOR_WOOD = makeItemBuilding(new BlockDoor("door_wood"));
     
     // Window
-    public static final Block WINDOW = make(new BlockWindow(), 4);
+    public static final BlockBuildingAbstract<?> WINDOW = makeItemBuilding(new BlockWindow());
+    
+    // Ladder
+    public static final BlockLadder LADDER = makeItemBuilding(new BlockLadder());
     
     // Beams
-    public static final BlockBeam BEAM_THIN =  makeItemless(new BlockBeam("beam_thick"), DELAYED_BAKE);
-    public static final BlockBeam BEAM_THICK = makeItemless(new BlockBeam("beam_thin"), DELAYED_BAKE);
+    public static final BlockBeam BEAM_THIN =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8), DELAYED_BAKE);
+    public static final BlockBeam BEAM_THICK = makeItemBuilding(new BlockBeam("beam_thin", 2, 4), DELAYED_BAKE);
         
     // Slabs
-    public static final BlockSlab SLAB_STONE_SINGLE = makeItemless(new BlockSlab("slab_stone_single", false, () -> GeoItems.SLAB_STONE));
-    public static final BlockSlab SLAB_STONE_DOUBLE = makeItemless(new BlockSlab("slab_stone_double", true, () -> GeoItems.SLAB_STONE));
-    public static final BlockSlab SLAB_BRICK_SINGLE = makeItemless(new BlockSlab("slab_brick_single", false, () -> GeoItems.SLAB_BRICK));
-    public static final BlockSlab SLAB_BRICK_DOUBLE = makeItemless(new BlockSlab("slab_brick_double", true, () -> GeoItems.SLAB_BRICK));
+    public static final BlockSlab SLAB_STONE = makeItemBuilding(new BlockSlab("slab_stone"));
+    public static final BlockSlab SLAB_BRICK = makeItemBuilding(new BlockSlab("slab_brick"));
     
     // Flat roofs
-    public static final Block FLATROOF_POLE = make(new BlockFlatroof("flatroof_pole", 1F, ToolType.AXE), 4);
+    public static final BlockBuildingAbstract<?> FLATROOF_POLE = makeItemBuilding(new BlockFlatroof("flatroof_pole", 1F));
     
     // Pitched roofs
-    public static final Block PITCHROOF_CLAY = make(new BlockPitchroof(BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F), 4);
+    public static final BlockBuildingAbstract<?> PITCHROOF_CLAY = makeItemBuilding(new BlockPitchroof(BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F, 4));
     
     /** Adjusts vanilla blocks, register fluids. */
     public static void preInit() {
@@ -293,18 +286,13 @@ public class GeoBlocks {
         Blocks.REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 1);
         Blocks.LEAVES.setHardness(0.2F)
-                .setHarvestLevel(ToolType.MACHETE.name(), 1);
+                .setHarvestLevel(EToolType.MACHETE.name(), 1);
         Blocks.REEDS.setHardness(0.2F)
-                .setHarvestLevel(ToolType.SICKLE.name(), 1);
-        Blocks.PUMPKIN.setHardness(0.2F);
-        Blocks.MELON_BLOCK.setHardness(0.2F);
-        GeoBlocks.OFFHAND_ONLY.add(Item.getItemFromBlock(Blocks.CHEST)
-                .setMaxStackSize(1));
-        Item.getItemFromBlock(Blocks.LADDER).setMaxStackSize(8);
+                .setHarvestLevel(EToolType.SICKLE.name(), 1);
     }
 
     /** Creates an ItemBlock, adds to maps and sets as needed. */ 
-    private static <B extends Block> B make(B block,
+    private static <B extends Block> B makeItemBlock(B block,
             int stackSize, boolean isOffhandOnly, Set<? super B>... sets) {
 
         Item item = new ItemBlock(block).setMaxStackSize(stackSize)
@@ -325,7 +313,28 @@ public class GeoBlocks {
         return block;
     }
     
-    /** Adds to maps and sets as needed without an ItemBlock. */
+    /** Gets ItemBuilding, adds to maps and sets as needed. */
+    private static <B extends BlockBuildingAbstract<?>> B makeItemBuilding(
+            B block, boolean isOffhandOnly, Set<? super B>...sets) {
+        
+        ItemPlacing item = block.getItem();
+        
+        if (isOffhandOnly) {
+            
+            OFFHAND_ONLY.add(item);
+        }
+        
+        for (Set<? super B> set : sets) {
+            
+            set.add(block);
+        }
+        
+        GeoItems.ITEMS.add(item);
+        BLOCKS.add(block);
+        return block;
+    }
+    
+    /** Adds to maps and sets as needed without any item. */
     private static <B extends Block> B makeItemless(B block,
             Set<? super B>... sets) {
         
@@ -339,20 +348,21 @@ public class GeoBlocks {
         return block;
     }
     
-    private static <B extends Block> B make(B block, boolean isOffhandOnly,
-            Set<? super B>... sets) {
+    private static <B extends BlockBuildingAbstract<?>> B makeItemBuilding(
+            B block, Set<? super B>...sets) {
         
-        return make(block, 1, isOffhandOnly, sets);
+        return makeItemBuilding(block, false, sets);
     }
     
-    private static <B extends Block> B make(B block, Set<? super B>... sets) {
-        
-        return make(block, 1, false, sets);
-    }
-        
-    private static <B extends Block> B make(B block, int stackSize,
+    private static <B extends Block> B makeItemBlock(B block,
             Set<? super B>... sets) {
         
-        return make(block, stackSize, false, sets);
+        return makeItemBlock(block, 1, false, sets);
+    }
+        
+    private static <B extends Block> B makeItemBlock(B block, int stackSize,
+            Set<? super B>... sets) {
+        
+        return makeItemBlock(block, stackSize, false, sets);
     }
 }

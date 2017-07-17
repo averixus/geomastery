@@ -6,11 +6,11 @@
  ******************************************************************************/
 package jayavery.geomastery.container;
 
-import jayavery.geomastery.blocks.BlockComplexAbstract;
+import jayavery.geomastery.blocks.BlockContainerAbstract;
 import jayavery.geomastery.container.slots.SlotCompostInput;
 import jayavery.geomastery.container.slots.SlotCompostOutput;
 import jayavery.geomastery.main.GeoRecipes;
-import jayavery.geomastery.tileentities.TECompost;
+import jayavery.geomastery.tileentities.TECompostheap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -41,12 +41,12 @@ public class ContainerCompost extends ContainerAbstract {
     /** Index of last inventory slot. */
     public final int invEnd;
     /** Drying rack TileEntity of this container. */
-    public final TECompost compost;
+    public final TECompostheap compost;
     /** Position of this container. */
     private final BlockPos pos;
     
     public ContainerCompost(EntityPlayer player, BlockPos pos,
-            TECompost compost) {
+            TECompostheap compost) {
         
         super(player);
         this.compost = compost;
@@ -65,7 +65,7 @@ public class ContainerCompost extends ContainerAbstract {
     public boolean canInteractWith(EntityPlayer player) {
 
         boolean correctBlock = this.world.getBlockState(this.pos)
-                .getBlock() instanceof BlockComplexAbstract;
+                .getBlock() instanceof BlockContainerAbstract;
 
         if (correctBlock) {
 

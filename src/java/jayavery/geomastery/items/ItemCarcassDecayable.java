@@ -6,7 +6,6 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import jayavery.geomastery.blocks.BlockCarcass;
 import jayavery.geomastery.capabilities.DefaultCapDecay;
@@ -15,36 +14,32 @@ import jayavery.geomastery.capabilities.ProviderCapDecay;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TECarcass;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import jayavery.geomastery.utilities.Lang;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/** Decayable carcass item. */
-public class ItemCarcassDecayable extends ItemBlockplacer {
-
-    /** The block for this item. */
-    private final Supplier<BlockCarcass> block;
+/** Decayable carcass placing item. */
+public class ItemCarcassDecayable extends ItemPlacing.Building {
     
-    public ItemCarcassDecayable(String name, Supplier<BlockCarcass> block) {
+    /** The shelf life of this carcass. */
+    private final int shelfLife;
+    
+    public ItemCarcassDecayable(BlockCarcass block, int stackSize) {
         
-        super(name, 1, CreativeTabs.FOOD, SoundType.CLOTH);
-        this.block = block;
+        super(block, stackSize);
+        this.shelfLife = block.getShelfLife();
         this.addPropertyOverride(new ResourceLocation("rot"),
                 new IItemPropertyGetter() {
             
@@ -74,8 +69,8 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         });
     }
     
-    /** Sends the capability data for syncing to
-     * the client (needed because of Forge syncing limitations). */
+    // Sends the capability data to the client because there is
+    // no other way to sync it reliably
     @Override
     public NBTTagCompound getNBTShareTag(ItemStack stack) {
 
@@ -93,51 +88,15 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         return tag;
     }
     
-    /** Gives this item an ICapDecay of its block's shelf life. */
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack,
             NBTTagCompound nbt) {
         
-        return new ProviderCapDecay(new
-                DefaultCapDecay(this.block.get().getShelfLife()));
+        return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
     }
     
-    /** Attempts to place this item's carcass block. */
-    @Override
-    protected boolean place(World world, BlockPos targetPos,
-            EnumFacing targetSide, EnumFacing placeFacing, ItemStack stack) {
-
-        BlockPos placePos = targetPos.offset(targetSide);
-        IBlockState state = world.getBlockState(placePos);
-        Block block = state.getBlock();
-            
-        if (!block.isReplaceable(world, placePos) ||
-                !this.block.get().isValid(world, placePos)) {
-            
-            return false;
-        }
-        
-        // Set up block and TE
-
-        ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY, null);
-        decayCap.updateFromNBT(stack.getTagCompound());
-        
-        if (decayCap.isRot(world)) {
-            
-            return false;
-        }
-        
-        IBlockState placeState = this.block.get().getDefaultState();
-        world.setBlockState(placePos, placeState);
-        ((TECarcass) world.getTileEntity(placePos))
-                .setData(decayCap.getBirthTime(), decayCap.getStageSize());
-        
-        return true;
-    }
-    
-    /** Makes this item named rotten according to capability. */
-    @SideOnly(Side.CLIENT)
-    @Override
+    // Adds rotten to name if applicable
+    @SideOnly(Side.CLIENT) @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
         if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
@@ -147,13 +106,15 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
             
             if (decayCap.isRot(Geomastery.proxy.getClientWorld())) {
             
-                return "Rotten " + super.getItemStackDisplayName(stack);
+                return I18n.format(Lang.ROTTEN) +
+                        super.getItemStackDisplayName(stack);
             }
         }
         
         return super.getItemStackDisplayName(stack);
     }
     
+    // Puts fresh and rotten versions in creative inventory.
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(Item item, CreativeTabs tab,
@@ -164,14 +125,14 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         list.add(ItemSimple.rottenStack(this, 1));
     }
     
-    /** Makes this item always show a durability bar. */
+    // Makes this item always show a durability bar.
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
         
         return true;
     }
     
-    /** Makes this item show a full durability bar unless config otherwise. */
+    // Makes this item show a full durability bar unless config otherwise. 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         
@@ -190,7 +151,7 @@ public class ItemCarcassDecayable extends ItemBlockplacer {
         return 0;
     }
     
-    /** Makes this item's durability bar colour represent its decay. */
+    // Makes this item's durability bar colour represent its decay. 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         

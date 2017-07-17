@@ -14,7 +14,9 @@
       { "textures": { "all": "geomastery:blocks/solids/rubble7" } },
       { "textures": { "all": "geomastery:blocks/solids/rubble8" } }
     ],
-    "inventory": 
-      [ { "textures": { "all": "geomastery:blocks/solids/rubble1" } } ]
+    "inventory": [{
+        "model": "geomastery:item",
+        "textures": { "layer0": "geomastery:items/rubble" }
+    }]
   }
 }

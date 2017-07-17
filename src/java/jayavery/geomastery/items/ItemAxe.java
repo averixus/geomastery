@@ -8,10 +8,11 @@ package jayavery.geomastery.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
 /** Axe tool item. */
@@ -26,6 +27,12 @@ public class ItemAxe extends ItemTool {
 
         super(3, -3.1F, material, EFFECTIVE_ON);
         ItemSimple.setupItem(this, name, 1, CreativeTabs.TOOLS);
-        this.setHarvestLevel(ToolType.AXE.toString(), 1);
+        this.setHarvestLevel(EToolType.AXE.toString(), 1);
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 }

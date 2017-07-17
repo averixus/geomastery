@@ -10,7 +10,7 @@ import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.capabilities.DefaultCapPlayer;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.utilities.TempStage;
+import jayavery.geomastery.utilities.ETempStage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -20,11 +20,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class CPacketTemp implements IMessage {
     
     /** The temperature stage. */
-    protected TempStage stage;
+    protected ETempStage stage;
     
     public CPacketTemp() {}
     
-    public CPacketTemp(TempStage stage) {
+    public CPacketTemp(ETempStage stage) {
         
         this.stage = stage;
     }
@@ -32,7 +32,7 @@ public class CPacketTemp implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        this.stage = TempStage.values()[buf.readInt()];
+        this.stage = ETempStage.values()[buf.readInt()];
     }
     
     @Override

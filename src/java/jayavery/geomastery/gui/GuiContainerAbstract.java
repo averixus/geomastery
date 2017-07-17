@@ -12,10 +12,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 /** Abstract superclass for gui containers. */
 public abstract class GuiContainerAbstract extends GuiContainer {
@@ -59,7 +59,7 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     public GuiContainerAbstract(Container container, String name) {
         
         super(container);
-        this.name = "geomastery:container." + name;
+        this.name = name;
     }
     
     /** @return The texture for this container. */
@@ -68,7 +68,7 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         
-        String name = I18n.translateToLocal(this.name);
+        String name = I18n.format(this.name);
         int stringWidth = this.fontRendererObj.getStringWidth(name);
         int start = this.xSize / 2 - stringWidth / 2;
         this.fontRendererObj.drawString(name, start, 6, TEXT_COLOUR);

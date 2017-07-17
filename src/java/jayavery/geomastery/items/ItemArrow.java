@@ -30,6 +30,12 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
         this.arrow = arrow;
     }
     
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
+    }
+    
     /** Creates an EntityProjectile arrow of this type. */
     @Override
     public EntityProjectile createArrow(World world, ItemStack stack,

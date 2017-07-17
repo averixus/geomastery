@@ -83,14 +83,14 @@ public class GeoJei extends BlankModPlugin {
         fuel = new GeoFuelCategory();
         drying = new GeoDryingCategory();
         inventory = new GeoInventoryCategory();
-        armourer = new GeoCraftingCategory(GuiList.ARMOURER.toString().toLowerCase());
-        candlemaker = new GeoCraftingCategory(GuiList.CANDLEMAKER.toString().toLowerCase());
-        forge = new GeoCraftingCategory(GuiList.FORGE.toString().toLowerCase());
-        knapping = new GeoCraftingCategory(GuiList.KNAPPING.toString().toLowerCase());
-        mason = new GeoCraftingCategory(GuiList.MASON.toString().toLowerCase());
-        sawpit = new GeoCraftingCategory(GuiList.SAWPIT.toString().toLowerCase());
-        textiles = new GeoCraftingCategory(GuiList.TEXTILES.toString().toLowerCase());
-        woodworking = new GeoCraftingCategory(GuiList.WOODWORKING.toString().toLowerCase());
+        armourer = new GeoCraftingCategory(GuiList.ARMOURER.title());
+        candlemaker = new GeoCraftingCategory(GuiList.CANDLEMAKER.title());
+        forge = new GeoCraftingCategory(GuiList.FORGE.title());
+        knapping = new GeoCraftingCategory(GuiList.KNAPPING.title());
+        mason = new GeoCraftingCategory(GuiList.MASON.title());
+        sawpit = new GeoCraftingCategory(GuiList.SAWPIT.title());
+        textiles = new GeoCraftingCategory(GuiList.TEXTILES.title());
+        woodworking = new GeoCraftingCategory(GuiList.WOODWORKING.title());
         registry.addRecipeCategories(compost, cooking, fuel, drying, inventory, armourer, candlemaker, forge, knapping, mason, sawpit, textiles, woodworking);
     }
     
@@ -112,16 +112,16 @@ public class GeoJei extends BlankModPlugin {
         
         Geomastery.LOG.info("JEI: Registering compost recipes");
         registry.handleRecipes(GeoCompostCategory.Recipe.class, GeoCompostCategory.Wrapper::new, compost.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.COMPOSTHEAP), compost.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.COMPOSTHEAP.getItem()), compost.getUid());
         transfers.addRecipeTransferHandler(GeoTransferInfo.comp());
         registry.addRecipes(Lists.newArrayList(new GeoCompostCategory.Recipe(GeoRecipes.COMPOST.wet, CompostType.WET), new GeoCompostCategory.Recipe(GeoRecipes.COMPOST.dry, CompostType.DRY)), compost.getUid());
 
         Geomastery.LOG.info("JEI: Registering cooking recipes");
         registry.handleRecipes(GeoCookingCategory.Recipe.class, GeoCookingCategory.Wrapper::new, cooking.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE), cooking.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_POTFIRE), cooking.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_CLAY), cooking.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_STONE), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE.getItem()), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_POTFIRE.getItem()), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CLAY.getItem()), cooking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_STONE.getItem()), cooking.getUid());
 
         transfers.addRecipeTransferHandler(GeoFillTransfer.cook(ContainerFurnaceSingle.Camp.class), cooking.getUid());
         transfers.addRecipeTransferHandler(GeoFillTransfer.cook(ContainerFurnaceSingle.Pot.class), cooking.getUid());
@@ -129,18 +129,18 @@ public class GeoJei extends BlankModPlugin {
         transfers.addRecipeTransferHandler(GeoFillTransfer.cook(ContainerFurnaceStone.class), cooking.getUid());
         
         Set<GeoCookingCategory.Recipe> cookings = Sets.newHashSet();
-        GeoRecipes.CAMPFIRE_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.CAMPFIRE.toString().toLowerCase())));
-        GeoRecipes.POTFIRE_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.POTFIRE.toString().toLowerCase())));
-        GeoRecipes.CLAY_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.CLAY.toString().toLowerCase())));
-        GeoRecipes.STONE_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.STONE.toString().toLowerCase())));
+        GeoRecipes.CAMPFIRE_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.CAMPFIRE.title())));
+        GeoRecipes.POTFIRE_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.POTFIRE.title())));
+        GeoRecipes.CLAY_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.CLAY.title())));
+        GeoRecipes.STONE_ONLY.recipes.entrySet().forEach((e) -> cookings.add(new GeoCookingCategory.Recipe(e, GuiList.STONE.title())));
         registry.addRecipes(cookings, cooking.getUid());
         
         Geomastery.LOG.info("JEI: Registering fuel recipes");
         registry.handleRecipes(GeoFuelCategory.Recipe.class, GeoFuelCategory.Wrapper::new, fuel.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE), fuel.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_POTFIRE), fuel.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_CLAY), fuel.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.FURNACE_STONE), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE.getItem()), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_POTFIRE.getItem()), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_CLAY.getItem()), fuel.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.FURNACE_STONE.getItem()), fuel.getUid());
         
         transfers.addRecipeTransferHandler(GeoFillTransfer.fuel(ContainerFurnaceSingle.Camp.class), fuel.getUid());
         transfers.addRecipeTransferHandler(GeoFillTransfer.fuel(ContainerFurnaceSingle.Pot.class), fuel.getUid());
@@ -148,15 +148,15 @@ public class GeoJei extends BlankModPlugin {
         transfers.addRecipeTransferHandler(GeoFillTransfer.fuel(ContainerFurnaceStone.class), fuel.getUid());
 
         Set<GeoFuelCategory.Recipe> fuels = Sets.newHashSet();
-        GeoRecipes.CAMPFIRE_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.CAMPFIRE.toString().toLowerCase())));
-        GeoRecipes.POTFIRE_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.POTFIRE.toString().toLowerCase())));
-        GeoRecipes.CLAY_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.CLAY.toString().toLowerCase())));
-        GeoRecipes.STONE_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.STONE.toString().toLowerCase())));
+        GeoRecipes.CAMPFIRE_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.CAMPFIRE.title())));
+        GeoRecipes.POTFIRE_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.POTFIRE.title())));
+        GeoRecipes.CLAY_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.CLAY.title())));
+        GeoRecipes.STONE_ONLY.fuels.keySet().forEach((k) -> fuels.add(new GeoFuelCategory.Recipe(k, GuiList.STONE.title())));
         registry.addRecipes(fuels, fuel.getUid());
         
         Geomastery.LOG.info("JEI: Registering drying recipes");
         registry.handleRecipes(GeoDryingCategory.Recipe.class, GeoDryingCategory.Wrapper::new, drying.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.DRYING), drying.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.DRYING.getItem()), drying.getUid());
         transfers.addRecipeTransferHandler(GeoFillTransfer.dry(), drying.getUid());
         registry.addRecipes(GeoRecipes.DRYING.recipes.entrySet().stream().map(GeoDryingCategory.Recipe::new).collect(Collectors.toSet()), drying.getUid());
         
@@ -175,14 +175,14 @@ public class GeoJei extends BlankModPlugin {
         registry.handleRecipes(GeoCraftingCategory.Recipe.class, GeoCraftingCategory.Wrapper::new, textiles.getUid());
         registry.handleRecipes(GeoCraftingCategory.Recipe.class, GeoCraftingCategory.Wrapper::new, woodworking.getUid());
 
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_ARMOURER), armourer.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_CANDLEMAKER), candlemaker.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_FORGE), forge.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_KNAPPING), knapping.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_MASON), mason.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_SAWPIT), sawpit.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_TEXTILES), textiles.getUid());
-        registry.addRecipeCatalyst(new ItemStack(GeoItems.CRAFTING_WOODWORKING), woodworking.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_ARMOURER.getItem()), armourer.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_CANDLEMAKER.getItem()), candlemaker.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_FORGE.getItem()), forge.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_KNAPPING.getItem()), knapping.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_MASON.getItem()), mason.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_SAWPIT.getItem()), sawpit.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_TEXTILES.getItem()), textiles.getUid());
+        registry.addRecipeCatalyst(new ItemStack(GeoBlocks.CRAFTING_WOODWORKING.getItem()), woodworking.getUid());
 
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Armourer.class, armourer.getUid()));
         transfers.addRecipeTransferHandler(GeoTransferInfo.craft(ContainerCrafting.Candlemaker.class, candlemaker.getUid()));
@@ -294,7 +294,7 @@ public class GeoJei extends BlankModPlugin {
                     Blocks.EMERALD_BLOCK, Blocks.QUARTZ_BLOCK,
                     Blocks.QUARTZ_ORE, Blocks.QUARTZ_STAIRS, Blocks.COAL_BLOCK,
                     Blocks.PURPUR_BLOCK, Blocks.PURPUR_PILLAR, Blocks.MAGMA,
-                    Blocks.CHEST, Blocks.CRAFTING_TABLE, Blocks.FURNACE,
+                    Blocks.CHEST, Blocks.FURNACE,
                     Blocks.JUKEBOX, Blocks.ACACIA_FENCE, Blocks.BIRCH_FENCE,
                     Blocks.DARK_OAK_FENCE, Blocks.JUNGLE_FENCE,
                     Blocks.NETHER_BRICK_FENCE, Blocks.OAK_FENCE,
@@ -375,9 +375,10 @@ public class GeoJei extends BlankModPlugin {
                 }
             }
             
-            for (CreativeTabs tab : CreativeTabs.CREATIVE_TAB_ARRAY) {
+            if (!GeoConfig.addCrafting) {
                 
-                tab.setRelevantEnchantmentTypes((EnumEnchantmentType[]) null);
+                blacklist.addIngredientToBlacklist(
+                        new ItemStack(Blocks.CRAFTING_TABLE));
             }
         }
     }

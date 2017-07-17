@@ -76,20 +76,11 @@ public class RenderWallSingle extends RenderWallAbstract {
         
         if (northBlock != null) {
             
-            boolean northTop = extState.getValue(BlockWall.N_TOP);
-            
-            if (northBlock.isDouble() != thisBlock.isDouble()) {
-                
-                northTop = northPri ? northTop : thisTop;
-                
-            } else {
-                
-                northTop = northTop || thisTop;
-            }
+            boolean northTop = thisTop || extState.getValue(BlockWall.N_TOP);
             
             RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
             IModel northModel = northRenderer
-                    .getConnectedSide(northTop, northBot);
+                    .getConnectedSide(northTop, northBot, false);
             this.addQuads(result, northModel, northRenderer
                     .getSideAngle(EnumFacing.NORTH), state, side, rand);
             
@@ -101,19 +92,10 @@ public class RenderWallSingle extends RenderWallAbstract {
         
         if (eastBlock != null) {
             
-            boolean eastTop = extState.getValue(BlockWall.E_TOP);
-            
-            if (eastBlock.isDouble() != thisBlock.isDouble()) {
-                
-                eastTop = eastPri ? eastTop : thisTop;
-                
-            } else {
-                
-                eastTop = eastTop || thisTop;
-            }
+            boolean eastTop = thisTop || extState.getValue(BlockWall.E_TOP);
             
             RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
-            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot, false);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
             
@@ -125,19 +107,10 @@ public class RenderWallSingle extends RenderWallAbstract {
         
         if (southBlock != null) {
             
-            boolean southTop = extState.getValue(BlockWall.S_TOP);
-            
-            if (southBlock.isDouble() != thisBlock.isDouble()) {
-                
-                southTop = southPri ? southTop : thisTop;
-                
-            } else {
-                
-                southTop = southTop || thisTop;
-            }
-            
+            boolean southTop = thisTop || extState.getValue(BlockWall.S_TOP);
+
             RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
-            IModel southModel = southRenderer.getConnectedSide(southTop, southBot);
+            IModel southModel = southRenderer.getConnectedSide(southTop, southBot, false);
             this.addQuads(result, southModel, southRenderer
                     .getSideAngle(EnumFacing.SOUTH), state, side, rand);
             
@@ -149,19 +122,10 @@ public class RenderWallSingle extends RenderWallAbstract {
         
         if (westBlock != null) {
             
-            boolean westTop = extState.getValue(BlockWall.W_TOP);
-            
-            if (westBlock.isDouble() != thisBlock.isDouble()) {
-                
-                westTop = westPri ? westTop : thisTop;
-                
-            } else {
-                
-                westTop = westTop || thisTop;
-            }
+            boolean westTop = thisTop || extState.getValue(BlockWall.W_TOP);
 
             RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
-            IModel westModel = westRenderer.getConnectedSide(westTop, westBot);
+            IModel westModel = westRenderer.getConnectedSide(westTop, westBot, false);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
             
@@ -188,7 +152,8 @@ public class RenderWallSingle extends RenderWallAbstract {
     }
     
     @Override
-    public IModel getConnectedSide(boolean isTop, boolean isBottom) {
+    public IModel getConnectedSide(boolean isTop, boolean isBottom,
+            boolean isDouble) {
         
         return this.side;
     }

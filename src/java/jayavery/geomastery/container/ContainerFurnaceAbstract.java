@@ -6,7 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.container;
 
-import jayavery.geomastery.blocks.BlockComplexAbstract;
+import jayavery.geomastery.blocks.BlockContainerAbstract;
 import jayavery.geomastery.tileentities.TEFurnaceAbstract;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -105,7 +105,7 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     public boolean canInteractWith(EntityPlayer player) {
 
         boolean correctBlock = this.world.getBlockState(this.pos)
-                .getBlock() instanceof BlockComplexAbstract;
+                .getBlock() instanceof BlockContainerAbstract;
 
         if (correctBlock) {
 

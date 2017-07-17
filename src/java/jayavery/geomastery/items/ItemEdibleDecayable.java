@@ -15,7 +15,9 @@ import jayavery.geomastery.capabilities.ProviderCapDecay;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.utilities.FoodType;
+import jayavery.geomastery.utilities.EFoodType;
+import jayavery.geomastery.utilities.Lang;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -30,7 +32,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,7 +45,7 @@ public class ItemEdibleDecayable extends ItemEdible {
 
     @SafeVarargs
     public ItemEdibleDecayable(String name, int hunger, float saturation,
-            int stackSize, FoodType foodType, int shelfLife,
+            int stackSize, EFoodType foodType, int shelfLife,
             Class<? extends EntityAnimal>... animalEaters) {
         
         super(name, hunger, saturation, stackSize, foodType, animalEaters);
@@ -140,7 +141,8 @@ public class ItemEdibleDecayable extends ItemEdible {
             
             if (decayCap.isRot(Geomastery.proxy.getClientWorld())) {
             
-                return "Rotten " + super.getItemStackDisplayName(stack);
+                return I18n.format(Lang.ROTTEN) +
+                        super.getItemStackDisplayName(stack);
             }
         }
         
@@ -163,8 +165,7 @@ public class ItemEdibleDecayable extends ItemEdible {
             
                 if (GeoConfig.foodTooltips) {
                     
-                    tooltip.add(I18n.translateToLocal("geomastery:foodtype."
-                            + this.type.toString().toLowerCase()));
+                    tooltip.add(I18n.format(this.type.tip()));
                 }
             }
         }

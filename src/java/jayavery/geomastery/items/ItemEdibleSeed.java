@@ -8,18 +8,18 @@ package jayavery.geomastery.items;
 
 import java.util.List;
 import java.util.function.Supplier;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.main.GeoConfig;
-import jayavery.geomastery.utilities.FoodType;
+import jayavery.geomastery.utilities.EFoodType;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -34,7 +34,7 @@ public class ItemEdibleSeed extends ItemEdible implements IPlantable {
     private final Supplier<Block> crop;
 
     public ItemEdibleSeed(String name, int hunger, float saturation,
-            int stackSize, Supplier<Block> crop, FoodType foodType) {
+            int stackSize, Supplier<Block> crop, EFoodType foodType) {
 
         super(name, hunger, saturation, stackSize, foodType);
         this.crop = crop;
@@ -76,14 +76,13 @@ public class ItemEdibleSeed extends ItemEdible implements IPlantable {
         
         if (GeoConfig.foodTooltips) {
             
-            tooltip.add(I18n.translateToLocal("geomastery:foodtype." +
-                    this.type.toString().toLowerCase()));
+            tooltip.add(I18n.format(this.type.tip()));
         }
         
         if (GeoConfig.cropTooltips) {
 
-            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
-                    ".biomes"));
+            tooltip.add(I18n.format(this.getUnlocalizedName() +
+                    Lang.BIOMES));
         }
     }
     

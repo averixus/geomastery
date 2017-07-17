@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.render.block;
 
+import jayavery.geomastery.main.Geomastery;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
@@ -24,7 +25,7 @@ public abstract class RenderWallAbstract extends RenderDelayedBakingAbstract {
 
     /** @return Model for this wall's side with given properties. */
     protected abstract IModel getConnectedSide(boolean isTop,
-            boolean isBottom);
+            boolean isBottom, boolean isDouble);
     /** @return Offset rotation angle for this block's side models. */
     protected abstract int getSideAngle(EnumFacing facing);
     

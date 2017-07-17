@@ -9,7 +9,7 @@ package jayavery.geomastery.packets;
 import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.tileentities.TEBeam;
-import jayavery.geomastery.tileentities.TEBeam.EnumFloor;
+import jayavery.geomastery.tileentities.TEBeam.ETypeFloor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class CPacketFloor implements IMessage {
     
     /** The floor type of the beam. */
-    protected EnumFloor floor;
+    protected ETypeFloor floor;
     /** X co-ordinate. */
     protected int x;
     /** Y co-ordinate. */
@@ -32,7 +32,7 @@ public class CPacketFloor implements IMessage {
     
     public CPacketFloor() {}
     
-    public CPacketFloor(EnumFloor floor, BlockPos pos) {
+    public CPacketFloor(ETypeFloor floor, BlockPos pos) {
         
         this.floor = floor;
         this.x = pos.getX();
@@ -43,7 +43,7 @@ public class CPacketFloor implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
 
-        this.floor = EnumFloor.values()[buf.readInt()];
+        this.floor = ETypeFloor.values()[buf.readInt()];
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();

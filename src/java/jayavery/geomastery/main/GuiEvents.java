@@ -6,16 +6,18 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
-import jayavery.geomastery.blocks.BlockBuilding;
 import jayavery.geomastery.capabilities.ICapPlayer;
 import jayavery.geomastery.container.ContainerInventory;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.FoodType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EFoodType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,9 +26,11 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -45,6 +49,8 @@ public class GuiEvents {
     private static final ResourceLocation yokeTexture = new ResourceLocation(Geomastery.MODID, "gui/yoke_slot");
     /** Texture for the vanilla icons. */
     private static final ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
+    /** Texture for tar fluid. */
+    private static final ResourceLocation TAR = new ResourceLocation(Geomastery.MODID, "textures/blocks/liquids/tar_overlay.png");
     
     /** X offset of temperature icon for left-handed player. */
     private static final int tempOffsetXLeft = -114;
@@ -106,13 +112,12 @@ public class GuiEvents {
                 net.minecraft.client.gui.inventory.GuiInventory &&
                 player.inventoryContainer instanceof ContainerInventory) {
         
-            event.setGui(new
-                    jayavery.geomastery.gui.GuiInventory((ContainerInventory)
-                    player.inventoryContainer));
+            event.setGui(new jayavery.geomastery.gui.GuiInventory(
+                    (ContainerInventory) player.inventoryContainer));
         }
     }
     
-    /** Adds block weight to vanilla tooltips if config. */
+    /** Adds block weight to non BlockBuildingAbstract tooltips if config. */
     @SubscribeEvent
     public void addTooltips(ItemTooltipEvent event) {
         
@@ -121,11 +126,10 @@ public class GuiEvents {
             Item item = event.getItemStack().getItem();
             Block block = Block.getBlockFromItem(item);
             
-            if (item instanceof ItemBlock &&
-                    !(block instanceof BlockBuilding)) {
+            if (item instanceof ItemBlock) {
             
-                event.getToolTip().add(I18n.format(BlockWeight
-                        .getWeight(block).support()));
+                event.getToolTip().add(I18n.format(EBlockWeight
+                        .getWeight(block.getDefaultState()).supports()));
             }
         }
     }
@@ -140,6 +144,39 @@ public class GuiEvents {
             event.getRight().add("");
             event.getRight().addAll(player.getCapability(GeoCaps.CAP_PLAYER,
                     null).getDebug());
+        }
+    }
+    
+    /** Replaces water overlay on tar. */
+    @SubscribeEvent
+    public void renderWaterOverlay(RenderBlockOverlayEvent event) {
+        
+        EntityPlayer player = event.getPlayer();
+        
+        if (event.getOverlayType() == OverlayType.WATER &&
+                player.world.getBlockState(event.getBlockPos())
+                .getBlock() == GeoBlocks.tar) {
+            
+            System.out.println("overlay");
+            Minecraft.getMinecraft().getTextureManager().bindTexture(TAR);
+            Tessellator tess = Tessellator.getInstance();
+            VertexBuffer vert = tess.getBuffer();
+            float f = player.getBrightness(event.getRenderPartialTicks());
+            GlStateManager.color(f, f, f, 0.5F);
+            GlStateManager.enableBlend();
+            GlStateManager.pushMatrix();
+            float f7 = -player.rotationYaw / 64.0F;
+            float f8 = player.rotationPitch / 64.0F;
+            vert.begin(7, DefaultVertexFormats.POSITION_TEX);
+            vert.pos(-1.0D, -1.0D, -0.5D).tex(4.0F + f7, 4.0F + f8).endVertex();
+            vert.pos(1.0D, -1.0D, -0.5D).tex(0.0F + f7, 4.0F + f8).endVertex();
+            vert.pos(1.0D, 1.0D, -0.5D).tex(0.0F + f7, 0.0F + f8).endVertex();
+            vert.pos(-1.0D, 1.0D, -0.5D).tex(4.0F + f7, 0.0F + f8).endVertex();
+            tess.draw();
+            GlStateManager.popMatrix();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 0.1F);
+            GlStateManager.disableBlend();
+            event.setCanceled(true);
         }
     }
     
@@ -222,7 +259,7 @@ public class GuiEvents {
         int top = resHeight + foodOffsetY;
         ICapPlayer playerCap = player.getCapability(GeoCaps.CAP_PLAYER, null);
         
-        int carbsHunger = playerCap.foodLevel(FoodType.CARBS);
+        int carbsHunger = playerCap.foodLevel(EFoodType.CARBS);
         Minecraft.getMinecraft().getTextureManager().bindTexture(carbsTexture);
         
         for (int i = 0; i < 10; i++) {
@@ -245,7 +282,7 @@ public class GuiEvents {
             }
         }
         
-        int fruitvegHunger = playerCap.foodLevel(FoodType.FRUITVEG);
+        int fruitvegHunger = playerCap.foodLevel(EFoodType.FRUITVEG);
         Minecraft.getMinecraft().getTextureManager()
                 .bindTexture(fruitvegTexture);
         top += foodSpacing;
@@ -270,7 +307,7 @@ public class GuiEvents {
             }
         }
         
-        int proteinHunger = playerCap.foodLevel(FoodType.PROTEIN);
+        int proteinHunger = playerCap.foodLevel(EFoodType.PROTEIN);
         Minecraft.getMinecraft().getTextureManager()
                 .bindTexture(proteinTexture);
         top += foodSpacing;

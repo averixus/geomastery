@@ -6,7 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.blocks;
 
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -19,7 +19,7 @@ public class BlockWood extends BlockLog {
     public BlockWood(String name, float hardness) {
         
         BlockNew.setupBlock(this, name, CreativeTabs.BUILDING_BLOCKS,
-                hardness, ToolType.AXE);
+                hardness, EToolType.AXE);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }

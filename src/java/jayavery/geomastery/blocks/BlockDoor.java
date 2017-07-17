@@ -8,14 +8,13 @@ package jayavery.geomastery.blocks;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
-import net.minecraft.block.Block;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
@@ -23,9 +22,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -35,30 +33,98 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Door block. */
-public class BlockDoor extends BlockBuilding {
+public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
     
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
     public static final PropertyBool TOP = PropertyBool.create("top");
-    public static final PropertyEnum<EnumPartDoor> PART =
-            PropertyEnum.<EnumPartDoor>create("part", EnumPartDoor.class);
-    public static final PropertyEnum<VaultAbove> VAULT =
-            PropertyEnum.create("vault", VaultAbove.class);
-    
-    /** Supplier for the door item. */
-    private final Supplier<Item> item;
+    public static final PropertyEnum<EPartDoor> PART =
+            PropertyEnum.<EPartDoor>create("part", EPartDoor.class);
+    public static final PropertyEnum<EVaultAbove> VAULT =
+            PropertyEnum.create("vault", EVaultAbove.class);
 
-    public BlockDoor(String name, Supplier<Item> item) {
+    public BlockDoor(String name) {
         
-        super(BlockMaterial.WOOD_FURNITURE, name, CreativeTabs.DECORATIONS,
-                2F, ToolType.AXE);
-        this.item = item;
+        super(BlockMaterial.WOOD_FURNITURE, name,
+                CreativeTabs.DECORATIONS, 2F, 1);
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public ItemPlacing.Building createItem(int stackSize) {
         
-        return BlockWeight.LIGHT;
+        return new ItemPlacing.Building(this, stackSize);
+    }
+    
+    @Override
+    public boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
+
+        BlockPos bottomPos = targetPos.offset(targetSide);
+        BlockPos topPos = bottomPos.up();
+        
+        IBlockState botState = this.getDefaultState().withProperty(FACING,
+                placeFacing).withProperty(OPEN, false).withProperty(TOP, false);
+        IBlockState topState = botState.withProperty(TOP, true);
+                
+        if (!this.isValid(world, bottomPos, stack, false, botState, player) ||
+                !this.isValid(world, topPos, stack, false, topState, player)) {
+        
+            return false;
+        }
+        
+
+        world.setBlockState(bottomPos, botState);
+        world.setBlockState(topPos, botState
+                .withProperty(BlockDoor.TOP, true));
+        
+        return true;
+    }
+    
+    @Override
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
+        
+        if (alreadyPresent) {
+            
+            IBlockState state = world.getBlockState(pos);
+            BlockPos otherPos = state.getValue(TOP) ? pos.down() : pos.up();
+            IBlockState otherState = world.getBlockState(otherPos);
+            
+            if (otherState.getBlock() != this) {
+                
+                return false;
+            }
+            
+        } else {
+        
+            if (!world.getBlockState(pos).getBlock()
+                    .isReplaceable(world, pos)) {
+                
+                message(player, Lang.BUILDFAIL_OBSTACLE);
+                return false;
+            }
+        }
+            
+        if (!setState.getValue(TOP)) {
+            
+            IBlockState stateBelow = world.getBlockState(pos.down());
+            EBlockWeight weightBelow = EBlockWeight.getWeight(stateBelow);
+            
+            if (!weightBelow.canSupport(this.getWeight(stateBelow))) {
+                
+                message(player, Lang.BUILDFAIL_SUPPORT);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.LIGHT;
     }
     
     @Override
@@ -75,7 +141,7 @@ public class BlockDoor extends BlockBuilding {
         
         state = this.getActualState(state, world, pos);
         int facing = state.getValue(FACING).getHorizontalIndex();
-        EnumPartDoor part = state.getValue(PART);
+        EPartDoor part = state.getValue(PART);
         boolean open = state.getValue(OPEN);
         
         if (!open) {
@@ -99,7 +165,7 @@ public class BlockDoor extends BlockBuilding {
         
         state = this.getActualState(state, world, pos);
         int facing = state.getValue(FACING).getHorizontalIndex();
-        EnumPartDoor part = state.getValue(PART);
+        EPartDoor part = state.getValue(PART);
         boolean open = state.getValue(OPEN);
         
         if (!open) {
@@ -117,7 +183,6 @@ public class BlockDoor extends BlockBuilding {
         }
     }
     
-    /** Toggles door open. */
     @Override
     public boolean onBlockActivated(World world, BlockPos thisPos,
             IBlockState thisState, EntityPlayer player, EnumHand hand,
@@ -142,36 +207,16 @@ public class BlockDoor extends BlockBuilding {
         return true;
     }
     
-    /** Checks position and open state, changes or breaks if invalid. */
-    @Override
-    public void neighborChanged(IBlockState thisState, World world,
-            BlockPos thisPos, Block block, BlockPos unused) {
-        
-        BlockPos otherPos = thisState.getValue(TOP) ?
-                thisPos.down() : thisPos.up();
-        IBlockState otherState = world.getBlockState(otherPos);
-        
-        if (otherState.getBlock() != this ||
-                !this.isValid(world, thisPos)) {
-
-            world.setBlockToAir(thisPos);
-            
-            if (thisState.getValue(TOP)) {
-                
-                spawnAsEntity(world, thisPos, new ItemStack(this.item.get()));
-            }
-        }
-    }
-    
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack tool, EntityPlayer player) {
         
         state = this.getActualState(state, world, pos);
         
         if (state.getValue(PART).isTop()) {
        
-            return Lists.newArrayList(new ItemStack(this.item.get()));
+            return Lists.newArrayList(new ItemStack(this.item));
             
         } else {
             
@@ -196,10 +241,10 @@ public class BlockDoor extends BlockBuilding {
         boolean isLeft = rightState.getBlock() == this &&
                 rightState.getValue(FACING) == facing;
         
-        state = state.withProperty(PART, EnumPartDoor
+        state = state.withProperty(PART, EPartDoor
                 .get(isTop, isLeft, isRight, state.getValue(OPEN)));
         
-        VaultAbove vault = VaultAbove.NONE;
+        EVaultAbove vault = EVaultAbove.NONE;
         BlockPos posUp = pos.up();
         IBlockState upState = world.getBlockState(posUp);
         
@@ -210,11 +255,11 @@ public class BlockDoor extends BlockBuilding {
 
             if (upFacing == facing.rotateY()) {
                 
-                vault = VaultAbove.LEFT;
+                vault = EVaultAbove.LEFT;
                 
             } else if (upFacing == facing.rotateYCCW()) {
                 
-                vault = VaultAbove.RIGHT;
+                vault = EVaultAbove.RIGHT;
             }
         }
 
@@ -257,13 +302,13 @@ public class BlockDoor extends BlockBuilding {
     }
     
     /** Enum defining vault extensions. */
-    public enum VaultAbove implements IStringSerializable {
+    public enum EVaultAbove implements IStringSerializable {
         
         LEFT("left"), RIGHT("right"), NONE("none");
         
         private final String name;
         
-        private VaultAbove(String name) {
+        private EVaultAbove(String name) {
             
             this.name = name;
         }
@@ -276,7 +321,7 @@ public class BlockDoor extends BlockBuilding {
     }
     
     /** Enum defining part and position of door blocks. */
-    public enum EnumPartDoor implements IStringSerializable {
+    public enum EPartDoor implements IStringSerializable {
         
         SBC("sbc", false), STC("stc", true), RBC("rbc", false),
         RTC("rtc", true), LBC("lbc", false), LTC("ltc", true),
@@ -284,9 +329,10 @@ public class BlockDoor extends BlockBuilding {
         RTO("rto", true), LBO("lbo", false), LTO("lto", true);
         
         private final String name;
+        /** Whether this part is the top of a door structure. */
         private final boolean isTop;
         
-        private EnumPartDoor(String name, boolean isTop) {
+        private EPartDoor(String name, boolean isTop) {
             
             this.isTop = isTop;
             this.name = name;
@@ -317,81 +363,13 @@ public class BlockDoor extends BlockBuilding {
             }
         }
         
-        public static EnumPartDoor get(boolean isTop, boolean isLeft,
+        /** @return The EPartDoor defined by the given information. */
+        public static EPartDoor get(boolean isTop, boolean isLeft,
                 boolean isRight, boolean isOpen) {
             
-            if (isTop) {
-                
-                if (isLeft) {
-                    
-                    if (isOpen) {
-                        
-                        return LTO;
-                        
-                    } else {
-                        
-                        return LTC;
-                    }
-                    
-                } else if (isRight) {
-                    
-                   if (isOpen) {
-                       
-                       return RTO;
-                       
-                   } else {
-                       
-                       return RTC;
-                   }
-                    
-                } else {
-                    
-                    if (isOpen) {
-                        
-                        return STO;
-                        
-                    } else {
-                        
-                        return STC;
-                    }
-                }
-                
-            } else {
-                
-                if (isLeft) {
-                    
-                    if (isOpen) {
-                        
-                        return LBO;
-                        
-                    } else {
-                        
-                        return LBC;
-                    }
-                    
-                } else if (isRight) {
-                    
-                   if (isOpen) {
-                       
-                       return RBO;
-                       
-                   } else {
-                       
-                       return RBC;
-                   }
-                    
-                } else {
-                    
-                    if (isOpen) {
-                        
-                        return SBO;
-                        
-                    } else {
-                        
-                        return SBC;
-                    }
-                }
-            }
+            return isTop ? isLeft ? isOpen ? LTO : LTC : isRight ? isOpen ?
+                    RTO : RTC : isOpen ? STO : STC : isLeft ? isOpen ? LBO :
+                    LBC : isRight ? isOpen ? RBO : RBC : isOpen ? SBO : SBC;
         }
     }
 }

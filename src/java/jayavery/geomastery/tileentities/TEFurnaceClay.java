@@ -6,24 +6,28 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockBuilding;
+import java.util.Map;
+import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
+import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.GeoRecipes;
-import jayavery.geomastery.tileentities.TEFurnaceClay.EnumPartClay;
-import jayavery.geomastery.utilities.BlockWeight;
+import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
+import jayavery.geomastery.tileentities.TEFurnaceClay.EPartClay;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** TileEntity for clay furnace. */
-public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
+public class TEFurnaceClay extends TEFurnaceAbstract<EPartClay> {
 
     public TEFurnaceClay() {
 
@@ -31,19 +35,19 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
     }
     
     @Override
-    protected EnumPartClay partByOrdinal(int ordinal) {
+    protected EPartClay partByOrdinal(int ordinal) {
 
-        return EnumPartClay.values()[ordinal];
+        return EPartClay.values()[ordinal];
     }
 
     /** Enum defining parts of the clay furnace structure. */
-    public enum EnumPartClay implements IMultipart {
+    public enum EPartClay implements IMultipart {
 
         BL("bl"), BR("br"), TL("tl"), TR("tr");
 
         private final String name;
 
-        private EnumPartClay(String name) {
+        private EPartClay(String name) {
 
             this.name = name;
         }
@@ -55,16 +59,9 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
         }
         
         @Override
-        public ItemStack getDrop() {
+        public boolean needsSupport() {
             
-            if (this == BL) {
-                
-                return new ItemStack(GeoItems.FURNACE_CLAY);
-                
-            } else {
-                
-                return ItemStack.EMPTY;
-            }
+            return this == BL || this == BR;
         }
         
         @Override
@@ -88,10 +85,8 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.FURNACE_CLAY;
-            Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !BlockWeight.getWeight(below)
-                    .canSupport(block.getWeight()) && below != block;
+            BlockBuildingAbstract<?> block = GeoBlocks.FURNACE_CLAY;
+            boolean broken = false;
             
             switch (this) {
                 
@@ -150,73 +145,47 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EnumPartClay> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing) {
+                EnumFacing facing, EntityPlayer player) {
             
             if (this == BL) {
                 
-                BlockPos posBL = pos;
-                BlockPos posBR = posBL.offset(facing.rotateY());
-                BlockPos posTL = posBL.up();
-                BlockPos posTR = posBR.up();
+                BlockContainerMulti<EPartClay> block = GeoBlocks.FURNACE_CLAY;
+                IBlockState state = block.getDefaultState();
+                PropertyEnum<EPartClay> prop = block.getPartProperty();
                 
-                BlockBuilding block = GeoBlocks.FURNACE_CLAY;
-                BlockPos[] basePositions = {posBL, posBR};
-                BlockPos[] upperPositions = {posTL, posTR};
-                boolean valid = true;
+                // Prepare map of properties
                 
-                for (BlockPos position : basePositions) {
+                Map<BlockPos, EPartClay> map = Maps.newHashMap();
+                map.put(pos, BL);
+                map.put(pos.offset(facing.rotateY()), BR);
+                map.put(pos.up(), TL);
+                map.put(pos.offset(facing.rotateY()).up(), TR);
+                
+                // Check validity
+                
+                for (Entry<BlockPos, EPartClay> entry : map.entrySet()) {
                     
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
+                    IBlockState placeState = state
+                            .withProperty(prop, entry.getValue());
                     
-                    Block blockBelow = world.getBlockState(position.down())
-                            .getBlock();
-                    boolean foundation = BlockWeight.getWeight(blockBelow)
-                            .canSupport(block.getWeight());
-                    
-                    if (!replaceable || !foundation) {
+                    if (!block.isValid(world, entry.getKey(), null,
+                            false, placeState, player)) {
                         
-                        valid = false;
-                        break;
-                    }
-                }
-                
-                for (BlockPos position : upperPositions) {
-                    
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
-                    
-                    if (!replaceable) {
-                        
-                        valid = false;
-                        break;
+                        return false;
                     }
                 }
 
-                if (valid) {
-
-                    // Place all
-                    IBlockState placeState = block.getDefaultState();
-    
-                    world.setBlockState(posBL, placeState);
-                    world.setBlockState(posBR, placeState);
-                    world.setBlockState(posTR, placeState);
-                    world.setBlockState(posTL, placeState);
-    
-                    // Set up tileentities
-                    ((TEFurnaceClay) world.getTileEntity(posBL))
-                            .setState(facing, BL);
-                    ((TEFurnaceClay) world.getTileEntity(posBR))
-                            .setState(facing, BR);
-                    ((TEFurnaceClay) world.getTileEntity(posTL))
-                            .setState(facing, TL);
-                    ((TEFurnaceClay) world.getTileEntity(posTR))
-                            .setState(facing, TR);
-                    
-                    return true;
-                }
+                // Place all
+                
+                map.keySet().forEach((p) -> world.setBlockState(p, state));
+                
+                // Set up tileentities
+                
+                map.entrySet().forEach((e) ->
+                        ((TEFurnaceClay) world.getTileEntity(e.getKey()))
+                        .setState(facing, e.getValue()));
+                
+                return true;
             }
             
             return false;

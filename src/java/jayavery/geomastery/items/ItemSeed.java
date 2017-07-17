@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.main.GeoConfig;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -23,7 +24,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -48,7 +48,7 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         this.crop = crop;
     }
     
-    /** Attempts to plant this item's crop. */
+    // Attempts to plant this item's crop. 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world,
             BlockPos pos, EnumHand hand, EnumFacing side,
@@ -76,7 +76,7 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         }
     }
     
-    /** Adds this item's valid biomes to the tooltip if config. */
+    // Adds this item's valid biomes to the tooltip if config.
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
@@ -84,26 +84,11 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         
         if (GeoConfig.cropTooltips) {
 
-            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
-                    ".biomes"));
+            tooltip.add(I18n.format(this.getUnlocalizedName() + Lang.BIOMES));
         }
     }
     
-    /** Gets plant type for block interactions. */
-    @Override
-    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
-        
-        return EnumPlantType.Crop;
-    }
-    
-    /** Gets plant state for block interactions. */
-    @Override
-    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        
-        return this.crop.get().getDefaultState();
-    }
-    
-    /** Breeds or grows the right-clicked animal if applicable. */
+    // Breeds or grows the right-clicked animal if applicable. 
     @Override
     public boolean itemInteractionForEntity(ItemStack stack,
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
@@ -142,5 +127,17 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         }
         
         return false;
+    }
+    
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        
+        return EnumPlantType.Crop;
+    }
+    
+    @Override
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        
+        return this.crop.get().getDefaultState();
     }
 }

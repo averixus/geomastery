@@ -6,16 +6,20 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockBuilding;
+import java.util.Map;
+import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
+import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.tileentities.TECraftingWoodworking.EnumPartWoodworking;
-import jayavery.geomastery.utilities.BlockWeight;
+import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
+import jayavery.geomastery.tileentities.TECraftingWoodworking.EPartWoodworking;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,22 +27,22 @@ import net.minecraft.world.World;
 
 /** TileEntity for woodworking crafting block. */
 public class TECraftingWoodworking extends
-        TECraftingAbstract<EnumPartWoodworking> {
+        TECraftingAbstract<EPartWoodworking> {
 
     @Override
-    protected EnumPartWoodworking partByOrdinal(int ordinal) {
+    protected EPartWoodworking partByOrdinal(int ordinal) {
         
-        return EnumPartWoodworking.values()[ordinal];
+        return EPartWoodworking.values()[ordinal];
     }
     
     /** Enum defining parts of the whole woodworking structure. */
-    public enum EnumPartWoodworking implements IMultipart {
+    public enum EPartWoodworking implements IMultipart {
 
         FM("fm"), FL("fl"), BL("bl"), BM("bm"), BR("br"), FR("fr");
 
         private final String name;
 
-        private EnumPartWoodworking(String name) {
+        private EPartWoodworking(String name) {
 
             this.name = name;
         }
@@ -50,16 +54,9 @@ public class TECraftingWoodworking extends
         }
         
         @Override
-        public ItemStack getDrop() {
+        public boolean needsSupport() {
             
-            if (this == FM) {
-                
-                return new ItemStack(GeoItems.CRAFTING_WOODWORKING);
-                
-            } else {
-                
-                return ItemStack.EMPTY;
-            }
+            return true;
         }
         
         @Override
@@ -89,10 +86,8 @@ public class TECraftingWoodworking extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.CRAFTING_WOODWORKING;
-            Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !BlockWeight.getWeight(below)
-                    .canSupport(block.getWeight());
+            BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_WOODWORKING;
+            boolean broken = false;
             
             switch (this) {
                 
@@ -184,68 +179,51 @@ public class TECraftingWoodworking extends
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing) {
+                EnumFacing facing, EntityPlayer player) {
             
             if (this == FM) {
                 
-                BlockPos posFM = pos;
-                BlockPos posFL = posFM.offset(facing.rotateY().getOpposite());
-                BlockPos posBL = posFL.offset(facing);
-                BlockPos posBM = posFM.offset(facing);
-                BlockPos posBR = posBM.offset(facing.rotateY());
-                BlockPos posFR = posBR.offset(facing.getOpposite());
+                BlockContainerMulti<EPartWoodworking> block =
+                        GeoBlocks.CRAFTING_WOODWORKING;
+                IBlockState state = block.getDefaultState();
+                PropertyEnum<EPartWoodworking> prop = block.getPartProperty();
                 
-                BlockBuilding block = GeoBlocks.CRAFTING_WOODWORKING;
-                BlockPos[] positions = {posFM, posFL, posBL,
-                        posBM, posBR, posFR};
-                boolean valid = true;
+                // Prepare map of properties
                 
-                for (BlockPos position : positions) {
+                Map<BlockPos, EPartWoodworking> map = Maps.newHashMap();
+                map.put(pos, FM);
+                map.put(pos.offset(facing.rotateY().getOpposite()), FL);
+                map.put(pos.offset(facing.rotateY().getOpposite())
+                        .offset(facing), BL);
+                map.put(pos.offset(facing), BM);
+                map.put(pos.offset(facing).offset(facing.rotateY()), BR);
+                map.put(pos.offset(facing.rotateY()), FR);
+                
+                // Check validity
+                
+                for (Entry<BlockPos, EPartWoodworking> entry : map.entrySet()) {
                     
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
+                    IBlockState placeState = state
+                            .withProperty(prop, entry.getValue());
                     
-                    Block blockBelow = world.getBlockState(position.down())
-                            .getBlock();
-                    boolean foundation = BlockWeight.getWeight(blockBelow)
-                            .canSupport(block.getWeight());
-                    
-                    if (!replaceable || !foundation) {
+                    if (!block.isValid(world, entry.getKey(), null,
+                            false, placeState, player)) {
                         
-                        valid = false;
-                        break;
+                        return false;
                     }
                 }
 
-                if (valid) {
-    
-                    // Place all
-                    IBlockState placeState = block.getDefaultState();
-    
-                    world.setBlockState(posFM, placeState);
-                    world.setBlockState(posFL, placeState);
-                    world.setBlockState(posBL, placeState);
-                    world.setBlockState(posBM, placeState);
-                    world.setBlockState(posBR, placeState);
-                    world.setBlockState(posFR, placeState);
-    
-                    // Set up tileentities
-                    ((TECraftingWoodworking) world.getTileEntity(posFM))
-                            .setState(facing, FM);
-                    ((TECraftingWoodworking) world.getTileEntity(posFL))
-                            .setState(facing, FL);
-                    ((TECraftingWoodworking) world.getTileEntity(posBL))
-                            .setState(facing, BL);
-                    ((TECraftingWoodworking) world.getTileEntity(posBM))
-                            .setState(facing, BM);
-                    ((TECraftingWoodworking) world.getTileEntity(posBR))
-                            .setState(facing, BR);
-                    ((TECraftingWoodworking) world.getTileEntity(posFR))
-                            .setState(facing, FR);
-                    
-                    return true;
-                }
+                // Place all
+                
+                map.keySet().forEach((p) -> world.setBlockState(p, state));
+                
+                // Set up tileentities
+                
+                map.entrySet().forEach((e) ->
+                        ((TECraftingWoodworking) world.getTileEntity(e
+                        .getKey())).setState(facing, e.getValue()));
+                
+                return true;
             }
             
             return false;

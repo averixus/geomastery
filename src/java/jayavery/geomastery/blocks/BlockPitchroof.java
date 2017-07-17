@@ -9,8 +9,8 @@ package jayavery.geomastery.blocks;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -30,22 +30,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Pitched roof block. */
-public class BlockPitchroof extends BlockBuilding {
+public class BlockPitchroof extends BlockFacing {
 
-    public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    public static final PropertyEnum<EnumShape> SHAPE =
-            PropertyEnum.create("shape", EnumShape.class);
+    public static final PropertyEnum<ERoofShape> SHAPE =
+            PropertyEnum.create("shape", ERoofShape.class);
 
-    public BlockPitchroof(Material material, String name, float hardness) {
+    public BlockPitchroof(Material material, String name,
+            float hardness, int stackSize) {
         
-        super(material, name, CreativeTabs.BUILDING_BLOCKS,
-                hardness, ToolType.AXE);
-    }
-    
-    @Override
-    public BlockWeight getWeight() {
-        
-        return BlockWeight.NONE;
+        super(name, material, hardness, stackSize, EBlockWeight.NONE);
     }
     
     @Override
@@ -56,18 +49,11 @@ public class BlockPitchroof extends BlockBuilding {
     }
     
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-    }
-    
-    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world,
             BlockPos pos) {
         
         EnumFacing facing = state.getValue(FACING);
-        EnumShape shape = EnumShape.MC;
+        ERoofShape shape = ERoofShape.MC;
         
         boolean isTop = !(world.getBlockState(pos.offset(facing).up())
                 .getBlock() instanceof BlockPitchroof);
@@ -96,7 +82,7 @@ public class BlockPitchroof extends BlockBuilding {
                 state = state.withProperty(FACING, facing.rotateY());
             }
             
-            shape = EnumShape.getExternal(isTop, isBottom);
+            shape = ERoofShape.getExternal(isTop, isBottom);
             
         } else if (infront.getBlock() instanceof BlockPitchroof &&
                 infront.getValue(FACING).getAxis() != facing.getAxis()) {
@@ -106,11 +92,11 @@ public class BlockPitchroof extends BlockBuilding {
                 state = state.withProperty(FACING, facing.rotateY());
             }
             
-            shape = EnumShape.getInternal(isTop, isBottom);
+            shape = ERoofShape.getInternal(isTop, isBottom);
             
         } else {
             
-            shape = EnumShape.getStraight(isTop, isBottom, isLeft, isRight);
+            shape = ERoofShape.getStraight(isTop, isBottom, isLeft, isRight);
         }
         
         return state.withProperty(SHAPE, shape);
@@ -135,7 +121,7 @@ public class BlockPitchroof extends BlockBuilding {
             @Nullable Entity entity, boolean unused) {
         
         state = this.getActualState(state, world, pos);
-        EnumShape shape = state.getValue(SHAPE);
+        ERoofShape shape = state.getValue(SHAPE);
         int facing = state.getValue(FACING).getHorizontalIndex();
         
         if (shape.isInternal()) {
@@ -161,29 +147,7 @@ public class BlockPitchroof extends BlockBuilding {
         }
     }
     
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState().withProperty(FACING,
-                EnumFacing.getHorizontal(meta));
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return state.getValue(FACING).getHorizontalIndex();
-    }
-    
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos,
-            EnumFacing side, float x, float y, float z,
-            int meta, EntityLivingBase placer) {
-        
-        return this.getDefaultState().withProperty(FACING,
-                placer.getHorizontalFacing());
-    }
-    
-    public enum EnumShape implements IStringSerializable {
+    public enum ERoofShape implements IStringSerializable {
         
         TL("tl"), TC("tc"), TR("tr"), ML("ml"), MC("mc"), MR("mr"),
         BL("bl"), BC("bc"), BR("br"), ST("st"), SM("sm"), SB("sb"),
@@ -192,7 +156,7 @@ public class BlockPitchroof extends BlockBuilding {
         
         private final String name;
         
-        private EnumShape(String name) {
+        private ERoofShape(String name) {
             
             this.name = name;
         }
@@ -203,6 +167,7 @@ public class BlockPitchroof extends BlockBuilding {
             return this.name;
         }
         
+        /** @return Whether this is an internal corner. */
         public boolean isInternal() {
             
             switch (this) {
@@ -217,6 +182,7 @@ public class BlockPitchroof extends BlockBuilding {
             }
         }
         
+        /** @return Whether this is an external corner. */
         public boolean isExternal() {
             
             switch (this) {
@@ -231,167 +197,26 @@ public class BlockPitchroof extends BlockBuilding {
             }
         }
         
-        public static EnumShape getExternal(boolean isTop, boolean isBottom) {
+        /** @return The external corner shape from the given information. */
+        public static ERoofShape getExternal(boolean isTop, boolean isBottom) {
             
-            if (isTop) {
-                
-                if (isBottom) {
-                    
-                    return ES;
-                    
-                } else {
-                    
-                    return ET;
-                }
-                
-            } else {
-                
-                if (isBottom) {
-                    
-                    return EB;
-                    
-                } else {
-                    
-                    return EM;
-                }
-            }
+            return isTop ? isBottom ? ES : ET : isBottom ? EB : EM;
         }
         
-        public static EnumShape getInternal(boolean isTop, boolean isBottom) {
+        /** @return The internal corner shape from given information. */
+        public static ERoofShape getInternal(boolean isTop, boolean isBottom) {
             
-            if (isTop) {
-                
-                if (isBottom) {
-                    
-                    return IS;
-                    
-                } else {
-                    
-                    return IT;
-                }
-                
-            } else {
-                
-                if (isBottom) {
-                    
-                    return IB;
-                    
-                } else {
-                    
-                    return IM;
-                }
-            }
+            return isTop ? isBottom ? IS : IT : isBottom ? IB : IM;
         }
         
-        public static EnumShape getStraight(boolean isTop, boolean isBottom,
+        /** @return The straight shape from the given information. */
+        public static ERoofShape getStraight(boolean isTop, boolean isBottom,
                 boolean isLeft, boolean isRight) {
             
-            if (isTop) {
-                
-                if (isBottom) {
-                    
-                    if (isLeft) {
-                        
-                        if (isRight) {
-                            
-                            return SS;
-                            
-                        } else {
-                            
-                            return SL;
-                        }
-                        
-                    } else {
-                        
-                        if (isRight) {
-                            
-                            return SR;
-                            
-                        } else {
-                            
-                            return SC;
-                        }
-                    }
-                    
-                } else {
-                    
-                    if (isLeft) {
-                        
-                        if (isRight) {
-                            
-                            return ST;
-                            
-                        } else {
-                            
-                            return TL;
-                        }
-                        
-                    } else {
-                        
-                        if (isRight) {
-                            
-                            return TR;
-                            
-                        } else {
-                            
-                            return TC;
-                        }
-                    }
-                }
-                
-            } else {
-                
-                if (isBottom) {
-                    
-                    if (isLeft) {
-                        
-                        if (isRight) {
-                            
-                            return SB;
-                            
-                        } else {
-                            
-                            return BL;
-                        }
-                        
-                    } else {
-                        
-                        if (isRight) {
-                            
-                            return BR;
-                            
-                        } else {
-                            
-                            return BC;
-                        }
-                    }
-                    
-                } else {
-                    
-                    if (isLeft) {
-                        
-                        if (isRight) {
-                            
-                            return SM;
-                            
-                        } else {
-                            
-                            return ML;
-                        }
-                        
-                    } else {
-                        
-                        if (isRight) {
-                            
-                            return MR;
-                            
-                        } else {
-                            
-                            return MC;
-                        }
-                    }
-                }
-            }
+            return isTop ? isBottom ? isLeft ? isRight ? SS : SL : isRight ?
+                    SR : SC : isLeft ? isRight ? ST : TL : isRight ?
+                    TR : TC : isBottom ? isLeft ? isRight ? SB : BL : isRight ?
+                    BR : BC : isLeft ? isRight ? SM : ML : isRight ? MR : MC;
         }
     }
 }

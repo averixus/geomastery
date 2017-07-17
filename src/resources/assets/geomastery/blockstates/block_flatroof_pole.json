@@ -1,7 +1,15 @@
 {
     "forge_marker": 1,
+    "defaults": {
+        "model": "geomastery:flatroof_pole"
+    },
     "variants": {
-        "normal": { "model": "geomastery:flatroof_pole" },
+        "facing": {
+            "north": {},
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
         "inventory": [{
             "model": "geomastery:item",
             "textures": {

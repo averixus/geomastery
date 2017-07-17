@@ -9,7 +9,7 @@ package jayavery.geomastery.render.block;
 import java.util.List;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.blocks.BlockWall;
-import jayavery.geomastery.blocks.BlockBeam.EnumAxis;
+import jayavery.geomastery.blocks.BlockBeam.EBeamAxis;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.util.EnumFacing;
@@ -51,12 +51,12 @@ public class RenderWallStraight extends RenderWallAbstract {
         if ((hasNorth || hasSouth) && !hasEast && !hasWest) {
             
             this.addQuads(result, this.straight, this
-                    .getStraightAngle(EnumAxis.NS), state, side, rand);
+                    .getStraightAngle(EBeamAxis.NS), state, side, rand);
             
         } else if ((hasEast || hasWest) && !hasNorth && !hasSouth) {
             
             this.addQuads(result, this.straight, this.
-                    getStraightAngle(EnumAxis.EW), state, side, rand);
+                    getStraightAngle(EBeamAxis.EW), state, side, rand);
             
         } else {
             
@@ -81,7 +81,7 @@ public class RenderWallStraight extends RenderWallAbstract {
     }
 
     @Override
-    protected IModel getConnectedSide(boolean isTop, boolean isBottom) {
+    protected IModel getConnectedSide(boolean isTop, boolean isBottom, boolean isDouble) {
         
         return this.side;
     }
@@ -93,8 +93,8 @@ public class RenderWallStraight extends RenderWallAbstract {
     }
     
     /** @return Offset rotation angle for this block's straight models. */
-    protected int getStraightAngle(EnumAxis axis) {
+    protected int getStraightAngle(EBeamAxis axis) {
         
-        return axis == EnumAxis.NS ? 0 : 90;
+        return axis == EBeamAxis.NS ? 0 : 90;
     }
 }

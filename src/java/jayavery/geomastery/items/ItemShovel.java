@@ -8,11 +8,11 @@ package jayavery.geomastery.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
 /** Shovel tool item. */
@@ -28,6 +28,12 @@ public class ItemShovel extends ItemTool {
 
         super(2, -3.0F, material, EFFECTIVE_ON);
         ItemSimple.setupItem(this, name, 1, CreativeTabs.TOOLS);
-        this.setHarvestLevel(ToolType.SHOVEL.toString(), 1);
+        this.setHarvestLevel(EToolType.SHOVEL.toString(), 1);
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 }

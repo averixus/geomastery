@@ -6,10 +6,10 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.utilities.EnumSingle;
+import jayavery.geomastery.utilities.EPartSingle;
 
 /** Tile entity for knapping crafting block. */
-public class TECraftingKnapping extends TECraftingAbstract<EnumSingle> {
+public class TECraftingKnapping extends TECraftingAbstract<EPartSingle> {
 
     @Override
     public void update() {}
@@ -21,8 +21,8 @@ public class TECraftingKnapping extends TECraftingAbstract<EnumSingle> {
     }
 
     @Override
-    protected EnumSingle partByOrdinal(int ordinal) {
+    protected EPartSingle partByOrdinal(int ordinal) {
 
-        return EnumSingle.SINGLE;
+        return EPartSingle.SINGLE;
     }
 }

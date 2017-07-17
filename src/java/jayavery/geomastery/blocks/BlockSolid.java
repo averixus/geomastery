@@ -11,8 +11,8 @@ import java.util.Random;
 import java.util.function.Supplier;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.main.GeoConfig;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -30,79 +30,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Simple solid block for ores etc. */
-public class BlockSolid extends BlockBuilding {
+public class BlockSolid extends BlockNew {
     
     /** This block's dropped item. */
     private final Supplier<Item> item;
     /** Maximum number of dropped items for randomising. */
     private final int maxDropped;
-    /** Building block weight. */
-    private final BlockWeight weight;
 
     public BlockSolid(Material material, String name, float hardness,
-            BlockWeight weight, Supplier<Item> item,
-            int maxDropped, ToolType tool) {
+            Supplier<Item> item, int maxDropped, EToolType tool) {
 
         super(material, name, CreativeTabs.BUILDING_BLOCKS, hardness, tool);
         this.item = item;
         this.maxDropped = maxDropped;
-        this.weight = weight;
-    }
-    
-    /** No build reqs, creative-only block type. */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.buildTooltips) {
-            
-            tooltip.add(net.minecraft.client.resources.I18n.format(this.getWeight().support()));
-        }
-    }
-
-    @Override
-    public boolean isValid(World world, BlockPos pos) {
-
-        return true;
-    }
-    
-    @Override
-    public BlockWeight getWeight() {
-        
-        return this.weight;
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-
-        return FULL_BLOCK_AABB;
-    }
-
-    @Override
-    public BlockStateContainer createBlockState() {
-
-        return new BlockStateContainer(this);
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-
-        return state;
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState();
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return 0;
     }
 
     @Override

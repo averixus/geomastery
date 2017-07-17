@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** TilEntity for storing crop fertilisation level. */
+/** TilEntity for crop fertilisation. */
 public class TECrop extends TileEntity {
 
     /** Current fertility level of this crop. */
@@ -39,7 +39,7 @@ public class TECrop extends TileEntity {
         return 1.0F + (0.1F * this.fertility);
     }
     
-    /** Stop the TE from being removed when the crop grows. */
+    // Stops the TE from being removed when the crop grows.
     @Override
     public boolean shouldRefresh(World world, BlockPos pos,
             IBlockState oldState, IBlockState newState) {

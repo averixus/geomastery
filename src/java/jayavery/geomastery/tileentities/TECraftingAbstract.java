@@ -44,10 +44,6 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         return true;
     }
     
-    /** Has no inventory to drop. */
-    @Override
-    public void dropItems() {}
-    
     /** Increments durability based on day, weather, and exposure. */
     @Override
     public void update() {
@@ -58,11 +54,11 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         }
         
         boolean update = false;
-        EnumExposure exposure = this.getExposure();
+        EExposureLevel exposure = this.getExposure();
         
         if (this.world.getWorldTime() % 24000L == 0) {
 
-            if (exposure == EnumExposure.EXPOSED) {
+            if (exposure == EExposureLevel.EXPOSED) {
                 
                 this.durability--;
                 update = true;
@@ -71,11 +67,11 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         
         if (this.world.isRaining() && !this.isRaining) {
             
-            if (exposure == EnumExposure.EXPOSED) {
+            if (exposure == EExposureLevel.EXPOSED) {
             
                 this.durability -= 3;
                 
-            } else if (exposure == EnumExposure.PARTIAL) {
+            } else if (exposure == EExposureLevel.PARTIAL) {
                 
                 this.durability--;
             }
@@ -100,12 +96,11 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         }
     }
     
-    /** @return Whether this block is exposed to the sky,
-     * not counting leaves as shelter. */
-    protected EnumExposure getExposure() {
+    /** @return The type of exposure this block is in. */
+    protected EExposureLevel getExposure() {
         
         BlockPos pos = this.pos.up();
-        EnumExposure result = EnumExposure.EXPOSED;
+        EExposureLevel result = EExposureLevel.EXPOSED;
 
         while (pos.getY() <= 256) {
             
@@ -115,12 +110,12 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
             
             if (block instanceof BlockFlatroof) {
    
-                result = EnumExposure.PARTIAL;                
+                result = EExposureLevel.PARTIAL;                
                 break;
                 
             } else if (light != 0 && !(block instanceof BlockLeaves)) {
                 
-                result = EnumExposure.SHELTERED;
+                result = EExposureLevel.SHELTERED;
                 break;
             }
             
@@ -158,7 +153,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
     }
     
     /** Enum defining levels of exposure to weather. */
-    public enum EnumExposure {
+    public enum EExposureLevel {
         
         SHELTERED, PARTIAL, EXPOSED;
     }

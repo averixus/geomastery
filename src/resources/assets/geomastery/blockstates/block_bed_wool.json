@@ -15,6 +15,9 @@
             "false": {},
             "true": {}
         },
-        "inventory": [{}]
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/bed_wool" }
+        }]
     }
 }

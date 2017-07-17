@@ -15,7 +15,7 @@ import jayavery.geomastery.items.ItemSimple;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.tileentities.TECrop;
 import jayavery.geomastery.utilities.IBiomeCheck;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -68,7 +68,7 @@ public abstract class BlockCrop extends BlockNew
 
     public BlockCrop(String name, Supplier<Item> cropRef,
             Supplier<Item> seedRef, Function<Random, Integer> yieldRef,
-            float growthChance, float hardness, ToolType tool) {
+            float growthChance, float hardness, EToolType tool) {
 
         super(Material.PLANTS, name, null, hardness, tool);
         this.cropRef = cropRef;
@@ -83,7 +83,7 @@ public abstract class BlockCrop extends BlockNew
     /** Convenience constructor for crops with seed == crop. */
     public BlockCrop(String name, Supplier<Item> cropRef,
             Function<Random, Integer> function, float growthChance,
-            float hardness, ToolType tool) {
+            float hardness, EToolType tool) {
 
         this(name, cropRef, cropRef, function, growthChance, hardness, tool);
     }
@@ -188,7 +188,7 @@ public abstract class BlockCrop extends BlockNew
         
         if (!this.canStay(world, pos)) {
             
-            world.setBlockToAir(pos);
+            world.destroyBlock(pos, true);
         }
     }
     
@@ -249,7 +249,7 @@ public abstract class BlockCrop extends BlockNew
         
         if (state.getBlock() != this) {
             
-            return getDefaultState();
+            return this.getDefaultState();
         }
         
         return state;
@@ -292,12 +292,13 @@ public abstract class BlockCrop extends BlockNew
         return this.canPlant(world, pos) && super.canPlaceBlockAt(world, pos);
     }
     
+    /** Wheat crop block. */
     public static class Wheat extends BlockCrop {
         
         public Wheat() {
             
             super("wheat", () -> GeoItems.WHEAT, (rand) -> 0,
-                    0.2F, 0.2F, ToolType.SICKLE);
+                    0.2F, 0.2F, EToolType.SICKLE);
         }
 
         @Override
@@ -312,12 +313,13 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Potato crop block. */
     public static class Potato extends BlockCrop {
         
         public Potato() {
             
             super("potato", () -> GeoItems.POTATO, (rand) -> rand.nextInt(3),
-                    0.15F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, EToolType.SICKLE);
         }
         
         @Override
@@ -330,12 +332,13 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Pepper crop block. */
     public static class Pepper extends BlockCrop {
         
         public Pepper() {
             
             super("pepper", () -> GeoItems.PEPPER, (rand) -> 2,
-                    0.15F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, EToolType.SICKLE);
         }
 
         @Override
@@ -349,13 +352,14 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Hemp crop block. */
     public static class Hemp extends BlockCrop {
         
         public Hemp() {
             
             super("hemp", () -> GeoItems.TWINE_HEMP,
                     () -> GeoItems.CUTTING_HEMP,
-                    (rand) -> 1, 0.2F, 0.2F, ToolType.SICKLE);
+                    (rand) -> 1, 0.2F, 0.2F, EToolType.SICKLE);
         }
 
         @Override
@@ -369,12 +373,13 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Beetroot crop block. */
     public static class Beetroot extends BlockCrop {
         
         public Beetroot() {
             
             super("beetroot", () -> GeoItems.BEETROOT,
-                    (rand) -> rand.nextInt(3), 0.15F, 0.2F, ToolType.SICKLE);
+                    (rand) -> rand.nextInt(3), 0.15F, 0.2F, EToolType.SICKLE);
         }
 
         @Override
@@ -387,12 +392,13 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Carrot crop block. */
     public static class Carrot extends BlockCrop {
         
         public Carrot() {
             
             super("carrot", () -> GeoItems.CARROT, (rand) -> rand.nextInt(3),
-                    0.15F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, EToolType.SICKLE);
         }
 
         @Override
@@ -405,12 +411,13 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Chickpea crop block. */
     public static class Chickpea extends BlockCrop {
         
         public Chickpea() {
             
             super("chickpea", () -> GeoItems.CHICKPEAS, (rand) -> 1,
-                    0.15F, 0.2F, ToolType.SICKLE);
+                    0.15F, 0.2F, EToolType.SICKLE);
         }
 
         @Override
@@ -425,12 +432,13 @@ public abstract class BlockCrop extends BlockNew
         }
     }
     
+    /** Cotton crop block. */
     public static class Cotton extends BlockCrop {
         
         public Cotton() {
             
             super("cotton", () -> GeoItems.COTTON, () -> GeoItems.CUTTING_COTTON,
-                    (rand) -> 1, 0.15F, 0.2F, ToolType.SICKLE);
+                    (rand) -> 1, 0.15F, 0.2F, EToolType.SICKLE);
         }
 
         @Override

@@ -6,37 +6,42 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockBuilding;
+import java.util.Map;
+import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
+import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.tileentities.TECraftingTextiles.EnumPartTextiles;
-import jayavery.geomastery.utilities.BlockWeight;
+import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
+import jayavery.geomastery.tileentities.TECraftingTextiles.EPartTextiles;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
+/** TileEntity for textiles crafting block. */
+public class TECraftingTextiles extends TECraftingAbstract<EPartTextiles> {
 
     @Override
-    protected EnumPartTextiles partByOrdinal(int ordinal) {
+    protected EPartTextiles partByOrdinal(int ordinal) {
         
-        return EnumPartTextiles.values()[ordinal];
+        return EPartTextiles.values()[ordinal];
     }
     
     /** Enum defining parts of the whole Textiles structure. */
-    public enum EnumPartTextiles implements IMultipart {
+    public enum EPartTextiles implements IMultipart {
 
         FRONT("front"), BACK("back");
 
         private final String name;
 
-        private EnumPartTextiles(String name) {
+        private EPartTextiles(String name) {
 
             this.name = name;
         }
@@ -48,16 +53,9 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
         }
         
         @Override
-        public ItemStack getDrop() {
+        public boolean needsSupport() {
             
-            if (this == FRONT) {
-                
-                return new ItemStack(GeoItems.CRAFTING_TEXTILES);
-                
-            } else {
-                
-                return ItemStack.EMPTY;
-            }
+            return true;
         }
         
         @Override
@@ -77,10 +75,8 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.CRAFTING_TEXTILES;
-            Block below = world.getBlockState(pos.down()).getBlock();
-            boolean broken = !BlockWeight.getWeight(below)
-                    .canSupport(block.getWeight());
+            BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_TEXTILES;
+            boolean broken = false;
             
             if (this == FRONT) {
 
@@ -111,50 +107,46 @@ public class TECraftingTextiles extends TECraftingAbstract<EnumPartTextiles> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing) {
+                EnumFacing facing, EntityPlayer player) {
             
             if (this == FRONT) {
                 
-                BlockPos frontPos = pos;
-                BlockPos backPos = frontPos.offset(facing);
+                BlockContainerMulti<EPartTextiles> block = 
+                        GeoBlocks.CRAFTING_TEXTILES;
+                IBlockState state = block.getDefaultState();
+                PropertyEnum<EPartTextiles> prop = block.getPartProperty();
                 
-                BlockBuilding block = GeoBlocks.CRAFTING_TEXTILES;
-                BlockPos[] positions = {frontPos, backPos};
-                boolean valid = true;
+                // Prepare map of properties
                 
-                for (BlockPos position : positions) {
+                Map<BlockPos, EPartTextiles> map = Maps.newHashMap();
+                map.put(pos, FRONT);
+                map.put(pos.offset(facing), BACK);
+                
+                // Check validity
+                
+                for (Entry<BlockPos, EPartTextiles> entry : map.entrySet()) {
                     
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
+                    IBlockState placeState = state
+                            .withProperty(prop, entry.getValue());
                     
-                    Block blockBelow = world.getBlockState(position.down())
-                            .getBlock();
-                    boolean foundation = BlockWeight.getWeight(blockBelow)
-                            .canSupport(block.getWeight());
-                    
-                    if (!replaceable || !foundation) {
+                    if (!block.isValid(world, entry.getKey(), null,
+                            false, placeState, player)) {
                         
-                        valid = false;
-                        break;
+                        return false;
                     }
                 }
 
-                if (valid) {
-
-                    // Place all blocks
-                    IBlockState placeState = block.getDefaultState();
-                    
-                    world.setBlockState(backPos, placeState);
-                    world.setBlockState(frontPos, placeState);
-                    
-                    ((TECraftingTextiles) world.getTileEntity(backPos))
-                            .setState(facing, BACK);
-                    ((TECraftingTextiles) world.getTileEntity(frontPos))
-                            .setState(facing, FRONT);
-                    
-                    return true;
-                }
+                // Place all
+                
+                map.keySet().forEach((p) -> world.setBlockState(p, state));
+                
+                // Set up tileentities
+                
+                map.entrySet().forEach((e) ->
+                        ((TECraftingTextiles) world.getTileEntity(e.getKey()))
+                        .setState(facing, e.getValue()));
+                
+                return true;
             }
             
             return false;

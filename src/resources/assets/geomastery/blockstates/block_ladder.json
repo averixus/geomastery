@@ -1,0 +1,13 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing=north": { "model": "ladder", "y": 180 },
+        "facing=east":  { "model": "ladder", "y": 270 },
+        "facing=south": { "model": "ladder" },
+        "facing=west":  { "model": "ladder", "y": 90 },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/ladder" }
+        }]
+    }
+}

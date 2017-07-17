@@ -6,30 +6,43 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
+import jayavery.geomastery.utilities.Lang;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
+import net.minecraftforge.common.config.Config.RequiresMcRestart;
 
+/** Geomastery configuration. */
 @Config(modid = Geomastery.MODID)
 public class GeoConfig {
-
+    
     @Comment("Show the food type in the item tooltip")
-    @LangKey("geomastery:config.foodTooltips")
+    @LangKey(Lang.CONFIG + "foodTooltips")
     public static boolean foodTooltips = true;
 
     @Comment("Show the item's decay level with the filled proportion of durability bar as well as colour")
-    @LangKey("geomastery:config.foodDurability")
+    @LangKey(Lang.CONFIG + "foodDurability")
     public static boolean foodDurability = false;
 
     @Comment("Show the biomes where a crop can grow in the item tooltip")
-    @LangKey("geomastery:config.cropTooltips")
+    @LangKey(Lang.CONFIG + "cropTooltips")
     public static boolean cropTooltips = true;
 
+    @Comment("Show building block requirements in the item tooltip")
+    @LangKey(Lang.CONFIG + "buildTooltips")
+    public static boolean buildTooltips = true;
+    
+    @Comment("Send messages about invalid building block placement")
+    @LangKey(Lang.CONFIG + "buildMessages")
+    public static boolean buildMessages = true;
+    
     @Comment("Hide unusued and inaccessible vanilla items from Just Enough Items")
-    @LangKey("geomastery:config.hideVanilla")
+    @LangKey(Lang.CONFIG + "hideVanilla")
+    @RequiresMcRestart
     public static boolean hideVanilla = true;
     
-    @Comment("Show building block requirements in the item tooltip")
-    @LangKey("geomastery:config.buildTooltips")
-    public static boolean buildTooltips = true;
+    @Comment("Add a recipe for vanilla crafting table")
+    @LangKey(Lang.CONFIG + "addCrafting")
+    @RequiresMcRestart
+    public static boolean addCrafting = false;
 }

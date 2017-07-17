@@ -6,7 +6,6 @@
  ******************************************************************************/
 package jayavery.geomastery.main;
 
-import java.util.Collections;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import jayavery.geomastery.blocks.BlockCropBlockfruit;
@@ -28,6 +27,7 @@ import jayavery.geomastery.render.block.RenderBeamThick;
 import jayavery.geomastery.render.block.RenderBeamThin;
 import jayavery.geomastery.render.block.RenderWallAbstract;
 import jayavery.geomastery.render.block.RenderWallComplex;
+import jayavery.geomastery.render.block.RenderWallHeaping;
 import jayavery.geomastery.render.block.RenderWallSingle;
 import jayavery.geomastery.render.block.RenderWallStraight;
 import jayavery.geomastery.render.projectile.RenderArrowFactory;
@@ -140,7 +140,7 @@ public class ClientProxy implements IProxy {
         Geomastery.LOG.info("Registering complex wall model loaders");
         for (BlockWall block : GeoBlocks.RENDER_COMPLEX) {
             
-            RenderWallAbstract render = new RenderWallComplex(block.getRegistryName(), block.isDouble());
+            RenderWallAbstract render = new RenderWallComplex(block.getRegistryName());
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }
@@ -149,6 +149,14 @@ public class ClientProxy implements IProxy {
         for (BlockWall block : GeoBlocks.RENDER_SINGLE) {
             
             RenderWallAbstract render = new RenderWallSingle(block.getRegistryName(), block.getSideAngle());
+            ModelLoaderRegistry.registerLoader(render);
+            WALL_RENDERS.put(block, render);
+        }
+        
+        Geomastery.LOG.info("Registering heaping wall model loaders");
+        for (BlockWall block : GeoBlocks.RENDER_HEAPING) {
+            
+            RenderWallAbstract render = new RenderWallHeaping(block.getRegistryName(), block.getSideAngle());
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }

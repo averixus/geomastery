@@ -312,7 +312,7 @@ public class BlockEvents {
         if (block instanceof BlockStone) {
 
             event.getDrops().clear();
-            event.getDrops().add(new ItemStack(GeoItems.RUBBLE, 1));
+            event.getDrops().add(new ItemStack(GeoBlocks.RUBBLE.getItem(), 1));
         }
         
         if (block == Blocks.SAND) {

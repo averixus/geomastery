@@ -6,16 +6,12 @@
  ******************************************************************************/
 package jayavery.geomastery.blocks;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
-import jayavery.geomastery.items.ItemBlockplacer;
-import jayavery.geomastery.render.block.RenderWallAbstract;
-import jayavery.geomastery.render.block.RenderWallComplex;
-import jayavery.geomastery.utilities.BlockWeight;
+import jayavery.geomastery.items.ItemPlacing;
+import jayavery.geomastery.utilities.EBlockWeight;
 import jayavery.geomastery.utilities.IDoublingBlock;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,46 +25,69 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
-/** Adaptive wall building block. */
+/** Fully adaptive wall building block. */
 public class BlockWallComplex extends BlockWall implements IDoublingBlock {
-    
-    /** The item this block drops. */
-    protected final Supplier<ItemBlockplacer.Doubling<BlockWallComplex>> item;
-    /** Whether this block is double. */
-    protected final boolean isDouble;
-    
-    public BlockWallComplex(Material material, String name, float hardness,
-            ToolType harvestTool, boolean isDouble,
-            Supplier<ItemBlockplacer.Doubling<BlockWallComplex>> item) {
         
-        super(material, name, hardness, harvestTool, 0);
-        this.item = item;
-        this.isDouble = isDouble;
+    public BlockWallComplex(Material material, String name, float hardness) {
+        
+        super(material, name, hardness, 0, 2);
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public ItemPlacing.Building createItem(int stackSize) {
+        
+        return new ItemPlacing.Building(this, stackSize);
+    }
+    
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
 
-        return BlockWeight.HEAVY;
+        return EBlockWeight.HEAVY;
     }
     
     @Override
     public boolean shouldDouble(IBlockState state, EnumFacing side) {
         
-        return side != EnumFacing.UP;
+        return !state.getValue(DOUBLE) && side != EnumFacing.UP;
     }
     
     @Override
-    public boolean isDouble() {
+    public boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
         
-        return this.isDouble;
+        IBlockState targetState = world.getBlockState(targetPos);
+        Block targetBlock = targetState.getBlock();
+
+        if (targetBlock == this && this.shouldDouble(targetState
+                .getActualState(world, targetPos), targetSide)) {
+            
+            world.setBlockState(targetPos,
+                    targetState.withProperty(DOUBLE, true));
+       
+        } else {
+            
+            targetPos = targetPos.offset(targetSide);
+            targetState = world.getBlockState(targetPos);
+            targetBlock = targetState.getBlock();
+            
+            if (!this.isValid(world, targetPos, stack, false, this.getDefaultState(), player)) {
+                
+                return false;
+            }
+            
+            world.setBlockState(targetPos, this.getDefaultState()
+                    .withProperty(DOUBLE, false));
+        }
+        
+        return true;
     }
     
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        if (this.isDouble()) {
+        if (state.getValue(DOUBLE)) {
             
             return FULL_BLOCK_AABB;
             
@@ -82,13 +101,15 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
     public IBlockState getActualState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        Block below = world.getBlockState(pos.down()).getBlock();
-        boolean isBottom = below instanceof BlockWallComplex ?
-                ((BlockWallComplex) below).isDouble() != this.isDouble() :
-                true;
-        Block above = world.getBlockState(pos.up()).getBlock();
-        boolean isTop = this.isDouble() ? above != this :
-                !(above instanceof BlockBuilding);
+        IBlockState stateBelow = world.getBlockState(pos.down());
+        Block blockBelow = stateBelow.getBlock();
+        boolean isBottom = blockBelow instanceof BlockWallComplex ?
+                ((BlockWallComplex) blockBelow).isDouble(stateBelow) !=
+                this.isDouble(state) : true;
+        IBlockState stateAbove = world.getBlockState(pos.up());
+        Block blockAbove = stateAbove.getBlock();
+        boolean isTop = this.isDouble(state) ? blockAbove != this :
+                !(blockAbove instanceof BlockBuildingAbstract);
         
         state = state.withProperty(TOP, isTop);
         state = state.withProperty(BOTTOM, isBottom);
@@ -110,7 +131,7 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
         
         IExtendedBlockState extState = (IExtendedBlockState) state;
         
-        if (this.isDouble()) {
+        if (this.isDouble(state)) {
             
             addCollisionBoxToList(pos, entityBox, list, FULL_BLOCK_AABB);
             return;
@@ -163,33 +184,6 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
                 
                 addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST);
             }
-        }
-    }
-    
-    /** Drops handled manually to account for double->single breaking. */
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        return Collections.emptyList();
-    }
-    
-    @Override
-    public boolean removedByPlayer(IBlockState state, World world,
-            BlockPos pos, EntityPlayer player, boolean willHarvest) {
-    
-        spawnAsEntity(world, pos, new ItemStack(this.item.get()));
-        
-        if (this.isDouble()) {
-            
-            world.setBlockState(pos, this.item.get()
-                    .single.get().getDefaultState());
-            return false;
-            
-        } else {
-            
-            world.setBlockToAir(pos);
-            return true;
         }
     }
 }

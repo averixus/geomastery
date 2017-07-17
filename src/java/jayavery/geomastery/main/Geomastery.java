@@ -38,7 +38,7 @@ import jayavery.geomastery.packets.SPacketContainer;
 import jayavery.geomastery.tileentities.TEBeam;
 import jayavery.geomastery.tileentities.TEBed;
 import jayavery.geomastery.tileentities.TECarcass;
-import jayavery.geomastery.tileentities.TECompost;
+import jayavery.geomastery.tileentities.TECompostheap;
 import jayavery.geomastery.tileentities.TECraftingArmourer;
 import jayavery.geomastery.tileentities.TECraftingCandlemaker;
 import jayavery.geomastery.tileentities.TECraftingForge;
@@ -49,22 +49,22 @@ import jayavery.geomastery.tileentities.TECraftingTextiles;
 import jayavery.geomastery.tileentities.TECraftingWoodworking;
 import jayavery.geomastery.tileentities.TECrop;
 import jayavery.geomastery.tileentities.TEDrying;
-import jayavery.geomastery.tileentities.TEFurnaceCampfire;
 import jayavery.geomastery.tileentities.TEFurnaceClay;
-import jayavery.geomastery.tileentities.TEFurnacePotfire;
+import jayavery.geomastery.tileentities.TEFurnaceSingle;
 import jayavery.geomastery.tileentities.TEFurnaceStone;
 import jayavery.geomastery.tileentities.TEStorage;
+import jayavery.geomastery.utilities.EBlockWeight;
 import jayavery.geomastery.utilities.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -96,9 +96,9 @@ import net.minecraftforge.fml.relauncher.Side;
 public class Geomastery {
 
     public static final String MODID = "geomastery";
-    public static final String VERSION = "1.1.1";
+    public static final String VERSION = "1.1.2-a1";
     public static final String NAME = "Geomastery";
-    public static final String MC_VER = "1.11.2-13.20.0.2228";
+    public static final String MC_VER = "1.11.2-13.20.1.2386";
     public static final String UPDATE = "https://gist.githubusercontent.com/JayAvery/97013d9f3a4d3dd904fb608899d9eadd/raw/";
     public static final String SERVER_PROXY = "jayavery.geomastery.main.ServerProxy";
     public static final String CLIENT_PROXY = "jayavery.geomastery.main.ClientProxy";
@@ -108,9 +108,7 @@ public class Geomastery {
     public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
     
     public static final Logger LOG = LogManager.getLogger(MODID);
-    
-  //  public static Configuration config;
-    
+        
     @SidedProxy(clientSide = CLIENT_PROXY, serverSide = SERVER_PROXY)
     public static IProxy proxy;
 
@@ -142,11 +140,10 @@ public class Geomastery {
     /** Registers everything other than blocks and items. */
     @EventHandler
     public static void preInit(FMLPreInitializationEvent e) {
-        
-     //   config = new Configuration(e.getSuggestedConfigurationFile());
-       // GeoConfig.syncConfig(config);
-     //   GeoConfig.preInit();
+
+        CraftingManager.getInstance().getRecipeList().clear();
         GeoBlocks.preInit();
+        EBlockWeight.preInit();
         GeoItems.preInit();
         GeoCaps.preInit();
         proxy.preInit();
@@ -198,8 +195,8 @@ public class Geomastery {
         }
         
         LOG.info("Registering tileentities");
-        tileentity(TEFurnaceCampfire.class, "furnace_campfire");
-        tileentity(TEFurnacePotfire.class, "furnace_potfire");
+        tileentity(TEFurnaceSingle.Campfire.class, "furnace_campfire");
+        tileentity(TEFurnaceSingle.Potfire.class, "furnace_potfire");
         tileentity(TEFurnaceClay.class, "furnace_clay");
         tileentity(TEFurnaceStone.class, "furnace_stone");
         tileentity(TECraftingMason.class, "crafting_mason");
@@ -217,7 +214,7 @@ public class Geomastery {
         tileentity(TEBed.class, "bed");
         tileentity(TEBeam.class, "beam");
         tileentity(TECarcass.class, "carcass");
-        tileentity(TECompost.class, "compost");
+        tileentity(TECompostheap.class, "compost");
         tileentity(TECrop.class, "crop");
     }
 

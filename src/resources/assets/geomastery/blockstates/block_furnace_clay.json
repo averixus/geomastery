@@ -13,6 +13,9 @@
             "south": { "y": 90 },
             "west": { "y": 180 }
         },
-        "inventory": [{}]
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/furnace_clay" }
+        }]
     }
 }

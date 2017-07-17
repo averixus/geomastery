@@ -8,7 +8,7 @@ package jayavery.geomastery.items;
 
 import java.util.Collections;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
 /** Sword tool item. */
@@ -18,5 +18,11 @@ public class ItemSword extends ItemTool {
 
         super(4, -3.1F, material, Collections.emptySet());
         ItemSimple.setupItem(this, name, 1, CreativeTabs.COMBAT);
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 }

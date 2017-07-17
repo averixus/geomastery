@@ -13,6 +13,8 @@
             "south": { "y": 180 },
             "west": { "y": 270 }
         },
-        "inventory": [{}]
-    }
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/crafting_armourer" }
+        }]    }
 }

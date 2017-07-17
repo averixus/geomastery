@@ -13,7 +13,7 @@ import jayavery.geomastery.compat.jei.GeoCompostCategory.Wrapper;
 import jayavery.geomastery.crafting.CompostManager.CompostType;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.main.GuiHandler.GuiList;
+import jayavery.geomastery.utilities.Lang;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -23,11 +23,11 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery compost recipes. */
 public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
@@ -85,10 +85,6 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
     /** Y position of slots. */
     private static final int SLOT_Y = 10;
 
-    /** Recipe tab unlocalised name. */
-    private final String name = Geomastery.MODID + ":container.compost";
-    /** Internal unique id. */
-    private final String uid = Geomastery.MODID + ":compost";
     /** Background image. */
     private final IDrawable background;
     /** Animation for compost fullness. */
@@ -137,13 +133,13 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getUid() {
         
-        return this.uid;
+        return Lang.CONTAINER_COMPOSTHEAP;
     }
     
     @Override
     public String getTitle() {
         
-        return I18n.translateToLocal(this.name);
+        return I18n.format(Lang.CONTAINER_COMPOSTHEAP);
     }
     
     @Override

@@ -12,7 +12,7 @@ import java.util.Random;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.utilities.IBiomeCheck;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -46,7 +46,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
 
     public BlockRiceTop() {
         
-        super(Material.PLANTS, "rice_top", null, 0.2F, ToolType.SICKLE);
+        super(Material.PLANTS, "rice_top", null, 0.2F, EToolType.SICKLE);
         this.setTickRandomly(true);
         this.setDefaultState(this.blockState
                 .getBaseState().withProperty(AGE, 0));

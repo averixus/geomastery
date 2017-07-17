@@ -8,6 +8,7 @@ package jayavery.geomastery.gui;
 
 import jayavery.geomastery.container.ContainerStorage.Basket;
 import jayavery.geomastery.main.Geomastery;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for basket container. */
@@ -18,7 +19,7 @@ public class GuiBasket extends GuiContainerAbstract {
     
     public GuiBasket(Basket container) {
         
-        super(container, "basket");
+        super(container, Lang.CONTAINER_BASKET);
         this.texture = new ResourceLocation(Geomastery.MODID, 
                 "textures/gui/basket_" +
                 container.capability.getInventoryRows() + ".png");

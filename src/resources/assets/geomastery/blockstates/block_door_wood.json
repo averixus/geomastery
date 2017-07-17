@@ -32,6 +32,9 @@
         "top": {
             "true": {}, "false": {}
         },
-        "inventory": [{}]
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/door_wood" }
+        }]
     }
 }

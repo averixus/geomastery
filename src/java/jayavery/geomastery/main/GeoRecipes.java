@@ -91,41 +91,41 @@ public class GeoRecipes {
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.BOW_CRUDE), "S ", "ST", 'S', Items.STICK, 'T', GeoItems.TWINE_HEMP);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.ARROW_WOOD, 5), "S", "F", 'S', Items.STICK, 'F', Items.FEATHER);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.POT_CLAY), "C C", " C ", 'C', GeoItems.CLAY);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_KNAPPING), "FFF", 'F', Items.FLINT);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_CANDLEMAKER), "PPP", "PPP", 'P', GeoItems.POLE);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_TEXTILES), "BPP", "PPP",'B', Items.BONE, 'P', GeoItems.POLE);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_SAWPIT), "PSP", " S ", 'P', GeoItems.POLE, 'S', GeoItems.INGOT_STEEL);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE), "S S", "SSS", 'S', Items.STICK);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoItems.FURNACE_CLAY), "C C", "MMM", 'C', GeoItems.LOOSE_CLAY, 'M', GeoItems.MUDBRICKS);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.DRYING), "PPP", 'P', GeoItems.POLE);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoItems.BED_LEAF), "LLL", 'L', GeoItems.LEAVES);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoItems.WALL_MUD, 2), "M", "M", 'M', GeoItems.MUDBRICKS);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_KNAPPING.getItem()), "FFF", 'F', Items.FLINT);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_CANDLEMAKER.getItem()), "PPP", "PPP", 'P', GeoItems.POLE);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_TEXTILES.getItem()), "BPP", "PPP",'B', Items.BONE, 'P', GeoItems.POLE);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_SAWPIT.getItem()), "PSP", " S ", 'P', GeoItems.POLE, 'S', GeoItems.INGOT_STEEL);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_CAMPFIRE.getItem()), "S S", "SSS", 'S', Items.STICK);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_CLAY.getItem()), "C C", "MMM", 'C', GeoItems.LOOSE_CLAY, 'M', GeoItems.MUDBRICKS);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.DRYING.getItem()), "PPP", 'P', GeoItems.POLE);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.BED_LEAF.getItem()), "LLL", 'L', GeoItems.LEAVES);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.WALL_MUD.getItem(), 2), "M", "M", 'M', GeoItems.MUDBRICKS);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CLAY, 6), "C", 'C', GeoItems.LOOSE_CLAY);
         INVENTORY.addShapedRecipe(new ItemStack(GeoItems.LOOSE_CLAY), "CCC", "CCC", 'C', GeoItems.CLAY);
-        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_POTFIRE), "SPS", "SSS", 'S', Items.STICK, 'P', GeoItems.POT_CLAY);
+        INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_POTFIRE.getItem()), "SPS", "SSS", 'S', Items.STICK, 'P', GeoItems.POT_CLAY);
         
         for (Item rottable : ROTTABLES) {
             
-            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.COMPOSTHEAP), "PRP", "PPP", 'P', GeoItems.POLE, 'R', ItemSimple.rottenStack(rottable, 1));
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.COMPOSTHEAP.getItem()), "PRP", "PPP", 'P', GeoItems.POLE, 'R', ItemSimple.rottenStack(rottable, 1));
         }
 
         for (Item skin : SKINS) {
             
-            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.BASKET), "SHS", " S ", 'S', Items.STICK, 'H', skin);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.BASKET.getItem()), "SHS", " S ", 'S', Items.STICK, 'H', skin);
         }
         
         for (Item metal : METALS) {
             
-            INVENTORY.addShapedRecipe(new ItemStack(GeoItems.FURNACE_STONE), "S S", "SMS", 'S', GeoItems.RUBBLE, 'M', metal);
-            INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_TEXTILES), "MPP", "PPP", 'M', metal, 'P', GeoItems.POLE);
-            INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_WOODWORKING), "PMM", "PPP", 'P', GeoItems.POLE, 'M', metal);
-            INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_MASON), "MSS", "PPP", 'M', metal, 'S', GeoItems.RUBBLE, 'P', GeoItems.POLE);
-            INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_ARMOURER), "MSP", "LBP", 'M', metal, 'S', GeoItems.RUBBLE, 'P', GeoItems.POLE, 'L', Items.LEATHER, 'B', GeoItems.BEESWAX);
-            INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_ARMOURER), "MSP", "LBP", 'M', metal, 'S', GeoItems.RUBBLE, 'P', GeoItems.POLE, 'L', Items.LEATHER, 'B', GeoItems.TALLOW);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.FURNACE_STONE.getItem()), "S S", "SMS", 'S', GeoBlocks.RUBBLE.getItem(), 'M', metal);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_TEXTILES.getItem()), "MPP", "PPP", 'M', metal, 'P', GeoItems.POLE);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_WOODWORKING.getItem()), "PMM", "PPP", 'P', GeoItems.POLE, 'M', metal);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_MASON.getItem()), "MSS", "PPP", 'M', metal, 'S', GeoBlocks.RUBBLE.getItem(), 'P', GeoItems.POLE);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_ARMOURER.getItem()), "MSP", "LBP", 'M', metal, 'S', GeoBlocks.RUBBLE.getItem(), 'P', GeoItems.POLE, 'L', Items.LEATHER, 'B', GeoItems.BEESWAX);
+            INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_ARMOURER.getItem()), "MSP", "LBP", 'M', metal, 'S', GeoBlocks.RUBBLE.getItem(), 'P', GeoItems.POLE, 'L', Items.LEATHER, 'B', GeoItems.TALLOW);
 
             for (Item metal2 : METALS) {
                 
-                INVENTORY.addShapedRecipe(new ItemStack(GeoItems.CRAFTING_FORGE), "MNS", "PPP", 'M', metal, 'N', metal2, 'S', GeoItems.RUBBLE, 'P', GeoItems.POLE);
+                INVENTORY.addShapedRecipe(new ItemStack(GeoBlocks.CRAFTING_FORGE.getItem()), "MNS", "PPP", 'M', metal, 'N', metal2, 'S', GeoBlocks.RUBBLE.getItem(), 'P', GeoItems.POLE);
             }
         }
     }
@@ -139,7 +139,7 @@ public class GeoRecipes {
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.SHEARS_FLINT), "F ", "FF", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.SPEAR_FLINT), "F", "S", "S", 'F', GeoItems.SPEARHEAD_FLINT, 'S', Items.STICK);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.ARROW_FLINT, 5), "F", "S", "E", 'F', GeoItems.ARROWHEAD_FLINT, 'S', Items.STICK, 'E', Items.FEATHER);
-        KNAPPING.addShapedRecipe(new ItemStack(GeoItems.WALL_ROUGH, 2), "R", "R", 'R', GeoItems.RUBBLE);
+        KNAPPING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_ROUGH.getItem(), 2), "R", "R", 'R', GeoBlocks.RUBBLE.getItem());
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.ARROWHEAD_FLINT), "F", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.AXEHEAD_FLINT), "F ", "FF", "F ", 'F', Items.FLINT);
         KNAPPING.addShapedRecipe(new ItemStack(GeoItems.PICKHEAD_FLINT), " F ", "FFF", " F ", 'F', Items.FLINT);
@@ -179,35 +179,39 @@ public class GeoRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.SHOVEL_STEEL), "H", "P", "P", 'H', GeoItems.SHOVELHEAD_STEEL, 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.ARROW_STEEL, 5), "A", "S", "F", 'A', GeoItems.ARROWHEAD_STEEL, 'S', Items.STICK, 'F', Items.FEATHER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.SHIELD_WOOD), " P ", "PPP", " P ", 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_POLE, 2), "PPP", "PPP", 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_POLE, 2), "  P", " PP", "PPP", 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_WOOD, 2), "  T", " TT", "TTT", 'T', GeoItems.TIMBER);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.DOOR_POLE), "PP", "PP", "PP", 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.DOOR_WOOD), "SS", "SS", "SS", 'S', GeoItems.TIMBER);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.BOX), "PTP", "PPP", 'P', GeoItems.POLE, 'T', GeoItems.TALLOW);
-        WOODWORKING.addShapedRecipe(new ItemStack(Blocks.LADDER, 8), "P P", "PPP", "P P", 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.BED_SIMPLE), "CCC", "WWW", "PPP", 'C', GeoItems.COTTON, 'W', GeoItems.WOOL, 'P', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.PITCHROOF_CLAY, 2), "SC ", " SC", "  S", 'S', GeoItems.TIMBER, 'C', GeoItems.LOOSE_CLAY);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FRAME, 3), "SSS", " S ", 'S', GeoItems.TIMBER);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_FRAME, 3), "S  ", " S ", "  S", 'S', GeoItems.TIMBER);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WINDOW, 4), "S S", " G ", "S S", 'S', GeoItems.TIMBER, 'G', GeoItems.GLASS);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.FLOOR_POLE, 4), "PPP", 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_POLE.getItem(), 2), "PPP", "PPP", 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_POLE.getItem(), 2), "  P", " PP", "PPP", 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_WOOD.getItem(), 2), "  T", " TT", "TTT", 'T', GeoItems.TIMBER);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.DOOR_POLE.getItem()), "PP", "PP", "PP", 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.DOOR_WOOD.getItem()), "SS", "SS", "SS", 'S', GeoItems.TIMBER);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.BOX.getItem()), "PTP", "PPP", 'P', GeoItems.POLE, 'T', GeoItems.TALLOW);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.LADDER, 8), "P P", "PPP", "P P", 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.BED_SIMPLE.getItem()), "CCC", "WWW", "PPP", 'C', GeoItems.COTTON, 'W', GeoItems.WOOL, 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.PITCHROOF_CLAY.getItem(), 2), "SC ", " SC", "  S", 'S', GeoItems.TIMBER, 'C', GeoItems.LOOSE_CLAY);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FRAME.getItem(), 3), "SSS", " S ", 'S', GeoItems.TIMBER);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_FRAME.getItem(), 3), "S  ", " S ", "  S", 'S', GeoItems.TIMBER);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WINDOW.getItem(), 4), "S S", " G ", "S S", 'S', GeoItems.TIMBER, 'G', GeoItems.GLASS);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.FLOOR_WOOD, 4), "TTT", 'T', GeoItems.TIMBER);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FLATROOF_POLE, 2), "TTT", "T T", 'T', GeoItems.POLE);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_LOG, 4), "L", "L", 'L', GeoItems.LOG);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FENCE, 4), "PPP", " P ", 'P', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FLATROOF_POLE.getItem(), 2), "TTT", "T T", 'T', GeoItems.POLE);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_LOG.getItem(), 4), "L", "L", 'L', GeoItems.LOG);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FENCE.getItem(), 4), "PPP", " P ", 'P', GeoItems.POLE);
+        
+        if (GeoConfig.addCrafting) {
+            
+            WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CRAFTING_TABLE), "SSS", "SSS", "SSS", 'S', GeoItems.TIMBER);
+        }
         
         for (Item metal : METALS) {
             
-            WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.CHEST), "SSS", "SMS", "SSS", 'S', GeoItems.TIMBER, 'M', metal);
+            WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.CHEST.getItem()), "SSS", "SMS", "SSS", 'S', GeoItems.TIMBER, 'M', metal);
         }
     }
 
     /** Adds all recipes to textiles table. */
     private static void setupTextiles() {
 
-        TEXTILES.addShapedRecipe(new ItemStack(GeoItems.BED_COTTON), "CCC", "CCC", 'C', GeoItems.COTTON);
-        TEXTILES.addShapedRecipe(new ItemStack(GeoItems.BED_WOOL), "WWW", "WWW", 'W', GeoItems.WOOL);
+        TEXTILES.addShapedRecipe(new ItemStack(GeoBlocks.BED_COTTON.getItem()), "CCC", "CCC", 'C', GeoItems.COTTON);
+        TEXTILES.addShapedRecipe(new ItemStack(GeoBlocks.BED_WOOL.getItem()), "WWW", "WWW", 'W', GeoItems.WOOL);
         TEXTILES.addShapedRecipe(new ItemStack(GeoItems.COTTON_CHEST), "C C", "CCC", "CCC", 'C', GeoItems.COTTON);
         TEXTILES.addShapedRecipe(new ItemStack(GeoItems.COTTON_LEGS), "CCC", "C C", "C C", 'C', GeoItems.COTTON);
         TEXTILES.addShapedRecipe(new ItemStack(GeoItems.COTTON_HEAD), "CCC", "C C", 'C', GeoItems.COTTON);
@@ -235,10 +239,10 @@ public class GeoRecipes {
     /** Adds all recipes to candlemaker's bench. */
     private static void setupCandlemaker() {
 
-        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.CANDLE_TALLOW, 12), "T", "T", 'T', GeoItems.TALLOW);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.CANDLE_BEESWAX, 12), "B", "B", 'B', GeoItems.BEESWAX);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.TORCH_TALLOW, 4), "T", "S", 'T', GeoItems.TALLOW, 'S', Items.STICK);
-        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.LAMP_CLAY), "H", "T", "C", 'H', GeoItems.TWINE_HEMP, 'T', GeoItems.TALLOW, 'C', GeoItems.CLAY);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.CANDLE_TALLOW.getItem(), 12), "T", "T", 'T', GeoItems.TALLOW);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.CANDLE_BEESWAX.getItem(), 12), "B", "B", 'B', GeoItems.BEESWAX);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.TORCH_TALLOW.getItem(), 4), "T", "S", 'T', GeoItems.TALLOW, 'S', Items.STICK);
+        CANDLEMAKER.addShapedRecipe(new ItemStack(GeoBlocks.LAMP_CLAY.getItem()), "H", "T", "C", 'H', GeoItems.TWINE_HEMP, 'T', GeoItems.TALLOW, 'C', GeoItems.CLAY);
     }
 
     /** Adds all recipes to forge. */
@@ -283,15 +287,15 @@ public class GeoRecipes {
     /** Adds all recipes to mason. */
     private static void setupMason() {
         
-        MASON.addShapedRecipe(new ItemStack(GeoItems.WALL_BRICK, 2), "B", "B", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.WALL_STONE, 2), "S", "S", 'S', GeoItems.DRESSEDSTONE);
-        MASON.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_STONE, 2), " S", "SS", 'S', GeoItems.DRESSEDSTONE);
-        MASON.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_BRICK, 2), " B", "BB", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.VAULT_STONE, 2), "SS", "S ", 'S', GeoItems.DRESSEDSTONE);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.VAULT_BRICK, 2), "BB", "B ", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_STONE, 2), "SSS", 'S', GeoItems.DRESSEDSTONE);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.SLAB_BRICK, 2), "BBB", 'B', Items.BRICK);
-        MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), "RR", "RR", 'R', GeoItems.RUBBLE);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.WALL_BRICK.getItem(), 2), "B", "B", 'B', Items.BRICK);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.WALL_STONE.getItem(), 2), "S", "S", 'S', GeoItems.DRESSEDSTONE);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_STONE.getItem(), 2), " S", "SS", 'S', GeoItems.DRESSEDSTONE);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.STAIRS_BRICK.getItem(), 2), " B", "BB", 'B', Items.BRICK);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_STONE.getItem(), 2), "SS", "S ", 'S', GeoItems.DRESSEDSTONE);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_BRICK.getItem(), 2), "BB", "B ", 'B', Items.BRICK);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.SLAB_STONE.getItem(), 2), "SSS", 'S', GeoItems.DRESSEDSTONE);
+        MASON.addShapedRecipe(new ItemStack(GeoBlocks.SLAB_BRICK.getItem(), 2), "BBB", 'B', Items.BRICK);
+        MASON.addShapedRecipe(new ItemStack(GeoItems.DRESSEDSTONE, 2), "RR", "RR", 'R', GeoBlocks.RUBBLE.getItem());
     }
 
     /** Adds all recipes to armourer. */
@@ -316,8 +320,8 @@ public class GeoRecipes {
         
         SAWPIT.addShapedRecipe(new ItemStack(GeoItems.TIMBER, 3), "T", 'T', GeoItems.THICKLOG);
         SAWPIT.addShapedRecipe(new ItemStack(GeoItems.TIMBER, 3), "LLL", 'L', GeoItems.LOG);
-        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_SHORT), "LL", 'L', GeoItems.LOG);
-        SAWPIT.addShapedRecipe(new ItemStack(GeoItems.BEAM_LONG), "TTT", 'T', GeoItems.THICKLOG);
+        SAWPIT.addShapedRecipe(new ItemStack(GeoBlocks.BEAM_THIN.getItem()), "LL", 'L', GeoItems.LOG);
+        SAWPIT.addShapedRecipe(new ItemStack(GeoBlocks.BEAM_THICK.getItem()), "TTT", 'T', GeoItems.THICKLOG);
     }
 
     /** Adds all recipes to campfire and higher levels. */

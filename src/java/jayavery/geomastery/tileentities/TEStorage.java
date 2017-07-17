@@ -6,8 +6,10 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
+import java.util.List;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketLid;
+import jayavery.geomastery.utilities.IItemStorage;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -16,10 +18,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.items.ItemStackHandler;
 
 /** Abstract superclass for storage TE. */
-public abstract class TEStorage extends TileEntity implements ITickable {
+public abstract class TEStorage extends TileEntity
+        implements ITickable, IItemStorage {
     
     /** Y co-ordinate for inventory in container. */
     protected int containerY;
@@ -36,6 +38,12 @@ public abstract class TEStorage extends TileEntity implements ITickable {
         
         this.inv = NonNullList.withSize(slots, ItemStack.EMPTY);
         this.containerY = containerY;
+    }
+    
+    @Override
+    public List<ItemStack> getDrops() {
+        
+        return this.inv;
     }
     
     /** Sets this storage lid angles. */
@@ -170,6 +178,7 @@ public abstract class TEStorage extends TileEntity implements ITickable {
         }
     }
     
+    // Tells the TESR to render break progress texture
     @Override
     public boolean canRenderBreaking() {
         
@@ -204,7 +213,7 @@ public abstract class TEStorage extends TileEntity implements ITickable {
         }
     }
     
-    /** Basket implementation. */
+    /** Basket container. */
     public static class Basket extends TEStorage {
         
         public Basket() {
@@ -216,7 +225,7 @@ public abstract class TEStorage extends TileEntity implements ITickable {
         public void update() {}
     }
     
-    /** Box implementation. */
+    /** Box container. */
     public static class Box extends TEStorage {
         
         public Box() {
@@ -225,7 +234,7 @@ public abstract class TEStorage extends TileEntity implements ITickable {
         }
     }
     
-    /** Chest implementation. */
+    /** Chest container. */
     public static class Chest extends TEStorage {
         
         public Chest() {

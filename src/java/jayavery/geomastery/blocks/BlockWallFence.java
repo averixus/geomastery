@@ -8,29 +8,37 @@ package jayavery.geomastery.blocks;
 
 import java.util.List;
 import javax.annotation.Nullable;
+import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/** Fence wall block. */
 public class BlockWallFence extends BlockWallThin {
 
-    public BlockWallFence(BlockMaterial material, String name, float hardness,
-            ToolType toolType, int sideAngle) {
+    public BlockWallFence() {
         
-        super(material, name, hardness, toolType, sideAngle);
+        super(BlockMaterial.WOOD_FURNITURE, "fence", 2F, 90, 1);
+    }
+    
+    @Override
+    public ItemPlacing.Building createItem(int stackSize) {
+        
+        return new ItemPlacing.Building(this, stackSize);
     }
     
     /** Adds this block's build reqs to the tooltip if config. */
@@ -41,23 +49,40 @@ public class BlockWallFence extends BlockWallThin {
         
         if (GeoConfig.buildTooltips) {
             
-            tooltip.add(I18n.translateToLocal(BlockWeight.NONE.build()));
-            tooltip.add(I18n.translateToLocal("geomastery:buildreq.fence"));
+            tooltip.add(I18n.format(EBlockWeight.NONE.requires()));
+            tooltip.add(I18n.format(Lang.BUILDTIP_FENCE));
         }
     }
 
     @Override
-    public BlockWeight getWeight() {
+    public EBlockWeight getWeight(IBlockState state) {
         
-        return BlockWeight.NONE;
+        return EBlockWeight.NONE;
     }
     
     @Override
-    public boolean isValid(World world, BlockPos pos) {
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
         
-        Block blockBelow = world.getBlockState(pos.down()).getBlock();
-        return super.isValid(world, pos) ||
-                blockBelow instanceof BlockWallFence;
+        if (!alreadyPresent && !world.getBlockState(pos).getBlock()
+                .isReplaceable(world, pos)) {
+            
+            message(player, Lang.BUILDFAIL_OBSTACLE);
+            return false;
+        }
+        
+        IBlockState stateBelow = world.getBlockState(pos.down());
+        Block blockBelow = stateBelow.getBlock();
+        EBlockWeight weightBelow = EBlockWeight.getWeight(stateBelow);
+        
+        if (!weightBelow.canSupport(this.getWeight(this.getDefaultState())) &&
+                !(blockBelow instanceof BlockWallFence)) {
+            
+            message(player, Lang.BUILDFAIL_SUPPORT);
+            return false;
+        }
+        
+        return true;
     }
     
     @Override

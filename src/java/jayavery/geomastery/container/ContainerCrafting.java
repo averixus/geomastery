@@ -7,7 +7,7 @@
 package jayavery.geomastery.container;
 
 import javax.annotation.Nullable;
-import jayavery.geomastery.blocks.BlockComplexAbstract;
+import jayavery.geomastery.blocks.BlockContainerAbstract;
 import jayavery.geomastery.container.slots.SlotCrafting;
 import jayavery.geomastery.crafting.CraftingManager;
 import jayavery.geomastery.main.GeoBlocks;
@@ -153,7 +153,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
     public boolean canInteractWith(EntityPlayer player) {
 
         boolean correctBlock = this.world.getBlockState(this.pos)
-                .getBlock() instanceof BlockComplexAbstract;
+                .getBlock() instanceof BlockContainerAbstract;
 
         if (correctBlock) {
 

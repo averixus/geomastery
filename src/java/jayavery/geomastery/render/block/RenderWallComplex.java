@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 import jayavery.geomastery.blocks.BlockWall;
 import jayavery.geomastery.main.ClientProxy;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.blocks.BlockBeam.EnumAxis;
+import jayavery.geomastery.blocks.BlockBeam.EBeamAxis;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.util.EnumFacing;
@@ -25,22 +25,30 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWallComplex extends RenderWallAbstract {
     
-    private IModel postTop;
-    private IModel postBottom;
-    private IModel postMiddle;
-    private IModel postLone;
-    private IModel sideTop;
-    private IModel sideBottom;
-    private IModel sideMiddle;
-    private IModel sideLone;
-    private IModel straightTop;
-    private IModel straightLone;
-    private final boolean isDouble;
+    private IModel singlePostTop;
+    private IModel singlePostBottom;
+    private IModel singlePostMiddle;
+    private IModel singlePostLone;
+    private IModel singleSideTop;
+    private IModel singleSideBottom;
+    private IModel singleSideMiddle;
+    private IModel singleSideLone;
     
-    public RenderWallComplex(ResourceLocation block, boolean isDouble) {
+    private IModel doublePostTop;
+    private IModel doublePostBottom;
+    private IModel doublePostMiddle;
+    private IModel doublePostLone;
+    private IModel doubleSideTop;
+    private IModel doubleSideBottom;
+    private IModel doubleSideMiddle;
+    private IModel doubleSideLone;
+    
+    private IModel singleStraightTop;
+    private IModel singleStraightLone;
+    
+    public RenderWallComplex(ResourceLocation block) {
         
         super(block);
-        this.isDouble = isDouble;
     }
     
     @Override
@@ -55,49 +63,54 @@ public class RenderWallComplex extends RenderWallAbstract {
         BlockWall thisBlock = (BlockWall) extState.getBlock();
         boolean thisTop = extState.getValue(BlockWall.TOP);
         boolean thisBot = extState.getValue(BlockWall.BOTTOM);
+        boolean thisDoub = extState.getValue(BlockWall.DOUBLE);
         
         BlockWall northBlock = extState.getValue(BlockWall.NORTH);
         boolean northPri = thisBlock.compareTo(northBlock) > 0;
         BlockWall northSide = northPri ? northBlock : thisBlock;
         boolean northBot = thisBot && extState.getValue(BlockWall.N_BOTTOM);
+        boolean northDoub = thisDoub && extState.getValue(BlockWall.N_DOUBLE);
 
         BlockWall eastBlock = extState.getValue(BlockWall.EAST);
         boolean eastPri = thisBlock.compareTo(eastBlock) > 0;
         BlockWall eastSide = eastPri ? eastBlock : thisBlock;
         boolean eastBot = thisBot && extState.getValue(BlockWall.E_BOTTOM);
+        boolean eastDoub = thisDoub && extState.getValue(BlockWall.E_DOUBLE);
 
         BlockWall southBlock = extState.getValue(BlockWall.SOUTH);
         boolean southPri = thisBlock.compareTo(southBlock) > 0;
         BlockWall southSide = southPri ? southBlock : thisBlock;
         boolean southBot = thisBot && extState.getValue(BlockWall.S_BOTTOM);
+        boolean southDoub = thisDoub && extState.getValue(BlockWall.S_DOUBLE);
 
         BlockWall westBlock = extState.getValue(BlockWall.WEST);
         boolean westPri = thisBlock.compareTo(westBlock) > 0;
         BlockWall westSide = westPri ? westBlock : thisBlock;
         boolean westBot = thisBot && extState.getValue(BlockWall.W_BOTTOM);
+        boolean westDoub = thisDoub && extState.getValue(BlockWall.W_DOUBLE);
 
         // Straight models if applicable
         
-        if (!this.isDouble && !northPri && !southPri && thisTop &&
+        if (!thisDoub && !northPri && !southPri && thisTop &&
                 eastSide == null && westSide == null &&
                 northBot == southBot == thisBot) {
             
             this.addQuads(result, this.getStraightModel(thisBot),
-                    this.getStraightAngle(EnumAxis.NS), state, side, rand);
+                    this.getStraightAngle(EBeamAxis.NS), state, side, rand);
             return result;
             
-        } else if (!this.isDouble && !eastPri && !westPri && thisTop &&
+        } else if (!thisDoub && !eastPri && !westPri && thisTop &&
                 northSide == null && southSide == null &&
                 eastBot == westBot == thisBot) {
             
             this.addQuads(result, this.getStraightModel(thisBot),
-                    this.getStraightAngle(EnumAxis.EW), state, side, rand);
+                    this.getStraightAngle(EBeamAxis.EW), state, side, rand);
             return result;
         }
         
         // Post
         
-        this.addQuads(result, this.getPostModel(thisTop, thisBot),
+        this.addQuads(result, this.getPostModel(thisTop, thisBot, thisDoub),
                 0, state, side, rand);
         
         // Sides
@@ -106,7 +119,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             
             boolean northTop = extState.getValue(BlockWall.N_TOP);
             
-            if (northBlock.isDouble() != thisBlock.isDouble()) {
+            if (northDoub != thisDoub) {
                 
                 northTop = northPri ? northTop : thisTop;
                 
@@ -117,7 +130,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             
             RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
             IModel northModel = northRenderer
-                    .getConnectedSide(northTop, northBot);
+                    .getConnectedSide(northTop, northBot, northDoub);
             this.addQuads(result, northModel, northRenderer
                     .getSideAngle(EnumFacing.NORTH), state, side, rand);
         }
@@ -126,7 +139,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             
             boolean eastTop = extState.getValue(BlockWall.E_TOP);
             
-            if (eastBlock.isDouble() != thisBlock.isDouble()) {
+            if (eastDoub != thisDoub) {
                 
                 eastTop = eastPri ? eastTop : thisTop;
                 
@@ -136,7 +149,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             }
             
             RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
-            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot, eastDoub);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
         }
@@ -145,7 +158,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             
             boolean southTop = extState.getValue(BlockWall.S_TOP);
             
-            if (southBlock.isDouble() != thisBlock.isDouble()) {
+            if (southDoub != thisDoub) {
                 
                 southTop = southPri ? southTop : thisTop;
                 
@@ -156,7 +169,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             
             RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
             IModel southModel = southRenderer
-                    .getConnectedSide(southTop, southBot);
+                    .getConnectedSide(southTop, southBot, southDoub);
             this.addQuads(result, southModel, southRenderer
                     .getSideAngle(EnumFacing.SOUTH), state, side, rand);
         }
@@ -165,7 +178,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             
             boolean westTop = extState.getValue(BlockWall.W_TOP);
             
-            if (westBlock.isDouble() != thisBlock.isDouble()) {
+            if (westDoub != thisDoub) {
                 
                 westTop = westPri ? westTop : thisTop;
                 
@@ -175,7 +188,7 @@ public class RenderWallComplex extends RenderWallAbstract {
             }
 
             RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
-            IModel westModel = westRenderer.getConnectedSide(westTop, westBot);
+            IModel westModel = westRenderer.getConnectedSide(westTop, westBot, westDoub);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
         }
@@ -188,42 +201,56 @@ public class RenderWallComplex extends RenderWallAbstract {
         
         // Load part models
         
-        this.postTop = this.model("/top_post");
-        this.postBottom = this.model("/bottom_post");
-        this.postMiddle = this.model("/middle_post");
-        this.postLone = this.model("/lone_post");
-        this.sideTop = this.model("/top_side");
-        this.sideBottom = this.model("/bottom_side");
-        this.sideMiddle = this.model("/middle_side");
-        this.sideLone = this.model("/lone_side");
+        this.singlePostTop = this.model("/top_post_single");
+        this.singlePostBottom = this.model("/bottom_post_single");
+        this.singlePostMiddle = this.model("/middle_post_single");
+        this.singlePostLone = this.model("/lone_post_single");
+        this.singleSideTop = this.model("/top_side_single");
+        this.singleSideBottom = this.model("/bottom_side_single");
+        this.singleSideMiddle = this.model("/middle_side_single");
+        this.singleSideLone = this.model("/lone_side_single");
+        
+        this.doublePostTop = this.model("/top_post_double");
+        this.doublePostBottom = this.model("/bottom_post_double");
+        this.doublePostMiddle = this.model("/middle_post_double");
+        this.doublePostLone = this.model("/lone_post_double");
+        this.doubleSideTop = this.model("/top_side_double");
+        this.doubleSideBottom = this.model("/bottom_side_double");
+        this.doubleSideMiddle = this.model("/middle_side_double");
+        this.doubleSideLone = this.model("/lone_side_double");
+        
+        this.singleStraightLone = this.model("/lone_straight_single");
+        this.singleStraightTop = this.model("/top_straight_single");
         
         // Prepare texture dependencies list
          
-        for (IModel model : new IModel[] {this.postTop, this.postBottom,
-                this.postMiddle, this.postLone, this.sideTop, this.sideBottom,
-                this.sideMiddle, this.sideLone}) {
+        for (IModel model : new IModel[] {this.singlePostTop, this.singlePostBottom,
+                this.singlePostMiddle, this.singlePostLone, this.singleSideTop, this.singleSideBottom,
+                this.singleSideMiddle, this.singleSideLone,
+                this.doublePostTop, this.doublePostBottom,
+                this.doublePostMiddle, this.doublePostLone, this.doubleSideTop, this.doubleSideBottom,
+                this.doubleSideMiddle, this.doubleSideLone, this.singleStraightLone, this.singleStraightTop}) {
             
             this.textures.addAll(model.getTextures());
-        }
-        
-        // Prepare models and textures for straight walls
-        
-        if (!this.isDouble) {
-            
-            this.straightLone = this.model("/lone_straight");
-            this.straightTop = this.model("/top_straight");
-            this.textures.addAll(this.straightLone.getTextures());
-            this.textures.addAll(this.straightTop.getTextures());
         }
         
         return this;
     }
 
     @Override
-    public IModel getConnectedSide(boolean isTop, boolean isBottom) {
+    public IModel getConnectedSide(boolean isTop,
+            boolean isBottom, boolean isDouble) {
         
-        return isBottom ? isTop ? this.sideLone : this.sideBottom :
-                isTop ? this.sideTop : this.sideMiddle;
+        if (!isDouble) {
+        
+            return isBottom ? isTop ? this.singleSideLone : this.singleSideBottom :
+                    isTop ? this.singleSideTop : this.singleSideMiddle;
+            
+        } else {
+            
+            return isBottom ? isTop ? this.doubleSideLone : this.doubleSideBottom :
+                isTop ? this.doubleSideTop : this.doubleSideMiddle;
+        }
     }
     
     @Override
@@ -233,21 +260,29 @@ public class RenderWallComplex extends RenderWallAbstract {
     }
     
     /** @return Model for this wall's post with given properties. */
-    protected IModel getPostModel(boolean isTop, boolean isBottom) {
+    protected IModel getPostModel(boolean isTop, boolean isBottom, boolean isDouble) {
         
-        return isBottom ? isTop ? this.postLone : this.postBottom :
-            isTop ? this.postTop : this.postMiddle;
+        if (!isDouble) {
+        
+            return isBottom ? isTop ? this.singlePostLone : this.singlePostBottom :
+                    isTop ? this.singlePostTop : this.singlePostMiddle;
+            
+        } else {
+            
+            return isBottom ? isTop ? this.doublePostLone : this.doublePostBottom :
+                isTop ? this.doublePostTop : this.doublePostMiddle;
+        }
     }
     
     /** @return Model for this straight through wall with given properties. */
     public IModel getStraightModel(boolean isBottom) {
         
-        return isBottom ? this.straightLone : this.straightTop;
+        return isBottom ? this.singleStraightLone : this.singleStraightTop;
     }
     
     /** @return Offset rotation angle for this block's straight models. */
-    public int getStraightAngle(EnumAxis axis) {
+    public int getStraightAngle(EBeamAxis axis) {
         
-        return axis == EnumAxis.NS ? 0 : 90;
+        return axis == EBeamAxis.NS ? 0 : 90;
     }
 }

@@ -8,90 +8,175 @@ package jayavery.geomastery.blocks;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
-import jayavery.geomastery.items.ItemBlockplacer;
-import jayavery.geomastery.render.block.RenderWallAbstract;
-import jayavery.geomastery.render.block.RenderWallSingle;
-import jayavery.geomastery.utilities.BlockWeight;
+import com.google.common.collect.Lists;
+import jayavery.geomastery.items.ItemPlacing;
+import jayavery.geomastery.main.GeoConfig;
+import jayavery.geomastery.utilities.EBlockWeight;
 import jayavery.geomastery.utilities.IDoublingBlock;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.Lang;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Rough heaping wall block. */
 public class BlockWallHeaping extends BlockWall implements IDoublingBlock {
-    
-    /** The item this block drops. */
-    protected final Supplier<ItemBlockplacer.Doubling<BlockWallHeaping>> item;
-    /** Whether this block is double. */
-    protected final boolean isDouble;
-    
-    public BlockWallHeaping(Material material, String name, float hardness,
-            ToolType harvestTool, boolean isDouble, int sideAngle,
-            Supplier<ItemBlockplacer.Doubling<BlockWallHeaping>> item) {
         
-        super(material, name, hardness, harvestTool, sideAngle);
-        this.item = item;
-        this.isDouble = isDouble;
+    public BlockWallHeaping(Material material, String name, float hardness,
+            int sideAngle) {
+        
+        super(material, name, hardness, sideAngle, 2);
     }
     
     @Override
-    public boolean isValid(World world, BlockPos pos) {
+    public ItemPlacing.Building createItem(int stackSize) {
         
-        IBlockState state = world.getBlockState(pos.down());
-        Block block = state.getBlock();
+        return new ItemPlacing.Building(this, stackSize);
+    }
+    
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
         
-        if (this.isDouble()) {
-            
-            return super.isValid(world, pos) &&
-                    !(block instanceof BlockWallHeaping);
-            
-        } else {
-                        
-            if (block instanceof BlockWallHeaping) {
-                
-                return super.isValid(world, pos) &&
-                        ((BlockWallHeaping) block).isDouble();
-            }
-            
-            return super.isValid(world, pos);
+        if (GeoConfig.buildTooltips) {
+        
+            tooltip.add(I18n.format(Lang.BUILDTIP_DOUBLING));
+            tooltip.add(I18n.format(this.getWeight(this.getDefaultState()).requires()));
+            tooltip.add(I18n.format(this.getWeight(this.getDefaultState()).supports()));
+            tooltip.add(I18n.format(Lang.BUILDTIP_HEAPWALL));
         }
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
         
-        return BlockWeight.MEDIUM;
+        IBlockState stateCurrent = world.getBlockState(pos);
+        Block blockCurrent = stateCurrent.getBlock();
+        
+        if (!alreadyPresent && blockCurrent != this &&
+                !blockCurrent.isReplaceable(world, pos)) {
+            
+            message(player, Lang.BUILDFAIL_OBSTACLE);
+            return false;
+        }
+        
+        IBlockState stateBelow = world.getBlockState(pos.down());
+        Block blockBelow = stateBelow.getBlock();
+        
+        if (blockBelow == this) {
+        
+            if (alreadyPresent) {
+                
+                if (!stateBelow.getValue(DOUBLE)) {
+                    
+                    return false;
+                }
+                
+            } else {
+    
+                if (blockCurrent == this) {
+                    
+                    message(player, Lang.BUILDFAIL_HEAPWALL);
+                    return false;
+                    
+                } else if (!stateBelow.getValue(DOUBLE)) {
+                    
+                    message(player, Lang.BUILDFAIL_HEAPWALL);
+                    return false;
+                }
+            }
+            
+        } else {
+        
+            EBlockWeight weightBelow = EBlockWeight.getWeight(stateBelow);
+            
+            if (!weightBelow.canSupport(this
+                    .getWeight(this.getDefaultState()))) {
+                
+                message(player, Lang.BUILDFAIL_SUPPORT);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    @Override
+    public boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
+        
+        IBlockState targetState = world.getBlockState(targetPos);
+        Block targetBlock = targetState.getBlock();
+
+        if (targetBlock == this && this.shouldDouble(targetState
+                .getActualState(world, targetPos), targetSide)) {
+            
+            if (!this.isValid(world, targetPos, stack, false, this.getDefaultState(), player)) {
+                
+                return false;
+            }
+            
+            world.setBlockState(targetPos,
+                    targetState.withProperty(DOUBLE, true)); 
+       
+        } else {
+            
+            targetPos = targetPos.offset(targetSide);
+            targetState = world.getBlockState(targetPos);
+            targetBlock = targetState.getBlock();
+            
+            if (!this.isValid(world, targetPos, stack, false, this.getDefaultState(), player)) {
+                
+                return false;
+            }
+            
+            world.setBlockState(targetPos,
+                    this.getDefaultState().withProperty(DOUBLE, false));
+        }
+        
+        return true;
+    }
+    
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.MEDIUM;
     }
     
     @Override
     public boolean shouldDouble(IBlockState state, EnumFacing side) {
         
-        return side != EnumFacing.UP;
+        return !state.getValue(DOUBLE) && side != EnumFacing.UP;
     }
     
     @Override
-    public boolean isDouble() {
+    public boolean isDouble(IBlockState state) {
         
-        return this.isDouble;
+        return state.getValue(DOUBLE);
     }
     
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
-        if (this.isDouble()) {
+        if (state.getValue(DOUBLE)) {
             
             return FULL_BLOCK_AABB;
             
@@ -115,7 +200,7 @@ public class BlockWallHeaping extends BlockWall implements IDoublingBlock {
         
         IExtendedBlockState extState = (IExtendedBlockState) state; 
         
-        if (this.isDouble()) {
+        if (state.getValue(DOUBLE)) {
             
             addCollisionBoxToList(pos, entityBox, list, FULL_BLOCK_AABB);
             return;
@@ -144,30 +229,28 @@ public class BlockWallHeaping extends BlockWall implements IDoublingBlock {
         }
     }
     
-    /** Drops handled manually to account for double->single breaking. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack tool, EntityPlayer player) {
 
-        return Collections.emptyList();
+        return Lists.newArrayList(new ItemStack(this.item,
+                state.getValue(DOUBLE) && player == null ? 2 : 1));
     }
     
     @Override
-    public boolean removedByPlayer(IBlockState state, World world,
-            BlockPos pos, EntityPlayer player, boolean willHarvest) {
-    
-        spawnAsEntity(world, pos, new ItemStack(this.item.get()));
-        
-        if (this.isDouble()) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack tool) {
             
-            world.setBlockState(pos, this.item.get()
-                    .single.get().getDefaultState());
-            return false;
+        if (state.getValue(DOUBLE)) {
+            
+            world.setBlockState(pos, state.withProperty(DOUBLE, false));
             
         } else {
             
             world.setBlockToAir(pos);
-            return true;
         }
+        
+        this.doHarvest(world, pos, state, player, te, tool);
     }
 }

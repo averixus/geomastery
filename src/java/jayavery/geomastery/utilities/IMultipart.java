@@ -6,8 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.utilities;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -18,10 +17,10 @@ import net.minecraft.world.World;
 /** Implemented for enums which define multipart structures. */
 public interface IMultipart extends IStringSerializable {
     
-    /** @return The item this part should drop from the given block. */
-    public ItemStack getDrop();
-    /** @return Whether this part should break based on neighbours. */
+    /** @return Whether this is still part of a valid multipart structure. */
     public boolean shouldBreak(World world, BlockPos pos, EnumFacing facing);
+    /** @return Whether this part needs support other than its own blocks. */
+    public boolean needsSupport();
     /** @return The position of the master for this structure. */
     public BlockPos getMaster(BlockPos pos, EnumFacing facing);
     /** @return The selection bounding box of this part. */
@@ -30,5 +29,6 @@ public interface IMultipart extends IStringSerializable {
     public AxisAlignedBB getCollisionBox(EnumFacing facing);
     /** Attempts to build the structure starting from this part.
      * @return Whether the structure was successfully built. */
-    public boolean buildStructure(World world, BlockPos pos, EnumFacing facing);
+    public boolean buildStructure(World world, BlockPos pos,
+            EnumFacing facing, EntityPlayer player);
 }

@@ -7,11 +7,8 @@
  package jayavery.geomastery.items;
 
 import javax.annotation.Nullable;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.entities.projectile.EntityProjectile;
 import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.utilities.InvLocation;
-import jayavery.geomastery.utilities.InvLocation.InvType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -86,6 +83,12 @@ public class ItemBow extends ItemSimple {
         });
     }
     
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
+    }
+    
     /** Fires an arrow. */
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world,
@@ -99,8 +102,7 @@ public class ItemBow extends ItemSimple {
         EntityPlayer player = (EntityPlayer) entity;
 
         // Find and prepare arrow item
-        InvLocation ammoSlot = this.findAmmoSlot(player);
-        ItemStack ammo = ammoSlot.getStack();
+        ItemStack ammo = this.getAmmoStack(player);
         int chargeTime = this.getMaxItemUseDuration(stack) - timeLeft;
 
         if (ammo.isEmpty()) {
@@ -146,7 +148,7 @@ public class ItemBow extends ItemSimple {
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
 
-        boolean hasAmmo = this.findAmmoSlot(player).isValid();
+        boolean hasAmmo = !this.getAmmoStack(player).isEmpty();
         ItemStack stack = player.getHeldItem(hand);
 
         if (!player.capabilities.isCreativeMode && !hasAmmo) {
@@ -174,22 +176,18 @@ public class ItemBow extends ItemSimple {
         return velocity * this.powerModifier;
     }
     
-    /** @return The InvLocation of the primary or prioritised arrow stack. */
-    private InvLocation findAmmoSlot(EntityPlayer player) {
-
-        InvType invType = InvType.MAIN;
-        int index = -1;
+    /** @return The primary or prioritised arrow stack. */
+    private ItemStack getAmmoStack(EntityPlayer player) {
         
         if (player.getHeldItem(EnumHand.OFF_HAND).getItem()
                 instanceof ItemArrow) {
 
-            index = 0;
-            invType = InvType.OFFHAND;
+            return player.getHeldItem(EnumHand.OFF_HAND);
 
         } else if (player.getHeldItem(EnumHand.MAIN_HAND).getItem()
                 instanceof ItemArrow) {
 
-            index = player.inventory.currentItem;
+            return player.getHeldItem(EnumHand.MAIN_HAND);
 
         } else {
 
@@ -201,13 +199,13 @@ public class ItemBow extends ItemSimple {
     
                     if (type.isAssignableFrom(stack.getItem().getClass())) {
     
-                        index = i;
+                        return stack;
                     }
                 }
             }
         }
         
-        return new InvLocation(player, invType, index);
+        return ItemStack.EMPTY;
     }
 
     /** @return The time taken for the bow to charge. */

@@ -8,7 +8,7 @@ package jayavery.geomastery.items;
 
 import java.util.Set;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,8 +28,14 @@ public class ItemHoe extends ItemTool {
 
         super(2, -3.1F, material, EFFECTIVE_ON);
         ItemSimple.setupItem(this, name, 1, CreativeTabs.TOOLS);
-        this.setHarvestLevel(ToolType.HOE.toString(), 1);
+        this.setHarvestLevel(EToolType.HOE.toString(), 1);
         this.efficiencyOnProperMaterial = 0.25F;
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
     
     /** Turns broken dirt/grass into farmland. */

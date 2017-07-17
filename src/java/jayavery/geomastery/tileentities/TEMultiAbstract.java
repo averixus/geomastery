@@ -6,22 +6,23 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockMultiCrafting;
+import jayavery.geomastery.blocks.BlockContainerMulti;
+import jayavery.geomastery.utilities.IItemStorage;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 /** Abstract superclass for multi part structure tile entities. */
 public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
-        extends TEContainerAbstract {
+        extends TileEntity {
 
     /** EnumFacing of this structure. */
     protected EnumFacing facing;
@@ -45,12 +46,6 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
     public E getPart() {
         
         return this.part;
-    }
-    
-    /** @return The item dropped from this block. */
-    public ItemStack getDrop() {
-        
-        return this.part == null ? ItemStack.EMPTY : this.part.getDrop();
     }
     
     /** @return Whether this block should be broken based on neighbours. */
@@ -82,7 +77,7 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
         state = this.part == null ? state :
                 state.withProperty(partProperty, this.part);
         state = this.facing == null ? state :
-                state.withProperty(BlockMultiCrafting.FACING, this.facing);
+                state.withProperty(BlockContainerMulti.FACING, this.facing);
         return state;
     }
     
@@ -114,14 +109,14 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
         this.part = this.partByOrdinal(compound.getInteger("part"));
     }
 
-    /** Required to update rendering on the client. */
+    // Required to update rendering on the client.
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Required to update rendering on the client. */
+    // Required to update rendering on the client.
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -129,7 +124,7 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    /** Required to update rendering on the client. */
+    // Required to update rendering on the client.
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

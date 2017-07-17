@@ -8,27 +8,31 @@ package jayavery.geomastery.tileentities;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import com.google.common.collect.Lists;
 import jayavery.geomastery.crafting.CookingManager;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.GeoRecipes;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketDrying;
+import jayavery.geomastery.utilities.IItemStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 
 /** TileEntity for drying rack block. */
-public class TEDrying extends TEContainerAbstract implements ITickable {
+public class TEDrying extends TileEntity implements ITickable, IItemStorage {
 
+    /** Recipes for this drying rack. */
+    public static final CookingManager RECIPES = GeoRecipes.DRYING;
+    
     /** Comparator to move all empty stacks to the end of a list. */
     private static final Comparator<ItemStack> SORTER =
             (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
-    
-    /** Recipes for this drying rack. */
-    public static final CookingManager RECIPES = GeoRecipes.DRYING;
     
     /** This drying rack's input stacks. */
     private NonNullList<ItemStack> inputs = NonNullList
@@ -45,7 +49,6 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
     public void sort() {
 
         Collections.sort(this.inputs, SORTER);
-        
         int newDryEach = RECIPES.getCookingTime(this.inputs.get(0));
         
         if (this.dryEach != newDryEach) {
@@ -57,10 +60,12 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
     }
     
     @Override
-    public void dropItems() {
+    public List<ItemStack> getDrops() {
         
-        this.dropInventory(this.inputs);
-        this.dropInventory(this.outputs);
+        List<ItemStack> result = Lists.newArrayList();
+        result.addAll(this.inputs);
+        result.addAll(this.outputs);
+        return result;
     }
 
     /** @return The ItemStack in the input slot. */
@@ -225,14 +230,14 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
         }
     }
     
-    /** Required to update GUI on the client. */
+    // Required to update GUI on the client. 
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Required to update GUI on the client. */
+    // Required to update GUI on the client.
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -240,7 +245,7 @@ public class TEDrying extends TEContainerAbstract implements ITickable {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    /** Required to update GUI on the client. */
+    // Required to update GUI on the client.
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

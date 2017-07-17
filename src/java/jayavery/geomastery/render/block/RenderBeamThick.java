@@ -14,10 +14,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import jayavery.geomastery.blocks.BlockBeam;
-import jayavery.geomastery.blocks.BlockBeam.EnumAxis;
+import jayavery.geomastery.blocks.BlockBeam.EBeamAxis;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TEBeam.EnumFloor;
+import jayavery.geomastery.tileentities.TEBeam.ETypeFloor;
 import jayavery.geomastery.utilities.UnlistedPropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -36,12 +36,6 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
     // Models for all possible parts
     protected static IModel thickMiddle;
     protected static IModel thickEnd;
-    protected static IModel poleMiddle;
-    protected static IModel poleEnd;
-    protected static IModel poleLeft;
-    protected static IModel poleRight;
-    protected static IModel poleCornerRight;
-    protected static IModel poleCornerLeft;
     protected static IModel woodMiddle;
     protected static IModel woodEnd;
     protected static IModel woodLeft;
@@ -50,19 +44,19 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
     protected static IModel woodCornerLeft;
     
     /** Map of axis -> rotation for main beam. */
-    protected static Map<EnumAxis, Integer> beams =
-            Maps.newEnumMap(EnumAxis.class);
+    protected static Map<EBeamAxis, Integer> beams =
+            Maps.newEnumMap(EBeamAxis.class);
     /** 3D map of axis -> property -> rotation for beam ends. */
-    protected static Map<EnumAxis, Map<UnlistedPropertyBool, Integer>> ends =
-            Maps.newEnumMap(EnumAxis.class);
+    protected static Map<EBeamAxis, Map<UnlistedPropertyBool, Integer>> ends =
+            Maps.newEnumMap(EBeamAxis.class);
     /** 3D map of axis -> floor -> model part and rotation for floor middles. */
-    protected static Map<EnumAxis, Map<EnumFloor,
-            Pair<IModel, Integer>>> middles = Maps.newEnumMap(EnumAxis.class);
+    protected static Map<EBeamAxis, Map<ETypeFloor,
+            Pair<IModel, Integer>>> middles = Maps.newEnumMap(EBeamAxis.class);
     /** 4D map of axis -> floor -> property -> model part and rotation
      * for floor surrounds. */
-    protected static Map<EnumAxis, Map<EnumFloor, Map<UnlistedPropertyBool,
+    protected static Map<EBeamAxis, Map<ETypeFloor, Map<UnlistedPropertyBool,
             Pair<IModel, Integer>>>> surrounds =
-            Maps.newEnumMap(EnumAxis.class);
+            Maps.newEnumMap(EBeamAxis.class);
 
 
     public RenderBeamThick() {
@@ -77,12 +71,6 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
         
         thickMiddle = model("thick/middle");
         thickEnd = model("thick/end");
-        poleMiddle = model("pole/middle");
-        poleEnd = model("pole/end");
-        poleLeft = model("pole/left");
-        poleRight = model("pole/right");
-        poleCornerRight = model("pole/corner_right");
-        poleCornerLeft = model("pole/corner_left");
         woodMiddle = model("wood/middle");
         woodEnd = model("wood/end");
         woodLeft = model("wood/left");
@@ -93,8 +81,7 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
         // Prepare texture dependencies list
                     
         for (IModel model : new IModel[] {thickMiddle, thickEnd,
-                poleMiddle, poleEnd, poleLeft, poleRight,
-                poleCornerRight, poleCornerLeft, woodMiddle, woodEnd,
+                woodMiddle, woodEnd,
                 woodLeft, woodRight, woodCornerLeft, woodCornerRight}) {
             
             this.textures.addAll(model.getTextures());
@@ -102,45 +89,31 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
         
         // Set up multipart mappings
         
-        beams.put(EnumAxis.NS, 90);
-        beams.put(EnumAxis.EW, 0);
+        beams.put(EBeamAxis.NS, 90);
+        beams.put(EBeamAxis.EW, 0);
         
         Map<UnlistedPropertyBool, Integer> endsNS = Maps.newHashMap();
         endsNS.put(BlockBeam.FRONTBEAM, 270);
         endsNS.put(BlockBeam.BACKBEAM, 90);
-        ends.put(EnumAxis.NS, endsNS);
+        ends.put(EBeamAxis.NS, endsNS);
         
         Map<UnlistedPropertyBool, Integer> endsEW = Maps.newHashMap();
         endsEW.put(BlockBeam.FRONTBEAM, 0);
         endsEW.put(BlockBeam.BACKBEAM, 180);
-        ends.put(EnumAxis.EW, endsEW);
+        ends.put(EBeamAxis.EW, endsEW);
         
-        Map<EnumFloor, Pair<IModel, Integer>> floorsNS =
-                Maps.newEnumMap(EnumFloor.class);
-        floorsNS.put(EnumFloor.POLE, Pair.of(poleMiddle, 90));
-        floorsNS.put(EnumFloor.WOOD, Pair.of(woodMiddle, 90));
-        middles.put(EnumAxis.NS, floorsNS);
+        Map<ETypeFloor, Pair<IModel, Integer>> floorsNS =
+                Maps.newEnumMap(ETypeFloor.class);
+        floorsNS.put(ETypeFloor.WOOD, Pair.of(woodMiddle, 90));
+        middles.put(EBeamAxis.NS, floorsNS);
         
-        Map<EnumFloor, Pair<IModel, Integer>> floorsEW =
-                Maps.newEnumMap(EnumFloor.class);
-        floorsEW.put(EnumFloor.POLE, Pair.of(poleMiddle, 0));
-        floorsEW.put(EnumFloor.WOOD, Pair.of(woodMiddle, 0));
-        middles.put(EnumAxis.EW, floorsEW);
+        Map<ETypeFloor, Pair<IModel, Integer>> floorsEW =
+                Maps.newEnumMap(ETypeFloor.class);
+        floorsEW.put(ETypeFloor.WOOD, Pair.of(woodMiddle, 0));
+        middles.put(EBeamAxis.EW, floorsEW);
         
-        Map<EnumFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
-                floorNSParts = Maps.newEnumMap(EnumFloor.class);
-        
-        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleNSParts =
-                Maps.newHashMap();
-        poleNSParts.put(BlockBeam.FRONT, Pair.of(poleEnd, 90));
-        poleNSParts.put(BlockBeam.BACK, Pair.of(poleEnd, 270));
-        poleNSParts.put(BlockBeam.LEFT, Pair.of(poleRight, 90));
-        poleNSParts.put(BlockBeam.RIGHT, Pair.of(poleLeft, 90));
-        poleNSParts.put(BlockBeam.BL, Pair.of(poleCornerLeft, 270));
-        poleNSParts.put(BlockBeam.BR, Pair.of(poleCornerRight, 270));
-        poleNSParts.put(BlockBeam.FL, Pair.of(poleCornerRight, 90));
-        poleNSParts.put(BlockBeam.FR, Pair.of(poleCornerLeft, 90));
-        floorNSParts.put(EnumFloor.POLE, poleNSParts);
+        Map<ETypeFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
+                floorNSParts = Maps.newEnumMap(ETypeFloor.class);
         
         Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodNSParts =
                 Maps.newHashMap();
@@ -152,22 +125,10 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
         woodNSParts.put(BlockBeam.BR, Pair.of(woodCornerRight, 270));
         woodNSParts.put(BlockBeam.FL, Pair.of(woodCornerRight, 90));
         woodNSParts.put(BlockBeam.FR, Pair.of(woodCornerLeft, 90));
-        floorNSParts.put(EnumFloor.WOOD, woodNSParts);
+        floorNSParts.put(ETypeFloor.WOOD, woodNSParts);
         
-        Map<EnumFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
-                floorEWParts = Maps.newEnumMap(EnumFloor.class);
-
-        Map<UnlistedPropertyBool, Pair<IModel, Integer>> poleEWParts =
-                Maps.newHashMap();
-        poleEWParts.put(BlockBeam.FRONT, Pair.of(poleEnd, 180));
-        poleEWParts.put(BlockBeam.BACK, Pair.of(poleEnd, 0));
-        poleEWParts.put(BlockBeam.LEFT, Pair.of(poleLeft, 0));
-        poleEWParts.put(BlockBeam.RIGHT, Pair.of(poleRight, 0));
-        poleEWParts.put(BlockBeam.BL, Pair.of(poleCornerLeft, 0));
-        poleEWParts.put(BlockBeam.BR, Pair.of(poleCornerRight, 0));
-        poleEWParts.put(BlockBeam.FL, Pair.of(poleCornerRight, 180));
-        poleEWParts.put(BlockBeam.FR, Pair.of(poleCornerLeft, 180));
-        floorEWParts.put(EnumFloor.POLE, poleEWParts);
+        Map<ETypeFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>
+                floorEWParts = Maps.newEnumMap(ETypeFloor.class);
         
         Map<UnlistedPropertyBool, Pair<IModel, Integer>> woodEWParts =
                 Maps.newHashMap();
@@ -179,10 +140,10 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
         woodEWParts.put(BlockBeam.BR, Pair.of(woodCornerRight, 0));
         woodEWParts.put(BlockBeam.FL, Pair.of(woodCornerRight, 180));
         woodEWParts.put(BlockBeam.FR, Pair.of(woodCornerLeft, 180));
-        floorEWParts.put(EnumFloor.WOOD, woodEWParts);
+        floorEWParts.put(ETypeFloor.WOOD, woodEWParts);
         
-        surrounds.put(EnumAxis.NS, floorNSParts);
-        surrounds.put(EnumAxis.EW, floorEWParts);
+        surrounds.put(EBeamAxis.NS, floorNSParts);
+        surrounds.put(EBeamAxis.EW, floorEWParts);
         
         return this;
     }
@@ -194,8 +155,8 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
         IExtendedBlockState extState = (IExtendedBlockState) state;
         List<BakedQuad> result = Lists.newArrayList();
         
-        EnumAxis axis = extState.getValue(BlockBeam.AXIS);
-        EnumFloor floor = extState.getValue(BlockBeam.FLOOR);
+        EBeamAxis axis = extState.getValue(BlockBeam.AXIS);
+        ETypeFloor floor = extState.getValue(BlockBeam.FLOOR);
         
         if (axis == null || floor == null) {
             
@@ -219,7 +180,7 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
             }
         }
         
-        if (floor == EnumFloor.NONE) {
+        if (floor == ETypeFloor.NONE) {
             
             return result;
         }

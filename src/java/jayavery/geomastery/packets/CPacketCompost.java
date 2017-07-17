@@ -8,7 +8,7 @@ package jayavery.geomastery.packets;
 
 import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TECompost;
+import jayavery.geomastery.tileentities.TECompostheap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -91,9 +91,9 @@ public class CPacketCompost implements IMessage {
             TileEntity tileEntity = world.getTileEntity(new BlockPos(message.x,
                     message.y, message.z));
             
-            if (tileEntity instanceof TECompost) {
+            if (tileEntity instanceof TECompostheap) {
                 
-                TECompost tileCompost = (TECompost) tileEntity;
+                TECompostheap tileCompost = (TECompostheap) tileEntity;
                 tileCompost.setValues(message.input, message.compostSpent,
                         message.balance, message.output);
             }

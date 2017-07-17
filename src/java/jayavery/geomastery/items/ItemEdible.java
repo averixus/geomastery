@@ -12,7 +12,8 @@ import com.google.common.collect.Sets;
 import jayavery.geomastery.capabilities.ICapPlayer;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.GeoConfig;
-import jayavery.geomastery.utilities.FoodType;
+import jayavery.geomastery.utilities.EFoodType;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -24,7 +25,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,13 +33,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemEdible extends ItemFood {
     
     /** This item's food type. */
-    protected final FoodType type;
+    protected final EFoodType type;
     /** Set of animals which can be bred with this item. */
     protected final Set<Class<? extends EntityAnimal>> animalEaters;
 
     @SafeVarargs
     public ItemEdible(String name, int hunger, float saturation, int stackSize,
-            FoodType type, Class<? extends EntityAnimal>... animalEaters) {
+            EFoodType type, Class<? extends EntityAnimal>... animalEaters) {
         
         super(hunger, saturation, false);
         this.type = type;
@@ -48,7 +48,7 @@ public class ItemEdible extends ItemFood {
     }
     
     /** @return This item's food type. */
-    public FoodType getType() {
+    public EFoodType getType() {
 
         return this.type;
     }
@@ -105,8 +105,7 @@ public class ItemEdible extends ItemFood {
         
         if (GeoConfig.foodTooltips) {
             
-            tooltip.add(I18n.translateToLocal("geomastery:foodtype." +
-                    this.type.toString().toLowerCase()));
+            tooltip.add(I18n.format(this.type.tip()));
         }
     }
     

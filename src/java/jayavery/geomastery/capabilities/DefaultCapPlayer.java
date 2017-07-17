@@ -28,9 +28,9 @@ import jayavery.geomastery.packets.CPacketYoke;
 import jayavery.geomastery.tileentities.TEFurnaceAbstract;
 import jayavery.geomastery.utilities.EquipMaterial;
 import jayavery.geomastery.utilities.FoodStatsPartial;
-import jayavery.geomastery.utilities.FoodType;
-import jayavery.geomastery.utilities.SpeedStage;
-import jayavery.geomastery.utilities.TempStage;
+import jayavery.geomastery.utilities.EFoodType;
+import jayavery.geomastery.utilities.ESpeedStage;
+import jayavery.geomastery.utilities.ETempStage;
 import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,14 +72,14 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Ticks since wet. */
     private int wetTimer = 0;
     /** Temperature stage. */
-    private TempStage tempStage = TempStage.OK;
+    private ETempStage tempStage = ETempStage.OK;
     /** Temperature debug text. */
     private List<String> debug = Lists.newArrayList();
     /** Decimal format for temperatures. */
     private DecimalFormat temp = new DecimalFormat("+0.00;-0.00");
     
     /** Current walk speed. */
-    private SpeedStage speedStage = null;
+    private ESpeedStage speedStage = null;
     
     /** Backpack slot. */
     private ItemStack backpack = ItemStack.EMPTY;
@@ -93,7 +93,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Fruit/veg food values. */
     private FoodStatsPartial fruitveg;
     /** Convenience map of food types onto associated food stats. */
-    private final Map<FoodType, FoodStatsPartial> typesMap = Maps.newHashMap();
+    private final Map<EFoodType, FoodStatsPartial> typesMap = Maps.newHashMap();
     /** Convenience list of food stats. */
     private final List<FoodStatsPartial> typesList = Lists.newArrayList();
     /** Comparator to sort foodstats in order of total fullness. */
@@ -109,9 +109,9 @@ public class DefaultCapPlayer implements ICapPlayer {
         this.carbs = new FoodStatsPartial(this.player);
         this.protein = new FoodStatsPartial(this.player);
         this.fruitveg = new FoodStatsPartial(this.player);
-        this.typesMap.put(FoodType.CARBS, this.carbs);
-        this.typesMap.put(FoodType.PROTEIN, this.protein);
-        this.typesMap.put(FoodType.FRUITVEG, this.fruitveg);
+        this.typesMap.put(EFoodType.CARBS, this.carbs);
+        this.typesMap.put(EFoodType.PROTEIN, this.protein);
+        this.typesMap.put(EFoodType.FRUITVEG, this.fruitveg);
         this.typesList.add(this.carbs);
         this.typesList.add(this.protein);
         this.typesList.add(this.fruitveg);
@@ -196,13 +196,13 @@ public class DefaultCapPlayer implements ICapPlayer {
     }
     
     @Override
-    public int foodLevel(FoodType type) {
+    public int foodLevel(EFoodType type) {
         
         return this.typesMap.get(type).getFoodLevel();
     }
     
     @Override
-    public boolean canEat(FoodType type) {
+    public boolean canEat(EFoodType type) {
         
         return this.typesMap.get(type).needFood();
     }
@@ -227,14 +227,14 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public void addStats(ItemEdible item, ItemStack stack) {
         
-        FoodType type = item.getType();
+        EFoodType type = item.getType();
         this.typesMap.get(type).addStats(item, stack);
     }
     
     @Override
     public void sleep(float healAmount) {
 
-        for (Entry<FoodType, FoodStatsPartial> entry :
+        for (Entry<EFoodType, FoodStatsPartial> entry :
                 this.typesMap.entrySet()) {
             
             FoodStatsPartial food = entry.getValue();
@@ -270,7 +270,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             return;
         }
             
-        for (Entry<FoodType, FoodStatsPartial> entry :
+        for (Entry<EFoodType, FoodStatsPartial> entry :
                 this.typesMap.entrySet()) {
             
             if (entry.getValue().tickHunger()) {
@@ -291,12 +291,12 @@ public class DefaultCapPlayer implements ICapPlayer {
     }
     
     /** Calculate the player's temperature.
-     * @return Whether the TempStage has changed. */
+     * @return Whether the ETempStage has changed. */
     private boolean tickTemperature() {
         
         this.debug.clear();
                 
-        TempStage oldStage = this.tempStage;
+        ETempStage oldStage = this.tempStage;
         float temp = 0;
         BlockPos playerPos = new BlockPos(this.player.posX,
                 this.player.posY, this.player.posZ);
@@ -500,10 +500,10 @@ public class DefaultCapPlayer implements ICapPlayer {
         this.debug.add("Heat block var: " + this.temp.format(fireVar));
 
         // Define stage
-        this.tempStage = TempStage.fromTemp(temp);
+        this.tempStage = ETempStage.fromTemp(temp);
 
-        if ((this.tempStage == TempStage.HOT ||
-                this.tempStage == TempStage.COLD)) {
+        if ((this.tempStage == ETempStage.HOT ||
+                this.tempStage == ETempStage.COLD)) {
             
             if (this.damageTimer == 0) {
 
@@ -594,23 +594,23 @@ public class DefaultCapPlayer implements ICapPlayer {
             speed -= 1.5;
         }
                 
-        SpeedStage oldStage = this.speedStage;
+        ESpeedStage oldStage = this.speedStage;
         
         if (speed <= 2.3) {
             
-            this.speedStage = SpeedStage.SPEED_2_3;
+            this.speedStage = ESpeedStage.SPEED_2_3;
             
         } else if (speed <= 2.8) {
             
-            this.speedStage = SpeedStage.SPEED_2_8;
+            this.speedStage = ESpeedStage.SPEED_2_8;
             
         } else if (speed <= 3.3) {
             
-            this.speedStage = SpeedStage.SPEED_3_3;
+            this.speedStage = ESpeedStage.SPEED_3_3;
             
         } else if (speed <= 3.8) {
             
-            this.speedStage = SpeedStage.SPEED_3_8;
+            this.speedStage = ESpeedStage.SPEED_3_8;
             
         } else {
             
@@ -619,7 +619,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         if (this.speedStage != oldStage) {
             
-            SpeedStage.apply(this.player.getEntityAttribute(
+            ESpeedStage.apply(this.player.getEntityAttribute(
                     SharedMonsterAttributes.MOVEMENT_SPEED), this.speedStage);
         }
     }
@@ -650,7 +650,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             return;
         }
         
-        for (FoodType type : this.typesMap.keySet()) {
+        for (EFoodType type : this.typesMap.keySet()) {
             
             this.sendFoodPacket(type);
         }
@@ -660,16 +660,16 @@ public class DefaultCapPlayer implements ICapPlayer {
         this.sendYokePacket(this.yoke);
     }
     
-    /** Sends a packet to the client to update the FoodType's hunger level. */
-    private void sendFoodPacket(FoodType type) {
+    /** Sends a packet to the client to update the EFoodType's hunger level. */
+    private void sendFoodPacket(EFoodType type) {
         
         Geomastery.NETWORK.sendTo(new CPacketHunger(type,
                 this.typesMap.get(type).getFoodLevel()),
                 (EntityPlayerMP) this.player);
     }
     
-    /** Sends a packet to the client to update the TempStage. */
-    private void sendTempPacket(TempStage stage) {
+    /** Sends a packet to the client to update the ETempStage. */
+    private void sendTempPacket(ETempStage stage) {
         
         Geomastery.NETWORK.sendTo(new CPacketTemp(stage),
                 (EntityPlayerMP) this.player);
@@ -698,14 +698,14 @@ public class DefaultCapPlayer implements ICapPlayer {
                 (EntityPlayerMP) this.player);
     }
     
-    /** Receive a packet on the client to update the FoodType hunger level. */
-    public void processFoodPacket(FoodType type, int hunger) {
+    /** Receive a packet on the client to update the EFoodType hunger level. */
+    public void processFoodPacket(EFoodType type, int hunger) {
         
         this.typesMap.get(type).setFoodLevel(hunger);
     }
     
-    /** Receive a packet on the client to update the TempStage. */
-    public void processTempPacket(TempStage stage) {
+    /** Receive a packet on the client to update the ETempStage. */
+    public void processTempPacket(ETempStage stage) {
         
         this.tempStage = stage;
     }
@@ -752,11 +752,11 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         int speedStage = nbt.getInteger("speedStage");
         this.speedStage = speedStage == -1 ? null :
-                SpeedStage.values()[speedStage];
+                ESpeedStage.values()[speedStage];
         
         this.damageTimer = nbt.getInteger("damageTimer");
         this.wetTimer = nbt.getInteger("wetTimer");
-        this.tempStage = TempStage.values()[nbt.getInteger("tempStage")];
+        this.tempStage = ETempStage.values()[nbt.getInteger("tempStage")];
         
         this.carbs.readNBT(nbt.getCompoundTag("carbs"));
         this.protein.readNBT(nbt.getCompoundTag("protein"));

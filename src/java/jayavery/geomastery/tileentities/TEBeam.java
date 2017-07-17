@@ -7,7 +7,6 @@
 package jayavery.geomastery.tileentities;
 
 import java.util.function.Supplier;
-import jayavery.geomastery.items.ItemBlockplacer;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketFloor;
@@ -26,27 +25,23 @@ public class TEBeam extends TileEntity {
     /** Direction this beam is facing. */
     private EnumFacing facing;
     /** This block's part in the whole structure. */
-    private EnumPartBeam part;
+    private EPartBeam part;
     /** The floor on this beam block. */
-    private EnumFloor floor;
-    /** The beam item associated with this block. */
-    private ItemBlockplacer.Beam item;
+    private ETypeFloor floor;
     
     /** Sets the given state information. */
-    public void setState(EnumFacing facing, EnumPartBeam part,
-            ItemBlockplacer.Beam item) {
+    public void setState(EnumFacing facing, EPartBeam part) {
         
         this.facing = facing;
         this.part = part;
-        this.item = item;
-        this.floor = EnumFloor.NONE;
+        this.floor = ETypeFloor.NONE;
     }
     
     /** Attempts to apply the given floor to this beam block.
      * @return Whether the floor is successfully applied. */
-    public boolean applyFloor(EnumFloor floor) {
+    public boolean applyFloor(ETypeFloor floor) {
         
-        if (this.floor == EnumFloor.NONE && floor != EnumFloor.NONE) {
+        if (this.floor == ETypeFloor.NONE && floor != ETypeFloor.NONE) {
             
             this.floor = floor;
             this.sendFloorUpdate();
@@ -59,7 +54,7 @@ public class TEBeam extends TileEntity {
     /** Sets the floor of this Beam block to NONE. */
     public void removeFloor() {
         
-        this.floor = EnumFloor.NONE;
+        this.floor = ETypeFloor.NONE;
         this.sendFloorUpdate();
     }
     
@@ -69,31 +64,28 @@ public class TEBeam extends TileEntity {
         return this.facing;
     }
     
-    /** @return the EnumPartBeam state of this beam block. */
-    public EnumPartBeam getPart() {
+    /** @return the EPartBeam state of this beam block. */
+    public EPartBeam getPart() {
         
         return this.part;
     }
     
-    /** @return The EnumFloor state of this beam block. */
-    public EnumFloor getFloor() {
+    /** @return The ETypeFloor state of this beam block. */
+    public ETypeFloor getFloor() {
         
         return this.floor;
     }
     
-    /** @return The item associated with this beam. */
-    public ItemBlockplacer.Beam getItem() {
-        
-        return this.item;
-    }
-    
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        // FIX
+
         super.writeToNBT(compound);
-        compound.setInteger("facing", this.facing == null ? 0 : this.facing.getHorizontalIndex());
-        compound.setInteger("part", this.part == null ? 0 : this.part.ordinal());
-        compound.setInteger("floor", this.floor == null ? 0 : this.floor.ordinal());
+        compound.setInteger("facing", this.facing == null ?
+                0 : this.facing.getHorizontalIndex());
+        compound.setInteger("part", this.part == null ?
+                0 : this.part.ordinal());
+        compound.setInteger("floor", this.floor == null ?
+                0 : this.floor.ordinal());
         return compound;
     }
     
@@ -102,18 +94,18 @@ public class TEBeam extends TileEntity {
         
         super.readFromNBT(compound);
         this.facing = EnumFacing.getHorizontal(compound.getInteger("facing"));
-        this.part = EnumPartBeam.values()[compound.getInteger("part")];
-        this.floor = EnumFloor.values()[compound.getInteger("floor")];
+        this.part = EPartBeam.values()[compound.getInteger("part")];
+        this.floor = ETypeFloor.values()[compound.getInteger("floor")];
     }
     
-    /** Required to update rendering on the Client. */
+    // Required to update rendering on the client. 
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    /** Required to update rendering on the Client. */
+    // Required to update rendering on the client.
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -121,7 +113,7 @@ public class TEBeam extends TileEntity {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    /** Required to update rendering on the Client. */
+    // Required to update rendering on the client. 
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -129,7 +121,7 @@ public class TEBeam extends TileEntity {
         this.readFromNBT(packet.getNbtCompound());
     }
     
-    /** Sends a packet to update the floor of this beam block on the Client. */
+    /** Sends a packet to update the floor of this beam block on the client. */
     private void sendFloorUpdate() {
         
         if (!this.world.isRemote) {
@@ -139,13 +131,13 @@ public class TEBeam extends TileEntity {
     }
     
     /** Enum defining parts of the whole Beam structure. */
-    public enum EnumPartBeam implements IStringSerializable {
+    public enum EPartBeam implements IStringSerializable {
         
         BACK("start"), MIDDLE("middle"), FRONT("end");
         
         private String name;
         
-        private EnumPartBeam(String name) {
+        private EPartBeam(String name) {
             
             this.name = name;
         }
@@ -163,16 +155,16 @@ public class TEBeam extends TileEntity {
     }
     
     /** Enum defining types of floor a beam block can have. */
-    public enum EnumFloor implements IStringSerializable {
+    public enum ETypeFloor implements IStringSerializable {
         
         NONE("none", () -> Items.AIR),
-        POLE("pole", () -> GeoItems.FLOOR_POLE),
         WOOD("wood", () -> GeoItems.FLOOR_WOOD);
         
         private String name;
+        /** Supplier for this floor's item. */
         private Supplier<Item> item;
         
-        private EnumFloor(String name, Supplier<Item> item) {
+        private ETypeFloor(String name, Supplier<Item> item) {
             
             this.name = name;
             this.item = item;

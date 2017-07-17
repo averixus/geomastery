@@ -9,7 +9,7 @@ package jayavery.geomastery.compat.jei;
 import java.util.Map.Entry;
 import jayavery.geomastery.compat.jei.GeoDryingCategory.Wrapper;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.main.GuiHandler.GuiList;
+import jayavery.geomastery.utilities.Lang;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -19,9 +19,9 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery drying recipes. */
 public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
@@ -64,11 +64,7 @@ public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
     private static final int OUT_X = 64;
     /** Y position of output slot. */
     private static final int OUT_Y = 0;
-    
-    /** Recipe tab unlocalised name. */
-    private final String name = Geomastery.MODID + ":container.drying";
-    /** Internal unique id. */
-    private final String uid = Geomastery.MODID + ":drying";
+
     /** Background image. */
     private final IDrawable background;
     /** Animated progress arrow. */
@@ -109,13 +105,13 @@ public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getUid() {
         
-        return this.uid;
+        return Lang.CONTAINER_DRYING;
     }
     
     @Override
     public String getTitle() {
         
-        return I18n.translateToLocal(this.name);
+        return I18n.format(Lang.CONTAINER_DRYING);
     }
     
     @Override

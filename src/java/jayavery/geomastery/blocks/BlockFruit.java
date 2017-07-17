@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import jayavery.geomastery.items.ItemSimple;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -38,7 +38,7 @@ public class BlockFruit extends BlockNew {
     public BlockFruit(String name, Supplier<Item> item, Supplier<Item> seed) {
         
         super(BlockMaterial.FRUIT, name, CreativeTabs.DECORATIONS,
-                0.2F, ToolType.SICKLE);
+                0.2F, EToolType.SICKLE);
         this.fruit = item;
         this.seed = seed;
     }

@@ -9,11 +9,10 @@ package jayavery.geomastery.blocks;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
-import jayavery.geomastery.render.block.RenderWallAbstract;
-import jayavery.geomastery.render.block.RenderWallSingle;
+import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -23,26 +22,31 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 /** Wall block with no height or thickness variation. */
 public class BlockWallThin extends BlockWall {
 
     public BlockWallThin(BlockMaterial material, String name,
-            float hardness, ToolType toolType, int sideAngle) {
+            float hardness, int sideAngle, int stackSize) {
                 
-        super(material, name, hardness, toolType, sideAngle);
+        super(material, name, hardness, sideAngle, stackSize);
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public ItemPlacing.Building createItem(int stackSize) {
         
-        return BlockWeight.LIGHT;
+        return new ItemPlacing.Building(this, stackSize);
     }
     
     @Override
-    public boolean isDouble() {
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.LIGHT;
+    }
+    
+    @Override
+    public boolean isDouble(IBlockState state) {
         
         return false;
     }
@@ -95,12 +99,5 @@ public class BlockWallThin extends BlockWall {
             BlockPos pos) {
 
         return CENTRE_POST;
-    }
-
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
     }
 }

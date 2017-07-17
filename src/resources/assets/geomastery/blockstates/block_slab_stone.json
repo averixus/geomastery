@@ -1,0 +1,13 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "double": {
+            "true": { "model": "geomastery:slab_stone/double" },
+            "false": { "model": "geomastery:slab_stone/single" }
+        },
+        "inventory": [{
+            "model": "geomastery:item",
+            "textures": { "layer0": "geomastery:items/slab_stone" }
+        }]
+    }
+}

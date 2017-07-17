@@ -6,8 +6,10 @@
  ******************************************************************************/
 package jayavery.geomastery.render.tileentity;
 
+import jayavery.geomastery.blocks.BlockContainerFacing;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.tileentities.TEStorage;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -57,8 +59,15 @@ public class RenderChest
         GlStateManager.scale(1F, -1F, -1F);
         GlStateManager.translate(0.5F, 0.5F, 0.5F);
         
-        // TODO: first param is y-axis rotation in degrees
-        GlStateManager.rotate(0F, 0F, 1F, 0F);
+        float rotation = 0;
+        
+        if (te.hasWorld()) {
+            
+            IBlockState state = te.getWorld().getBlockState(te.getPos());
+            rotation = 90 * ((state.getValue(BlockContainerFacing.FACING).getHorizontalIndex() + 2) % 4);
+        }
+        
+        GlStateManager.rotate(rotation, 0F, 1F, 0F);
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
         float angle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * ticks;
         angle = 1.0F - angle;

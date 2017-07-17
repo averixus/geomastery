@@ -10,7 +10,7 @@ import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.capabilities.DefaultCapPlayer;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.utilities.FoodType;
+import jayavery.geomastery.utilities.EFoodType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -20,13 +20,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class CPacketHunger implements IMessage {
     
     /** The food type. */
-    protected FoodType type;
+    protected EFoodType type;
     /** The hunger level. */
     protected int hunger;
     
     public CPacketHunger() {}
     
-    public CPacketHunger(FoodType type, int hunger) {
+    public CPacketHunger(EFoodType type, int hunger) {
         
         this.type = type;
         this.hunger = hunger;
@@ -35,7 +35,7 @@ public class CPacketHunger implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        this.type = FoodType.values()[buf.readInt()];
+        this.type = EFoodType.values()[buf.readInt()];
         this.hunger = buf.readInt();
     }
     

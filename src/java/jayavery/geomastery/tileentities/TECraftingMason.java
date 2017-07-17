@@ -6,37 +6,41 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockBuilding;
+import java.util.Map;
+import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
+import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.tileentities.TECraftingMason.EnumPartMason;
+import jayavery.geomastery.tileentities.TECraftingMason.EPartMason;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** TileEntity for mason crafting block. */
-public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
+public class TECraftingMason extends TECraftingAbstract<EPartMason> {
 
     @Override
-    protected EnumPartMason partByOrdinal(int ordinal) {
+    protected EPartMason partByOrdinal(int ordinal) {
 
-        return EnumPartMason.values()[ordinal];
+        return EPartMason.values()[ordinal];
     }
     
     /** Enum defining parts of the whole mason structure. */
-    public enum EnumPartMason implements IMultipart {
+    public enum EPartMason implements IMultipart {
 
         FM("fm"), FL("fl"), BM("bm"), BR("br"), FR("fr");
 
         private final String name;
 
-        private EnumPartMason(String name) {
+        private EPartMason(String name) {
 
             this.name = name;
         }
@@ -48,16 +52,9 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
         }
         
         @Override
-        public ItemStack getDrop() {
+        public boolean needsSupport() {
             
-            if (this == FM) {
-                    
-                return new ItemStack(GeoItems.CRAFTING_MASON);
-                
-            } else {
-                
-                return ItemStack.EMPTY;
-            }
+            return true;
         }
         
         @Override
@@ -84,8 +81,8 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.CRAFTING_MASON;
-            boolean broken = !block.isValid(world, pos);
+            BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_MASON;
+            boolean broken = false;
             
             switch (this) {
                 
@@ -161,59 +158,49 @@ public class TECraftingMason extends TECraftingAbstract<EnumPartMason> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing) {
+                EnumFacing facing, EntityPlayer player) {
             
             if (this == FM) {
                 
-                BlockPos posFM = pos;
-                BlockPos posFL = posFM.offset(facing.rotateY().getOpposite());
-                BlockPos posBM = posFM.offset(facing);
-                BlockPos posFR = posFM.offset(facing.rotateY());
-                BlockPos posBR = posFR.offset(facing);
+                BlockContainerMulti<EPartMason> block =
+                        GeoBlocks.CRAFTING_MASON;
+                IBlockState state = block.getDefaultState();
+                PropertyEnum<EPartMason> prop = block.getPartProperty();
                 
-                BlockBuilding block = GeoBlocks.CRAFTING_MASON;
-                BlockPos[] positions = {posFM, posFL, posBM, posFR, posBR};
-                boolean valid = true;
+                // Prepare map of properties
                 
-                for (BlockPos position : positions) {
+                Map<BlockPos, EPartMason> map = Maps.newHashMap();
+                map.put(pos, FM);
+                map.put(pos.offset(facing.rotateY().getOpposite()), FL);
+                map.put(pos.offset(facing), BM);
+                map.put(pos.offset(facing.rotateY()), FR);
+                map.put(pos.offset(facing.rotateY()).offset(facing), BR);
+                
+                // Check validity
+                
+                for (Entry<BlockPos, EPartMason> entry : map.entrySet()) {
                     
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
-                    boolean foundation = block.isValid(world, position);
+                    IBlockState placeState = state
+                            .withProperty(prop, entry.getValue());
                     
-                    if (!replaceable || !foundation) {
+                    if (!block.isValid(world, entry.getKey(), null,
+                            false, placeState, player)) {
                         
-                        valid = false;
-                        break;
+                        return false;
                     }
                 }
-
-                if (valid) {
-
-                    // Place all
-                    IBlockState placeState = block.getDefaultState();
-    
-                    world.setBlockState(posFM, placeState);
-                    world.setBlockState(posFL, placeState);
-                    world.setBlockState(posBM, placeState);
-                    world.setBlockState(posBR, placeState);
-                    world.setBlockState(posFR, placeState);
-    
-                    // Set up tileentities
-                    ((TECraftingMason) world.getTileEntity(posFM))
-                            .setState(facing, FM);
-                    ((TECraftingMason) world.getTileEntity(posFL))
-                            .setState(facing, FL);
-                    ((TECraftingMason) world.getTileEntity(posBM))
-                            .setState(facing, BM);
-                    ((TECraftingMason) world.getTileEntity(posBR))
-                            .setState(facing, BR);
-                    ((TECraftingMason) world.getTileEntity(posFR))
-                            .setState(facing, FR);
-                    
-                    return true;
-                }
+                
+                // Place all
+                
+                map.keySet().forEach((p) -> world.setBlockState(p, state));
+                
+                // Set up tileentities
+                
+                map.entrySet().forEach((e) ->
+                        ((TECraftingMason) world.getTileEntity(e.getKey()))
+                        .setState(facing, e.getValue()));
+                
+                return true;
             }
             
             return false;

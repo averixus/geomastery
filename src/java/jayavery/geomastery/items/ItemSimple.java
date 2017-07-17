@@ -56,7 +56,7 @@ public class ItemSimple extends Item {
     }
     
     /** @return A new stack of the item with a decay capability
-     * set to {@code Long.MIN_VALUE} if applicable. */
+     * set to -100000 if applicable. */
     public static ItemStack rottenStack(Item item, int count) {
         
         ItemStack stack = new ItemStack(item, count);

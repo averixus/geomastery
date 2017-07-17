@@ -8,10 +8,13 @@ package jayavery.geomastery.tileentities;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import com.google.common.collect.Lists;
 import jayavery.geomastery.crafting.CookingManager;
 import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketFurnace;
+import jayavery.geomastery.utilities.IItemStorage;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +26,7 @@ import net.minecraft.util.math.MathHelper;
 
 /** Abstract superclass TileEntity for furnace blocks. */
 public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
-        extends TEMultiAbstract<E> implements ITickable {
+        extends TEMultiAbstract<E> implements ITickable, IItemStorage {
 
     /** Comparator to move all empty stacks to the end of a list. */
     private static final Comparator<ItemStack> SORTER =
@@ -33,7 +36,6 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
     public final CookingManager recipes;
     /** Size of inputs, outputs, and fuels for this furnace. */
     protected final int size;
-    
     /** This furnace's input stacks. */
     protected NonNullList<ItemStack> inputs;
     /** This funace's fuel stacks. */
@@ -65,11 +67,13 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
     }
     
     @Override
-    public void dropItems() {
+    public List<ItemStack> getDrops() {
 
-        this.dropInventory(this.inputs);
-        this.dropInventory(this.outputs);
-        this.dropInventory(this.fuels);
+        List<ItemStack> result = Lists.newArrayList();
+        result.addAll(this.inputs);
+        result.addAll(this.outputs);
+        result.addAll(this.fuels);
+        return result;
     }
     
     /** Sorts the input and fuel stacks. */
@@ -324,29 +328,6 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         }
     }
     
-    /** Required to update GUI on the client. */
-    @Override
-    public NBTTagCompound getUpdateTag() {
-
-        return this.writeToNBT(new NBTTagCompound());
-    }
-
-    /** Required to update GUI on the client. */
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-
-        return new SPacketUpdateTileEntity(this.getPos(), 0,
-                this.writeToNBT(new NBTTagCompound()));
-    }
-
-    /** Required to update GUI on the client. */
-    @Override
-    public void onDataPacket(NetworkManager net,
-            SPacketUpdateTileEntity packet) {
-
-        this.readFromNBT(packet.getNbtCompound());
-    }
-    
     @Override
     public void readFromNBT(NBTTagCompound compound) {
 
@@ -374,7 +355,6 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         this.cookSpent = compound.getInteger("cookSpent");
         this.cookEach = compound.getInteger("cookEach");
         this.fuelEach = compound.getInteger("fuelEach");
-  
     }
 
     @Override

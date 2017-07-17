@@ -7,24 +7,38 @@
 package jayavery.geomastery.blocks;
 
 import java.util.Random;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.items.ItemLooseplacing;
+import jayavery.geomastery.utilities.BlockMaterial;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockRubble extends BlockSolid {
+/** Falling rubble block. */
+public class BlockRubble extends BlockBuildingAbstract<ItemLooseplacing> {
 
     public BlockRubble() {
         
-        super(Material.ROCK, "rubble", 1F, BlockWeight.HEAVY,
-                () -> GeoItems.RUBBLE, 1, ToolType.SHOVEL);
+        super(BlockMaterial.SOIL, "rubble",
+                CreativeTabs.BUILDING_BLOCKS, 1F, 1);
+    }
+    
+    @Override
+    public ItemLooseplacing createItem(int stackSize) {
+        
+        return new ItemLooseplacing(this, stackSize);
+    }
+    
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.HEAVY;
     }
     
     @Override

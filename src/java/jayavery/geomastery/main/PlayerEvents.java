@@ -8,7 +8,7 @@ package jayavery.geomastery.main;
 
 import java.util.List;
 import jayavery.geomastery.blocks.BlockBed;
-import jayavery.geomastery.blocks.BlockBed.EnumPartBed;
+import jayavery.geomastery.blocks.BlockBed.EPartBed;
 import jayavery.geomastery.capabilities.DefaultCapPlayer;
 import jayavery.geomastery.capabilities.ICapPlayer;
 import jayavery.geomastery.capabilities.ProviderCapPlayer;
@@ -184,7 +184,7 @@ public class PlayerEvents {
             return;
         }
         
-        BlockPos posFoot = state.getValue(BlockBed.PART) == EnumPartBed.FOOT ?
+        BlockPos posFoot = state.getValue(BlockBed.PART) == EPartBed.FOOT ?
                 pos : pos.offset(state.getValue(BlockBed.FACING).getOpposite());
         
         BlockBed bed = (BlockBed) block;

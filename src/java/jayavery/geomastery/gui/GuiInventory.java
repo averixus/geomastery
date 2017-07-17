@@ -7,6 +7,8 @@
 package jayavery.geomastery.gui;
 
 import jayavery.geomastery.container.ContainerInventory;
+import jayavery.geomastery.utilities.Lang;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for the player inventory */
@@ -25,14 +27,15 @@ public class GuiInventory extends GuiContainerAbstract {
 
     public GuiInventory(ContainerInventory container) {
 
-        super(container, "inventory");
+        super(container, Lang.CONTAINER_INVENTORY);
         this.allowUserInput = true;
     }
     
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         
-        this.fontRendererObj.drawString(this.name, TEXT_X, 6, TEXT_COLOUR);
+        this.fontRendererObj.drawString(I18n.format(this.name),
+                TEXT_X, 6, TEXT_COLOUR);
     }
 
     @Override

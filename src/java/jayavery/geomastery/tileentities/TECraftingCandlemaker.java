@@ -6,37 +6,42 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockBuilding;
+import java.util.Map;
+import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
+import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.tileentities.TECraftingCandlemaker.EnumPartCandlemaker;
+import jayavery.geomastery.tileentities.TECraftingCandlemaker.EPartCandlemaker;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/** TileEntity for candlemaker crafting block. */
 public class TECraftingCandlemaker extends
-        TECraftingAbstract<EnumPartCandlemaker> {
+        TECraftingAbstract<EPartCandlemaker> {
     
     @Override
-    protected EnumPartCandlemaker partByOrdinal(int ordinal) {
+    protected EPartCandlemaker partByOrdinal(int ordinal) {
         
-        return EnumPartCandlemaker.values()[ordinal];
+        return EPartCandlemaker.values()[ordinal];
     }
     
     /** Enum defining parts of the whole Candlemaker structure. */
-    public enum EnumPartCandlemaker implements IMultipart {
+    public enum EPartCandlemaker implements IMultipart {
 
         FRONT("front"), BACK("back");
 
         private final String name;
 
-        private EnumPartCandlemaker(String name) {
+        private EPartCandlemaker(String name) {
 
             this.name = name;
         }
@@ -48,16 +53,9 @@ public class TECraftingCandlemaker extends
         }
         
         @Override
-        public ItemStack getDrop() {
+        public boolean needsSupport() {
             
-            if (this == FRONT) {
-                
-                return new ItemStack(GeoItems.CRAFTING_CANDLEMAKER);
-                
-            } else {
-                
-                return ItemStack.EMPTY;
-            }
+            return true;
         }
         
         @Override
@@ -77,8 +75,8 @@ public class TECraftingCandlemaker extends
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.CRAFTING_CANDLEMAKER;
-            boolean broken = !block.isValid(world, pos);
+            BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_CANDLEMAKER;
+            boolean broken = false;
             
             if (this == FRONT) {
 
@@ -108,47 +106,46 @@ public class TECraftingCandlemaker extends
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing) {
+                EnumFacing facing, EntityPlayer player) {
 
             if (this == FRONT) {
                 
-                BlockPos posFront = pos;
-                BlockPos posBack = posFront.offset(facing);
+                BlockContainerMulti<EPartCandlemaker> block =
+                        GeoBlocks.CRAFTING_CANDLEMAKER;
+                IBlockState state = block.getDefaultState();
+                PropertyEnum<EPartCandlemaker> prop = block.getPartProperty();
                 
-                BlockBuilding block = GeoBlocks.CRAFTING_CANDLEMAKER;
-                BlockPos[] positions = {posFront, posBack};
-                boolean valid = true;
+                // Prepare map of properties
                 
-                for (BlockPos position : positions) {
+                Map<BlockPos, EPartCandlemaker> map = Maps.newHashMap();
+                map.put(pos, FRONT);
+                map.put(pos.offset(facing), BACK);
+                
+                // Check validity
+                
+                for (Entry<BlockPos, EPartCandlemaker> entry : map.entrySet()) {
                     
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
-                    boolean foundation = block.isValid(world, position);
+                    IBlockState placeState = state
+                            .withProperty(prop, entry.getValue());
                     
-                    if (!replaceable || !foundation) {
+                    if (!block.isValid(world, entry.getKey(), null,
+                            false, placeState, player)) {
                         
-                        valid = false;
-                        break;
+                        return false;
                     }
                 }
                 
-                if (valid) {
-
-                    // Place all
-                    IBlockState placeState = block.getDefaultState();
-                    
-                    world.setBlockState(posBack, placeState);
-                    world.setBlockState(posFront, placeState);
-                    
-                    // Set up tileentities
-                    ((TECraftingCandlemaker) world.getTileEntity(posBack))
-                            .setState(facing, BACK);
-                    ((TECraftingCandlemaker) world.getTileEntity(posFront))
-                            .setState(facing, FRONT);
-
-                    return true;
-                }
+                // Place all
+                
+                map.keySet().forEach((p) -> world.setBlockState(p, state));
+                
+                // Set up tileentities
+                
+                map.entrySet().forEach((e) ->
+                        ((TECraftingCandlemaker) world.getTileEntity(e
+                        .getKey())).setState(facing, e.getValue()));
+                
+                return true;
             }
             
             return false;

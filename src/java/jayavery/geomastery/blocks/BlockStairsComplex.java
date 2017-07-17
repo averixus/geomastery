@@ -8,65 +8,50 @@ package jayavery.geomastery.blocks;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.google.common.collect.Lists;
 import jayavery.geomastery.main.GeoConfig;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
-import net.minecraft.block.BlockHorizontal;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Complex adaptive stairs block. */
-public class BlockStairsComplex extends BlockBuilding {
+public class BlockStairsComplex extends BlockFacing {
 
-    public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyEnum<BlockStairs.EnumShape> SHAPE =
             PropertyEnum.<BlockStairs.EnumShape>create("shape",
             BlockStairs.EnumShape.class);
     
     public BlockStairsComplex(Material material,
-            String name, float hardness, ToolType tool) {
+            String name, float hardness, int stackSize) {
         
-        super(material, name, CreativeTabs.BUILDING_BLOCKS,
-                hardness, tool);
+        super(name, material, hardness, stackSize, EBlockWeight.NONE);
     }
     
-    /** Adds this item's build reqs to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
+    @SideOnly(Side.CLIENT) @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
         if (GeoConfig.buildTooltips) {
             
-            tooltip.add(I18n.translateToLocal(BlockWeight.HEAVY.build()));
-            tooltip.add(net.minecraft.client.resources.I18n.format(BlockWeight.NONE.support()));
+            tooltip.add(I18n.format(EBlockWeight.HEAVY.requires()));
+            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
         }
-    }
-
-    @Override
-    public BlockWeight getWeight() {
-        
-        return BlockWeight.NONE;
     }
     
     @Override
@@ -74,6 +59,29 @@ public class BlockStairsComplex extends BlockBuilding {
             BlockPos pos, EnumFacing direction) {
         
         return direction == state.getValue(FACING);
+    }
+    
+    @Override
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
+        
+        if (!alreadyPresent && !world.getBlockState(pos).getBlock()
+                .isReplaceable(world, pos)) {
+            
+            message(player, Lang.BUILDFAIL_OBSTACLE);
+            return false;
+        }
+        
+        IBlockState stateBelow = world.getBlockState(pos.down());
+        EBlockWeight weightBelow = EBlockWeight.getWeight(stateBelow);
+        
+        if (!weightBelow.canSupport(EBlockWeight.HEAVY)) {
+            
+            message(player, Lang.BUILDFAIL_SUPPORT);
+            return false;
+        }
+        
+        return true;
     }
     
     @Override
@@ -93,9 +101,11 @@ public class BlockStairsComplex extends BlockBuilding {
                 if (offsetFacing == facing.rotateYCCW()) {
                     
                     shape = BlockStairs.EnumShape.OUTER_LEFT;
-                }
+                    
+                } else {
 
-                shape = BlockStairs.EnumShape.OUTER_RIGHT;
+                    shape = BlockStairs.EnumShape.OUTER_RIGHT;
+                }
             }
         }
 
@@ -110,9 +120,11 @@ public class BlockStairsComplex extends BlockBuilding {
                 if (offsetFacing == facing.rotateYCCW()) {
                     
                     shape = BlockStairs.EnumShape.INNER_LEFT;
-                }
+                    
+                } else {
 
-                shape = BlockStairs.EnumShape.INNER_RIGHT;
+                    shape = BlockStairs.EnumShape.INNER_RIGHT;
+                }
             }
         }
 
@@ -136,9 +148,9 @@ public class BlockStairsComplex extends BlockBuilding {
 
         int facing = state.getValue(FACING).getHorizontalIndex() + 1;
         
-        if (shape == EnumShape.INNER_LEFT || shape == EnumShape.OUTER_LEFT) {
+        if (shape == EnumShape.OUTER_LEFT) {
             
-            facing++;
+            facing--;
         } 
         
         facing %= 4;
@@ -168,37 +180,8 @@ public class BlockStairsComplex extends BlockBuilding {
     }
     
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-    }
-    
-    @Override
     public BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, FACING, SHAPE);
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        EnumFacing facing = EnumFacing.getHorizontal(meta);
-        return this.getDefaultState().withProperty(FACING, facing);
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return state.getValue(FACING).getHorizontalIndex();
-    }
-    
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos,
-            EnumFacing side, float x, float y, float z,
-            int meta, EntityLivingBase placer) {
-        
-        return this.getDefaultState().withProperty(FACING,
-                placer.getHorizontalFacing());
     }
 }

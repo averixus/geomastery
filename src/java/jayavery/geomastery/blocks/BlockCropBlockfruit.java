@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.properties.IProperty;
@@ -53,7 +53,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
             Supplier<BlockFruit> fruit, Supplier<Item> seed) {
 
         super(name, () -> Items.AIR, (rand) -> 0,
-                growthChance, hardness, ToolType.SICKLE);
+                growthChance, hardness, EToolType.SICKLE);
         this.fruit = fruit;
         this.seed = seed;
     }
@@ -129,6 +129,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         return Lists.newArrayList(new ItemStack(this.seed.get()));
     }
     
+    /** Pumpkin crop block. */
     public static class Pumpkin extends BlockCropBlockfruit {
         
         public Pumpkin() {
@@ -148,6 +149,7 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         }
     }
     
+    /** Melon crop block. */
     public static class Melon extends BlockCropBlockfruit {
         
         public Melon() {

@@ -27,4 +27,10 @@ public class ItemShield extends net.minecraft.item.ItemShield {
         return I18n.translateToLocal(this
                 .getUnlocalizedNameInefficiently(stack) + ".name").trim();
     }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
+    }
 }

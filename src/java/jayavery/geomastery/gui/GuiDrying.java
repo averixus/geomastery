@@ -8,6 +8,7 @@ package jayavery.geomastery.gui;
 
 import jayavery.geomastery.container.ContainerDrying;
 import jayavery.geomastery.main.Geomastery;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for Drying Rack */
@@ -23,7 +24,7 @@ public class GuiDrying extends GuiContainerAbstract {
 
     public GuiDrying(ContainerDrying container) {
 
-        super(container, "drying");
+        super(container, Lang.CONTAINER_DRYING);
         this.texture = new ResourceLocation(Geomastery.MODID,
                 "textures/gui/drying_" +
                 container.capability.getInventoryRows() + ".png");

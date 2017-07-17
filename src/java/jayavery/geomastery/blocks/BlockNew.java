@@ -6,7 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.blocks;
 
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -161,17 +161,17 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0.5,0.5,0.5,1,0.75,1),
             new AxisAlignedBB(0.75,0.75,0.75,1,1,1)},
             {new AxisAlignedBB(0,0,0,1,0.25,1),
-            new AxisAlignedBB(0.25,0.25,0,1,0.5,0.75),
-            new AxisAlignedBB(0.5,0.5,0,1,0.75,0.5),
-            new AxisAlignedBB(0.75,0.75,0,1,1,0.25)},
+            new AxisAlignedBB(0,0.25,0.25,0.75,0.5,1),
+            new AxisAlignedBB(0,0.5,0.5,0.5,0.75,1),
+            new AxisAlignedBB(0,0.75,0.75,0.25,1,1)},
             {new AxisAlignedBB(0,0,0,1,0.25,1),
             new AxisAlignedBB(0,0.25,0,0.75,0.5,0.75),
             new AxisAlignedBB(0,0.5,0,0.5,0.75,0.5),
             new AxisAlignedBB(0,0.75,0,0.25,1,0.25)},
             {new AxisAlignedBB(0,0,0,1,0.25,1),
-            new AxisAlignedBB(0,0.25,0.25,0.75,0.5,1),
-            new AxisAlignedBB(0,0.5,0.5,0.5,0.75,1),
-            new AxisAlignedBB(0,0.75,0.75,0.25,1,1)}};
+            new AxisAlignedBB(0.25,0.25,0,1,0.5,0.75),
+            new AxisAlignedBB(0.5,0.5,0,1,0.75,0.5),
+            new AxisAlignedBB(0.75,0.75,0,1,1,0.25)}};
     /** Internal stairs arrays, indexed by facing. */
     public static final AxisAlignedBB[][] STAIRS_INTERNAL =
             {{new AxisAlignedBB(0,0,0,1,0.25,1),
@@ -216,26 +216,26 @@ public class BlockNew extends Block {
             {new AxisAlignedBB(0.75,0.25,0,1,1,1),
             new AxisAlignedBB(0.25,0.8,0,0.75,1,1)}};
     /** External vault arrays, indexed by facing. */
-    public static final AxisAlignedBB[][] VAULT_EXTERNAL =
-            {{new AxisAlignedBB(0.75,0.25,0,1,1,0.25),
-            new AxisAlignedBB(0.25,0.8,0,1,1,0.75)},
+    public static final AxisAlignedBB[][] VAULT_INTERNAL =
+            {{new AxisAlignedBB(0,0.25,0.75,0.25,1,1),
+            new AxisAlignedBB(0,0.8,0.25,0.75,1,1)},
             {new AxisAlignedBB(0,0.25,0,0.25,1,0.25),
             new AxisAlignedBB(0,0.8,0,0.75,1,0.75)},
-            {new AxisAlignedBB(0,0.25,0.75,0.25,1,1),
-            new AxisAlignedBB(0,0.8,0.25,0.75,1,1)},
+            {new AxisAlignedBB(0.75,0.25,0,1,1,0.25),
+            new AxisAlignedBB(0.25,0.8,0,1,1,0.75)},
             {new AxisAlignedBB(0.75,0.25,0.75,1,1,1),
             new AxisAlignedBB(0.25,0.8,0.25,1,1,1)}};
     /** Internal vault arrays, indexed by facing. */
-    public static final AxisAlignedBB[][] VAULT_INTERNAL =
-            {{new AxisAlignedBB(0,0.25,0,1,1,0.25),
-            new AxisAlignedBB(0,0.25,0.25,0.25,1,1),
-            new AxisAlignedBB(0.25,0.8,0.25,1,0,0)},
+    public static final AxisAlignedBB[][] VAULT_EXTERNAL =
+            {{new AxisAlignedBB(0,0.25,0.75,1,1,1),
+            new AxisAlignedBB(0.75,0.25,0,1,1,0.75),
+            new AxisAlignedBB(0,0.8,1,0.75,0,0.75)},
             {new AxisAlignedBB(0,0.25,0,0.25,1,1),
             new AxisAlignedBB(0.25,0.25,0.75,1,1,1),
             new AxisAlignedBB(0.25,0.8,0,0,0,0.75)},
-            {new AxisAlignedBB(0,0.25,0.75,1,1,1),
-            new AxisAlignedBB(0.75,0.25,0,1,1,0.75),
-            new AxisAlignedBB(0,0.8,1,0.75,0,0.75)},
+            {new AxisAlignedBB(0,0.25,0,1,1,0.25),
+            new AxisAlignedBB(0,0.25,0.25,0.25,1,1),
+            new AxisAlignedBB(0.25,0.8,0.25,1,0,0)},
             {new AxisAlignedBB(0.75,0.25,0,1,1,1),
             new AxisAlignedBB(0,0.25,0,0.75,1,0.25),
             new AxisAlignedBB(1,0.8,0.25,0.75,0,1)}};
@@ -262,14 +262,14 @@ public class BlockNew extends Block {
             new AxisAlignedBB(0.37,0,0.88,1.37,1,0.94)};
     
     public BlockNew(Material material, String name,
-            CreativeTabs tab, float hardness, ToolType harvestTool) {
+            CreativeTabs tab, float hardness, EToolType harvestTool) {
         
         super(material);
         setupBlock(this, name, tab, hardness, harvestTool);
     }
     
     public BlockNew(Material material, String name,
-            float hardness, ToolType harvestTool) {
+            float hardness, EToolType harvestTool) {
         
         this(material, name, CreativeTabs.BUILDING_BLOCKS,
                 hardness, harvestTool);
@@ -277,7 +277,7 @@ public class BlockNew extends Block {
     
     /** Assigns the given values to the block statically. */
     public static void setupBlock(Block block, String name, CreativeTabs tab,
-            float hardness, ToolType harvestTool) {
+            float hardness, EToolType harvestTool) {
         
         block.setRegistryName("block_" + name);
         block.setUnlocalizedName(block.getRegistryName().toString());

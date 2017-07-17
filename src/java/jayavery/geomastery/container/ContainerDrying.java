@@ -6,7 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.container;
 
-import jayavery.geomastery.blocks.BlockComplexAbstract;
+import jayavery.geomastery.blocks.BlockContainerAbstract;
 import jayavery.geomastery.container.slots.SlotDryingInput;
 import jayavery.geomastery.container.slots.SlotDryingOutput;
 import jayavery.geomastery.tileentities.TEDrying;
@@ -82,7 +82,7 @@ public class ContainerDrying extends ContainerAbstract {
     public boolean canInteractWith(EntityPlayer player) {
 
         boolean correctBlock = this.world.getBlockState(this.pos)
-                .getBlock() instanceof BlockComplexAbstract;
+                .getBlock() instanceof BlockContainerAbstract;
 
         if (correctBlock) {
 

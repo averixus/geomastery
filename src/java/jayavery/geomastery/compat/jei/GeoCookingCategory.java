@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.util.Map.Entry;
 import jayavery.geomastery.compat.jei.GeoCookingCategory.Wrapper;
 import jayavery.geomastery.main.Geomastery;
+import jayavery.geomastery.utilities.Lang;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -19,9 +20,9 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery cooking recipes. */
 public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
@@ -74,11 +75,7 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
     private static final int OUT_X = 60;
     /** Y position of output slot. */
     private static final int OUT_Y = 18;
-    
-    /** Recipe tab unlocalised name. */
-    private final String name = Geomastery.MODID + ":jeicategory.cooking";
-    /** Internal unique id. */
-    private final String uid = Geomastery.MODID + ":cooking";
+
     /** Background image. */
     private final IDrawable background;
     /** Flame animation. */
@@ -126,13 +123,13 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
     @Override
     public String getUid() {
         
-        return this.uid;
+        return Lang.JEICAT_COOKING;
     }
     
     @Override
     public String getTitle() {
         
-        return I18n.translateToLocal(this.name);
+        return I18n.format(Lang.JEICAT_COOKING);
     }
     
     @Override

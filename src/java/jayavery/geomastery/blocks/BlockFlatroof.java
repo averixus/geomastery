@@ -8,20 +8,18 @@ package jayavery.geomastery.blocks;
 
 import java.util.List;
 import java.util.Random;
-import com.google.common.collect.Lists;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
-import net.minecraft.block.state.BlockStateContainer;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
+import jayavery.geomastery.utilities.Lang;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -33,14 +31,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Flat breakable roof block. */
-public class BlockFlatroof extends BlockBuilding {
+public class BlockFlatroof extends BlockFacing {
 
-    public BlockFlatroof(String name, float hardness, ToolType harvestTool) {
+    public BlockFlatroof(String name, float hardness) {
         
-        super(BlockMaterial.WOOD_HANDHARVESTABLE, name,
-                CreativeTabs.BUILDING_BLOCKS, hardness, harvestTool);
+        super(name, BlockMaterial.WOOD_FURNITURE, hardness,
+                4, EBlockWeight.NONE);
     }
-    
+
     /** Adds this block's build reqs to the tooltip if config. */
     @SideOnly(Side.CLIENT)
     @Override
@@ -49,15 +47,9 @@ public class BlockFlatroof extends BlockBuilding {
         
         if (GeoConfig.buildTooltips) {
             
-            tooltip.add(net.minecraft.client.resources.I18n.format("geomastery:buildreq.flatroof"));
-            tooltip.add(I18n.format(BlockWeight.NONE.support()));
+            tooltip.add(I18n.format(Lang.BUILDTIP_FLATROOF));
+            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
         }
-    }
-    
-    @Override
-    public BlockWeight getWeight() {
-        
-        return BlockWeight.NONE;
     }
     
     @Override
@@ -66,19 +58,22 @@ public class BlockFlatroof extends BlockBuilding {
         
         return false;
     }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-    }
 
     @Override
-    public boolean isValid(World world, BlockPos pos) {
-                        
-        if (BlockWeight.getWeight(world.getBlockState(pos.down()).getBlock())
-                .canSupport(this.getWeight())) {
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
+        
+        if (!alreadyPresent && !world.getBlockState(pos).getBlock()
+                .isReplaceable(world, pos)) {
+            
+            message(player, Lang.BUILDFAIL_OBSTACLE);
+            return false;
+        }
+        
+        IBlockState stateBelow = world.getBlockState(pos.down());
+        EBlockWeight weightBelow = EBlockWeight.getWeight(stateBelow);
+        
+        if (weightBelow.canSupport(this.getWeight(stateBelow))) {
             
             return true;
         }
@@ -106,10 +101,10 @@ public class BlockFlatroof extends BlockBuilding {
             }
         }
         
+        message(player, Lang.BUILDFAIL_FLATROOF);
         return false;
     }
 
-    /** Breaks the block if an entity tries to walk on it. */
     @Override
     public void onEntityCollidedWithBlock(World world, BlockPos pos,
             IBlockState state, Entity entity) {
@@ -121,22 +116,21 @@ public class BlockFlatroof extends BlockBuilding {
             BlockPos feetPos = new BlockPos(living.posX,
                     living.getEntityBoundingBox().minY + 0.5D, living.posZ);
 
-            if (feetPos.equals(pos) && !BlockWeight.getWeight(world
-                    .getBlockState(pos.down()).getBlock())
-                    .canSupport(this.getWeight())) {
+            if (feetPos.equals(pos) && !EBlockWeight.getWeight(world
+                    .getBlockState(pos.down()))
+                    .canSupport(this.getWeight(state))) {
             
                 world.destroyBlock(pos, true);
             }
         }
     }
     
-    /** @return Whether the given position is a valid supported roof block. */
     protected boolean isValidSupport(World world, BlockPos pos) {
         
         boolean isRoof = world.getBlockState(pos).getBlock()
                 instanceof BlockFlatroof;
-        boolean isSupported = BlockWeight.getWeight(world.getBlockState(pos
-                .down()).getBlock()).canSupport(this.getWeight());
+        boolean isSupported = EBlockWeight.getWeight(world.getBlockState(pos
+                .down())).canSupport(this.getWeight(this.getDefaultState()));
         return isRoof && isSupported;
     }
     
@@ -170,18 +164,5 @@ public class BlockFlatroof extends BlockBuilding {
             IBlockAccess world, BlockPos pos) {
         
         return NULL_AABB;
-    }
-    
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return state;
-    }
-    
-    @Override
-    public BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this);
     }
 }

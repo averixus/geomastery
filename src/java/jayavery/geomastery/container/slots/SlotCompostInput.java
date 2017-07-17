@@ -7,7 +7,7 @@
 package jayavery.geomastery.container.slots;
 
 import jayavery.geomastery.main.GeoRecipes;
-import jayavery.geomastery.tileentities.TECompost;
+import jayavery.geomastery.tileentities.TECompostheap;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
@@ -17,9 +17,9 @@ import net.minecraft.item.ItemStack;
 public class SlotCompostInput extends Slot {
 
     /** The compost heap this slot belongs to. */
-    private final TECompost compost;
+    private final TECompostheap compost;
     
-    public SlotCompostInput(TECompost compost, int xPos, int yPos) {
+    public SlotCompostInput(TECompostheap compost, int xPos, int yPos) {
         
         super(null, 0, xPos, yPos);
         this.compost = compost;

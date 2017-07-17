@@ -8,7 +8,7 @@ package jayavery.geomastery.capabilities;
 
 import java.util.List;
 import jayavery.geomastery.items.ItemEdible;
-import jayavery.geomastery.utilities.FoodType;
+import jayavery.geomastery.utilities.EFoodType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -63,13 +63,13 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
      * @return The ResourceLocation for one of five icons. */
     public ResourceLocation getTempIcon();
     
-    /** Get the food level for the FoodType.
+    /** Get the food level for the EFoodType.
      * @return An int from 0 to 20. */
-    public int foodLevel(FoodType type);
+    public int foodLevel(EFoodType type);
     
-    /** Check whether the player has less than full hunger for the FoodType.
-     * @return Whether the player is allowed to eat the FoodType. */
-    public boolean canEat(FoodType type);
+    /** Check whether the player has less than full hunger for the EFoodType.
+     * @return Whether the player is allowed to eat the EFoodType. */
+    public boolean canEat(EFoodType type);
     
     /** Get the lowest food level of all hunger types.
      * @return An int from 0 to 20. */

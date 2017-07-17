@@ -8,35 +8,35 @@ package jayavery.geomastery.blocks;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import com.google.common.collect.Lists;
-import jayavery.geomastery.render.block.RenderWallAbstract;
-import jayavery.geomastery.render.block.RenderWallStraight;
+import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Crossing log wall block. */
 public class BlockWallLog extends BlockWall {
         
     public BlockWallLog() {
         
-        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, ToolType.AXE, 0);
+        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, 0, 4);
     }
     
     @Override
-    public boolean isDouble() {
+    public ItemPlacing.Building createItem(int stackSize) {
+        
+        return new ItemPlacing.Building(this, stackSize);
+    }
+    
+    @Override
+    public boolean isDouble(IBlockState state) {
         
         return false;
     }
@@ -48,9 +48,9 @@ public class BlockWallLog extends BlockWall {
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public EBlockWeight getWeight(IBlockState state) {
         
-        return BlockWeight.MEDIUM;
+        return EBlockWeight.MEDIUM;
     }
     
     @Override
@@ -88,12 +88,5 @@ public class BlockWallLog extends BlockWall {
             BlockPos pos) {
 
         return CENTRE_POST;
-    }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
     }
 }

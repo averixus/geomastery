@@ -8,12 +8,12 @@ package jayavery.geomastery.blocks;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
-import jayavery.geomastery.main.GeoItems;
+import com.google.common.collect.Lists;
+import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.tileentities.TEBed;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
+import jayavery.geomastery.utilities.EBlockWeight;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.PropertyBool;
@@ -23,8 +23,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -37,27 +35,141 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Bed blocks. */
-public abstract class BlockBed extends BlockBuilding {
+public abstract class BlockBed
+        extends BlockBuildingAbstract<ItemPlacing.Building> {
 
-    public static final PropertyEnum<EnumPartBed> PART =
-            PropertyEnum.<EnumPartBed>create("part", EnumPartBed.class);
+    public static final PropertyEnum<EPartBed> PART =
+            PropertyEnum.<EPartBed>create("part", EPartBed.class);
     public static final PropertyBool OCCUPIED = PropertyBool.create("occupied");
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-    /** This bed's item. */
-    protected final Supplier<Item> itemRef;
     /** The amount to heal the player when sleeping in this bed. */
     protected final float healAmount;
 
-    public BlockBed(String name, float hardness, float healAmount,
-            Supplier<Item> itemRef) {
+    public BlockBed(String name, float hardness, float healAmount) {
 
-        super(BlockMaterial.WOOD_HANDHARVESTABLE, name, null, hardness, null);
+        super(BlockMaterial.WOOD_FURNITURE, name, null, hardness, 1);
         this.setDefaultState(this.blockState.getBaseState()
-                .withProperty(PART, EnumPartBed.FOOT)
+                .withProperty(PART, EPartBed.FOOT)
                 .withProperty(OCCUPIED, false));
-        this.itemRef = itemRef;
         this.healAmount = healAmount;
+    }
+    
+    @Override
+    public abstract AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos);
+    
+    @Override
+    public ItemPlacing.Building createItem(int stackSize) {
+        
+        ItemPlacing.Building item = new ItemPlacing.Building(this, stackSize);
+        item.setMaxDamage(TEBed.MAX_USES);
+        return item;
+    }
+
+    @Override
+    public boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
+        
+        BlockPos posFoot = targetPos.offset(targetSide);
+        BlockPos posHead = posFoot.offset(placeFacing);
+        IBlockState placeFoot = this.getDefaultState()
+                .withProperty(BlockBed.FACING, placeFacing);
+        IBlockState placeHead = placeFoot
+                .withProperty(BlockBed.PART, EPartBed.HEAD);
+        boolean validFoot = this.isValid(world, posFoot, stack, false,
+                placeFoot, player);
+        boolean validHead = this.isValid(world, posHead, stack, false,
+                placeHead, player);
+        
+        if (!validFoot || !validHead) {
+            
+            return false;
+        }
+        
+        world.setBlockState(posHead, placeHead);
+        world.setBlockState(posFoot, placeFoot);
+        
+        int usesLeft = stack.getMaxDamage() - stack.getItemDamage();
+        TEBed bedTE = (TEBed) world.getTileEntity(posFoot);
+        bedTE.setUsesLeft(usesLeft);
+        
+        return true;
+    }
+    
+    @Override
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
+        
+        if (alreadyPresent) {
+        
+            IBlockState state = world.getBlockState(pos);
+            EnumFacing facing = state.getValue(FACING);
+            
+            BlockPos otherPos = state.getValue(PART) == EPartBed.HEAD ?
+                    pos.offset(facing.getOpposite()) : pos.offset(facing);
+            IBlockState otherState = world.getBlockState(otherPos);
+            
+            if (otherState.getBlock() != this) {
+    
+                    return false;
+            }
+        }
+        
+        return super.isValid(world, pos, stack, alreadyPresent,
+                setState, player);
+    }
+    
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+
+        if (!this.isValid(world, pos, null, true, state, null)) {
+            
+            TileEntity te = world.getTileEntity(pos);
+            
+            if (state.getValue(PART) == EPartBed.FOOT) {
+                
+                ItemStack drop;
+                TEBed bed = (TEBed) te;
+                
+                if (bed.isUndamaged()) {
+                    
+                    drop = new ItemStack(this.item);
+                    
+                } else {
+                     
+                    drop = new ItemStack(this.item, 1,
+                            this.item.getMaxDamage() - bed.getUsesLeft());
+                }
+                
+                spawnAsEntity(world, pos, drop);
+            }
+        }
+    }
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack tool, EntityPlayer player) {
+        
+        if (te instanceof TEBed) {
+            
+            TEBed bed = (TEBed) te;
+            
+            if (bed.isUndamaged()) {
+                
+                return Lists.newArrayList(new ItemStack(this.item));
+                
+            } else {
+                
+                return Lists.newArrayList(new ItemStack(this.item, 1,
+                        this.item.getMaxDamage() - bed.getUsesLeft()));
+            }
+        }
+        
+        return Collections.emptyList();
     }
     
     @Override
@@ -73,9 +185,9 @@ public abstract class BlockBed extends BlockBuilding {
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public EBlockWeight getWeight(IBlockState state) {
         
-        return BlockWeight.NONE;
+        return EBlockWeight.NONE;
     }
     
     /** @return The amount the player heals sleeping in this Bed. */
@@ -98,10 +210,6 @@ public abstract class BlockBed extends BlockBuilding {
         }
     }
     
-    @Override
-    public abstract AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos);
-    
     /** The player sleeps in this bed if possible. */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
@@ -114,7 +222,7 @@ public abstract class BlockBed extends BlockBuilding {
             return true;
         }
 
-        if (state.getValue(PART) != EnumPartBed.HEAD) {
+        if (state.getValue(PART) != EPartBed.HEAD) {
 
             pos = pos.offset(state.getValue(FACING));
             state = world.getBlockState(pos);
@@ -132,7 +240,7 @@ public abstract class BlockBed extends BlockBuilding {
             if (sleeper != null) {
                 
                 player.sendMessage(new TextComponentTranslation(
-                        "tile.bed.occupied", new Object[0]));
+                        "tile.bed.occupied"));
                 return true;
             }
 
@@ -152,14 +260,14 @@ public abstract class BlockBed extends BlockBuilding {
         if (sleepable == EntityPlayer.SleepResult.NOT_POSSIBLE_NOW) {
 
             player.sendMessage(new TextComponentTranslation(
-                    "tile.bed.noSleep", new Object[0]));
+                    "tile.bed.noSleep"));
             return true;
         }
 
         if (sleepable == EntityPlayer.SleepResult.NOT_SAFE) {
 
             player.sendMessage(new TextComponentTranslation(
-                    "tile.bed.notSafe", new Object[0]));
+                    "tile.bed.notSafe"));
             return true;
         }
 
@@ -181,82 +289,6 @@ public abstract class BlockBed extends BlockBuilding {
         return null;
     }
 
-    /** Checks if this block is part of a whole
-     * bed structure, removes it if not. */
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-
-        EnumFacing facing = state.getValue(FACING);
-
-        if (state.getValue(PART) == EnumPartBed.HEAD) {
-
-            if (world.getBlockState(pos.offset(facing.getOpposite()))
-                    .getBlock() != this) {
-
-                world.setBlockToAir(pos);
-            }
-            
-        } else {
-
-            if (world.getBlockState(pos.offset(facing))
-                    .getBlock() != this) {
-
-                Item item = this.itemRef.get();
-                ItemStack drop;
-                TEBed bed = (TEBed) world.getTileEntity(pos);
-                
-                if (bed.isUndamaged()) {
-                    
-                    drop = new ItemStack(item);
-                    
-                } else {
-                     
-                    drop = new ItemStack(item, 1,
-                            item.getMaxDamage() - bed.getUsesLeft());
-                }
-                
-                spawnAsEntity(world, pos, drop);
-                world.setBlockToAir(pos);
-            }
-        }
-    }
-    
-    /** Drops are handled using TE. */
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        return Collections.emptyList();
-    }
-    
-    /** Breaks this block and drops its item if applicable. */
-    @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
-            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-        
-        player.addExhaustion(0.005F);
-        
-        if (state.getValue(PART) == EnumPartBed.FOOT) {
-            
-            Item item = this.itemRef.get();
-            ItemStack drop;
-            TEBed bed = (TEBed) te;
-            
-            if (bed.isUndamaged()) {
-                
-                drop = new ItemStack(item);
-                
-            } else {
-                 
-                drop = new ItemStack(item, 1,
-                        item.getMaxDamage() - bed.getUsesLeft());
-            }
-            
-            spawnAsEntity(world, pos, drop);
-        }
-    }
-
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
@@ -265,13 +297,13 @@ public abstract class BlockBed extends BlockBuilding {
 
         if ((meta & 8) > 0) {
 
-            state = state.withProperty(PART, EnumPartBed.HEAD);
+            state = state.withProperty(PART, EPartBed.HEAD);
             state = state.withProperty(FACING, facing);
             state = state.withProperty(OCCUPIED, (meta & 4) > 0);
             
         } else {
 
-            state = state.withProperty(PART, EnumPartBed.FOOT);
+            state = state.withProperty(PART, EPartBed.FOOT);
             state = state.withProperty(FACING, facing);
         }
 
@@ -285,7 +317,7 @@ public abstract class BlockBed extends BlockBuilding {
 
         i = i | state.getValue(FACING).getHorizontalIndex();
 
-        if (state.getValue(PART) == EnumPartBed.HEAD) {
+        if (state.getValue(PART) == EPartBed.HEAD) {
 
             i |= 8;
 
@@ -302,7 +334,7 @@ public abstract class BlockBed extends BlockBuilding {
     public IBlockState getActualState(IBlockState state, IBlockAccess world,
             BlockPos pos) {
 
-        if (state.getValue(PART) == EnumPartBed.FOOT) {
+        if (state.getValue(PART) == EPartBed.FOOT) {
 
             IBlockState thisState = world.getBlockState(pos
                     .offset(state.getValue(FACING)));
@@ -331,11 +363,12 @@ public abstract class BlockBed extends BlockBuilding {
         return true;
     }
     
+    /** Simple solid bed. */
     public static class Simple extends BlockBed {
 
         public Simple() {
             
-            super("bed_simple", 2F, 2F, () -> GeoItems.BED_SIMPLE);
+            super("bed_simple", 2F, 2F);
         }
 
         @Override
@@ -356,11 +389,12 @@ public abstract class BlockBed extends BlockBuilding {
         public void onWakeup(World world, BlockPos pos, TEBed bed) {}
     }
     
+    /** Single-use leaf bed. */
     public static class Leaf extends BlockBed {
         
         public Leaf() {
             
-            super("bed_leaf", 0.2F, 0.33F, () -> Items.AIR);
+            super("bed_leaf", 0.2F, 0.33F);
         }
         
         @Override
@@ -390,11 +424,12 @@ public abstract class BlockBed extends BlockBuilding {
         }
     }
     
+    /** Wool bedroll. */
     public static class Wool extends BlockBed {
         
         public Wool() {
             
-            super("bed_wool", 2F, 0.66F, () -> GeoItems.BED_WOOL);
+            super("bed_wool", 2F, 0.66F);
         }
         
         @Override
@@ -412,11 +447,12 @@ public abstract class BlockBed extends BlockBuilding {
         }
     }
     
+    /** Cotton bedroll. */
     public static class Cotton extends BlockBed {
         
         public Cotton() {
             
-            super("bed_cotton", 2F, 0.66F, () -> GeoItems.BED_COTTON);
+            super("bed_cotton", 2F, 0.66F);
         }
         
         @Override
@@ -435,14 +471,13 @@ public abstract class BlockBed extends BlockBuilding {
     }
     
     /** Enum defining parts of the whole Bed structure. */
-    public static enum EnumPartBed implements IStringSerializable {
+    public static enum EPartBed implements IStringSerializable {
 
-        HEAD("head"),
-        FOOT("foot");
+        HEAD("head"), FOOT("foot");
 
         private final String name;
 
-        private EnumPartBed(String name) {
+        private EPartBed(String name) {
 
             this.name = name;
         }

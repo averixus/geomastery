@@ -6,19 +6,15 @@
  ******************************************************************************/
 package jayavery.geomastery.compat.jei;
 
-import java.util.List;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.main.GuiHandler.GuiList;
-import mezz.jei.api.gui.ICraftingGridHelper;
+import jayavery.geomastery.utilities.Lang;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 /** Category for Geomastery inventory crafting recipes. */
 public class GeoInventoryCategory
@@ -43,11 +39,7 @@ public class GeoInventoryCategory
     private static final int ICON_START = 0;
     /** Size of icon image. */
     private static final int ICON_SIZE = 14;
-    
-    /** Recipe tab unlocalised name. */
-    private final String name = Geomastery.MODID + ":container.inventory";
-    /** Internal unique id. */
-    private final String uid = Geomastery.MODID + ":inventory";
+
     /** Background image. */
     private final IDrawable background;
     /** Recipe tab icon. */
@@ -64,13 +56,13 @@ public class GeoInventoryCategory
     @Override
     public String getUid() {
         
-        return this.uid;
+        return Lang.CONTAINER_INVENTORY;
     }
     
     @Override
     public String getTitle() {
         
-        return I18n.translateToLocal(this.name);
+        return I18n.format(Lang.CONTAINER_INVENTORY);
     }
     
     @Override

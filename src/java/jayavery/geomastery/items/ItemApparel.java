@@ -9,6 +9,7 @@ package jayavery.geomastery.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 
 /** Apparel and armour items. */
 public class ItemApparel extends ItemArmor {
@@ -18,5 +19,11 @@ public class ItemApparel extends ItemArmor {
         
         super(material, (slot == EntityEquipmentSlot.LEGS ? 2 : 1), slot);
         ItemSimple.setupItem(this, name, 1, tab);
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 }

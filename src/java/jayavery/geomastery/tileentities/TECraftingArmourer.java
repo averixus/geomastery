@@ -6,37 +6,41 @@
  ******************************************************************************/
 package jayavery.geomastery.tileentities;
 
-import jayavery.geomastery.blocks.BlockBuilding;
+import java.util.Map;
+import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import jayavery.geomastery.blocks.BlockBuildingAbstract;
+import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.tileentities.TECraftingArmourer.EnumPartArmourer;
+import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** TileEntity for armourer crafting block. */
-public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
+public class TECraftingArmourer extends TECraftingAbstract<EPartArmourer> {
     
     @Override
-    protected EnumPartArmourer partByOrdinal(int ordinal) {
+    protected EPartArmourer partByOrdinal(int ordinal) {
 
-        return EnumPartArmourer.values()[ordinal];
+        return EPartArmourer.values()[ordinal];
     }
     
     /** Enum defining parts of the whole Armourer structure. */
-    public enum EnumPartArmourer implements IMultipart {
+    public enum EPartArmourer implements IMultipart {
         
         T("t"), L("l"), M("m"), R("r");
         
         private final String name;
         
-        private EnumPartArmourer(String name) {
+        private EPartArmourer(String name) {
             
             this.name = name;
         }
@@ -46,18 +50,11 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
             
             return this.name;
         }
-
+        
         @Override
-        public ItemStack getDrop() {
-
-            if (this == T) {
-                
-                return new ItemStack(GeoItems.CRAFTING_ARMOURER);
-                
-            } else {
-                
-                return ItemStack.EMPTY;
-            }
+        public boolean needsSupport() {
+            
+            return this != T;
         }
         
         @Override
@@ -81,8 +78,8 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
         public boolean shouldBreak(World world, BlockPos pos,
                 EnumFacing facing) {
             
-            BlockBuilding block = GeoBlocks.CRAFTING_ARMOURER;
-            boolean broken = !block.isValid(world, pos);
+            BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_ARMOURER;
+            boolean broken = false;
             
             switch (this) {
                 
@@ -165,70 +162,49 @@ public class TECraftingArmourer extends TECraftingAbstract<EnumPartArmourer> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing) {
+                EnumFacing facing, EntityPlayer player) {
             
             if (this == M) {
                 
-                BlockPos posM = pos;
-                BlockPos posL = posM.offset(facing.rotateYCCW());
-                BlockPos posT = posL.up();
-                BlockPos posR = posM.offset(facing.rotateY());
+                BlockContainerMulti<EPartArmourer> block =
+                        GeoBlocks.CRAFTING_ARMOURER;
+                IBlockState state = block.getDefaultState();
+                PropertyEnum<EPartArmourer> prop = block.getPartProperty();
                 
-                BlockBuilding block = GeoBlocks.CRAFTING_ARMOURER;
-                BlockPos[] basePositions = {posM, posL, posR};
-                BlockPos[] upperPositions = {posT};
-                boolean valid = true;
+                // Prepare map of properties
                 
-                for (BlockPos position : basePositions) {
+                Map<BlockPos, EPartArmourer> map = Maps.newHashMap();
+                map.put(pos, M);
+                map.put(pos.offset(facing.rotateYCCW()), L);
+                map.put(pos.offset(facing.rotateYCCW()).up(), T);
+                map.put(pos.offset(facing.rotateY()), R);
+                
+                // Check validity
+                
+                for (Entry<BlockPos, EPartArmourer> entry : map.entrySet()) {
                     
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
+                    IBlockState placeState = state
+                            .withProperty(prop, entry.getValue());
+                    
+                    if (!block.isValid(world, entry.getKey(), null,
+                            false, placeState, player)) {
+                        
+                        return false;
+                    }
+                }
 
-                    boolean foundation = block.isValid(world, position);
-                    
-                    if (!replaceable || !foundation) {
-                        
-                        valid = false;
-                        break;
-                    }
-                }
+                // Place all
                 
-                for (BlockPos position : upperPositions) {
-                    
-                    Block blockCheck = world.getBlockState(position).getBlock();
-                    boolean replaceable = blockCheck
-                            .isReplaceable(world, position);
-                    
-                    if (!replaceable) {
-                        
-                        valid = false;
-                        break;
-                    }
-                }
+                map.keySet().forEach((p) -> world.setBlockState(p, state));
                 
-                if (valid) {
+                // Set up tileentities
                 
-                    // Place all
-                    IBlockState placeState = block.getDefaultState();
-                    
-                    world.setBlockState(posT, placeState);
-                    world.setBlockState(posL, placeState);
-                    world.setBlockState(posM, placeState);
-                    world.setBlockState(posR, placeState);
-                    
-                    // Set up tileentities
-                    ((TECraftingArmourer) world.getTileEntity(posT))
-                            .setState(facing, T);
-                    ((TECraftingArmourer) world.getTileEntity(posL))
-                            .setState(facing, L);
-                    ((TECraftingArmourer) world.getTileEntity(posM))
-                            .setState(facing, M);
-                    ((TECraftingArmourer) world.getTileEntity(posR))
-                            .setState(facing, R);
-                    
-                    return true;
-                }
+                map.entrySet().forEach((e) ->
+                        ((TECraftingArmourer) world.getTileEntity(e.getKey()))
+                        .setState(facing, e.getValue()));
+
+                
+                return true;
             }
             
             return false;

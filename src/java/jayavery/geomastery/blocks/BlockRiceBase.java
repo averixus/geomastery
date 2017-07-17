@@ -7,23 +7,19 @@
 package jayavery.geomastery.blocks;
 
 import java.util.Random;
-import javax.annotation.Nullable;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.main.GeoItems;
-import jayavery.geomastery.utilities.BlockMaterial;
 import jayavery.geomastery.utilities.IBiomeCheck;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -42,8 +38,8 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
     
     public BlockRiceBase() {
         
-        super(BlockMaterial.WATER_PLANT, "rice_base",
-                null, 0.2F, ToolType.SICKLE);
+        super(Material.WATER, "rice_base",
+                null, 0.2F, EToolType.SICKLE);
         this.setDefaultState(this.blockState.getBaseState());        
     }
     
@@ -141,15 +137,6 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         
         return true;
     }
-    
-    /** Slow down entities like water. */
-    @Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos,
-            IBlockState state, Entity entity) {
-        
-        entity.motionX *= 0.6D;
-        entity.motionZ *= 0.6D;
-    }
 
     @Override
     public boolean isPermitted(Biome biome) {
@@ -158,5 +145,23 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
                 biome instanceof BiomeSwamp ||
                 biome instanceof BiomeMushroomIsland ||
                 biome instanceof BiomeJungle;
+    }
+    
+    @Override
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, BlockLiquid.LEVEL);
+    }
+    
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        return state.getValue(BlockLiquid.LEVEL);
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        
+        return this.getDefaultState().withProperty(BlockLiquid.LEVEL, meta);
     }
 }

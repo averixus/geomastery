@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 import jayavery.geomastery.items.ItemSimple;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EToolType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -49,7 +49,7 @@ public class BlockHarvestableLeaves extends BlockLeaves {
                 .withProperty(AGE, 0));
         this.setTickRandomly(true);
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS,
-                0.2F, ToolType.MACHETE);
+                0.2F, EToolType.MACHETE);
         this.fruitRef = itemRef;
         this.seedlingRef = seedlingRef;
         this.growthChance = growthChance;

@@ -13,7 +13,6 @@ import jayavery.geomastery.main.GeoItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.EnumHand;
@@ -32,6 +31,12 @@ public class ItemShears extends ItemTool {
         super(1F, -3.1F, material, Collections.emptySet());
         ItemSimple.setupItem(this, name, 1, CreativeTabs.TOOLS);
         this.yield = yield;
+    }
+    
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 
     /** Shears sheep. */

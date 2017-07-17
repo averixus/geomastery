@@ -14,6 +14,7 @@ import net.minecraft.util.ITickable;
 /** TileEntity for custom bed blocks. */
 public class TEBed extends TileEntity implements ITickable {
     
+    /** The maximum number of times the player can sleep in this bed. */
     public static final int MAX_USES = 20;
 
     /** The remaining number of times the player can sleep in

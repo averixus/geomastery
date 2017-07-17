@@ -128,6 +128,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         }
     }
     
+    /** Bean crop block. */
     public static class Bean extends BlockCropHarvestable {
         
         public Bean() {
@@ -144,6 +145,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         }
     }
     
+    /** Tomato crop block. */
     public static class Tomato extends BlockCropHarvestable {
         
         public Tomato() {
@@ -160,6 +162,7 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         }
     }
     
+    /** Berry crop block. */
     public static class Berry extends BlockCropHarvestable {
         
         public Berry() {

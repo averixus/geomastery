@@ -7,39 +7,37 @@
 package jayavery.geomastery.items;
 
 import java.util.List;
-import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoConfig;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Rice seed item. */
-public class ItemRice extends ItemBlockplacer {
+public class ItemRice extends ItemPlacing {
         
     public ItemRice() {
         
-        super("rice", 12, CreativeTabs.MATERIALS, SoundType.PLANT);
+        super("rice", 12, CreativeTabs.MATERIALS);
     }
     
-    /** Attempts to plant a rice crop. */
     @Override
     protected boolean place(World world, BlockPos targetPos,
-            EnumFacing targetSide, EnumFacing placeFacing, ItemStack stack) {
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
         
         // Check positions are allowed
         BlockPos target = targetPos.offset(targetSide);
@@ -89,16 +87,20 @@ public class ItemRice extends ItemBlockplacer {
         return true;
     }
     
-    /** Adds this item's valid biomes to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
+    // Adds this item's valid biomes to the tooltip if config. 
+    @Override @SideOnly(Side.CLIENT) 
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
         if (GeoConfig.cropTooltips) {
 
-            tooltip.add(I18n.translateToLocal(this.getUnlocalizedName() +
-                    ".biomes"));
+            tooltip.add(I18n.format(this.getUnlocalizedName() + Lang.BIOMES));
         }
+    }
+
+    @Override
+    protected SoundType getSoundType() {
+
+        return SoundType.PLANT;
     }
 }

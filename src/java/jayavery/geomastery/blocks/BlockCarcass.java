@@ -8,21 +8,22 @@ package jayavery.geomastery.blocks;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import com.google.common.collect.Lists;
 import jayavery.geomastery.capabilities.ICapDecay;
 import jayavery.geomastery.items.ItemCarcassDecayable;
 import jayavery.geomastery.items.ItemHuntingknife;
 import jayavery.geomastery.main.GeoCaps;
-import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.tileentities.TECarcass;
 import jayavery.geomastery.utilities.BlockMaterial;
-import jayavery.geomastery.utilities.BlockWeight;
-import jayavery.geomastery.utilities.ToolType;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.EToolType;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -32,39 +33,33 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Carcass blocks. */
-public abstract class BlockCarcass extends BlockBuilding {
-    
-    /** Shelf life of this carcass in days. */
-    protected final int shelfLife;
-    /** Supplier for the dropped item. */
-    protected final Supplier<ItemCarcassDecayable> item;
+public abstract class BlockCarcass
+        extends BlockBuildingAbstract<ItemCarcassDecayable> {
 
-    public BlockCarcass(String name, float hardness, int shelfLife,
-            Supplier<ItemCarcassDecayable> item) {
+    public BlockCarcass(String name, float hardness) {
 
-        super(BlockMaterial.CARCASS, name, null, hardness, ToolType.KNIFE);
-        this.shelfLife = shelfLife;
-        this.item = item;
+        super(BlockMaterial.CARCASS, name, CreativeTabs.FOOD, hardness, 1);
+        this.setHarvestLevel(EToolType.KNIFE.toString(), 1);
     }
     
     /** Spawns the knife harvest drops for this carcass. */
-    protected abstract void spawnDrops(World world,
+    protected abstract List<ItemStack> getItems(World world,
             BlockPos pos, long birthTime);
-    
     /** @return The shelf life of this carcass in days. */
-    public int getShelfLife() {
+    public abstract int getShelfLife();
+    
+    @Override
+    protected ItemCarcassDecayable createItem(int stackSize) {
         
-        return this.shelfLife;
+        return new ItemCarcassDecayable(this, stackSize);
     }
     
     @Override
-    public BlockWeight getWeight() {
+    public EBlockWeight getWeight(IBlockState state) {
         
-        return BlockWeight.NONE;
+        return EBlockWeight.NONE;
     }
     
     @Override
@@ -81,34 +76,51 @@ public abstract class BlockCarcass extends BlockBuilding {
         return EIGHT;
     }
     
-    /** Breaks this block and drops carcass item or
-     * food items according to harvesting tool. */
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
-            IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-        
-        player.addExhaustion(0.005F);
-        long birthTime = ((TECarcass) te).getBirthTime();
-        int stageSize = ((TECarcass) te).getStageSize();
-        
-        if (stack.getItem() instanceof ItemHuntingknife) {
-            
-            this.spawnDrops(world, pos, birthTime);
-            
-        } else {
+    public boolean place(World world, BlockPos targetPos, EnumFacing targetSide,
+            EnumFacing placeFacing, ItemStack stack, EntityPlayer player) {
 
-            ItemStack drop = new ItemStack(this.item.get(), 1);
-            ICapDecay capDecay = drop.getCapability(GeoCaps.CAP_DECAY, null);
-            capDecay.setBirthTime(birthTime);
-            capDecay.setStageSize(stageSize);
-            spawnAsEntity(world, pos, drop);
+        BlockPos placePos = targetPos.offset(targetSide);
+        IBlockState setState = this.getDefaultState();
+        
+        if (this.isValid(world, placePos, stack, false, setState, player)) {
+
+            ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY, null);
+            decayCap.updateFromNBT(stack.getTagCompound());
+            world.setBlockState(placePos, setState);
+            ((TECarcass) world.getTileEntity(placePos))
+                    .setData(decayCap.getBirthTime(), decayCap.getStageSize());
+            return true;
         }
+        
+        return false;
     }
     
-    /** Drops are handled using TE. */
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack stack, EntityPlayer player) {
+        
+        if (te instanceof TECarcass && world instanceof World) {
+            
+            TECarcass carcass = (TECarcass) te;
+            long birthTime = carcass.getBirthTime();
+            int stageSize = carcass.getStageSize();
+            
+            if (stack.getItem() instanceof ItemHuntingknife) {
+                
+                return this.getItems((World) world, pos, birthTime);
+                
+            } else {
+                
+                ItemStack drop = new ItemStack(this.item, 1);
+                ICapDecay capDecay = drop.getCapability(GeoCaps.CAP_DECAY,
+                        null);
+                capDecay.setBirthTime(birthTime);
+                capDecay.setStageSize(stageSize);
+                return Lists.newArrayList(drop);
+            }
+        }
         
         return Collections.emptyList();
     }
@@ -125,72 +137,27 @@ public abstract class BlockCarcass extends BlockBuilding {
         return new TECarcass();
     }
     
-    /** Adds this block's build reqs to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.buildTooltips) {
-            
-            
-        }
-    }
-    
-    /** Check position and break if invalid. */
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-        
-        if (!this.isValid(world, pos)) {
-
-            TileEntity te = world.getTileEntity(pos);
-            
-            if (te instanceof TECarcass) {
-
-                long birthTime = ((TECarcass) te).getBirthTime();
-                int stageSize = ((TECarcass) te).getStageSize();
-                ItemStack drop = new ItemStack(this.item.get(), 1);
-                ICapDecay capDecay = drop
-                        .getCapability(GeoCaps.CAP_DECAY, null);
-                capDecay.setBirthTime(birthTime);
-                capDecay.setStageSize(stageSize);
-                spawnAsEntity(world, pos, drop);
-            }
-            
-            world.setBlockToAir(pos);
-        }
-    }
-    
-    @Override
-    public BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this);
-    }
-    
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return state;
-    }
-    
     public static class Chicken extends BlockCarcass {
         
         public Chicken() {
             
-            super("carcass_chicken", 1F, 1, () -> GeoItems.CARCASS_CHICKEN);
+            super("carcass_chicken", 1F);
         }
         
         @Override
-        protected void spawnDrops(World world, BlockPos pos, long age) {
+        protected List<ItemStack> getItems(World world,
+                BlockPos pos, long age) {
             
             ItemStack meat = new ItemStack(GeoItems.CHICKEN_RAW, 2);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
+            return Lists.newArrayList(meat, new ItemStack(Items.BONE),
+                    new ItemStack(Items.FEATHER));
+        }
+        
+        @Override
+        public int getShelfLife() {
             
-            spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(Items.BONE));
-            spawnAsEntity(world, pos, new ItemStack(Items.FEATHER));
+            return 1;
         }
     }
     
@@ -198,20 +165,26 @@ public abstract class BlockCarcass extends BlockBuilding {
         
         public Sheep() {
             
-            super("carcass_sheep", 1F, 2, () -> GeoItems.CARCASS_SHEEP);
+            super("carcass_sheep", 1F);
         }
         
         @Override
-        protected void spawnDrops(World world, BlockPos pos, long age) {
+        protected List<ItemStack> getItems(World world,
+                BlockPos pos, long age) {
             
             ItemStack meat = new ItemStack(GeoItems.MUTTON_RAW, 3);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
+            return Lists.newArrayList(meat,
+                    new ItemStack(GeoItems.SKIN_SHEEP, 4),
+                    new ItemStack(Items.BONE, 3),
+                    new ItemStack(GeoItems.TALLOW),
+                    new ItemStack(GeoItems.WOOL, 3));
+        }
+        
+        @Override
+        public int getShelfLife() {
             
-            spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.SKIN_SHEEP, 4));
-            spawnAsEntity(world, pos, new ItemStack(Items.BONE, 3));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.TALLOW));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.WOOL, 3));
+            return 2;
         }
     }
     
@@ -219,19 +192,24 @@ public abstract class BlockCarcass extends BlockBuilding {
 
         public Cowpart() {
             
-            super("carcass_cowpart", 2F, 2, () -> GeoItems.CARCASS_COWPART);
+            super("carcass_cowpart", 2F);
         }
         
         @Override
-        protected void spawnDrops(World world, BlockPos pos, long age) {
+        protected List<ItemStack> getItems(World world,
+                BlockPos pos, long age) {
             
             ItemStack meat = new ItemStack(GeoItems.BEEF_RAW, 5);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
+            return Lists.newArrayList(meat, new ItemStack(GeoItems.SKIN_COW, 6),
+                    new ItemStack(Items.BONE, 5),
+                    new ItemStack(GeoItems.TALLOW));
+        }
+        
+        @Override
+        public int getShelfLife() {
             
-            spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.SKIN_COW, 6));
-            spawnAsEntity(world, pos, new ItemStack(Items.BONE, 5));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.TALLOW));
+            return 2;
         }
     }
     
@@ -239,19 +217,24 @@ public abstract class BlockCarcass extends BlockBuilding {
 
         public Pig() {
             
-            super("carcass_pig", 1F, 2, () -> GeoItems.CARCASS_PIG);
+            super("carcass_pig", 1F);
         }
         
         @Override
-        protected void spawnDrops(World world, BlockPos pos, long age) {
+        protected List<ItemStack> getItems(World world,
+                BlockPos pos, long age) {
             
             ItemStack meat = new ItemStack(GeoItems.PORK_RAW, 4);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
+            return Lists.newArrayList(meat, new ItemStack(GeoItems.SKIN_PIG, 5),
+                    new ItemStack(Items.BONE, 4),
+                    new ItemStack(GeoItems.TALLOW));
+        }
+        
+        @Override
+        public int getShelfLife() {
             
-            spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.SKIN_PIG, 5));
-            spawnAsEntity(world, pos, new ItemStack(Items.BONE, 4));
-            spawnAsEntity(world, pos, new ItemStack(GeoItems.TALLOW));
+            return 2;
         }
     }
     
@@ -259,18 +242,23 @@ public abstract class BlockCarcass extends BlockBuilding {
 
         public Rabbit() {
             
-            super("carcass_rabbit", 1F, 2, () -> GeoItems.CARCASS_RABBIT);
+            super("carcass_rabbit", 1F);
         }
         
         @Override
-        protected void spawnDrops(World world, BlockPos pos, long age) {
+        protected List<ItemStack> getItems(World world,
+                BlockPos pos, long age) {
             
             ItemStack meat = new ItemStack(GeoItems.RABBIT_RAW);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
+            return Lists.newArrayList(meat, new ItemStack(Items.RABBIT_HIDE),
+                    new ItemStack(Items.BONE));
+        }
+        
+        @Override
+        public int getShelfLife() {
             
-            spawnAsEntity(world, pos, meat);
-            spawnAsEntity(world, pos, new ItemStack(Items.RABBIT_HIDE));
-            spawnAsEntity(world, pos, new ItemStack(Items.BONE));
+            return 2;
         }
     }
 }

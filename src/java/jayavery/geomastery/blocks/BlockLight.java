@@ -9,9 +9,10 @@ package jayavery.geomastery.blocks;
 import java.util.List;
 import java.util.Random;
 import com.google.common.collect.Lists;
-import jayavery.geomastery.utilities.BlockWeight;
+import jayavery.geomastery.items.ItemPlacing;
+import jayavery.geomastery.utilities.EBlockWeight;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -26,12 +27,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Torch and candle blocks. */
-public abstract class BlockLight extends BlockBuilding {
+public abstract class BlockLight
+        extends BlockBuildingAbstract<ItemPlacing.Building> {
 
     protected static final AxisAlignedBB FLAT_BOUNDS =
             new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
@@ -41,17 +42,23 @@ public abstract class BlockLight extends BlockBuilding {
     /** Chance of extinguishing per update tick. */
     private final float extinguishChance;
 
-    public BlockLight(String name, int light, float extinguish) {
+    public BlockLight(String name, int light, float extinguish, int stackSize) {
 
-        super(Material.CIRCUITS, name, CreativeTabs.DECORATIONS, 0, null);
+        super(Material.CIRCUITS, name, CreativeTabs.DECORATIONS, 0F, stackSize);
         this.lightValue = light;
         this.extinguishChance = extinguish;
     }
     
     @Override
-    public BlockWeight getWeight() {
+    protected ItemPlacing.Building createItem(int stackSize) {
         
-        return BlockWeight.NONE;
+        return new ItemPlacing.Building(this, stackSize);
+    }
+    
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.NONE;
     }
     
     @Override
@@ -62,31 +69,76 @@ public abstract class BlockLight extends BlockBuilding {
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
+    public boolean place(World world, BlockPos targetPos, EnumFacing targetSide,
+            EnumFacing placeFacing, ItemStack stack, EntityPlayer player) {
         
-        if (!BlockWeight.getWeight(world.getBlockState(pos
-                .offset(state.getValue(FACING)))
-                .getBlock()).canSupport(BlockWeight.NONE)) {
-
-            world.destroyBlock(pos, true);
+        BlockPos placePos = targetPos.offset(targetSide);
+        
+        if (!this.isValid(world, placePos, stack, false, this.getDefaultState(), player)) {
+            
+            return false;
         }
+        
+        if ((EBlockWeight.getWeight(world.getBlockState(targetPos))
+                .canSupport(EBlockWeight.NONE))) {
+            
+            world.setBlockState(placePos, this.getDefaultState()
+                    .withProperty(FACING, targetSide.getOpposite()));
+            
+        } else {
+            
+            for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
+                
+                if (EBlockWeight.getWeight(world.getBlockState(placePos
+                        .offset(facing))).canSupport(EBlockWeight.NONE)) {
+                    
+                    world.setBlockState(placePos,this.getDefaultState()
+                            .withProperty(FACING, facing));
+                }
+            }
+
+            world.setBlockState(placePos, this.getDefaultState());
+        }
+        
+        return true;
     }
     
     @Override
-    public boolean isValid(World world, BlockPos pos) {
+    public boolean isValid(World world, BlockPos pos, ItemStack stack,
+            boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
         
-        for (EnumFacing facing : FACING.getAllowedValues()) {
+        if (alreadyPresent) {
             
-            if (BlockWeight.getWeight(world.getBlockState(pos
-                    .offset(facing)).getBlock())
-                    .canSupport(BlockWeight.NONE)) {
+            if ((EBlockWeight.getWeight(world.getBlockState(pos
+                    .offset(world.getBlockState(pos).getValue(FACING))))
+                    .canSupport(EBlockWeight.NONE))) {
                 
                 return true;
             }
+            
+            return false;
+            
+        } else {
+            
+            if (!world.getBlockState(pos).getBlock()
+                    .isReplaceable(world, pos)) {
+                
+                message(player, Lang.BUILDFAIL_OBSTACLE);
+                return false;
+            }
+            
+            for (EnumFacing facing : FACING.getAllowedValues()) {
+                
+                if (EBlockWeight.getWeight(world.getBlockState(pos
+                        .offset(facing))).canSupport(EBlockWeight.NONE)) {
+                    
+                    return true;
+                }
+            }
+            
+            message(player, Lang.BUILDFAIL_SUPPORT);
+            return false;
         }
-        
-        return false;
     }
     
     public int getLightLevel() {
@@ -107,52 +159,11 @@ public abstract class BlockLight extends BlockBuilding {
             world.setBlockToAir(pos);
         }
     }
-
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos,
-            EnumFacing side, float x, float y, float z,
-            int meta, EntityLivingBase placer) {
-        
-        if (BlockWeight.getWeight(world.getBlockState(pos.offset(side
-                .getOpposite())).getBlock()).canSupport(BlockWeight.NONE)) {
-            
-            return this.getDefaultState().withProperty(FACING,
-                    side.getOpposite());
-            
-        } else {
-            
-            for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
-                
-                if (BlockWeight.getWeight(world.getBlockState(pos
-                        .offset(facing)).getBlock())
-                        .canSupport(BlockWeight.NONE)) {
-                    
-                    return this.getDefaultState().withProperty(FACING, facing);
-                }
-            }
-
-            return this.getDefaultState();
-        }
-    }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        return Lists.newArrayList(new ItemStack(Item.getItemFromBlock(this)));
-    }
     
     @Override
     public BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, FACING);
-    }
-    
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return state;
     }
     
     @Override
@@ -168,11 +179,12 @@ public abstract class BlockLight extends BlockBuilding {
         return state.getValue(FACING).getIndex();
     }
     
+    /** Candle block. */
     public static class Candle extends BlockLight {
 
-        public Candle(String name, float extinguish) {
+        public Candle(String name, float extinguish, int stackSize) {
             
-            super(name, 10, extinguish);
+            super(name, 10, extinguish, stackSize);
         }
         
         @Override
@@ -185,11 +197,12 @@ public abstract class BlockLight extends BlockBuilding {
         }
     }
     
+    /** Torch block. */
     public static class Torch extends BlockLight {
 
-        public Torch(String name, float extinguish) {
+        public Torch(String name, float extinguish, int stackSize) {
             
-            super(name, 13, extinguish);
+            super(name, 13, extinguish, stackSize);
         }
         
         @Override
@@ -202,11 +215,12 @@ public abstract class BlockLight extends BlockBuilding {
         }
     }
     
+    /** Lamp block. */
     public static class Lamp extends BlockLight {
         
-        public Lamp(String name) {
+        public Lamp(String name, int stackSize) {
             
-            super(name, 14, -1);
+            super(name, 14, -1, stackSize);
         }
         
         @Override
