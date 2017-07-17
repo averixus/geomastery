@@ -8,13 +8,11 @@ package jayavery.geomastery.blocks;
 
 import java.util.Collections;
 import java.util.List;
-import javax.annotation.Nullable;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.tileentities.TEBed;
 import jayavery.geomastery.utilities.BlockMaterial;
 import jayavery.geomastery.utilities.EBlockWeight;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -122,39 +120,11 @@ public abstract class BlockBed
     }
     
     @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-
-        if (!this.isValid(world, pos, null, true, state, null)) {
-            
-            TileEntity te = world.getTileEntity(pos);
-            
-            if (state.getValue(PART) == EPartBed.FOOT) {
-                
-                ItemStack drop;
-                TEBed bed = (TEBed) te;
-                
-                if (bed.isUndamaged()) {
-                    
-                    drop = new ItemStack(this.item);
-                    
-                } else {
-                     
-                    drop = new ItemStack(this.item, 1,
-                            this.item.getMaxDamage() - bed.getUsesLeft());
-                }
-                
-                spawnAsEntity(world, pos, drop);
-            }
-        }
-    }
-    
-    @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune, TileEntity te,
             ItemStack tool, EntityPlayer player) {
         
-        if (te instanceof TEBed) {
+        if (te instanceof TEBed && state.getValue(PART) == EPartBed.FOOT) {
             
             TEBed bed = (TEBed) te;
             
@@ -421,6 +391,14 @@ public abstract class BlockBed
         public void onWakeup(World world, BlockPos pos, TEBed bed) {
             
             world.setBlockToAir(pos);
+        }
+        
+        @Override
+        public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+                IBlockState state, int fortune, TileEntity te,
+                ItemStack tool, EntityPlayer player) {
+            
+            return Collections.emptyList();
         }
     }
     
