@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** WorldGenerator for pear trees. */
-public class WorldGenTreePear extends WorldGenTree {
+public class WorldGenTreePear extends WorldGenTreeAbstract {
     
     public WorldGenTreePear(World world, Random rand, boolean isSapling) {
         

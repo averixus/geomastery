@@ -22,9 +22,11 @@ import net.minecraft.world.biome.Biome;
 public class PopulateChunkRicelake extends WorldGenAbstract {
         
     /** Water block state. */
-    private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
+    private static final IBlockState water =
+            Blocks.FLOWING_WATER.getDefaultState();
     /** Rice base block state. */
-    private static final IBlockState base = GeoBlocks.RICE_BASE.getDefaultState();
+    private static final IBlockState base =
+            GeoBlocks.RICE_BASE.getDefaultState();
     /** Rice top block state. */
     private static final IBlockState top = GeoBlocks.RICE_TOP.getDefaultState();
 
@@ -44,7 +46,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
         for (position = start; position.getY() > 5 &&
                 this.world.isAirBlock(position); position = position.down()) {}
 
-        // Vanilla generation
+        // Begin vanilla lake generation copy
         if (position.getY() <= 4) {
             
             return;
@@ -126,7 +128,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 }
             }
             
-            // Rice lake generation using vanilla loops
+            // Begin rice lake generation using vanilla loops
             ArrayList<BlockPos> possibles = new ArrayList<BlockPos>();
 
             for (int l1 = 0; l1 < 16; ++l1) {
@@ -184,7 +186,7 @@ public class PopulateChunkRicelake extends WorldGenAbstract {
                 }
             }
 
-            // Vanilla generation
+            // Back to vanilla generation copy
             for (int i2 = 0; i2 < 16; ++i2) {
                 
                 for (int j3 = 0; j3 < 16; ++j3) {

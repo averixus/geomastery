@@ -8,6 +8,7 @@ package jayavery.geomastery.worldgen;
 
 import java.util.Random;
 import com.google.common.base.Predicate;
+import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.Geomastery;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-/** Abstract superclass for WorldGenerators replacing Stone blocks. */
+/** WorldGenerators replacing stone blocks. */
 public abstract class WorldGenStone extends WorldGenAbstract {
 
     /** Predicate for blocks this generator replaces. */
@@ -46,9 +47,13 @@ public abstract class WorldGenStone extends WorldGenAbstract {
     
     /** @return The size of a single vein of this block. */
     protected abstract int getVeinSize();
-
-    /** @return Whether a single block in a vein should be generated or not. */
-    protected abstract boolean shouldGenBlock();
+    
+    /** @return Whether a single block in a vein should be generated or not.
+     * Default implementation is always true. */
+    protected boolean shouldGenBlock() {
+        
+        return true;
+    }
 
     @Override
     public void generateChunk(int xFromChunk, int zFromChunk) {
@@ -79,62 +84,57 @@ public abstract class WorldGenStone extends WorldGenAbstract {
         }
     }
     
-    /** Generates a single vein centred at the given position. */
-    protected void generateVein(int x, int y, int z) {
+    /** Generates a single vein centred at the given position.
+     * Mostly copied from WorldGenMinable. */
+    protected void generateVein(int centreX, int centreY, int centreZ) {
 
-        int veinSize = this.getVeinSize();
+        int size = this.getVeinSize();
 
-        float f = this.rand.nextFloat() * (float) Math.PI;
-        double d0 = x + 8 + MathHelper
-                .sin(f) * veinSize / 8.0F;
-        double d1 = x + 8 - MathHelper
-                .sin(f) * veinSize / 8.0F;
-        double d2 = z + 8 + MathHelper
-                .cos(f) * veinSize / 8.0F;
-        double d3 = z + 8 - MathHelper
-                .cos(f) * veinSize / 8.0F;
-        double d4 = y + this.rand.nextInt(3) - 2;
-        double d5 = y + this.rand.nextInt(3) - 2;
+        float angle = this.rand.nextFloat() * (float) Math.PI;
+        double posX = centreX + 8 + MathHelper.sin(angle) * size / 8.0F;
+        double negX = centreX + 8 - MathHelper.sin(angle) * size / 8.0F;
+        double posZ = centreZ + 8 + MathHelper.cos(angle) * size / 8.0F;
+        double negZ = centreZ + 8 - MathHelper.cos(angle) * size / 8.0F;
+        double oneY = centreY + this.rand.nextInt(3) - 2;
+        double twoY = centreY + this.rand.nextInt(3) - 2;
 
-        for (int i = 0; i < veinSize; ++i) {
+        for (int count = 0; count < size; ++count) {
             
-            float f1 = (float) i / (float) veinSize;
-            double d6 = d0 + (d1 - d0) * f1;
-            double d7 = d4 + (d5 - d4) * f1;
-            double d8 = d2 + (d3 - d2) * f1;
-            double d9 = this.rand.nextDouble() * veinSize / 16.0D;
-            double d10 = (MathHelper
-                    .sin((float) Math.PI * f1) + 1.0F) * d9 + 1.0D;
-            double d11 = (MathHelper
-                    .sin((float) Math.PI * f1) + 1.0F) * d9 + 1.0D;
-            int j = MathHelper.floor(d6 - d10 / 2.0D);
-            int k = MathHelper.floor(d7 - d11 / 2.0D);
-            int l = MathHelper.floor(d8 - d10 / 2.0D);
-            int i1 = MathHelper.floor(d6 + d10 / 2.0D);
-            int j1 = MathHelper.floor(d7 + d11 / 2.0D);
-            int k1 = MathHelper.floor(d8 + d10 / 2.0D);
+            float frVein = (float) count / (float) size;
+            double frX = posX + (negX - posX) * frVein;
+            double frY = oneY + (twoY - oneY) * frVein;
+            double frZ = posZ + (negZ - posZ) * frVein;
+            double frRand = this.rand.nextDouble() * size / 16.0D;
+            double frHor = (MathHelper.sin((float) Math.PI *
+                    frVein) + 1.0F) * frRand + 1.0D;
+            double frVert = (MathHelper.sin((float) Math.PI *
+                    frVein) + 1.0F) * frRand + 1.0D;
+            int minX = MathHelper.floor(frX - frHor / 2.0D);
+            int minY = MathHelper.floor(frY - frVert / 2.0D);
+            int minZ = MathHelper.floor(frZ - frHor / 2.0D);
+            int maxX = MathHelper.floor(frX + frHor / 2.0D);
+            int maxY = MathHelper.floor(frY + frVert / 2.0D);
+            int maxZ = MathHelper.floor(frZ + frHor / 2.0D);
 
-            for (int l1 = j; l1 <= i1; ++l1) {
+            for (int x = minX; x <= maxX; ++x) {
                 
-                double d12 = (l1 + 0.5D - d6) / (d10 / 2.0D);
+                double diX = (x + 0.5D - frX) / (frHor / 2.0D);
 
-                if (d12 * d12 < 1.0D) {
+                if (diX * diX < 1.0D) {
                     
-                    for (int i2 = k; i2 <= j1; ++i2) {
+                    for (int y = minY; y <= maxY; ++y) {
                         
-                        double d13 = (i2 + 0.5D - d7) / (d11 / 2.0D);
+                        double diY = (y + 0.5D - frY) / (frVert / 2.0D);
 
-                        if (d12 * d12 + d13 * d13 < 1.0D) {
+                        if (diX * diX + diY * diY < 1.0D) {
                             
-                            for (int j2 = l; j2 <= k1; ++j2) {
+                            for (int z = minZ; z <= maxZ; ++z) {
                                 
-                                double d14 = (j2 + 0.5D - d8) /
-                                        (d10 / 2.0D);
+                                double diZ = (z + 0.5D - frZ) / (frHor / 2.0D);
 
-                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D) {
+                                if (diX * diX + diY * diY + diZ * diZ < 1.0D) {
                                     
-                                    BlockPos blockpos =
-                                            new BlockPos(l1, i2, j2);
+                                    BlockPos blockpos = new BlockPos(x, y, z);
                                     IBlockState state =
                                             this.world.getBlockState(blockpos);
                                     
@@ -154,6 +154,378 @@ public abstract class WorldGenStone extends WorldGenAbstract {
                     }
                 }
             }
+        }
+    }
+    
+    /** Clay. */
+    public static class Clay extends WorldGenStone {
+
+        public Clay(World world, Random rand) {
+            
+            super(world, rand, Blocks.CLAY.getDefaultState(), 40, 80, 3, 1);
+            this.predicate = (s) -> s != null && (s.getBlock() == Blocks.STONE
+                    || s.getBlock() == Blocks.DIRT
+                    || s.getBlock() == Blocks.GRASS);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(20) + 1;
+        }
+    }
+    
+    /** Chalk. */
+    public static class Chalk extends WorldGenStone {
+
+        public Chalk(World world, Random rand) {
+            
+            super(world, rand, GeoBlocks.CHALK.getDefaultState(),
+                    30, 256, 1, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(12) + 1;
+        }
+    }
+    
+    /** Salt. */
+    public static class Salt extends WorldGenStone {
+
+        public Salt(World world, Random rand) {
+            
+            super(world, rand, GeoBlocks.SALT.getDefaultState(),
+                    20, 60, 1, 0.5);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(100) + 1;
+        }
+    }
+    
+    /** Tin ore. */
+    public static class Tin extends WorldGenStone {
+
+        public Tin(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.ORE_TIN.getDefaultState(),
+                    30, 120, 40, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            int rand1 = this.rand.nextInt(2);
+            int rand2 = this.rand.nextInt(2);
+
+            return rand1 + rand2 + 1;
+        }
+    }
+    
+    /** Silver ore. */
+    public static class Silver extends WorldGenStone {
+
+        public Silver(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.ORE_SILVER.getDefaultState(),
+                    10, 60, 10, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            int rand1 = this.rand.nextInt(2);
+            int rand2 = this.rand.nextInt(2);
+            int rand3 = this.rand.nextInt(2);
+
+            return rand1 + rand2 + rand3 + 1;
+        }
+    }
+    
+    /** Iron ore. */
+    public static class Iron extends WorldGenStone {
+
+        public Iron(World world, Random rand) {
+
+            super(world, rand, Blocks.IRON_ORE.getDefaultState(),
+                    15, 50, 20, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            int rand1 = this.rand.nextInt(3);
+            int rand2 = this.rand.nextInt(3);
+            int rand3 = this.rand.nextInt(3);
+
+            return rand1 + rand2 + rand3 + 1;
+        }
+    }
+    
+    /** Gold ore. */
+    public static class Gold extends WorldGenStone {
+
+        public Gold(World world, Random rand) {
+
+            super(world, rand, Blocks.GOLD_ORE.getDefaultState(), 0, 40, 10, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            int rand1 = this.rand.nextInt(2);
+            int rand2 = this.rand.nextInt(2);
+            int rand3 = this.rand.nextInt(2);
+
+            return rand1 + rand2 + rand3;
+        }
+    }
+    
+    /** Copper ore. */
+    public static class Copper extends WorldGenStone {
+
+        public Copper(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.ORE_COPPER.getDefaultState(),
+                    40, 120, 20, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            int rand1 = this.rand.nextInt(5);
+            int rand2 = this.rand.nextInt(5);
+
+            return rand1 + rand2 + 1;
+        }
+    }
+    
+    /** Coal ore. */
+    public static class Coal extends WorldGenStone {
+
+        public Coal(World world, Random rand) {
+
+            super(world, rand, Blocks.COAL_ORE.getDefaultState(), 5, 60, 20, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(10) + 1;
+        }
+    }
+    
+    /** Fireopal lode. */
+    public static class Fireopal extends WorldGenStone {
+
+        public Fireopal(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.LODE_FIREOPAL.getDefaultState(),
+                    5, 15, 2, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(15) + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.3) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    /** Emerald lode. */
+    public static class Emerald extends WorldGenStone {
+
+        public Emerald(World world, Random rand) {
+
+            super(world, rand, Blocks.EMERALD_ORE.getDefaultState(),
+                    0, 30, 1, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(39) + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.1) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    /** Diamond lode. */
+    public static class Diamond extends WorldGenStone {
+
+        public Diamond(World world, Random rand) {
+
+            super(world, rand, Blocks.DIAMOND_ORE.getDefaultState(),
+                    0, 15, 1, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(79) + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.05) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    /** Amethyst lode. */
+    public static class Amethyst extends WorldGenStone {
+
+        public Amethyst(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.LODE_AMETHYST.getDefaultState(),
+                    90, 256, 20, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            int rand1 = this.rand.nextInt(4);
+            int rand2 = this.rand.nextInt(4);
+            int rand3 = this.rand.nextInt(4);
+            int rand4 = this.rand.nextInt(4);
+
+            return rand1 + rand2 + rand3 + rand4 + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.9) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    /** Sapphire lode. */
+    public static class Sapphire extends WorldGenStone {
+
+        public Sapphire(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.LODE_SAPPHIRE.getDefaultState(),
+                    80, 120, 30, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(2) + 1;
+        }
+    }
+    
+    /** Ruby lode. */
+    public static class Ruby extends WorldGenStone {
+
+        public Ruby(World world, Random rand) {
+
+            super(world, rand, GeoBlocks.LODE_RUBY.getDefaultState(),
+                    0, 256, 1, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(29) + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.2) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    /** Redstone lode. */
+    public static class Redstone extends WorldGenStone {
+
+        public Redstone(World world, Random rand) {
+
+            super(world, rand, Blocks.REDSTONE_ORE.getDefaultState(),
+                    5, 45, 2, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(39) + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.2) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    /** Lapis lode. */
+    public static class Lapis extends WorldGenStone {
+
+        public Lapis(World world, Random rand) {
+
+            super(world, rand, Blocks.LAPIS_ORE.getDefaultState(),
+                    60, 70, 1, 1);
+        }
+
+        @Override
+        protected int getVeinSize() {
+
+            return this.rand.nextInt(19) + 1;
+        }
+
+        @Override
+        protected boolean shouldGenBlock() {
+
+            if (this.rand.nextFloat() < 0.3) {
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

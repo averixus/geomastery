@@ -21,7 +21,7 @@ public abstract class WorldGenAbstract {
     
     /** The world to generate in. */
     protected World world;
-    /** Random for utilities. */
+    /** Randomiser. */
     protected Random rand;
     
     public WorldGenAbstract(World world, Random rand) {
@@ -107,9 +107,7 @@ public abstract class WorldGenAbstract {
         }
         
         BlockPos spacePos = checkPos.up();
-        IBlockState spaceState = this.world.getBlockState(spacePos);
-        boolean validSpace = spaceState.getBlock()
-                .isReplaceable(this.world, spacePos);
+        boolean validSpace = this.world.isAirBlock(spacePos);
         
         if (checkBlock.isSideSolid(checkState, this.world,
                 checkPos, EnumFacing.UP) && validSpace) {

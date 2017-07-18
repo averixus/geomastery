@@ -7,14 +7,14 @@
 package jayavery.geomastery.utilities;
 
 import java.util.Random;
-import jayavery.geomastery.worldgen.WorldGenTree;
+import jayavery.geomastery.worldgen.WorldGenTreeAbstract;
 import net.minecraft.world.World;
 
-/** Functional interface for creating a WorldGenTree. */
+/** Functional interface for creating a WorldGenTreeAbstract. */
 @FunctionalInterface
 public interface ITreeGenFactory {
     
-    /** @return A new WorldGenTree. */
-    public WorldGenTree makeTreeGen(World world, Random rand,
+    /** @return A new WorldGenTreeAbstract. */
+    public WorldGenTreeAbstract makeTreeGen(World world, Random rand,
             boolean isSapling);
 }

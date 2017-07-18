@@ -174,7 +174,7 @@ public class Geomastery {
         entity("falling_leaves", FallingTreeBlock.Leaves.class);
         
         LOG.info("Registering packets");
-        sPacket(SPacketContainer.Handler.class, SPacketContainer.class); // TEST
+        sPacket(SPacketContainer.Handler.class, SPacketContainer.class);
         cPacket(CPacketContainer.Handler.class, CPacketContainer.class);
         cPacket(CPacketTemp.Handler.class, CPacketTemp.class);
         cPacket(CPacketHunger.Handler.class, CPacketHunger.class);

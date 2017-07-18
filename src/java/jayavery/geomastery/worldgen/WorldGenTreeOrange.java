@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** WorldGenerator for orange trees. */
-public class WorldGenTreeOrange extends WorldGenTree {
+public class WorldGenTreeOrange extends WorldGenTreeAbstract {
     
     public WorldGenTreeOrange(World world, Random rand, boolean isSapling) {
         

@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 /** Abstract superclass for tree WorldGenerators. */
-public abstract class WorldGenTree extends WorldGenAbstract {
+public abstract class WorldGenTreeAbstract extends WorldGenAbstract {
     
     /** Chance to generate per chunk. */
     private static final float CHANCE = 0.002F;
@@ -28,7 +28,7 @@ public abstract class WorldGenTree extends WorldGenAbstract {
     /** Type of seedling to generate. */
     protected BlockSeedling seedlingType;
     
-    public WorldGenTree(World world, Random rand, boolean isSapling,
+    public WorldGenTreeAbstract(World world, Random rand, boolean isSapling,
             int spread, int maxCluster, BlockSeedling seedlingType) {
         
         super(world, rand);

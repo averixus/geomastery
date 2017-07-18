@@ -12,7 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Abstract superclass for generating blocks on the surface. */
+/** Generator for peat on the surface. */
 public class WorldGenPeat extends WorldGenAbstract {
 
     /** Chance of generating per chunk. */

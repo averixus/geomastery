@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** WorldGenerator for banana trees. */
-public class WorldGenTreeBanana extends WorldGenTree {
+public class WorldGenTreeBanana extends WorldGenTreeAbstract {
 
     public WorldGenTreeBanana(World world, Random rand, boolean isSapling) {
         

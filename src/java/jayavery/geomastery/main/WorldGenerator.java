@@ -8,45 +8,16 @@ package jayavery.geomastery.main;
 
 import java.util.Random;
 import jayavery.geomastery.worldgen.PopulateChunkRicelake;
-import jayavery.geomastery.worldgen.WorldGenAmethyst;
 import jayavery.geomastery.worldgen.WorldGenAntler;
-import jayavery.geomastery.worldgen.WorldGenBean;
 import jayavery.geomastery.worldgen.WorldGenBeehive;
-import jayavery.geomastery.worldgen.WorldGenBeetroot;
-import jayavery.geomastery.worldgen.WorldGenBerry;
-import jayavery.geomastery.worldgen.WorldGenCarrot;
-import jayavery.geomastery.worldgen.WorldGenChalk;
-import jayavery.geomastery.worldgen.WorldGenChickpea;
-import jayavery.geomastery.worldgen.WorldGenClay;
-import jayavery.geomastery.worldgen.WorldGenCoal;
-import jayavery.geomastery.worldgen.WorldGenCopper;
-import jayavery.geomastery.worldgen.WorldGenCotton;
-import jayavery.geomastery.worldgen.WorldGenDiamond;
-import jayavery.geomastery.worldgen.WorldGenEmerald;
-import jayavery.geomastery.worldgen.WorldGenFireopal;
-import jayavery.geomastery.worldgen.WorldGenGold;
-import jayavery.geomastery.worldgen.WorldGenHemp;
-import jayavery.geomastery.worldgen.WorldGenIron;
-import jayavery.geomastery.worldgen.WorldGenLapis;
-import jayavery.geomastery.worldgen.WorldGenMelon;
+import jayavery.geomastery.worldgen.WorldGenCrop;
 import jayavery.geomastery.worldgen.WorldGenPeat;
-import jayavery.geomastery.worldgen.WorldGenPepper;
-import jayavery.geomastery.worldgen.WorldGenPotato;
-import jayavery.geomastery.worldgen.WorldGenPumpkin;
-import jayavery.geomastery.worldgen.WorldGenRedstone;
-import jayavery.geomastery.worldgen.WorldGenRuby;
-import jayavery.geomastery.worldgen.WorldGenSalt;
-import jayavery.geomastery.worldgen.WorldGenSapphire;
-import jayavery.geomastery.worldgen.WorldGenSilver;
+import jayavery.geomastery.worldgen.WorldGenStone;
 import jayavery.geomastery.worldgen.WorldGenTar;
-import jayavery.geomastery.worldgen.WorldGenTin;
-import jayavery.geomastery.worldgen.WorldGenTomato;
 import jayavery.geomastery.worldgen.WorldGenTreeApple;
 import jayavery.geomastery.worldgen.WorldGenTreeBanana;
 import jayavery.geomastery.worldgen.WorldGenTreeOrange;
 import jayavery.geomastery.worldgen.WorldGenTreePear;
-import jayavery.geomastery.worldgen.WorldGenWheat;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -84,44 +55,44 @@ public class WorldGenerator implements IWorldGenerator {
     private void generateOverworldChunk(World world, Random rand,
             int xFromChunk, int zFromChunk) {
 
-        new WorldGenCoal(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenDiamond(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenEmerald(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenGold(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenIron(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenLapis(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenRedstone(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Coal(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Diamond(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Emerald(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Gold(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Iron(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Lapis(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Redstone(world, rand).generateChunk(xFromChunk, zFromChunk);
         
-        new WorldGenCopper(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenFireopal(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenRuby(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenSapphire(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenSilver(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenTin(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenAmethyst(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Copper(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Fireopal(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Ruby(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Sapphire(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Silver(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Tin(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Amethyst(world, rand).generateChunk(xFromChunk, zFromChunk);
         
-        new WorldGenSalt(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenChalk(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Salt(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Chalk(world, rand).generateChunk(xFromChunk, zFromChunk);
         new WorldGenPeat(world, rand).generateChunk(xFromChunk, xFromChunk);
         new WorldGenTar(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenClay(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenStone.Clay(world, rand).generateChunk(xFromChunk, zFromChunk);
         
         new WorldGenAntler(world, rand).generateChunk(xFromChunk, zFromChunk);
         
-        new WorldGenBean(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenTomato(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenBerry(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenCotton(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenHemp(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenPepper(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenChickpea(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenBeetroot(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenCarrot(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenPotato(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenWheat(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Bean(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Tomato(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Berry(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Cotton(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Hemp(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Pepper(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Chickpea(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Beetroot(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Carrot(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Potato(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Wheat(world, rand).generateChunk(xFromChunk, zFromChunk);
         
-        new WorldGenPumpkin(world, rand).generateChunk(xFromChunk, zFromChunk);
-        new WorldGenMelon(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Pumpkin(world, rand).generateChunk(xFromChunk, zFromChunk);
+        new WorldGenCrop.Melon(world, rand).generateChunk(xFromChunk, zFromChunk);
         
         new WorldGenBeehive(world, rand).generateChunk(xFromChunk, zFromChunk);
         
