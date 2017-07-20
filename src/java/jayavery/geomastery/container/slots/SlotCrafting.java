@@ -27,9 +27,8 @@ public class SlotCrafting extends Slot {
     /** The amount of items crafted at this slot. */
     private int amountCrafted;
 
-    public SlotCrafting(EntityPlayer player,
-            InventoryCrafting craftingInv, IInventory inventory,
-            int xPosition, int yPosition,
+    public SlotCrafting(EntityPlayer player, InventoryCrafting craftingInv,
+            IInventory inventory, int xPosition, int yPosition,
             CraftingManager craftingManager) {
 
         super(inventory, 0, xPosition, yPosition);

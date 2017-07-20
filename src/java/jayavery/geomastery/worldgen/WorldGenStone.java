@@ -21,8 +21,7 @@ import net.minecraft.world.World;
 public abstract class WorldGenStone extends WorldGenAbstract {
 
     /** Predicate for blocks this generator replaces. */
-    protected Predicate<IBlockState> predicate =
-            BlockMatcher.forBlock(Blocks.STONE);
+    protected Predicate<IBlockState> predicate = BlockMatcher.forBlock(Blocks.STONE);
     /** State of the block to generate. */
     protected IBlockState state;
     /** Minimum y co-ordinate to generate at. */

@@ -17,8 +17,7 @@ public class TEBed extends TileEntity implements ITickable {
     /** The maximum number of times the player can sleep in this bed. */
     public static final int MAX_USES = 20;
 
-    /** The remaining number of times the player can sleep in
-     * this bed before its durability runs out. */
+    /** The remaining number of times the player can sleep in this bed before its durability runs out. */
     private int usesLeft = MAX_USES;
 
     @Override

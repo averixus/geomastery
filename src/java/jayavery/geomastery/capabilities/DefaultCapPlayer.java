@@ -7,7 +7,6 @@
 package jayavery.geomastery.capabilities;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -20,17 +19,15 @@ import jayavery.geomastery.main.GeoBiomes;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.packets.CPacketBackpack;
 import jayavery.geomastery.packets.CPacketDebug;
 import jayavery.geomastery.packets.CPacketHunger;
 import jayavery.geomastery.packets.CPacketTemp;
-import jayavery.geomastery.packets.CPacketYoke;
 import jayavery.geomastery.tileentities.TEFurnaceAbstract;
-import jayavery.geomastery.utilities.EquipMaterial;
-import jayavery.geomastery.utilities.FoodStatsPartial;
 import jayavery.geomastery.utilities.EFoodType;
 import jayavery.geomastery.utilities.ESpeedStage;
 import jayavery.geomastery.utilities.ETempStage;
+import jayavery.geomastery.utilities.EquipMaterial;
+import jayavery.geomastery.utilities.FoodStatsPartial;
 import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,6 +52,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     private static final int DAMAGE_MAX = 200;
     /** Tick count for hit of temperature damage. */
     private static final int DAMAGE_TIME = 160;
+    /** Decimal format for temperatures. */
+    private static DecimalFormat TEMP = new DecimalFormat("+0.00;-0.00");
     /** Default walk speed actual value. */
     private static final float DEFAULT_SPEED = 4.3F;
     /** Inventory slots in a row. */
@@ -75,9 +74,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     private ETempStage tempStage = ETempStage.OK;
     /** Temperature debug text. */
     private List<String> debug = Lists.newArrayList();
-    /** Decimal format for temperatures. */
-    private DecimalFormat temp = new DecimalFormat("+0.00;-0.00");
-    
+
     /** Current walk speed. */
     private ESpeedStage speedStage = null;
     
@@ -97,8 +94,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     /** Convenience list of food stats. */
     private final List<FoodStatsPartial> typesList = Lists.newArrayList();
     /** Comparator to sort foodstats in order of total fullness. */
-    private final Comparator<FoodStatsPartial> comparator =
-            (a, b) -> Math.round(b.getFullness() - a.getFullness());
+    private final Comparator<FoodStatsPartial> comparator = (a, b) -> Math.round(b.getFullness() - a.getFullness());
             
     /** Set of item pickup delays. */
     private final Map<Item, Long> delays = Maps.newHashMap();
@@ -121,17 +117,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     public int getInventoryRows() {
         
         int rows = 0;
-
-        if (this.backpack.getItem() == GeoItems.BACKPACK) {
-
-            rows += 1;
-        }
-
-        if (this.yoke.getItem() == GeoItems.YOKE) {
-
-            rows += 2;
-        }
-
+        rows = this.backpack.getItem() == GeoItems.BACKPACK ? rows + 1 : rows;
+        rows = this.yoke.getItem() == GeoItems.YOKE ? rows + 2 : rows;
         return rows;
     }
     
@@ -306,7 +293,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         Biome biome = world.getBiomeForCoordsBody(playerPos);
         float biomeVar = GeoBiomes.getTemp(biome);
         temp += biomeVar;
-        this.debug.add("Biome base temp: " + this.temp.format(biomeVar));
+        this.debug.add("Biome base temp: " + TEMP.format(biomeVar));
         
         // Altitude
         float heightVar = 0;
@@ -318,7 +305,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += heightVar;
-        this.debug.add("Altitude var: " + this.temp.format(heightVar));
+        this.debug.add("Altitude var: " + TEMP.format(heightVar));
         
         // Time of day
         float timeVar = 0;
@@ -328,23 +315,23 @@ public class DefaultCapPlayer implements ICapPlayer {
             
             timeVar = 0.5F; 
             
-        } else if (time > 6000 && time <= 9000) { // 12 til 3pm
+        } else if (time > 6000 && time <= 9000) { // 12 til 3 pm
             
             timeVar = 1;
             
-        } else if (time > 9000 && time <= 12000) { // 3 til 6pm
+        } else if (time > 9000 && time <= 12000) { // 3 til 6 pm
             
             timeVar = 0.5F;
             
-        } else if (time > 15000 && time <= 18000) { // 9 til 12pm
+        } else if (time > 15000 && time <= 18000) { // 9 til 12 pm
             
             timeVar = -0.5F;
             
-        } else if (time > 18000 && time <= 21000) { // 12 til 3am
+        } else if (time > 18000 && time <= 21000) { // 12 til 3 am
             
             timeVar = -1;
             
-        } else if (time > 21000) { // 3 til 6am
+        } else if (time > 21000) { // 3 til 6 am
             
             timeVar = -0.5F;
         }
@@ -357,7 +344,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += timeVar;
-        this.debug.add("Time var: " + this.temp.format(timeVar));
+        this.debug.add("Time var: " + TEMP.format(timeVar));
                 
         // Cave climate
         boolean isCave = true;
@@ -406,7 +393,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
 
         temp += waterVar;
-        this.debug.add("Water var: " + this.temp.format(waterVar));
+        this.debug.add("Water var: " + TEMP.format(waterVar));
 
         // Clothing
         float clothesVar = 0;
@@ -434,7 +421,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += clothesVar;
-        this.debug.add("Clothing var: " + this.temp.format(clothesVar));
+        this.debug.add("Clothing var: " + TEMP.format(clothesVar));
 
         // Heating blocks
         double fireVar = 0;
@@ -497,7 +484,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         temp += fireVar;
-        this.debug.add("Heat block var: " + this.temp.format(fireVar));
+        this.debug.add("Heat block var: " + TEMP.format(fireVar));
 
         // Define stage
         this.tempStage = ETempStage.fromTemp(temp);
@@ -521,7 +508,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             this.damageTimer--;
         }
         
-        this.debug.add("Final temp: " + this.temp.format(temp));
+        this.debug.add("Final temp: " + TEMP.format(temp));
         this.sendDebugPacket();
         
         return oldStage != this.tempStage;
@@ -533,7 +520,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         return this.debug;
     }
         
-    /** Heal the player if possible, using up fullest FoodTypes first. */
+    /** Heals the player if possible, using up fullest FoodTypes first. */
     private void tickHeal() {
    
         if (!this.player.shouldHeal()) {
@@ -549,7 +536,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
     }
     
-    /** Calculate the player's walk speed based on inventory. */
+    /** Recalculates the player's walk speed based on inventory. */
     private void tickSpeed() {
         
         double speed = DEFAULT_SPEED;
@@ -624,7 +611,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
     }
     
-    /** Remove pickups that are timed out. */
+    /** Removes pickup delays that are timed out. */
     private void tickPickup() {
         
         Iterator<Entry<Item, Long>> iterator =
@@ -656,8 +643,6 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         this.sendTempPacket(this.tempStage);
-        this.sendBackpackPacket(this.backpack);
-        this.sendYokePacket(this.yoke);
     }
     
     /** Sends a packet to the client to update the EFoodType's hunger level. */
@@ -672,22 +657,6 @@ public class DefaultCapPlayer implements ICapPlayer {
     private void sendTempPacket(ETempStage stage) {
         
         Geomastery.NETWORK.sendTo(new CPacketTemp(stage),
-                (EntityPlayerMP) this.player);
-    }
-    
-    /** Sends a packet to the client to update the backpack slot, only needed
-     * to sync when joining world (all other syncing is in Container). */
-    private void sendBackpackPacket(ItemStack stack) {
-        
-        Geomastery.NETWORK.sendTo(new CPacketBackpack(stack),
-                (EntityPlayerMP) this.player);
-    }
-    
-    /** Sends a packet to the client to update the yoke slot, only needed
-     * to sync when joining world (all other syncing is in Container). */
-    private void sendYokePacket(ItemStack stack) {
-        
-        Geomastery.NETWORK.sendTo(new CPacketYoke(stack),
                 (EntityPlayerMP) this.player);
     }
     

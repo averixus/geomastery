@@ -35,13 +35,7 @@ public class ItemCompost extends ItemSimple {
         this.setMaxDamage(0);
     }
     
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-
-        return super.getUnlocalizedName() + "_grade_" + stack.getMetadata();
-    }
-    
-    /** Applies the stack's fertiliser level to right-clicked crop. */
+    // Applies the stack's fertiliser level to right-clicked crop
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world,
             BlockPos targetPos, EnumHand hand, EnumFacing targetSide,
@@ -75,8 +69,14 @@ public class ItemCompost extends ItemSimple {
         
         return EnumActionResult.FAIL;
     }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+
+        return super.getUnlocalizedName() + "_grade_" + stack.getMetadata();
+    }
     
-    /** Variants to put in creative inventory. */
+    // Puts variants in creative inventory
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(Item item, CreativeTabs tab,

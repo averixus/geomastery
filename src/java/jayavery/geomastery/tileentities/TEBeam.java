@@ -98,14 +98,12 @@ public class TEBeam extends TileEntity {
         this.floor = ETypeFloor.values()[compound.getInteger("floor")];
     }
     
-    // Required to update rendering on the client. 
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    // Required to update rendering on the client.
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -113,7 +111,6 @@ public class TEBeam extends TileEntity {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    // Required to update rendering on the client. 
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

@@ -76,20 +76,17 @@ public class TECraftingCandlemaker extends
                 EnumFacing facing) {
             
             BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_CANDLEMAKER;
-            boolean broken = false;
             
             if (this == FRONT) {
 
-                broken |= world.getBlockState(pos.offset(facing)).getBlock()
+                return world.getBlockState(pos.offset(facing)).getBlock()
                         != block;
 
             } else {
 
-                broken |= world.getBlockState(pos.offset(facing.getOpposite()))
+                return world.getBlockState(pos.offset(facing.getOpposite()))
                         .getBlock() != block;
             }
-            
-            return broken;
         }
         
         @Override
@@ -108,47 +105,46 @@ public class TECraftingCandlemaker extends
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
 
-            if (this == FRONT) {
+            if (this != FRONT) {
                 
-                BlockContainerMulti<EPartCandlemaker> block =
-                        GeoBlocks.CRAFTING_CANDLEMAKER;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartCandlemaker> prop = block.getPartProperty();
+                return false;
+            }
                 
-                // Prepare map of properties
+            BlockContainerMulti<EPartCandlemaker> block =
+                    GeoBlocks.CRAFTING_CANDLEMAKER;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartCandlemaker> prop = block.getPartProperty();
+            
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartCandlemaker> map = Maps.newHashMap();
+            map.put(pos, FRONT);
+            map.put(pos.offset(facing), BACK);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartCandlemaker> entry : map.entrySet()) {
                 
-                Map<BlockPos, EPartCandlemaker> map = Maps.newHashMap();
-                map.put(pos, FRONT);
-                map.put(pos.offset(facing), BACK);
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
                 
-                // Check validity
-                
-                for (Entry<BlockPos, EPartCandlemaker> entry : map.entrySet()) {
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
                     
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
+                    return false;
                 }
-                
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingCandlemaker) world.getTileEntity(e
-                        .getKey())).setState(facing, e.getValue()));
-                
-                return true;
             }
             
-            return false;
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingCandlemaker) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            
+            return true;
         }
     }
 }

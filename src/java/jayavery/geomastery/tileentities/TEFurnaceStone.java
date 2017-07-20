@@ -62,14 +62,9 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EPartStone> {
             
             switch (this) {
                 
-                case BL:
-                case BM:
-                case BR:
+                case BL: case BM: case BR:
                     return true;
-                case TL:
-                case TM:
-                case TR:
-                default:
+                case TL: case TM: case TR: default:
                     return false;
             }
         }
@@ -89,8 +84,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EPartStone> {
                     return pos.offset(facing.rotateY().getOpposite()).down();
                 case TR: 
                     return pos.offset(facing.rotateY().getOpposite(), 2).down();
-                case BL:
-                default: 
+                case BL: default: 
                     return pos;
             }
         }
@@ -100,53 +94,29 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EPartStone> {
                 EnumFacing facing) {
             
             BlockBuildingAbstract<?> block = GeoBlocks.FURNACE_STONE;
-            boolean broken = false;
             
             switch (this) {
                 
-                case BM: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
+                case BM:
+                    return world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BR: {
-
-                    broken |= world.getBlockState(pos.up()).getBlock() != block;
-                    break;
-                }
-
-                case TR: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()
+                case BR:
+                    return world.getBlockState(pos.up()).getBlock() != block;
+                case TR:
+                    return world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
-
-                case TM: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()
+                case TM:
+                    return world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
-
-                case TL: {
-
-                    broken |= world.getBlockState(pos.down()).getBlock()
+                case TL:
+                    return world.getBlockState(pos.down()).getBlock()
                             != block;
-                    break;
-                }
-
-                case BL: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
+                case BL:
+                    return world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
-                    break;
-                }
+                default:
+                    return false;
             }
-            
-            return broken;
         }
         
         @Override
@@ -154,15 +124,9 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EPartStone> {
             
             switch (this) {
 
-                case TR: 
-                case TM: 
-                case TL: 
+                case TR: case TM: case TL: 
                     return BlockNew.TWELVE;
-                    
-                case BR: 
-                case BM:             
-                case BL:
-                default: 
+                case BR: case BM: case BL: default: 
                     return Block.FULL_BLOCK_AABB;
             }
         }
@@ -177,50 +141,49 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EPartStone> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == BM) {
+            if (this != BM) {
                 
-                BlockContainerMulti<EPartStone> block = GeoBlocks.FURNACE_STONE;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartStone> prop = block.getPartProperty();
-                
-                // Prepare map of properties
-                
-                Map<BlockPos, EPartStone> map = Maps.newHashMap();
-                map.put(pos, BM);
-                map.put(pos.offset(facing.rotateY().getOpposite()), BL);
-                map.put(pos.offset(facing.rotateY()), BR);
-                map.put(pos.offset(facing.rotateY().getOpposite()).up(), TL);
-                map.put(pos.up(), TM);
-                map.put(pos.offset(facing.rotateY()).up(), TR);
-                
-                // Check validity
-                
-                for (Entry<BlockPos, EPartStone> entry : map.entrySet()) {
-                    
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
-                }
-
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TEFurnaceStone) world.getTileEntity(e.getKey()))
-                        .setState(facing, e.getValue()));
-                
-                return true;
+                return false;
             }
+                
+            BlockContainerMulti<EPartStone> block = GeoBlocks.FURNACE_STONE;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartStone> prop = block.getPartProperty();
             
-            return false;
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartStone> map = Maps.newHashMap();
+            map.put(pos, BM);
+            map.put(pos.offset(facing.rotateY().getOpposite()), BL);
+            map.put(pos.offset(facing.rotateY()), BR);
+            map.put(pos.offset(facing.rotateY().getOpposite()).up(), TL);
+            map.put(pos.up(), TM);
+            map.put(pos.offset(facing.rotateY()).up(), TR);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartStone> entry : map.entrySet()) {
+                
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
+                
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
+                    
+                    return false;
+                }
+            }
+
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TEFurnaceStone) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            
+            return true;
         }
     }
 }

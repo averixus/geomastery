@@ -30,6 +30,12 @@ public class ItemSimple extends Item {
         this(name, 1);
     }
     
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
+    }
+    
     /** Applies constructor functions statically. */
     public static void setupItem(Item item, String name,
             int stackSize, CreativeTabs tab) {
@@ -39,7 +45,7 @@ public class ItemSimple extends Item {
         item.setMaxStackSize(stackSize);
         item.setCreativeTab(tab);
     }
-    
+
     /** @return A new stack of the item with a decay capability
      * set to the current world time if applicable. */
     public static ItemStack newStack(Item item, int count, World world) {
@@ -48,7 +54,7 @@ public class ItemSimple extends Item {
         
         if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
             
-            long birth = world == null ? -1 : world.getTotalWorldTime();
+            long birth = world == null ? 0 : world.getTotalWorldTime();
             stack.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(birth);
         }
         

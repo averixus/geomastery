@@ -36,11 +36,26 @@ public class BlockVaultDoubling extends BlockVault implements IDoublingBlock {
     }
     
     @Override
-    public boolean isDouble(IBlockState state) {
+    public boolean shouldDouble(IBlockState state, EnumFacing side) {
         
-        return state.getValue(DOUBLE);
+        if (this.isDouble(state)) {
+            
+            return false;
+        }
+        
+        EVaultShape shape = state.getValue(SHAPE);
+        
+        if (shape != EVaultShape.SINGLE) {
+            
+            return true;
+            
+        } else {
+            
+            EnumFacing facing = state.getValue(FACING);
+            return side != facing.rotateY() && side != facing.rotateYCCW();            
+        }
     }
-    
+
     @Override
     public boolean place(World world, BlockPos targetPos,
             EnumFacing targetSide, EnumFacing placeFacing,
@@ -52,13 +67,13 @@ public class BlockVaultDoubling extends BlockVault implements IDoublingBlock {
                 targetSide.getOpposite() : placeFacing;
         IBlockState setState = this.getDefaultState()
                 .withProperty(FACING, placeFacing);
-
+    
         if (targetBlock == this && this.shouldDouble(targetState
                 .getActualState(world, targetPos), targetSide)) {
             
             world.setBlockState(targetPos,
                     setState.withProperty(DOUBLE, true));
-       
+    
         } else {
             
             targetPos = targetPos.offset(targetSide);
@@ -77,7 +92,7 @@ public class BlockVaultDoubling extends BlockVault implements IDoublingBlock {
         
         return true;
     }
-    
+
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack tool) {
@@ -93,7 +108,7 @@ public class BlockVaultDoubling extends BlockVault implements IDoublingBlock {
         
         this.doHarvest(world, pos, state, player, te, tool);
     }
-    
+
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune, TileEntity te,
@@ -104,24 +119,9 @@ public class BlockVaultDoubling extends BlockVault implements IDoublingBlock {
     }
 
     @Override
-    public boolean shouldDouble(IBlockState state, EnumFacing side) {
+    public boolean isDouble(IBlockState state) {
         
-        if (state.getValue(DOUBLE)) {
-            
-            return false;
-        }
-        
-        EVaultShape shape = state.getValue(SHAPE);
-        
-        if (shape != EVaultShape.SINGLE) {
-            
-            return true;
-            
-        } else {
-            
-            EnumFacing facing = state.getValue(FACING);
-            return side != facing.rotateY() && side != facing.rotateYCCW();            
-        }
+        return state.getValue(DOUBLE);
     }
     
     @Override

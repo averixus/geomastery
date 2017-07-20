@@ -29,6 +29,9 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
     /** Enum part of this block. */
     protected E part;
     
+    /** To implement values() for generic type, only used for NBT tags. */
+    protected abstract E partByOrdinal(int ordinal);
+    
     /** Sets the given facing and part for this block. */
     public void setState(EnumFacing facing, E part) {
         
@@ -62,7 +65,7 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
             this.part.getCollisionBox(this.facing);
     }
     
-    /** @return Selection bounding box of this part. */
+    /** @return Highlight bounding box of this part. */
     public AxisAlignedBB getBoundingBox() {
         
         return this.part == null ? Block.FULL_BLOCK_AABB :
@@ -87,9 +90,6 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
         return this.part.getMaster(this.pos, this.facing);
     }
     
-    /** To implement values() for generic type, only used for NBT tags. */
-    protected abstract E partByOrdinal(int ordinal);
-    
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
@@ -109,14 +109,12 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
         this.part = this.partByOrdinal(compound.getInteger("part"));
     }
 
-    // Required to update rendering on the client.
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    // Required to update rendering on the client.
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -124,7 +122,6 @@ public abstract class TEMultiAbstract<E extends Enum<E> & IMultipart>
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    // Required to update rendering on the client.
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

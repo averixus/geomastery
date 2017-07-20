@@ -12,7 +12,7 @@ import jayavery.geomastery.tileentities.TECompostheap;
 import jayavery.geomastery.utilities.Lang;
 import net.minecraft.util.ResourceLocation;
 
-/** GUI for compost heap. */
+/** Gui for compost heap. */
 public class GuiCompost extends GuiContainerAbstract {
     
     /** Width of input fullness bar. */
@@ -69,7 +69,8 @@ public class GuiCompost extends GuiContainerAbstract {
         
         super.drawGuiContainerBackgroundLayer(ticks, mouseX, mouseY);
         
-        TECompostheap compost = ((ContainerCompost) this.inventorySlots).compost;
+        TECompostheap compost = ((ContainerCompost) this.inventorySlots)
+                .compost;
         
         int input = compost.getInput();
         int inputHeight = (int) (input *
@@ -80,8 +81,8 @@ public class GuiCompost extends GuiContainerAbstract {
                 INPUT_SOURCE_X, inputSourceY, INPUT_WIDTH, inputHeight);
         
         int progress = compost.getCompostSpent();
-        int progressWidth = (int) (((float) progress / TECompostheap.COMPOST_EACH)
-                * PROGRESS_WIDTH);
+        int progressWidth = (int) (((float) progress /
+                TECompostheap.COMPOST_EACH) * PROGRESS_WIDTH);
         this.drawTexturedModalRect(this.guiLeft + PROGRESS_X,
                 this.guiTop + PROGRESS_Y, PROGRESS_SOURCE_X, PROGRESS_SOURCE_Y,
                 progressWidth, PROGRESS_HEIGHT);

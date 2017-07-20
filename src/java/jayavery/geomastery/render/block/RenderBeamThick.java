@@ -44,20 +44,14 @@ public class RenderBeamThick extends RenderDelayedBakingAbstract {
     protected static IModel woodCornerLeft;
     
     /** Map of axis -> rotation for main beam. */
-    protected static Map<EBeamAxis, Integer> beams =
-            Maps.newEnumMap(EBeamAxis.class);
+    protected static Map<EBeamAxis, Integer> beams = Maps.newEnumMap(EBeamAxis.class);
     /** 3D map of axis -> property -> rotation for beam ends. */
-    protected static Map<EBeamAxis, Map<UnlistedPropertyBool, Integer>> ends =
-            Maps.newEnumMap(EBeamAxis.class);
+    protected static Map<EBeamAxis, Map<UnlistedPropertyBool, Integer>> ends = Maps.newEnumMap(EBeamAxis.class);
     /** 3D map of axis -> floor -> model part and rotation for floor middles. */
-    protected static Map<EBeamAxis, Map<ETypeFloor,
-            Pair<IModel, Integer>>> middles = Maps.newEnumMap(EBeamAxis.class);
+    protected static Map<EBeamAxis, Map<ETypeFloor, Pair<IModel, Integer>>> middles = Maps.newEnumMap(EBeamAxis.class);
     /** 4D map of axis -> floor -> property -> model part and rotation
      * for floor surrounds. */
-    protected static Map<EBeamAxis, Map<ETypeFloor, Map<UnlistedPropertyBool,
-            Pair<IModel, Integer>>>> surrounds =
-            Maps.newEnumMap(EBeamAxis.class);
-
+    protected static Map<EBeamAxis, Map<ETypeFloor, Map<UnlistedPropertyBool, Pair<IModel, Integer>>>> surrounds = Maps.newEnumMap(EBeamAxis.class);
 
     public RenderBeamThick() {
         

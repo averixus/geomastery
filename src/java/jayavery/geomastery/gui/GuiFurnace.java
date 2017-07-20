@@ -42,7 +42,7 @@ public class GuiFurnace extends GuiContainerAbstract {
             int flameSourceY = FLAME_SOURCE_Y - flameHeight;
             
             this.drawTexturedModalRect(this.guiLeft + this.container.fireX,
-                    this.guiTop + this.container.fireY + flameSourceY,
+                    this.guiTop + this.container.FIRE_Y + flameSourceY,
                     FLAME_SOURCE_X, flameSourceY, FLAME_WIDTH, flameHeight + 1);
         }
 
@@ -51,7 +51,7 @@ public class GuiFurnace extends GuiContainerAbstract {
         int arrowLength = cookSpent != 0 && cookEach != 0 ?
                 cookSpent * ARROW_LENGTH / cookEach : 0;
         this.drawTexturedModalRect(this.guiLeft + this.container.arrowX,
-                this.guiTop + this.container.arrowY, ARROW_SOURCE_X,
+                this.guiTop + this.container.ARROW_Y, ARROW_SOURCE_X,
                 ARROW_SOURCE_Y, arrowLength + 1, ARROW_HEIGHT);
     }
 

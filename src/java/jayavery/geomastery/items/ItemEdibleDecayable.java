@@ -81,34 +81,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         });
     }
 
-    /** Sends the capability data for syncing to
-     * the client (needed because of Forge syncing limitations). */
-    @Override
-    public NBTTagCompound getNBTShareTag(ItemStack stack) {
-
-        NBTTagCompound tag = stack.getTagCompound() == null ?
-                new NBTTagCompound() : stack.getTagCompound();
-        
-        if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
-
-            tag.setLong("birthTime", stack.getCapability(GeoCaps.CAP_DECAY,
-                    null).getBirthTime());
-            tag.setInteger("stageSize", stack.getCapability(GeoCaps.CAP_DECAY,
-                    null).getStageSize());
-        }
-        
-        return tag;
-    }
-    
-    /** Gives this item an ICapDecay with its shelf life. */
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack,
-            NBTTagCompound nbt) {
-
-        return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
-    }
-    
-    /** Starts eating if not rotten. */
+    // Starts eating if not rotten
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
@@ -119,19 +92,18 @@ public class ItemEdibleDecayable extends ItemEdible {
         decayCap.updateFromNBT(stack.getTagCompound());
         ICapPlayer playerCap = player
                 .getCapability(GeoCaps.CAP_PLAYER, null);
-
+    
         if (playerCap.canEat(this.type) && !decayCap.isRot(world)) {
-
+    
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
         
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
-    
-    /** Makes this item named rotten according to capability. */
-    @SideOnly(Side.CLIENT)
-    @Override
+
+    // Makes this item named rotten according to capability
+    @SideOnly(Side.CLIENT) @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
         if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
@@ -148,10 +120,9 @@ public class ItemEdibleDecayable extends ItemEdible {
         
         return super.getItemStackDisplayName(stack);
     }
-    
-    /** Adds this item's food type to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
+
+    // Adds this item's food type to the tooltip if config
+    @SideOnly(Side.CLIENT) @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
@@ -170,25 +141,42 @@ public class ItemEdibleDecayable extends ItemEdible {
             }
         }
     }
-    
-    @SideOnly(Side.CLIENT)
+
+    // Gives this item an ICapDecay with its shelf life
     @Override
-    public void getSubItems(Item item, CreativeTabs tab,
-            NonNullList<ItemStack> list) {
+    public ICapabilityProvider initCapabilities(ItemStack stack,
+            NBTTagCompound nbt) {
+    
+        return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
+    }
+
+    // Sends the capability data to the client because there is
+    // no other way to sync it reliably
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack) {
+
+        NBTTagCompound tag = stack.getTagCompound() == null ?
+                new NBTTagCompound() : stack.getTagCompound();
         
-        list.add(ItemSimple.newStack(this, 1,
-                Geomastery.proxy.getClientWorld()));    
-        list.add(ItemSimple.rottenStack(this, 1));
+        if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
+
+            tag.setLong("birthTime", stack.getCapability(GeoCaps.CAP_DECAY,
+                    null).getBirthTime());
+            tag.setInteger("stageSize", stack.getCapability(GeoCaps.CAP_DECAY,
+                    null).getStageSize());
+        }
+        
+        return tag;
     }
     
-    /** Makes this item always show a durability bar. */
+    // Makes this item always show a durability bar
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
         
         return true;
     }
     
-    /** Makes this item show a full durability bar unless config otherwise. */
+    // Makes this item show a full durability bar unless config otherwise
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         
@@ -207,7 +195,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         return 0;
     }
     
-    /** Makes this item's durability bar colour represent its decay. */
+    // Makes this item's durability bar colour represent its decay
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         
@@ -215,14 +203,25 @@ public class ItemEdibleDecayable extends ItemEdible {
             
             ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY, null);
             decayCap.updateFromNBT(stack.getTagCompound());
-            float fraction = decayCap.getFraction(Geomastery.proxy.getClientWorld());
+            float fraction = decayCap.getFraction(Geomastery.proxy
+                    .getClientWorld());
             return MathHelper.hsvToRGB(fraction / 3.0F, 1.0F, 1.0F);
         }
         
         return 0;
     }
     
-    /** Feeds to animals if not rotten. */
+    // Adds fresh and rotten stacks to creative
+    @SideOnly(Side.CLIENT) @Override
+    public void getSubItems(Item item, CreativeTabs tab,
+            NonNullList<ItemStack> list) {
+        
+        list.add(ItemSimple.newStack(this, 1,
+                Geomastery.proxy.getClientWorld()));    
+        list.add(ItemSimple.rottenStack(this, 1));
+    }
+
+    // Feeds to animals if not rotten
     @Override
     public boolean itemInteractionForEntity(ItemStack stack,
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {

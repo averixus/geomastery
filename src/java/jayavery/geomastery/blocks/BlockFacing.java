@@ -22,8 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /** Building block with horizontal facing. */
-public abstract class BlockFacing
-        extends BlockBuildingAbstract<ItemPlacing.Building> {
+public abstract class BlockFacing extends BlockBuildingAbstract<ItemPlacing.Building> {
 
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 

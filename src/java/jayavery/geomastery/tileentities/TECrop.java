@@ -19,7 +19,7 @@ public class TECrop extends TileEntity {
     private int fertility = 0;
    
     /** Apply the given fertility to this crop.
-     * @return Whether the fertiliser was applied successfully. */
+     * @return Whether the fertiliser was used. */
     public boolean applyFertiliser(int applied) {
                     
         if (applied <= this.fertility) {

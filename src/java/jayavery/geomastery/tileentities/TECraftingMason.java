@@ -71,8 +71,7 @@ public class TECraftingMason extends TECraftingAbstract<EPartMason> {
                             .offset(facing.rotateYCCW());
                 case BM:
                     return pos.offset(facing.getOpposite());
-                case FM:
-                default:
+                case FM: default:
                     return pos;
             }
         }
@@ -160,50 +159,48 @@ public class TECraftingMason extends TECraftingAbstract<EPartMason> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == FM) {
+            if (this != FM) {
                 
-                BlockContainerMulti<EPartMason> block =
-                        GeoBlocks.CRAFTING_MASON;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartMason> prop = block.getPartProperty();
+                return false;
+            }
                 
-                // Prepare map of properties
+            BlockContainerMulti<EPartMason> block = GeoBlocks.CRAFTING_MASON;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartMason> prop = block.getPartProperty();
+            
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartMason> map = Maps.newHashMap();
+            map.put(pos, FM);
+            map.put(pos.offset(facing.rotateY().getOpposite()), FL);
+            map.put(pos.offset(facing), BM);
+            map.put(pos.offset(facing.rotateY()), FR);
+            map.put(pos.offset(facing.rotateY()).offset(facing), BR);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartMason> entry : map.entrySet()) {
                 
-                Map<BlockPos, EPartMason> map = Maps.newHashMap();
-                map.put(pos, FM);
-                map.put(pos.offset(facing.rotateY().getOpposite()), FL);
-                map.put(pos.offset(facing), BM);
-                map.put(pos.offset(facing.rotateY()), FR);
-                map.put(pos.offset(facing.rotateY()).offset(facing), BR);
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
                 
-                // Check validity
-                
-                for (Entry<BlockPos, EPartMason> entry : map.entrySet()) {
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
                     
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
+                    return false;
                 }
-                
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingMason) world.getTileEntity(e.getKey()))
-                        .setState(facing, e.getValue()));
-                
-                return true;
             }
             
-            return false;
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingMason) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            
+            return true;
         }
     }
 }

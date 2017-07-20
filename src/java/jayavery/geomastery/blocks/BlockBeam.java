@@ -44,33 +44,22 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 /** Beam block. */
 public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
 
-    public static final UnlistedPropertyEnum<EBeamAxis> AXIS =
-            new UnlistedPropertyEnum<EBeamAxis>("axis", EBeamAxis.class);
-    public static final UnlistedPropertyBool FRONTBEAM =
-            new UnlistedPropertyBool("frontbeam");
-    public static final UnlistedPropertyBool BACKBEAM =
-            new UnlistedPropertyBool("backbeam");
-    public static final UnlistedPropertyEnum<ETypeFloor> FLOOR =
-            new UnlistedPropertyEnum<ETypeFloor>
-            ("floor", TEBeam.ETypeFloor.class);
-    public static final UnlistedPropertyBool LEFT =
-            new UnlistedPropertyBool("left");
-    public static final UnlistedPropertyBool RIGHT =
-            new UnlistedPropertyBool("right");
-    public static final UnlistedPropertyBool FRONT =
-            new UnlistedPropertyBool("front");
-    public static final UnlistedPropertyBool BACK =
-            new UnlistedPropertyBool("back");
-    public static final UnlistedPropertyBool FL =
-            new UnlistedPropertyBool("fl");
-    public static final UnlistedPropertyBool FR = 
-            new UnlistedPropertyBool("fr");
-    public static final UnlistedPropertyBool BL =
-            new UnlistedPropertyBool("bl");
-    public static final UnlistedPropertyBool BR =
-            new UnlistedPropertyBool("br");
+    public static final UnlistedPropertyEnum<EBeamAxis> AXIS = new UnlistedPropertyEnum<EBeamAxis>("axis", EBeamAxis.class);
+    public static final UnlistedPropertyBool FRONTBEAM = new UnlistedPropertyBool("frontbeam");
+    public static final UnlistedPropertyBool BACKBEAM = new UnlistedPropertyBool("backbeam");
+    public static final UnlistedPropertyEnum<ETypeFloor> FLOOR = new UnlistedPropertyEnum<ETypeFloor>("floor", TEBeam.ETypeFloor.class);
+    public static final UnlistedPropertyBool LEFT = new UnlistedPropertyBool("left");
+    public static final UnlistedPropertyBool RIGHT = new UnlistedPropertyBool("right");
+    public static final UnlistedPropertyBool FRONT = new UnlistedPropertyBool("front");
+    public static final UnlistedPropertyBool BACK = new UnlistedPropertyBool("back");
+    public static final UnlistedPropertyBool FL = new UnlistedPropertyBool("fl");
+    public static final UnlistedPropertyBool FR = new UnlistedPropertyBool("fr");
+    public static final UnlistedPropertyBool BL = new UnlistedPropertyBool("bl");
+    public static final UnlistedPropertyBool BR = new UnlistedPropertyBool("br");
     
+    /** Minimum length of this beam structure. */
     private final int minLength;
+    /** Maximum length of this beam structure. */
     private final int maxLength;
             
     public BlockBeam(String name, int minLength, int maxLength) {
@@ -101,63 +90,91 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
     }
     
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
+                  
+        // Get positions
+        
+        BlockPos posBack = targetPos.offset(targetSide);
+        BlockPos posMiddle = posBack.offset(targetSide);
+        ArrayList<BlockPos> middles = new ArrayList<BlockPos>();
+        int length = 2;
+        
+        while (length <= this.maxLength &&
+                world.getBlockState(posMiddle).getBlock()
+                .isReplaceable(world, posMiddle) &&
+                world.getBlockState(posMiddle.offset(targetSide)).getBlock()
+                .isReplaceable(world, posMiddle.offset(targetSide))) {
+    
+            middles.add(posMiddle);
+            posMiddle = posMiddle.offset(targetSide);
+            length++;
+        }
+        
+        BlockPos posFront = posMiddle;
+        
+        IBlockState frontEnd = world.getBlockState(posFront.offset(targetSide));
+        IBlockState backEnd = world.getBlockState(targetPos);
+        
+        // Check validity of supports and length
+                
+        boolean frontValid = EBlockWeight.getWeight(frontEnd)
+                .canSupport(this.getWeight(this.getDefaultState()));
+        boolean backValid = EBlockWeight.getWeight(backEnd)
+                .canSupport(this.getWeight(this.getDefaultState()));
+        
+        if (length < this.minLength || length > this.maxLength) {
+            
+            message(player, Lang.BUILDFAIL_BEAM);
+            return false;
+        }
+        
+        if (!frontValid || !backValid) {
+    
+            message(player, Lang.BUILDFAIL_SUPPORT);
+            return false;
+        }   
+        
+        // Check ends replaceable
+        IBlockState stateBack = world.getBlockState(posBack);
+        Block blockBack = stateBack.getBlock();
+        boolean replaceableBack = blockBack.isReplaceable(world, posBack);
+        
+        IBlockState stateFront = world.getBlockState(posFront);
+        Block blockFront = stateFront.getBlock();
+        boolean replaceableFront = blockFront.isReplaceable(world, posFront);
+        
+        if (!replaceableBack || !replaceableFront) {
+    
+            message(player, Lang.BUILDFAIL_OBSTACLE);
+            return false;
+        }
+        
+        // Place blocks
+        IBlockState state = this.getDefaultState();
+        
+        world.setBlockState(posBack, state);
+        world.setBlockState(posFront, state);
+        
+        for (BlockPos mid : middles) {
+            
+            world.setBlockState(mid, state);
+        }
+        
+        // Apply TE states
+        ((TEBeam) world.getTileEntity(posBack))
+                .setState(targetSide, EPartBeam.BACK);
+        ((TEBeam) world.getTileEntity(posFront))
+                .setState(targetSide, EPartBeam.FRONT);
+        
+        for (BlockPos mid : middles) {
+            
+            ((TEBeam) world.getTileEntity(mid))
+                    .setState(targetSide, EPartBeam.MIDDLE);
+        }
         
         return true;
-    }
-    
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        
-        return new TEBeam();
-    }
-    
-    @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
-            IBlockState state, @Nullable TileEntity te, ItemStack tool) {
-        
-        if (te instanceof TEBeam) {
-        
-            TEBeam tileBeam = (TEBeam) te;
-            ETypeFloor floor = tileBeam.getFloor();
-            
-            if (floor == ETypeFloor.NONE) {
-                
-                world.setBlockToAir(pos);
-              
-            } else {
-                
-                tileBeam.removeFloor();
-            }
-        }
-    }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune, TileEntity te,
-            ItemStack stack, EntityPlayer player) {
-        
-        List<ItemStack> result = Lists.newArrayList();
-        
-        if (te instanceof TEBeam) {
-            
-            TEBeam tileBeam = (TEBeam) te;
-            ETypeFloor floor = tileBeam.getFloor();
-            
-            if (floor == ETypeFloor.NONE) {
-                
-                if (tileBeam.getPart().shouldDrop()) {
-                    
-                    result.add(new ItemStack(this.item));
-                }
-              
-            } else {
-                
-                result.add(new ItemStack(floor.getItem()));
-            }
-        }
-        
-        return result;
     }
 
     @Override
@@ -176,7 +193,7 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
         EnumFacing facing = tileBeam.getFacing();
         
         boolean destroy = false;
-
+    
         switch (part) { 
             
             case FRONT: {
@@ -245,189 +262,76 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
             world.setBlockToAir(pos);
             
             if (part.shouldDrop()) {
-
+    
                 spawnAsEntity(world, pos, new ItemStack(this.item));
             }
         }
     }
-    
+
     @Override
-    public boolean place(World world, BlockPos targetPos,
-            EnumFacing targetSide, EnumFacing placeFacing,
-            ItemStack stack, EntityPlayer player) {
-                  
-        // Get positions
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack tool) {
         
-        BlockPos posBack = targetPos.offset(targetSide);
-        BlockPos posMiddle = posBack.offset(targetSide);
-        ArrayList<BlockPos> middles = new ArrayList<BlockPos>();
-        int length = 2;
+        if (te instanceof TEBeam) {
         
-        while (length <= this.maxLength &&
-                world.getBlockState(posMiddle).getBlock()
-                .isReplaceable(world, posMiddle) &&
-                world.getBlockState(posMiddle.offset(targetSide)).getBlock()
-                .isReplaceable(world, posMiddle.offset(targetSide))) {
-
-            middles.add(posMiddle);
-            posMiddle = posMiddle.offset(targetSide);
-            length++;
-        }
-        
-        BlockPos posFront = posMiddle;
-        
-        IBlockState frontEnd = world.getBlockState(posFront.offset(targetSide));
-        IBlockState backEnd = world.getBlockState(targetPos);
-        
-        // Check validity of supports and length
+            TEBeam tileBeam = (TEBeam) te;
+            ETypeFloor floor = tileBeam.getFloor();
+            
+            if (floor == ETypeFloor.NONE) {
                 
-        boolean frontValid = EBlockWeight.getWeight(frontEnd)
-                .canSupport(this.getWeight(this.getDefaultState()));
-        boolean backValid = EBlockWeight.getWeight(backEnd)
-                .canSupport(this.getWeight(this.getDefaultState()));
-        
-        if (length < this.minLength || length > this.maxLength) {
-            
-            message(player, Lang.BUILDFAIL_BEAM);
-            return false;
+                world.setBlockToAir(pos);
+              
+            } else {
+                
+                tileBeam.removeFloor();
+            }
         }
-        
-        if (!frontValid || !backValid) {
+    }
 
-            message(player, Lang.BUILDFAIL_SUPPORT);
-            return false;
-        }   
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack stack, EntityPlayer player) {
         
-        // Check ends replaceable
-        IBlockState stateBack = world.getBlockState(posBack);
-        Block blockBack = stateBack.getBlock();
-        boolean replaceableBack = blockBack.isReplaceable(world, posBack);
+        List<ItemStack> result = Lists.newArrayList();
         
-        IBlockState stateFront = world.getBlockState(posFront);
-        Block blockFront = stateFront.getBlock();
-        boolean replaceableFront = blockFront.isReplaceable(world, posFront);
+        if (te instanceof TEBeam) {
+            
+            TEBeam tileBeam = (TEBeam) te;
+            ETypeFloor floor = tileBeam.getFloor();
+            
+            if (floor == ETypeFloor.NONE) {
+                
+                if (tileBeam.getPart().shouldDrop()) {
+                    
+                    result.add(new ItemStack(this.item));
+                }
+              
+            } else {
+                
+                result.add(new ItemStack(floor.getItem()));
+            }
+        }
         
-        if (!replaceableBack || !replaceableFront) {
+        return result;
+    }
 
-            message(player, Lang.BUILDFAIL_OBSTACLE);
-            return false;
-        }
-        
-        // Place blocks
-        IBlockState state = this.getDefaultState();
-        
-        world.setBlockState(posBack, state);
-        world.setBlockState(posFront, state);
-        
-        for (BlockPos mid : middles) {
-            
-            world.setBlockState(mid, state);
-        }
-        
-        // Apply TE states
-        ((TEBeam) world.getTileEntity(posBack))
-                .setState(targetSide, EPartBeam.BACK);
-        ((TEBeam) world.getTileEntity(posFront))
-                .setState(targetSide, EPartBeam.FRONT);
-        
-        for (BlockPos mid : middles) {
-            
-            ((TEBeam) world.getTileEntity(mid))
-                    .setState(targetSide, EPartBeam.MIDDLE);
-        }
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
         
         return true;
     }
-
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-
-        state = this.getExtendedState(state, world, pos);
-        
-        if (!(state instanceof IExtendedBlockState)) {
-            
-            return FULL_BLOCK_AABB;
-        }
-        
-        IExtendedBlockState extState = (IExtendedBlockState) state;
-        
-        ETypeFloor floor = extState.getValue(FLOOR);
-        
-        if (floor != ETypeFloor.NONE) {
-            
-            return TOP_HALF;
-        }
-        
-        EBeamAxis axis = extState.getValue(AXIS);
-        int ordinal = axis == null ? 0 : axis.ordinal();
-        
-        TileEntity tileEntity = world.getTileEntity(pos);
-        
-        if (tileEntity instanceof TEBeam && this.maxLength > 5) {
-        
-            return BEAM[ordinal];
-            
-        } else {
-            
-            return BEAM_THIN[ordinal];
-        }
-    }
     
     @Override
-    public void addCollisionBoxToList(IBlockState state, World world,
-            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
-            @Nullable Entity entity, boolean unused) {
+    public TileEntity createTileEntity(World world, IBlockState state) {
         
-        state = this.getExtendedState(state, world, pos);
-        
-        if (!(state instanceof IExtendedBlockState)) {
-            
-            return;
-        }
-        
-        IExtendedBlockState extState = (IExtendedBlockState) state;
-        
-        EBeamAxis axis = extState.getValue(AXIS);
-        int ordinal = axis == null ? 0 : axis.ordinal();
-        
-        TileEntity tileEntity = world.getTileEntity(pos);
-        
-        if (tileEntity instanceof TEBeam && this.maxLength > 5) {
-        
-            addCollisionBoxToList(pos, entityBox, list, BEAM[ordinal]);
-            
-        } else {
-            
-            addCollisionBoxToList(pos, entityBox, list, BEAM_THIN[ordinal]);
-        }
-        
-        if (extState.getValue(FLOOR) != ETypeFloor.NONE) {
-            
-            addCollisionBoxToList(pos, entityBox, list, BEAM_FLOOR);
-        }
-    }
-
-    @Override
-    public BlockStateContainer createBlockState() {
-
-        return new ExtendedBlockState(this, new IProperty[0],
-                new IUnlistedProperty[] {AXIS, FRONTBEAM, BACKBEAM,
-                FLOOR, FRONT, RIGHT, BACK, LEFT, FL, FR, BL, BR});
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return state;
+        return new TEBeam();
     }
     
     @Override
     public IBlockState getExtendedState(IBlockState state, IBlockAccess world,
             BlockPos pos) {
-
+    
         TileEntity tileEntity = world.getTileEntity(pos);
         
         if (!(tileEntity instanceof TEBeam) ||
@@ -449,7 +353,7 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
         
         EnumFacing frontFacing = extState.getValue(AXIS) == EBeamAxis.NS ?
                 EnumFacing.NORTH : EnumFacing.EAST;
-
+    
         Block blockFront = world.getBlockState(pos.offset(frontFacing))
                 .getBlock();
         boolean front = blockFront instanceof IDoublingBlock;
@@ -489,7 +393,84 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
         
         return extState;
     }
+
+    @Override
+    public BlockStateContainer createBlockState() {
     
+        return new ExtendedBlockState(this, new IProperty[0],
+                new IUnlistedProperty[] {AXIS, FRONTBEAM, BACKBEAM,
+                FLOOR, FRONT, RIGHT, BACK, LEFT, FL, FR, BL, BR});
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
+            BlockPos pos) {
+
+        state = this.getExtendedState(state, world, pos);
+        
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return FULL_BLOCK_AABB;
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
+        
+        ETypeFloor floor = extState.getValue(FLOOR);
+        
+        if (floor != ETypeFloor.NONE) {
+            
+            return TOP_HALF;
+        }
+        
+        EBeamAxis axis = extState.getValue(AXIS);
+        int ordinal = axis == null ? 0 : axis.ordinal();
+        
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TEBeam && this.maxLength > 5) {
+        
+            return BEAM_THICK[ordinal];
+            
+        } else {
+            
+            return BEAM_THIN[ordinal];
+        }
+    }
+    
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World world,
+            BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
+            @Nullable Entity entity, boolean unused) {
+        
+        state = this.getExtendedState(state, world, pos);
+        
+        if (!(state instanceof IExtendedBlockState)) {
+            
+            return;
+        }
+        
+        IExtendedBlockState extState = (IExtendedBlockState) state;
+        
+        EBeamAxis axis = extState.getValue(AXIS);
+        int ordinal = axis == null ? 0 : axis.ordinal();
+        
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TEBeam && this.maxLength > 5) {
+        
+            addCollisionBoxToList(pos, entityBox, list, BEAM_THICK[ordinal]);
+            
+        } else {
+            
+            addCollisionBoxToList(pos, entityBox, list, BEAM_THIN[ordinal]);
+        }
+        
+        if (extState.getValue(FLOOR) != ETypeFloor.NONE) {
+            
+            addCollisionBoxToList(pos, entityBox, list, BEAM_FLOOR);
+        }
+    }
+
     /** Enum defining which axis the Beam structure is aligned on. */
     public enum EBeamAxis implements IStringSerializable {
         
@@ -511,14 +492,8 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
         /** @return The EBeamAxis associated with the given direction. */
         public static EBeamAxis get(EnumFacing facing) {
             
-            if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
-                
-                return NS;
-                
-            } else {
-                
-                return EW;
-            }
+            return (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) ?
+                    NS : EW;
         }
     }
 }

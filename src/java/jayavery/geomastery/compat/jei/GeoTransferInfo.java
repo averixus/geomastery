@@ -21,38 +21,13 @@ public abstract class GeoTransferInfo<C extends ContainerAbstract>
 
     /** The class this info applies to. */
     private final Class<C> clas;
-    /** Intenal unique id of this transfer's recipe category. */
+    /** Intenal unique id of this handler's recipe category. */
     private final String uid;
     
     public GeoTransferInfo(Class<C> clas, String uid) {
         
         this.clas = clas;
         this.uid = uid;
-    }
-    
-    /** Crafting transfer info object factory. */
-    public static <T extends ContainerCrafting> Crafting<T>
-            craft(Class<T> clas, String uid) {
-        
-        return new Crafting<T>(clas, uid);
-    }
-    
-    /** Inventory transfer info object factory. */
-    public static Inventory inv() {
-        
-        return new Inventory();
-    }
-    
-    /** Compost transfer info object factory. */
-    public static Compost comp() {
-        
-        return new Compost();
-    }
-    
-    @Override
-    public Class<C> getContainerClass() {
-
-        return this.clas;
     }
     
     /** @return Start index of the inventory to draw from. */
@@ -63,6 +38,12 @@ public abstract class GeoTransferInfo<C extends ContainerAbstract>
     protected abstract int getCraftStart(C container);
     /** @return End index of the crafting grid to fill. */
     protected abstract int getCraftEnd(C container);
+    
+    @Override
+    public Class<C> getContainerClass() {
+
+        return this.clas;
+    }
 
     @Override
     public String getRecipeCategoryUid() {
@@ -104,6 +85,25 @@ public abstract class GeoTransferInfo<C extends ContainerAbstract>
         }
         
         return slots;
+    }
+    
+    /** Crafting transfer info object factory. */
+    public static <T extends ContainerCrafting> Crafting<T>
+            craft(Class<T> clas, String uid) {
+        
+        return new Crafting<T>(clas, uid);
+    }
+    
+    /** Inventory transfer info object factory. */
+    public static Inventory inv() {
+        
+        return new Inventory();
+    }
+    
+    /** Compost transfer info object factory. */
+    public static Compost comp() {
+        
+        return new Compost();
     }
     
     /** Inventory container transfer info. */

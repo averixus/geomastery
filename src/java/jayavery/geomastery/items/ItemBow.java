@@ -27,9 +27,7 @@ import net.minecraft.world.World;
 public class ItemBow extends ItemSimple {
     
     /** Arrow classes in order of priority. */
-    private static final Class<?>[] PRIORITY = {ItemArrow.Steel.class,
-            ItemArrow.Bronze.class, ItemArrow.Copper.class,
-            ItemArrow.Flint.class, ItemArrow.Wood.class};
+    private static final Class<?>[] PRIORITY = {ItemArrow.Steel.class, ItemArrow.Bronze.class, ItemArrow.Copper.class, ItemArrow.Flint.class, ItemArrow.Wood.class};
     
     /** Modifier for firing velocity. */
     private float powerModifier;
@@ -83,114 +81,40 @@ public class ItemBow extends ItemSimple {
         });
     }
     
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        
-        return false;
-    }
-    
-    /** Fires an arrow. */
-    @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world,
-            EntityLivingBase entity, int timeLeft) {
-
-        if (!(entity instanceof EntityPlayer) || world.isRemote) {
-
-            return;
-        }
-
-        EntityPlayer player = (EntityPlayer) entity;
-
-        // Find and prepare arrow item
-        ItemStack ammo = this.getAmmoStack(player);
-        int chargeTime = this.getMaxItemUseDuration(stack) - timeLeft;
-
-        if (ammo.isEmpty()) {
-
-            if (player.capabilities.isCreativeMode) {
-
-                ammo = new ItemStack(GeoItems.ARROW_STEEL);
-
-            } else {
-
-                return;
-            }
-        }
-
-        float velocity = getArrowVelocity(chargeTime);
-
-        if (velocity < 0.2) {
-
-            return;
-        }
-
-        // Create arrow entity
-        ItemArrow arrow = (ItemArrow) ammo.getItem();
-        EntityProjectile entityArrow = arrow.createArrow(world, stack, player);
-
-        entityArrow.setAim(player, player.rotationPitch,
-                player.rotationYaw, 0F, velocity, 1F);
-        world.spawnEntity(entityArrow);
-        world.playSound(null, player.posX, player.posY, player.posZ,
-                SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F,
-                1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
-
-        // Use and damage items
-        if (!player.capabilities.isCreativeMode) {
-
-            ammo.shrink(1);
-            stack.damageItem(1, player);
-        }
-    }
-
-    /** Charges bow if there is ammo. */
+    // Charges bow if there is ammo
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
-
+    
         boolean hasAmmo = !this.getAmmoStack(player).isEmpty();
         ItemStack stack = player.getHeldItem(hand);
-
+    
         if (!player.capabilities.isCreativeMode && !hasAmmo) {
-
+    
             return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
-
+    
         } else {
-
+    
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
     }
 
-    /** @return The velocity of an arrow fired from this bow. */
-    private float getArrowVelocity(int charge) {
-
-        float velocity = charge / 20F;
-        velocity = ((velocity * velocity) + (2F * velocity)) / 3F;
-
-        if (velocity > 1F) {
-
-            velocity = 1F;
-        }
-
-        return velocity * this.powerModifier;
-    }
-    
     /** @return The primary or prioritised arrow stack. */
     private ItemStack getAmmoStack(EntityPlayer player) {
         
         if (player.getHeldItem(EnumHand.OFF_HAND).getItem()
                 instanceof ItemArrow) {
-
+    
             return player.getHeldItem(EnumHand.OFF_HAND);
-
+    
         } else if (player.getHeldItem(EnumHand.MAIN_HAND).getItem()
                 instanceof ItemArrow) {
-
+    
             return player.getHeldItem(EnumHand.MAIN_HAND);
-
+    
         } else {
-
+    
             for (Class<?> type : PRIORITY) {
                 
                 for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
@@ -208,17 +132,91 @@ public class ItemBow extends ItemSimple {
         return ItemStack.EMPTY;
     }
 
-    /** @return The time taken for the bow to charge. */
+    // Fires an arrow
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World world,
+            EntityLivingBase entity, int timeLeft) {
+    
+        if (!(entity instanceof EntityPlayer) || world.isRemote) {
+    
+            return;
+        }
+    
+        EntityPlayer player = (EntityPlayer) entity;
+    
+        // Find and prepare arrow item
+        ItemStack ammo = this.getAmmoStack(player);
+        int chargeTime = this.getMaxItemUseDuration(stack) - timeLeft;
+    
+        if (ammo.isEmpty()) {
+    
+            if (player.capabilities.isCreativeMode) {
+    
+                ammo = new ItemStack(GeoItems.ARROW_STEEL);
+    
+            } else {
+    
+                return;
+            }
+        }
+    
+        float velocity = getArrowVelocity(chargeTime);
+    
+        if (velocity < 0.2) {
+    
+            return;
+        }
+    
+        // Create arrow entity
+        ItemArrow arrow = (ItemArrow) ammo.getItem();
+        EntityProjectile entityArrow = arrow.createArrow(world, stack, player);
+    
+        entityArrow.setAim(player, player.rotationPitch,
+                player.rotationYaw, 0F, velocity, 1F);
+        world.spawnEntity(entityArrow);
+        world.playSound(null, player.posX, player.posY, player.posZ,
+                SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F,
+                1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
+    
+        // Use and damage items
+        if (!player.capabilities.isCreativeMode) {
+    
+            ammo.shrink(1);
+            stack.damageItem(1, player);
+        }
+    }
+
+    /** @return The velocity of an arrow fired from this bow. */
+    private float getArrowVelocity(int charge) {
+    
+        float velocity = charge / 20F;
+        velocity = ((velocity * velocity) + (2F * velocity)) / 3F;
+    
+        if (velocity > 1F) {
+    
+            velocity = 1F;
+        }
+    
+        return velocity * this.powerModifier;
+    }
+
+    // Returns the time taken for the bow to charge
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-
+    
         return 72000;
     }
-    
-    /** Makes the player move like pulling a bow. */
+
+    // Makes the player move like pulling a bow
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
-
+    
         return EnumAction.BOW;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 }

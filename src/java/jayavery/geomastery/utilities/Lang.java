@@ -17,6 +17,9 @@ public class Lang {
     
     public static final String CONFIG = Geomastery.MODID + ":config.";
     
+    public static final String COMPOST_WET = Geomastery.MODID + ":compost.wet";
+    public static final String COMPOST_DRY = Geomastery.MODID + ":compost.dry";
+    
     public static final String FOODTIP_PROTEIN = Geomastery.MODID + ":foodtip.protein";
     public static final String FOODTIP_CARBS = Geomastery.MODID + ":foodtip.carbs";
     public static final String FOODTIP_FRUITVEG = Geomastery.MODID + ":foodtip.fruitveg";

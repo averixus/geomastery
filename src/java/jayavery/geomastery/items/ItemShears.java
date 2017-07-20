@@ -33,17 +33,11 @@ public class ItemShears extends ItemTool {
         this.yield = yield;
     }
     
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        
-        return false;
-    }
-
-    /** Shears sheep. */
+    // Shears sheep
     @Override
     public boolean itemInteractionForEntity(ItemStack stack,
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-
+    
         if (entity.world.isRemote) {
             
             return false;
@@ -66,6 +60,12 @@ public class ItemShears extends ItemTool {
             
             return true;
         }
+        
+        return false;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
         
         return false;
     }

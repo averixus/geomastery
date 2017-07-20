@@ -31,14 +31,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Torch and candle blocks. */
-public abstract class BlockLight
-        extends BlockBuildingAbstract<ItemPlacing.Building> {
-
-    protected static final AxisAlignedBB FLAT_BOUNDS =
-            new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
-    public static final PropertyDirection FACING = PropertyDirection
-            .create("facing", (f) -> f != EnumFacing.UP);
+public abstract class BlockLight extends BlockBuildingAbstract<ItemPlacing.Building> {
     
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", (f) -> f != EnumFacing.UP);
+    
+    protected static final AxisAlignedBB FLAT_BOUNDS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.18D, 1.0D);
+        
     /** Chance of extinguishing per update tick. */
     private final float extinguishChance;
 
@@ -74,7 +72,8 @@ public abstract class BlockLight
         
         BlockPos placePos = targetPos.offset(targetSide);
         
-        if (!this.isValid(world, placePos, stack, false, this.getDefaultState(), player)) {
+        if (!this.isValid(world, placePos, stack, false,
+                this.getDefaultState(), player)) {
             
             return false;
         }
@@ -87,22 +86,37 @@ public abstract class BlockLight
             
         } else {
             
+            IBlockState state = this.getDefaultState();
+            
             for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
                 
                 if (EBlockWeight.getWeight(world.getBlockState(placePos
                         .offset(facing))).canSupport(EBlockWeight.NONE)) {
                     
-                    world.setBlockState(placePos,this.getDefaultState()
-                            .withProperty(FACING, facing));
+                    state = state.withProperty(FACING, facing);
                 }
             }
-
-            world.setBlockState(placePos, this.getDefaultState());
+            
+            world.setBlockState(placePos, state);
         }
         
         return true;
     }
     
+    /** Extinguishes according to chance. */
+    @Override
+    public void updateTick(World world, BlockPos pos,
+            IBlockState state, Random rand) {
+        
+        if (rand.nextFloat() <= this.extinguishChance) {
+            
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(),
+                    SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.BLOCKS, 1, 1, false);
+            world.setBlockToAir(pos);
+        }
+    }
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -141,25 +155,6 @@ public abstract class BlockLight
         }
     }
     
-    public int getLightLevel() {
-        
-        return this.lightValue;
-    }
-    
-    /** Extinguishes according to chance. */
-    @Override
-    public void updateTick(World world, BlockPos pos,
-            IBlockState state, Random rand) {
-        
-        if (rand.nextFloat() <= this.extinguishChance) {
-            
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(),
-                    SoundEvents.BLOCK_FIRE_EXTINGUISH,
-                    SoundCategory.BLOCKS, 1, 1, false);
-            world.setBlockToAir(pos);
-        }
-    }
-    
     @Override
     public BlockStateContainer createBlockState() {
         
@@ -167,16 +162,16 @@ public abstract class BlockLight
     }
     
     @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        return state.getValue(FACING).getIndex();
+    }
+
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         
         return this.getDefaultState().withProperty(FACING,
                 EnumFacing.VALUES[meta]);
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return state.getValue(FACING).getIndex();
     }
     
     /** Candle block. */

@@ -237,6 +237,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
                 super.canMergeSlot(stack, slot);
     }
     
+    /** Knapping block. */
     public static class Knapping extends ContainerCrafting {
 
         public Knapping(EntityPlayer player, BlockPos pos,
@@ -246,6 +247,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }    
     }
     
+    /** Candlemaker's bench. */
     public static class Candlemaker extends ContainerCrafting {
         
         public Candlemaker(EntityPlayer player, BlockPos pos,
@@ -255,6 +257,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }
     }
     
+    /** Forge. */
     public static class Forge extends ContainerCrafting {
         
         public Forge(EntityPlayer player, BlockPos pos,
@@ -264,6 +267,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }
     }
     
+    /** Mason's workshop. */
     public static class Mason extends ContainerCrafting {
         
         public Mason(EntityPlayer player, BlockPos pos,
@@ -273,6 +277,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }
     }
     
+    /** Sawpit. */
     public static class Sawpit extends ContainerCrafting {
         
         public Sawpit(EntityPlayer player, BlockPos pos,
@@ -282,6 +287,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }
     }
     
+    /** Textiles table. */
     public static class Textiles extends ContainerCrafting {
         
         public Textiles(EntityPlayer player, BlockPos pos,
@@ -291,6 +297,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }
     }
     
+    /** Woodworking bench. */
     public static class Woodworking extends ContainerCrafting {
         
         public Woodworking(EntityPlayer player, BlockPos pos,
@@ -300,6 +307,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
         }
     }
     
+    /** Armourer. */
     public static class Armourer extends ContainerCrafting {
         
         public Armourer(EntityPlayer player, BlockPos pos,

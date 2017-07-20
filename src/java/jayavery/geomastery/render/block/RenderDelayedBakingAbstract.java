@@ -47,9 +47,7 @@ public abstract class RenderDelayedBakingAbstract
         implements IBakedModel, IModel, ICustomModelLoader {
 
     /** Cached model quads for states. */
-    protected final Map<Pair<ImmutableMap<IProperty<?>,Comparable<?>>,
-            ImmutableMap<IUnlistedProperty<?>,Optional<?>>>,
-            List<BakedQuad>> cache = Maps.newHashMap();
+    protected final Map<Pair<ImmutableMap<IProperty<?>,Comparable<?>>, ImmutableMap<IUnlistedProperty<?>,Optional<?>>>, List<BakedQuad>> cache = Maps.newHashMap();
     /** VertexFormat from the original {@code bake}. */
     protected VertexFormat format;
     /** Texture getter from the original {@code bake}. */

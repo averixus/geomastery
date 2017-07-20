@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-/** Abstract superclass for storage containers. */
+/** Storage containers. */
 public class ContainerStorage extends ContainerAbstract {
     
     /** Index of the start of the player hotbar. */

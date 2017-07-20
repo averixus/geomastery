@@ -92,7 +92,8 @@ public class RenderWallHeaping extends RenderWallAbstract {
                 northTop = northTop || thisTop;
             }
             
-            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
+            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS
+                    .get(northSide);
             IModel northModel = northRenderer
                     .getConnectedSide(northTop, northBot, northDoub);
             this.addQuads(result, northModel, northRenderer
@@ -112,8 +113,10 @@ public class RenderWallHeaping extends RenderWallAbstract {
                 eastTop = eastTop || thisTop;
             }
             
-            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
-            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot, eastDoub);
+            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS
+                    .get(eastSide);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop,
+                    eastBot, eastDoub);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
         }
@@ -131,7 +134,8 @@ public class RenderWallHeaping extends RenderWallAbstract {
                 southTop = southTop || thisTop;
             }
             
-            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
+            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS
+                    .get(southSide);
             IModel southModel = southRenderer
                     .getConnectedSide(southTop, southBot, southDoub);
             this.addQuads(result, southModel, southRenderer
@@ -151,8 +155,10 @@ public class RenderWallHeaping extends RenderWallAbstract {
                 westTop = westTop || thisTop;
             }
 
-            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
-            IModel westModel = westRenderer.getConnectedSide(westTop, westBot, westDoub);
+            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS
+                    .get(westSide);
+            IModel westModel = westRenderer.getConnectedSide(westTop,
+                    westBot, westDoub);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
         }
@@ -182,7 +188,8 @@ public class RenderWallHeaping extends RenderWallAbstract {
     }
     
     @Override
-    public IModel getConnectedSide(boolean isTop, boolean isBottom, boolean isDouble) {
+    public IModel getConnectedSide(boolean isTop, boolean isBottom,
+            boolean isDouble) {
         
         return isDouble ? this.doubleSide : this.singleSide;
     }

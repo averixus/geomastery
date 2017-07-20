@@ -87,20 +87,20 @@ public class ItemRice extends ItemPlacing {
         return true;
     }
     
-    // Adds this item's valid biomes to the tooltip if config. 
+    @Override
+    protected SoundType getSoundType() {
+
+        return SoundType.PLANT;
+    }
+
+    // Adds this item's valid biomes to the tooltip if config
     @Override @SideOnly(Side.CLIENT) 
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
         if (GeoConfig.cropTooltips) {
-
+    
             tooltip.add(I18n.format(this.getUnlocalizedName() + Lang.BIOMES));
         }
-    }
-
-    @Override
-    protected SoundType getSoundType() {
-
-        return SoundType.PLANT;
     }
 }

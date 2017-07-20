@@ -43,27 +43,27 @@ public class BlockRubble extends BlockBuildingAbstract<ItemLooseplacing> {
     }
     
     @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+    public void updateTick(World world, BlockPos pos,
+            IBlockState state, Random rand) {
         
         this.tryFall(world, pos);
     }
-    
+
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos source) {
         
         this.tryFall(world, pos);
     }
-    
+
     @Override
-    public void updateTick(World world, BlockPos pos,
-            IBlockState state, Random rand) {
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
         
         this.tryFall(world, pos);
     }
     
     /** Makes the block fall if needed. */
-    public void tryFall(World world, BlockPos pos) {
+    private void tryFall(World world, BlockPos pos) {
         
         if (world.isRemote) {
             

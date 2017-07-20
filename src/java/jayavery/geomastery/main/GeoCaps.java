@@ -36,8 +36,7 @@ public class GeoCaps {
     @CapabilityInject(ICapPlayer.class)
     public static final Capability<ICapPlayer> CAP_PLAYER = null;
     /** Player capability ID. */
-    public static final ResourceLocation CAP_PLAYER_ID =
-            new ResourceLocation(Geomastery.MODID, "CapabilityPlayer");
+    public static final ResourceLocation CAP_PLAYER_ID = new ResourceLocation(Geomastery.MODID, "CapabilityPlayer");
     
     /** Decay capability. */
     @CapabilityInject(ICapDecay.class)
@@ -46,9 +45,7 @@ public class GeoCaps {
     public static void preInit() {
 
         Geomastery.LOG.info("Registering capabilities");
-        CapabilityManager.INSTANCE.register(ICapDecay.class,
-                new StorageCapDecay(), DefaultCapDecay.class);
-        CapabilityManager.INSTANCE.register(ICapPlayer.class,
-                new StorageCapPlayer(), DefaultCapPlayer.class);
+        CapabilityManager.INSTANCE.register(ICapDecay.class, new StorageCapDecay(), DefaultCapDecay.class);
+        CapabilityManager.INSTANCE.register(ICapPlayer.class, new StorageCapPlayer(), DefaultCapPlayer.class);
     }
 }

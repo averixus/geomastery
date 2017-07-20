@@ -58,8 +58,27 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         super.grow(world, pos, state, rand);
     }
-    
-    /** Harvests the crop's items if full grown. */
+
+    /** Attempts to grow another block of this Crop above. */
+    protected void growUp(World world, BlockPos pos) {
+        
+        if (!world.isAirBlock(pos.up())) {
+            
+            return;
+        }
+        
+        int height;
+        
+        for (height = 1; world.getBlockState(pos.down(height))
+                .getBlock() == this; height++) {}
+        
+        if (height < this.maxHeight) {
+            
+            world.setBlockState(pos.up(), this.getDefaultState());
+        }
+    }
+
+    // Harvests the crop's items if full grown
     @Override
     public boolean onBlockActivated(World world, BlockPos pos,
             IBlockState state, EntityPlayer player, EnumHand hand,
@@ -100,32 +119,13 @@ public abstract class BlockCropHarvestable extends BlockCrop {
         
         return true;
     }
-    
+
     @Override
     public boolean canStay(World world, BlockPos pos) {
         
         BlockPos downPos = pos.down();
         Block downBlock = world.getBlockState(downPos).getBlock();
         return super.canStay(world, pos) || downBlock == this;
-    }
-    
-    /** Attempts to grow another block of this Crop above. */
-    protected void growUp(World world, BlockPos pos) {
-        
-        if (!world.isAirBlock(pos.up())) {
-            
-            return;
-        }
-        
-        int height;
-        
-        for (height = 1; world.getBlockState(pos.down(height))
-                .getBlock() == this; height++) {}
-        
-        if (height < this.maxHeight) {
-            
-            world.setBlockState(pos.up(), this.getDefaultState());
-        }
     }
     
     /** Bean crop block. */

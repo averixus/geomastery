@@ -35,6 +35,7 @@ public class GeoBiomes {
     /** Map of biome base temperatures */
     private static final Map<Biome, Float> BIOMES = Maps.newHashMap();
     
+    /** Sets up biome map. */
     public static void init() {
         
         Geomastery.LOG.info("Creating biome temperature map");

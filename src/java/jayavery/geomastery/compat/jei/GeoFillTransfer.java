@@ -28,33 +28,7 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
     public GeoFillTransfer(Class<C> clas) {
         
         this.clas = clas;
-    }
-    
-    /** Fuel transfer object factory. */
-    public static <T extends ContainerFurnaceAbstract> GeoFillTransfer.Fuel<T>
-            fuel(Class<T> clas) {
-        
-        return new GeoFillTransfer.Fuel<T>(clas);
-    }
-    
-    /** Cooking transfer object factory. */
-    public static <T extends ContainerFurnaceAbstract> GeoFillTransfer.Cooking<T>
-            cook(Class<T> clas) {
-        
-        return new GeoFillTransfer.Cooking<T>(clas);
-    }
-    
-    /** Drying transfer object factory. */
-    public static GeoFillTransfer.Drying dry() {
-        
-        return new GeoFillTransfer.Drying();
-    }
-    
-    @Override
-    public Class<C> getContainerClass() {
-        
-        return this.clas;
-    }
+    }   
     
     /** @return Start index of the inventory to draw from. */
     protected abstract int getInvStart(C container);
@@ -64,6 +38,12 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
     protected abstract int getInputStart(C container);
     /** @return End index of the inventory to fill. */
     protected abstract int getInputEnd(C container);
+    
+    @Override
+    public Class<C> getContainerClass() {
+        
+        return this.clas;
+    }
     
     @Override
     public IRecipeTransferError transferRecipe(C container,
@@ -121,6 +101,26 @@ public abstract class GeoFillTransfer<C extends ContainerAbstract>
         }
         
         return null;
+    }
+    
+    /** Fuel transfer object factory. */
+    public static <T extends ContainerFurnaceAbstract> GeoFillTransfer.Fuel<T>
+            fuel(Class<T> clas) {
+        
+        return new GeoFillTransfer.Fuel<T>(clas);
+    }
+    
+    /** Cooking transfer object factory. */
+    public static <T extends ContainerFurnaceAbstract> GeoFillTransfer.Cooking<T>
+            cook(Class<T> clas) {
+        
+        return new GeoFillTransfer.Cooking<T>(clas);
+    }
+    
+    /** Drying transfer object factory. */
+    public static GeoFillTransfer.Drying dry() {
+        
+        return new GeoFillTransfer.Drying();
     }
     
     /** Furnace container transfer handler for fuels. */

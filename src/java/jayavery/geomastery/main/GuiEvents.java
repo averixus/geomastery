@@ -38,68 +38,68 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class GuiEvents {
     
     /** Texture for the carbs food icons. */
-    private static final ResourceLocation carbsTexture = new ResourceLocation(Geomastery.MODID, "textures/gui/carbs.png");
+    private static final ResourceLocation CARBS_TEXTURE = new ResourceLocation(Geomastery.MODID, "textures/gui/carbs.png");
     /** Texture for the protein food icons. */
-    private static final ResourceLocation proteinTexture = new ResourceLocation(Geomastery.MODID, "textures/gui/protein.png");
+    private static final ResourceLocation PROTEIN_TEXTURE = new ResourceLocation(Geomastery.MODID, "textures/gui/protein.png");
     /** Texture for the fruitveg food icons. */
-    private static final ResourceLocation fruitvegTexture = new ResourceLocation(Geomastery.MODID, "textures/gui/fruitveg.png");
+    private static final ResourceLocation FRUITVEG_TEXTURE = new ResourceLocation(Geomastery.MODID, "textures/gui/fruitveg.png");
     /** Texture for the backpack slot icon. */
-    private static final ResourceLocation backpackTexture = new ResourceLocation(Geomastery.MODID, "gui/backpack_slot");
+    private static final ResourceLocation BACKPACK_TEXTURE = new ResourceLocation(Geomastery.MODID, "gui/backpack_slot");
     /** Texture for the yoke slot icon. */
-    private static final ResourceLocation yokeTexture = new ResourceLocation(Geomastery.MODID, "gui/yoke_slot");
+    private static final ResourceLocation YOKE_SLOT = new ResourceLocation(Geomastery.MODID, "gui/yoke_slot");
     /** Texture for the vanilla icons. */
-    private static final ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
+    private static final ResourceLocation ICONS = new ResourceLocation("textures/gui/ICONS.png");
     /** Texture for tar fluid. */
     private static final ResourceLocation TAR = new ResourceLocation(Geomastery.MODID, "textures/blocks/liquids/tar_overlay.png");
     
     /** X offset of temperature icon for left-handed player. */
-    private static final int tempOffsetXLeft = -114;
+    private static final int TEMP_OFFSET_X_LEFT = -114;
     /** X offset of temperature icon for right-handed player. */
-    private static final int tempOffsetXRight = 96;
+    private static final int TEMP_OFFSET_X_RIGHT = 96;
     /** Y offset of temperature icon. */
-    private static final int tempOffsetY = -21;
+    private static final int TEMP_OFFSET_Y = -21;
     /** Size of temperature icon. */
-    private static final int tempIconSize = 18;
+    private static final int TEMP_ICON_SIZE = 18;
     
-    /** Spacing of standard style icons. */
-    private static final int iconSpacing = 8;
-    /** Size of standard style icons. */
-    private static final int iconSize = 9;
+    /** Spacing of standard style ICONS. */
+    private static final int ICON_SPACING = 8;
+    /** Size of standard style ICONS. */
+    private static final int ICON_SIZE = 9;
     
     /** Y offset of air bar. */
-    private static final int airOffsetY = -49;
+    private static final int AIR_OFFSET_Y = -49;
     /** X offset of air bar. */
-    private static final int airOffsetX = -91;
+    private static final int AIR_OFFSET_X = -91;
     /** X position of full air icon in texture. */
-    private static final int airIconXFull = 16;
+    private static final int AIR_ICON_X_FULL = 16;
     /** X position of partial air icon in texture. */
-    private static final int airIconXPartial = 25;
+    private static final int AIR_ICON_X_PARTIAL = 25;
     /** Y position of air icons in texture. */
-    private static final int airIconY = 18;
+    private static final int AIR_ICON_Y = 18;
     
     /** X offset of food icons. */
-    private static final int foodOffsetX = 82;
+    private static final int FOOD_OFFSET_X = 82;
     /** Y offset of food icons. */
-    private static final int foodOffsetY = -39;
-    /** X size of food icons textures. */
-    private static final int foodSizeX = 27;
-    /** Y size of food icons textures. */
-    private static final int foodSizeY = 9;
+    private static final int FOOD_OFFSET_Y = -39;
+    /** X size of food icons. */
+    private static final int FOOD_SIZE_X = 27;
+    /** Y size of food icons. */
+    private static final int FOOD_SIZE_Y = 9;
     /** X position of background food icon in texture. */
-    private static final int foodBackgroundX = 0;
+    private static final int FOOD_BACKGROUND_X = 0;
     /** X position of full food icon in texture. */
-    private static final int foodFullX = 9;
+    private static final int FOOD_FULL_X = 9;
     /** X position of partial food icon in texture. */
-    private static final int foodPartialX = 18;
+    private static final int FOOD_PARTIAL_X = 18;
     /** Vertical spacing between rows of food icons. */
-    private static final int foodSpacing = -10;
+    private static final int FOOD_SPACING = -10;
     
-    /** Registers icons for container slot backgrounds. */
+    /** Registers ICONS for container slot backgrounds. */
     @SubscribeEvent
     public void textureStich(TextureStitchEvent.Pre event) {
 
-        event.getMap().registerSprite(backpackTexture);
-        event.getMap().registerSprite(yokeTexture);
+        event.getMap().registerSprite(BACKPACK_TEXTURE);
+        event.getMap().registerSprite(YOKE_SLOT);
     }
     
     /** Alters which vanilla Gui is opened. */
@@ -157,7 +157,6 @@ public class GuiEvents {
                 player.world.getBlockState(event.getBlockPos())
                 .getBlock() == GeoBlocks.tar) {
             
-            System.out.println("overlay");
             Minecraft.getMinecraft().getTextureManager().bindTexture(TAR);
             Tessellator tess = Tessellator.getInstance();
             VertexBuffer vert = tess.getBuffer();
@@ -219,22 +218,22 @@ public class GuiEvents {
                 .CAP_PLAYER, null).getTempIcon();
         
         int x = hand == EnumHandSide.LEFT ?
-                centreX + tempOffsetXLeft : centreX + tempOffsetXRight;
-        int y = resHeight + tempOffsetY;
+                centreX + TEMP_OFFSET_X_LEFT : centreX + TEMP_OFFSET_X_RIGHT;
+        int y = resHeight + TEMP_OFFSET_Y;
         
         Minecraft.getMinecraft().getTextureManager().bindTexture(icon);
         Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0,
-                tempIconSize, tempIconSize, tempIconSize, tempIconSize);
+                TEMP_ICON_SIZE, TEMP_ICON_SIZE, TEMP_ICON_SIZE, TEMP_ICON_SIZE);
     }
     
     /** Draws the player's air bubbles above health bar. */
     private static void drawAirBubbles(EntityPlayer player,
             int centreX, int resHeight) {
         
-        Minecraft.getMinecraft().getTextureManager().bindTexture(icons);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(ICONS);
         GlStateManager.enableBlend();
-        int left = centreX + airOffsetX;
-        int top = resHeight + airOffsetY;
+        int left = centreX + AIR_OFFSET_X;
+        int top = resHeight + AIR_OFFSET_Y;
         
         int air = player.getAir();
         int full = MathHelper.ceil((air - 2) * 10.0D / 300.0D);
@@ -242,9 +241,9 @@ public class GuiEvents {
         
         for (int i = 0; i < full + partial; i++) {
             
-            new Gui().drawTexturedModalRect(left + i * iconSpacing,
-                    top, (i < full ? airIconXFull : airIconXPartial),
-                    airIconY, iconSize, iconSize);
+            new Gui().drawTexturedModalRect(left + i * ICON_SPACING,
+                    top, (i < full ? AIR_ICON_X_FULL : AIR_ICON_X_PARTIAL),
+                    AIR_ICON_Y, ICON_SIZE, ICON_SIZE);
         }
         
         GlStateManager.disableBlend();
@@ -255,80 +254,80 @@ public class GuiEvents {
             int centreX, int resHeight) {
         
         GlStateManager.enableBlend();
-        int left = centreX + foodOffsetX;
-        int top = resHeight + foodOffsetY;
+        int left = centreX + FOOD_OFFSET_X;
+        int top = resHeight + FOOD_OFFSET_Y;
         ICapPlayer playerCap = player.getCapability(GeoCaps.CAP_PLAYER, null);
         
         int carbsHunger = playerCap.foodLevel(EFoodType.CARBS);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(carbsTexture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(CARBS_TEXTURE);
         
         for (int i = 0; i < 10; i++) {
             
             int idx = i * 2 + 1;
-            int x = left - i * iconSpacing;
+            int x = left - i * ICON_SPACING;
             
-            Gui.drawModalRectWithCustomSizedTexture(x, top, foodBackgroundX, 0,
-                    iconSize, iconSize, foodSizeX, foodSizeY);
+            Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_BACKGROUND_X,
+                    0, ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
             
             if (idx < carbsHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top, foodFullX, 0,
-                        iconSize, iconSize, foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_FULL_X, 0,
+                        ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
                 
             } else if (idx == carbsHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top, foodPartialX, 0,
-                        iconSize, iconSize, foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_PARTIAL_X,
+                        0, ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
             }
         }
         
         int fruitvegHunger = playerCap.foodLevel(EFoodType.FRUITVEG);
         Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(fruitvegTexture);
-        top += foodSpacing;
+                .bindTexture(FRUITVEG_TEXTURE);
+        top += FOOD_SPACING;
         
         for (int i = 0; i < 10; i++) {
             
             int idx = i * 2 + 1;
-            int x = left - i * iconSpacing;
+            int x = left - i * ICON_SPACING;
             
-            Gui.drawModalRectWithCustomSizedTexture(x, top, foodBackgroundX, 0,
-                    iconSize, iconSize, foodSizeX, foodSizeY);
+            Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_BACKGROUND_X,
+                    0, ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
             
             if (idx < fruitvegHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top, foodFullX, 0,
-                        iconSize, iconSize, foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_FULL_X, 0,
+                        ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
                 
             } else if (idx == fruitvegHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top, foodPartialX, 0,
-                        iconSize, iconSize, foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_PARTIAL_X,
+                        0, ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
             }
         }
         
         int proteinHunger = playerCap.foodLevel(EFoodType.PROTEIN);
         Minecraft.getMinecraft().getTextureManager()
-                .bindTexture(proteinTexture);
-        top += foodSpacing;
+                .bindTexture(PROTEIN_TEXTURE);
+        top += FOOD_SPACING;
         
         for (int i = 0; i < 10; i++) {
             
             int idx = i * 2 + 1;
-            int x = left - i * iconSpacing;
+            int x = left - i * ICON_SPACING;
             
-            Gui.drawModalRectWithCustomSizedTexture(x, top, foodBackgroundX, 0,
-                    iconSize, iconSize, foodSizeX, foodSizeY);
+            Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_BACKGROUND_X,
+                    0, ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
             
             if (idx < proteinHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top, foodFullX, 0,
-                        iconSize, iconSize, foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_FULL_X, 0,
+                        ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
                 
             } else if (idx == proteinHunger) {
                 
-                Gui.drawModalRectWithCustomSizedTexture(x, top, foodPartialX, 0,
-                        iconSize, iconSize, foodSizeX, foodSizeY);
+                Gui.drawModalRectWithCustomSizedTexture(x, top, FOOD_PARTIAL_X,
+                        0, ICON_SIZE, ICON_SIZE, FOOD_SIZE_X, FOOD_SIZE_Y);
             }
         }
     }

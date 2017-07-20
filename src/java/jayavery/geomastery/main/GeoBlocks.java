@@ -359,10 +359,4 @@ public class GeoBlocks {
         
         return makeItemBlock(block, 1, false, sets);
     }
-        
-    private static <B extends Block> B makeItemBlock(B block, int stackSize,
-            Set<? super B>... sets) {
-        
-        return makeItemBlock(block, stackSize, false, sets);
-    }
 }

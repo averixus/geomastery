@@ -53,5 +53,4 @@ public class ProviderCapPlayer
         
         this.instance.deserializeNBT(nbt);
     }
-
 }

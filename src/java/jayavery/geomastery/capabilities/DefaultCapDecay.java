@@ -23,7 +23,7 @@ public class DefaultCapDecay implements ICapDecay {
     /** Number of ticks in a single decay stage. */
     private int stageSize;
     /** World time when this item was created. */
-    private long birthTime = -1;
+    private long birthTime;
     
     public DefaultCapDecay(int maxDays) {
         
@@ -54,7 +54,7 @@ public class DefaultCapDecay implements ICapDecay {
     @Override
     public float getFraction(World world) {
         
-        if (world == null || this.birthTime == -1) {
+        if (world == null) {
             
             return 1;
         }
@@ -80,8 +80,7 @@ public class DefaultCapDecay implements ICapDecay {
     @Override
     public void setBirthTime(long birthTime) {
         
-        this.birthTime = birthTime == -1 ? -1 :
-            (birthTime / this.stageSize) * this.stageSize;
+        this.birthTime = (birthTime / this.stageSize) * this.stageSize;
     }
     
     @Override
@@ -93,7 +92,7 @@ public class DefaultCapDecay implements ICapDecay {
     @Override
     public boolean isRot(World world) {
         
-        if (world == null || this.birthTime == -1) {
+        if (world == null) {
             
             return false;
         }

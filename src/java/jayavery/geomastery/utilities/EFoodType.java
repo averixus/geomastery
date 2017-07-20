@@ -20,6 +20,7 @@ public enum EFoodType {
         this.tip = tip;
     }
     
+    /** @return Unlocalised tooltip for this food type. */
     public String tip() {
         
         return this.tip;

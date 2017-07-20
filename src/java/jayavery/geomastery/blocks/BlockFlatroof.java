@@ -39,19 +39,6 @@ public class BlockFlatroof extends BlockFacing {
                 4, EBlockWeight.NONE);
     }
 
-    /** Adds this block's build reqs to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.buildTooltips) {
-            
-            tooltip.add(I18n.format(Lang.BUILDTIP_FLATROOF));
-            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
-        }
-    }
-    
     @Override
     public boolean shouldConnect(IBlockAccess world, IBlockState state,
             BlockPos pos, EnumFacing direcion) {
@@ -105,6 +92,59 @@ public class BlockFlatroof extends BlockFacing {
         return false;
     }
 
+    /** @return Whether this position can support adjacent roof. */
+    protected boolean isValidSupport(World world, BlockPos pos) {
+        
+        boolean isRoof = world.getBlockState(pos).getBlock()
+                instanceof BlockFlatroof;
+        boolean isSupported = EBlockWeight.getWeight(world.getBlockState(pos
+                .down())).canSupport(this.getWeight(this.getDefaultState()));
+        return isRoof && isSupported;
+    }
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.format(Lang.BUILDTIP_FLATROOF));
+            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
+        }
+    }
+    
+    // Make drips when raining (as vanilla leaves)
+    @SideOnly(Side.CLIENT) @Override
+    public void randomDisplayTick(IBlockState stateIn, World world,
+            BlockPos pos, Random rand) {
+        
+        if (world.isRainingAt(pos.up()) && !world.getBlockState(pos.down())
+                .isSideSolid(world, pos.down(), EnumFacing.UP) &&
+                rand.nextInt(15) == 1) {
+            
+            double d0 = pos.getX() + rand.nextFloat();
+            double d1 = pos.getY() - 0.05D;
+            double d2 = pos.getZ() + rand.nextFloat();
+            world.spawnParticle(EnumParticleTypes.DRIP_WATER, d0, d1, d2,
+                    0.0D, 0.0D, 0.0D);
+        }
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return TWO;
+    }
+
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return NULL_AABB;
+    }
+
+    // Break when walked on
     @Override
     public void onEntityCollidedWithBlock(World world, BlockPos pos,
             IBlockState state, Entity entity) {
@@ -123,46 +163,5 @@ public class BlockFlatroof extends BlockFacing {
                 world.destroyBlock(pos, true);
             }
         }
-    }
-    
-    protected boolean isValidSupport(World world, BlockPos pos) {
-        
-        boolean isRoof = world.getBlockState(pos).getBlock()
-                instanceof BlockFlatroof;
-        boolean isSupported = EBlockWeight.getWeight(world.getBlockState(pos
-                .down())).canSupport(this.getWeight(this.getDefaultState()));
-        return isRoof && isSupported;
-    }
-    
-    /** Make drips when raining (as vanilla leaves). */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void randomDisplayTick(IBlockState stateIn, World world,
-            BlockPos pos, Random rand) {
-        
-        if (world.isRainingAt(pos.up()) && !world.getBlockState(pos.down())
-                .isSideSolid(world, pos.down(), EnumFacing.UP) &&
-                rand.nextInt(15) == 1) {
-            
-            double d0 = pos.getX() + rand.nextFloat();
-            double d1 = pos.getY() - 0.05D;
-            double d2 = pos.getZ() + rand.nextFloat();
-            world.spawnParticle(EnumParticleTypes.DRIP_WATER, d0, d1, d2,
-                    0.0D, 0.0D, 0.0D);
-        }
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return TWO;
-    }
-    
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return NULL_AABB;
     }
 }

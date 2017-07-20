@@ -25,19 +25,19 @@ public class BlockMaterial extends Material {
     public static final BlockMaterial FRUIT =                   new BlockMaterial(MapColor.GREEN, false, true, true, true, false, false, false);
     
     /** Whether this material is solid. */
-    private boolean isSolid;
+    private final boolean isSolid;
     /** Whether this material can be harvested by hand. */
-    private boolean isHandHarvestable;
+    private final boolean isHandHarvestable;
     /** Whether this material is flammable. */
-    private boolean isFlammable;
+    private final boolean isFlammable;
     /** Whether this material is translucent. */
-    private boolean isTranslucent;
+    private final boolean isTranslucent;
     /** Whether this material can be replaced by other blocks. */
-    private boolean isReplaceable;
+    private final boolean isReplaceable;
     /** Whether this material blocks pistons. */
-    private boolean isImmovable;
+    private final boolean isImmovable;
     /** Whether this material is liquid. */
-    private boolean isLiquid;
+    private final boolean isLiquid;
     
     public BlockMaterial(MapColor colour, boolean isSolid,
             boolean isHandHarvestable, boolean isFlammable,

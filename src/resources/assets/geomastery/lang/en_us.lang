@@ -325,7 +325,7 @@ tile.geomastery:block_seedling_apple.biomes=Valid biomes: Forest, Plains, River,
 geomastery:container.basket=Basket
 geomastery:container.box=Box
 geomastery:container.chest=Chest
-geomastery:container.compost=Compost Heap
+geomastery:container.compostheap=Compost Heap
 geomastery:container.drying=Drying Rack
 geomastery:container.inventory=Inventory
 geomastery:container.knapping=Knapping Block
@@ -340,6 +340,9 @@ geomastery:container.campfire=Campfire
 geomastery:container.potfire=Pot Fire
 geomastery:container.clay=Clay Oven
 geomastery:container.stone=Stone Furnace
+
+geomastery:compost.wet=Wet
+geomastery:compost.dry=Dry
 
 geomastery:buildtip.req.none=Support weights needed: Light or more
 geomastery:buildtip.req.light=Support weights needed: Light or more

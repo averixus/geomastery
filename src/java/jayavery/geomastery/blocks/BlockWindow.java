@@ -30,8 +30,7 @@ import net.minecraft.world.World;
 /** Window block. */
 public class BlockWindow extends BlockFacing {
 
-    public static final PropertyEnum<EVaultAbove> VAULT =
-            PropertyEnum.create("vault", EVaultAbove.class);
+    public static final PropertyEnum<EVaultAbove> VAULT = PropertyEnum.create("vault", EVaultAbove.class);
     
     public BlockWindow() {
         
@@ -48,14 +47,6 @@ public class BlockWindow extends BlockFacing {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-        
-        int facing = state.getValue(FACING).getHorizontalIndex();
-        return DOOR_CLOSED[(facing + 2) % 4];
-    }
-    
-    @Override
     public IBlockState getActualState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
         
@@ -67,7 +58,7 @@ public class BlockWindow extends BlockFacing {
         if (upState.getBlock() instanceof BlockVault) {
             
             EnumFacing upFacing = upState.getActualState(world, posUp)
-                    .getValue(BlockVault.FACING);
+                    .getValue(BlockFacing.FACING);
             
             if (upFacing == facing.rotateY()) {
                 
@@ -81,10 +72,18 @@ public class BlockWindow extends BlockFacing {
         
         return state.withProperty(VAULT, vault);
     }
-    
+
     @Override
     public BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, FACING, VAULT);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
+            BlockPos pos) {
+        
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        return DOOR_CLOSED[(facing + 2) % 4];
     }
 }

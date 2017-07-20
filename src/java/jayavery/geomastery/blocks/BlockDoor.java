@@ -38,10 +38,8 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
     public static final PropertyBool TOP = PropertyBool.create("top");
-    public static final PropertyEnum<EPartDoor> PART =
-            PropertyEnum.<EPartDoor>create("part", EPartDoor.class);
-    public static final PropertyEnum<EVaultAbove> VAULT =
-            PropertyEnum.create("vault", EVaultAbove.class);
+    public static final PropertyEnum<EPartDoor> PART = PropertyEnum.<EPartDoor>create("part", EPartDoor.class);
+    public static final PropertyEnum<EVaultAbove> VAULT = PropertyEnum.create("vault", EVaultAbove.class);
 
     public BlockDoor(String name) {
         
@@ -55,6 +53,20 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
         return new ItemPlacing.Building(this, stackSize);
     }
     
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.LIGHT;
+    }
+
+    @Override
+    public boolean shouldConnect(IBlockAccess world, IBlockState state,
+            BlockPos pos, EnumFacing direction) {
+        
+        EnumFacing facing = state.getValue(FACING);
+        return facing != direction && facing != direction.getOpposite();
+    }
+
     @Override
     public boolean place(World world, BlockPos targetPos,
             EnumFacing targetSide, EnumFacing placeFacing,
@@ -75,12 +87,35 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
         
 
         world.setBlockState(bottomPos, botState);
-        world.setBlockState(topPos, botState
-                .withProperty(BlockDoor.TOP, true));
+        world.setBlockState(topPos, topState);
         
         return true;
     }
     
+    @Override
+    public boolean onBlockActivated(World world, BlockPos thisPos,
+            IBlockState thisState, EntityPlayer player, EnumHand hand,
+            EnumFacing side, float x, float y, float z) {
+        
+        BlockPos otherPos = thisState.getValue(TOP) ?
+                thisPos.down() : thisPos.up();
+        IBlockState otherState = world.getBlockState(otherPos);
+        
+        if (otherState.getBlock() != this) {
+            
+            return false;
+        }
+            
+        thisState = thisState.cycleProperty(OPEN);
+        world.setBlockState(thisPos, thisState);
+        world.setBlockState(otherPos, otherState
+                .withProperty(OPEN, thisState.getValue(OPEN)));
+        world.playEvent(player, thisState.getValue(OPEN) ?
+                1006 : 1012, thisPos, 0);
+        
+        return true;
+    }
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -122,92 +157,6 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
     }
     
     @Override
-    public EBlockWeight getWeight(IBlockState state) {
-        
-        return EBlockWeight.LIGHT;
-    }
-    
-    @Override
-    public boolean shouldConnect(IBlockAccess world, IBlockState state,
-            BlockPos pos, EnumFacing direction) {
-        
-        EnumFacing facing = state.getValue(FACING);
-        return facing != direction && facing != direction.getOpposite();
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        state = this.getActualState(state, world, pos);
-        int facing = state.getValue(FACING).getHorizontalIndex();
-        EPartDoor part = state.getValue(PART);
-        boolean open = state.getValue(OPEN);
-        
-        if (!open) {
-
-            return DOOR_CLOSED[facing];
-        }
-        
-        if (part.isLeft()) {
-
-            return DOOR_OPEN_LEFT[facing];
-            
-        } else {
-
-            return DOOR_OPEN_RIGHT[facing];
-        }
-    }
-    
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        state = this.getActualState(state, world, pos);
-        int facing = state.getValue(FACING).getHorizontalIndex();
-        EPartDoor part = state.getValue(PART);
-        boolean open = state.getValue(OPEN);
-        
-        if (!open) {
-
-            return DOOR_CLOSED[facing];
-        }
-        
-        if (part.isLeft()) {
-
-            return DOOR_OPEN_LEFT[facing];
-            
-        } else {
-
-            return DOOR_OPEN_RIGHT[facing];
-        }
-    }
-    
-    @Override
-    public boolean onBlockActivated(World world, BlockPos thisPos,
-            IBlockState thisState, EntityPlayer player, EnumHand hand,
-            EnumFacing side, float x, float y, float z) {
-        
-        BlockPos otherPos = thisState.getValue(TOP) ?
-                thisPos.down() : thisPos.up();
-        IBlockState otherState = world.getBlockState(otherPos);
-        
-        if (otherState.getBlock() != this) {
-            
-            return false;
-        }
-            
-        thisState = thisState.cycleProperty(OPEN);
-        world.setBlockState(thisPos, thisState);
-        world.setBlockState(otherPos, otherState
-                .withProperty(OPEN, thisState.getValue(OPEN)));
-        world.playEvent(player, thisState.getValue(OPEN) ?
-                1006 : 1012, thisPos, 0);
-        
-        return true;
-    }
-    
-    @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune, TileEntity te,
             ItemStack tool, EntityPlayer player) {
@@ -215,7 +164,7 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
         state = this.getActualState(state, world, pos);
         
         if (state.getValue(PART).isTop()) {
-       
+    
             return Lists.newArrayList(new ItemStack(this.item));
             
         } else {
@@ -223,7 +172,7 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
             return Collections.emptyList();
         }
     }
-    
+
     @Override
     public IBlockState getActualState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
@@ -249,10 +198,10 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
         IBlockState upState = world.getBlockState(posUp);
         
         if (isTop && upState.getBlock() instanceof BlockVault) {
-
+    
             EnumFacing upFacing = upState.getActualState(world, posUp)
-                    .getValue(BlockVault.FACING);
-
+                    .getValue(FACING);
+    
             if (upFacing == facing.rotateY()) {
                 
                 vault = EVaultAbove.LEFT;
@@ -262,21 +211,16 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
                 vault = EVaultAbove.RIGHT;
             }
         }
-
+    
         return state.withProperty(VAULT, vault);
     }
-    
+
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public BlockStateContainer createBlockState() {
         
-        IBlockState state = this.getDefaultState();
-        
-        state = state.withProperty(OPEN, ((meta & 8) > 0));
-        state = state.withProperty(TOP, ((meta & 4) > 0));
-        state = state.withProperty(FACING, EnumFacing.getHorizontal(meta));
-        return state;
+        return new BlockStateContainer(this, FACING, OPEN, TOP, PART, VAULT);
     }
-    
+
     @Override
     public int getMetaFromState(IBlockState state) {
         
@@ -294,11 +238,33 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
         
         return meta;
     }
-    
+
     @Override
-    public BlockStateContainer createBlockState() {
+    public IBlockState getStateFromMeta(int meta) {
         
-        return new BlockStateContainer(this, FACING, OPEN, TOP, PART, VAULT);
+        IBlockState state = this.getDefaultState();
+        
+        state = state.withProperty(OPEN, ((meta & 8) > 0));
+        state = state.withProperty(TOP, ((meta & 4) > 0));
+        state = state.withProperty(FACING, EnumFacing.getHorizontal(meta));
+        return state;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        state = this.getActualState(state, world, pos);
+        int facing = state.getValue(FACING).getHorizontalIndex();
+        EPartDoor part = state.getValue(PART);
+        boolean open = state.getValue(OPEN);
+        
+        if (!open) {
+
+            return DOOR_CLOSED[facing];
+        }
+        
+        return part.isLeft() ? DOOR_OPEN_LEFT[facing] : DOOR_OPEN_RIGHT[facing];
     }
     
     /** Enum defining vault extensions. */
@@ -353,10 +319,7 @@ public class BlockDoor extends BlockBuildingAbstract<ItemPlacing.Building> {
             
             switch (this) {
                 
-                case LBC:
-                case LTC:
-                case LBO:
-                case LTO:
+                case LBC: case LTC: case LBO: case LTO:
                     return true;
                 default:
                     return false;

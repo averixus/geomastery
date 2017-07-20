@@ -60,15 +60,8 @@ public class TECraftingTextiles extends TECraftingAbstract<EPartTextiles> {
         
         @Override
         public BlockPos getMaster(BlockPos pos, EnumFacing facing) {
-            
-            if (this == FRONT) {
-                
-                return pos;
-                
-            } else {
-                
-                return pos.offset(facing.getOpposite());
-            }
+
+            return this == FRONT ? pos : pos.offset(facing.getOpposite());
         }
         
         @Override
@@ -76,20 +69,17 @@ public class TECraftingTextiles extends TECraftingAbstract<EPartTextiles> {
                 EnumFacing facing) {
             
             BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_TEXTILES;
-            boolean broken = false;
             
             if (this == FRONT) {
 
-                broken |= world.getBlockState(pos.offset(facing)).getBlock()
+                return world.getBlockState(pos.offset(facing)).getBlock()
                         != block;
                 
             } else {
 
-                broken |= world.getBlockState(pos.offset(facing.getOpposite()))
+                return world.getBlockState(pos.offset(facing.getOpposite()))
                         .getBlock() != block;
             }
-            
-            return broken;
         }
         
         @Override
@@ -109,47 +99,46 @@ public class TECraftingTextiles extends TECraftingAbstract<EPartTextiles> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == FRONT) {
+            if (this != FRONT) {
                 
-                BlockContainerMulti<EPartTextiles> block = 
-                        GeoBlocks.CRAFTING_TEXTILES;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartTextiles> prop = block.getPartProperty();
-                
-                // Prepare map of properties
-                
-                Map<BlockPos, EPartTextiles> map = Maps.newHashMap();
-                map.put(pos, FRONT);
-                map.put(pos.offset(facing), BACK);
-                
-                // Check validity
-                
-                for (Entry<BlockPos, EPartTextiles> entry : map.entrySet()) {
-                    
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
-                }
-
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingTextiles) world.getTileEntity(e.getKey()))
-                        .setState(facing, e.getValue()));
-                
-                return true;
+                return false;
             }
+                
+            BlockContainerMulti<EPartTextiles> block =
+                    GeoBlocks.CRAFTING_TEXTILES;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartTextiles> prop = block.getPartProperty();
             
-            return false;
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartTextiles> map = Maps.newHashMap();
+            map.put(pos, FRONT);
+            map.put(pos.offset(facing), BACK);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartTextiles> entry : map.entrySet()) {
+                
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
+                
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
+                    
+                    return false;
+                }
+            }
+
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingTextiles) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            
+            return true;
         }
     }
 }

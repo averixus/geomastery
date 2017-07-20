@@ -17,8 +17,7 @@ public class RenderBox
         extends TileEntitySpecialRenderer<TEStorage.Box> {
 
     /** Texture for box .*/
-    private static final ResourceLocation TEXTURE = new
-            ResourceLocation(Geomastery.MODID, "textures/entity/box.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Geomastery.MODID, "textures/entity/box.png");
     /** Model for box. */
     private ModelBox model = new ModelBox();
     

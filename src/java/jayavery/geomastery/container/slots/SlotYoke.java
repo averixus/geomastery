@@ -28,8 +28,7 @@ public class SlotYoke extends Slot {
         
         super(null, 0, x, y);
         this.player = player;
-        this.capability = player.getCapability(GeoCaps.CAP_PLAYER,
-                null);
+        this.capability = player.getCapability(GeoCaps.CAP_PLAYER, null);
         this.backgroundName = Geomastery.MODID + ":gui/yoke_slot";
     }
     

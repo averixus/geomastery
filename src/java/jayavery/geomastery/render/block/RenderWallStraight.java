@@ -81,7 +81,8 @@ public class RenderWallStraight extends RenderWallAbstract {
     }
 
     @Override
-    protected IModel getConnectedSide(boolean isTop, boolean isBottom, boolean isDouble) {
+    protected IModel getConnectedSide(boolean isTop, boolean isBottom,
+            boolean isDouble) {
         
         return this.side;
     }

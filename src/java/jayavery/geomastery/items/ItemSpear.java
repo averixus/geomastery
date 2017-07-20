@@ -59,24 +59,17 @@ public class ItemSpear extends ItemTool {
         });
     }
     
+    // Starts charging throw
     @Override
-    public boolean isEnchantable(ItemStack stack) {
-        
-        return false;
-    }
+    public ActionResult<ItemStack> onItemRightClick(World world,
+            EntityPlayer player, EnumHand hand) {
     
-    /** Creates this spear's thrown entity. */
-    protected void throwSpear(World world, EntityPlayer player,
-            float velocity, int durability) {
-        
-        EntityProjectile thrown = this.factory.create(world,
-                player, durability);
-        thrown.setAim(player, player.rotationPitch, player.rotationYaw,
-                0, velocity, 1F);
-        world.spawnEntity(thrown);
+        ItemStack stack = player.getHeldItem(hand);
+        player.setActiveHand(hand);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
-    /** Throws spear. */
+    // Throws spear
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world,
             EntityLivingBase entity, int timeLeft) {
@@ -114,41 +107,48 @@ public class ItemSpear extends ItemTool {
         }
     }
 
-    /** Starts charging throw. */
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World world,
-            EntityPlayer player, EnumHand hand) {
-
-        ItemStack stack = player.getHeldItem(hand);
-        player.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-    }
-
     /** @return The velocity of thrown spear. */
     private static float getVelocity(int charge) {
-
+    
         float velocity = charge / 20F;
         velocity = ((velocity * velocity) + (velocity * 2F)) / 3F;
-
+    
         if (velocity > 1F) {
-
+    
             velocity = 1F;
         }
-
+    
         return velocity * EntityProjectile.SPEAR_MOD;
     }
 
-    /** The time taken for the throw to charge. */
+    /** Creates this spear's thrown entity. */
+    protected void throwSpear(World world, EntityPlayer player,
+            float velocity, int durability) {
+        
+        EntityProjectile thrown = this.factory.create(world,
+                player, durability);
+        thrown.setAim(player, player.rotationPitch, player.rotationYaw,
+                0, velocity, 1F);
+        world.spawnEntity(thrown);
+    }
+
+    // Returns the time taken for the throw to charge
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-
+    
         return 72000;
     }
 
-    /** Makes the player move like pulling a bow. */
+    // Makes the player move like pulling a bow
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
-
+    
         return EnumAction.BOW;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
 }

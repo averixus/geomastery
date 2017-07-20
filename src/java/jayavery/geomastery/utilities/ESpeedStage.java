@@ -19,15 +19,16 @@ public enum ESpeedStage {
     SPEED_3_8(new AttributeModifier(UUID.fromString("8cae5c5d-8a29-473b-bba0-5a633b1b7e91"), "Speed 3.8", -0.116, 1).setSaved(true));
         
     /** Attribute modifier for this speed stage. */
-    private AttributeModifier modifier;
+    private final AttributeModifier modifier;
     
     private ESpeedStage(AttributeModifier modifier) {
         
         this.modifier = modifier;
     }
     
-    /** Apply the given modifier and remove all others. */
-    public static void apply(IAttributeInstance movement, ESpeedStage newStage) {
+    /** Applies the given modifier and remove all others. */
+    public static void apply(IAttributeInstance movement,
+            ESpeedStage newStage) {
         
         for (ESpeedStage stage : values()) {
             

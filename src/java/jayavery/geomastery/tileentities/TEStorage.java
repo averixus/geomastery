@@ -19,7 +19,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 
-/** Abstract superclass for storage TE. */
+/** TE which stores items. */
 public abstract class TEStorage extends TileEntity
         implements ITickable, IItemStorage {
     
@@ -46,7 +46,7 @@ public abstract class TEStorage extends TileEntity
         return this.inv;
     }
     
-    /** Sets this storage lid angles. */
+    /** Sets this storage block's lid angles. */
     public void setAngles(float lidAngle, float prevLidAngle) {
         
         this.lidAngle = lidAngle;
@@ -64,46 +64,6 @@ public abstract class TEStorage extends TileEntity
     public ItemStack getInventory(int index) {
         
         return this.inv.get(index);
-    }
-    
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        
-        super.readFromNBT(compound);
-        
-        for (int i = 0; i < this.inv.size(); i++) {
-            
-            this.setInventory(new ItemStack(compound
-                    .getCompoundTag("inv" + i)), i);
-        }
-    }
-    
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        
-        super.writeToNBT(compound);
-
-        for (int i = 0; i < this.inv.size(); i++) {
-            
-            compound.setTag("inv" + i, this.getInventory(i)
-                    .writeToNBT(new NBTTagCompound()));
-        }
-
-        return compound;
-    }
-    
-    /** Drop inventory items when block is broken. */
-    public void dropItems() {
-        
-        for (ItemStack stack : this.inv) {
-            
-            if (!stack.isEmpty()) {
-                
-                this.world.spawnEntity(new EntityItem(this.world,
-                        this.pos.getX(), this.pos.getY(),
-                        this.pos.getZ(), stack));
-            }
-        }
     }
     
     /** @return The number of slots in this inventory. */
@@ -178,13 +138,6 @@ public abstract class TEStorage extends TileEntity
         }
     }
     
-    // Tells the TESR to render break progress texture
-    @Override
-    public boolean canRenderBreaking() {
-        
-        return true;
-    }
-    
     /** Gets the container Y co-ordinate for this inventory. */
     public int getInvY() {
         
@@ -203,7 +156,7 @@ public abstract class TEStorage extends TileEntity
         this.users--;
     }
     
-    /** Sends an packet to update the lid angle on the Client. */
+    /** Sends a packet to update the lid angle on the client. */
     private void sendAnglePacket() {
         
         if (!this.world.isRemote) {
@@ -211,6 +164,39 @@ public abstract class TEStorage extends TileEntity
             Geomastery.NETWORK.sendToAll(new CPacketLid(this.lidAngle,
                     this.prevLidAngle, this.pos));
         }
+    }
+    
+    // Tells the TESR to render break progress texture.
+    @Override
+    public boolean canRenderBreaking() {
+        
+        return true;
+    }
+    
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        
+        super.readFromNBT(compound);
+        
+        for (int i = 0; i < this.inv.size(); i++) {
+            
+            this.setInventory(new ItemStack(compound
+                    .getCompoundTag("inv" + i)), i);
+        }
+    }
+    
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        
+        super.writeToNBT(compound);
+
+        for (int i = 0; i < this.inv.size(); i++) {
+            
+            compound.setTag("inv" + i, this.getInventory(i)
+                    .writeToNBT(new NBTTagCompound()));
+        }
+
+        return compound;
     }
     
     /** Basket container. */

@@ -128,7 +128,8 @@ public class RenderWallComplex extends RenderWallAbstract {
                 northTop = northTop || thisTop;
             }
             
-            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
+            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS
+                    .get(northSide);
             IModel northModel = northRenderer
                     .getConnectedSide(northTop, northBot, northDoub);
             this.addQuads(result, northModel, northRenderer
@@ -148,8 +149,10 @@ public class RenderWallComplex extends RenderWallAbstract {
                 eastTop = eastTop || thisTop;
             }
             
-            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
-            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot, eastDoub);
+            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS
+                    .get(eastSide);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop,
+                    eastBot, eastDoub);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
         }
@@ -167,7 +170,8 @@ public class RenderWallComplex extends RenderWallAbstract {
                 southTop = southTop || thisTop;
             }
             
-            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
+            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS
+                    .get(southSide);
             IModel southModel = southRenderer
                     .getConnectedSide(southTop, southBot, southDoub);
             this.addQuads(result, southModel, southRenderer
@@ -187,8 +191,10 @@ public class RenderWallComplex extends RenderWallAbstract {
                 westTop = westTop || thisTop;
             }
 
-            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
-            IModel westModel = westRenderer.getConnectedSide(westTop, westBot, westDoub);
+            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS
+                    .get(westSide);
+            IModel westModel = westRenderer.getConnectedSide(westTop,
+                    westBot, westDoub);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
         }
@@ -224,12 +230,14 @@ public class RenderWallComplex extends RenderWallAbstract {
         
         // Prepare texture dependencies list
          
-        for (IModel model : new IModel[] {this.singlePostTop, this.singlePostBottom,
-                this.singlePostMiddle, this.singlePostLone, this.singleSideTop, this.singleSideBottom,
-                this.singleSideMiddle, this.singleSideLone,
-                this.doublePostTop, this.doublePostBottom,
-                this.doublePostMiddle, this.doublePostLone, this.doubleSideTop, this.doubleSideBottom,
-                this.doubleSideMiddle, this.doubleSideLone, this.singleStraightLone, this.singleStraightTop}) {
+        for (IModel model : new IModel[] {this.singlePostTop,
+                this.singlePostBottom, this.singlePostMiddle,
+                this.singlePostLone, this.singleSideTop, this.singleSideBottom,
+                this.singleSideMiddle, this.singleSideLone, this.doublePostTop,
+                this.doublePostBottom, this.doublePostMiddle,
+                this.doublePostLone, this.doubleSideTop, this.doubleSideBottom,
+                this.doubleSideMiddle, this.doubleSideLone,
+                this.singleStraightLone, this.singleStraightTop}) {
             
             this.textures.addAll(model.getTextures());
         }
@@ -243,13 +251,15 @@ public class RenderWallComplex extends RenderWallAbstract {
         
         if (!isDouble) {
         
-            return isBottom ? isTop ? this.singleSideLone : this.singleSideBottom :
-                    isTop ? this.singleSideTop : this.singleSideMiddle;
+            return isBottom ? isTop ? this.singleSideLone :
+                    this.singleSideBottom : isTop ?
+                    this.singleSideTop : this.singleSideMiddle;
             
         } else {
             
-            return isBottom ? isTop ? this.doubleSideLone : this.doubleSideBottom :
-                isTop ? this.doubleSideTop : this.doubleSideMiddle;
+            return isBottom ? isTop ? this.doubleSideLone :
+                    this.doubleSideBottom : isTop ?
+                    this.doubleSideTop : this.doubleSideMiddle;
         }
     }
     
@@ -260,17 +270,20 @@ public class RenderWallComplex extends RenderWallAbstract {
     }
     
     /** @return Model for this wall's post with given properties. */
-    protected IModel getPostModel(boolean isTop, boolean isBottom, boolean isDouble) {
+    protected IModel getPostModel(boolean isTop, boolean isBottom,
+            boolean isDouble) {
         
         if (!isDouble) {
         
-            return isBottom ? isTop ? this.singlePostLone : this.singlePostBottom :
-                    isTop ? this.singlePostTop : this.singlePostMiddle;
+            return isBottom ? isTop ? this.singlePostLone :
+                    this.singlePostBottom : isTop ?
+                    this.singlePostTop : this.singlePostMiddle;
             
         } else {
             
-            return isBottom ? isTop ? this.doublePostLone : this.doublePostBottom :
-                isTop ? this.doublePostTop : this.doublePostMiddle;
+            return isBottom ? isTop ? this.doublePostLone :
+                    this.doublePostBottom : isTop ?
+                    this.doublePostTop : this.doublePostMiddle;
         }
     }
     

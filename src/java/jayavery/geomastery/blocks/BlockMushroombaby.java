@@ -27,7 +27,6 @@ public class BlockMushroombaby extends BlockMushroom {
     
     public BlockMushroombaby(String name, Supplier<Block> adult) {
         
-        super();
         this.adult = adult;
         BlockNew.setupBlock(this, name, null, 0F, null);
     }

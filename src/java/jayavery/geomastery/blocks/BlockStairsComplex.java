@@ -33,25 +33,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** Complex adaptive stairs block. */
 public class BlockStairsComplex extends BlockFacing {
 
-    public static final PropertyEnum<BlockStairs.EnumShape> SHAPE =
-            PropertyEnum.<BlockStairs.EnumShape>create("shape",
-            BlockStairs.EnumShape.class);
+    public static final PropertyEnum<BlockStairs.EnumShape> SHAPE = PropertyEnum.<BlockStairs.EnumShape>create("shape", BlockStairs.EnumShape.class);
     
     public BlockStairsComplex(Material material,
             String name, float hardness, int stackSize) {
         
         super(name, material, hardness, stackSize, EBlockWeight.NONE);
-    }
-    
-    @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.buildTooltips) {
-            
-            tooltip.add(I18n.format(EBlockWeight.HEAVY.requires()));
-            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
-        }
     }
     
     @Override
@@ -60,7 +47,7 @@ public class BlockStairsComplex extends BlockFacing {
         
         return direction == state.getValue(FACING);
     }
-    
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -83,7 +70,7 @@ public class BlockStairsComplex extends BlockFacing {
         
         return true;
     }
-    
+
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world,
             BlockPos pos) {
@@ -91,11 +78,11 @@ public class BlockStairsComplex extends BlockFacing {
         EnumShape shape = BlockStairs.EnumShape.STRAIGHT;
         EnumFacing facing = state.getValue(FACING);
         IBlockState offsetState = world.getBlockState(pos.offset(facing));
-
+    
         if (offsetState.getBlock() instanceof BlockStairsComplex) {
             
             EnumFacing offsetFacing = offsetState.getValue(FACING);
-
+    
             if (offsetFacing.getAxis() != state.getValue(FACING).getAxis()) {
                 
                 if (offsetFacing == facing.rotateYCCW()) {
@@ -103,18 +90,18 @@ public class BlockStairsComplex extends BlockFacing {
                     shape = BlockStairs.EnumShape.OUTER_LEFT;
                     
                 } else {
-
+    
                     shape = BlockStairs.EnumShape.OUTER_RIGHT;
                 }
             }
         }
-
+    
         offsetState = world.getBlockState(pos.offset(facing.getOpposite()));
-
+    
         if (offsetState.getBlock() instanceof BlockStairsComplex) {
             
             EnumFacing offsetFacing = offsetState.getValue(FACING);
-
+    
             if (offsetFacing.getAxis() != state.getValue(FACING).getAxis()) {
                 
                 if (offsetFacing == facing.rotateYCCW()) {
@@ -122,13 +109,30 @@ public class BlockStairsComplex extends BlockFacing {
                     shape = BlockStairs.EnumShape.INNER_LEFT;
                     
                 } else {
-
+    
                     shape = BlockStairs.EnumShape.INNER_RIGHT;
                 }
             }
         }
-
+    
         return state.withProperty(SHAPE, shape);
+    }
+
+    @Override
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, FACING, SHAPE);
+    }
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.format(EBlockWeight.HEAVY.requires()));
+            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
+        }
     }
     
     @Override
@@ -177,11 +181,5 @@ public class BlockStairsComplex extends BlockFacing {
                 addCollisionBoxToList(pos, entityBox, list, box);
             }
         }
-    }
-    
-    @Override
-    public BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this, FACING, SHAPE);
     }
 }

@@ -22,11 +22,9 @@ import net.minecraft.world.biome.Biome;
 public class PopulateChunkRicelake extends WorldGenAbstract {
         
     /** Water block state. */
-    private static final IBlockState water =
-            Blocks.FLOWING_WATER.getDefaultState();
+    private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
     /** Rice base block state. */
-    private static final IBlockState base =
-            GeoBlocks.RICE_BASE.getDefaultState();
+    private static final IBlockState base = GeoBlocks.RICE_BASE.getDefaultState();
     /** Rice top block state. */
     private static final IBlockState top = GeoBlocks.RICE_TOP.getDefaultState();
 

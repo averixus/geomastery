@@ -27,8 +27,7 @@ import net.minecraft.util.ResourceLocation;
 public class GeoDryingCategory extends BlankRecipeCategory<Wrapper> {
 
     /** Location of background image. */
-    private static final ResourceLocation BG_RES = new ResourceLocation(
-            Geomastery.MODID, "textures/gui/drying_0.png");
+    private static final ResourceLocation BG_RES = new ResourceLocation(Geomastery.MODID, "textures/gui/drying_0.png");
     /** X position of background image. */
     private static final int BG_X = 48;
     /** Y position of background image. */

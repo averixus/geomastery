@@ -21,8 +21,7 @@ public class GeoInventoryCategory
         extends BlankRecipeCategory<GeoCraftingCategory.Wrapper> {
 
     /** Location of background image. */
-    private static final ResourceLocation BG_RES = new ResourceLocation(
-            Geomastery.MODID, "textures/gui/inventory_0.png");
+    private static final ResourceLocation BG_RES = new ResourceLocation(Geomastery.MODID, "textures/gui/inventory_0.png");
     /** X position of background image. */
     private static final int BG_X = 79;
     /** Y position of background image. */
@@ -33,12 +32,25 @@ public class GeoInventoryCategory
     private static final int BG_HEIGHT = 36;
     
     /** Location of icon image. */
-    private static final ResourceLocation ICON_RES = new ResourceLocation(
-            Geomastery.MODID, "textures/logo_small.jpg");
+    private static final ResourceLocation ICON_RES = new ResourceLocation(Geomastery.MODID, "textures/logo_small.jpg");
     /** Start position of icon image. */
     private static final int ICON_START = 0;
     /** Size of icon image. */
     private static final int ICON_SIZE = 14;
+    
+    /** Index of output slot. */
+    private static final int OUTPUT_I = 6;
+    /** X position of output slot. */
+    private static final int OUTPUT_X = 74;
+    /** Y position of output slot. */
+    private static final int OUTPUT_Y = 10;
+    /** Number of crafting grid rows. */
+    private static final int CRAFT_ROWS = 2;
+    /** Number of crafting grid columns. */
+    private static final int CRAFT_COLS = 3;
+    /** Size of crafting slot. */
+    private static final int SLOT_SIZE = 18;
+    
 
     /** Background image. */
     private final IDrawable background;
@@ -88,14 +100,14 @@ public class GeoInventoryCategory
             GeoCraftingCategory.Wrapper wrapper, IIngredients ingredients) {
         
         IGuiItemStackGroup stacks = layout.getItemStacks();        
-        stacks.init(6, false, 74, 10);
+        stacks.init(OUTPUT_I, false, OUTPUT_X, OUTPUT_Y);
         
-        for (int y = 0; y < 2; y++) {
+        for (int y = 0; y < CRAFT_ROWS; y++) {
             
-            for (int x = 0; x < 3; x++) {
+            for (int x = 0; x < CRAFT_COLS; x++) {
                 
-                int index = x + (y * 3);
-                stacks.init(index, true, x * 18, y * 18);
+                int index = x + (y * CRAFT_COLS);
+                stacks.init(index, true, x * SLOT_SIZE, y * SLOT_SIZE);
             }
         }
         

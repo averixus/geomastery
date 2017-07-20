@@ -77,9 +77,7 @@ public class ClientProxy implements IProxy {
             
             for (ItemStack stack : stacks) {
                 
-                ModelLoader.setCustomModelResourceLocation(item, stack
-                        .getMetadata(), new ModelResourceLocation(item
-                        .getRegistryName(), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(item, stack.getMetadata(), new ModelResourceLocation(item.getRegistryName(), "inventory"));
             }
         }
         
@@ -189,9 +187,7 @@ public class ClientProxy implements IProxy {
         Geomastery.LOG.info("Registering tar state mapper and model loader");
         BlockFluidBase tarBlock = GeoBlocks.tar;
         ResourceLocation tarRegistry = tarBlock.getRegistryName();
-        ModelResourceLocation tarLoc = new ModelResourceLocation(
-                tarRegistry.getResourceDomain() + ":fluid#" +
-                tarRegistry.getResourcePath());
+        ModelResourceLocation tarLoc = new ModelResourceLocation(tarRegistry.getResourceDomain() + ":fluid#" + tarRegistry.getResourcePath());
         
         Item tarItem = Item.getItemFromBlock(tarBlock);
         ModelBakery.registerItemVariants(tarItem);
@@ -199,8 +195,7 @@ public class ClientProxy implements IProxy {
         ModelLoader.setCustomStateMapper(tarBlock, new StateMapperBase() {
             
             @Override
-            protected ModelResourceLocation getModelResourceLocation(
-                    IBlockState state) {
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
                 
                 return tarLoc;
             }
@@ -231,7 +226,7 @@ public class ClientProxy implements IProxy {
         Minecraft.getMinecraft().addScheduledTask(task);
     }
     
-    /** Helper for registering entity renders. */
+    /** Registers an entity render factory. */
     private static <E extends Entity> void entity(Class<E> clas,
             IRenderFactory<? super E> renderer) {
         

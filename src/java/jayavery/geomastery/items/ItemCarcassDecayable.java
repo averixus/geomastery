@@ -70,32 +70,6 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
         });
     }
     
-    // Sends the capability data to the client because there is
-    // no other way to sync it reliably
-    @Override
-    public NBTTagCompound getNBTShareTag(ItemStack stack) {
-
-        NBTTagCompound tag = stack.getTagCompound() == null ?
-                new NBTTagCompound() : stack.getTagCompound();
-        
-        if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
-
-            tag.setLong("birthTime", stack.getCapability(GeoCaps.CAP_DECAY,
-                    null).getBirthTime());
-            tag.setInteger("stageSize", stack.getCapability(GeoCaps.CAP_DECAY,
-                    null).getStageSize());
-        }
-        
-        return tag;
-    }
-    
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack,
-            NBTTagCompound nbt) {
-        
-        return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
-    }
-    
     // Adds rotten to name if applicable
     @SideOnly(Side.CLIENT) @Override
     public String getItemStackDisplayName(ItemStack stack) {
@@ -114,16 +88,31 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
         
         return super.getItemStackDisplayName(stack);
     }
-    
-    // Puts fresh and rotten versions in creative inventory.
-    @SideOnly(Side.CLIENT)
+
     @Override
-    public void getSubItems(Item item, CreativeTabs tab,
-            NonNullList<ItemStack> list) {
+    public ICapabilityProvider initCapabilities(ItemStack stack,
+            NBTTagCompound nbt) {
         
-        list.add(ItemSimple.newStack(this, 1,
-                Geomastery.proxy.getClientWorld()));    
-        list.add(ItemSimple.rottenStack(this, 1));
+        return new ProviderCapDecay(new DefaultCapDecay(this.shelfLife));
+    }
+
+    // Sends the capability data to the client because there is
+    // no other way to sync it reliably
+    @Override
+    public NBTTagCompound getNBTShareTag(ItemStack stack) {
+
+        NBTTagCompound tag = stack.getTagCompound() == null ?
+                new NBTTagCompound() : stack.getTagCompound();
+        
+        if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
+
+            tag.setLong("birthTime", stack.getCapability(GeoCaps.CAP_DECAY,
+                    null).getBirthTime());
+            tag.setInteger("stageSize", stack.getCapability(GeoCaps.CAP_DECAY,
+                    null).getStageSize());
+        }
+        
+        return tag;
     }
     
     // Makes this item always show a durability bar.
@@ -166,5 +155,15 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
         }
         
         return 0;
+    }
+
+    // Puts fresh and rotten versions in creative inventory.
+    @SideOnly(Side.CLIENT) @Override
+    public void getSubItems(Item item, CreativeTabs tab,
+            NonNullList<ItemStack> list) {
+        
+        list.add(ItemSimple.newStack(this, 1,
+                Geomastery.proxy.getClientWorld()));    
+        list.add(ItemSimple.rottenStack(this, 1));
     }
 }

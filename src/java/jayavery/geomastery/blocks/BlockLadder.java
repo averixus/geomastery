@@ -21,10 +21,10 @@ import net.minecraft.world.World;
 
 public class BlockLadder extends BlockFacing {
 
-    protected static final AxisAlignedBB LADDER_WEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB LADDER_EAST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB LADDER_NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.1875D);
-    protected static final AxisAlignedBB LADDER_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
+    private static final AxisAlignedBB LADDER_WEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
+    private static final AxisAlignedBB LADDER_EAST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+    private static final AxisAlignedBB LADDER_NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.1875D);
+    private static final AxisAlignedBB LADDER_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
 
     public BlockLadder() {
         
@@ -73,7 +73,8 @@ public class BlockLadder extends BlockFacing {
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
         
         switch (state.getValue(FACING)) {
             
@@ -83,8 +84,7 @@ public class BlockLadder extends BlockFacing {
                 return LADDER_SOUTH_AABB;
             case WEST:
                 return LADDER_WEST_AABB;
-            case EAST:
-            default:
+            case EAST: default:
                 return LADDER_EAST_AABB;
         }
     }

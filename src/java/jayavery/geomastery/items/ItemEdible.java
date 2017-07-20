@@ -53,7 +53,7 @@ public class ItemEdible extends ItemFood {
         return this.type;
     }
     
-    /** Starts eating this item if its food type is not full. */
+    // Starts eating this item if its food type is not full
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world,
             EntityPlayer player, EnumHand hand) {
@@ -71,7 +71,7 @@ public class ItemEdible extends ItemFood {
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
     
-    /** Eats this item. */
+    // Eats this item
     @Override
     public ItemStack onItemUseFinish(ItemStack stack,
             World world, EntityLivingBase entity) {
@@ -97,9 +97,8 @@ public class ItemEdible extends ItemFood {
 
     }
     
-    /** Adds this item's food type to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
+    // Adds this item's food type to the tooltip if config
+    @SideOnly(Side.CLIENT) @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
@@ -109,7 +108,7 @@ public class ItemEdible extends ItemFood {
         }
     }
     
-    /** Breeds or grows the right-clicked animal if applicable. */
+    // Breeds or grows the right-clicked animal if applicable
     @Override
     public boolean itemInteractionForEntity(ItemStack stack,
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {

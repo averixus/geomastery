@@ -147,7 +147,7 @@ public class WorldGenerator implements IWorldGenerator {
         }
     }
 
-    /* Alters vanilla ore generation. */
+    /** Alters vanilla ore generation. */
     @SubscribeEvent
     public void oreGenMinable(OreGenEvent.GenerateMinable event) {
 

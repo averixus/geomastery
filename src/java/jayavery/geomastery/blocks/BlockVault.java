@@ -34,8 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** Single vault block. */
 public class BlockVault extends BlockFacing {
     
-    public static final PropertyEnum<EVaultShape> SHAPE =
-            PropertyEnum.<EVaultShape>create("shape", EVaultShape.class);
+    public static final PropertyEnum<EVaultShape> SHAPE = PropertyEnum.<EVaultShape>create("shape", EVaultShape.class);
     
     public BlockVault(String name, Material material, EBlockWeight weight,
             int stackSize) {
@@ -49,26 +48,13 @@ public class BlockVault extends BlockFacing {
         return new ItemPlacing.Building(this, stackSize);
     }
     
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.buildTooltips) {
-            
-            tooltip.add(I18n.format(Lang.BUILDTIP_VAULT));
-            tooltip.add(I18n.format(this.weight.requires()));
-            tooltip.add(I18n.format(this.weight.supports()));
-        }
-    }
-    
     @Override
     public boolean shouldConnect(IBlockAccess world, IBlockState state,
             BlockPos pos, EnumFacing direcion) {
         
         return false;
     }
-    
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -111,7 +97,7 @@ public class BlockVault extends BlockFacing {
         
         return true;
     }
-    
+
     @Override
     public IBlockState getActualState(IBlockState state,
             IBlockAccess world, BlockPos pos) {
@@ -166,7 +152,7 @@ public class BlockVault extends BlockFacing {
         }
         
         return state.withProperty(SHAPE, EVaultShape.SINGLE);
-
+    
     }
 
     /** @return Whether the given blockstate can support a vault. */
@@ -176,11 +162,23 @@ public class BlockVault extends BlockFacing {
         return EBlockWeight.getWeight(state).canSupport(this.weight) &&
                 !(block instanceof BlockVault) && !(block instanceof BlockBeam);
     }
-    
+
     @Override
     public BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, SHAPE, FACING);
+    }
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.format(Lang.BUILDTIP_VAULT));
+            tooltip.add(I18n.format(this.weight.requires()));
+            tooltip.add(I18n.format(this.weight.supports()));
+        }
     }
     
     @Override
@@ -208,25 +206,19 @@ public class BlockVault extends BlockFacing {
             case SINGLE:
                 boxes = VAULT_STRAIGHT[facing];
                 break;
-                
             case INTERNAL_RIGHT:
                 boxes = VAULT_INTERNAL[facing];
                 break;
-                
             case INTERNAL_LEFT:
                 boxes = VAULT_INTERNAL[(facing + 3) % 4];
                 break;
-                
             case EXTERNAL_RIGHT:
                 boxes = VAULT_EXTERNAL[(facing + 1) % 4];
                 break;
-                
             case EXTERNAL_LEFT:
                 boxes = VAULT_EXTERNAL[facing];
                 break;
-                
-            case LINTEL:
-            default:
+            case LINTEL: default:
                 boxes = new AxisAlignedBB[] {FULL_BLOCK_AABB};
                 break;
         }

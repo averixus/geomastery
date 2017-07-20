@@ -30,20 +30,21 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
         this.arrow = arrow;
     }
     
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        
-        return false;
-    }
-    
-    /** Creates an EntityProjectile arrow of this type. */
+    // Creates an EntityProjectile arrow of this type
     @Override
     public EntityProjectile createArrow(World world, ItemStack stack,
             EntityLivingBase shooter) {
         
         return this.arrow.apply(world, shooter);
     }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
+    }
     
+    /** Wooden arrow. */
     public static class Wood extends ItemArrow {
         
         public Wood() {
@@ -52,6 +53,7 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
         }
     }
     
+    /** Flint arrow. */
     public static class Flint extends ItemArrow {
         
         public Flint() {
@@ -60,6 +62,7 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
         }
     }
     
+    /** Copper arrow. */
     public static class Copper extends ItemArrow {
         
         public Copper() {
@@ -68,6 +71,7 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
         }
     }
     
+    /** Bronze arrow. */
     public static class Bronze extends ItemArrow {
         
         public Bronze() {
@@ -76,6 +80,7 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
         }
     }
     
+    /** Steel arrow. */
     public static class Steel extends ItemArrow {
         
         public Steel() {

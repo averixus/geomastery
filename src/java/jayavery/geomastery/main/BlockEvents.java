@@ -42,11 +42,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 /** Handler for block related events. */
 public class BlockEvents {
     
-    private static final BlockPos[] HORIZONTALS = {new BlockPos(1, 0, 1),
-            new BlockPos(1, 0, -1), new BlockPos(-1, 0, 1),
-            new BlockPos(-1, 0, -1), new BlockPos(1, 0, 0),
-            new BlockPos(-1, 0, 0), new BlockPos(0, 0, 1),
-            new BlockPos(0, 0, -1)};
+    private static final BlockPos[] HORIZONTALS = {new BlockPos(1, 0, 1), new BlockPos(1, 0, -1), new BlockPos(-1, 0, 1), new BlockPos(-1, 0, -1), new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(0, 0, 1), new BlockPos(0, 0, -1)};
 
     /** Alters equivalent to Block#neighborChanged behaviour
      * for vanilla blocks. */

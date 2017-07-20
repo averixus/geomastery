@@ -205,93 +205,90 @@ public class TECraftingSawpit extends TECraftingAbstract<EPartSawpit> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == F) {
+            if (this != F) {
                 
-                BlockContainerMulti<EPartSawpit> block =
-                        GeoBlocks.CRAFTING_SAWPIT;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartSawpit> prop = block.getPartProperty();
+                return false;
+            }
                 
-                // Prepare map of properties
+            BlockContainerMulti<EPartSawpit> block =
+                    GeoBlocks.CRAFTING_SAWPIT;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartSawpit> prop = block.getPartProperty();
+            
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartSawpit> map = Maps.newHashMap();
+            map.put(pos, F);
+            map.put(pos.offset(facing), FL);
+            map.put(pos.offset(facing).offset(facing.rotateY()), L);
+            map.put(pos.offset(facing).offset(facing.rotateY(), 2), M);
+            map.put(pos.offset(facing).offset(facing.rotateY(), 3), R);
+            map.put(pos.offset(facing).offset(facing.rotateY(), 4), FR);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartSawpit> entry : map.entrySet()) {
                 
-                Map<BlockPos, EPartSawpit> map = Maps.newHashMap();
-                map.put(pos, F);
-                map.put(pos.offset(facing), FL);
-                map.put(pos.offset(facing).offset(facing.rotateY()), L);
-                map.put(pos.offset(facing).offset(facing.rotateY(), 2), M);
-                map.put(pos.offset(facing).offset(facing.rotateY(), 3), R);
-                map.put(pos.offset(facing).offset(facing.rotateY(), 4), FR);
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
                 
-                // Check validity
-                
-                for (Entry<BlockPos, EPartSawpit> entry : map.entrySet()) {
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
                     
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
+                    return false;
                 }
+            }
 
+            BlockSawpit placeBlock = GeoBlocks.CRAFTING_SAWPIT;
+            
+            BlockPos posFL = pos.offset(facing);
+            BlockPos posL = pos.offset(facing).offset(facing.rotateY());
+            BlockPos posM = pos.offset(facing).offset(facing.rotateY(), 2);
+            BlockPos posR = pos.offset(facing).offset(facing.rotateY(), 3);
+            BlockPos posFR = pos.offset(facing).offset(facing.rotateY(), 4);
+            
+            BlockPos supportFL = posFL.offset(facing.getOpposite());
+            BlockPos supportBL = posFL.offset(facing);
+            BlockPos supportFR = posFR.offset(facing.getOpposite());
+            BlockPos supportBR = posFR.offset(facing);
+            
+            BlockPos[] allSupports = {supportFL.down(), supportBL.down(),
+                    supportFR.down(), supportBR.down()};
+            
+            BlockPos[] allAir = {posFL.down(), posFL.down(2), posL.down(),
+                    posL.down(2), posM.down(), posM.down(2), posR.down(),
+                    posR.down(2), posFR.down(), posFR.down(2)};
+            
+            // Check supports
+            
+            for (BlockPos support : allSupports) {
                 
-                BlockSawpit placeBlock = GeoBlocks.CRAFTING_SAWPIT;
-                IBlockState placeState = placeBlock.getDefaultState();
-                
-                BlockPos posF = pos;
-                BlockPos posFL = pos.offset(facing);
-                BlockPos posL = pos.offset(facing).offset(facing.rotateY());
-                BlockPos posM = pos.offset(facing).offset(facing.rotateY(), 2);
-                BlockPos posR = pos.offset(facing).offset(facing.rotateY(), 3);
-                BlockPos posFR = pos.offset(facing).offset(facing.rotateY(), 4);
-                
-                BlockPos supportFL = posFL.offset(facing.getOpposite());
-                BlockPos supportBL = posFL.offset(facing);
-                BlockPos supportFR = posFR.offset(facing.getOpposite());
-                BlockPos supportBR = posFR.offset(facing);
-                BlockPos[] allSupports = {supportFL.down(), supportBL.down(),
-                        supportFR.down(), supportBR.down()};
-                
-                BlockPos[] allAir = {posFL.down(), posFL.down(2), posL.down(),
-                        posL.down(2), posM.down(), posM.down(2), posR.down(),
-                        posR.down(2), posFR.down(), posFR.down(2)};
-                
-                // Check supports
-                
-                for (BlockPos support : allSupports) {
-                    
-                    if (!placeBlock.isSupport(world, support, player)) {
+                if (!placeBlock.isSupport(world, support, player)) {
 
-                        return false;
-                    }
+                    return false;
                 }
-                
-                // Check air
-                
-                for (BlockPos air : allAir) {
-                    
-                    if (!placeBlock.isSpace(world, air, player)) {
-                        
-                        return false;
-                    }
-                }
-
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingSawpit) world.getTileEntity(e.getKey()))
-                        .setState(facing, e.getValue()));
-           
-                return true;
             }
             
-            return false;
+            // Check air
+            
+            for (BlockPos air : allAir) {
+                
+                if (!placeBlock.isSpace(world, air, player)) {
+                    
+                    return false;
+                }
+            }
+
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingSawpit) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+       
+            return true;
         }
     }
 }

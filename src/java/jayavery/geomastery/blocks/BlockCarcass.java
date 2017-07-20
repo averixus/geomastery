@@ -35,8 +35,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Carcass blocks. */
-public abstract class BlockCarcass
-        extends BlockBuildingAbstract<ItemCarcassDecayable> {
+public abstract class BlockCarcass extends BlockBuildingAbstract<ItemCarcassDecayable> {
 
     public BlockCarcass(String name, float hardness) {
 
@@ -70,21 +69,14 @@ public abstract class BlockCarcass
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return EIGHT;
-    }
-    
-    @Override
     public boolean place(World world, BlockPos targetPos, EnumFacing targetSide,
             EnumFacing placeFacing, ItemStack stack, EntityPlayer player) {
-
+    
         BlockPos placePos = targetPos.offset(targetSide);
         IBlockState setState = this.getDefaultState();
         
         if (this.isValid(world, placePos, stack, false, setState, player)) {
-
+    
             ICapDecay decayCap = stack.getCapability(GeoCaps.CAP_DECAY, null);
             decayCap.updateFromNBT(stack.getTagCompound());
             world.setBlockState(placePos, setState);
@@ -95,7 +87,7 @@ public abstract class BlockCarcass
         
         return false;
     }
-    
+
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune, TileEntity te,
@@ -124,7 +116,7 @@ public abstract class BlockCarcass
         
         return Collections.emptyList();
     }
-    
+
     @Override
     public boolean hasTileEntity(IBlockState state) {
         
@@ -137,6 +129,14 @@ public abstract class BlockCarcass
         return new TECarcass();
     }
     
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return EIGHT;
+    }
+
+    /** Chicken carcass. */
     public static class Chicken extends BlockCarcass {
         
         public Chicken() {
@@ -161,6 +161,7 @@ public abstract class BlockCarcass
         }
     }
     
+    /** Sheep carcass. */
     public static class Sheep extends BlockCarcass {
         
         public Sheep() {
@@ -188,6 +189,7 @@ public abstract class BlockCarcass
         }
     }
     
+    /** Cow carcass part. */
     public static class Cowpart extends BlockCarcass {
 
         public Cowpart() {
@@ -213,6 +215,7 @@ public abstract class BlockCarcass
         }
     }
     
+    /** Pig carcass. */
     public static class Pig extends BlockCarcass {
 
         public Pig() {
@@ -238,6 +241,7 @@ public abstract class BlockCarcass
         }
     }
     
+    /** Rabbit carcass. */
     public static class Rabbit extends BlockCarcass {
 
         public Rabbit() {

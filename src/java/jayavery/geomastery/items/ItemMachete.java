@@ -19,8 +19,7 @@ import net.minecraft.item.ItemTool;
 public class ItemMachete extends ItemTool {
 
     /** Set of vanilla blocks to harvest. */
-    private static final Set<Block> EFFECTIVE_ON =
-            Sets.newHashSet(new Block[] {Blocks.LEAVES, Blocks.LEAVES2});
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(new Block[] {Blocks.LEAVES, Blocks.LEAVES2});
 
     public ItemMachete(String name, ToolMaterial material) {
 

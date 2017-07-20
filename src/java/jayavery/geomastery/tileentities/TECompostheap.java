@@ -44,15 +44,14 @@ public class TECompostheap extends TileEntity
     /** Balance threshold for quality 2. */
     private static final int BALANCE_2 = 47;
     
+    /** This compost heap's output. */
+    public NonNullList<ItemStack> outputs = NonNullList.withSize(1, ItemStack.EMPTY);
     /** Ticks spend composting next output. */
     private int compostSpent = 0;
     /** Balance of dry (negative) to wet (positive). */
     private int balance = 0;
     /** This compost heap's input fullness. */
     private int input = 0;
-    /** This compost heap's output. */
-    public NonNullList<ItemStack> outputs = NonNullList
-            .withSize(1, ItemStack.EMPTY);
     
     @Override
     public List<ItemStack> getDrops() {
@@ -112,6 +111,16 @@ public class TECompostheap extends TileEntity
                 this.outputs.get(0).getCount(), grade));
     }
     
+    /** Sets the given values, used for packets. */
+    public void setValues(int input, int compostSpent,
+            int balance, ItemStack output) {
+        
+        this.input = input;
+        this.compostSpent = compostSpent;
+        this.balance = balance;
+        this.outputs.set(0, output);
+    }
+    
     @Override
     public void update() {
 
@@ -157,16 +166,6 @@ public class TECompostheap extends TileEntity
         this.sendProgressPacket();
     }
     
-    /** Sets the given values, used for packets. */
-    public void setValues(int input, int compostSpent,
-            int balance, ItemStack output) {
-        
-        this.input = input;
-        this.compostSpent = compostSpent;
-        this.balance = balance;
-        this.outputs.set(0, output);
-    }
-    
     /** Sends a packet to update progress values on the client. */
     private void sendProgressPacket() {
         
@@ -178,14 +177,12 @@ public class TECompostheap extends TileEntity
         }
     }
     
-    // Required to update GUI on the client. 
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    // Required to update GUI on the client. 
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -193,7 +190,6 @@ public class TECompostheap extends TileEntity
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    // Required to update GUI on the client.
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {
@@ -222,7 +218,6 @@ public class TECompostheap extends TileEntity
         compound.setTag("output", this.outputs.get(0)
                 .writeToNBT(new NBTTagCompound()));
         compound.setInteger("compostSpent", this.compostSpent);
-        
         return compound;
     }
 }

@@ -7,11 +7,9 @@
 package jayavery.geomastery.crafting;
 
 import java.awt.Color;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import jayavery.geomastery.utilities.Lang;
 import net.minecraft.item.ItemStack;
 
 /** Compost ingredient manager. */
@@ -71,14 +69,23 @@ public class CompostManager {
     /** Types of compost ingredient. */
     public static enum CompostType {
         
-        WET(new Color(0, 120, 0)), DRY(new Color(120, 70, 20));
+        WET(new Color(0, 120, 0), Lang.COMPOST_WET),
+        DRY(new Color(120, 70, 20), Lang.COMPOST_DRY);
 
         /** Colour for GUI uses. */
         private final Color colour;
+        /** Unlocalised name of this type. */
+        private final String name;
         
-        private CompostType(Color colour) {
+        private CompostType(Color colour, String name) {
             
             this.colour = colour;
+            this.name = name;
+        }
+        
+        public String getName() {
+            
+            return this.name;
         }
         
         public Color getColour() {

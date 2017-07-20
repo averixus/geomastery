@@ -61,13 +61,6 @@ public class BlockContainerFacing extends BlockContainerSingle {
     }
     
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return FULL_BLOCK_AABB;
-    }
-    
-    @Override
     public BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, FACING);
@@ -86,6 +79,13 @@ public class BlockContainerFacing extends BlockContainerSingle {
                 EnumFacing.getHorizontal(meta));
     }
     
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return FULL_BLOCK_AABB;
+    }
+
     /** Compost heap block. */
     public static class Compostheap extends BlockContainerFacing {
         
@@ -135,16 +135,16 @@ public class BlockContainerFacing extends BlockContainerSingle {
         }
         
         @Override
+        public EnumBlockRenderType getRenderType(IBlockState state) {
+            
+            return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+        }
+
+        @Override
         @SideOnly(Side.CLIENT)
         public boolean hasCustomBreakingProgress(IBlockState state) {
             
             return true;
-        }
-        
-        @Override
-        public EnumBlockRenderType getRenderType(IBlockState state) {
-            
-            return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
         }
     }
 }

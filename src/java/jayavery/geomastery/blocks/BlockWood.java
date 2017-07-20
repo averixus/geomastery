@@ -27,42 +27,7 @@ public class BlockWood extends BlockLog {
     @Override
     protected BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {LOG_AXIS});        
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        IBlockState state = this.getDefaultState();
-        
-        switch (meta & 12) {
-            
-            case 0 : {
-                
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
-                break;
-            }
-            
-            case 4 : {
-                
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
-                break;
-            }
-            
-            case 8 : {
-                
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
-                break;
-            }
-            
-            default : {
-                
-                state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-                break;
-            }
-        }
-        
-        return state;        
+        return new BlockStateContainer(this, LOG_AXIS);        
     }
     
     @Override
@@ -73,19 +38,29 @@ public class BlockWood extends BlockLog {
         switch (state.getValue(LOG_AXIS)) {
             
             case X: 
-                meta |= 4;
-                break;
-                
+                return meta | 4;
             case Z:
-                meta |= 8;
-                break;
-            
-            case Y:
-            case NONE:
-                meta |= 12;
-                break;
+                return meta | 8;
+            case Y: case NONE: default:
+                return meta | 12;
         }
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
         
-        return meta;
+        IBlockState state = this.getDefaultState();
+        
+        switch (meta & 12) {
+            
+            case 0:
+                return state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
+            case 4:
+                return state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
+            case 8:
+                return state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
+            default: 
+                return state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);  
+        }
     }
 }

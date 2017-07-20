@@ -21,8 +21,7 @@ import net.minecraft.util.math.BlockPos;
 public class ItemHoe extends ItemTool {
 
     /** Set of vanilla blocks to harvest. */
-    private static final Set<Block> EFFECTIVE_ON =
-            Sets.newHashSet( new Block[] {Blocks.DIRT, Blocks.GRASS});
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet( new Block[] {Blocks.DIRT, Blocks.GRASS});
 
     public ItemHoe(String name, ToolMaterial material) {
 
@@ -32,17 +31,11 @@ public class ItemHoe extends ItemTool {
         this.efficiencyOnProperMaterial = 0.25F;
     }
     
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        
-        return false;
-    }
-    
-    /** Turns broken dirt/grass into farmland. */
+    // Turns broken dirt/grass into farmland
     @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos pos,
             EntityPlayer player) {
-
+    
         if (!player.world.isRemote) {
             
             stack.damageItem(1, player);
@@ -56,6 +49,12 @@ public class ItemHoe extends ItemTool {
                 return true;
             }
         }
+        
+        return false;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
         
         return false;
     }

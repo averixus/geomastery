@@ -20,8 +20,7 @@ public class RenderChest
         extends TileEntitySpecialRenderer<TEStorage.Chest> {
 
     /** Texture for chest. */
-    private static final ResourceLocation TEXTURE = new
-            ResourceLocation(Geomastery.MODID, "textures/entity/chest.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Geomastery.MODID, "textures/entity/chest.png");
     /** Model for chest. */
     private ModelChest model = new ModelChest();
     
@@ -64,7 +63,8 @@ public class RenderChest
         if (te.hasWorld()) {
             
             IBlockState state = te.getWorld().getBlockState(te.getPos());
-            rotation = 90 * ((state.getValue(BlockContainerFacing.FACING).getHorizontalIndex() + 2) % 4);
+            rotation = 90 * ((state.getValue(BlockContainerFacing.FACING)
+                    .getHorizontalIndex() + 2) % 4);
         }
         
         GlStateManager.rotate(rotation, 0F, 1F, 0F);

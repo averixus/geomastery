@@ -87,7 +87,13 @@ public class ItemLooseplacing extends ItemPlacing {
         return true;
     }
     
-    // Adds the block's building information to tooltip.
+    @Override
+    protected SoundType getSoundType() {
+    
+        return this.block.get().getSoundType();
+    }
+
+    // Adds the block's building information to tooltip
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player,
@@ -98,11 +104,5 @@ public class ItemLooseplacing extends ItemPlacing {
             tooltip.add(I18n.format(EBlockWeight.getWeight(this.block.get().getDefaultState()).supports()));
             tooltip.add(I18n.format(Lang.BUILDTIP_HEAPING));
         }
-    }
-
-    @Override
-    protected SoundType getSoundType() {
-
-        return this.block.get().getSoundType();
     }
 }

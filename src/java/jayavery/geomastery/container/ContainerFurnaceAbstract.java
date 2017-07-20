@@ -22,18 +22,17 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     protected static final int INPUT_Y = 17;
     /** Y-position of start of fuel slots. */
     protected static final int FUEL_Y = 53;
-
     /** Index of first input slot. */
     public static final int INPUT_START = 0;
+    /** Y-position of flame in the GUI. */
+    public static final int FIRE_Y = 36;
+    /** Y-position of progress arrow in the GUI. */
+    public static final int ARROW_Y = 34;
     
     /** X-position of flame in the GUI. */
     public int fireX;
-    /** Y-position of flame in the GUI. */
-    public final int fireY = 36;
     /** X-position of progress arrow in the GUI. */
     public int arrowX;
-    /** Y-position of progress arrow in the GUI. */
-    public final int arrowY = 34;
     /** Number of input, fuel, and output slots. */
     public final int size;
     
@@ -67,7 +66,7 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
         super(player);
         this.furnace = furnace;
         this.pos = pos;
-        this.size = furnace.size();
+        this.size = furnace.size;
         
         // Furnace slots
         this.buildInput();
@@ -94,10 +93,8 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
     
     /** Builds this furnace's input slots. */
     protected abstract void buildInput();
-    
     /** Builds this furnace's fuel slots. */
     protected abstract void buildFuel();
-    
     /** Builds this furnace's output slots. */
     protected abstract void buildOutput();
 

@@ -33,11 +33,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /** Bed blocks. */
-public abstract class BlockBed
-        extends BlockBuildingAbstract<ItemPlacing.Building> {
+public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Building> {
 
-    public static final PropertyEnum<EPartBed> PART =
-            PropertyEnum.<EPartBed>create("part", EPartBed.class);
+    public static final PropertyEnum<EPartBed> PART = PropertyEnum.<EPartBed>create("part", EPartBed.class);
     public static final PropertyBool OCCUPIED = PropertyBool.create("occupied");
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
@@ -53,16 +51,59 @@ public abstract class BlockBed
         this.healAmount = healAmount;
     }
     
+    // Overriden for different shape/size beds
     @Override
     public abstract AxisAlignedBB getCollisionBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos);
     
+    /** @return The amount the player heals sleeping in this Bed. */
+    public float getHealAmount() {
+        
+        return this.healAmount;
+    }
+
+    /** Behaviour of the bed in the morning when not slept. Default is no-op. */
+    public void onMorning(World world, BlockPos pos) {}
+
+    /** Behaviour of the bed when player wakes up after sleeping.
+     * Adds use and breaks if needed. */
+    public void onWakeup(World world, BlockPos pos, TEBed bed) {
+        
+        bed.addUse();
+    
+        if (bed.isBroken()) {
+    
+            world.setBlockToAir(pos);
+        }
+    }
+
+    /** @return The player currently in this bed block, null if none. */
+    private EntityPlayer getPlayerInBed(World world, BlockPos pos) {
+    
+        for (EntityPlayer player: world.playerEntities) {
+    
+            if (player.isPlayerSleeping() && player.bedLocation
+                    .equals(pos)) {
+    
+                return player;
+            }
+        }
+    
+        return null;
+    }
+
     @Override
     public ItemPlacing.Building createItem(int stackSize) {
         
         ItemPlacing.Building item = new ItemPlacing.Building(this, stackSize);
         item.setMaxDamage(TEBed.MAX_USES);
         return item;
+    }
+
+    @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.NONE;
     }
 
     @Override
@@ -96,6 +137,69 @@ public abstract class BlockBed
         return true;
     }
     
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos,
+            IBlockState state, EntityPlayer player, EnumHand hand,
+            EnumFacing side, float x, float y,
+            float z) {
+    
+        if (world.isRemote) {
+            
+            return true;
+        }
+    
+        if (state.getValue(PART) != EPartBed.HEAD) {
+    
+            pos = pos.offset(state.getValue(FACING));
+            state = world.getBlockState(pos);
+    
+            if (state.getBlock() != this) {
+    
+                return true;
+            }
+        }
+    
+        if (state.getValue(OCCUPIED)) {
+    
+            EntityPlayer sleeper = this.getPlayerInBed(world, pos);
+    
+            if (sleeper != null) {
+                
+                player.sendMessage(new TextComponentTranslation(
+                        "tile.bed.occupied"));
+                return true;
+            }
+    
+            state = state.withProperty(OCCUPIED, false);
+            world.setBlockState(pos, state, 4);
+        }
+    
+        EntityPlayer.SleepResult sleepable = player.trySleep(pos);
+    
+        if (sleepable == EntityPlayer.SleepResult.OK) {
+    
+            state = state.withProperty(OCCUPIED, true);
+            world.setBlockState(pos, state, 4);
+            return true;
+        }
+    
+        if (sleepable == EntityPlayer.SleepResult.NOT_POSSIBLE_NOW) {
+    
+            player.sendMessage(new TextComponentTranslation(
+                    "tile.bed.noSleep"));
+            return true;
+        }
+    
+        if (sleepable == EntityPlayer.SleepResult.NOT_SAFE) {
+    
+            player.sendMessage(new TextComponentTranslation(
+                    "tile.bed.notSafe"));
+            return true;
+        }
+    
+        return false;
+    }
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -155,177 +259,71 @@ public abstract class BlockBed
     }
     
     @Override
-    public EBlockWeight getWeight(IBlockState state) {
-        
-        return EBlockWeight.NONE;
-    }
-    
-    /** @return The amount the player heals sleeping in this Bed. */
-    public float getHealAmount() {
-        
-        return this.healAmount;
-    }
-    
-    /** Does nothing except special cases (leaf). */
-    public void onMorning(World world, BlockPos pos) {}
-    
-    /** Adds durability by default. */
-    public void onWakeup(World world, BlockPos pos, TEBed bed) {
-        
-        bed.addUse();
-
-        if (bed.isBroken()) {
-
-            world.setBlockToAir(pos);
-        }
-    }
-    
-    /** The player sleeps in this bed if possible. */
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos,
-            IBlockState state, EntityPlayer player, EnumHand hand,
-            EnumFacing side, float x, float y,
-            float z) {
-
-        if (world.isRemote) {
-            
-            return true;
-        }
-
-        if (state.getValue(PART) != EPartBed.HEAD) {
-
-            pos = pos.offset(state.getValue(FACING));
-            state = world.getBlockState(pos);
-
-            if (state.getBlock() != this) {
-
-                return true;
-            }
-        }
-
-        if (state.getValue(OCCUPIED)) {
-
-            EntityPlayer sleeper = this.getPlayerInBed(world, pos);
-
-            if (sleeper != null) {
-                
-                player.sendMessage(new TextComponentTranslation(
-                        "tile.bed.occupied"));
-                return true;
-            }
-
-            state = state.withProperty(OCCUPIED, false);
-            world.setBlockState(pos, state, 4);
-        }
-
-        EntityPlayer.SleepResult sleepable = player.trySleep(pos);
-
-        if (sleepable == EntityPlayer.SleepResult.OK) {
-
-            state = state.withProperty(OCCUPIED, true);
-            world.setBlockState(pos, state, 4);
-            return true;
-        }
-
-        if (sleepable == EntityPlayer.SleepResult.NOT_POSSIBLE_NOW) {
-
-            player.sendMessage(new TextComponentTranslation(
-                    "tile.bed.noSleep"));
-            return true;
-        }
-
-        if (sleepable == EntityPlayer.SleepResult.NOT_SAFE) {
-
-            player.sendMessage(new TextComponentTranslation(
-                    "tile.bed.notSafe"));
-            return true;
-        }
-
-        return false;
-    }
-
-    /** @return The player currently in this bed block, null if none. */
-    private EntityPlayer getPlayerInBed(World world, BlockPos pos) {
-
-        for (EntityPlayer player: world.playerEntities) {
-
-            if (player.isPlayerSleeping() && player.bedLocation
-                    .equals(pos)) {
-
-                return player;
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-
-        EnumFacing facing = EnumFacing.getHorizontal(meta);
-        IBlockState state = this.getDefaultState();
-
-        if ((meta & 8) > 0) {
-
-            state = state.withProperty(PART, EPartBed.HEAD);
-            state = state.withProperty(FACING, facing);
-            state = state.withProperty(OCCUPIED, (meta & 4) > 0);
-            
-        } else {
-
-            state = state.withProperty(PART, EPartBed.FOOT);
-            state = state.withProperty(FACING, facing);
-        }
-
-        return state;
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-
-        int i = 0;
-
-        i = i | state.getValue(FACING).getHorizontalIndex();
-
-        if (state.getValue(PART) == EPartBed.HEAD) {
-
-            i |= 8;
-
-            if (state.getValue(OCCUPIED)) {
-
-                i |= 4;
-            }
-        }
-
-        return i;
-    }
-
-    @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world,
             BlockPos pos) {
-
+    
         if (state.getValue(PART) == EPartBed.FOOT) {
-
+    
             IBlockState thisState = world.getBlockState(pos
                     .offset(state.getValue(FACING)));
-
+    
             if (thisState.getBlock() == this) {
-
+    
                 state = state.withProperty(OCCUPIED,
                         thisState.getValue(OCCUPIED));
             }
         }
-
+    
         return state;
     }
 
     @Override
     public BlockStateContainer createBlockState() {
-
+    
         return new BlockStateContainer(this, FACING, PART, OCCUPIED);
     }
 
-    /** Needed for Forge bed implementations. */
+    @Override
+    public int getMetaFromState(IBlockState state) {
+    
+        int i = 0;
+    
+        i = i | state.getValue(FACING).getHorizontalIndex();
+    
+        if (state.getValue(PART) == EPartBed.HEAD) {
+    
+            i |= 8;
+    
+            if (state.getValue(OCCUPIED)) {
+    
+                i |= 4;
+            }
+        }
+    
+        return i;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+    
+        EnumFacing facing = EnumFacing.getHorizontal(meta);
+        IBlockState state = this.getDefaultState();
+    
+        if ((meta & 8) > 0) {
+    
+            state = state.withProperty(PART, EPartBed.HEAD);
+            state = state.withProperty(FACING, facing);
+            state = state.withProperty(OCCUPIED, (meta & 4) > 0);
+            
+        } else {
+    
+            state = state.withProperty(PART, EPartBed.FOOT);
+            state = state.withProperty(FACING, facing);
+        }
+    
+        return state;
+    }
+
     @Override
     public boolean isBed(IBlockState state, IBlockAccess world,
             BlockPos pos, Entity player) {
@@ -341,12 +339,9 @@ public abstract class BlockBed
             super("bed_simple", 2F, 2F);
         }
 
+        // Does not have limited durability
         @Override
-        public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-                IBlockAccess world, BlockPos pos) {
-
-            return SIX;
-        }
+        public void onWakeup(World world, BlockPos pos, TEBed bed) {}
 
         @Override
         public AxisAlignedBB getBoundingBox(IBlockState state,
@@ -356,7 +351,11 @@ public abstract class BlockBed
         }
         
         @Override
-        public void onWakeup(World world, BlockPos pos, TEBed bed) {}
+        public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+                IBlockAccess world, BlockPos pos) {
+        
+            return SIX;
+        }
     }
     
     /** Single-use leaf bed. */

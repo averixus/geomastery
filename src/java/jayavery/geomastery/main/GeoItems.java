@@ -96,6 +96,13 @@ public class GeoItems {
     // Non-decaying edible seeds
     public static final Item SEED_PUMPKIN = make(new ItemEdibleSeed("seeds_pumpkin", 1, 1, 15, () -> GeoBlocks.PUMPKIN_CROP, EFoodType.PROTEIN));
     
+    // Non-decaying inedible seeds
+    public static final Item CHICKPEAS =      make(new ItemSeed("chickpeas", 10, () -> GeoBlocks.CHICKPEA));
+    public static final Item CUTTING_COTTON = make(new ItemSeed("cutting_cotton", 1, () -> GeoBlocks.COTTON));
+    public static final Item CUTTING_HEMP =   make(new ItemSeed("cutting_hemp", 1, () -> GeoBlocks.HEMP));
+    public static final Item WHEAT =          make(new ItemSeed("wheat", 10, () -> GeoBlocks.WHEAT, EntityCow.class, EntitySheep.class, EntityChicken.class));
+    public static final Item SEED_MELON =     make(new ItemSeed("seeds_melon", 15, () -> GeoBlocks.MELON_CROP));
+
     // Decaying edible seeds
     public static final Item MUSHROOM_RED =   make(new ItemEdibleSeedDecayable("mushroom_red", 4, 4, 4, () -> GeoBlocks.MUSHROOMBABY_RED, EnumPlantType.Cave, EFoodType.FRUITVEG, 2));
     public static final Item MUSHROOM_BROWN = make(new ItemEdibleSeedDecayable("mushroom_brown", 2, 2, 9, () -> GeoBlocks.MUSHROOMBABY_BROWN, EnumPlantType.Cave, EFoodType.FRUITVEG, 2));
@@ -106,13 +113,6 @@ public class GeoItems {
     public static final Item POTATO =         make(new ItemEdibleSeedDecayable("potato", 7, 7F, 5, () -> GeoBlocks.POTATO, EnumPlantType.Crop, EFoodType.CARBS, 4));
     public static final Item CARROT =         make(new ItemEdibleSeedDecayable("carrot", 3, 3F, 7, () -> GeoBlocks.CARROT, EnumPlantType.Crop, EFoodType.FRUITVEG, 4, EntityPig.class, EntityRabbit.class));
     public static final Item BEETROOT =       make(new ItemEdibleSeedDecayable("beetroot", 3, 3F, 6, () -> GeoBlocks.BEETROOT, EnumPlantType.Crop, EFoodType.FRUITVEG, 4));
-        
-    // Non-decaying inedible seeds
-    public static final Item CHICKPEAS =      make(new ItemSeed("chickpeas", 10, () -> GeoBlocks.CHICKPEA));
-    public static final Item CUTTING_COTTON = make(new ItemSeed("cutting_cotton", 1, () -> GeoBlocks.COTTON));
-    public static final Item CUTTING_HEMP =   make(new ItemSeed("cutting_hemp", 1, () -> GeoBlocks.HEMP));
-    public static final Item WHEAT =          make(new ItemSeed("wheat", 10, () -> GeoBlocks.WHEAT, EntityCow.class, EntitySheep.class, EntityChicken.class));
-    public static final Item SEED_MELON =     make(new ItemSeed("seeds_melon", 15, () -> GeoBlocks.MELON_CROP));
     
     // Rice
     public static final Item RICE = make(new ItemRice());
@@ -351,7 +351,7 @@ public class GeoItems {
         }
     };
     
-    /** Adjust vanilla items. */
+    /** Adjusts vanilla items. */
     public static void preInit() {
         
         Geomastery.LOG.info("Adjusting vanilla item properties");
@@ -365,7 +365,7 @@ public class GeoItems {
         Items.BRICK.setMaxStackSize(1);
     }
     
-    /** Put the constructed item into the modelling set
+    /** Puts the constructed item into the modelling set
      * and the offhand-only set if applicable. */
     private static <I extends Item> I make(I item, boolean isOffhandOnly) {
         

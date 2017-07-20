@@ -57,11 +57,46 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
         
         BlockNew.setupBlock(this, name, CreativeTabs.DECORATIONS,
                 1F, EToolType.SHOVEL);
-        this.setTickRandomly(true); // TEST just added?
+        this.setTickRandomly(true);
         this.treeGenFactory = treeGenFactory;
         this.growthChance = growthChance;
     }
     
+    @Override
+    public void updateTick(World world, BlockPos pos,
+            IBlockState state, Random rand) {
+    
+        super.updateTick(world, pos, state, rand);
+    
+        if (world.isRemote) {
+            
+            return;
+        }
+                
+        if (!this.isPermitted(world.getBiome(pos)) &&
+                rand.nextFloat() <= this.deathChance) {
+    
+            world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState());
+            return;
+        }
+    
+        if (rand.nextFloat() <= this.growthChance) {
+            
+            this.treeGenFactory.makeTreeGen(world, rand, true)
+                    .generateTree(pos);
+        }
+    }
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.cropTooltips) {
+    
+            tooltip.add(I18n.format(this.getUnlocalizedName() + Lang.BIOMES));
+        }
+    }
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state,
             IBlockAccess world, BlockPos pos) {
@@ -74,43 +109,6 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
             IBlockAccess world, BlockPos pos) {
         
         return NULL_AABB;
-    }
-    
-    @Override
-    public void updateTick(World world, BlockPos pos,
-            IBlockState state, Random rand) {
-
-        super.updateTick(world, pos, state, rand);
-
-        if (world.isRemote) {
-            
-            return;
-        }
-                
-        if (!this.isPermitted(world.getBiome(pos)) &&
-                rand.nextFloat() <= this.deathChance) {
-
-            world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState());
-            return;
-        }
-
-        if (rand.nextFloat() <= this.growthChance) {
-            
-            this.treeGenFactory.makeTreeGen(world, rand, true)
-                    .generateTree(pos);
-        }
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.cropTooltips) {
-
-            tooltip.add(I18n.format(this.getUnlocalizedName() +
-                    Lang.BIOMES));
-        }
     }
     
     /** Pear sapling block. */

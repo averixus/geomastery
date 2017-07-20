@@ -6,14 +6,13 @@
  ******************************************************************************/
 package jayavery.geomastery.utilities;
 
-/** Enum defining all Tool Types. */
+/** Enum defining all tool types. */
 public enum EToolType {
     
     PICKAXE("pickaxe"), AXE("axe"), KNIFE("knife"), SICKLE("sickle"),
     MACHETE("machete"), SHOVEL("shovel"), HOE("hoe");
     
-    /** Name of this tooltype. */
-    private String name;
+    private final String name;
     
     private EToolType(String name) {
         

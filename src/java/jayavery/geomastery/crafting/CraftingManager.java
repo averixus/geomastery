@@ -176,6 +176,7 @@ public class CraftingManager {
         return result;
     }
 
+    /** @return The list of recipes. */
     public List<ShapedRecipe> getRecipeList() {
 
         return this.recipes;

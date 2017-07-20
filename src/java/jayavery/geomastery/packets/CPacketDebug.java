@@ -52,7 +52,8 @@ public class CPacketDebug implements IMessage {
         }
     }
     
-    public static class Handler implements IMessageHandler<CPacketDebug, IMessage> {
+    public static class Handler
+            implements IMessageHandler<CPacketDebug, IMessage> {
         
         @Override
         public IMessage onMessage(CPacketDebug message, MessageContext ctx) {

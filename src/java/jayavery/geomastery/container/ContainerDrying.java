@@ -26,7 +26,6 @@ public class ContainerDrying extends ContainerAbstract {
     private static final int INPUT_Y = 35;
     /** X-position of start of output slots. */
     private static final int OUTPUT_X = 113;
-
     /** Index of first input slot. */
     public static final int INPUT_START = 0;
     /** Index of last input slot. */

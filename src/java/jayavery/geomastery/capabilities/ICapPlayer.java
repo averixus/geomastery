@@ -18,79 +18,59 @@ import net.minecraftforge.common.util.INBTSerializable;
 /** Capability adding various information and functions to the Player. */
 public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
 
-    /** Update all ticking features. */
+    /** Updates all ticking features. */
     public void tick();
-    
-    /** Update all stats with given heal amount. */
+    /** Updates all stats with given heal amount. */
     public void sleep(float healAmount);
-    
-    /** Get the amount of main inventory rows the player has
+    /** Gets the amount of main inventory rows the player has
      * available, excluding the hotbar.
      * @return Between 0 and 3. */
     public int getInventoryRows();
-    
-    /** Get the amount of inventory slots the player has available,
+    /** Gets the amount of inventory slots the player has available,
      * including the hotbar.
      * @return between 9 and 36. */
     public int getInventorySize();
-    
-    /** Check whether the player is carrying heavy items.
+    /** Checks whether the player is carrying heavy items.
      * @return Whether the player is allowed to sprint. */
     public boolean canSprint();
-    
     /** @return The ItemStack in the backpack slot. */
     public ItemStack getBackpack();
-    
     /** @return The ItemStack in the yoke slot. */
     public ItemStack getYoke();
-    
-    /** Remove the ItemStack in the backpack slot.
+    /** Removes the ItemStack in the backpack slot.
      * @return The ItemStack removed. */
     public ItemStack removeBackpack();
-    
-    /** Remove the ItemStack in the yoke slot.
+    /** Removes the ItemStack in the yoke slot.
      * @return the ItemStack removed. */
     public ItemStack removeYoke();
-    
-    /** Put an ItemStack in the backpack slot, does not check validity. */
+    /** Puts an ItemStack in the backpack slot, does not check validity. */
     public void putBackpack(ItemStack stack);
-    
-    /** Put an ItemStack in the yoke slot, does not check validity. */
+    /** Puts an ItemStack in the yoke slot, does not check validity. */
     public void putYoke(ItemStack stack);
-    
-    /** Get the ResourceLocation for the GUI icon representing the
+    /** Gets the ResourceLocation for the GUI icon representing the
      * current temperature.
      * @return The ResourceLocation for one of five icons. */
     public ResourceLocation getTempIcon();
-    
-    /** Get the food level for the EFoodType.
+    /** Gets the food level for the EFoodType.
      * @return An int from 0 to 20. */
     public int foodLevel(EFoodType type);
-    
-    /** Check whether the player has less than full hunger for the EFoodType.
+    /** Checks whether the player has less than full hunger for the EFoodType.
      * @return Whether the player is allowed to eat the EFoodType. */
     public boolean canEat(EFoodType type);
-    
-    /** Get the lowest food level of all hunger types.
+    /** Gets the lowest food level of all hunger types.
      * @return An int from 0 to 20. */
     public int getFoodLevel();
-    
-    /** Add the exhaustion to all food types. */
+    /** Adds the exhaustion to all food types. */
     public void addExhaustion(float exhaustion);
-    
-    /** Add the item's food value to its food type. */
+    /** Adds the item's food value to its food type. */
     public void addStats(ItemEdible item, ItemStack stack);
-    
     /** Adds the item pickup delay. */
     public void addDelay(Item item, long time);
-    
     /** Checks whether this item is currently delayed.
      * @return Whether this item can be picked up. */
     public boolean canPickup(Item item);
-
-    /** Send all necessary initial update packets to the client. */
+    /** Sends all necessary initial update packets to the client. */
     public void syncAll();
-
     /** @return A list of info to be added to the debug screen. */
     public List<String> getDebug();
 }

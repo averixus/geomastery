@@ -28,8 +28,7 @@ import net.minecraft.util.ResourceLocation;
 public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
 
     /** Location of background image. */
-    private static final ResourceLocation BG_RES = new ResourceLocation(
-            Geomastery.MODID, "textures/gui/furnace1_0.png");
+    private static final ResourceLocation BG_RES = new ResourceLocation(Geomastery.MODID, "textures/gui/furnace1_0.png");
     /** X position of background image. */
     private static final int BG_X = 54;
     /** Y position of background image. */
@@ -66,15 +65,15 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
     private static final int ARROW_Y = 18;
     
     /** Index of input slot. */
-    private static final int IN_I = 0;
+    private static final int INPUT_I = 0;
     /** Index of output slot. */
-    private static final int OUT_I = 2;
+    private static final int OUTPUT_I = 2;
     /** X and Y position of input slot. */
-    private static final int IN = 0;
+    private static final int INPUT_POS = 0;
     /** X position of output slot. */
-    private static final int OUT_X = 60;
+    private static final int OUTPUT_X = 60;
     /** Y position of output slot. */
-    private static final int OUT_Y = 18;
+    private static final int OUTPUT_Y = 18;
 
     /** Background image. */
     private final IDrawable background;
@@ -115,8 +114,8 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
             IIngredients ingredients) {
         
         IGuiItemStackGroup stacks = layout.getItemStacks();
-        stacks.init(IN_I, true, IN, IN);
-        stacks.init(OUT_I, false, OUT_X, OUT_Y);
+        stacks.init(INPUT_I, true, INPUT_POS, INPUT_POS);
+        stacks.init(OUTPUT_I, false, OUTPUT_X, OUTPUT_Y);
         stacks.set(ingredients);
     }
     
@@ -185,8 +184,8 @@ public class GeoCookingCategory extends BlankRecipeCategory<Wrapper> {
         public void drawInfo(Minecraft minecraft, int width, int height,
                 int mouseX, int mouseY) {
             
-            minecraft.fontRendererObj.drawString("Min: " + this.recipe.level,
-                    STRING_X, STRING_Y, GREY);
+            minecraft.fontRendererObj.drawString("Min: " +
+                    I18n.format(this.recipe.level), STRING_X, STRING_Y, GREY);
         }
     }
 }

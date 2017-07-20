@@ -13,7 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** 'null' implementation of IMultipart for single blocks. */
+/** Implementation of IMultipart for single blocks. */
 public enum EPartSingle implements IMultipart {
     
     SINGLE;
@@ -42,22 +42,25 @@ public enum EPartSingle implements IMultipart {
         return pos;
     }
 
+    // No-op never called
     @Override
     public AxisAlignedBB getBoundingBox(EnumFacing facing) {
-        // never called
+
         return null;
     }
 
+    // No-op never called
     @Override
     public AxisAlignedBB getCollisionBox(EnumFacing facing) {
-        // never called
+
         return null;
     }
 
+    // No-op never called
     @Override
     public boolean buildStructure(World world, BlockPos pos,
             EnumFacing facing, EntityPlayer player) {
-        // never called
+        
         return false;
     }
 }

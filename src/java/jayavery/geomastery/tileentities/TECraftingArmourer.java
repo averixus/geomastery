@@ -68,8 +68,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EPartArmourer> {
                     return pos.offset(facing.rotateYCCW()).up();
                 case R:
                     return pos.offset(facing.rotateYCCW(), 2).up();
-                case T:
-                default:
+                case T: default:
                     return pos;
             }
         }
@@ -137,8 +136,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EPartArmourer> {
                     return BlockNew.HALF[(intFacing + 1) % 4];
                 case T: 
                     return BlockNew.CORNER[(intFacing + 2) % 4];
-                case M: 
-                default: 
+                case M: default: 
                     return Block.FULL_BLOCK_AABB;
             }
         }
@@ -152,8 +150,7 @@ public class TECraftingArmourer extends TECraftingAbstract<EPartArmourer> {
                     return BlockNew.TWELVE;
                 case M: 
                     return BlockNew.FOURTEEN;
-                case L: 
-                case T: 
+                case L: case T: 
                     return Block.NULL_AABB;
                 default: 
                     return Block.FULL_BLOCK_AABB;
@@ -164,50 +161,49 @@ public class TECraftingArmourer extends TECraftingAbstract<EPartArmourer> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == M) {
+            if (this != M) {
                 
-                BlockContainerMulti<EPartArmourer> block =
-                        GeoBlocks.CRAFTING_ARMOURER;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartArmourer> prop = block.getPartProperty();
-                
-                // Prepare map of properties
-                
-                Map<BlockPos, EPartArmourer> map = Maps.newHashMap();
-                map.put(pos, M);
-                map.put(pos.offset(facing.rotateYCCW()), L);
-                map.put(pos.offset(facing.rotateYCCW()).up(), T);
-                map.put(pos.offset(facing.rotateY()), R);
-                
-                // Check validity
-                
-                for (Entry<BlockPos, EPartArmourer> entry : map.entrySet()) {
-                    
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
-                }
-
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingArmourer) world.getTileEntity(e.getKey()))
-                        .setState(facing, e.getValue()));
-
-                
-                return true;
+                return false;
             }
+                
+            BlockContainerMulti<EPartArmourer> block =
+                    GeoBlocks.CRAFTING_ARMOURER;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartArmourer> prop = block.getPartProperty();
             
-            return false;
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartArmourer> map = Maps.newHashMap();
+            map.put(pos, M);
+            map.put(pos.offset(facing.rotateYCCW()), L);
+            map.put(pos.offset(facing.rotateYCCW()).up(), T);
+            map.put(pos.offset(facing.rotateY()), R);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartArmourer> entry : map.entrySet()) {
+                
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
+                
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
+                    
+                    return false;
+                }
+            }
+
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingArmourer) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+
+            
+            return true;
         }
     }
 }

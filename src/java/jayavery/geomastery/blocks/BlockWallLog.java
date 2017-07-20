@@ -36,23 +36,30 @@ public class BlockWallLog extends BlockWall {
     }
     
     @Override
+    public EBlockWeight getWeight(IBlockState state) {
+        
+        return EBlockWeight.MEDIUM;
+    }
+
+    @Override
+    public boolean shouldDouble(IBlockState state, EnumFacing facing) {
+        
+        return false;
+    }
+
+    @Override
     public boolean isDouble(IBlockState state) {
         
         return false;
     }
     
     @Override
-    public boolean shouldDouble(IBlockState state, EnumFacing facing) {
-        
-        return false;
-    }
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
+            BlockPos pos) {
     
-    @Override
-    public EBlockWeight getWeight(IBlockState state) {
-        
-        return EBlockWeight.MEDIUM;
+        return CENTRE_POST;
     }
-    
+
     @Override
     public void addCollisionBoxToList(IBlockState state, World world,
             BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
@@ -81,12 +88,5 @@ public class BlockWallLog extends BlockWall {
             addCollisionBoxToList(pos, entityBox, list, BRANCH_EAST_THIN);
             addCollisionBoxToList(pos, entityBox, list, BRANCH_WEST_THIN);
         }
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-
-        return CENTRE_POST;
     }
 }

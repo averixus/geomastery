@@ -41,25 +41,12 @@ public class BlockWallFence extends BlockWallThin {
         return new ItemPlacing.Building(this, stackSize);
     }
     
-    /** Adds this block's build reqs to the tooltip if config. */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
-        
-        if (GeoConfig.buildTooltips) {
-            
-            tooltip.add(I18n.format(EBlockWeight.NONE.requires()));
-            tooltip.add(I18n.format(Lang.BUILDTIP_FENCE));
-        }
-    }
-
     @Override
     public EBlockWeight getWeight(IBlockState state) {
         
         return EBlockWeight.NONE;
     }
-    
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -84,7 +71,18 @@ public class BlockWallFence extends BlockWallThin {
         
         return true;
     }
-    
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.format(EBlockWeight.NONE.requires()));
+            tooltip.add(I18n.format(Lang.BUILDTIP_FENCE));
+        }
+    }
+
     @Override
     public void addCollisionBoxToList(IBlockState state, World world,
             BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
@@ -98,7 +96,6 @@ public class BlockWallFence extends BlockWallThin {
         }
         
         IExtendedBlockState extState = (IExtendedBlockState) state; 
-        
         addCollisionBoxToList(pos, entityBox, list, CENTRE_POST_THIN_TALL);
         
         if (extState.getValue(NORTH) != null) {

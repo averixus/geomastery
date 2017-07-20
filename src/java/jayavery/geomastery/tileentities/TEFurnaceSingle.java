@@ -20,6 +20,13 @@ public abstract class TEFurnaceSingle extends
         super(recipes, 1);
     }
     
+    
+    @Override
+    public EPartSingle partByOrdinal(int ordinal) {
+        
+        return EPartSingle.SINGLE;
+    }
+    
     @Override
     public boolean isHeating() {
         
@@ -78,12 +85,6 @@ public abstract class TEFurnaceSingle extends
         }
         
         this.sendProgressPacket();
-    }
-    
-    @Override
-    public EPartSingle partByOrdinal(int ordinal) {
-        
-        return EPartSingle.SINGLE;
     }
     
     /** Campfire furnace. */

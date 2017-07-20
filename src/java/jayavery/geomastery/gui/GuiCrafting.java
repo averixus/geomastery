@@ -8,6 +8,7 @@ package jayavery.geomastery.gui;
 
 import jayavery.geomastery.container.ContainerCrafting;
 import jayavery.geomastery.main.Geomastery;
+import jayavery.geomastery.tileentities.TECraftingAbstract;
 import net.minecraft.util.ResourceLocation;
 
 /** Gui for crafting devices */
@@ -44,9 +45,9 @@ public class GuiCrafting extends GuiContainerAbstract {
         
         if (this.container.tile.hasDurability()) {
             
-            int height = Math.round(((15 -
-                    (float) this.container.tile.getDurability()) / 15)
-                    * DURABILITY_HEIGHT);
+            int height = Math.round(((TECraftingAbstract.MAX_DURABILITY -
+                    (float) this.container.tile.getDurability()) /
+                    TECraftingAbstract.MAX_DURABILITY) * DURABILITY_HEIGHT);
             this.drawTexturedModalRect(this.guiLeft + DURABILITY_X,
                     this.guiTop + DURABILITY_Y + height, DURABILITY_SOURCE_X,
                     height, DURABILITY_WIDTH, DURABILITY_HEIGHT);

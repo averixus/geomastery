@@ -38,51 +38,9 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
     
     public BlockRiceBase() {
         
-        super(Material.WATER, "rice_base",
-                null, 0.2F, EToolType.SICKLE);
-        this.setDefaultState(this.blockState.getBaseState());        
+        super(Material.WATER, "rice_base", null, 0.2F, EToolType.SICKLE);
     }
     
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return NULL_AABB;
-    }
-    
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        
-        return Items.AIR;
-    }
-    
-    /** Do not render sides when next to real water. */
-    @Override
-    public boolean doesSideBlockRendering(IBlockState state,
-            IBlockAccess world, BlockPos pos, EnumFacing face) {
-        
-        BlockPos beside = pos.offset(face);
-        Block blockBeside = world.getBlockState(beside).getBlock();
-        
-        if (blockBeside == Blocks.WATER ||
-                blockBeside == Blocks.FLOWING_WATER) {
-            
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /** Turn straight to water when broken. */
-    @Override
-   public boolean removedByPlayer(IBlockState state, World world, BlockPos pos,
-           EntityPlayer player, boolean willHarvest) {
-        
-       return world.setBlockState(pos, Blocks.WATER.getDefaultState(),
-               world.isRemote ? 11 : 3);
-   }
-    
-    /** Check position and break if invalid. */
     @Override
     public void neighborChanged(IBlockState state, World world,
             BlockPos pos, Block block, BlockPos unusued) {
@@ -93,16 +51,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
             world.setBlockState(pos, Blocks.WATER.getDefaultState());
         }
     }
-    
-    /** Render translucent and cutout model parts. */
-    @Override
-    public boolean canRenderInLayer(IBlockState state,
-            BlockRenderLayer layer) {
-        
-        return (layer == BlockRenderLayer.CUTOUT_MIPPED ||
-                layer == BlockRenderLayer.TRANSLUCENT);
-    }
-    
+
     /** @return Whether this block can stay in the given position. */
     protected boolean canStay(World world, BlockPos pos) {
         
@@ -110,7 +59,7 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         Block blockBelow = world.getBlockState(posBelow).getBlock();
         
         if (blockBelow != Blocks.GRASS && blockBelow != Blocks.DIRT) {
-
+    
             return false;
         }
         
@@ -138,6 +87,72 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
         return true;
     }
 
+        // Turns straight to water when broken
+        @Override
+       public boolean removedByPlayer(IBlockState state, World world, BlockPos pos,
+               EntityPlayer player, boolean willHarvest) {
+            
+           return world.setBlockState(pos, Blocks.WATER.getDefaultState(),
+                   world.isRemote ? 11 : 3);
+       }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        
+        return Items.AIR;
+    }
+
+    @Override
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, BlockLiquid.LEVEL);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        return state.getValue(BlockLiquid.LEVEL);
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        
+        return this.getDefaultState().withProperty(BlockLiquid.LEVEL, meta);
+    }
+
+    // Does not render sides when next to real water
+    @Override
+    public boolean doesSideBlockRendering(IBlockState state,
+            IBlockAccess world, BlockPos pos, EnumFacing face) {
+        
+        BlockPos beside = pos.offset(face);
+        Block blockBeside = world.getBlockState(beside).getBlock();
+        
+        if (blockBeside == Blocks.WATER ||
+                blockBeside == Blocks.FLOWING_WATER) {
+            
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Renders translucent and cutout model parts
+    @Override
+    public boolean canRenderInLayer(IBlockState state,
+            BlockRenderLayer layer) {
+        
+        return (layer == BlockRenderLayer.CUTOUT_MIPPED ||
+                layer == BlockRenderLayer.TRANSLUCENT);
+    }
+
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return NULL_AABB;
+    }
+    
     @Override
     public boolean isPermitted(Biome biome) {
 
@@ -145,23 +160,5 @@ public class BlockRiceBase extends BlockNew implements IBiomeCheck {
                 biome instanceof BiomeSwamp ||
                 biome instanceof BiomeMushroomIsland ||
                 biome instanceof BiomeJungle;
-    }
-    
-    @Override
-    public BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this, BlockLiquid.LEVEL);
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return state.getValue(BlockLiquid.LEVEL);
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState().withProperty(BlockLiquid.LEVEL, meta);
     }
 }

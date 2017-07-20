@@ -77,35 +77,18 @@ public class SlotArmour extends Slot {
 
         switch (this.type) {
 
-            case HEAD: {
-                
+            case HEAD:
                 return this.playerInv.armorInventory.get(3);
-            }
-
-            case CHEST: {
-                
+            case CHEST:
                 return this.playerInv.armorInventory.get(2);
-            }
-
-            case LEGS: {
-                
+            case LEGS:
                 return this.playerInv.armorInventory.get(1);
-            }
-            
-            case FEET: {
-                
+            case FEET:
                 return this.playerInv.armorInventory.get(0);
-            }
-            
-            case OFFHAND: {
-               
+            case OFFHAND: 
                 return this.playerInv.offHandInventory.get(0);
-            }
-            
-            default: {
-                
+            default:
                 return ItemStack.EMPTY;
-            }
         }
     }
 
@@ -114,40 +97,23 @@ public class SlotArmour extends Slot {
 
         switch (this.type) {
 
-            case HEAD: {
-
+            case HEAD:
                 this.playerInv.armorInventory.set(3, stack);
                 break;
-            }
-
-            case CHEST: {
-
+            case CHEST: 
                 this.playerInv.armorInventory.set(2, stack);
                 break;
-            }
-
-            case LEGS: {
-
+            case LEGS: 
                 this.playerInv.armorInventory.set(1, stack);
                 break;
-            }
-
-            case FEET: {
-
+            case FEET:
                 this.playerInv.armorInventory.set(0, stack);
                 break;
-            }
-
-            case OFFHAND: {
-
+            case OFFHAND:
                 this.playerInv.offHandInventory.set(0, stack);
                 break;
-            }
-
-            default: {
-
-                break;
-            }
+            default:
+                return;
         }
     }
 

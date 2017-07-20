@@ -78,7 +78,8 @@ public class RenderWallSingle extends RenderWallAbstract {
             
             boolean northTop = thisTop || extState.getValue(BlockWall.N_TOP);
             
-            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS.get(northSide);
+            RenderWallAbstract northRenderer = ClientProxy.WALL_RENDERS
+                    .get(northSide);
             IModel northModel = northRenderer
                     .getConnectedSide(northTop, northBot, false);
             this.addQuads(result, northModel, northRenderer
@@ -94,8 +95,10 @@ public class RenderWallSingle extends RenderWallAbstract {
             
             boolean eastTop = thisTop || extState.getValue(BlockWall.E_TOP);
             
-            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS.get(eastSide);
-            IModel eastModel = eastRenderer.getConnectedSide(eastTop, eastBot, false);
+            RenderWallAbstract eastRenderer = ClientProxy.WALL_RENDERS
+                    .get(eastSide);
+            IModel eastModel = eastRenderer.getConnectedSide(eastTop,
+                    eastBot, false);
             this.addQuads(result, eastModel, eastRenderer
                     .getSideAngle(EnumFacing.EAST), state, side, rand);
             
@@ -109,8 +112,10 @@ public class RenderWallSingle extends RenderWallAbstract {
             
             boolean southTop = thisTop || extState.getValue(BlockWall.S_TOP);
 
-            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS.get(southSide);
-            IModel southModel = southRenderer.getConnectedSide(southTop, southBot, false);
+            RenderWallAbstract southRenderer = ClientProxy.WALL_RENDERS
+                    .get(southSide);
+            IModel southModel = southRenderer.getConnectedSide(southTop,
+                    southBot, false);
             this.addQuads(result, southModel, southRenderer
                     .getSideAngle(EnumFacing.SOUTH), state, side, rand);
             
@@ -124,8 +129,10 @@ public class RenderWallSingle extends RenderWallAbstract {
             
             boolean westTop = thisTop || extState.getValue(BlockWall.W_TOP);
 
-            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS.get(westSide);
-            IModel westModel = westRenderer.getConnectedSide(westTop, westBot, false);
+            RenderWallAbstract westRenderer = ClientProxy.WALL_RENDERS
+                    .get(westSide);
+            IModel westModel = westRenderer.getConnectedSide(westTop,
+                    westBot, false);
             this.addQuads(result, westModel, westRenderer
                     .getSideAngle(EnumFacing.WEST), state, side, rand);
             

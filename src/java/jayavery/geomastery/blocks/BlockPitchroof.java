@@ -32,8 +32,7 @@ import net.minecraft.world.World;
 /** Pitched roof block. */
 public class BlockPitchroof extends BlockFacing {
 
-    public static final PropertyEnum<ERoofShape> SHAPE =
-            PropertyEnum.create("shape", ERoofShape.class);
+    public static final PropertyEnum<ERoofShape> SHAPE = PropertyEnum.create("shape", ERoofShape.class);
 
     public BlockPitchroof(Material material, String name,
             float hardness, int stackSize) {
@@ -107,14 +106,6 @@ public class BlockPitchroof extends BlockFacing {
         
         return new BlockStateContainer(this, FACING, SHAPE);
     }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        return FULL_BLOCK_AABB;
-    }
-    
     @Override
     public void addCollisionBoxToList(IBlockState state, World world,
             BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list,
@@ -147,6 +138,7 @@ public class BlockPitchroof extends BlockFacing {
         }
     }
     
+    /** All possible shapes of roof blocks. */
     public enum ERoofShape implements IStringSerializable {
         
         TL("tl"), TC("tc"), TR("tr"), ML("ml"), MC("mc"), MR("mr"),

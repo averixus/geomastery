@@ -29,8 +29,7 @@ import net.minecraft.util.ResourceLocation;
 public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
 
     /** Location of background image. */
-    private static final ResourceLocation BG_RES = new ResourceLocation(
-            "minecraft", "textures/gui/container/crafting_table.png");
+    private static final ResourceLocation BG_RES = new ResourceLocation("minecraft", "textures/gui/container/crafting_table.png");
     /** X position of background image. */
     private static final int BG_X = 29;
     /** Y position of background image. */
@@ -39,11 +38,19 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
     private static final int BG_WIDTH = 116;
     /** Height of background image. */
      private static final int BG_HEIGHT = 54;
-     
-     /** Index of input slot. */
-     private static final int IN_I = 1;
+    
      /** Index of output slot. */
-     private static final int OUT_I = 0;
+     private static final int OUTPUT_I = 0;
+     /** X position of output slot. */
+     private static final int OUTPUT_X = 94;
+     /** Y position of output slot. */
+     private static final int OUTPUT_Y = 18;
+     /** Number of crafting rows and columns. */
+     private static final int CRAFT_SIZE = 3;
+     /** Index of input slot. */
+     private static final int INPUT_I = 1;
+     /** Size of crafting slot. */
+     private static final int SLOT_SIZE = 18;
     
     /** Recipe tab unlocalised name. */
     private final String name;
@@ -57,7 +64,7 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
         this.background = GeoJei.guiHelper.createDrawable(BG_RES,
                 BG_X, BG_Y, BG_WIDTH, BG_HEIGHT);
         this.gridHelper = GeoJei.guiHelper
-                .createCraftingGridHelper(IN_I, OUT_I);
+                .createCraftingGridHelper(INPUT_I, OUTPUT_I);
         this.name = name;
     }
     
@@ -92,14 +99,14 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
         // Mostly copied from JEI's CraftingRecipeCategory
         
         IGuiItemStackGroup stacks = layout.getItemStacks();
-        stacks.init(OUT_I, false, 94, 18);
+        stacks.init(OUTPUT_I, false, OUTPUT_X, OUTPUT_Y);
 
-        for (int y = 0; y < 3; ++y) {
+        for (int y = 0; y < CRAFT_SIZE; ++y) {
             
-            for (int x = 0; x < 3; ++x) {
+            for (int x = 0; x < CRAFT_SIZE; ++x) {
                 
-                int index = IN_I + x + (y * 3);
-                stacks.init(index, true, x * 18, y * 18);
+                int index = INPUT_I + x + (y * CRAFT_SIZE);
+                stacks.init(index, true, x * SLOT_SIZE, y * SLOT_SIZE);
             }
         }
 
@@ -108,7 +115,7 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
 
         this.gridHelper.setInputs(stacks, inputs, wrapper.getWidth(),
                 wrapper.getHeight());
-        stacks.set(OUT_I, outputs.get(0));
+        stacks.set(OUTPUT_I, outputs.get(0));
     }
     
     /** Recipe containing a group of matching shaped recipes. */

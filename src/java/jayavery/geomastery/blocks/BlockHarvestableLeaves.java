@@ -32,8 +32,7 @@ import net.minecraft.world.World;
 /** Harvestable fruit leaf block. */
 public class BlockHarvestableLeaves extends BlockLeaves {
     
-    public static final PropertyInteger AGE =
-            PropertyInteger.create("age", 0, 7);
+    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
     
     /** Supplier for fruit item. */
     private final Supplier<Item> fruitRef;
@@ -55,7 +54,55 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         this.growthChance = growthChance;
     }
     
-    /** Gets seedling by chance and harvestable items if applicable. */
+    // Grows up according to chance
+    @Override
+    public void updateTick(World world, BlockPos pos,
+            IBlockState state, Random rand) {
+        
+        super.updateTick(world, pos, state, rand);
+        
+        if (rand.nextFloat() <= this.growthChance) {
+            
+            int oldAge = state.getValue(AGE);       
+            int newAge = (oldAge + 1) > 7 ? 7 : (oldAge + 1);
+            IBlockState newState = state.withProperty(AGE, newAge);
+            world.setBlockState(pos, newState);  
+        }
+    }
+
+    // Harvests fruit if full grown
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos,
+            IBlockState state, EntityPlayer player, EnumHand hand,
+            EnumFacing side, float hitX, float hitY, float hitZ) {
+                
+        if (state.getValue(AGE) == 7) {
+    
+            IBlockState newState = state.withProperty(AGE, 0);
+            world.setBlockState(pos, newState);
+            
+            if (!world.isRemote) {
+                
+                for (EnumFacing facing : EnumFacing.VALUES) {
+                    
+                    if (world.isAirBlock(pos.offset(facing))) {
+                        
+                        pos = pos.offset(facing);
+                        break;
+                    }
+                }
+                
+                spawnAsEntity(world, pos,
+                        ItemSimple.newStack(this.fruitRef.get(), 1, world));
+            }  
+            
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Drops seedling by chance and harvestable items if applicable
     @Override
     public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
             IBlockState state, int fortune) {
@@ -82,64 +129,10 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         return items;
     }
     
-    /** Grows up according to chance. */
-    @Override
-    public void updateTick(World world, BlockPos pos,
-            IBlockState state, Random rand) {
-        
-        super.updateTick(world, pos, state, rand);
-        
-        if (rand.nextFloat() <= this.growthChance) {
-            
-            int oldAge = state.getValue(AGE);       
-            int newAge = (oldAge + 1) > 7 ? 7 : (oldAge + 1);
-            IBlockState newState = state.withProperty(AGE, newAge);
-            world.setBlockState(pos, newState);  
-        }
-    }
-    
-    /** Harvests fruit if full grown. */
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos,
-            IBlockState state, EntityPlayer player, EnumHand hand,
-            EnumFacing side, float hitX, float hitY, float hitZ) {
-                
-        if (state.getValue(AGE) == 7) {
-
-            IBlockState newState = state.withProperty(AGE, 0);
-            world.setBlockState(pos, newState);
-            
-            if (!world.isRemote) {
-                
-                for (EnumFacing facing : EnumFacing.VALUES) {
-                    
-                    if (world.isAirBlock(pos.offset(facing))) {
-                        
-                        pos = pos.offset(facing);
-                        break;
-                    }
-                }
-                
-                spawnAsEntity(world, pos,
-                        ItemSimple.newStack(this.fruitRef.get(), 1, world));
-            }  
-            
-            return true;
-        }
-        
-        return false;
-    } 
-    
     @Override
     protected BlockStateContainer createBlockState() {
         
         return new BlockStateContainer(this, AGE, DECAYABLE, CHECK_DECAY);
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState().withProperty(AGE, meta);
     }
     
     @Override
@@ -148,6 +141,12 @@ public class BlockHarvestableLeaves extends BlockLeaves {
         return state.getValue(AGE);
     }
 
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        
+        return this.getDefaultState().withProperty(AGE, meta);
+    }
+    
     @Override
     public List<ItemStack> onSheared(ItemStack item, IBlockAccess world,
             BlockPos pos, int fortune) {

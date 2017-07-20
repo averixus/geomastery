@@ -52,7 +52,7 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
         this.plantType = plantType;
     }
     
-    /** Attempts to plant this item's crop. */
+    // Attempts to plant this item's crop
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world,
             BlockPos pos, EnumHand hand, EnumFacing side,
@@ -80,7 +80,7 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
         }
     }
     
-    /** Adds this item's food type and valid biomes to the tooltip if config. */
+    // Adds this item's food type and valid biomes to the tooltip if config
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
@@ -108,14 +108,12 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
         }
     }
     
-    /** Gets plant type for block interactions. */
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         
         return this.plantType;
     }
     
-    /** Gets plant state for block interactions. */
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         

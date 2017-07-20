@@ -36,59 +36,37 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
 /** Complex wall for multipart state rendering. */
-public abstract class BlockWall
-        extends BlockBuildingAbstract<ItemPlacing.Building>
-        implements IDoublingBlock, Comparable<BlockWall> {
+public abstract class BlockWall extends BlockBuildingAbstract<ItemPlacing.Building> implements IDoublingBlock, Comparable<BlockWall> {
     
     public static final PropertyBool TOP = PropertyBool.create("top");
     public static final PropertyBool BOTTOM = PropertyBool.create("bottom");
     public static final PropertyBool DOUBLE = PropertyBool.create("double");
     
-    public static final UnlistedPropertyWall NORTH =
-            new UnlistedPropertyWall("north");
-    public static final UnlistedPropertyBool N_TOP =
-            new UnlistedPropertyBool("n_top");
-    public static final UnlistedPropertyBool N_BOTTOM = 
-            new UnlistedPropertyBool("n_bottom");
-    public static final UnlistedPropertyBool N_DOUBLE =
-            new UnlistedPropertyBool("n_double");
-    public static final UnlistedPropertyWall EAST =
-            new UnlistedPropertyWall("east");
-    public static final UnlistedPropertyBool E_TOP =
-            new UnlistedPropertyBool("e_top");
-    public static final UnlistedPropertyBool E_BOTTOM =
-            new UnlistedPropertyBool("e_bottom");
-    public static final UnlistedPropertyBool E_DOUBLE =
-            new UnlistedPropertyBool("e_double");
-    public static final UnlistedPropertyWall SOUTH =
-            new UnlistedPropertyWall("south");
-    public static final UnlistedPropertyBool S_TOP =
-            new UnlistedPropertyBool("s_top");
-    public static final UnlistedPropertyBool S_BOTTOM =
-            new UnlistedPropertyBool("s_bottom");
-    public static final UnlistedPropertyBool S_DOUBLE =
-            new UnlistedPropertyBool("s_double");
-    public static final UnlistedPropertyWall WEST =
-            new UnlistedPropertyWall("west");
-    public static final UnlistedPropertyBool W_TOP =
-            new UnlistedPropertyBool("w_top");
-    public static final UnlistedPropertyBool W_BOTTOM =
-            new UnlistedPropertyBool("w_bottom");
-    public static final UnlistedPropertyBool W_DOUBLE =
-            new UnlistedPropertyBool("w_double");
+    public static final UnlistedPropertyWall NORTH = new UnlistedPropertyWall("north");
+    public static final UnlistedPropertyBool N_TOP = new UnlistedPropertyBool("n_top");
+    public static final UnlistedPropertyBool N_BOTTOM = new UnlistedPropertyBool("n_bottom");
+    public static final UnlistedPropertyBool N_DOUBLE = new UnlistedPropertyBool("n_double");
+    public static final UnlistedPropertyWall EAST = new UnlistedPropertyWall("east");
+    public static final UnlistedPropertyBool E_TOP = new UnlistedPropertyBool("e_top");
+    public static final UnlistedPropertyBool E_BOTTOM = new UnlistedPropertyBool("e_bottom");
+    public static final UnlistedPropertyBool E_DOUBLE = new UnlistedPropertyBool("e_double");
+    public static final UnlistedPropertyWall SOUTH = new UnlistedPropertyWall("south");
+    public static final UnlistedPropertyBool S_TOP = new UnlistedPropertyBool("s_top");
+    public static final UnlistedPropertyBool S_BOTTOM = new UnlistedPropertyBool("s_bottom");
+    public static final UnlistedPropertyBool S_DOUBLE = new UnlistedPropertyBool("s_double");
+    public static final UnlistedPropertyWall WEST = new UnlistedPropertyWall("west");
+    public static final UnlistedPropertyBool W_TOP = new UnlistedPropertyBool("w_top");
+    public static final UnlistedPropertyBool W_BOTTOM = new UnlistedPropertyBool("w_bottom");
+    public static final UnlistedPropertyBool W_DOUBLE = new UnlistedPropertyBool("w_double");
     
     /** Convenience map of facing to wall properties. */
-    private static final Map<EnumFacing, UnlistedPropertyWall> blocks =
-            Maps.newEnumMap(EnumFacing.class);
+    private static final Map<EnumFacing, UnlistedPropertyWall> blocks = Maps.newEnumMap(EnumFacing.class);
     /** Convenience map of facing to top properties. */
-    private static final Map<EnumFacing, UnlistedPropertyBool> tops =
-            Maps.newEnumMap(EnumFacing.class);
+    private static final Map<EnumFacing, UnlistedPropertyBool> tops = Maps.newEnumMap(EnumFacing.class);
     /** Convenience map of facing to bottom properties. */
-    private static final Map<EnumFacing, UnlistedPropertyBool> bottoms =
-            Maps.newEnumMap(EnumFacing.class);
+    private static final Map<EnumFacing, UnlistedPropertyBool> bottoms = Maps.newEnumMap(EnumFacing.class);
     /** Convenience map of facing to double properties. */
-    private static final Map<EnumFacing, UnlistedPropertyBool> doubles =
-            Maps.newEnumMap(EnumFacing.class);
+    private static final Map<EnumFacing, UnlistedPropertyBool> doubles = Maps.newEnumMap(EnumFacing.class);
     static {
         blocks.put(EnumFacing.NORTH, NORTH);
         blocks.put(EnumFacing.EAST, EAST);
@@ -136,6 +114,32 @@ public abstract class BlockWall
         return other == null ? 1 : this.priority - other.priority;
     }
     
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
+            IBlockState state, @Nullable TileEntity te, ItemStack tool) {
+            
+        if (this.isDouble(state)) {
+            
+            world.setBlockState(pos, state.withProperty(DOUBLE, false));
+            
+        } else {
+            
+            world.setBlockToAir(pos);
+        }
+        
+        this.doHarvest(world, pos, state, player, te, tool);
+    }
+
+    // Player is null when broken from neighbour changed, i.e. straight to air
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack tool, EntityPlayer player) {
+        
+        return Lists.newArrayList(new ItemStack(this.item,
+                this.isDouble(state) && player == null ? 2 : 1));
+    }
+
     @Override
     public boolean isDouble(IBlockState state) {
         
@@ -201,31 +205,6 @@ public abstract class BlockWall
         }
         
         return exState;
-    }
-    
-    @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
-            IBlockState state, @Nullable TileEntity te, ItemStack tool) {
-            
-        if (this.isDouble(state)) {
-            
-            world.setBlockState(pos, state.withProperty(DOUBLE, false));
-            
-        } else {
-            
-            world.setBlockToAir(pos);
-        }
-        
-        this.doHarvest(world, pos, state, player, te, tool);
-    }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune, TileEntity te,
-            ItemStack tool, EntityPlayer player) {
-        
-        return Lists.newArrayList(new ItemStack(this.item,
-                this.isDouble(state) && player == null ? 2 : 1));
     }
     
     @Override

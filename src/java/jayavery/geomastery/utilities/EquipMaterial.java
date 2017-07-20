@@ -12,7 +12,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 
-/** Custom Tool and Armour Materials. */
+/** Custom tool and armour materials. */
 public class EquipMaterial {
 
     /** Flint tools material. */

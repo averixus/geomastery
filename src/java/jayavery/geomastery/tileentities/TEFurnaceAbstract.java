@@ -29,13 +29,12 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         extends TEMultiAbstract<E> implements ITickable, IItemStorage {
 
     /** Comparator to move all empty stacks to the end of a list. */
-    private static final Comparator<ItemStack> SORTER =
-            (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
+    private static final Comparator<ItemStack> SORTER = (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
 
     /** Recipes for this furnace. */
     public final CookingManager recipes;
     /** Size of inputs, outputs, and fuels for this furnace. */
-    protected final int size;
+    public final int size;
     /** This furnace's input stacks. */
     protected NonNullList<ItemStack> inputs;
     /** This funace's fuel stacks. */
@@ -58,12 +57,6 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         this.fuels = NonNullList.withSize(size, ItemStack.EMPTY);
         this.outputs = NonNullList.withSize(size, ItemStack.EMPTY);
         this.size = size;
-    }
-    
-    /** @return The number of input, fuel, and output slots of this furnace. */
-    public int size() {
-        
-        return this.size;
     }
     
     @Override
@@ -96,7 +89,6 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         if (this.fuelEach != newFuelEach) {
             
             this.fuelEach = newFuelEach;
-          //  this.fuelLeft = this.fuelEach;
             this.markDirty();
         }
     }
@@ -117,6 +109,26 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
     public ItemStack getOutput(int index) {
         
         return this.outputs.get(index);
+    }
+    
+    /** Sets the ItemStack to the input slot. */
+    public void setInput(ItemStack stack, int index) {
+        
+        this.inputs.set(index, stack);
+        this.sort();
+    }
+    
+    /** Sets the ItemStack to the fuel slot. */
+    public void setFuel(ItemStack stack, int index) {
+        
+        this.fuels.set(index, stack);
+        this.sort();
+    }
+    
+    /** Sets the ItemStack to the output slot. */
+    public void setOutput(ItemStack stack, int index) {
+        
+        this.outputs.set(index, stack);
     }
     
     /** @return The ticks of burning left from the current fuel item. */
@@ -151,26 +163,6 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         this.fuelEach = fuelEach;
         this.cookSpent = cookSpent;
         this.cookEach = cookEach;
-    }
-    
-    /** Sets the ItemStack to the input slot. */
-    public void setInput(ItemStack stack, int index) {
-        
-        this.inputs.set(index, stack);
-        this.sort();
-    }
-    
-    /** Sets the ItemStack to the fuel slot. */
-    public void setFuel(ItemStack stack, int index) {
-        
-        this.fuels.set(index, stack);
-        this.sort();
-    }
-    
-    /** Sets the ItemStack to the output slot. */
-    public void setOutput(ItemStack stack, int index) {
-        
-        this.outputs.set(index, stack);
     }
 
     /** @return Whether this furnace is currently producing heat. */
@@ -281,6 +273,7 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
         ItemStack result = this.recipes.getCookingResult(this.inputs.get(0),
                 this.world);
 
+        // Add to existing stack
         for (int i = 0; i < this.outputs.size(); i++) {
             
             ItemStack output = this.outputs.get(i);
@@ -296,6 +289,7 @@ public abstract class TEFurnaceAbstract<E extends Enum<E> & IMultipart>
             }
         }
         
+        // Add to empty slot
         for (int i = 0; i < this.outputs.size(); i++) {
             
             ItemStack output = this.outputs.get(i);

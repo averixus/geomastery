@@ -31,20 +31,26 @@ public class TEDrying extends TileEntity implements ITickable, IItemStorage {
     public static final CookingManager RECIPES = GeoRecipes.DRYING;
     
     /** Comparator to move all empty stacks to the end of a list. */
-    private static final Comparator<ItemStack> SORTER =
-            (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
+    private static final Comparator<ItemStack> SORTER = (s1, s2) -> s1.isEmpty() ? 1 : s2.isEmpty() ? -1 : 0;
     
     /** This drying rack's input stacks. */
-    private NonNullList<ItemStack> inputs = NonNullList
-            .withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> inputs = NonNullList.withSize(2, ItemStack.EMPTY);
     /** This drying rack's output stacks. */
-    private NonNullList<ItemStack> outputs = NonNullList
-            .withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> outputs = NonNullList.withSize(2, ItemStack.EMPTY);
     /** Ticks spent drying the current item. */
     private int drySpent = 0;
     /** Total ticks needed to dry the current item. */
     private int dryEach = -1;
 
+    @Override
+    public List<ItemStack> getDrops() {
+        
+        List<ItemStack> result = Lists.newArrayList();
+        result.addAll(this.inputs);
+        result.addAll(this.outputs);
+        return result;
+    }
+    
     /** Sorts the list of input stacks. */
     public void sort() {
 
@@ -57,15 +63,6 @@ public class TEDrying extends TileEntity implements ITickable, IItemStorage {
             this.drySpent = 0;
             this.markDirty();
         }
-    }
-    
-    @Override
-    public List<ItemStack> getDrops() {
-        
-        List<ItemStack> result = Lists.newArrayList();
-        result.addAll(this.inputs);
-        result.addAll(this.outputs);
-        return result;
     }
 
     /** @return The ItemStack in the input slot. */
@@ -183,6 +180,7 @@ public class TEDrying extends TileEntity implements ITickable, IItemStorage {
         ItemStack result = RECIPES.getCookingResult(this.inputs.get(0),
                 this.world);
 
+        // Add to existing stack
         for (int i = 0; i < this.outputs.size(); i++) {
             
             ItemStack output = this.outputs.get(i);
@@ -198,6 +196,7 @@ public class TEDrying extends TileEntity implements ITickable, IItemStorage {
             }
         }
         
+        // Add to empty slot
         for (int i = 0; i < this.outputs.size(); i++) {
             
             ItemStack output = this.outputs.get(i);
@@ -230,14 +229,12 @@ public class TEDrying extends TileEntity implements ITickable, IItemStorage {
         }
     }
     
-    // Required to update GUI on the client. 
     @Override
     public NBTTagCompound getUpdateTag() {
 
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    // Required to update GUI on the client.
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
@@ -245,7 +242,6 @@ public class TEDrying extends TileEntity implements ITickable, IItemStorage {
                 this.writeToNBT(new NBTTagCompound()));
     }
 
-    // Required to update GUI on the client.
     @Override
     public void onDataPacket(NetworkManager net,
             SPacketUpdateTileEntity packet) {

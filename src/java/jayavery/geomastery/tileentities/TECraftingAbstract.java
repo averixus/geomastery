@@ -20,9 +20,12 @@ import net.minecraft.util.math.BlockPos;
 /** Abstract superclass for crafting devices with weathering durability. */
 public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         extends TEMultiAbstract<E> implements ITickable {
+    
+    /** Maximum weather durability this crafter has. */
+    public static final int MAX_DURABILITY = 15;
 
     /** Number of days durability remaining for this block. */
-    protected int durability = 15;
+    protected int durability = MAX_DURABILITY;
     /** Whether this block is currently being rained on. */
     protected boolean isRaining;
     

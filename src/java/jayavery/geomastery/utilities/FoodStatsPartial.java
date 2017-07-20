@@ -155,12 +155,12 @@ public class FoodStatsPartial extends FoodStats {
         this.saturation = saturation;
     }
 
-    /** Unused from super. */
+    // Unused from super.
     @Override
     @SideOnly(Side.CLIENT)
     public void setFoodSaturationLevel(float saturation) {}
     
-    /** Unused from super. */
+    // Unused from super.
     @Override
     public void onUpdate(EntityPlayer player) {}
     

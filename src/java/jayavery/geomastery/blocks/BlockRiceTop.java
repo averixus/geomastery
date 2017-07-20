@@ -36,8 +36,7 @@ import net.minecraft.world.biome.BiomeSwamp;
 /** Rice crop top block. */
 public class BlockRiceTop extends BlockNew implements IBiomeCheck {
     
-    public static final PropertyInteger AGE =
-            PropertyInteger.create("age", 0, 7);
+    public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
     
     /** Chance of death per update tick if invalid position. */
     private static final float DEATH_CHANCE = 0.5F;
@@ -52,68 +51,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
                 .getBaseState().withProperty(AGE, 0));
     }
     
-    @Override
-    public BlockRenderLayer getBlockLayer() {
-        
-        return BlockRenderLayer.CUTOUT_MIPPED;
-    }
-    
-    @Override
-    public void neighborChanged(IBlockState state, World world,
-            BlockPos pos, Block block, BlockPos unused) {
-        
-        this.checkStay(world, state, pos);
-    }
-    
-    /** Checks whether this block can stay in the
-     * given position, drops it if not.
-     * @return Whether this block stayed. */
-    private boolean checkStay(World world, IBlockState state, BlockPos pos) {
-        
-        if (world.getBlockState(pos.down()).getBlock() != GeoBlocks.RICE_BASE) {
-            
-            world.setBlockToAir(pos); 
-            
-            if (!world.isRemote) {
-
-                this.dropBlockAsItem(world, pos, state, 0);
-            }
-            
-            return false;
-            
-        } else {
-        
-            return true;
-        }
-    }
-    
-    /** @return Whether this crop can grow at the given position. */
-    private boolean canGrow(World world, BlockPos pos) {
-        
-        return world.getLightFor(EnumSkyBlock.SKY, pos) >= 8 &&
-                this.isPermitted(world.getBiome(pos));
-    }
-    
-    /** Harvests items if full grown. */
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
-            IBlockState state, int fortune) {
-        
-        List<ItemStack> items = new ArrayList<ItemStack>();
-        
-        if (state.getValue(AGE) == 7) {
-
-            items.add(new ItemStack(GeoItems.RICE, 2));
-            
-        } else {
-            
-            items.add(new ItemStack(GeoItems.RICE, 1));
-        }
-        
-        return items;
-    }
-    
-    /** Check position and die or grow according to chance. */
+    // Checks position and die or grow according to chance
     @Override
     public void updateTick(World world, BlockPos pos,
             IBlockState state, Random rand) {
@@ -138,23 +76,84 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
             world.setBlockState(pos, newState);
         }
     }
+
+    /** Checks whether this block can stay in the
+     * given position, drops it if not.
+     * @return Whether this block stayed. */
+    private boolean checkStay(World world, IBlockState state, BlockPos pos) {
+        
+        if (world.getBlockState(pos.down()).getBlock() != GeoBlocks.RICE_BASE) {
+            
+            world.setBlockToAir(pos); 
+            
+            if (!world.isRemote) {
     
+                this.dropBlockAsItem(world, pos, state, 0);
+            }
+            
+            return false;
+            
+        } else {
+        
+            return true;
+        }
+    }
+
+    /** @return Whether this crop can grow at the given position. */
+    private boolean canGrow(World world, BlockPos pos) {
+        
+        return world.getLightFor(EnumSkyBlock.SKY, pos) >= 8 &&
+                this.isPermitted(world.getBiome(pos));
+    }
+
+    @Override
+    public void neighborChanged(IBlockState state, World world,
+            BlockPos pos, Block block, BlockPos unused) {
+        
+        this.checkStay(world, state, pos);
+    }
+
+    // Harvests items if full grown
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess blockAccess, BlockPos pos,
+            IBlockState state, int fortune) {
+        
+        List<ItemStack> items = new ArrayList<ItemStack>();
+        
+        if (state.getValue(AGE) == 7) {
+    
+            items.add(new ItemStack(GeoItems.RICE, 2));
+            
+        } else {
+            
+            items.add(new ItemStack(GeoItems.RICE, 1));
+        }
+        
+        return items;
+    }
+
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, new IProperty[] {AGE});
+        return new BlockStateContainer(this, AGE);
     }
-    
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        return state.getValue(AGE);
+    }
+
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
         return this.getDefaultState().withProperty(AGE, meta);
     }
-    
+
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public BlockRenderLayer getBlockLayer() {
         
-        return state.getValue(AGE);
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
     
     @Override
@@ -163,7 +162,7 @@ public class BlockRiceTop extends BlockNew implements IBiomeCheck {
         
         return CENTRE_SIXTEEN;
     }
-    
+
     @Override
     public boolean isPermitted(Biome biome) {
 

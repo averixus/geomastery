@@ -18,11 +18,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class SGeoPacketSingle implements IMessage {
     
     /** The input slot to move into. */
-    int space;
+    protected int space;
     /** The inventory slot to take from. */
-    int input;
+    protected int input;
     /** Whether to transfer the whole stack. */
-    boolean max;
+    protected boolean max;
     
     public SGeoPacketSingle() {}
     
@@ -72,7 +72,7 @@ public class SGeoPacketSingle implements IMessage {
             if (message.max) {
                 
                 space.putStack(input.getStack().copy());
-                input.decrStackSize(Integer.MAX_VALUE);
+                input.decrStackSize(input.getStack().getCount());
                 
             } else {
                 

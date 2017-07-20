@@ -28,24 +28,10 @@ import net.minecraft.world.World;
 public class TreeFallUtils {
     
     /** Array of all possible offset BlockPos for tree trunks. */
-    private static final BlockPos[] TRUNK_OFFSETS = {new BlockPos(-1, 0, -1),
-            new BlockPos(-1, 1, -1), new BlockPos(-1, 0, 0),
-            new BlockPos(-1, 1, 0), new BlockPos(-1, 0, 1),
-            new BlockPos(-1, 1, 1), new BlockPos(0, 0, -1),
-            new BlockPos(0, 1, -1), new BlockPos(1, 1, 1),
-            new BlockPos(0, 1, 0), new BlockPos(0, 0, 1),
-            new BlockPos(0, 1, 1), new BlockPos(1, 0, -1),
-            new BlockPos(1, 1, -1), new BlockPos(1, 0, 0),
-            new BlockPos(1, 1, 0), new BlockPos(1, 0, 1)};
+    private static final BlockPos[] TRUNK_OFFSETS = {new BlockPos(-1, 0, -1), new BlockPos(-1, 1, -1), new BlockPos(-1, 0, 0), new BlockPos(-1, 1, 0), new BlockPos(-1, 0, 1), new BlockPos(-1, 1, 1), new BlockPos(0, 0, -1), new BlockPos(0, 1, -1), new BlockPos(1, 1, 1), new BlockPos(0, 1, 0), new BlockPos(0, 0, 1), new BlockPos(0, 1, 1), new BlockPos(1, 0, -1), new BlockPos(1, 1, -1), new BlockPos(1, 0, 0), new BlockPos(1, 1, 0), new BlockPos(1, 0, 1)};
     
     /** Upper limit for number of blocks which can be felled in one action. */
     private static final int HARD_MAX = 150;
-    
-    /** Surroundings array for leaf decay checking. */
-    private static int[] surroundings;
-
-    /** Utility class: do not create instances. */
-    private TreeFallUtils() {}
 
     /** Fells a tree with trunk at origin position in a random direction. */
     public static void fellTree(World world, BlockPos origin) {
@@ -166,6 +152,9 @@ public class TreeFallUtils {
         }
     }
 
+    /** Surroundings array for leaf decay checking. */
+    private static int[] surroundings;
+    
     /** Copied from vanilla.
      * @return Whether leaves should decay. */
     private static boolean shouldLeavesFall(World world, BlockPos pos,
@@ -287,4 +276,7 @@ public class TreeFallUtils {
 
         return false;
     }
+    
+    /** Utility class: do not create instances. */
+    private TreeFallUtils() {}
 }

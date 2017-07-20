@@ -135,8 +135,7 @@ public class PlayerEvents {
             stack = ItemSimple.newStack(GeoItems.EGG, count, player.world);
         }
 
-        if (player.getCapability(GeoCaps.CAP_PLAYER, null)
-                .canPickup(item)) {
+        if (player.getCapability(GeoCaps.CAP_PLAYER, null).canPickup(item)) {
             
             stack = ContainerInventory.add(player, stack);
         }

@@ -48,7 +48,7 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         this.crop = crop;
     }
     
-    // Attempts to plant this item's crop. 
+    // Attempts to plant this item's crop
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world,
             BlockPos pos, EnumHand hand, EnumFacing side,
@@ -76,7 +76,7 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         }
     }
     
-    // Adds this item's valid biomes to the tooltip if config.
+    // Adds this item's valid biomes to the tooltip if config
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
@@ -88,7 +88,7 @@ public class ItemSeed extends ItemSimple implements IPlantable {
         }
     }
     
-    // Breeds or grows the right-clicked animal if applicable. 
+    // Breeds or grows the right-clicked animal if applicable
     @Override
     public boolean itemInteractionForEntity(ItemStack stack,
             EntityPlayer player, EntityLivingBase entity, EnumHand hand) {

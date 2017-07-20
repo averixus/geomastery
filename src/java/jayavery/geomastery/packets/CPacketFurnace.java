@@ -92,7 +92,8 @@ public class CPacketFurnace implements IMessage {
             
             if (tileEntity instanceof TEFurnaceAbstract) {
                 
-                TEFurnaceAbstract<?> tileFurnace = (TEFurnaceAbstract<?>) tileEntity;
+                TEFurnaceAbstract<?> tileFurnace = (TEFurnaceAbstract<?>)
+                        tileEntity;
                 tileFurnace.setProgressBars(message.fuelLeft,
                         message.fuelEach, message.cookSpent, message.cookEach);
             }

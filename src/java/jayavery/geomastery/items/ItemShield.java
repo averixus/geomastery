@@ -6,9 +6,9 @@
  ******************************************************************************/
 package jayavery.geomastery.items;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.translation.I18n;
 
 /** Custom shield item. */
 public class ItemShield extends net.minecraft.item.ItemShield {
@@ -20,12 +20,11 @@ public class ItemShield extends net.minecraft.item.ItemShield {
         ItemSimple.setupItem(this, name, 1, CreativeTabs.COMBAT);
     }
     
-    /** Bypass vanilla shield naming. */
+    // Bypasses vanilla shield naming
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
-        return I18n.translateToLocal(this
-                .getUnlocalizedNameInefficiently(stack) + ".name").trim();
+        return I18n.format(this.getUnlocalizedName() + ".name").trim();
     }
     
     @Override

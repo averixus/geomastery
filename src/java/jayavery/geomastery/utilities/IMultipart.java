@@ -14,7 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/** Implemented for enums which define multipart structures. */
+/** Implemented for enums which define multipart block structures. */
 public interface IMultipart extends IStringSerializable {
     
     /** @return Whether this is still part of a valid multipart structure. */

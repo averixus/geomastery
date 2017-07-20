@@ -72,8 +72,7 @@ public class TECraftingForge extends TECraftingAbstract<EPartForge> {
                 case BR:
                     return pos.offset(facing.getOpposite())
                             .offset(facing.rotateYCCW(), 2);
-                case FM:
-                default:
+                case FM: default:
                     return pos;
             }
         }
@@ -83,54 +82,30 @@ public class TECraftingForge extends TECraftingAbstract<EPartForge> {
                 EnumFacing facing) {
             
             BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_FORGE;
-            boolean broken = false;
             
             switch (this) {
 
-                case FM: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()
+                case FM:
+                    return world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
-
-                case FL: {
-
-                    broken |= world.getBlockState(pos.offset(facing))
+                case FL:
+                    return world.getBlockState(pos.offset(facing))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BL: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
+                case BL:
+                    return world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BM: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
+                case BM: 
+                    return world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BR: {
-
-                    broken |= world.getBlockState(pos.offset(facing
+                case BR: 
+                    return world.getBlockState(pos.offset(facing
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
-
-                case FR: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()
+                case FR:
+                    return world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
+                default:
+                    return false;
             }
-            
-            return broken;
         }
         
         @Override
@@ -140,20 +115,14 @@ public class TECraftingForge extends TECraftingAbstract<EPartForge> {
             
             switch (this) {
                 
-                case BR: 
-                case BM:
+                case BR: case BM:
                     return BlockNew.HALF[intFacing % 4];
-                
                 case FR: 
                     return BlockNew.CORNER[(intFacing + 2) % 4];
-                
                 case FM: 
                     return BlockNew.CORNER[(intFacing + 3) % 4];
-                    
-                case BL: 
-                case FL: 
+                case BL: case FL: 
                     return BlockNew.TEN;
-                
                 default:
                     return Block.FULL_BLOCK_AABB;
             }
@@ -177,52 +146,50 @@ public class TECraftingForge extends TECraftingAbstract<EPartForge> {
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == FM) {
+            if (this != FM) {
                 
-                BlockContainerMulti<EPartForge> block =
-                        GeoBlocks.CRAFTING_FORGE;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartForge> prop = block.getPartProperty();
+                return false;
+            }
                 
-                // Prepare map of properties
+            BlockContainerMulti<EPartForge> block = GeoBlocks.CRAFTING_FORGE;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartForge> prop = block.getPartProperty();
+            
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartForge> map = Maps.newHashMap();
+            map.put(pos, FM);
+            map.put(pos.offset(facing.rotateY().getOpposite()), FL);
+            map.put(pos.offset(facing.rotateY().getOpposite())
+                    .offset(facing), BL);
+            map.put(pos.offset(facing), BM);
+            map.put(pos.offset(facing).offset(facing.rotateY()), BR);
+            map.put(pos.offset(facing.rotateY()), FR);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartForge> entry : map.entrySet()) {
                 
-                Map<BlockPos, EPartForge> map = Maps.newHashMap();
-                map.put(pos, FM);
-                map.put(pos.offset(facing.rotateY().getOpposite()), FL);
-                map.put(pos.offset(facing.rotateY().getOpposite())
-                        .offset(facing), BL);
-                map.put(pos.offset(facing), BM);
-                map.put(pos.offset(facing).offset(facing.rotateY()), BR);
-                map.put(pos.offset(facing.rotateY()), FR);
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
                 
-                // Check validity
-                
-                for (Entry<BlockPos, EPartForge> entry : map.entrySet()) {
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
                     
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
+                    return false;
                 }
-                
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingForge) world.getTileEntity(e.getKey()))
-                        .setState(facing, e.getValue()));
-                
-                return true;
             }
             
-            return false;
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingForge) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            
+            return true;
         }
     }
 }

@@ -54,7 +54,7 @@ public abstract class ItemPlacing extends Item {
     @Override @SideOnly(Side.CLIENT)
     public abstract void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced);
-    
+
     // Tries to place the structure, play sound, use item
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world,
@@ -86,6 +86,12 @@ public abstract class ItemPlacing extends Item {
         }
         
         return EnumActionResult.FAIL;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        
+        return false;
     }
     
     /** Translates and sends the message to the player if config and nonnull. */

@@ -30,8 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BlockContainerSingle
-        extends BlockContainerAbstract<ItemPlacing.Building> {
+public abstract class BlockContainerSingle extends BlockContainerAbstract<ItemPlacing.Building> {
     
     public BlockContainerSingle(String name, Material material,
             float hardness, int ordinal) {
@@ -124,8 +123,7 @@ public abstract class BlockContainerSingle
     /** Box block. */
     public static class Box extends BlockContainerSingle {
         
-        private static final AxisAlignedBB BOX =
-                new AxisAlignedBB(0.25,0,0.25,0.75,0.56,0.75);
+        private static final AxisAlignedBB BOX = new AxisAlignedBB(0.25,0,0.25,0.75,0.56,0.75);
         
         public Box() {
         
@@ -140,23 +138,23 @@ public abstract class BlockContainerSingle
         }
         
         @Override
-        public AxisAlignedBB getBoundingBox(IBlockState state,
-                IBlockAccess source, BlockPos pos) {
+        public EnumBlockRenderType getRenderType(IBlockState state) {
             
-            return BOX;
+            return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
         }
-        
+
         @Override
         @SideOnly(Side.CLIENT)
         public boolean hasCustomBreakingProgress(IBlockState state) {
             
             return true;
         }
-        
+
         @Override
-        public EnumBlockRenderType getRenderType(IBlockState state) {
+        public AxisAlignedBB getBoundingBox(IBlockState state,
+                IBlockAccess source, BlockPos pos) {
             
-            return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+            return BOX;
         }
     }
     
@@ -170,30 +168,13 @@ public abstract class BlockContainerSingle
         }
         
         @Override
-        public int getLightValue(IBlockState state, IBlockAccess world,
-                BlockPos pos) {
-            
-            TileEntity te = world.getTileEntity(pos);
-        
-            if (te instanceof TEFurnaceSingle.Campfire) {
-                
-                if (((TEFurnaceSingle.Campfire) te).isHeating()) {
-                    
-                    return 14;
-                }
-            }
-            
-            return 12;
-        }
-
-        @Override
         public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
                 IBlockState state, int fortune, TileEntity te,
                 ItemStack tool, EntityPlayer player) {
             
             return Collections.emptyList();
         }
-        
+
         @Override
         public TileEntity createTileEntity(World worldIn, IBlockState state) {
 
@@ -213,6 +194,23 @@ public abstract class BlockContainerSingle
             
             return TWO;
         }
+
+        @Override
+        public int getLightValue(IBlockState state, IBlockAccess world,
+                BlockPos pos) {
+            
+            TileEntity te = world.getTileEntity(pos);
+        
+            if (te instanceof TEFurnaceSingle.Campfire) {
+                
+                if (((TEFurnaceSingle.Campfire) te).isHeating()) {
+                    
+                    return 14;
+                }
+            }
+            
+            return 12;
+        }
     }
     
     /** Pot fire block. */
@@ -224,6 +222,34 @@ public abstract class BlockContainerSingle
                     5F, GuiList.POTFIRE.ordinal());
         }
         
+        @Override
+        public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+                IBlockState state, int fortune, TileEntity te,
+                ItemStack tool, EntityPlayer player) {
+            
+            return Lists.newArrayList(new ItemStack(GeoItems.POT_CLAY));
+        }
+
+        @Override
+        public TileEntity createTileEntity(World worldIn, IBlockState state) {
+        
+            return new TEFurnaceSingle.Potfire();
+        }
+
+        @Override
+        public AxisAlignedBB getBoundingBox(IBlockState state,
+                IBlockAccess world, BlockPos pos) {
+
+            return SIX;
+        }
+        
+        @Override
+        public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
+                IBlockAccess world, BlockPos pos) {
+            
+            return CENTRE_FOURTEEN;
+        }
+
         @Override
         public int getLightValue(IBlockState state, IBlockAccess world,
                 BlockPos pos) {
@@ -239,34 +265,6 @@ public abstract class BlockContainerSingle
             }
             
             return 12;
-        }
-            
-        @Override
-        public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-                IBlockState state, int fortune, TileEntity te,
-                ItemStack tool, EntityPlayer player) {
-            
-            return Lists.newArrayList(new ItemStack(GeoItems.POT_CLAY));
-        }
-
-        @Override
-        public TileEntity createTileEntity(World worldIn, IBlockState state) {
-
-            return new TEFurnaceSingle.Potfire();
-        }
-        
-        @Override
-        public AxisAlignedBB getBoundingBox(IBlockState state,
-                IBlockAccess world, BlockPos pos) {
-
-            return SIX;
-        }
-        
-        @Override
-        public AxisAlignedBB getCollisionBoundingBox(IBlockState state,
-                IBlockAccess world, BlockPos pos) {
-            
-            return CENTRE_FOURTEEN;
         }
     }
 }

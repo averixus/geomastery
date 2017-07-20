@@ -76,8 +76,7 @@ public class TECraftingWoodworking extends
                 case BR:
                     return pos.offset(facing.getOpposite())
                             .offset(facing.rotateYCCW());
-                case FM:
-                default:
+                case FM: default:
                     return pos;
             }
         }
@@ -87,54 +86,30 @@ public class TECraftingWoodworking extends
                 EnumFacing facing) {
             
             BlockBuildingAbstract<?> block = GeoBlocks.CRAFTING_WOODWORKING;
-            boolean broken = false;
             
             switch (this) {
                 
-                case FM: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()
+                case FM: 
+                    return world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
-
-                case FL: {
-
-                    broken |= world.getBlockState(pos.offset(facing))
+                case FL:
+                    return world.getBlockState(pos.offset(facing))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BL: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
+                case BL: 
+                    return world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BM: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()))
+                case BM: 
+                    return world.getBlockState(pos.offset(facing.rotateY()))
                             .getBlock() != block;
-                    break;
-                }
-
-                case BR: {
-
-                    broken |= world.getBlockState(pos.offset(facing
+                case BR: 
+                    return world.getBlockState(pos.offset(facing
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
-
-                case FR: {
-
-                    broken |= world.getBlockState(pos.offset(facing.rotateY()
+                case FR:
+                    return world.getBlockState(pos.offset(facing.rotateY()
                             .getOpposite())).getBlock() != block;
-                    break;
-                }
+                default:
+                    return false;
             }
-            
-            return broken;
         }
         
         @Override
@@ -152,9 +127,7 @@ public class TECraftingWoodworking extends
                     return BlockNew.HALF[intFacing];
                 case FL: 
                     return BlockNew.TWELVE;
-                case BM: 
-                case BL: 
-                default:
+                case BM: case BL:  default:
                     return Block.FULL_BLOCK_AABB;
             }
         }
@@ -166,13 +139,9 @@ public class TECraftingWoodworking extends
                 
                 case FL:
                     return BlockNew.TWELVE;
-                case BM:
-                case BL:
+                case BM: case BL:
                     return Block.FULL_BLOCK_AABB;
-                case BR:
-                case FR:
-                case FM:
-                default:
+                case BR: case FR: case FM: default:
                     return Block.NULL_AABB;
             }
         }
@@ -181,52 +150,51 @@ public class TECraftingWoodworking extends
         public boolean buildStructure(World world, BlockPos pos,
                 EnumFacing facing, EntityPlayer player) {
             
-            if (this == FM) {
+            if (this != FM) {
                 
-                BlockContainerMulti<EPartWoodworking> block =
-                        GeoBlocks.CRAFTING_WOODWORKING;
-                IBlockState state = block.getDefaultState();
-                PropertyEnum<EPartWoodworking> prop = block.getPartProperty();
-                
-                // Prepare map of properties
-                
-                Map<BlockPos, EPartWoodworking> map = Maps.newHashMap();
-                map.put(pos, FM);
-                map.put(pos.offset(facing.rotateY().getOpposite()), FL);
-                map.put(pos.offset(facing.rotateY().getOpposite())
-                        .offset(facing), BL);
-                map.put(pos.offset(facing), BM);
-                map.put(pos.offset(facing).offset(facing.rotateY()), BR);
-                map.put(pos.offset(facing.rotateY()), FR);
-                
-                // Check validity
-                
-                for (Entry<BlockPos, EPartWoodworking> entry : map.entrySet()) {
-                    
-                    IBlockState placeState = state
-                            .withProperty(prop, entry.getValue());
-                    
-                    if (!block.isValid(world, entry.getKey(), null,
-                            false, placeState, player)) {
-                        
-                        return false;
-                    }
-                }
-
-                // Place all
-                
-                map.keySet().forEach((p) -> world.setBlockState(p, state));
-                
-                // Set up tileentities
-                
-                map.entrySet().forEach((e) ->
-                        ((TECraftingWoodworking) world.getTileEntity(e
-                        .getKey())).setState(facing, e.getValue()));
-                
-                return true;
+                return false;
             }
+                
+            BlockContainerMulti<EPartWoodworking> block =
+                    GeoBlocks.CRAFTING_WOODWORKING;
+            IBlockState state = block.getDefaultState();
+            PropertyEnum<EPartWoodworking> prop = block.getPartProperty();
             
-            return false;
+            // Prepare map of properties
+            
+            Map<BlockPos, EPartWoodworking> map = Maps.newHashMap();
+            map.put(pos, FM);
+            map.put(pos.offset(facing.rotateY().getOpposite()), FL);
+            map.put(pos.offset(facing.rotateY().getOpposite())
+                    .offset(facing), BL);
+            map.put(pos.offset(facing), BM);
+            map.put(pos.offset(facing).offset(facing.rotateY()), BR);
+            map.put(pos.offset(facing.rotateY()), FR);
+            
+            // Check validity
+            
+            for (Entry<BlockPos, EPartWoodworking> entry : map.entrySet()) {
+                
+                IBlockState placeState = state
+                        .withProperty(prop, entry.getValue());
+                
+                if (!block.isValid(world, entry.getKey(), null,
+                        false, placeState, player)) {
+                    
+                    return false;
+                }
+            }
+
+            // Place all
+            
+            map.keySet().forEach((p) -> world.setBlockState(p, state));
+            
+            // Set up tileentities
+            
+            map.entrySet().forEach((e) -> ((TECraftingWoodworking) world
+                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            
+            return true;
         }
     }
 }

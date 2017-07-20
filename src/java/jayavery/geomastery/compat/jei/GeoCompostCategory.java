@@ -33,8 +33,7 @@ import net.minecraft.util.ResourceLocation;
 public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
     
     /** Location of background image. */
-    static final ResourceLocation BG_RES = new ResourceLocation(
-            Geomastery.MODID, "textures/gui/compost_0.png");
+    static final ResourceLocation BG_RES = new ResourceLocation(Geomastery.MODID, "textures/gui/compost_0.png");
     /** X position of background image. */
     private static final int BG_X = 24;
     /** Y position of background image. */
@@ -198,8 +197,9 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
         public void drawInfo(Minecraft minecraft, int width, int height,
                 int mouseX, int mouseY) {
             
-            minecraft.fontRendererObj.drawString("Type: " + this.recipe.type,
-                    STRING_X, String_Y, this.recipe.type.getColour().getRGB());
+            minecraft.fontRendererObj.drawString("Type: " +
+                    I18n.format(this.recipe.type.getName()), STRING_X, String_Y,
+                    this.recipe.type.getColour().getRGB());
         }
     }
 }

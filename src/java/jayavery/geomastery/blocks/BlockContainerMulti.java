@@ -55,11 +55,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Abstract superclass for crafting blocks with multipart TileEntities. */
-public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
-        extends BlockContainerAbstract<ItemPlacing.Building> {
+public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extends BlockContainerAbstract<ItemPlacing.Building> {
     
-    public static final PropertyDirection FACING = PropertyDirection
-            .create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     /** Supplier for this block's tileentity. */
     private final Supplier<? extends TileEntity> te;
@@ -84,34 +82,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
         return new ItemPlacing.Building(this, stackSize);
     }
     
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state) {
-        
-        return this.te.get();
-    }
-    
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
-            IBlockState state, int fortune, TileEntity te,
-            ItemStack tool, EntityPlayer player) {
-        
-        List<ItemStack> result = Lists.newArrayList();
-        
-        if (te instanceof TEMultiAbstract<?> &&
-                ((TEMultiAbstract<?>) te).getPart() == this.placePart) {
-
-            result.add(new ItemStack(this.item));
-        }
-        
-        if (te instanceof IItemStorage) {
-            
-            result.addAll(((IItemStorage) te).getDrops());
-        }
-        
-        return result;
-    }
-    
-    /** Checking and placement handled by TEs. */
+    // Checking and placement handled by TEs
     @Override
     public boolean place(World world, BlockPos targetPos, EnumFacing targetSide,
             EnumFacing placeFacing, ItemStack stack, EntityPlayer player) {
@@ -119,8 +90,8 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
         return this.placePart.buildStructure(world,
                 targetPos.offset(targetSide), placeFacing, player);
     }
-    
-    /** Validity logic used by TEs. */
+
+    // Validity logic used by TEs
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -160,9 +131,70 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
         
         return true;
     }
-    
-    @SideOnly(Side.CLIENT)
+
     @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
+            IBlockState state, int fortune, TileEntity te,
+            ItemStack tool, EntityPlayer player) {
+        
+        List<ItemStack> result = Lists.newArrayList();
+        
+        if (te instanceof TEMultiAbstract<?> &&
+                ((TEMultiAbstract<?>) te).getPart() == this.placePart) {
+    
+            result.add(new ItemStack(this.item));
+        }
+        
+        if (te instanceof IItemStorage) {
+            
+            result.addAll(((IItemStorage) te).getDrops());
+        }
+        
+        return result;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        
+        return this.te.get();
+    }
+    
+    @Override
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        TileEntity tileEntity = world.getTileEntity(pos);
+        
+        if (tileEntity instanceof TEMultiAbstract<?>) {
+            
+            @SuppressWarnings("unchecked")
+            TEMultiAbstract<E> tileCrafting = (TEMultiAbstract<E>) tileEntity;
+            state = tileCrafting.applyActualState(state,
+                    this.getPartProperty());
+        }
+        
+        return state;
+    }
+
+    @Override
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, FACING, this.getPartProperty());
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        
+        return 0;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        
+        return this.getDefaultState();
+    }
+
+    @SideOnly(Side.CLIENT) @Override
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
@@ -204,46 +236,10 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
         return tileCrafting.getCollisionBox();
     }
     
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        TileEntity tileEntity = world.getTileEntity(pos);
-        
-        if (tileEntity instanceof TEMultiAbstract<?>) {
-            
-            @SuppressWarnings("unchecked")
-            TEMultiAbstract<E> tileCrafting = (TEMultiAbstract<E>) tileEntity;
-            state = tileCrafting.applyActualState(state,
-                    this.getPartProperty());
-        }
-        
-        return state;
-    }
-    
-    @Override
-    public BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this, FACING, this.getPartProperty());
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        
-        return this.getDefaultState();
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        
-        return 0;
-    }
-    
     /** Stone furnace. */
     public static class Stone extends BlockContainerMulti<EPartStone> {
         
-        public static final PropertyEnum<EPartStone> PART =
-                PropertyEnum.create("part", EPartStone.class);
+        public static final PropertyEnum<EPartStone> PART = PropertyEnum.create("part", EPartStone.class);
         
         public Stone() {
             
@@ -262,8 +258,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     /** Clay furnace. */
     public static class Clay extends BlockContainerMulti<EPartClay> {
         
-        public static final PropertyEnum<EPartClay> PART =
-                PropertyEnum.create("part", EPartClay.class);
+        public static final PropertyEnum<EPartClay> PART = PropertyEnum.create("part", EPartClay.class);
         
         public Clay() {
             
@@ -280,11 +275,9 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     }
     
     /** Woodworking bench. */
-    public static class Woodworking extends
-            BlockContainerMulti<EPartWoodworking> {
+    public static class Woodworking extends BlockContainerMulti<EPartWoodworking> {
         
-        public static final PropertyEnum<EPartWoodworking> PART =
-                PropertyEnum.create("part", EPartWoodworking.class);
+        public static final PropertyEnum<EPartWoodworking> PART = PropertyEnum.create("part", EPartWoodworking.class);
         
         public Woodworking() {
             
@@ -303,8 +296,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     /** Textiles table. */
     public static class Textiles extends BlockContainerMulti<EPartTextiles> {
         
-        public static final PropertyEnum<EPartTextiles> PART =
-                PropertyEnum.create("part", EPartTextiles.class);
+        public static final PropertyEnum<EPartTextiles> PART = PropertyEnum.create("part", EPartTextiles.class);
         
         public Textiles() {
             
@@ -323,8 +315,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     /** Mason's workshop. */
     public static class Mason extends BlockContainerMulti<EPartMason> {
         
-        public static final PropertyEnum<EPartMason> PART =
-                PropertyEnum.create("part", EPartMason.class);
+        public static final PropertyEnum<EPartMason> PART = PropertyEnum.create("part", EPartMason.class);
         
         public Mason() {
             
@@ -343,8 +334,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     /** Forge. */
     public static class Forge extends BlockContainerMulti<EPartForge> {
         
-        public static final PropertyEnum<EPartForge> PART =
-                PropertyEnum.create("part", EPartForge.class);
+        public static final PropertyEnum<EPartForge> PART = PropertyEnum.create("part", EPartForge.class);
         
         public Forge() {
             
@@ -361,11 +351,9 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     }
     
     /** Candlemaker's bench. */
-    public static class Candlemaker extends
-            BlockContainerMulti<EPartCandlemaker> {
+    public static class Candlemaker extends BlockContainerMulti<EPartCandlemaker> {
         
-        public static final PropertyEnum<EPartCandlemaker> PART =
-                PropertyEnum.create("part", EPartCandlemaker.class);
+        public static final PropertyEnum<EPartCandlemaker> PART = PropertyEnum.create("part", EPartCandlemaker.class);
         
         public Candlemaker() {
             
@@ -384,8 +372,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart>
     /** Armourer. */
     public static class Armourer extends BlockContainerMulti<EPartArmourer> {
         
-        public static final PropertyEnum<EPartArmourer> PART =
-                PropertyEnum.create("part", EPartArmourer.class);
+        public static final PropertyEnum<EPartArmourer> PART = PropertyEnum.create("part", EPartArmourer.class);
         
         public Armourer() {
             

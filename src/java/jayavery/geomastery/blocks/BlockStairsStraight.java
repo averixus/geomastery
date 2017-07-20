@@ -41,19 +41,16 @@ public abstract class BlockStairsStraight extends BlockFacing {
                 hardness, stackSize, EBlockWeight.NONE);
     }
     
+    /** @return Whether these stairs have a valid amount of nearby stairs. */
     protected abstract boolean hasValidConnection(World world, BlockPos pos);
     
-    @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    @Override
+    public boolean shouldConnect(IBlockAccess world, IBlockState state,
+            BlockPos pos, EnumFacing direction) {
         
-        if (GeoConfig.buildTooltips) {
-        
-            tooltip.add(I18n.format(Lang.BUILDTIP_STAIRS));
-            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
-        }
+        return false;
     }
-    
+
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -69,10 +66,10 @@ public abstract class BlockStairsStraight extends BlockFacing {
             message(player, Lang.BUILDFAIL_STAIRS_WIDTH);
             return false;
         }
-
+    
         return true;
     }
-    
+
     /** @return Whether this block is supported from below or nearby stairs. */
     protected boolean hasValidSupport(World world, BlockPos pos) {
         
@@ -110,13 +107,16 @@ public abstract class BlockStairsStraight extends BlockFacing {
          
         return supported;
     }
-    
-    
-    @Override
-    public boolean shouldConnect(IBlockAccess world, IBlockState state,
-            BlockPos pos, EnumFacing direction) {
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
         
-        return false;
+        if (GeoConfig.buildTooltips) {
+        
+            tooltip.add(I18n.format(Lang.BUILDTIP_STAIRS));
+            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
+        }
     }
     
     @Override
@@ -148,14 +148,8 @@ public abstract class BlockStairsStraight extends BlockFacing {
         }
 
         @Override
-        public BlockStateContainer createBlockState() {
-
-            return new BlockStateContainer(this, FACING);
-        }
-
-        @Override
         protected boolean hasValidConnection(World world, BlockPos pos) {
-
+        
             for (EnumFacing direction : EnumFacing.HORIZONTALS) {
                 
                 Block connect = world.getBlockState(pos
@@ -168,6 +162,12 @@ public abstract class BlockStairsStraight extends BlockFacing {
             }
             
             return true;
+        }
+
+        @Override
+        public BlockStateContainer createBlockState() {
+
+            return new BlockStateContainer(this, FACING);
         }
     }
     
@@ -183,6 +183,38 @@ public abstract class BlockStairsStraight extends BlockFacing {
             super(name, hardness, stackSize);
         }
         
+        @Override
+        protected boolean hasValidConnection(World world, BlockPos pos) {
+        
+            int count = 0;
+        
+            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+                
+                Block block = world.getBlockState(pos.offset(direction))
+                        .getBlock();
+                
+                if (block == this) {
+                    
+                    count++;
+                    
+                    Block nextBlock = world.getBlockState(pos
+                            .offset(direction, 2)).getBlock();
+                    
+                    if (nextBlock == this) {
+                        
+                        return false;
+                    }
+                }
+            }
+            
+            if (count > 1) {
+                
+                return false;
+            }
+            
+            return true;
+        }
+
         @Override
         public IBlockState getActualState(IBlockState state, IBlockAccess world,
                 BlockPos pos) {
@@ -212,38 +244,6 @@ public abstract class BlockStairsStraight extends BlockFacing {
         public BlockStateContainer createBlockState() {
             
             return new BlockStateContainer(this, FACING, CONNECTION);
-        }
-
-        @Override
-        protected boolean hasValidConnection(World world, BlockPos pos) {
-
-            int count = 0;
-
-            for (EnumFacing direction : EnumFacing.HORIZONTALS) {
-                
-                Block block = world.getBlockState(pos.offset(direction))
-                        .getBlock();
-                
-                if (block == this) {
-                    
-                    count++;
-                    
-                    Block nextBlock = world.getBlockState(pos
-                            .offset(direction, 2)).getBlock();
-                    
-                    if (nextBlock == this) {
-                        
-                        return false;
-                    }
-                }
-            }
-            
-            if (count > 1) {
-                
-                return false;
-            }
-            
-            return true;
         }
     }
     

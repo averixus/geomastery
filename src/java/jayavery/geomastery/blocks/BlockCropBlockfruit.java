@@ -59,64 +59,38 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
     }
     
     @Override
-    public BlockStateContainer createBlockState() {
-        
-        return new BlockStateContainer(this, AGE, FACING);
-    }
-
-    @Override
-    public IBlockState getActualState(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-
-        int age = state.getValue(AGE);
-        state = state.withProperty(FACING, EnumFacing.UP);
-
-        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-            
-            if (world.getBlockState(pos.offset(enumfacing))
-                    .getBlock() == this.fruit.get() && age == 7) {
-                
-                state = state.withProperty(FACING, enumfacing);
-                break;
-            }
-        }
-
-        return state;
-    }
-
-    @Override
     protected void grow(World world, BlockPos pos,
             IBlockState state, Random rand) {
-
+    
         if (state.getValue(AGE) == 7) {
-
+    
             this.growFruit(world, pos, rand);
         }
-
+    
         super.grow(world, pos, state, rand);
     }
 
     /** Attempts to grow a fruit in an adjacent block. */
     protected void growFruit(World world, BlockPos pos, Random rand) {
-
+    
         for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
-
+    
             if (world.getBlockState(pos.offset(facing))
                     .getBlock() == this.fruit) {
-
+    
                 return;
             }
         }
-
+    
         EnumFacing side = EnumFacing.Plane.HORIZONTAL.random(rand);
         BlockPos fruitPos = pos.offset(side);
         IBlockState soilState = world.getBlockState(fruitPos.down());
         Block soilBlock = soilState.getBlock();
-
+    
         if (world.isAirBlock(fruitPos) && (soilBlock.canSustainPlant(soilState,
                 world, pos.down(), EnumFacing.UP, this) ||
                 soilBlock == Blocks.DIRT || soilBlock == Blocks.GRASS)) {
-
+    
             world.setBlockState(fruitPos, this.fruit.get().getDefaultState()
                     .withProperty(BlockFruit.FACING, side.getOpposite()));
         }
@@ -128,7 +102,33 @@ public abstract class BlockCropBlockfruit extends BlockCrop {
         
         return Lists.newArrayList(new ItemStack(this.seed.get()));
     }
+
+    @Override
+    public IBlockState getActualState(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
     
+        int age = state.getValue(AGE);
+        state = state.withProperty(FACING, EnumFacing.UP);
+    
+        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
+            
+            if (world.getBlockState(pos.offset(enumfacing))
+                    .getBlock() == this.fruit.get() && age == 7) {
+                
+                state = state.withProperty(FACING, enumfacing);
+                break;
+            }
+        }
+    
+        return state;
+    }
+
+    @Override
+    public BlockStateContainer createBlockState() {
+        
+        return new BlockStateContainer(this, AGE, FACING);
+    }
+
     /** Pumpkin crop block. */
     public static class Pumpkin extends BlockCropBlockfruit {
         

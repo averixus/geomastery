@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 /** Fully adaptive wall building block. */
-public class BlockWallComplex extends BlockWall implements IDoublingBlock {
+public class BlockWallComplex extends BlockWall {
         
     public BlockWallComplex(Material material, String name, float hardness) {
         
@@ -48,7 +48,7 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
     @Override
     public boolean shouldDouble(IBlockState state, EnumFacing side) {
         
-        return !state.getValue(DOUBLE) && side != EnumFacing.UP;
+        return !this.isDouble(state) && side != EnumFacing.UP;
     }
     
     @Override
@@ -59,8 +59,7 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
         IBlockState targetState = world.getBlockState(targetPos);
         Block targetBlock = targetState.getBlock();
 
-        if (targetBlock == this && this.shouldDouble(targetState
-                .getActualState(world, targetPos), targetSide)) {
+        if (targetBlock == this && this.shouldDouble(targetState, targetSide)) {
             
             world.setBlockState(targetPos,
                     targetState.withProperty(DOUBLE, true));
@@ -71,30 +70,18 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
             targetState = world.getBlockState(targetPos);
             targetBlock = targetState.getBlock();
             
-            if (!this.isValid(world, targetPos, stack, false, this.getDefaultState(), player)) {
+            IBlockState state = this.getDefaultState()
+                    .withProperty(DOUBLE, false);
+            
+            if (!this.isValid(world, targetPos, stack, false, state, player)) {
                 
                 return false;
             }
             
-            world.setBlockState(targetPos, this.getDefaultState()
-                    .withProperty(DOUBLE, false));
+            world.setBlockState(targetPos, state);
         }
         
         return true;
-    }
-    
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state,
-            IBlockAccess world, BlockPos pos) {
-        
-        if (state.getValue(DOUBLE)) {
-            
-            return FULL_BLOCK_AABB;
-            
-        } else {
-            
-            return CENTRE_POST;
-        }
     }
     
     @Override
@@ -115,6 +102,13 @@ public class BlockWallComplex extends BlockWall implements IDoublingBlock {
         state = state.withProperty(BOTTOM, isBottom);
         
         return state;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state,
+            IBlockAccess world, BlockPos pos) {
+        
+        return this.isDouble(state) ? FULL_BLOCK_AABB : CENTRE_POST;
     }
     
     @Override

@@ -27,8 +27,7 @@ import net.minecraft.world.World;
 
 /** Abstract superclass for complex blocks with TileEntities,
  * GUIs, Containers, complex drops. */
-public abstract class BlockContainerAbstract<I extends ItemPlacing.Building>
-        extends BlockBuildingAbstract<I> {
+public abstract class BlockContainerAbstract<I extends ItemPlacing.Building> extends BlockBuildingAbstract<I> {
     
     /** This container's gui ordinal. */
     private final int ordinal;

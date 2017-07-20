@@ -27,14 +27,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** Sawpit multi crafting block. */
 public class BlockSawpit extends BlockContainerMulti<EPartSawpit> {
 
-    public static final PropertyEnum<EPartSawpit> PART =
-            PropertyEnum.create("part", EPartSawpit.class);
+    public static final PropertyEnum<EPartSawpit> PART = PropertyEnum.create("part", EPartSawpit.class);
     
     public BlockSawpit() {
         
         super("crafting_sawpit", BlockMaterial.WOOD_FURNITURE, 5F,
-                TECraftingSawpit::new, GuiList.SAWPIT.ordinal(),
-                EPartSawpit.F);
+                TECraftingSawpit::new, GuiList.SAWPIT.ordinal(), EPartSawpit.F);
     }
     
     @Override
@@ -51,11 +49,12 @@ public class BlockSawpit extends BlockContainerMulti<EPartSawpit> {
         
             tooltip.add(I18n.format(Lang.BUILDTIP_MULTIPART));
             tooltip.add(I18n.format(Lang.BUILDTIP_SAWPIT));
-            tooltip.add(I18n.format(this.getWeight(this.getDefaultState()).supports()));
+            tooltip.add(I18n.format(this.getWeight(this
+                    .getDefaultState()).supports()));
         }
     }
     
-    /** Used for TE part checks. */
+    /** Checks whether the position can support this, sending error message. */
     public boolean isSupport(World world, BlockPos pos, EntityPlayer player) {
         
         if (!EBlockWeight.getWeight(world.getBlockState(pos))
@@ -68,7 +67,7 @@ public class BlockSawpit extends BlockContainerMulti<EPartSawpit> {
         return true;
     }
     
-    /** Used for TE part checks. */
+    /** Checks whether the position has a space, sending error message. */
     public boolean isSpace(World world, BlockPos pos, EntityPlayer player) {
         
         if (!world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {

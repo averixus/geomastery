@@ -22,9 +22,7 @@ public enum EBlockWeight {
     LIGHT(Lang.BUILDTIP_REQ_LIGHT, Lang.BUILDTIP_SUP_LIGHT),
     NONE(Lang.BUILDTIP_REQ_NONE, Lang.BUILDTIP_SUP_NONE);
     
-    /** Unlocalised string for required supports tooltip. */
     private final String requires;
-    /** Unlocalised string for provided supports tooltip. */
     private final String supports;
     
     private EBlockWeight(String requires, String supports) {

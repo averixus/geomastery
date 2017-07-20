@@ -27,8 +27,7 @@ import net.minecraft.util.ResourceLocation;
 public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
 
     /** Location of background image. */
-    private static final ResourceLocation BG_RES = new ResourceLocation(
-            Geomastery.MODID, "textures/gui/furnace1_0.png");
+    private static final ResourceLocation BG_RES = new ResourceLocation(Geomastery.MODID, "textures/gui/furnace1_0.png");
     /** X position of background image. */
     private static final int BG_X = 55;
     /** Y position of background image. */
@@ -169,8 +168,8 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
         public void drawInfo(Minecraft minecraft, int width, int height,
                 int mouseX, int mouseY) {
             
-            minecraft.fontRendererObj.drawString("Min: " + this.recipe.level,
-                    STRING_X, STRING_Y, GREY);
+            minecraft.fontRendererObj.drawString("Min: " +
+                    I18n.format(this.recipe.level), STRING_X, STRING_Y, GREY);
         }
     }
 }

@@ -63,8 +63,8 @@ public class ShapedRecipe extends ShapedRecipes {
                 }
             }
         }
-        // Shouldn't happen
-        return null;
+       
+        return null; // Shouldn't happen
     }
     
     /** Gets the number of items used from each input in the InventoryCrafting.

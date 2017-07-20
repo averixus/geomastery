@@ -17,25 +17,15 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 public class RenderSpearFactory implements IRenderFactory<EntityArrow> {
 
     /** Factory for copper spear renderers. */
-    public static final RenderSpearFactory SPEAR_COPPER = new
-            RenderSpearFactory(new ResourceLocation(Geomastery.MODID,
-            "textures/entity/projectiles/spear_copper.png"));
+    public static final RenderSpearFactory SPEAR_COPPER = new RenderSpearFactory(new ResourceLocation(Geomastery.MODID, "textures/entity/projectiles/spear_copper.png"));
     /** Factory for bronze spear renderers. */
-    public static final RenderSpearFactory SPEAR_BRONZE = new
-            RenderSpearFactory(new ResourceLocation(Geomastery.MODID,
-            "textures/entity/projectiles/spear_bronze.png"));
+    public static final RenderSpearFactory SPEAR_BRONZE = new RenderSpearFactory(new ResourceLocation(Geomastery.MODID, "textures/entity/projectiles/spear_bronze.png"));
     /** Factory for flint spear renderers. */
-    public static final RenderSpearFactory SPEAR_FLINT = new
-            RenderSpearFactory(new ResourceLocation(Geomastery.MODID,
-            "textures/entity/projectiles/spear_flint.png"));
+    public static final RenderSpearFactory SPEAR_FLINT = new RenderSpearFactory(new ResourceLocation(Geomastery.MODID, "textures/entity/projectiles/spear_flint.png"));
     /** Factory for steel spear renderers. */
-    public static final RenderSpearFactory SPEAR_STEEL = new
-            RenderSpearFactory(new ResourceLocation(Geomastery.MODID,
-            "textures/entity/projectiles/spear_steel.png"));
+    public static final RenderSpearFactory SPEAR_STEEL = new RenderSpearFactory(new ResourceLocation(Geomastery.MODID, "textures/entity/projectiles/spear_steel.png"));
     /** Factory for wood spear renderers. */
-    public static final RenderSpearFactory SPEAR_WOOD = new
-            RenderSpearFactory(new ResourceLocation(Geomastery.MODID,
-            "textures/entity/projectiles/spear_wood.png"));
+    public static final RenderSpearFactory SPEAR_WOOD = new RenderSpearFactory(new ResourceLocation(Geomastery.MODID, "textures/entity/projectiles/spear_wood.png"));
     
     /** Texture for this render. */
     private ResourceLocation texture;

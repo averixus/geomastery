@@ -27,8 +27,7 @@ import net.minecraft.world.World;
 /** Fruit block. */
 public class BlockFruit extends BlockNew {
     
-    public static final PropertyDirection FACING =
-            PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     
     /** Supplier for the fruit item. */
     private final Supplier<Item> fruit;

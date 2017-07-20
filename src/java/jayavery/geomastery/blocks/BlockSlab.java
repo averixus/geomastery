@@ -57,51 +57,12 @@ public class BlockSlab extends BlockBuildingAbstract<ItemPlacing.Building>
         return this.isDouble(state) ? EBlockWeight.LIGHT : EBlockWeight.NONE;
     }
     
-    @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    public boolean shouldDouble(IBlockState state, EnumFacing side) {
         
-        if (GeoConfig.buildTooltips) {
-            
-            tooltip.add(I18n.format(Lang.BUILDTIP_DOUBLING));                
-            tooltip.add(I18n.format(EBlockWeight.MEDIUM.requires()));
-            tooltip.add(I18n.format(Lang.BUILDTIP_SLAB));
-        }
+        return !this.isDouble(state) && side == EnumFacing.UP;
     }
-    
-    @Override
-    public boolean place(World world, BlockPos targetPos,
-            EnumFacing targetSide, EnumFacing placeFacing,
-            ItemStack stack, EntityPlayer player) {
-        
-        IBlockState targetState = world.getBlockState(targetPos);
-        Block targetBlock = targetState.getBlock();
 
-        if (targetBlock == this && this.shouldDouble(targetState
-                .getActualState(world, targetPos), targetSide)) {
-            
-            world.setBlockState(targetPos,
-                    targetState.withProperty(DOUBLE, true));
-       
-        } else {
-            
-            targetPos = targetPos.offset(targetSide);
-            targetState = world.getBlockState(targetPos);
-            targetBlock = targetState.getBlock();
-            
-            if (!this.isValid(world, targetPos, stack, false, this.getDefaultState(), player)) {
-                
-                return false;
-            }
-            
-            world.setBlockState(targetPos, this.getDefaultState()
-                    .withProperty(DOUBLE, false));
-        }
-        
-        return true;
-    }
-    
     @Override
     public boolean isValid(World world, BlockPos pos, ItemStack stack,
             boolean alreadyPresent, IBlockState setState, EntityPlayer player) {
@@ -124,24 +85,38 @@ public class BlockSlab extends BlockBuildingAbstract<ItemPlacing.Building>
         
         return true;
     }
-    
-    @Override
-    public boolean shouldDouble(IBlockState state, EnumFacing side) {
-        
-        return side == EnumFacing.UP && !state.getValue(DOUBLE);
-    }
-    
-    @Override
-    public boolean isDouble(IBlockState state) {
-        
-        return state.getValue(DOUBLE);
-    }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
-            BlockPos pos) {
-
-        return state.getValue(DOUBLE) ? FULL_BLOCK_AABB : EIGHT;
+    public boolean place(World world, BlockPos targetPos,
+            EnumFacing targetSide, EnumFacing placeFacing,
+            ItemStack stack, EntityPlayer player) {
+        
+        IBlockState targetState = world.getBlockState(targetPos);
+        Block targetBlock = targetState.getBlock();
+    
+        if (targetBlock == this && this.shouldDouble(targetState, targetSide)) {
+            
+            world.setBlockState(targetPos,
+                    targetState.withProperty(DOUBLE, true));
+    
+        } else {
+            
+            targetPos = targetPos.offset(targetSide);
+            targetState = world.getBlockState(targetPos);
+            targetBlock = targetState.getBlock();
+            
+            IBlockState state = this.getDefaultState()
+                    .withProperty(DOUBLE, false);
+            
+            if (!this.isValid(world, targetPos, stack, false, state, player)) {
+                
+                return false;
+            }
+            
+            world.setBlockState(targetPos, state);
+        }
+        
+        return true;
     }
 
     @Override
@@ -159,7 +134,7 @@ public class BlockSlab extends BlockBuildingAbstract<ItemPlacing.Building>
         
         this.doHarvest(world, pos, state, player, te, tool);      
     }
-    
+
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos,
             IBlockState state, int fortune, TileEntity te,
@@ -170,20 +145,45 @@ public class BlockSlab extends BlockBuildingAbstract<ItemPlacing.Building>
     }
 
     @Override
-    public BlockStateContainer createBlockState() {
+    public boolean isDouble(IBlockState state) {
+        
+        return state.getValue(DOUBLE);
+    }
 
+    @Override
+    public BlockStateContainer createBlockState() {
+    
         return new BlockStateContainer(this, DOUBLE);
     }
-    
+
     @Override
     public int getMetaFromState(IBlockState state) {
         
         return state.getValue(DOUBLE) ? 1 : 0;
     }
-    
+
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
         return this.getDefaultState().withProperty(DOUBLE, meta > 0);
+    }
+
+    @SideOnly(Side.CLIENT) @Override
+    public void addInformation(ItemStack stack, EntityPlayer player,
+            List<String> tooltip, boolean advanced) {
+        
+        if (GeoConfig.buildTooltips) {
+            
+            tooltip.add(I18n.format(Lang.BUILDTIP_DOUBLING));                
+            tooltip.add(I18n.format(EBlockWeight.MEDIUM.requires()));
+            tooltip.add(I18n.format(Lang.BUILDTIP_SLAB));
+        }
+    }
+    
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world,
+            BlockPos pos) {
+
+        return state.getValue(DOUBLE) ? FULL_BLOCK_AABB : EIGHT;
     }
 }
