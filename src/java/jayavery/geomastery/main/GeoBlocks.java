@@ -38,6 +38,7 @@ import jayavery.geomastery.blocks.BlockSolid;
 import jayavery.geomastery.blocks.BlockStairsComplex;
 import jayavery.geomastery.blocks.BlockStairsStraight;
 import jayavery.geomastery.blocks.BlockTar;
+import jayavery.geomastery.blocks.BlockTrunk;
 import jayavery.geomastery.blocks.BlockVault;
 import jayavery.geomastery.blocks.BlockVaultDoubling;
 import jayavery.geomastery.blocks.BlockWall;
@@ -96,6 +97,9 @@ public class GeoBlocks {
     // Fluids
     public static Fluid tarFluid = new Fluid("fluid_tar", new ResourceLocation(Geomastery.MODID, "blocks/liquids/tar_still"), new ResourceLocation(Geomastery.MODID, "blocks/liquids/tar_flowing")).setViscosity(10000);
     public static BlockFluidBase tar;
+    
+    // TEST
+    public static final BlockTrunk TRUNK = makeItemBuilding(new BlockTrunk());
     
     // Beds
     public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf());

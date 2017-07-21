@@ -34,7 +34,9 @@ import jayavery.geomastery.render.projectile.RenderArrowFactory;
 import jayavery.geomastery.render.projectile.RenderSpearFactory;
 import jayavery.geomastery.render.tileentity.RenderBox;
 import jayavery.geomastery.render.tileentity.RenderChest;
+import jayavery.geomastery.render.tileentity.RenderTrunk;
 import jayavery.geomastery.tileentities.TEStorage;
+import jayavery.geomastery.tileentities.TETrunk;
 import jayavery.geomastery.utilities.IProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
@@ -183,6 +185,9 @@ public class ClientProxy implements IProxy {
         Geomastery.LOG.info("Registering tileentity renderers");
         ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Box.class, new RenderBox());
         ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Chest.class, new RenderChest());
+        
+        // TEST
+        ClientRegistry.bindTileEntitySpecialRenderer(TETrunk.class, new RenderTrunk());
         
         Geomastery.LOG.info("Registering tar state mapper and model loader");
         BlockFluidBase tarBlock = GeoBlocks.tar;

@@ -32,6 +32,8 @@ import jayavery.geomastery.packets.CPacketFurnace;
 import jayavery.geomastery.packets.CPacketHunger;
 import jayavery.geomastery.packets.CPacketLid;
 import jayavery.geomastery.packets.CPacketTemp;
+import jayavery.geomastery.packets.CPacketTree;
+import jayavery.geomastery.packets.CPacketTrunk;
 import jayavery.geomastery.packets.SPacketContainer;
 import jayavery.geomastery.tileentities.TEBeam;
 import jayavery.geomastery.tileentities.TEBed;
@@ -51,6 +53,7 @@ import jayavery.geomastery.tileentities.TEFurnaceClay;
 import jayavery.geomastery.tileentities.TEFurnaceSingle;
 import jayavery.geomastery.tileentities.TEFurnaceStone;
 import jayavery.geomastery.tileentities.TEStorage;
+import jayavery.geomastery.tileentities.TETrunk;
 import jayavery.geomastery.utilities.EBlockWeight;
 import jayavery.geomastery.utilities.IProxy;
 import net.minecraft.block.Block;
@@ -183,7 +186,11 @@ public class Geomastery {
         cPacket(CPacketLid.Handler.class, CPacketLid.class);
         cPacket(CPacketCompost.Handler.class, CPacketCompost.class);
         cPacket(CPacketDebug.Handler.class, CPacketDebug.class);
-
+        
+        //TEST
+        cPacket(CPacketTrunk.Handler.class, CPacketTrunk.class);
+        cPacket(CPacketTree.Handler.class, CPacketTree.class);
+        
         if (Loader.isModLoaded("jei")) {
             
             LOG.info("Registering JEI packets");
@@ -212,6 +219,9 @@ public class Geomastery {
         tileentity(TECarcass.class, "carcass");
         tileentity(TECompostheap.class, "compost");
         tileentity(TECrop.class, "crop");
+        
+        // TEST
+        tileentity(TETrunk.class, "trunk");
     }
 
     @EventHandler

@@ -10,7 +10,7 @@ import jayavery.geomastery.blocks.BlockSolid;
 import jayavery.geomastery.items.ItemAxe;
 import jayavery.geomastery.items.ItemPickaxe;
 import jayavery.geomastery.items.ItemSimple;
-import jayavery.geomastery.utilities.TreeFallUtils;
+import jayavery.geomastery.tileentities.TETrunk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFalling;
@@ -23,7 +23,6 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -58,7 +57,7 @@ public class BlockEvents {
 
             world.setBlockToAir(sourcePos);
         }
-
+        
         // Apply gravity
         for (EnumFacing facing : EnumFacing.VALUES) {
         
@@ -67,14 +66,15 @@ public class BlockEvents {
             Block block = state.getBlock();
             
             // Check for falling trees
-            if (block instanceof BlockLog) {
+            // TEST
+            /*if (block instanceof BlockLog) {
                 
                 TreeFallUtils.checkTreeFall(world, pos);
                 
             } else if (block instanceof BlockLeaves) {
                 
                 TreeFallUtils.checkLeavesFall(world, pos);
-            }
+            }*/
             
             // Check for vertical-falling single blocks
             
@@ -367,10 +367,13 @@ public class BlockEvents {
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         
-        if (block instanceof BlockLog) {
+        if (block instanceof BlockLog && world.getBlockState(pos.down()).getBlock() == GeoBlocks.TRUNK) {
 
-            TreeFallUtils.fellTree(world, pos, event.getPlayer()
-                    .getHorizontalFacing().rotateY());
+            // TEST TreeFallUtils.fellTree(world, pos, event.getPlayer()
+                  //  .getHorizontalFacing().rotateY());
+            System.out.println("falling event");
+            event.setCanceled(true);
+            ((TETrunk) world.getTileEntity(pos.down())).fall(event.getPlayer().getHorizontalFacing().rotateY());
         }
     }    
 }

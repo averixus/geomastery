@@ -8,7 +8,7 @@ package jayavery.geomastery.packets;
 
 import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TEStorage;
+import jayavery.geomastery.tileentities.TETrunk;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,12 +17,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /** Packet for server->client box lid angle syncing. */
-public class CPacketLid implements IMessage {
+public class CPacketTrunk implements IMessage {
     
     /** Angle of the lid. */
-    protected float lidAngle;
+    protected float angle;
     /** Angle of the lid last tick. */
-    protected float prevLidAngle;
+    protected float prevAngle;
     /** X co-ordinate. */
     protected int x;
     /** Y co-ordinate. */
@@ -30,12 +30,12 @@ public class CPacketLid implements IMessage {
     /** Z co-ordinate. */
     protected int z;
     
-    public CPacketLid() {}
+    public CPacketTrunk() {}
     
-    public CPacketLid(float lidAngle, float prevLidAngle, BlockPos pos) {
+    public CPacketTrunk(float angle, float prevAngle, BlockPos pos) {
         
-        this.lidAngle = lidAngle;
-        this.prevLidAngle = prevLidAngle;
+        this.angle = angle;
+        this.prevAngle = prevAngle;
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
@@ -44,8 +44,8 @@ public class CPacketLid implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         
-        this.lidAngle = buf.readFloat();
-        this.prevLidAngle = buf.readFloat();
+        this.angle = buf.readFloat();
+        this.prevAngle = buf.readFloat();
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();
@@ -54,32 +54,32 @@ public class CPacketLid implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
         
-        buf.writeFloat(this.lidAngle);
-        buf.writeFloat(this.prevLidAngle);
+        buf.writeFloat(this.angle);
+        buf.writeFloat(this.prevAngle);
         buf.writeInt(this.x);
         buf.writeInt(this.y);
         buf.writeInt(this.z);
     }
     
-    public static class Handler implements IMessageHandler<CPacketLid, IMessage> {
+    public static class Handler implements IMessageHandler<CPacketTrunk, IMessage> {
         
         @Override
-        public IMessage onMessage(CPacketLid message, MessageContext ctx) {
+        public IMessage onMessage(CPacketTrunk message, MessageContext ctx) {
             
             Geomastery.proxy.addClientRunnable(() -> processMessage(message));
             return null;
         }
         
-        public void processMessage(CPacketLid message) {
+        public void processMessage(CPacketTrunk message) {
             
             World world = Geomastery.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new
                     BlockPos(message.x, message.y, message.z));
             
-            if (tileEntity instanceof TEStorage) {
+            if (tileEntity instanceof TETrunk) {
                 
-                TEStorage tileBox = (TEStorage) tileEntity;
-                tileBox.setAngles(message.lidAngle, message.prevLidAngle);
+                TETrunk tileTrunk = (TETrunk) tileEntity;
+                tileTrunk.setAngles(message.angle, message.prevAngle);
             }
         }
     }
