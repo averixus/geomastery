@@ -2,7 +2,7 @@
   "modid": "geomastery",
   "name": "Geomastery",
   "description": "A mod for Minecraft survival mode which makes the early game harder and slower, while improving on the simulation of real-world ancient technology development.",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "mcversion": "1.11.2-13.20.1.2386",
   "logoFile": "assets/geomastery/textures/logo.jpg",
   "url": "https://minecraft.curseforge.com/projects/geomastery",
