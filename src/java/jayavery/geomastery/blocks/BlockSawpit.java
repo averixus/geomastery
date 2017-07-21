@@ -49,8 +49,7 @@ public class BlockSawpit extends BlockContainerMulti<EPartSawpit> {
         
             tooltip.add(I18n.format(Lang.BUILDTIP_MULTIPART));
             tooltip.add(I18n.format(Lang.BUILDTIP_SAWPIT));
-            tooltip.add(I18n.format(this.getWeight(this
-                    .getDefaultState()).supports()));
+            tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
         }
     }
     

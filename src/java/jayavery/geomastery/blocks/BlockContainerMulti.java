@@ -6,13 +6,13 @@
  ******************************************************************************/
 package jayavery.geomastery.blocks;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import com.google.common.collect.Lists;
 import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.GuiHandler.GuiList;
+import jayavery.geomastery.tileentities.TECraftingAbstract;
 import jayavery.geomastery.tileentities.TECraftingArmourer;
 import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
 import jayavery.geomastery.tileentities.TECraftingCandlemaker;
@@ -21,8 +21,6 @@ import jayavery.geomastery.tileentities.TECraftingForge;
 import jayavery.geomastery.tileentities.TECraftingForge.EPartForge;
 import jayavery.geomastery.tileentities.TECraftingMason;
 import jayavery.geomastery.tileentities.TECraftingMason.EPartMason;
-import jayavery.geomastery.tileentities.TECraftingSawpit;
-import jayavery.geomastery.tileentities.TECraftingSawpit.EPartSawpit;
 import jayavery.geomastery.tileentities.TECraftingTextiles;
 import jayavery.geomastery.tileentities.TECraftingTextiles.EPartTextiles;
 import jayavery.geomastery.tileentities.TECraftingWoodworking;
@@ -37,7 +35,6 @@ import jayavery.geomastery.utilities.EBlockWeight;
 import jayavery.geomastery.utilities.IItemStorage;
 import jayavery.geomastery.utilities.IMultipart;
 import jayavery.geomastery.utilities.Lang;
-import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -79,7 +76,9 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extend
     @Override
     public ItemPlacing.Building createItem(int stackSize) {
         
-        return new ItemPlacing.Building(this, stackSize);
+        ItemPlacing.Building item = new ItemPlacing.Building(this, stackSize);
+        item.setMaxDamage(TECraftingAbstract.MAX_WEATHERING);
+        return item;
     }
     
     // Checking and placement handled by TEs
@@ -88,7 +87,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extend
             EnumFacing placeFacing, ItemStack stack, EntityPlayer player) {
         
         return this.placePart.buildStructure(world,
-                targetPos.offset(targetSide), placeFacing, player);
+                targetPos.offset(targetSide), placeFacing, stack, player);
     }
 
     // Validity logic used by TEs
@@ -142,7 +141,16 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extend
         if (te instanceof TEMultiAbstract<?> &&
                 ((TEMultiAbstract<?>) te).getPart() == this.placePart) {
     
-            result.add(new ItemStack(this.item));
+            if ((te instanceof TECraftingAbstract) &&
+                    ((TECraftingAbstract<?>) te).hasWeathering()) {
+                
+                result.add(new ItemStack(this.item, 1, this.item.getMaxDamage()
+                        - ((TECraftingAbstract<?>) te).getWeathering()));
+                
+            } else {
+            
+                result.add(new ItemStack(this.item));
+            }
         }
         
         if (te instanceof IItemStorage) {
@@ -203,6 +211,7 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extend
             tooltip.add(I18n.format(Lang.BUILDTIP_MULTIPART));
             tooltip.add(I18n.format(EBlockWeight.NONE.requires()));
             tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
+            tooltip.add(I18n.format(Lang.BUILDTIP_WEATHER));
         }
     }
     
@@ -253,6 +262,18 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extend
             
             return PART;
         }
+        
+        @SideOnly(Side.CLIENT) @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.format(Lang.BUILDTIP_MULTIPART));
+                tooltip.add(I18n.format(EBlockWeight.NONE.requires()));
+                tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
+            }
+        }
     }
     
     /** Clay furnace. */
@@ -271,6 +292,18 @@ public abstract class BlockContainerMulti<E extends Enum<E> & IMultipart> extend
         public PropertyEnum<EPartClay> getPartProperty() {
             
             return PART;
+        }
+        
+        @SideOnly(Side.CLIENT) @Override
+        public void addInformation(ItemStack stack, EntityPlayer player,
+                List<String> tooltip, boolean advanced) {
+            
+            if (GeoConfig.buildTooltips) {
+                
+                tooltip.add(I18n.format(Lang.BUILDTIP_MULTIPART));
+                tooltip.add(I18n.format(EBlockWeight.NONE.requires()));
+                tooltip.add(I18n.format(EBlockWeight.NONE.supports()));
+            }
         }
     }
     

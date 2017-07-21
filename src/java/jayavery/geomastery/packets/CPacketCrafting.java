@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-/** Packet for server->client crafting device durability syncing. */
+/** Packet for server->client crafting device weathering syncing. */
 public class CPacketCrafting implements IMessage {
 
     /** Durability of this crafting device. */
@@ -78,7 +78,7 @@ public class CPacketCrafting implements IMessage {
                 
                 TECraftingAbstract<?> tileCrafting =
                         (TECraftingAbstract<?>) tileEntity;
-                tileCrafting.setDurability(message.durability);
+                tileCrafting.setWeathering(message.durability);
             }
         }
     }

@@ -20,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -139,7 +140,7 @@ public class TEFurnaceStone extends TEFurnaceAbstract<EPartStone> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing, EntityPlayer player) {
+                EnumFacing facing, ItemStack stack, EntityPlayer player) {
             
             if (this != BM) {
                 

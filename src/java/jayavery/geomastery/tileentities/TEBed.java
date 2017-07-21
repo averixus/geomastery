@@ -17,7 +17,7 @@ public class TEBed extends TileEntity implements ITickable {
     /** The maximum number of times the player can sleep in this bed. */
     public static final int MAX_USES = 20;
 
-    /** The remaining number of times the player can sleep in this bed before its durability runs out. */
+    /** The remaining number of times the player can sleep in this bed before its weathering runs out. */
     private int usesLeft = MAX_USES;
 
     @Override
@@ -30,32 +30,32 @@ public class TEBed extends TileEntity implements ITickable {
         }
     }
     
-    /** @return The current durability of this bed. */
+    /** @return The current weathering of this bed. */
     public int getUsesLeft() {
 
         return this.usesLeft;
     }
 
-    /** Increments the current durability of this bed. */
+    /** Increments the current weathering of this bed. */
     public void addUse() {
 
         this.usesLeft--;
     }
 
-    /** Sets the current durability of this bed to the given damage. */
+    /** Sets the current weathering of this bed to the given damage. */
     public void setUsesLeft(int usesLeft) {
 
         this.usesLeft = usesLeft;
     }
 
-    /** Checks whether this bed has reached its maximum durability.
+    /** Checks whether this bed has reached its maximum weathering.
      * @return Whether or not the bed has run out of uses. */
     public boolean isBroken() {
 
         return this.usesLeft <= 0;
     }
     
-    /** Checks whether this bed is at its original durability.
+    /** Checks whether this bed is at its original weathering.
      * @return Whether or not the bed is fully durable. */
     public boolean isUndamaged() {
         

@@ -339,7 +339,7 @@ public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Buildin
             super("bed_simple", 2F, 2F);
         }
 
-        // Does not have limited durability
+        // Does not have limited weathering
         @Override
         public void onWakeup(World world, BlockPos pos, TEBed bed) {}
 

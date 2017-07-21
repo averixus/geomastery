@@ -42,15 +42,15 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     protected static final int FLAME_HEIGHT = 13;
     /** Width of progress flame. */
     protected static final int FLAME_WIDTH = 14;
-    /** X-position of crafting durability bar. */
+    /** X-position of crafting weathering bar. */
     protected static final int DURABILITY_X = 9;
-    /** Y-position of crafting durability bar. */
+    /** Y-position of crafting weathering bar. */
     protected static final int DURABILITY_Y = 17;
-    /** X-position of source of crafting durability bar. */
+    /** X-position of source of crafting weathering bar. */
     protected static final int DURABILITY_SOURCE_X = 176;
-    /** Width of crafting durability bar. */
+    /** Width of crafting weathering bar. */
     protected static final int DURABILITY_WIDTH = 5;
-    /** Height of crafting durability bar. */
+    /** Height of crafting weathering bar. */
     protected static final int DURABILITY_HEIGHT = 52;
     
     /** Unlocalised name of this container. */

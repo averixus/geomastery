@@ -24,7 +24,7 @@ public class GuiCrafting extends GuiContainerAbstract {
         super(container, name);
         this.container = container;
         
-        if (this.container.tile.hasDurability()) {
+        if (this.container.tile.hasWeathering()) {
         
             this.texture = new ResourceLocation(Geomastery.MODID,
                     "textures/gui/craftingdurability_" + 
@@ -43,11 +43,11 @@ public class GuiCrafting extends GuiContainerAbstract {
         
         super.drawGuiContainerBackgroundLayer(ticks, mouseX, mouseY);
         
-        if (this.container.tile.hasDurability()) {
+        if (this.container.tile.hasWeathering()) {
             
-            int height = Math.round(((TECraftingAbstract.MAX_DURABILITY -
-                    (float) this.container.tile.getDurability()) /
-                    TECraftingAbstract.MAX_DURABILITY) * DURABILITY_HEIGHT);
+            int height = Math.round(((TECraftingAbstract.MAX_WEATHERING -
+                    (float) this.container.tile.getWeathering()) /
+                    TECraftingAbstract.MAX_WEATHERING) * DURABILITY_HEIGHT);
             this.drawTexturedModalRect(this.guiLeft + DURABILITY_X,
                     this.guiTop + DURABILITY_Y + height, DURABILITY_SOURCE_X,
                     height, DURABILITY_WIDTH, DURABILITY_HEIGHT);

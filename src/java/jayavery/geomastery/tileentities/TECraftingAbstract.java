@@ -17,37 +17,37 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-/** Abstract superclass for crafting devices with weathering durability. */
+/** Abstract superclass for crafting devices with weathering. */
 public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         extends TEMultiAbstract<E> implements ITickable {
     
-    /** Maximum weather durability this crafter has. */
-    public static final int MAX_DURABILITY = 15;
+    /** Maximum weather weathering this crafter has. */
+    public static final int MAX_WEATHERING = 15;
 
-    /** Number of days durability remaining for this block. */
-    protected int durability = MAX_DURABILITY;
+    /** Number of days weathering remaining for this block. */
+    protected int weathering = MAX_WEATHERING;
     /** Whether this block is currently being rained on. */
     protected boolean isRaining;
     
-    /** Sets the durability of this crafter. */
-    public void setDurability(int durability) {
+    /** Sets the weathering of this crafter. */
+    public void setWeathering(int weathering) {
 
-        this.durability = durability;
+        this.weathering = weathering;
     }
     
-    /** @return The durability of this crafter. */
-    public int getDurability() {
+    /** @return The weathering of this crafter. */
+    public int getWeathering() {
         
-        return this.durability;
+        return this.weathering;
     }
     
-    /** @return Whether this crafter has durability for weathering. */
-    public boolean hasDurability() {
+    /** @return Whether this crafter has weathering. */
+    public boolean hasWeathering() {
         
         return true;
     }
     
-    /** Increments durability based on day, weather, and exposure. */
+    /** Increments weathering based on day, conditions, and exposure. */
     @Override
     public void update() {
         
@@ -63,7 +63,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
 
             if (exposure == EExposureLevel.EXPOSED) {
                 
-                this.durability--;
+                this.weathering--;
                 update = true;
             }
         }
@@ -72,11 +72,11 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
             
             if (exposure == EExposureLevel.EXPOSED) {
             
-                this.durability -= 3;
+                this.weathering -= 3;
                 
             } else if (exposure == EExposureLevel.PARTIAL) {
                 
-                this.durability--;
+                this.weathering--;
             }
             
             this.isRaining = true;
@@ -88,7 +88,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
             this.isRaining = false;
         }
 
-        if (this.durability <= 0) {
+        if (this.weathering <= 0) {
 
             this.world.destroyBlock(this.pos, false);
         }
@@ -128,13 +128,13 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
         return result;
     }
     
-    /** Sends an update packet to the client for the durability bar. */
+    /** Sends an update packet to the client for the weathering bar. */
     protected void sendDurabilityPacket() {
         
         if (!this.world.isRemote) {
             
             Geomastery.NETWORK.sendToAll(new
-                    CPacketCrafting(this.durability, this.pos));
+                    CPacketCrafting(this.weathering, this.pos));
         }
     }
     
@@ -142,7 +142,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
         super.writeToNBT(compound);
-        compound.setInteger("durability", this.durability);
+        compound.setInteger("weathering", this.weathering);
         compound.setBoolean("isRaining", this.isRaining);
         return compound;
     }
@@ -151,7 +151,7 @@ public abstract class TECraftingAbstract<E extends Enum<E> & IMultipart>
     public void readFromNBT(NBTTagCompound compound) {
 
         super.readFromNBT(compound);
-        this.durability = compound.getInteger("durability");
+        this.weathering = compound.getInteger("weathering");
         this.isRaining = compound.getBoolean("isRaining");
     }
     

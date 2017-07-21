@@ -365,6 +365,7 @@ geomastery:buildtip.stairs=Support needed: Light or more, or connected to nearby
 geomastery:buildtip.heaping=Support needed: Medium or more, and blocks diagonally below on all sides
 geomastery:buildtip.heapwall=Maximum height of two blocks, with bottom block doubled
 geomastery:buildtip.sawpit=Needs two blocks of space below, and corner blocks of weight Light or more
+geomastery:buildtip.weather=Suffers weathering when exposed
 
 geomastery:buildfail.support=A block underneath cannot support this weight!
 geomastery:buildfail.obstacle=Something is in the way of this structure!

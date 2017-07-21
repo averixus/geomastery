@@ -59,7 +59,7 @@ public enum EPartSingle implements IMultipart {
     // No-op never called
     @Override
     public boolean buildStructure(World world, BlockPos pos,
-            EnumFacing facing, EntityPlayer player) {
+            EnumFacing facing, ItemStack stack, EntityPlayer player) {
         
         return false;
     }

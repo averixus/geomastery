@@ -115,14 +115,14 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
         return tag;
     }
     
-    // Makes this item always show a durability bar.
+    // Makes this item always show a weathering bar.
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
         
         return true;
     }
     
-    // Makes this item show a full durability bar unless config otherwise. 
+    // Makes this item show a full weathering bar unless config otherwise. 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         
@@ -141,7 +141,7 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
         return 0;
     }
     
-    // Makes this item's durability bar colour represent its decay. 
+    // Makes this item's weathering bar colour represent its decay. 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         

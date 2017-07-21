@@ -13,13 +13,13 @@ import jayavery.geomastery.blocks.BlockBuildingAbstract;
 import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
 import jayavery.geomastery.tileentities.TECraftingTextiles.EPartTextiles;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -97,7 +97,7 @@ public class TECraftingTextiles extends TECraftingAbstract<EPartTextiles> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing, EntityPlayer player) {
+                EnumFacing facing, ItemStack stack, EntityPlayer player) {
             
             if (this != FRONT) {
                 
@@ -135,8 +135,13 @@ public class TECraftingTextiles extends TECraftingAbstract<EPartTextiles> {
             
             // Set up tileentities
             
-            map.entrySet().forEach((e) -> ((TECraftingTextiles) world
-                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            map.entrySet().forEach((e) -> {
+                
+                TECraftingTextiles te = (TECraftingTextiles) world
+                        .getTileEntity(e.getKey());
+                te.setWeathering(stack.getMaxDamage() - stack.getItemDamage());
+                te.setState(facing, e.getValue());
+            });
             
             return true;
         }

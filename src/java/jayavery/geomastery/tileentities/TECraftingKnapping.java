@@ -15,7 +15,7 @@ public class TECraftingKnapping extends TECraftingAbstract<EPartSingle> {
     public void update() {}
     
     @Override
-    public boolean hasDurability() {
+    public boolean hasWeathering() {
         
         return false;
     }

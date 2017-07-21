@@ -19,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -103,7 +104,7 @@ public class TECraftingCandlemaker extends
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing, EntityPlayer player) {
+                EnumFacing facing, ItemStack stack, EntityPlayer player) {
 
             if (this != FRONT) {
                 
@@ -141,8 +142,13 @@ public class TECraftingCandlemaker extends
             
             // Set up tileentities
             
-            map.entrySet().forEach((e) -> ((TECraftingCandlemaker) world
-                    .getTileEntity(e.getKey())).setState(facing, e.getValue()));
+            map.entrySet().forEach((e) -> {
+                
+                TECraftingCandlemaker te = (TECraftingCandlemaker) world
+                        .getTileEntity(e.getKey());
+                te.setWeathering(stack.getMaxDamage() - stack.getItemDamage());
+                te.setState(facing, e.getValue());
+            });
             
             return true;
         }

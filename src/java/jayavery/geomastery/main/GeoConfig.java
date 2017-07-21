@@ -20,7 +20,7 @@ public class GeoConfig {
     @LangKey(Lang.CONFIG + "foodTooltips")
     public static boolean foodTooltips = true;
 
-    @Comment("Show the item's decay level with the filled proportion of durability bar as well as colour")
+    @Comment("Show the item's decay level with the filled proportion of weathering bar as well as colour")
     @LangKey(Lang.CONFIG + "foodDurability")
     public static boolean foodDurability = false;
 

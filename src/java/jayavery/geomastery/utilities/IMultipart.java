@@ -30,5 +30,5 @@ public interface IMultipart extends IStringSerializable {
     /** Attempts to build the structure starting from this part.
      * @return Whether the structure was successfully built. */
     public boolean buildStructure(World world, BlockPos pos,
-            EnumFacing facing, EntityPlayer player);
+            EnumFacing facing, ItemStack stack, EntityPlayer player);
 }

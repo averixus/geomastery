@@ -64,6 +64,7 @@ public class Lang {
     public static final String BUILDTIP_HEAPING = Geomastery.MODID + ":buildtip.heaping";
     public static final String BUILDTIP_HEAPWALL = Geomastery.MODID + ":buildtip.heapwall";
     public static final String BUILDTIP_SAWPIT = Geomastery.MODID + ":buildtip.sawpit";
+    public static final String BUILDTIP_WEATHER = Geomastery.MODID + ":buildtip.weather";
     
     public static final String BUILDFAIL_OBSTACLE = Geomastery.MODID + ":buildfail.obstacle";
     public static final String BUILDFAIL_SUPPORT = Geomastery.MODID + ":buildfail.support";

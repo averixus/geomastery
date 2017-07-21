@@ -14,13 +14,13 @@ import jayavery.geomastery.blocks.BlockContainerMulti;
 import jayavery.geomastery.blocks.BlockNew;
 import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.main.GeoRecipes;
-import jayavery.geomastery.tileentities.TECraftingArmourer.EPartArmourer;
 import jayavery.geomastery.tileentities.TEFurnaceClay.EPartClay;
 import jayavery.geomastery.utilities.IMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -124,7 +124,7 @@ public class TEFurnaceClay extends TEFurnaceAbstract<EPartClay> {
         
         @Override
         public boolean buildStructure(World world, BlockPos pos,
-                EnumFacing facing, EntityPlayer player) {
+                EnumFacing facing, ItemStack stack, EntityPlayer player) {
             
             if (this != BL) {
                 

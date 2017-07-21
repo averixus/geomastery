@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 /** Capability to make ItemStacks decay over time. */
 public interface ICapDecay extends INBTSerializable<NBTTagCompound> {
 
-    /** Gets the effective damage level for rendering the durability bar.
+    /** Gets the effective damage level for rendering the weathering bar.
      * @return A float between 0 (full freshness) and 1 (rot). */
     public float getFraction(World world);
     /** @return The current age in ticks. */
