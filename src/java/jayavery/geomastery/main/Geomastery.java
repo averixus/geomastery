@@ -32,8 +32,8 @@ import jayavery.geomastery.packets.CPacketFurnace;
 import jayavery.geomastery.packets.CPacketHunger;
 import jayavery.geomastery.packets.CPacketLid;
 import jayavery.geomastery.packets.CPacketTemp;
-import jayavery.geomastery.packets.CPacketTree;
-import jayavery.geomastery.packets.CPacketTrunk;
+import jayavery.geomastery.packets.CPacketTrunkBlocks;
+import jayavery.geomastery.packets.CPacketTrunkAngle;
 import jayavery.geomastery.packets.SPacketContainer;
 import jayavery.geomastery.tileentities.TEBeam;
 import jayavery.geomastery.tileentities.TEBed;
@@ -188,8 +188,8 @@ public class Geomastery {
         cPacket(CPacketDebug.Handler.class, CPacketDebug.class);
         
         //TEST
-        cPacket(CPacketTrunk.Handler.class, CPacketTrunk.class);
-        cPacket(CPacketTree.Handler.class, CPacketTree.class);
+        cPacket(CPacketTrunkAngle.Handler.class, CPacketTrunkAngle.class);
+        cPacket(CPacketTrunkBlocks.Handler.class, CPacketTrunkBlocks.class);
         
         if (Loader.isModLoaded("jei")) {
             

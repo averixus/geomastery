@@ -40,7 +40,7 @@ public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();
         BlockPos pos = te.getPos();
-        float angle = te.prevAngle + (te.angle - te.prevAngle) * tick;
+        float angle = (float) (te.prevAngle + (te.angle - te.prevAngle) * Math.pow(1.1, tick));
 
         
         if (fallDir == EnumFacing.NORTH) {

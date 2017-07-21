@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 // TEST
 /** Packet for server->client box lid angle syncing. */
-public class CPacketTree implements IMessage {
+public class CPacketTrunkBlocks implements IMessage {
     
     /** X co-ordinate. */
     protected int x;
@@ -34,9 +34,9 @@ public class CPacketTree implements IMessage {
     /** Blocks map. */
     protected Map<BlockPos, IBlockState> blocks;
     
-    public CPacketTree() {}
+    public CPacketTrunkBlocks() {}
     
-    public CPacketTree(BlockPos pos, Map<BlockPos, IBlockState> blocks) {
+    public CPacketTrunkBlocks(BlockPos pos, Map<BlockPos, IBlockState> blocks) {
         
         this.blocks = blocks;
         this.x = pos.getX();
@@ -86,16 +86,16 @@ public class CPacketTree implements IMessage {
         }
     }
     
-    public static class Handler implements IMessageHandler<CPacketTree, IMessage> {
+    public static class Handler implements IMessageHandler<CPacketTrunkBlocks, IMessage> {
         
         @Override
-        public IMessage onMessage(CPacketTree message, MessageContext ctx) {
+        public IMessage onMessage(CPacketTrunkBlocks message, MessageContext ctx) {
             
             Geomastery.proxy.addClientRunnable(() -> processMessage(message));
             return null;
         }
         
-        public void processMessage(CPacketTree message) {
+        public void processMessage(CPacketTrunkBlocks message) {
             
             World world = Geomastery.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /** Packet for server->client box lid angle syncing. */
-public class CPacketTrunk implements IMessage {
+public class CPacketTrunkAngle implements IMessage {
     
     /** Angle of the lid. */
     protected float angle;
@@ -30,9 +30,9 @@ public class CPacketTrunk implements IMessage {
     /** Z co-ordinate. */
     protected int z;
     
-    public CPacketTrunk() {}
+    public CPacketTrunkAngle() {}
     
-    public CPacketTrunk(float angle, float prevAngle, BlockPos pos) {
+    public CPacketTrunkAngle(float angle, float prevAngle, BlockPos pos) {
         
         this.angle = angle;
         this.prevAngle = prevAngle;
@@ -61,16 +61,16 @@ public class CPacketTrunk implements IMessage {
         buf.writeInt(this.z);
     }
     
-    public static class Handler implements IMessageHandler<CPacketTrunk, IMessage> {
+    public static class Handler implements IMessageHandler<CPacketTrunkAngle, IMessage> {
         
         @Override
-        public IMessage onMessage(CPacketTrunk message, MessageContext ctx) {
+        public IMessage onMessage(CPacketTrunkAngle message, MessageContext ctx) {
             
             Geomastery.proxy.addClientRunnable(() -> processMessage(message));
             return null;
         }
         
-        public void processMessage(CPacketTrunk message) {
+        public void processMessage(CPacketTrunkAngle message) {
             
             World world = Geomastery.proxy.getClientWorld();
             TileEntity tileEntity = world.getTileEntity(new
