@@ -39,6 +39,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -116,6 +117,25 @@ public class PlayerEvents {
             ReflectionHelper.setPrivateValue(EntityPlayer.class, player,
                     new FoodStatsWrapper(player),
                     "foodStats", "field_71100_bB");
+        }
+    }
+    
+    /** Drops excess items in case of using vanilla containers. */
+    @SubscribeEvent
+    public void containerClose(PlayerContainerEvent.Close event) {
+        
+        EntityPlayer player = event.getEntityPlayer();
+        int size = player.getCapability(GeoCaps.CAP_PLAYER, null)
+                .getInventorySize();
+        
+        for (int i = size; i < player.inventory.getSizeInventory(); i++) {
+            
+            ItemStack stack = player.inventory.removeStackFromSlot(i);
+            
+            if (!stack.isEmpty()) {
+                
+                player.dropItem(stack, true);
+            }
         }
     }
     
