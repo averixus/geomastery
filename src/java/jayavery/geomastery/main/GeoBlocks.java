@@ -70,7 +70,7 @@ public class GeoBlocks {
     public static final Set<Block> BLOCKS = Sets.newHashSet();
     
     /** Items which are restricted to the offhand slot. */
-    public static final Set<Item> OFFHAND_ONLY = Sets.newHashSet();
+    private static final Set<Item> OFFHAND_ONLY = Sets.newHashSet();
     
     /** Leaves which need to set transparency. */
     public static final Set<BlockHarvestableLeaves> LEAVES = Sets.newHashSet();
@@ -98,10 +98,10 @@ public class GeoBlocks {
     public static BlockFluidBase tar;
     
     // Beds
-    public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf());
-    public static final BlockBed BED_COTTON = makeItemBuilding(new BlockBed.Cotton());
-    public static final BlockBed BED_WOOL =   makeItemBuilding(new BlockBed.Wool());
-    public static final BlockBed BED_SIMPLE = makeItemBuilding(new BlockBed.Simple());
+    public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf(), true);
+    public static final BlockBed BED_COTTON = makeItemBuilding(new BlockBed.Cotton(), true);
+    public static final BlockBed BED_WOOL =   makeItemBuilding(new BlockBed.Wool(), true);
+    public static final BlockBed BED_SIMPLE = makeItemBuilding(new BlockBed.Simple(), true);
     
     // Antler
     public static final Block ANTLER = makeItemless(new BlockAntler());
@@ -111,21 +111,21 @@ public class GeoBlocks {
     
     // Carcasses
     public static final BlockCarcass CARCASS_CHICKEN =    makeItemBuilding(new BlockCarcass.Chicken());
-    public static final BlockCarcass CARCASS_COWPART =    makeItemBuilding(new BlockCarcass.Cowpart());
-    public static final BlockCarcass CARCASS_PIG =        makeItemBuilding(new BlockCarcass.Pig());
-    public static final BlockCarcass CARCASS_SHEEP =      makeItemBuilding(new BlockCarcass.Sheep());
+    public static final BlockCarcass CARCASS_COWPART =    makeItemBuilding(new BlockCarcass.Cowpart(), true);
+    public static final BlockCarcass CARCASS_PIG =        makeItemBuilding(new BlockCarcass.Pig(), true);
+    public static final BlockCarcass CARCASS_SHEEP =      makeItemBuilding(new BlockCarcass.Sheep(), true);
     public static final BlockCarcass CARCASS_RABBIT =     makeItemBuilding(new BlockCarcass.Rabbit());
 
     // Multiblock complex devices
-    public static final BlockContainerMulti.Candlemaker CRAFTING_CANDLEMAKER =      makeItemBuilding(new BlockContainerMulti.Candlemaker());
-    public static final BlockContainerMulti.Forge CRAFTING_FORGE =                  makeItemBuilding(new BlockContainerMulti.Forge());
-    public static final BlockContainerMulti.Mason CRAFTING_MASON =                  makeItemBuilding(new BlockContainerMulti.Mason());
-    public static final BlockContainerMulti.Textiles CRAFTING_TEXTILES =            makeItemBuilding(new BlockContainerMulti.Textiles());
-    public static final BlockContainerMulti.Woodworking CRAFTING_WOODWORKING =      makeItemBuilding(new BlockContainerMulti.Woodworking());
-    public static final BlockContainerMulti.Armourer CRAFTING_ARMOURER =            makeItemBuilding(new BlockContainerMulti.Armourer());
-    public static final BlockSawpit CRAFTING_SAWPIT =                               makeItemBuilding(new BlockSawpit());
-    public static final BlockContainerMulti.Clay FURNACE_CLAY =                     makeItemBuilding(new BlockContainerMulti.Clay());
-    public static final BlockContainerMulti.Stone FURNACE_STONE =                   makeItemBuilding(new BlockContainerMulti.Stone());
+    public static final BlockContainerMulti.Candlemaker CRAFTING_CANDLEMAKER =      makeItemBuilding(new BlockContainerMulti.Candlemaker(), true);
+    public static final BlockContainerMulti.Forge CRAFTING_FORGE =                  makeItemBuilding(new BlockContainerMulti.Forge(), true);
+    public static final BlockContainerMulti.Mason CRAFTING_MASON =                  makeItemBuilding(new BlockContainerMulti.Mason(), true);
+    public static final BlockContainerMulti.Textiles CRAFTING_TEXTILES =            makeItemBuilding(new BlockContainerMulti.Textiles(), true);
+    public static final BlockContainerMulti.Woodworking CRAFTING_WOODWORKING =      makeItemBuilding(new BlockContainerMulti.Woodworking(), true);
+    public static final BlockContainerMulti.Armourer CRAFTING_ARMOURER =            makeItemBuilding(new BlockContainerMulti.Armourer(), true);
+    public static final BlockSawpit CRAFTING_SAWPIT =                               makeItemBuilding(new BlockSawpit(), true);
+    public static final BlockContainerMulti.Clay FURNACE_CLAY =                     makeItemBuilding(new BlockContainerMulti.Clay(), true);
+    public static final BlockContainerMulti.Stone FURNACE_STONE =                   makeItemBuilding(new BlockContainerMulti.Stone(), true);
 
     // Single complex blocks
     public static final BlockBuildingAbstract<?> CRAFTING_KNAPPING =  makeItemBuilding(new BlockContainerSingle.Knapping());
@@ -236,8 +236,8 @@ public class GeoBlocks {
     public static final BlockVault VAULT_FRAME =        makeItemBuilding(new BlockVault("vault_frame", BlockMaterial.WOOD_FURNITURE, EBlockWeight.LIGHT, 6));
         
     // Doors
-    public static final BlockDoor DOOR_POLE = makeItemBuilding(new BlockDoor("door_pole"));
-    public static final BlockDoor DOOR_WOOD = makeItemBuilding(new BlockDoor("door_wood"));
+    public static final BlockDoor DOOR_POLE = makeItemBuilding(new BlockDoor("door_pole"), true);
+    public static final BlockDoor DOOR_WOOD = makeItemBuilding(new BlockDoor("door_wood"), true);
     
     // Window
     public static final BlockBuildingAbstract<?> WINDOW = makeItemBuilding(new BlockWindow());
@@ -246,8 +246,8 @@ public class GeoBlocks {
     public static final BlockLadder LADDER = makeItemBuilding(new BlockLadder());
     
     // Beams
-    public static final BlockBeam BEAM_THIN =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8), DELAYED_BAKE);
-    public static final BlockBeam BEAM_THICK = makeItemBuilding(new BlockBeam("beam_thin", 2, 4), DELAYED_BAKE);
+    public static final BlockBeam BEAM_THIN =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8), true, DELAYED_BAKE);
+    public static final BlockBeam BEAM_THICK = makeItemBuilding(new BlockBeam("beam_thin", 2, 4), true, DELAYED_BAKE);
         
     // Slabs
     public static final BlockSlab SLAB_STONE = makeItemBuilding(new BlockSlab("slab_stone"));
@@ -291,6 +291,18 @@ public class GeoBlocks {
                 .setHarvestLevel(EToolType.SICKLE.name(), 1);
     }
 
+    /** Makes this item offhand only. */
+    public static void addOffhandOnly(Item item) {
+        
+        OFFHAND_ONLY.add(item);
+    }
+    
+    /** @return Whether this item is offhand only. */
+    public static boolean isOffhandOnly(Item item) {
+        
+        return GeoConfig.inventory && OFFHAND_ONLY.contains(item);
+    }
+    
     /** Creates an ItemBlock, adds to maps and sets as needed. */ 
     private static <B extends Block> B makeItemBlock(B block,
             int stackSize, boolean isOffhandOnly, Set<? super B>... sets) {

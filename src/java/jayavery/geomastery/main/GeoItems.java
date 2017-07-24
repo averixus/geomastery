@@ -371,7 +371,7 @@ public class GeoItems {
         
         if (isOffhandOnly) {
             
-            GeoBlocks.OFFHAND_ONLY.add(item);
+            GeoBlocks.addOffhandOnly(item);
         }
 
         ITEMS.add(item);

@@ -9,6 +9,8 @@ package jayavery.geomastery.items;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** Custom shield item. */
 public class ItemShield extends net.minecraft.item.ItemShield {
@@ -21,7 +23,7 @@ public class ItemShield extends net.minecraft.item.ItemShield {
     }
     
     // Bypasses vanilla shield naming
-    @Override
+    @SideOnly(Side.CLIENT) @Override
     public String getItemStackDisplayName(ItemStack stack) {
         
         return I18n.format(this.getUnlocalizedName() + ".name").trim();

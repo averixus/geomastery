@@ -129,9 +129,10 @@ public class PlayerEvents {
         int size = player.getCapability(GeoCaps.CAP_PLAYER, null)
                 .getInventorySize();
         
-        for (int i = size; i < player.inventory.getSizeInventory(); i++) {
+        for (int i = size; i < player.inventory.mainInventory.size(); i++) {
             
-            ItemStack stack = player.inventory.removeStackFromSlot(i);
+            ItemStack stack = player.inventory.mainInventory.get(i);
+            player.inventory.mainInventory.set(i, ItemStack.EMPTY);
             
             if (!stack.isEmpty()) {
                 

@@ -206,7 +206,7 @@ public class ContainerInventory extends ContainerAbstract {
             stack = this.addToOffhand(stack);
         }
         
-        if (GeoBlocks.OFFHAND_ONLY.contains(stack.getItem())) {
+        if (GeoBlocks.isOffhandOnly(stack.getItem())) {
             
             return stack;
         }
@@ -275,7 +275,7 @@ public class ContainerInventory extends ContainerAbstract {
         int total = inSlot.getCount() + stack.getCount();
         
         if ((inSlot.isEmpty() &&
-                GeoBlocks.OFFHAND_ONLY.contains(stack.getItem())) ||
+                GeoBlocks.isOffhandOnly(stack.getItem())) ||
                 (ItemStack.areItemsEqual(stack, inSlot) &&
                 stack.areCapsCompatible(inSlot))) {
             
@@ -460,13 +460,13 @@ public class ContainerInventory extends ContainerAbstract {
             
             boolean fail = false;
             
-            if (GeoBlocks.OFFHAND_ONLY.contains(slotItem) &&
+            if (GeoBlocks.isOffhandOnly(slotItem) &&
                     !this.mergeItemStack(slotStack, OFFHAND_I,
                     OFFHAND_I + 1, false)) {
                 
                 fail = true;
                 
-            } else if (!GeoBlocks.OFFHAND_ONLY.contains(slotItem) &&
+            } else if (!GeoBlocks.isOffhandOnly(slotItem) &&
                     !this.mergeItemStack(slotStack, this.hotStart,
                     this.invEnd + 1, false)) {
 

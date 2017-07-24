@@ -30,7 +30,7 @@ public class SlotStorage extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         
-         return !GeoBlocks.OFFHAND_ONLY.contains(stack.getItem());
+         return !GeoBlocks.isOffhandOnly(stack.getItem());
     }
     
     @Override

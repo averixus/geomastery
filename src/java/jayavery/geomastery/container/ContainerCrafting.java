@@ -178,7 +178,7 @@ public abstract class ContainerCrafting extends ContainerAbstract {
 
             if (index == this.outputI) {
 
-                if (!GeoBlocks.OFFHAND_ONLY.contains(slotStack) &&
+                if (!GeoBlocks.isOffhandOnly(slotStack.getItem()) &&
                         !this.mergeItemStack(slotStack, HOT_START,
                         this.invEnd + 1, false)) {
 

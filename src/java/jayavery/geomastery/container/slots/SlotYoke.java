@@ -19,8 +19,8 @@ import net.minecraft.item.ItemStack;
 /** Container slot for yoke. */
 public class SlotYoke extends Slot {
     
-    /** The player capability of this slot. */
-    private final ICapPlayer capability;
+    /** The player playerCap of this slot. */
+    private final ICapPlayer playerCap;
     /** The player who owns this slot. */
     private final EntityPlayer player;
     
@@ -28,7 +28,7 @@ public class SlotYoke extends Slot {
         
         super(null, 0, x, y);
         this.player = player;
-        this.capability = player.getCapability(GeoCaps.CAP_PLAYER, null);
+        this.playerCap = player.getCapability(GeoCaps.CAP_PLAYER, null);
         this.backgroundName = Geomastery.MODID + ":gui/yoke_slot";
     }
     
@@ -47,13 +47,13 @@ public class SlotYoke extends Slot {
     @Override
     public ItemStack getStack() {
         
-        return this.capability.getYoke();
+        return this.playerCap.getYoke();
     }
     
     @Override
     public void putStack(ItemStack stack) {
         
-        this.capability.putYoke(stack);
+        this.playerCap.putYoke(stack);
         this.onSlotChanged();
     }
     
@@ -73,7 +73,7 @@ public class SlotYoke extends Slot {
     @Override
     public ItemStack decrStackSize(int amount) {
         
-        return this.capability.getYoke().splitStack(amount);
+        return this.playerCap.getYoke().splitStack(amount);
     }
     
     @Override

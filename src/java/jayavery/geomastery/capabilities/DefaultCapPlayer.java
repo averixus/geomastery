@@ -118,16 +118,25 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public int getInventoryRows() {
         
-        int rows = 0;
-        rows = this.backpack.getItem() == GeoItems.BACKPACK ? rows + 1 : rows;
-        rows = this.yoke.getItem() == GeoItems.YOKE ? rows + 2 : rows;
-        return rows;
+        if (GeoConfig.inventory) {
+          
+            int rows = 0;
+            rows = this.backpack.getItem() == GeoItems.BACKPACK ?
+                    rows + 1 : rows;
+            rows = this.yoke.getItem() == GeoItems.YOKE ? rows + 2 : rows;
+            return rows;
+        
+        } else {
+            
+            return 3;
+        }
     }
     
     @Override
     public int getInventorySize() {
 
-        return ROW_LENGTH + (ROW_LENGTH * this.getInventoryRows());
+        return !GeoConfig.inventory ? 36 :
+            ROW_LENGTH + (ROW_LENGTH * this.getInventoryRows());
     }
     
     @Override
@@ -173,7 +182,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public boolean canSprint() {
         
-        return !GeoBlocks.OFFHAND_ONLY.contains(this.player.getHeldItemOffhand()
+        return !GeoBlocks.isOffhandOnly(this.player.getHeldItemOffhand()
                 .getItem()) && this.yoke.getItem() != GeoItems.YOKE;
     }
     
@@ -565,7 +574,7 @@ public class DefaultCapPlayer implements ICapPlayer {
             }
         }
         
-        if (GeoBlocks.OFFHAND_ONLY.contains(this.player
+        if (GeoBlocks.isOffhandOnly(this.player
                 .getHeldItemOffhand().getItem())) {
 
             speed -= 2;

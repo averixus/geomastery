@@ -11,6 +11,7 @@ import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
+import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 
 /** Geomastery configuration. */
 @Config(modid = Geomastery.MODID)
@@ -54,7 +55,13 @@ public class GeoConfig {
     @LangKey(Lang.CONFIG + ":speed")
     public static boolean speed = true;
     
-    @Comment("Enable three separate food types")
+    @Comment("Enable three separate food types and associated health effects")
     @LangKey(Lang.CONFIG + ":food")
+    @RequiresWorldRestart
     public static boolean food = true;
+    
+    @Comment("Enable restricted and variable inventory size")
+    @LangKey(Lang.CONFIG + ":inventory")
+    @RequiresWorldRestart
+    public static boolean inventory = true;
 }
