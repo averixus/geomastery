@@ -172,9 +172,9 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public boolean canSprint() {
         
-        return !GeoBlocks.OFFHAND_ONLY.contains(this.player
-                .getHeldItemOffhand().getItem()) &&
-                this.yoke.getItem() != GeoItems.YOKE;
+        return !GeoConfig.speed || (!GeoBlocks.OFFHAND_ONLY
+                .contains(this.player.getHeldItemOffhand().getItem()) &&
+                this.yoke.getItem() != GeoItems.YOKE);
     }
     
     @Override
@@ -269,7 +269,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         
         this.tickHeal();
         
-        if (GeoConfig.temperature && this.tickTemperature()) {
+        if (this.tickTemperature()) {
     
             this.sendTempPacket(this.tempStage);
         }
@@ -490,7 +490,7 @@ public class DefaultCapPlayer implements ICapPlayer {
         // Define stage
         this.tempStage = ETempStage.fromTemp(temp);
 
-        if ((this.tempStage == ETempStage.HOT ||
+        if (GeoConfig.temperature && (this.tempStage == ETempStage.HOT ||
                 this.tempStage == ETempStage.COLD)) {
             
             if (this.damageTimer == 0) {
@@ -501,7 +501,6 @@ public class DefaultCapPlayer implements ICapPlayer {
                 
                 this.player.attackEntityFrom(DamageSource.GENERIC, 1);  
             }
-            
         } 
         
         if (this.damageTimer > 0) {
@@ -584,21 +583,28 @@ public class DefaultCapPlayer implements ICapPlayer {
                 
         ESpeedStage oldStage = this.speedStage;
         
-        if (speed <= 2.3) {
-            
-            this.speedStage = ESpeedStage.SPEED_2_3;
-            
-        } else if (speed <= 2.8) {
-            
-            this.speedStage = ESpeedStage.SPEED_2_8;
-            
-        } else if (speed <= 3.3) {
-            
-            this.speedStage = ESpeedStage.SPEED_3_3;
-            
-        } else if (speed <= 3.8) {
-            
-            this.speedStage = ESpeedStage.SPEED_3_8;
+        if (GeoConfig.speed) {
+        
+            if (speed <= 2.3) {
+                
+                this.speedStage = ESpeedStage.SPEED_2_3;
+                
+            } else if (speed <= 2.8) {
+                
+                this.speedStage = ESpeedStage.SPEED_2_8;
+                
+            } else if (speed <= 3.3) {
+                
+                this.speedStage = ESpeedStage.SPEED_3_3;
+                
+            } else if (speed <= 3.8) {
+                
+                this.speedStage = ESpeedStage.SPEED_3_8;
+                
+            } else {
+                
+                this.speedStage = null;
+            }
             
         } else {
             

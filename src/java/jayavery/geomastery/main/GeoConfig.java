@@ -49,4 +49,8 @@ public class GeoConfig {
     @Comment("Enable damage from extreme temperatures")
     @LangKey(Lang.CONFIG + ":temperature")
     public static boolean temperature = true;
+    
+    @Comment("Enable speed and sprint restrictions from apparel and carrying items")
+    @LangKey(Lang.CONFIG + ":speed")
+    public static boolean speed = true;
 }
