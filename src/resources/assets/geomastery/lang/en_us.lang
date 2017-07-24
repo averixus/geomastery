@@ -398,7 +398,9 @@ geomastery:configprop.buildMessages.tooltip=Send helpful chat message when a blo
 geomastery:configprop.hideVanilla=Hide vanilla from JEI
 geomastery:configprop.hideVanilla.tooltip=Hide unused and inaccessible vanilla items from Just Enough Items
 geomastery:configprop.addCrafting=Vanilla crafting table
-geomastery:configprop.addCrafting.tooltip=Add vanilla crafting table recipe, with all recipes removed by default
+geomastery:configprop.addCrafting.tooltip=Add vanilla crafting table recipe made with nine Sawn Timber at a Wood Workshop, with all vanilla recipes removed by default
+geomastery:configprop.portals=Enable End and Nether portals
+geomastery:configprop.portals.tooptip=Make a nether portal at your position by right-clicking with Fire Opal, and use Amethysts to activate End Portal frames
 
 geomastery:configprop.temperature=Enable temperature
 geomastery:configprop.temperature.tooltip=Enable damage from extreme heat and cold

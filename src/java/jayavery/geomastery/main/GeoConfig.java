@@ -18,7 +18,7 @@ import net.minecraftforge.common.config.Config.RequiresWorldRestart;
 public class GeoConfig {
     
     @Comment("Changes to text and visuals for textVisual")
-    @LangKey(Lang.CONFIG_CAT + "textvisual")
+    @LangKey(Lang.CONFIG_CAT + "textVisual")
     public static TextVisual textVisual = new TextVisual();
     
     @Comment("Compatibility with other mods")
@@ -29,13 +29,14 @@ public class GeoConfig {
     @LangKey(Lang.CONFIG_CAT + "gameplay")
     public static Gameplay gameplay = new Gameplay();
     
+    /** Text and visual changes category object. */
     public static class TextVisual {
 
         @Comment("Show the food type in the item tooltip")
         @LangKey(Lang.CONFIG_PROP + "foodTooltips")
         public boolean foodTooltips = true;
     
-        @Comment("Show the item's decay level with the filled proportion of weathering bar as well as colour")
+        @Comment("Show the item's decay level with the filled proportion of durability bar as well as colour")
         @LangKey(Lang.CONFIG_PROP + "foodDurability")
         public boolean foodDurability = false;
     
@@ -52,6 +53,7 @@ public class GeoConfig {
         public boolean buildMessages = true;
     }
     
+    /** Compatibility changes category object. */
     public static class Compatibility {
         
         @Comment("Hide unusued and inaccessible vanilla items from Just Enough Items")
@@ -63,8 +65,13 @@ public class GeoConfig {
         @LangKey(Lang.CONFIG_PROP + "addCrafting")
         @RequiresMcRestart
         public boolean addCrafting = false;
+        
+        @Comment("Enable End and Nether portals")
+        @LangKey(Lang.CONFIG_PROP + "portals")
+        public boolean portals = false;
     }
     
+    /** Gameplay changes category object. */
     public static class Gameplay {
     
         @Comment("Enable damage from extreme temperatures")

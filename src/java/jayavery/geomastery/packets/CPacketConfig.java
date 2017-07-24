@@ -17,14 +17,20 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-// TEST
+/** Packet to set the client's config values from those on the server. */
 public class CPacketConfig implements IMessage {
 
+    /** Hide vanilla from JEI. */
     protected boolean hideVanilla;
+    /** Add vanilla crafting table recipe. */
     protected boolean addCrafting;
+    /** Apply temperature damage. */
     protected boolean temperature;
+    /** Apply speed effects. */
     protected boolean speed;
+    /** Use food types. */
     protected boolean food;
+    /** Apply inventory restrictions. */
     protected boolean inventory;
     
     public CPacketConfig() {

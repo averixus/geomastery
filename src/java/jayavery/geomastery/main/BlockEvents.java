@@ -13,6 +13,7 @@ import jayavery.geomastery.items.ItemSimple;
 import jayavery.geomastery.utilities.TreeFallUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockEndPortalFrame;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockGrass;
@@ -27,11 +28,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -53,8 +58,9 @@ public class BlockEvents {
         World world = event.getWorld();
         BlockPos sourcePos = event.getPos();
         
-        // Prevent Nether Portals from generating
-        if (sourceBlock == Blocks.PORTAL) {
+        // Prevent portals if config
+        if (!GeoConfig.compatibility.portals && (sourceBlock == Blocks.PORTAL ||
+                sourceBlock == Blocks.END_PORTAL)) {
 
             world.setBlockToAir(sourcePos);
         }
@@ -372,5 +378,29 @@ public class BlockEvents {
             TreeFallUtils.fellTree(world, pos, event.getPlayer()
                     .getHorizontalFacing().rotateY());
         }
-    }    
+    }   
+    
+    /** Makes portals if config. */
+    @SubscribeEvent
+    public void rightClick(RightClickBlock event) {
+
+        EntityPlayer player = event.getEntityPlayer();
+        World world = event.getWorld();
+        ItemStack stack = event.getItemStack();
+        Item item = stack.getItem();
+        BlockPos pos = event.getPos();
+        
+        if (GeoConfig.compatibility.portals && item == GeoItems.FIREOPAL &&
+                world instanceof WorldServer) {
+
+            new Teleporter((WorldServer) world).makePortal(player);
+            stack.shrink(1);
+        }
+        
+        if (GeoConfig.compatibility.portals && item == GeoItems.AMETHYST) {
+            
+            Items.ENDER_EYE.onItemUse(player, world, pos,
+                    event.getHand(), event.getFace(), 0, 0, 0);
+        }
+    }
 }
