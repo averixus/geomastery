@@ -164,7 +164,7 @@ public class ClientProxy implements IProxy {
     public void preInit() {
         
         Geomastery.LOG.info("Registering client event handler");
-        MinecraftForge.EVENT_BUS.register(new GuiEvents());
+        MinecraftForge.EVENT_BUS.register(new ClientEvents());
                 
         Geomastery.LOG.info("Registering entity renderers");
         entity(EntitySpearWood.class, RenderSpearFactory.SPEAR_WOOD);

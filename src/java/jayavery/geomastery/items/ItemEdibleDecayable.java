@@ -93,7 +93,7 @@ public class ItemEdibleDecayable extends ItemEdible {
         ICapPlayer playerCap = player
                 .getCapability(GeoCaps.CAP_PLAYER, null);
     
-        if (!decayCap.isRot(world) && ((GeoConfig.food &&
+        if (!decayCap.isRot(world) && ((GeoConfig.gameplay.food &&
                 playerCap.canEat(this.type)) || player.canEat(false))) {
     
             player.setActiveHand(hand);
@@ -135,7 +135,7 @@ public class ItemEdibleDecayable extends ItemEdible {
             
             if (!decayCap.isRot(Geomastery.proxy.getClientWorld())) {
             
-                if (GeoConfig.foodTooltips) {
+                if (GeoConfig.textVisual.foodTooltips) {
                     
                     tooltip.add(I18n.format(this.type.tip()));
                 }
@@ -181,7 +181,7 @@ public class ItemEdibleDecayable extends ItemEdible {
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         
-        if (GeoConfig.foodDurability) {
+        if (GeoConfig.textVisual.foodDurability) {
             
             if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
                 

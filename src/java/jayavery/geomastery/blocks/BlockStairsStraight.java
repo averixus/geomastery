@@ -112,7 +112,7 @@ public abstract class BlockStairsStraight extends BlockFacing {
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
-        if (GeoConfig.buildTooltips) {
+        if (GeoConfig.textVisual.buildTooltips) {
         
             tooltip.add(I18n.format(Lang.BUILDTIP_STAIRS));
             tooltip.add(I18n.format(EBlockWeight.NONE.supports()));

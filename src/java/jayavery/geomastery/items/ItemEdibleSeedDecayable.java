@@ -94,12 +94,12 @@ public class ItemEdibleSeedDecayable extends ItemEdibleDecayable
             
             if (!decayCap.isRot(Geomastery.proxy.getClientWorld())) {
             
-                if (GeoConfig.foodTooltips) {
+                if (GeoConfig.textVisual.foodTooltips) {
                     
                     tooltip.add(I18n.format(this.type.tip()));
                 }
                 
-                if (GeoConfig.cropTooltips) {
+                if (GeoConfig.textVisual.cropTooltips) {
 
                     tooltip.add(I18n.format(this.getUnlocalizedName()
                             + Lang.BIOMES));

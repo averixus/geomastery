@@ -15,7 +15,8 @@ public class Lang {
     
     public static final String BIOMES  = ".biomes";
     
-    public static final String CONFIG = Geomastery.MODID + ":config.";
+    public static final String CONFIG_PROP = Geomastery.MODID + ":configprop.";
+    public static final String CONFIG_CAT = Geomastery.MODID + ":configcat.";
     
     public static final String COMPOST_WET = Geomastery.MODID + ":compost.wet";
     public static final String COMPOST_DRY = Geomastery.MODID + ":compost.dry";

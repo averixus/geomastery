@@ -27,15 +27,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 /** Handler for GUI and player input related events. */
-public class GuiEvents {
+public class ClientEvents {
     
     /** Texture for the carbs food icons. */
     private static final ResourceLocation CARBS_TEXTURE = new ResourceLocation(Geomastery.MODID, "textures/gui/carbs.png");
@@ -121,7 +122,7 @@ public class GuiEvents {
     @SubscribeEvent
     public void addTooltips(ItemTooltipEvent event) {
         
-        if (GeoConfig.buildTooltips) {
+        if (GeoConfig.textVisual.buildTooltips) {
             
             Item item = event.getItemStack().getItem();
             Block block = Block.getBlockFromItem(item);
@@ -187,7 +188,8 @@ public class GuiEvents {
         int centreX = event.getResolution().getScaledWidth() / 2;
         int resHeight = event.getResolution().getScaledHeight();
         
-        if (event.getType() == ElementType.HOTBAR && GeoConfig.temperature) {
+        if (event.getType() == ElementType.HOTBAR &&
+                GeoConfig.gameplay.temperature) {
             
             drawTempIcon(player, centreX, resHeight);
         }
@@ -202,7 +204,7 @@ public class GuiEvents {
             event.setCanceled(true);
         }
         
-        if (event.getType() == ElementType.FOOD && GeoConfig.food) {
+        if (event.getType() == ElementType.FOOD && GeoConfig.gameplay.food) {
 
             drawFoodBars(player, centreX, resHeight);
             event.setCanceled(true);

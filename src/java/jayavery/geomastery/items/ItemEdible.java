@@ -62,7 +62,7 @@ public class ItemEdible extends ItemFood {
         ICapPlayer playerCap = player
                 .getCapability(GeoCaps.CAP_PLAYER, null);
 
-        if ((GeoConfig.food && playerCap.canEat(this.type)) ||
+        if ((GeoConfig.gameplay.food && playerCap.canEat(this.type)) ||
                 player.canEat(false)) {
 
             player.setActiveHand(hand);
@@ -104,7 +104,7 @@ public class ItemEdible extends ItemFood {
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
-        if (GeoConfig.foodTooltips) {
+        if (GeoConfig.textVisual.foodTooltips) {
             
             tooltip.add(I18n.format(this.type.tip()));
         }

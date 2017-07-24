@@ -188,7 +188,7 @@ public abstract class BlockBuildingAbstract<I extends ItemPlacing> extends Block
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
-        if (GeoConfig.buildTooltips) {
+        if (GeoConfig.textVisual.buildTooltips) {
         
             tooltip.add(I18n.format(this.getWeight(this
                     .getDefaultState()).requires()));
@@ -206,7 +206,7 @@ public abstract class BlockBuildingAbstract<I extends ItemPlacing> extends Block
     /** Translates and sends the message to the player if config and nonnull. */
     protected static void message(EntityPlayer player, String unlocalised) {
         
-        if (player != null && GeoConfig.buildMessages) {
+        if (player != null && GeoConfig.textVisual.buildMessages) {
             
             player.sendMessage(new TextComponentTranslation(unlocalised));
         }

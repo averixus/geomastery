@@ -98,7 +98,7 @@ public class ItemRice extends ItemPlacing {
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
-        if (GeoConfig.cropTooltips) {
+        if (GeoConfig.textVisual.cropTooltips) {
     
             tooltip.add(I18n.format(this.getUnlocalizedName() + Lang.BIOMES));
         }

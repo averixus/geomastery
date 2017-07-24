@@ -126,7 +126,7 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         
-        if (GeoConfig.foodDurability) {
+        if (GeoConfig.textVisual.foodDurability) {
             
             if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
                 

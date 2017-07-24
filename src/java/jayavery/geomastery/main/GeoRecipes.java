@@ -196,7 +196,7 @@ public class GeoRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WALL_LOG.getItem(), 4), "L", "L", 'L', GeoItems.LOG);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FENCE.getItem(), 4), "PPP", " P ", 'P', GeoItems.POLE);
         
-        if (GeoConfig.addCrafting) {
+        if (GeoConfig.compatibility.addCrafting) {
             
             WOODWORKING.addShapedRecipe(new ItemStack(Blocks.CRAFTING_TABLE), "SSS", "SSS", "SSS", 'S', GeoItems.TIMBER);
         }

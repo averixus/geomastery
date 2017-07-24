@@ -300,7 +300,7 @@ public class GeoBlocks {
     /** @return Whether this item is offhand only. */
     public static boolean isOffhandOnly(Item item) {
         
-        return GeoConfig.inventory && OFFHAND_ONLY.contains(item);
+        return GeoConfig.gameplay.inventory && OFFHAND_ONLY.contains(item);
     }
     
     /** Creates an ItemBlock, adds to maps and sets as needed. */ 

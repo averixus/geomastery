@@ -15,6 +15,7 @@ import jayavery.geomastery.capabilities.ProviderCapPlayer;
 import jayavery.geomastery.container.ContainerInventory;
 import jayavery.geomastery.items.ItemShield;
 import jayavery.geomastery.items.ItemSimple;
+import jayavery.geomastery.packets.CPacketConfig;
 import jayavery.geomastery.packets.SPacketContainer;
 import jayavery.geomastery.tileentities.TEBed;
 import jayavery.geomastery.utilities.FoodStatsWrapper;
@@ -29,7 +30,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -43,6 +43,7 @@ import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -110,7 +111,7 @@ public class PlayerEvents {
             player.openContainer = player.inventoryContainer;
         }
     
-        if (GeoConfig.food &&
+        if (GeoConfig.gameplay.food &&
                 !(player.getFoodStats() instanceof FoodStatsWrapper)) {
             
             Geomastery.LOG.info("Replacing {}'s vanilla foodstats",
@@ -211,7 +212,7 @@ public class PlayerEvents {
         BlockBed bed = (BlockBed) block;
         bed.onWakeup(world, posFoot, (TEBed) world.getTileEntity(posFoot));
         
-        if (GeoConfig.food) {
+        if (GeoConfig.gameplay.food) {
             
             player.getCapability(GeoCaps.CAP_PLAYER, null)
                 .sleep(bed.getHealAmount());
@@ -268,5 +269,16 @@ public class PlayerEvents {
         List<EntityItem> drops = event.getDrops();
         drops.add(new EntityItem(world, x, y, z, capPlayer.removeBackpack()));
         drops.add(new EntityItem(world, x, y, z, capPlayer.removeYoke()));
+    }
+    
+    
+    @SubscribeEvent
+    public void playerLogin(PlayerLoggedInEvent event) {
+        
+        if (event.player instanceof EntityPlayerMP) {
+            
+            Geomastery.NETWORK.sendTo(new CPacketConfig(),
+                    (EntityPlayerMP) event.player);
+        }
     }
 }

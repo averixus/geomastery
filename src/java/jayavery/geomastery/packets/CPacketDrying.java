@@ -62,8 +62,7 @@ public class CPacketDrying implements IMessage {
         buf.writeInt(this.z);
     }
     
-    public static class Handler
-            implements IMessageHandler<CPacketDrying, IMessage> {
+    public static class Handler implements IMessageHandler<CPacketDrying, IMessage> {
         
         @Override
         public IMessage onMessage(CPacketDrying message,

@@ -118,7 +118,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public int getInventoryRows() {
         
-        if (GeoConfig.inventory) {
+        if (GeoConfig.gameplay.inventory) {
           
             int rows = 0;
             rows = this.backpack.getItem() == GeoItems.BACKPACK ?
@@ -135,7 +135,7 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public int getInventorySize() {
 
-        return !GeoConfig.inventory ? 36 :
+        return !GeoConfig.gameplay.inventory ? 36 :
             ROW_LENGTH + (ROW_LENGTH * this.getInventoryRows());
     }
     
@@ -498,9 +498,9 @@ public class DefaultCapPlayer implements ICapPlayer {
 
         // Define stage
         this.tempStage = ETempStage.fromTemp(temp);
-
-        if (GeoConfig.temperature && (this.tempStage == ETempStage.HOT ||
-                this.tempStage == ETempStage.COLD)) {
+        
+        if (GeoConfig.gameplay.temperature && (this.tempStage == ETempStage.HOT
+                || this.tempStage == ETempStage.COLD)) {
             
             if (this.damageTimer == 0) {
 
@@ -592,7 +592,7 @@ public class DefaultCapPlayer implements ICapPlayer {
                 
         ESpeedStage oldStage = this.speedStage;
         
-        if (GeoConfig.speed) {
+        if (GeoConfig.gameplay.speed) {
         
             if (speed <= 2.3) {
                 

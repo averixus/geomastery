@@ -97,7 +97,7 @@ public abstract class ItemPlacing extends Item {
     /** Translates and sends the message to the player if config and nonnull. */
     protected static void message(EntityPlayer player, String unlocalised) {
         
-        if (player != null && GeoConfig.buildMessages) {
+        if (player != null && GeoConfig.textVisual.buildMessages) {
             
             player.sendMessage(new TextComponentTranslation(unlocalised));
         }

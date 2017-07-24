@@ -172,7 +172,7 @@ public class BlockSlab extends BlockBuildingAbstract<ItemPlacing.Building>
     public void addInformation(ItemStack stack, EntityPlayer player,
             List<String> tooltip, boolean advanced) {
         
-        if (GeoConfig.buildTooltips) {
+        if (GeoConfig.textVisual.buildTooltips) {
             
             tooltip.add(I18n.format(Lang.BUILDTIP_DOUBLING));                
             tooltip.add(I18n.format(EBlockWeight.MEDIUM.requires()));
