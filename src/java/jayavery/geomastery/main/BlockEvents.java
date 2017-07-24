@@ -13,13 +13,15 @@ import jayavery.geomastery.items.ItemSimple;
 import jayavery.geomastery.utilities.TreeFallUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockEndPortalFrame;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -357,8 +359,14 @@ public class BlockEvents {
                     .newStack(GeoItems.MUSHROOM_RED, 1, world));
         }
         
+        // Clear any exploitable generated building blocks
         if (block == Blocks.RED_MUSHROOM_BLOCK ||
-                block == Blocks.BROWN_MUSHROOM_BLOCK) {
+                block == Blocks.BROWN_MUSHROOM_BLOCK ||
+                block instanceof BlockPlanks || block instanceof BlockFence ||
+                block == Blocks.COBBLESTONE ||
+                block == Blocks.MOSSY_COBBLESTONE ||
+                block == Blocks.STONEBRICK ||
+                block instanceof BlockPrismarine) {
             
             event.getDrops().clear();
         }
