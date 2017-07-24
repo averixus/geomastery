@@ -45,4 +45,8 @@ public class GeoConfig {
     @LangKey(Lang.CONFIG + "addCrafting")
     @RequiresMcRestart
     public static boolean addCrafting = false;
+    
+    @Comment("Enable damage from extreme temperatures")
+    @LangKey(Lang.CONFIG + ":temperature")
+    public static boolean temperature = true;
 }

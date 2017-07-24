@@ -48,7 +48,7 @@ public class GuiEvents {
     /** Texture for the yoke slot icon. */
     private static final ResourceLocation YOKE_SLOT = new ResourceLocation(Geomastery.MODID, "gui/yoke_slot");
     /** Texture for the vanilla icons. */
-    private static final ResourceLocation ICONS = new ResourceLocation("textures/gui/ICONS.png");
+    private static final ResourceLocation ICONS = new ResourceLocation("textures/gui/icons.png");
     /** Texture for tar fluid. */
     private static final ResourceLocation TAR = new ResourceLocation(Geomastery.MODID, "textures/blocks/liquids/tar_overlay.png");
     
@@ -187,7 +187,7 @@ public class GuiEvents {
         int centreX = event.getResolution().getScaledWidth() / 2;
         int resHeight = event.getResolution().getScaledHeight();
         
-        if (event.getType() == ElementType.HOTBAR) {
+        if (event.getType() == ElementType.HOTBAR && GeoConfig.temperature) {
             
             drawTempIcon(player, centreX, resHeight);
         }

@@ -17,6 +17,7 @@ import com.google.common.collect.Maps;
 import jayavery.geomastery.items.ItemEdible;
 import jayavery.geomastery.main.GeoBiomes;
 import jayavery.geomastery.main.GeoBlocks;
+import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.main.GeoItems;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketDebug;
@@ -267,9 +268,9 @@ public class DefaultCapPlayer implements ICapPlayer {
         }
         
         this.tickHeal();
-
-        if (this.tickTemperature()) {
-
+        
+        if (GeoConfig.temperature && this.tickTemperature()) {
+    
             this.sendTempPacket(this.tempStage);
         }
         
