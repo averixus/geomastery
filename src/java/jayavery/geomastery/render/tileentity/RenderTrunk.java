@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 import org.lwjgl.opengl.GL11;
 import jayavery.geomastery.blocks.BlockFacing;
 import jayavery.geomastery.tileentities.TETrunk;
+import net.minecraft.block.BlockOldLog;
+import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelRenderer;
@@ -40,7 +42,7 @@ public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();
         BlockPos pos = te.getPos();
-        float angle = (float) (te.prevAngle + (te.angle - te.prevAngle) * Math.pow(1.1, tick));
+        float angle = (float) (te.prevAngle + ((te.angle - te.prevAngle) * Math.pow(1.1, tick)));
 
         
         if (fallDir == EnumFacing.NORTH) {
@@ -76,9 +78,10 @@ public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
         BlockModelRenderer render = dispatcher.getBlockModelRenderer();
         World world = te.getWorld();
         
-        if (te.angle < 90) {
+        if (te.isFalling) {
+            
             for (Entry<BlockPos, IBlockState> entry : te.blocks.entrySet()) {
-                System.out.println("blocks entry " + entry);
+
                 render.renderModel(world, dispatcher.getModelForState(entry.getValue()), entry.getValue(), entry.getKey(), vb, false);
             }
         }
@@ -91,7 +94,8 @@ public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
         GlStateManager.disableLighting();
         GlStateManager.translate(x - pos.getX(), y - pos.getY(), z - pos.getZ());
         vb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        render.renderModel(world, dispatcher.getModelForState(Blocks.LOG.getDefaultState()), Blocks.LOG.getDefaultState(), pos, vb, false);
+        IBlockState trunk = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, EnumType.JUNGLE);
+        render.renderModel(world, dispatcher.getModelForState(trunk), trunk, pos, vb, false);
         tess.draw();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();

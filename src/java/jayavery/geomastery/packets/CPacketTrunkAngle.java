@@ -23,6 +23,8 @@ public class CPacketTrunkAngle implements IMessage {
     protected float angle;
     /** Angle of the lid last tick. */
     protected float prevAngle;
+    /** Whether the trunk is falling. */
+    protected boolean isFalling;
     /** X co-ordinate. */
     protected int x;
     /** Y co-ordinate. */
@@ -32,10 +34,11 @@ public class CPacketTrunkAngle implements IMessage {
     
     public CPacketTrunkAngle() {}
     
-    public CPacketTrunkAngle(float angle, float prevAngle, BlockPos pos) {
+    public CPacketTrunkAngle(float angle, float prevAngle, boolean isFalling, BlockPos pos) {
         
         this.angle = angle;
         this.prevAngle = prevAngle;
+        this.isFalling = isFalling;
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
@@ -46,6 +49,7 @@ public class CPacketTrunkAngle implements IMessage {
         
         this.angle = buf.readFloat();
         this.prevAngle = buf.readFloat();
+        this.isFalling = buf.readBoolean();
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();
@@ -56,6 +60,7 @@ public class CPacketTrunkAngle implements IMessage {
         
         buf.writeFloat(this.angle);
         buf.writeFloat(this.prevAngle);
+        buf.writeBoolean(this.isFalling);
         buf.writeInt(this.x);
         buf.writeInt(this.y);
         buf.writeInt(this.z);
@@ -79,7 +84,7 @@ public class CPacketTrunkAngle implements IMessage {
             if (tileEntity instanceof TETrunk) {
                 
                 TETrunk tileTrunk = (TETrunk) tileEntity;
-                tileTrunk.setAngles(message.angle, message.prevAngle);
+                tileTrunk.setState(message.angle, message.prevAngle, message.isFalling);
             }
         }
     }

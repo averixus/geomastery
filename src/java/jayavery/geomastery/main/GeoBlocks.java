@@ -25,6 +25,7 @@ import jayavery.geomastery.blocks.BlockFlatroof;
 import jayavery.geomastery.blocks.BlockFruit;
 import jayavery.geomastery.blocks.BlockHarvestableLeaves;
 import jayavery.geomastery.blocks.BlockLadder;
+import jayavery.geomastery.blocks.BlockLeaves;
 import jayavery.geomastery.blocks.BlockLight;
 import jayavery.geomastery.blocks.BlockMushroombaby;
 import jayavery.geomastery.blocks.BlockPitchroof;
@@ -100,6 +101,7 @@ public class GeoBlocks {
     
     // TEST
     public static final BlockTrunk TRUNK = makeItemBuilding(new BlockTrunk());
+    public static final BlockLeaves LEAF = makeItemBlock(new BlockLeaves("leaves"));
     
     // Beds
     public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf());

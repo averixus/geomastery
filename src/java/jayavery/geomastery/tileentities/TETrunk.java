@@ -18,11 +18,12 @@ import com.google.common.collect.Sets;
 import jayavery.geomastery.blocks.BlockFacing;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.packets.CPacketTree;
-import jayavery.geomastery.packets.CPacketTrunk;
+import jayavery.geomastery.packets.CPacketTrunkAngle;
+import jayavery.geomastery.packets.CPacketTrunkBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockLog.EnumAxis;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -54,17 +55,41 @@ public class TETrunk extends TileEntity implements ITickable {
         }
         
         this.prevAngle = this.angle;
-        this.angle = this.angle == 0 ? 0.1F : this.angle * 1.1F;
+        this.angle = Math.min(this.angle == 0 ? 0.1F : this.angle * 1.1F, 90);
         
         for (BlockPos pos : this.blocks.keySet()) {
-            System.out.println("removing block at " + pos);
+
             this.world.setBlockToAir(pos);
         }
         
-        if (this.angle >= 90) {
+        BlockPos originPos = BlockPos.ORIGIN;
+        BlockPos newPos = BlockPos.ORIGIN;
+        int rand = this.world.rand.nextInt(this.blocks.entrySet().size());
+        int i = 0;
+        for (BlockPos pos : this.blocks.keySet()) {
+            
+            if (rand == i) {
+                
+                originPos = pos;
+                BlockPos offset = pos.subtract(this.pos);
+                int x = offset.getX();
+                int y = offset.getY();
+                int z = offset.getZ();
+                BlockPos rotated = new BlockPos(y + 1, -x, z);
+                newPos = rotated.add(this.pos); 
+                break;
+            }
+            
+            i++;
+        }
+        
+        if (this.world.getBlockState(newPos) == this.blocks.get(originPos)) {
             
             this.isFalling = false;
-            
+        }
+        
+        if (this.angle >= 90) {
+                        
             EnumFacing fall = this.world.getBlockState(this.pos).getValue(BlockFacing.FACING);
             
             for (Entry<BlockPos, IBlockState> entry : this.blocks.entrySet()) {
@@ -74,23 +99,31 @@ public class TETrunk extends TileEntity implements ITickable {
                 int y = offset.getY();
                 int z = offset.getZ();
                 
-                BlockPos rotated = new BlockPos(x, z, y + 1);
-                BlockPos result = rotated.add(this.pos);
-                System.out.println("setting new state at " + result);
-                this.world.setBlockState(result, entry.getValue().withRotation(Rotation.CLOCKWISE_90));
+                BlockPos rotated = new BlockPos(y + 1, -x, z);
+                BlockPos result = rotated.add(this.pos);                
+                IBlockState state = entry.getValue();
+                
+                if (state.getBlock() instanceof BlockLog) {
+                    
+                    state = state.withProperty(BlockLog.LOG_AXIS, EnumAxis.X);
+                }
+                
+                this.world.setBlockState(result, state);
             }
+            
+         //   this.isFalling = false;
         }
 
-        Geomastery.NETWORK.sendToAll(new CPacketTrunk(this.angle,
-                this.prevAngle, this.pos));
+        Geomastery.NETWORK.sendToAll(new CPacketTrunkAngle(this.angle,
+                this.prevAngle, this.isFalling, this.pos));
     }
     
     public void fall(EnumFacing direction) {
         
         if (!this.isFalling) {
+            
             Thread thread = new Thread(() -> {
                 
-                System.out.println("starting fall thread");
                 BlockPos origin = this.pos.up();
             
                 List<FallingTreeBlock> toFall = Lists.newArrayList();
@@ -117,7 +150,6 @@ public class TETrunk extends TileEntity implements ITickable {
                     if (nextBlock instanceof BlockLog) {
     
                         this.blocks.put(nextPos, nextState);
-                        System.out.println("adding block at " + nextPos);
     
                         for (BlockPos offset : TRUNK_OFFSETS) {
     
@@ -147,7 +179,6 @@ public class TETrunk extends TileEntity implements ITickable {
                     if (nextBlock instanceof BlockLeaves) {
     
                         this.blocks.put(nextPos, nextState);
-                        System.out.println("adding block at " + nextPos);
     
                         for (EnumFacing facing : EnumFacing.VALUES) {
     
@@ -160,20 +191,22 @@ public class TETrunk extends TileEntity implements ITickable {
                         }
                     }
                 }
-                System.out.println("finished fall thread");
+
                 this.isFalling = true;
-                Geomastery.NETWORK.sendToAll(new CPacketTree(this.pos, this.blocks));
+                Geomastery.NETWORK.sendToAll(new CPacketTrunkBlocks(this.pos, this.blocks));
             });
+            
             thread.setDaemon(true);
             thread.setPriority(Thread.MIN_PRIORITY);
             thread.start();
         }
     }
     
-    public void setAngles(float angle, float prevAngle) {
+    public void setState(float angle, float prevAngle, boolean isFalling) {
 
         this.angle = angle;
         this.prevAngle = prevAngle;
+        this.isFalling = isFalling;
     }
     
     public void setBlocks(Map<BlockPos, IBlockState> blocks) {
