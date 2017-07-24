@@ -62,7 +62,8 @@ public class ItemEdible extends ItemFood {
         ICapPlayer playerCap = player
                 .getCapability(GeoCaps.CAP_PLAYER, null);
 
-        if (playerCap.canEat(this.type)) {
+        if ((GeoConfig.food && playerCap.canEat(this.type)) ||
+                player.canEat(false)) {
 
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
@@ -80,8 +81,9 @@ public class ItemEdible extends ItemFood {
         
             EntityPlayer player = (EntityPlayer) entity;
             
-            player.getCapability(GeoCaps.CAP_PLAYER, null)
-                .addStats(this, stack);
+       //     player.getCapability(GeoCaps.CAP_PLAYER, null)
+        //        .addStats(this, stack);
+            player.getFoodStats().addStats(this, stack);
             
             world.playSound(player, player.posX, player.posY, player.posZ,
                     SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F,

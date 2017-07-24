@@ -110,7 +110,8 @@ public class PlayerEvents {
             player.openContainer = player.inventoryContainer;
         }
     
-        if (!(player.getFoodStats() instanceof FoodStatsWrapper)) {
+        if (GeoConfig.food &&
+                !(player.getFoodStats() instanceof FoodStatsWrapper)) {
             
             Geomastery.LOG.info("Replacing {}'s vanilla foodstats",
                     player.getName());
@@ -208,8 +209,12 @@ public class PlayerEvents {
         
         BlockBed bed = (BlockBed) block;
         bed.onWakeup(world, posFoot, (TEBed) world.getTileEntity(posFoot));
-        player.getCapability(GeoCaps.CAP_PLAYER, null)
+        
+        if (GeoConfig.food) {
+            
+            player.getCapability(GeoCaps.CAP_PLAYER, null)
                 .sleep(bed.getHealAmount());
+        }
     }
     
     /** Alters behaviour when the player takes damage. */

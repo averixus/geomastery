@@ -39,6 +39,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -172,9 +173,8 @@ public class DefaultCapPlayer implements ICapPlayer {
     @Override
     public boolean canSprint() {
         
-        return !GeoConfig.speed || (!GeoBlocks.OFFHAND_ONLY
-                .contains(this.player.getHeldItemOffhand().getItem()) &&
-                this.yoke.getItem() != GeoItems.YOKE);
+        return !GeoBlocks.OFFHAND_ONLY.contains(this.player.getHeldItemOffhand()
+                .getItem()) && this.yoke.getItem() != GeoItems.YOKE;
     }
     
     @Override

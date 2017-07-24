@@ -202,7 +202,7 @@ public class GuiEvents {
             event.setCanceled(true);
         }
         
-        if (event.getType() == ElementType.FOOD) {
+        if (event.getType() == ElementType.FOOD && GeoConfig.food) {
 
             drawFoodBars(player, centreX, resHeight);
             event.setCanceled(true);

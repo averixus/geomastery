@@ -57,10 +57,10 @@ public interface ICapPlayer extends INBTSerializable<NBTTagCompound> {
     /** Checks whether the player has less than full hunger for the EFoodType.
      * @return Whether the player is allowed to eat the EFoodType. */
     public boolean canEat(EFoodType type);
-    /** Gets the lowest food level of all hunger types.
+    /** Gets the lowest food level of all hunger types. Called from wrapper.
      * @return An int from 0 to 20. */
     public int getFoodLevel();
-    /** Adds the exhaustion to all food types. */
+    /** Adds the exhaustion to all food types. Called from wrapper. */
     public void addExhaustion(float exhaustion);
     /** Adds the item's food value to its food type. */
     public void addStats(ItemEdible item, ItemStack stack);

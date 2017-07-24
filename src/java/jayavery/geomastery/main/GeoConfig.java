@@ -53,4 +53,8 @@ public class GeoConfig {
     @Comment("Enable speed and sprint restrictions from apparel and carrying items")
     @LangKey(Lang.CONFIG + ":speed")
     public static boolean speed = true;
+    
+    @Comment("Enable three separate food types")
+    @LangKey(Lang.CONFIG + ":food")
+    public static boolean food = true;
 }

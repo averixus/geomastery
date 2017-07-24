@@ -93,7 +93,8 @@ public class ItemEdibleDecayable extends ItemEdible {
         ICapPlayer playerCap = player
                 .getCapability(GeoCaps.CAP_PLAYER, null);
     
-        if (playerCap.canEat(this.type) && !decayCap.isRot(world)) {
+        if (!decayCap.isRot(world) && ((GeoConfig.food &&
+                playerCap.canEat(this.type)) || player.canEat(false))) {
     
             player.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.utilities;
 
+import jayavery.geomastery.items.ItemEdible;
 import jayavery.geomastery.main.GeoCaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -32,6 +33,17 @@ public class FoodStatsWrapper extends FoodStats {
         
         this.player.getCapability(GeoCaps.CAP_PLAYER, null)
                 .addExhaustion(exhaustion);
+    }
+    
+    /** Used for normal eating. */
+    @Override
+    public void addStats(ItemFood item, ItemStack stack) {
+        
+        if (item instanceof ItemEdible) {
+        
+            this.player.getCapability(GeoCaps.CAP_PLAYER, null)
+                    .addStats((ItemEdible) item, stack);
+        }
     }
     
     /** Only used to check whether player is allowed to sprint */
@@ -63,10 +75,6 @@ public class FoodStatsWrapper extends FoodStats {
         
         return 5.0F;
     }
-    
-    /** Used for most vanilla eating. */
-    @Override
-    public void addStats(ItemFood item, ItemStack stack) {}
     
     /** Only used for eating vanilla cake. */
     @Override
