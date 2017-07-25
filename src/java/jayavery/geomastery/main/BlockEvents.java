@@ -359,7 +359,7 @@ public class BlockEvents {
                     .newStack(GeoItems.MUSHROOM_RED, 1, world));
         }
         
-        // Clear any exploitable generated building blocks
+        // Clear any exploitable generated blocks
         if (block == Blocks.RED_MUSHROOM_BLOCK ||
                 block == Blocks.BROWN_MUSHROOM_BLOCK ||
                 block instanceof BlockPlanks || block instanceof BlockFence ||
