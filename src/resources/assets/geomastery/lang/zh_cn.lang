@@ -341,6 +341,9 @@ geomastery:container.potfire=火锅
 geomastery:container.clay=泥炉
 geomastery:container.stone=石炉
 
+geomastery:compost.wet=潮湿的
+geomastery:compost.dry=干燥的
+
 geomastery:buildtip.req.none=需要支撑物重量：轻或以上
 geomastery:buildtip.req.light=需要支撑物重量：轻或以上
 geomastery:buildtip.req.medium=需要支撑物重量：中或以上
@@ -362,6 +365,7 @@ geomastery:buildtip.stairs=需要支撑物重量：轻或以上，或与附近�
 geomastery:buildtip.heaping=需要支撑物重量：中或以上，下方对角线有方块支撑
 geomastery:buildtip.heapwall=最高两格，此时底部亦需两格方块支撑
 geomastery:buildtip.sawpit=底部需要两格方块，边角方块重量应为轻或以下
+geomastery:buildtip.weather=暴露在外界空气时会受到风化
 
 geomastery:buildfail.support=下面的方块不能支撑这个重量！
 geomastery:buildfail.obstacle=有一些东西妨碍了这次构造！
@@ -373,20 +377,37 @@ geomastery:buildfail.flatroof=屋顶周围没有支撑物！
 geomastery:buildfail.heapwall=这堵墙不能这么高！
 geomastery:buildfail.ladder=这些梯子得有东西支撑住！
 
+geomastery:configcat.textVisual=文字和图片介绍
+geomastery:configcat.textVisual.tooltip=对可用的文本和图片介绍的更改
+geomastery:configcat.compatibility=兼容性
+geomastery:configcat.compatibility.tooltip-与其他mod兼容
+geomastery:configcat.gameplay=游戏玩法
+geomastery:configcat.gameplay.tooltip=主要的游戏选项
+
 geomastery:config.foodTooltips=食物类型提示
 geomastery:config.foodTooltips.tooltip=在物品提示栏中展示食物种类
 geomastery:config.foodDurability=食物耐久条
 geomastery:config.foodDurability.tooltip=用耐久条中已填充的比例和颜色来显示食物腐烂情况
 geomastery:config.cropTooltips=作物生物群系提示栏
 geomastery:config.cropTooltips.tooltip=在作物的物品提示栏中显示其能生长的生物群系
-geomastery:config.hideVanilla=JEI原版隐藏
-geomastery:config.hideVanilla.tooltip=在JEI中隐藏无用且不可及的原版物品
 geomastery:config.buildTooltips=建筑方块提示栏
 geomastery:config.buildTooltips.tooltip=在建筑方块的物品提示栏中显示其所需者
-geomastery:config.addCrafting=原版合成
-geomastery:config.addCrafting.tooltip=加入原版合成台以及所有默认禁用的合成表
 geomastery:config.buildMessages=建造提示
 geomastery:config.buildMessages.tooltip=当方块放置于无效区域内时在聊天栏中发送提示
+
+geomastery:config.hideVanilla=JEI原版隐藏
+geomastery:config.hideVanilla.tooltip=在JEI中隐藏无用且不可及的原版物品
+geomastery:config.addCrafting=原版合成
+geomastery:config.addCrafting.tooltip=加入原版合成台以及所有默认禁用的合成表
+
+geomastery:configprop.temperature=启用温度
+geomastery:configprop.temperature.tooltip=开启极端炎热和寒冷造成伤害
+geomastery:configprop.speed=启用速度
+geomastery:configprop.speed.tooltip=启用服装和携带物品的减速和冲刺限制
+geomastery:configprop.food=启用食物
+geomastery:configprop.food.tooltip=启用三个不同的食物类型（饥饿条）和相关的健康影响
+geomastery:configprop.inventory=启用库存限制
+geomastery:configprop.inventory.tooltip=启用限制和可变库存大小
 
 geomastery:jeicat.cooking=烹饪
 geomastery:jeicat.fuel=燃料
