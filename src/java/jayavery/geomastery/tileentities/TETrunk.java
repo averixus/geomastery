@@ -122,7 +122,7 @@ public class TETrunk extends TileEntity implements ITickable {
         
         if (!this.isFalling) {
             
-            Thread thread = new Thread(() -> {
+        //    Thread thread = new Thread(() -> {
                 
                 BlockPos origin = this.pos.up();
             
@@ -183,7 +183,7 @@ public class TETrunk extends TileEntity implements ITickable {
                         for (EnumFacing facing : EnumFacing.VALUES) {
     
                             BlockPos toAdd = nextPos.offset(facing);
-    
+
                             if (!checked.contains(toAdd) && !leafQueue.contains(toAdd)) {
     
                                 leafQueue.add(toAdd);
@@ -194,11 +194,11 @@ public class TETrunk extends TileEntity implements ITickable {
 
                 this.isFalling = true;
                 Geomastery.NETWORK.sendToAll(new CPacketTrunkBlocks(this.pos, this.blocks));
-            });
+         //   });
             
-            thread.setDaemon(true);
-            thread.setPriority(Thread.MIN_PRIORITY);
-            thread.start();
+       //     thread.setDaemon(true);
+         //   thread.setPriority(Thread.MIN_PRIORITY);
+        //    thread.start();
         }
     }
     
