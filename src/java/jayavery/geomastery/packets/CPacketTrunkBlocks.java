@@ -10,8 +10,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.collect.Maps;
 import io.netty.buffer.ByteBuf;
+import jayavery.geomastery.blocks.BlockStumpTest;
+import jayavery.geomastery.blocks.BlockTree;
+import jayavery.geomastery.blocks.BlockTreeTest;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TETrunk;
+import jayavery.geomastery.tileentities.TEStump;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -22,7 +25,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 // TEST
-/** Packet for server->client box lid angle syncing. */
+/** Packet for server->client trunk falling syncing. */
 public class CPacketTrunkBlocks implements IMessage {
     
     /** X co-ordinate. */
@@ -55,13 +58,19 @@ public class CPacketTrunkBlocks implements IMessage {
         
         for (int i = 0; i < length; i++) {
             
-            int x = buf.readInt();
-            int y = buf.readInt();
-            int z = buf.readInt();
-            int blockId = buf.readInt();
-            int blockMeta = buf.readInt();
-            BlockPos pos = new BlockPos(x, y, z);
-            IBlockState state = Block.getBlockById(blockId).getStateFromMeta(blockMeta);
+            BlockPos pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+            Block block = Block.getBlockById(buf.readInt());
+            IBlockState state;
+
+            if (block instanceof BlockTree) {
+                
+                state = ((BlockTree) block).deserialiseActualState(buf);
+                
+            } else {
+                
+                state = block.getStateFromMeta(buf.readInt());
+            }
+            
             this.blocks.put(pos, state);
         }
     }
@@ -80,9 +89,18 @@ public class CPacketTrunkBlocks implements IMessage {
             buf.writeInt(pos.getX());
             buf.writeInt(pos.getY());
             buf.writeInt(pos.getZ());
-            Block block = entry.getValue().getBlock();
+            IBlockState state = entry.getValue();
+            Block block = state.getBlock();
             buf.writeInt(Block.getIdFromBlock(block));
-            buf.writeInt(block.getMetaFromState(entry.getValue()));
+            
+            if (block instanceof BlockTree) {
+                
+                ((BlockTree) block).serialiseActualState(state, buf);
+                
+            } else {
+                
+                buf.writeInt(block.getMetaFromState(state));
+            }
         }
     }
     
@@ -98,12 +116,21 @@ public class CPacketTrunkBlocks implements IMessage {
         public void processMessage(CPacketTrunkBlocks message) {
             
             World world = Geomastery.proxy.getClientWorld();
-            TileEntity tileEntity = world.getTileEntity(new
-                    BlockPos(message.x, message.y, message.z));
             
-            if (tileEntity instanceof TETrunk) {
+            BlockPos pos = new BlockPos(message.x, message.y, message.z);
+            
+            IBlockState state = world.getBlockState(pos);
+            
+            if (!state.getValue(BlockStumpTest.FALLING)) {
                 
-                TETrunk tileTrunk = (TETrunk) tileEntity;
+                world.setBlockState(pos, state.withProperty(BlockStumpTest.FALLING, true));
+            }
+            
+            TileEntity tileEntity = world.getTileEntity(pos);
+            
+            if (tileEntity instanceof TEStump) {
+                
+                TEStump tileTrunk = (TEStump) tileEntity;
                 tileTrunk.setBlocks(message.blocks);
             }
         }

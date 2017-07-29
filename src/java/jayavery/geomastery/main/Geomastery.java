@@ -53,7 +53,7 @@ import jayavery.geomastery.tileentities.TEFurnaceClay;
 import jayavery.geomastery.tileentities.TEFurnaceSingle;
 import jayavery.geomastery.tileentities.TEFurnaceStone;
 import jayavery.geomastery.tileentities.TEStorage;
-import jayavery.geomastery.tileentities.TETrunk;
+import jayavery.geomastery.tileentities.TEStump;
 import jayavery.geomastery.utilities.EBlockWeight;
 import jayavery.geomastery.utilities.IProxy;
 import net.minecraft.block.Block;
@@ -221,7 +221,7 @@ public class Geomastery {
         tileentity(TECrop.class, "crop");
         
         // TEST
-        tileentity(TETrunk.class, "trunk");
+        tileentity(TEStump.class, "trunk");
     }
 
     @EventHandler

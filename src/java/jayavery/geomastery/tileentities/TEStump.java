@@ -15,25 +15,26 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.blocks.BlockFacing;
+import jayavery.geomastery.blocks.BlockLeaves;
+import jayavery.geomastery.blocks.BlockStumpTest;
+import jayavery.geomastery.blocks.BlockTree;
+import jayavery.geomastery.blocks.BlockTreeTest;
+import jayavery.geomastery.blocks.BlockTrunkTest;
+import jayavery.geomastery.blocks.BlockTrunkTest.ETrunkAxis;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.packets.CPacketTrunkAngle;
 import jayavery.geomastery.packets.CPacketTrunkBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockLog.EnumAxis;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 // TEST
-public class TETrunk extends TileEntity implements ITickable {
+public class TEStump extends TileEntity implements ITickable {
 
     /** Array of all possible offset BlockPos for tree trunks. */
     private static final BlockPos[] TRUNK_OFFSETS = {new BlockPos(-1, 0, -1), new BlockPos(-1, 1, -1), new BlockPos(-1, 0, 0), new BlockPos(-1, 1, 0), new BlockPos(-1, 0, 1), new BlockPos(-1, 1, 1), new BlockPos(0, 0, -1), new BlockPos(0, 1, -1), new BlockPos(1, 1, 1), new BlockPos(0, 1, 0), new BlockPos(0, 0, 1), new BlockPos(0, 1, 1), new BlockPos(1, 0, -1), new BlockPos(1, 1, -1), new BlockPos(1, 0, 0), new BlockPos(1, 1, 0), new BlockPos(1, 0, 1)};
@@ -43,55 +44,29 @@ public class TETrunk extends TileEntity implements ITickable {
     
     public float angle;
     public float prevAngle;
-    public volatile boolean isFalling = false;
     public Map<BlockPos, IBlockState> blocks = Maps.newHashMap();
     
     @Override
     public void update() {
+        
 
-        if (!this.isFalling || this.world.isRemote) {
-            
+        if (this.world.isRemote) {
+
             return;
         }
         
         this.prevAngle = this.angle;
-        this.angle = Math.min(this.angle == 0 ? 0.1F : this.angle * 1.1F, 90);
-        
-        for (BlockPos pos : this.blocks.keySet()) {
+        this.angle = Math.min(this.angle * 1.1F, 90);
 
-            this.world.setBlockToAir(pos);
-        }
-        
-        BlockPos originPos = BlockPos.ORIGIN;
-        BlockPos newPos = BlockPos.ORIGIN;
-        int rand = this.world.rand.nextInt(this.blocks.entrySet().size());
-        int i = 0;
         for (BlockPos pos : this.blocks.keySet()) {
             
-            if (rand == i) {
-                
-                originPos = pos;
-                BlockPos offset = pos.subtract(this.pos);
-                int x = offset.getX();
-                int y = offset.getY();
-                int z = offset.getZ();
-                BlockPos rotated = new BlockPos(y + 1, -x, z);
-                newPos = rotated.add(this.pos); 
-                break;
-            }
-            
-            i++;
-        }
-        
-        if (this.world.getBlockState(newPos) == this.blocks.get(originPos)) {
-            
-            this.isFalling = false;
+            this.world.setBlockToAir(pos);
         }
         
         if (this.angle >= 90) {
                         
-            EnumFacing fall = this.world.getBlockState(this.pos).getValue(BlockFacing.FACING);
-            
+          //  EnumFacing fall = this.world.getBlockState(this.pos).getValue(BlockFacing.FACING);
+            System.out.println("placing fallen trunk blocks " + this);
             for (Entry<BlockPos, IBlockState> entry : this.blocks.entrySet()) {
                 
                 BlockPos offset = entry.getKey().subtract(this.pos);
@@ -102,25 +77,31 @@ public class TETrunk extends TileEntity implements ITickable {
                 BlockPos rotated = new BlockPos(y + 1, -x, z);
                 BlockPos result = rotated.add(this.pos);                
                 IBlockState state = entry.getValue();
+                Block block = state.getBlock();
                 
-                if (state.getBlock() instanceof BlockLog) {
+                if (block instanceof BlockTree && ((BlockTree) block).hasFallen()) {
                     
-                    state = state.withProperty(BlockLog.LOG_AXIS, EnumAxis.X);
+                    state = ((BlockTree) block).getFallen().getDefaultState().withProperty(BlockTrunkTest.AXIS, ETrunkAxis.X_AXIS);
                 }
                 
                 this.world.setBlockState(result, state);
             }
-            
-         //   this.isFalling = false;
+            System.out.println("setting trunk not falling " + this);
+            IBlockState thisState = this.world.getBlockState(this.pos);
+            this.world.setBlockState(this.pos, thisState.withProperty(BlockTree.FALLING, false));
         }
 
         Geomastery.NETWORK.sendToAll(new CPacketTrunkAngle(this.angle,
-                this.prevAngle, this.isFalling, this.pos));
+                this.prevAngle, this.pos));
     }
     
     public void fall(EnumFacing direction) {
+
+        IBlockState thisState = this.world.getBlockState(this.pos);
+        System.out.println("fall event " + this + " state is " + thisState);
+        this.blocks = Maps.newHashMap();
         
-        if (!this.isFalling) {
+
             
         //    Thread thread = new Thread(() -> {
                 
@@ -131,7 +112,7 @@ public class TETrunk extends TileEntity implements ITickable {
                 Queue<BlockPos> trunkQueue = new LinkedList<BlockPos>();
                 Queue<BlockPos> leafQueue = new LinkedList<BlockPos>();
     
-                if (this.world.getBlockState(origin).getBlock() instanceof BlockLog) {
+                if (this.world.getBlockState(origin).getBlock() instanceof BlockTree) {
     
                     trunkQueue.add(origin);
     
@@ -147,9 +128,9 @@ public class TETrunk extends TileEntity implements ITickable {
                     Block nextBlock = nextState.getBlock();
                     checked.add(nextPos);
     
-                    if (nextBlock instanceof BlockLog) {
+                    if (nextBlock instanceof BlockTree) {
     
-                        this.blocks.put(nextPos, nextState);
+                        this.blocks.put(nextPos, nextState.getActualState(this.world, nextPos));
     
                         for (BlockPos offset : TRUNK_OFFSETS) {
     
@@ -191,22 +172,22 @@ public class TETrunk extends TileEntity implements ITickable {
                         }
                     }
                 }
-
-                this.isFalling = true;
+System.out.println("setting trunk falling " + this);
+                this.angle = 0.1F;
+              //  this.world.setBlockState(this.pos, thisState.withProperty(BlockStump.FALLING, true));
+                System.out.println("sending blocks " + this.blocks);
                 Geomastery.NETWORK.sendToAll(new CPacketTrunkBlocks(this.pos, this.blocks));
          //   });
             
        //     thread.setDaemon(true);
          //   thread.setPriority(Thread.MIN_PRIORITY);
         //    thread.start();
-        }
     }
     
-    public void setState(float angle, float prevAngle, boolean isFalling) {
+    public void setState(float angle, float prevAngle) {
 
         this.angle = angle;
         this.prevAngle = prevAngle;
-        this.isFalling = isFalling;
     }
     
     public void setBlocks(Map<BlockPos, IBlockState> blocks) {

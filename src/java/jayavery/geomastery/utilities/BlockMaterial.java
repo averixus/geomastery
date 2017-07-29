@@ -23,6 +23,8 @@ public class BlockMaterial extends Material {
     public static final BlockMaterial SOIL =                    new BlockMaterial(MapColor.DIRT, true, true, false, false, false, false, false);
     /** Blockfruit material. */
     public static final BlockMaterial FRUIT =                   new BlockMaterial(MapColor.GREEN, false, true, true, true, false, false, false);
+    /** Tree material. */
+    public static final BlockMaterial TREES =                   new BlockMaterial(MapColor.WOOD, true, false, true, true, false, true, false);
     
     /** Whether this material is solid. */
     private final boolean isSolid;

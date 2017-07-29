@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "geomastery:trees/tree_giant",
+        "textures": {
+            "bark": "geomastery:blocks/trees/barksize34oak",
+            "cross": "geomastery:blocks/trees/crosssize4oak",
+            "edgegrain": "geomastery:blocks/trees/edgegrainoak"
+        }
+    },
+    "variants": {
+        "type": {
+            "oak": {},
+            "birch": {}
+        },
+        "facing": {
+            "north": {},
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
+        "inventory": [{}]
+    }
+}

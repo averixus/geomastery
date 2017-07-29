@@ -1,0 +1,32 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "geomastery:trees/stump_medium",
+        "textures": {
+            "stump": "geomastery:blocks/trees/stumpsize2oak",
+            "cross": "geomastery:blocks/trees/crosssize2oak",
+            "all": "geomastery:blocks/trees/leavesoak"
+        }
+    },
+    "variants": {
+        "type": {
+            "oak": {},
+            "birch": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize2birch",
+                    "cross": "geomastery:blocks/trees/crosssize2birch",
+                    "all": "geomastery:blocks/trees/leavesbirch"
+                }
+            }
+        },
+        "falling": {
+            "false": {},
+            "true": {}
+        },
+        "leaves": {
+            "true": { "submodel": { "leaves": { "model": "cube_all" } } },
+            "false": {}
+        },
+        "inventory": [{}]
+    }
+}

@@ -16,8 +16,10 @@ import jayavery.geomastery.worldgen.WorldGenStone;
 import jayavery.geomastery.worldgen.WorldGenTar;
 import jayavery.geomastery.worldgen.WorldGenTreeApple;
 import jayavery.geomastery.worldgen.WorldGenTreeBanana;
+import jayavery.geomastery.worldgen.WorldGenTreeBirchMedium;
 import jayavery.geomastery.worldgen.WorldGenTreeOrange;
 import jayavery.geomastery.worldgen.WorldGenTreePear;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -29,6 +31,7 @@ import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent.EventType;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -164,5 +167,34 @@ public class WorldGenerator implements IWorldGenerator {
 
             event.setResult(Event.Result.DENY);
         }
+    }
+    
+    // TEST
+    @SubscribeEvent
+    public void saplingGrow(SaplingGrowTreeEvent event) {
+        
+        event.setResult(Result.DENY);
+        World world = event.getWorld();
+        Random rand = world.rand;
+        BlockPos pos = event.getPos();
+        
+ //       switch (rand.nextInt(4)) {
+            
+   //         case 0:
+          //      new WorldGenTreeOakSmall(world, rand, true).generateTree(pos);
+     //           return;
+ //           case 1:
+     //           new WorldGenTreeOakMedium(world, rand, true).generateTree(pos);
+  //              return;
+//            case 2:
+         //       new WorldGenTreeOakLarge(world, rand, true).generateTree(pos);  
+ //               return;
+ //           case 3:
+        //        new WorldGenTreeOakGiant(world, rand, true).generateTree(pos);
+     //           return;
+//        }
+        
+   //     new WorldGenTreeBirchSmall(world, rand, true).generateTree(pos);
+        new WorldGenTreeBirchMedium(world, rand, true).generateTree(pos);
     }
 }

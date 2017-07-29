@@ -39,7 +39,8 @@ import jayavery.geomastery.blocks.BlockSolid;
 import jayavery.geomastery.blocks.BlockStairsComplex;
 import jayavery.geomastery.blocks.BlockStairsStraight;
 import jayavery.geomastery.blocks.BlockTar;
-import jayavery.geomastery.blocks.BlockTrunk;
+import jayavery.geomastery.blocks.BlockTree;
+import jayavery.geomastery.blocks.BlockTrunkTest;
 import jayavery.geomastery.blocks.BlockVault;
 import jayavery.geomastery.blocks.BlockVaultDoubling;
 import jayavery.geomastery.blocks.BlockWall;
@@ -100,7 +101,34 @@ public class GeoBlocks {
     public static BlockFluidBase tar;
     
     // TEST
-    public static final BlockTrunk TRUNK = makeItemBuilding(new BlockTrunk());
+    
+  //  public static final BlockStumpTest.Small STUMP_SMALL = makeItemBuilding(new BlockStumpTest.Small("stump_small"));
+ //   public static final BlockTreeTest TREE_SMALL = makeItemBuilding(new BlockTreeTest("tree_small", () -> null));
+    
+ //   public static final BlockStumpTest STUMP_MEDIUM = makeItemBuilding(new BlockStumpTest("stump_medium"));
+    public static final BlockTrunkTest TRUNK_MEDIUM = makeItemBuilding(new BlockTrunkTest("trunk_medium"));
+ //   public static final BlockTreeTest TREE_MEDIUM = makeItemBuilding(new BlockTreeTest("tree_medium", () -> TRUNK_MEDIUM));
+    
+ //   public static final BlockStumpTest STUMP_LARGE = makeItemBuilding(new BlockStumpTest("stump_large"));
+    public static final BlockTrunkTest TRUNK_LARGE = makeItemBuilding(new BlockTrunkTest("trunk_large"));
+  //  public static final BlockTreeTest TREE_LARGE = makeItemBuilding(new BlockTreeTest("tree_large", () -> TRUNK_LARGE));
+    
+ //   public static final BlockStumpTest STUMP_GIANT = makeItemBuilding(new BlockStumpTest("stump_giant"));
+ //   public static final BlockTrunkTest TRUNK_GIANT = makeItemBuilding(new BlockTrunkTest("trunk_giant"));
+ //   public static final BlockTreeTest TREE_GIANT = makeItemBuilding(new BlockTreeTest("tree_giant", () -> TRUNK_GIANT));
+    
+    public static final BlockTree STUMP_SMALL = makeItemless(new BlockTree("stump_small", true, false, false, null));
+    public static final BlockTree TREE_SMALL = makeItemless(new BlockTree("tree_small", true, false, false, null));
+    
+    public static final BlockTree STUMP_MEDIUM = makeItemless(new BlockTree("stump_medium", true, false, true, null));
+    public static final BlockTree TREE_MEDIUM = makeItemless(new BlockTree("tree_medium", true, false, false, () -> TRUNK_MEDIUM));
+    
+    public static final BlockTree STUMP_LARGE = makeItemless(new BlockTree("stump_large", false, false, true, null));
+    public static final BlockTree TREE_LARGE = makeItemless(new BlockTree("tree_large", false, false, false, () -> TRUNK_LARGE));
+    
+    public static final BlockTree STUMP_GIANT = makeItemless(new BlockTree("stump_giant", false, true, true, null));
+    public static final BlockTree TREE_GIANT = makeItemless(new BlockTree("tree_giant", false, true, false, () -> TRUNK_LARGE));    
+    
     public static final BlockLeaves LEAF = makeItemBlock(new BlockLeaves("leaves"));
     
     // Beds

@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "geomastery:trees/stump_large",
+            "textures": {
+                "stump": "geomastery:blocks/trees/stumpsize34oak",
+                "cross": "geomastery:blocks/trees/crosssize3oak"
+            }
+    },
+    "variants": {
+        "type": {
+            "oak": {},
+            "birch": {}
+        },
+        "falling": {
+            "false": {},
+            "true": {}
+        },
+        "inventory": [{}]
+    }
+}

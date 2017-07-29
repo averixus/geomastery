@@ -8,8 +8,8 @@ package jayavery.geomastery.render.tileentity;
 
 import java.util.Map.Entry;
 import org.lwjgl.opengl.GL11;
-import jayavery.geomastery.blocks.BlockFacing;
-import jayavery.geomastery.tileentities.TETrunk;
+import jayavery.geomastery.blocks.BlockStumpTest;
+import jayavery.geomastery.tileentities.TEStump;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -29,14 +28,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 // TEST
-public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
+public class RenderStump extends TileEntitySpecialRenderer<TEStump> {
 
     @Override
-    public void renderTileEntityAt(TETrunk te, double x, double y,
+    public void renderTileEntityAt(TEStump te, double x, double y,
             double z, float tick, int damage) {
-        
-        IBlockState state = te.getWorld().getBlockState(te.getPos());
-        EnumFacing fallDir = state.getValue(BlockFacing.FACING);
+
+        IBlockState state = te.getWorld().getBlockState(te.getPos()).getActualState(te.getWorld(), te.getPos());
+        EnumFacing fallDir = /*state.getValue(BlockFacing.FACING)*/ EnumFacing.EAST;
 
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         GlStateManager.pushMatrix();
@@ -77,13 +76,10 @@ public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
         BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         BlockModelRenderer render = dispatcher.getBlockModelRenderer();
         World world = te.getWorld();
-        
-        if (te.isFalling) {
-            
-            for (Entry<BlockPos, IBlockState> entry : te.blocks.entrySet()) {
 
-                render.renderModel(world, dispatcher.getModelForState(entry.getValue()), entry.getValue(), entry.getKey(), vb, false);
-            }
+        for (Entry<BlockPos, IBlockState> entry : te.blocks.entrySet()) {
+
+            render.renderModel(world, dispatcher.getModelForState(entry.getValue()), entry.getValue(), entry.getKey(), vb, false);
         }
         
         tess.draw();
@@ -94,8 +90,7 @@ public class RenderTrunk extends TileEntitySpecialRenderer<TETrunk> {
         GlStateManager.disableLighting();
         GlStateManager.translate(x - pos.getX(), y - pos.getY(), z - pos.getZ());
         vb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        IBlockState trunk = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, EnumType.JUNGLE);
-        render.renderModel(world, dispatcher.getModelForState(trunk), trunk, pos, vb, false);
+        render.renderModel(world, dispatcher.getModelForState(state), state, pos, vb, false);
         tess.draw();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();

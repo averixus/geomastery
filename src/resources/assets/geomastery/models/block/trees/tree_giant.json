@@ -1,0 +1,54 @@
+{
+"textures": {
+    "particle": "#bark"
+},
+"elements": [ 
+{
+    "from": [ 8, 0, 0 ],
+    "to": [ 16, 16, 10 ],
+    "faces": {
+        "down":  { "uv": [ 16, 16, 8, 6 ], "rotation": 180, "texture": "#cross" },
+        "up":    { "uv": [ 6, 8, 16, 16 ], "rotation": 270, "texture": "#cross" },
+        "north": { "uv": [ 3, 0, 11, 16 ], "texture": "#edgegrain" },
+        "south": { "uv": [ 8, 0, 16, 16 ], "texture": "#bark" },
+        "west":  { "uv": [ 0, 0, 10, 16 ], "texture": "#bark" },
+        "east":  { "uv": [ 0, 0, 10, 16 ], "texture": "#edgegrain" }
+    }
+},
+{
+    "from": [ 4, 0, 0 ],
+    "to": [ 6, 16, 4 ],
+    "faces": {
+        "down":  { "uv": [ 6, 16, 4, 12 ], "rotation": 180, "texture": "#cross" },
+        "up":    { "uv": [ 8, 6, 12, 8 ], "rotation": 270, "texture": "#cross" },
+        "north": { "uv": [ 10, 0, 12, 16 ], "texture": "#edgegrain" },
+        "south": { "uv": [ 4, 0, 6, 16 ], "texture": "#bark" },
+        "west":  { "uv": [ 0, 0, 4, 16 ], "texture": "#bark" },
+        "east":  { "uv": [ 12, 0, 16, 16 ], "texture": "#edgegrain" }
+    }
+},
+{
+    "from": [ 6, 0, 0 ],
+    "to": [ 8, 16, 8 ],
+    "faces": {
+        "down":  { "uv": [ 8, 16, 6, 8 ], "rotation": 180, "texture": "#cross" },
+        "up":    { "uv": [ 8, 6, 16, 8 ], "rotation": 270, "texture": "#cross" },
+        "north": { "uv": [ 8, 0, 10, 16 ], "texture": "#edgegrain" },
+        "south": { "uv": [ 6, 0, 8, 16 ], "texture": "#bark" },
+        "west":  { "uv": [ 0, 0, 8, 16 ], "texture": "#bark" }
+    }
+},
+{
+    "from": [ 12, 0, 10 ],
+    "to": [ 16, 16, 12 ],
+    "faces": {
+        "down":  { "uv": [ 16, 6, 12, 4 ], "rotation": 180, "texture": "#cross" },
+        "up":    { "uv": [ 6, 8, 8, 12 ], "rotation": 270, "texture": "#cross" },
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#edgegrain" },
+        "south": { "uv": [ 0, 0, 4, 16 ], "texture": "#bark" },
+        "west":  { "uv": [ 10, 0, 12, 16 ], "texture": "#bark" },
+        "east":  { "uv": [ 10, 0, 12, 16 ], "rotation": 180, "texture": "#edgegrain" }
+    }
+}
+]
+}

@@ -1,0 +1,26 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "geomastery:trees/trunk_large"
+    },
+    "variants": {
+        "type": {
+            "oak": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize34oak",
+                    "cross": "geomastery:blocks/trees/crosssize3oak",
+                    "all": "geomastery:blocks/trees/leavesoak"
+                }
+            }
+        },
+        "axis": {
+            "x_axis": { "y": 90 },
+            "z_axis": {}
+        },
+        "leaves": {
+            "true": { "submodel": { "leaves": { "model": "cube_all" } } },
+            "false": {}
+        },
+        "inventory": [{}]
+    }
+}

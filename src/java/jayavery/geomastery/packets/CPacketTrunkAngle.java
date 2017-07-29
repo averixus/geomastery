@@ -8,7 +8,7 @@ package jayavery.geomastery.packets;
 
 import io.netty.buffer.ByteBuf;
 import jayavery.geomastery.main.Geomastery;
-import jayavery.geomastery.tileentities.TETrunk;
+import jayavery.geomastery.tileentities.TEStump;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+// TEST
 /** Packet for server->client box lid angle syncing. */
 public class CPacketTrunkAngle implements IMessage {
     
@@ -24,7 +25,7 @@ public class CPacketTrunkAngle implements IMessage {
     /** Angle of the lid last tick. */
     protected float prevAngle;
     /** Whether the trunk is falling. */
-    protected boolean isFalling;
+  //  protected boolean isFalling;
     /** X co-ordinate. */
     protected int x;
     /** Y co-ordinate. */
@@ -34,11 +35,11 @@ public class CPacketTrunkAngle implements IMessage {
     
     public CPacketTrunkAngle() {}
     
-    public CPacketTrunkAngle(float angle, float prevAngle, boolean isFalling, BlockPos pos) {
+    public CPacketTrunkAngle(float angle, float prevAngle, BlockPos pos) {
         
         this.angle = angle;
         this.prevAngle = prevAngle;
-        this.isFalling = isFalling;
+      //  this.isFalling = isFalling;
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
@@ -49,7 +50,7 @@ public class CPacketTrunkAngle implements IMessage {
         
         this.angle = buf.readFloat();
         this.prevAngle = buf.readFloat();
-        this.isFalling = buf.readBoolean();
+      //  this.isFalling = buf.readBoolean();
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();
@@ -60,7 +61,7 @@ public class CPacketTrunkAngle implements IMessage {
         
         buf.writeFloat(this.angle);
         buf.writeFloat(this.prevAngle);
-        buf.writeBoolean(this.isFalling);
+     //   buf.writeBoolean(this.isFalling);
         buf.writeInt(this.x);
         buf.writeInt(this.y);
         buf.writeInt(this.z);
@@ -81,10 +82,10 @@ public class CPacketTrunkAngle implements IMessage {
             TileEntity tileEntity = world.getTileEntity(new
                     BlockPos(message.x, message.y, message.z));
             
-            if (tileEntity instanceof TETrunk) {
+            if (tileEntity instanceof TEStump) {
                 
-                TETrunk tileTrunk = (TETrunk) tileEntity;
-                tileTrunk.setState(message.angle, message.prevAngle, message.isFalling);
+                TEStump tileTrunk = (TEStump) tileEntity;
+                tileTrunk.setState(message.angle, message.prevAngle);
             }
         }
     }

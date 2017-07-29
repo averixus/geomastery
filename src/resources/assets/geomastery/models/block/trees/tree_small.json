@@ -1,0 +1,20 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "particle": "#endgrain"
+},
+"elements": [ 
+{
+    "from": [ 7, 0, 7 ],
+    "to": [ 9, 16, 9 ],
+    "faces": {
+        "down":  { "uv": [ 9, 9, 7, 7 ], "texture": "#endgrain" },
+        "up":    { "uv": [ 13, 14, 15, 16 ], "texture": "#endgrain" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#bark" },
+        "south": { "uv": [ 2, 0, 4, 16 ], "texture": "#bark" },
+        "west":  { "uv": [ 9, 0, 11, 16 ], "texture": "#bark" },
+        "east":  { "uv": [ 10, 0, 12, 16 ], "texture": "#bark" }
+    }
+}
+]
+}

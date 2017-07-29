@@ -1,0 +1,25 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all"
+    },
+    "variants": {
+        "type": {
+            "oak": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leavesoak"
+                }
+            },
+            "birch": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leavesbirch"
+                }
+            }
+        },
+        "node": {
+            "false": {},
+            "true": {}
+        },
+        "inventory": [{}]
+    }
+}

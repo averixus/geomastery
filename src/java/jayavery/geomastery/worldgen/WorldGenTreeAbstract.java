@@ -6,6 +6,7 @@
  ******************************************************************************/
 package jayavery.geomastery.worldgen;
 
+import java.util.Collection;
 import java.util.Random;
 import jayavery.geomastery.blocks.BlockSeedling;
 import net.minecraft.block.state.IBlockState;
@@ -86,6 +87,106 @@ public abstract class WorldGenTreeAbstract extends WorldGenAbstract {
         } else {
             
             this.world.setBlockState(pos, state, 2);
+        }
+    }
+    
+    protected void layerCorners(BlockPos centre, int radius, Collection<BlockPos> leaves, ECornerAmount corners) {
+        
+        for (int x = -radius; x <= radius; x++) {
+            
+            for (int z = -radius; z <= radius; z++) {
+                
+                int sum = Math.abs(x) + Math.abs(z);
+                
+                if (sum == 2 * radius) {
+                    
+                    if (corners.placeOuter(this.rand)) {
+                        
+                        leaves.add(centre.add(x, 0, z));
+                    }
+                    
+                } else if (sum == (2 * radius) - 1) {
+                    
+                    if (corners.placeInner(this.rand)) {
+                        
+                        leaves.add(centre.add(x, 0, z));
+                    }
+                    
+                } else {
+                    
+                    leaves.add(centre.add(x, 0, z));
+                }
+            }
+        }
+    }
+    
+    protected void layerOutsides(BlockPos centre, int radius, Collection<BlockPos> leaves, int outsideChance) {
+        
+        for (int x = -radius; x <= radius; x++) {
+            
+            for (int z = -radius; z <= radius; z++) {
+                
+                int sum = Math.abs(x) + Math.abs(z);
+                
+                if (sum == radius) {
+                    
+                    if (this.rand.nextInt(outsideChance) == 0) {
+                        
+                        leaves.add(centre.add(x, 0, z));
+                    }
+                    
+                } else if (sum < radius) {
+                    
+                    leaves.add(centre.add(x, 0, z));
+                }
+            }
+        }
+    }
+
+    protected void layerPoints(BlockPos centre, int radius, Collection<BlockPos> leaves, int pointChance) {
+        
+        for (int x = -radius; x <= radius; x++) {
+            
+            for (int z = -radius; z <= radius; z++) {
+                
+                int sum = Math.abs(x) + Math.abs(z);
+                
+                if (sum > radius) {
+                    
+                } else if (Math.abs(x) == radius || Math.abs(z) == radius) {
+                    
+                    if (this.rand.nextInt(pointChance) == 0) {
+                        
+                        leaves.add(centre.add(x, 0, z));
+                    }
+                    
+                } else {
+                    
+                    leaves.add(centre.add(x, 0, z));
+                }
+            }
+        }
+    }
+    
+    protected enum ECornerAmount {
+        
+        OUTER_CHANCE, OUTER_REMOVED, INNER_CHANCE;
+        
+        public boolean placeOuter(Random rand) {
+            
+            return this == OUTER_CHANCE && rand.nextInt(2) == 0;
+        }
+        
+        public boolean placeInner(Random rand) {
+            
+            switch (this) {
+                case OUTER_CHANCE: default:
+                    return true;
+                case OUTER_REMOVED:
+                    return true;
+                case INNER_CHANCE:
+                    return rand.nextInt(2) == 0;
+            }
         }
     }
 }

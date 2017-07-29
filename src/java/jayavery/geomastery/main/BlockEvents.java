@@ -10,7 +10,6 @@ import jayavery.geomastery.blocks.BlockSolid;
 import jayavery.geomastery.items.ItemAxe;
 import jayavery.geomastery.items.ItemPickaxe;
 import jayavery.geomastery.items.ItemSimple;
-import jayavery.geomastery.tileentities.TETrunk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFalling;
@@ -31,6 +30,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -367,13 +367,12 @@ public class BlockEvents {
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         
-        if (block instanceof BlockLog && world.getBlockState(pos.down()).getBlock() == GeoBlocks.TRUNK) {
+        if (block instanceof BlockLog && world.getBlockState(pos.down()).getBlock() == GeoBlocks.STUMP_MEDIUM) {
 
             // TEST TreeFallUtils.fellTree(world, pos, event.getPlayer()
                   //  .getHorizontalFacing().rotateY());
-            System.out.println("falling event");
-            event.setCanceled(true);
-            ((TETrunk) world.getTileEntity(pos.down())).fall(event.getPlayer().getHorizontalFacing().rotateY());
+     //       event.setCanceled(true);
+    //        ((TEStump) world.getTileEntity(pos.down())).fall(event.getPlayer().getHorizontalFacing().rotateY());
         }
     }    
 }

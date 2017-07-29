@@ -12,28 +12,40 @@ import java.util.Random;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import jayavery.geomastery.utilities.EToolType;
+import jayavery.geomastery.utilities.ETreeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 // TEST
 public class BlockLeaves extends BlockNew {
 
     public static final PropertyBool NODE = PropertyBool.create("node");
+    public static final PropertyEnum<ETreeType> TYPE = PropertyEnum.create("type", ETreeType.class);
     
     public BlockLeaves(String name) {
         
         super(Material.LEAVES, name, CreativeTabs.DECORATIONS,
                 0.2F, EToolType.MACHETE);
+        this.setTickRandomly(true);
+        this.setLightOpacity(1);
     }
     
     @Override
@@ -57,21 +69,45 @@ public class BlockLeaves extends BlockNew {
     }
     
     @Override
+    public void onEntityWalk(World world, BlockPos pos, Entity entity) {
+        
+        entity.motionX *= 0.2;
+        entity.motionZ *= 0.2;
+    }
+    
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        
+        return Blocks.LEAVES.isOpaqueCube(state);
+    }
+    
+    @Override @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer() {
+        
+        return Blocks.LEAVES.getBlockLayer();
+    }
+    
+    @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, NODE);
+        return new BlockStateContainer(this, NODE, TYPE);
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
         
-        return state.getValue(NODE) ? 1 : 0;
+        int meta = state.getValue(NODE) ? 8 : 0;
+        meta += state.getValue(TYPE).ordinal();
+        return meta;
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
-        return this.getDefaultState().withProperty(NODE, meta > 0);
+        IBlockState state = this.getDefaultState();
+        state = state.withProperty(NODE, (meta & 8) > 0);
+        state = state.withProperty(TYPE, ETreeType.values()[meta % 8]);
+        return state;
     }
 
     private void tryFall(World world, BlockPos pos, IBlockState state) {
@@ -86,19 +122,20 @@ public class BlockLeaves extends BlockNew {
                 
                 BlockPos nextPos = checkQueue.remove();
                 IBlockState nextState = world.getBlockState(nextPos);
+                Block nextBlock = nextState.getBlock();
                 checked.add(nextPos);
                 
-                if (nextState.getBlock() instanceof BlockLog) {
+                if (nextBlock instanceof BlockTree) {
                     
                     return;
                     
-                } else if (nextState.getBlock() == this && nextState.getValue(NODE)) {
+                } else if (nextBlock == this && nextState.getValue(NODE)) {
                     
                     for (EnumFacing facing : EnumFacing.VALUES) {
                         
                         BlockPos toAdd = nextPos.offset(facing);
                         
-                        if (!checked.contains(toAdd) && !checkQueue.contains(toAdd) && Math.sqrt(pos.distanceSq(toAdd)) < 10) {
+                        if (!checked.contains(toAdd) && !checkQueue.contains(toAdd) && Math.sqrt(pos.distanceSq(toAdd)) < 8) {
                             
                             checkQueue.add(toAdd);
                         }
@@ -115,10 +152,11 @@ public class BlockLeaves extends BlockNew {
                 
                 BlockPos nextPos = checkQueue.remove();
                 IBlockState nextState = world.getBlockState(nextPos);
+                Block nextBlock = nextState.getBlock();
                 checked.add(nextPos);
                 
-                if ((nextState.getBlock() == this && nextState.getValue(NODE))
-                        || nextState.getBlock() instanceof BlockLog) {
+                if ((nextBlock == this && nextState.getValue(NODE)) ||
+                        (nextBlock instanceof BlockTree)) {
                     
                     return;
                     
@@ -128,7 +166,7 @@ public class BlockLeaves extends BlockNew {
                         
                         BlockPos toAdd = nextPos.offset(facing);
                         
-                        if (!checked.contains(toAdd) && !checkQueue.contains(toAdd) && Math.sqrt(pos.distanceSq(toAdd)) < 5) {
+                        if (!checked.contains(toAdd) && !checkQueue.contains(toAdd) && Math.sqrt(pos.distanceSq(toAdd)) < 4) {
                             
                             checkQueue.add(toAdd);
                         }
@@ -142,7 +180,7 @@ public class BlockLeaves extends BlockNew {
     
     private void fall(World world, BlockPos pos, IBlockState state) {
         
-if (world.isRemote) {
+        if (world.isRemote) {
             
             return;
         }
