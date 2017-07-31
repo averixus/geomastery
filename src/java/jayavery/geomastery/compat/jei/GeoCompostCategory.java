@@ -173,8 +173,7 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
         static final List<List<ItemStack>> outputs = Lists.newArrayList();
         static { 
             NonNullList<ItemStack> allCompost = NonNullList.create();
-            GeoItems.COMPOST.getSubItems(GeoItems.COMPOST,
-                    CreativeTabs.MATERIALS, allCompost);
+            GeoItems.COMPOST.getSubItems(CreativeTabs.MATERIALS, allCompost);
             outputs.add(allCompost);
         }
 
@@ -197,7 +196,7 @@ public class GeoCompostCategory extends BlankRecipeCategory<Wrapper> {
         public void drawInfo(Minecraft minecraft, int width, int height,
                 int mouseX, int mouseY) {
             
-            minecraft.fontRendererObj.drawString("Type: " +
+            minecraft.fontRenderer.drawString("Type: " +
                     I18n.format(this.recipe.type.getName()), STRING_X, String_Y,
                     this.recipe.type.getColour().getRGB());
         }

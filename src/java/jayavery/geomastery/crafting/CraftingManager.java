@@ -108,8 +108,7 @@ public class CraftingManager {
             }
         }
 
-        ShapedRecipe recipe =
-                new ShapedRecipe(j, k, stackArray, stack);
+        ShapedRecipe recipe = ShapedRecipe.create(j, k, stackArray, stack);
         this.recipes.add(recipe);
 
         return recipe;

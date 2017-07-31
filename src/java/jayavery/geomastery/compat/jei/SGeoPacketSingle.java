@@ -56,7 +56,7 @@ public class SGeoPacketSingle implements IMessage {
         public IMessage onMessage(SGeoPacketSingle message,
                 MessageContext ctx) {
             
-            ctx.getServerHandler().playerEntity.getServer()
+            ctx.getServerHandler().player.getServer()
                     .addScheduledTask(() -> processMessage(message, ctx));
             return null;
         }
@@ -65,7 +65,7 @@ public class SGeoPacketSingle implements IMessage {
                 MessageContext ctx) {
             
             Container container = ctx.getServerHandler()
-                    .playerEntity.openContainer;
+                    .player.openContainer;
             Slot space = container.getSlot(message.space);
             Slot input = container.getSlot(message.input);
             

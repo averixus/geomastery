@@ -22,8 +22,8 @@ public class RenderBox
     private ModelBox model = new ModelBox();
     
     @Override
-    public void renderTileEntityAt(TEStorage.Box te, double x, double y,
-            double z, float ticks, int destroyStage) {
+    public void render(TEStorage.Box te, double x, double y,
+            double z, float ticks, int destroyStage, float alpha) {
                 
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);

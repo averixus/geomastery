@@ -347,7 +347,7 @@ public class GeoItems {
         @Override @SideOnly(Side.CLIENT)
         public void displayAllRelevantItems(NonNullList<ItemStack> list) {
             
-            GeoItems.ITEMS.forEach((i) -> i.getSubItems(i, this, list));
+            GeoItems.ITEMS.forEach((i) -> i.getSubItems(this, list));
         }
     };
     

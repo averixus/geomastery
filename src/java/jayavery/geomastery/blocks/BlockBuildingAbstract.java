@@ -12,20 +12,18 @@ import com.google.common.collect.Lists;
 import jayavery.geomastery.items.ItemPlacing;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.EBlockWeight;
-import jayavery.geomastery.utilities.EToolType;
 import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
@@ -185,8 +183,8 @@ public abstract class BlockBuildingAbstract<I extends ItemPlacing> extends Block
     /** Adds this block's build reqs to the tooltip if config. Default
      * implementation uses {@code getWeight} for requires and supports. */
     @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World world,
+            List<String> tooltip, ITooltipFlag advanced) {
         
         if (GeoConfig.textVisual.buildTooltips) {
         

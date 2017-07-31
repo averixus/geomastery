@@ -79,12 +79,12 @@ public class ItemCompost extends ItemSimple {
     // Puts variants in creative inventory
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item item, CreativeTabs tab,
+    public void getSubItems(CreativeTabs tab,
             NonNullList<ItemStack> subItems) {
         
         for (int i = 1; i < 6; i++) {
             
-            subItems.add(new ItemStack(item, 1, i));
+            subItems.add(new ItemStack(this, 1, i));
         }
     }
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
+import jayavery.geomastery.blocks.BlockTar;
 import jayavery.geomastery.compat.jei.SGeoPacketSingle;
 import jayavery.geomastery.entities.FallingTreeBlock;
 import jayavery.geomastery.entities.projectile.EntityArrowBronze;
@@ -65,6 +66,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -83,11 +85,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.common.versioning.Restriction;
 import net.minecraftforge.fml.common.versioning.VersionRange;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.registries.IForgeRegistry;
 
 /** Main Geomastery mod class. */
 @Mod(modid = Geomastery.MODID, version = Geomastery.VERSION, name = Geomastery.NAME, acceptedMinecraftVersions = Geomastery.MC_VER, updateJSON = Geomastery.UPDATE)
@@ -117,8 +119,13 @@ public class Geomastery {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
               
-        LOG.info("Registering blocks");
         IForgeRegistry<Block> registry = event.getRegistry();
+        
+        Geomastery.LOG.info("Registering fluids");
+        FluidRegistry.registerFluid(GeoBlocks.tarFluid);
+        registry.register(GeoBlocks.tar = GeoBlocks.makeItemless(new BlockTar()));
+        
+        LOG.info("Registering blocks");
         GeoBlocks.BLOCKS.forEach(registry::register);
     }
     
@@ -140,7 +147,6 @@ public class Geomastery {
     @EventHandler
     public static void preInit(FMLPreInitializationEvent e) {
 
-        CraftingManager.getInstance().getRecipeList().clear();
         GeoBlocks.preInit();
         EBlockWeight.preInit();
         GeoItems.preInit();

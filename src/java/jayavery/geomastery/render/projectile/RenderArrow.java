@@ -6,9 +6,9 @@
  ******************************************************************************/
 package jayavery.geomastery.render.projectile;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -55,7 +55,7 @@ public class RenderArrow extends Render<EntityArrow> {
                 partialTicks, 0.0F, 0.0F, 1.0F);
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder vertexbuffer = tessellator.getBuffer();
 
         GlStateManager.enableRescaleNormal();
 

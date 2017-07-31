@@ -14,6 +14,7 @@ import jayavery.geomastery.main.GeoCaps;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.EFoodType;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -101,8 +102,8 @@ public class ItemEdible extends ItemFood {
     
     // Adds this item's food type to the tooltip if config
     @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World world,
+            List<String> tooltip, ITooltipFlag advanced) {
         
         if (GeoConfig.textVisual.foodTooltips) {
             

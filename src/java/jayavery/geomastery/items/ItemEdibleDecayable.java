@@ -18,6 +18,7 @@ import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.utilities.EFoodType;
 import jayavery.geomastery.utilities.Lang;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -124,8 +125,8 @@ public class ItemEdibleDecayable extends ItemEdible {
 
     // Adds this item's food type to the tooltip if config
     @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World world,
+            List<String> tooltip, ITooltipFlag advanced) {
         
         if (stack.hasCapability(GeoCaps.CAP_DECAY, null)) {
             
@@ -214,7 +215,7 @@ public class ItemEdibleDecayable extends ItemEdible {
     
     // Adds fresh and rotten stacks to creative
     @SideOnly(Side.CLIENT) @Override
-    public void getSubItems(Item item, CreativeTabs tab,
+    public void getSubItems(CreativeTabs tab,
             NonNullList<ItemStack> list) {
         
         list.add(ItemSimple.newStack(this, 1,

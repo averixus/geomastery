@@ -23,6 +23,7 @@ import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
 /** Category for Geomastery crafting recipes. */
@@ -155,22 +156,22 @@ public class GeoCraftingCategory extends BlankRecipeCategory<Wrapper> {
             
             if (this.recipe.recipes.size() > 1) {
                 
-                List<List<ItemStack>> lists = new ArrayList<List<ItemStack>>();
+                List<List<Ingredient>> lists = new ArrayList<List<Ingredient>>();
                 
-                for (int i = 0; i < first.recipeItems.length; i++) {
+                for (int i = 0; i < first.recipeItems.size(); i++) {
                     
-                    lists.add(new ArrayList<ItemStack>());
+                    lists.add(new ArrayList<Ingredient>());
                 }
                 
                 for (ShapedRecipe recipe : this.recipe.recipes) {
                     
                     for (int i = 0; i < lists.size(); i++) {
                         
-                        lists.get(i).add(recipe.recipeItems[i]);
+                        lists.get(i).add(recipe.recipeItems.get(i));
                     }
                 }
                 
-                ingredients.setInputLists(ItemStack.class, lists);
+                ingredients.setInputLists(Ingredient.class, lists);
                 
             } else {
                 

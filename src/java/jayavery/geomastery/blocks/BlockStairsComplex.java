@@ -10,7 +10,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import jayavery.geomastery.main.GeoConfig;
 import jayavery.geomastery.utilities.EBlockWeight;
-import jayavery.geomastery.utilities.EToolType;
 import jayavery.geomastery.utilities.Lang;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStairs.EnumShape;
@@ -19,6 +18,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -125,8 +125,8 @@ public class BlockStairsComplex extends BlockFacing {
     }
 
     @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World world,
+            List<String> tooltip, ITooltipFlag advanced) {
         
         if (GeoConfig.textVisual.buildTooltips) {
             

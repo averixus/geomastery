@@ -168,7 +168,7 @@ public class GeoFuelCategory extends BlankRecipeCategory<Wrapper> {
         public void drawInfo(Minecraft minecraft, int width, int height,
                 int mouseX, int mouseY) {
             
-            minecraft.fontRendererObj.drawString("Min: " +
+            minecraft.fontRenderer.drawString("Min: " +
                     I18n.format(this.recipe.level), STRING_X, STRING_Y, GREY);
         }
     }

@@ -298,7 +298,7 @@ public abstract class FallingTreeBlock extends Entity
             int minZ = MathHelper.floor(entityBox.minZ) - 1;
             int maxZ = MathHelper.ceil(entityBox.maxZ) + 1;
             WorldBorder border = world.getWorldBorder();
-            boolean borderCheck = world.func_191503_g(this);
+            boolean borderCheck = world.isInsideWorldBorder(this);
             PooledMutableBlockPos pos = PooledMutableBlockPos.retain();
 
             try {
@@ -351,7 +351,7 @@ public abstract class FallingTreeBlock extends Entity
             
             // Get entity bounding boxes
             List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(
-                    this, entityBox.expandXyz(0.25D));
+                    this, entityBox.expand(0.25, 0.25, 0.25));
 
             for (int i = 0; i < entities.size(); ++i) {
                 
@@ -361,14 +361,14 @@ public abstract class FallingTreeBlock extends Entity
                     
                     AxisAlignedBB box = entity.getCollisionBoundingBox();
 
-                    if (box != null && box.intersectsWith(entityBox)) {
+                    if (box != null && box.intersects(entityBox)) {
                         
                         list.add(box);
                     }
 
                     box = this.getCollisionBox(entity);
 
-                    if (box != null && box.intersectsWith(entityBox)) {
+                    if (box != null && box.intersects(entityBox)) {
                         
                         list.add(box);
                     }

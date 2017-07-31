@@ -11,6 +11,7 @@ import jayavery.geomastery.blocks.BlockBuildingAbstract;
 import jayavery.geomastery.main.GeoConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -52,8 +53,8 @@ public abstract class ItemPlacing extends Item {
     protected abstract SoundType getSoundType();
     /** Adds the block's building information to tooltip. */
     @Override @SideOnly(Side.CLIENT)
-    public abstract void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced);
+    public abstract void addInformation(ItemStack stack, World world,
+            List<String> tooltip, ITooltipFlag advanced);
 
     // Tries to place the structure, play sound, use item
     @Override
@@ -132,10 +133,10 @@ public abstract class ItemPlacing extends Item {
         }
 
         @Override
-        public void addInformation(ItemStack stack, EntityPlayer player,
-                List<String> tooltip, boolean advanced) {
+        public void addInformation(ItemStack stack, World world,
+                List<String> tooltip, ITooltipFlag advanced) {
 
-            this.block.addInformation(stack, player, tooltip, advanced);
+            this.block.addInformation(stack, world, tooltip, advanced);
         }
     }
 }

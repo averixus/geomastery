@@ -154,7 +154,7 @@ public class TECompostheap extends TileEntity
                 EntityItem.class, new AxisAlignedBB(x, y, z,
                 x + 1D, y + 1.5D, z + 1D), EntitySelectors.IS_ALIVE)) {
                 
-            ItemStack stack = item.getEntityItem();
+            ItemStack stack = item.getItem();
             
             if (GeoRecipes.COMPOST.getType(stack) != null) {
                 

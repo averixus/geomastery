@@ -14,9 +14,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +33,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 /** Handler for GUI and player input related events. */
 public class ClientEvents {
@@ -160,8 +159,8 @@ public class ClientEvents {
             
             Minecraft.getMinecraft().getTextureManager().bindTexture(TAR);
             Tessellator tess = Tessellator.getInstance();
-            VertexBuffer vert = tess.getBuffer();
-            float f = player.getBrightness(event.getRenderPartialTicks());
+            BufferBuilder vert = tess.getBuffer();
+            float f = player.getBrightness();
             GlStateManager.color(f, f, f, 0.5F);
             GlStateManager.enableBlend();
             GlStateManager.pushMatrix();

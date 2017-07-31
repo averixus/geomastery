@@ -7,22 +7,34 @@
  ******************************************************************************/
 package jayavery.geomastery.crafting;
 
-import jayavery.geomastery.items.ItemCarcassDecayable;
-import jayavery.geomastery.items.ItemEdibleDecayable;
 import jayavery.geomastery.main.GeoCaps;
-import jayavery.geomastery.main.GeoRecipes;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 /** ShapedRecipe for variable sized crafting grids. */
 public class ShapedRecipe extends ShapedRecipes {
 
-    public ShapedRecipe(int width, int height, ItemStack[] inputs,
+    public ShapedRecipe(int width, int height, NonNullList<Ingredient> ingredients,
             ItemStack output) {
-
-        super(width, height, inputs, output);
+        
+        super("Recipe", width, height, ingredients, output);
+    }
+    
+    public static ShapedRecipe create(int width, int height, ItemStack[] inputs, ItemStack output) {
+        
+        NonNullList<Ingredient> ingredients = NonNullList.create();
+        
+        for (ItemStack stack : inputs) {
+            
+            ingredients.add(CraftingHelper.getIngredient(stack));
+        }
+        
+        return new ShapedRecipe(width, height, ingredients, output);
     }
 
     @Override
@@ -93,13 +105,13 @@ public class ShapedRecipe extends ShapedRecipes {
 
                     if (flag) {
 
-                        amounts[amount] = this.recipeItems[this.recipeWidth -
-                                k - 1 + l * this.recipeWidth].getCount();
+                        amounts[amount] = this.recipeItems.get(this.recipeWidth -
+                                k - 1 + l * this.recipeWidth).getMatchingStacks()[0].getCount();
 
                     } else {
 
-                        amounts[amount] = this.recipeItems[k + l *
-                                this.recipeWidth].getCount();
+                        amounts[amount] = this.recipeItems.get(k + l *
+                                this.recipeWidth).getMatchingStacks()[0].getCount();
                     }
                 }
             }
@@ -126,13 +138,24 @@ public class ShapedRecipe extends ShapedRecipes {
                         l < this.recipeHeight) {
 
                     if (flag) {
+                        
+                        NonNullList<Ingredient> ings = null;
+                        int index = 0;
+                        Ingredient ing = null;
+                        ItemStack[] stacks = null;
 
-                        required = this.recipeItems[this.recipeWidth -
-                                k - 1 + l * this.recipeWidth];
+                        ings = this.recipeItems;
+                        index = this.recipeWidth - k - 1 + l * this.recipeWidth;
+                        ing = ings.get(index);
+                        stacks = ing.getMatchingStacks();
+ 
+                        if (stacks.length > 0) {
+                            required = stacks[0];
+                        }
 
                     } else {
 
-                        required = this.recipeItems[k + l * this.recipeWidth];
+                        required = this.recipeItems.get(k + l * this.recipeWidth).getMatchingStacks()[0];
                     }
                 }
 

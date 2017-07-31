@@ -69,9 +69,9 @@ public abstract class GuiContainerAbstract extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         
         String name = I18n.format(this.name);
-        int stringWidth = this.fontRendererObj.getStringWidth(name);
+        int stringWidth = this.fontRenderer.getStringWidth(name);
         int start = this.xSize / 2 - stringWidth / 2;
-        this.fontRendererObj.drawString(name, start, 6, TEXT_COLOUR);
+        this.fontRenderer.drawString(name, start, 6, TEXT_COLOUR);
     }
     
     @Override

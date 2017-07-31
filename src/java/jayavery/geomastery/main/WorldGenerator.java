@@ -20,9 +20,9 @@ import jayavery.geomastery.worldgen.WorldGenTreeOrange;
 import jayavery.geomastery.worldgen.WorldGenTreePear;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.ChunkProviderFlat;
+import net.minecraft.world.gen.ChunkGeneratorFlat;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
@@ -44,7 +44,7 @@ public class WorldGenerator implements IWorldGenerator {
 
         if (world.provider.getDimension() == 0) {
 
-            if (!(chunkGenerator instanceof ChunkProviderFlat)) {
+            if (!(chunkGenerator instanceof ChunkGeneratorFlat)) {
                 
                 generateOverworldChunk(world, rand, chunkScaleX * 16,
                     chunkScaleZ * 16);

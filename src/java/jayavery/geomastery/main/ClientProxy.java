@@ -73,7 +73,7 @@ public class ClientProxy implements IProxy {
         for (Item item : GeoItems.ITEMS) {
             
             NonNullList<ItemStack> stacks = NonNullList.create();
-            item.getSubItems(item, null, stacks);
+            item.getSubItems(null, stacks);
             
             for (ItemStack stack : stacks) {
                 
@@ -158,6 +158,23 @@ public class ClientProxy implements IProxy {
             ModelLoaderRegistry.registerLoader(render);
             WALL_RENDERS.put(block, render);
         }
+        
+        Geomastery.LOG.info("Registering tar state mapper and model loader");
+        BlockFluidBase tarBlock = GeoBlocks.tar;
+        ResourceLocation tarRegistry = tarBlock.getRegistryName();
+        ModelResourceLocation tarLoc = new ModelResourceLocation(tarRegistry.getResourceDomain() + ":fluid#" + tarRegistry.getResourcePath());
+        
+        Item tarItem = Item.getItemFromBlock(tarBlock);
+        ModelBakery.registerItemVariants(tarItem);
+        ModelLoader.setCustomMeshDefinition(tarItem, stack -> tarLoc);
+        ModelLoader.setCustomStateMapper(tarBlock, new StateMapperBase() {
+            
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                
+                return tarLoc;
+            }
+        });
     }
     
     @Override
@@ -183,23 +200,6 @@ public class ClientProxy implements IProxy {
         Geomastery.LOG.info("Registering tileentity renderers");
         ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Box.class, new RenderBox());
         ClientRegistry.bindTileEntitySpecialRenderer(TEStorage.Chest.class, new RenderChest());
-        
-        Geomastery.LOG.info("Registering tar state mapper and model loader");
-        BlockFluidBase tarBlock = GeoBlocks.tar;
-        ResourceLocation tarRegistry = tarBlock.getRegistryName();
-        ModelResourceLocation tarLoc = new ModelResourceLocation(tarRegistry.getResourceDomain() + ":fluid#" + tarRegistry.getResourcePath());
-        
-        Item tarItem = Item.getItemFromBlock(tarBlock);
-        ModelBakery.registerItemVariants(tarItem);
-        ModelLoader.setCustomMeshDefinition(tarItem, stack -> tarLoc);
-        ModelLoader.setCustomStateMapper(tarBlock, new StateMapperBase() {
-            
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                
-                return tarLoc;
-            }
-        });
     }
 
     @Override

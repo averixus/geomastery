@@ -25,8 +25,8 @@ public class RenderChest
     private ModelChest model = new ModelChest();
     
     @Override
-    public void renderTileEntityAt(TEStorage.Chest te, double x, double y,
-            double z, float ticks, int destroyStage) {
+    public void render(TEStorage.Chest te, double x, double y,
+            double z, float ticks, int destroyStage, float alpha) {
         
         GlStateManager.enableDepth();
         GlStateManager.depthFunc(515);

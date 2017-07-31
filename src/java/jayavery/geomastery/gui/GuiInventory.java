@@ -34,7 +34,7 @@ public class GuiInventory extends GuiContainerAbstract {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         
-        this.fontRendererObj.drawString(I18n.format(this.name),
+        this.fontRenderer.drawString(I18n.format(this.name),
                 TEXT_X, 6, TEXT_COLOUR);
     }
 

@@ -123,12 +123,6 @@ public abstract class ContainerFurnaceAbstract extends ContainerAbstract {
         return result;
     }
     
-    /** Prevents slot click from being repeated if the
-     * same item moves into the slot after sorting. */
-    @Override
-    public void retrySlotClick(int slot, int click, boolean mode,
-            EntityPlayer player) {}
-    
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 

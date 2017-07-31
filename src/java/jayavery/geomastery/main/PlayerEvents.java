@@ -148,7 +148,7 @@ public class PlayerEvents {
         
         EntityPlayer player = event.getEntityPlayer();
         
-        ItemStack stack = event.getItem().getEntityItem();
+        ItemStack stack = event.getItem().getItem();
         Item item = stack.getItem();
         
         // Special case for laid eggs
@@ -169,7 +169,7 @@ public class PlayerEvents {
 
         } else {
             
-            event.getItem().setEntityItemStack(stack);
+            event.getItem().setItem(stack);
         }
 
         event.setCanceled(true);
@@ -180,7 +180,7 @@ public class PlayerEvents {
     public void itemToss(ItemTossEvent event) {
         
         EntityPlayer player = event.getPlayer();
-        Item item = event.getEntityItem().getEntityItem().getItem();
+        Item item = event.getEntityItem().getItem().getItem();
         long time = player.world.getWorldTime();
         
         player.getCapability(GeoCaps.CAP_PLAYER, null).addDelay(item, time);
@@ -243,8 +243,8 @@ public class PlayerEvents {
                 Vec3d attackVec = sourceVec.subtractReverse(new
                         Vec3d(player.posX, player.posY,
                         player.posZ)).normalize();
-                attackVec = new Vec3d(attackVec.xCoord,
-                        0.0D, attackVec.zCoord);
+                attackVec = new Vec3d(attackVec.x,
+                        0.0D, attackVec.z);
 
                 if (attackVec.dotProduct(playerVec) < 0.0D &&
                         event.getAmount() >= 3) {

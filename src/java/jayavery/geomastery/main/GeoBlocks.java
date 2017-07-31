@@ -261,11 +261,7 @@ public class GeoBlocks {
     
     /** Adjusts vanilla blocks, register fluids. */
     public static void preInit() {
-        
-        Geomastery.LOG.info("Registering fluids");
-        FluidRegistry.registerFluid(tarFluid);
-        GameRegistry.register(tar = makeItemless(new BlockTar()));
-                
+              
         Geomastery.LOG.info("Altering vanilla block properties");
         Blocks.LOG.setHarvestLevel("axe", 1);
         Blocks.LOG2.setHarvestLevel("axe", 1);
@@ -347,7 +343,7 @@ public class GeoBlocks {
     }
     
     /** Adds to maps and sets as needed without any item. */
-    private static <B extends Block> B makeItemless(B block,
+    static <B extends Block> B makeItemless(B block,
             Set<? super B>... sets) {
         
         BLOCKS.add(block);

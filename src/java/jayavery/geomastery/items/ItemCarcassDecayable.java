@@ -159,7 +159,7 @@ public class ItemCarcassDecayable extends ItemPlacing.Building {
 
     // Puts fresh and rotten versions in creative inventory.
     @SideOnly(Side.CLIENT) @Override
-    public void getSubItems(Item item, CreativeTabs tab,
+    public void getSubItems(CreativeTabs tab,
             NonNullList<ItemStack> list) {
         
         list.add(ItemSimple.newStack(this, 1,

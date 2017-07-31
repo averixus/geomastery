@@ -20,6 +20,7 @@ import jayavery.geomastery.worldgen.WorldGenTreePear;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
@@ -88,8 +89,8 @@ public abstract class BlockSeedling extends BlockBush implements IBiomeCheck {
     }
 
     @SideOnly(Side.CLIENT) @Override
-    public void addInformation(ItemStack stack, EntityPlayer player,
-            List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, World world,
+            List<String> tooltip, ITooltipFlag advanced) {
         
         if (GeoConfig.textVisual.cropTooltips) {
     

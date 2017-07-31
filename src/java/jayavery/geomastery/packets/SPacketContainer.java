@@ -30,14 +30,14 @@ public class SPacketContainer implements IMessage {
         @Override
         public IMessage onMessage(SPacketContainer msg, MessageContext ctx) {
             
-            ctx.getServerHandler().playerEntity.getServer()
+            ctx.getServerHandler().player.getServer()
                     .addScheduledTask(() -> setInventory(ctx));
             return null;
         }
         
         public void setInventory(MessageContext ctx) {
             
-            EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+            EntityPlayerMP player = ctx.getServerHandler().player;
             player.inventoryContainer = new ContainerInventory(player);
             player.openContainer = player.inventoryContainer;
             player.inventoryContainer.addListener(player);
