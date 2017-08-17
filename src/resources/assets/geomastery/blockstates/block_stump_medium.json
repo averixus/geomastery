@@ -17,6 +17,27 @@
                     "cross": "geomastery:blocks/trees/crosssize2birch",
                     "all": "geomastery:blocks/trees/leavesbirch"
                 }
+            },
+            "larch": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize234larch",
+                    "cross": "geomastery:blocks/trees/crosssize2larch",
+                    "all": "geomastery:blocks/trees/leaveslarch"
+                }
+            },
+            "pine": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize2pine",
+                    "cross": "geomastery:blocks/trees/crosssize2pine",
+                    "all": "geomastery:blocks/trees/leavespine"
+                }
+            },
+            "spruce": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize2spruce",
+                    "cross": "geomastery:blocks/trees/crosssize2spruce",
+                    "all": "geomastery:blocks/trees/leavesspruce"
+                }
             }
         },
         "falling": {

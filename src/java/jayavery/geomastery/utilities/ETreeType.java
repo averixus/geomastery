@@ -11,7 +11,7 @@ import net.minecraft.util.IStringSerializable;
 // TEST
 public enum ETreeType implements IStringSerializable {
     
-    OAK("oak"), BIRCH("birch");
+    OAK("oak"), BIRCH("birch"), LARCH("larch"), SPRUCE("spruce"), PINE("pine");
     
     private final String name;
 

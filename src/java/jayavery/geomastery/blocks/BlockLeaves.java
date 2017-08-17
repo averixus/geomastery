@@ -112,6 +112,14 @@ public class BlockLeaves extends BlockNew {
 
     private void tryFall(World world, BlockPos pos, IBlockState state) {
         
+        if (this.shouldFall(world, pos, state)) {
+            
+            this.fall(world, pos, state);
+        }
+    }
+    
+    private boolean shouldFall(World world, BlockPos pos, IBlockState state) {
+        
         Set<BlockPos> checked = Sets.newHashSet();
         Queue<BlockPos> checkQueue = new LinkedList<BlockPos>();
         checkQueue.add(pos);
@@ -127,7 +135,7 @@ public class BlockLeaves extends BlockNew {
                 
                 if (nextBlock instanceof BlockTree) {
                     
-                    return;
+                    return false;
                     
                 } else if (nextBlock == this && nextState.getValue(NODE)) {
                     
@@ -144,7 +152,7 @@ public class BlockLeaves extends BlockNew {
             }
             
             world.setBlockState(pos, state.withProperty(NODE, false));
-            return;
+            return false;
             
         } else {
             
@@ -158,7 +166,7 @@ public class BlockLeaves extends BlockNew {
                 if ((nextBlock == this && nextState.getValue(NODE)) ||
                         (nextBlock instanceof BlockTree)) {
                     
-                    return;
+                    return false;
                     
                 } else if (nextState.getBlock() == this) {
                     
@@ -174,7 +182,7 @@ public class BlockLeaves extends BlockNew {
                 }
             }
             
-            this.fall(world, pos, state);
+            return true;
         }
     }
     

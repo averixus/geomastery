@@ -10,7 +10,25 @@
     "variants": {
         "type": {
             "oak": {},
-            "birch": {}
+            "birch": {},
+            "larch": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize234larch",
+                    "cross": "geomastery:blocks/trees/crosssize3larch"
+                }
+            },
+            "pine": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize34pine",
+                    "cross": "geomastery:blocks/trees/crosssize3pine"
+                }
+            },
+            "spruce": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize34spruce",
+                    "cross": "geomastery:blocks/trees/crosssize3spruce"
+                }
+            }
         },
         "falling": {
             "false": {},

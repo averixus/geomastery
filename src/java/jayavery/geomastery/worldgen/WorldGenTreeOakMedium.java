@@ -59,8 +59,7 @@ public class WorldGenTreeOakMedium extends WorldGenTreeAbstract {
             
             Block found = this.world.getBlockState(trunk).getBlock();
             
-            if (!(found instanceof BlockSapling) &&
-                    !found.isReplaceable(this.world, trunk)) {
+            if (!found.isReplaceable(this.world, trunk)) {
                 
                 return false;
             }

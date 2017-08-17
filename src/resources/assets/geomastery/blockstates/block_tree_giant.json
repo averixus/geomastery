@@ -5,13 +5,42 @@
         "textures": {
             "bark": "geomastery:blocks/trees/barksize34oak",
             "cross": "geomastery:blocks/trees/crosssize4oak",
-            "edgegrain": "geomastery:blocks/trees/edgegrainoak"
+            "edgegrain": "geomastery:blocks/trees/edgegrainoak",
+            "all": "geomastery:blocks/trees/leavesoak"
         }
     },
     "variants": {
         "type": {
             "oak": {},
-            "birch": {}
+            "birch": {},
+            "larch": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize234larch",
+                    "cross": "geomastery:blocks/trees/crosssize4larch",
+                    "edgegrain": "geomastery:blocks/trees/edgegrainlarch",
+                    "all": "geomastery:blocks/trees/leaveslarch"
+                }
+            },
+            "pine": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize34pine",
+                    "cross": "geomastery:blocks/trees/crosssize4pine",
+                    "edgegrain": "geomastery:blocks/trees/edgegrainpine",
+                    "all": "geomastery:blocks/trees/leavespine"
+                }
+            },
+            "spruce": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize34spruce",
+                    "cross": "geomastery:blocks/trees/crosssize4spruce",
+                    "edgegrain": "geomastery:blocks/trees/edgegrainspruce",
+                    "all": "geomastery:blocks/trees/leavesspruce"
+                }
+            }
+        },
+        "leaves": {
+            "true": { "submodel": { "leaves": { "model": "cube_all" } } },
+            "false": {}
         },
         "facing": {
             "north": {},

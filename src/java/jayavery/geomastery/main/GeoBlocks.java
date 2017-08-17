@@ -126,8 +126,8 @@ public class GeoBlocks {
     public static final BlockTree STUMP_LARGE = makeItemless(new BlockTree("stump_large", false, false, true, null));
     public static final BlockTree TREE_LARGE = makeItemless(new BlockTree("tree_large", false, false, false, () -> TRUNK_LARGE));
     
-    public static final BlockTree STUMP_GIANT = makeItemless(new BlockTree("stump_giant", false, true, true, null));
-    public static final BlockTree TREE_GIANT = makeItemless(new BlockTree("tree_giant", false, true, false, () -> TRUNK_LARGE));    
+    public static final BlockTree STUMP_GIANT = makeItemless(new BlockTree("stump_giant", true, true, true, null));
+    public static final BlockTree TREE_GIANT = makeItemless(new BlockTree("tree_giant", true, true, false, () -> TRUNK_LARGE));    
     
     public static final BlockLeaves LEAF = makeItemBlock(new BlockLeaves("leaves"));
     

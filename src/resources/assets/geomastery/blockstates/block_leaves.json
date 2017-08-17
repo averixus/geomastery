@@ -14,6 +14,21 @@
                 "textures": {
                     "all": "geomastery:blocks/trees/leavesbirch"
                 }
+            },
+            "larch": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leaveslarch"
+                }
+            },
+            "pine": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leavespine"
+                }
+            },
+            "spruce": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leavesspruce"
+                }
             }
         },
         "node": {

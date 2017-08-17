@@ -17,6 +17,27 @@
                     "endgrain": "geomastery:blocks/trees/endgrainbirch",
                     "all": "geomastery:blocks/trees/leavesbirch"
                 }
+            },
+            "larch": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1larch",
+                    "endgrain": "geomastery:blocks/trees/endgrainlarch",
+                    "all": "geomastery:blocks/trees/leaveslarch"
+                }
+            },
+            "pine": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1pine",
+                    "endgrain": "geomastery:blocks/trees/endgrainpine",
+                    "all": "geomastery:blocks/trees/leavespine"
+                }
+            },
+            "spruce": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1spruce",
+                    "endgrain": "geomastery:blocks/trees/endgrainspruce",
+                    "all": "geomastery:blocks/trees/leavesspruce"
+                }
             }
         },
         "leaves": {
