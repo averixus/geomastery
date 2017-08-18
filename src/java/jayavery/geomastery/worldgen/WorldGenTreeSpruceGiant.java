@@ -22,21 +22,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
+public class WorldGenTreeSpruceGiant extends WorldGenTreeAbstract {
 
-    public WorldGenTreeLarchGiant(World world, Random rand, boolean isSapling) {
+    public WorldGenTreeSpruceGiant(World world, Random rand, boolean isSapling) {
         
         super(world, rand, isSapling, 1, 1, null);
     }
     
     @Override
     public boolean generateTree(BlockPos stump) {
-        
+                
         EnumFacing facingFront = EnumFacing.HORIZONTALS[this.rand.nextInt(EnumFacing.HORIZONTALS.length)];
         EnumFacing facingSide = facingFront.rotateY();
         
-        int layerCount = 15 + this.rand.nextInt(7);
-        int trunkCount = layerCount - 1 - this.rand.nextInt(2);
+        int layerCount = 15 + this.rand.nextInt(4);
+        int trunkCount = layerCount - 2 - this.rand.nextInt(2);
         
         ArrayList<BlockPos> trunks = Lists.newArrayList();
         
@@ -115,7 +115,18 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
                 leaves.add(start.offset(facingSide).down(layer));
                 leaves.add(start.offset(facingFront).offset(facingSide).down(layer));
                 
-            } else if (layer == 6 || layer == 9 || layer == 12 || layer == layerCount) {
+            } else if (layer == layerCount - 2 || layer == layerCount - 1) {
+                
+                this.layerFifteen(start.down(layer), facingFront, leaves, nodes);
+                
+            } else if (layer == layerCount) {
+                
+                this.quarterBase(start.down(layer), facingFront.getOpposite(), leaves, nodes);
+                this.quarterBase(start.down(layer).offset(facingFront), facingSide.getOpposite(), leaves, nodes);
+                this.quarterBase(start.down(layer).offset(facingFront).offset(facingSide), facingFront, leaves, nodes);
+                this.quarterBase(start.down(layer).offset(facingSide), facingSide, leaves, nodes);
+                
+            } else if (layer == 6 || layer == 9 || layer == 12) {
                 
                 this.layerSix(start.down(layer), facingFront, leaves);
                 
@@ -123,7 +134,7 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
                 
                 this.layerSeven(start.down(layer), facingFront, leaves);
                 
-            } else if (layer == 8 || layer == 11 || layer == 14 || layer == 17 || layer == layerCount - 1) {
+            } else if (layer == 8 || layer == 11 || layer == 14 || layer == 17) {
                 
                 this.quarterEight(start.down(layer), facingSide.getOpposite(), leaves);
                 this.quarterEight(start.down(layer).offset(facingFront), facingFront, leaves);
@@ -134,15 +145,8 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
                 
                 this.layerFifteen(start.down(layer), facingFront, leaves, nodes);
                 
-            } else if (layer == 19) {
-                
-                this.quarterNineteen(start.down(layer), facingSide.getOpposite(), leaves, nodes);
-                this.quarterNineteen(start.down(layer).offset(facingFront), facingFront, leaves, nodes);
-                this.quarterNineteen(start.down(layer).offset(facingSide).offset(facingFront), facingSide, leaves, nodes);
-                this.quarterNineteen(start.down(layer).offset(facingSide), facingFront.getOpposite(), leaves, nodes);
             }
         }
-        
         
         for (BlockPos node : nodes) {
             
@@ -150,7 +154,7 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
                     .isReplaceable(this.world, node)) {
                 
                 this.setBlock(node, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, true).withProperty(BlockLeaves.TYPE, ETreeType.LARCH));
+                        .withProperty(BlockLeaves.NODE, true).withProperty(BlockLeaves.TYPE, ETreeType.SPRUCE));
             }
         }
         
@@ -160,15 +164,16 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
                     .isReplaceable(this.world, leaf)) {
             
                 this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.LARCH));
+                        .withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.SPRUCE));
             }
         }
+        
         
         return true;
     }
     
     private void layerSix(BlockPos start, EnumFacing facing, Collection<BlockPos> leaves) {
-                
+        
         if (this.rand.nextInt(2) == 0) {
             
             leaves.add(start.offset(facing, 2));
@@ -254,46 +259,116 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
                     if (this.rand.nextInt(2) == 0) {
                         
                         leaves.add(start.offset(facing, front).offset(facing.rotateY(), side));
+                        
+                        if (front == 0 || side == 0) {
+                            
+                            nodes.add(start.offset(facing, front).offset(facing.rotateY(), side));
+                        }
                     }
                     
                 } else {
                     
                     leaves.add(start.offset(facing, front).offset(facing.rotateY(), side));
-                }
-                
-                if (front == 0 || side == 0) {
                     
-                    nodes.add(start.offset(facing, front).offset(facing.rotateY(), side));
+                    if (front == 0 || side == 0) {
+                        
+                        nodes.add(start.offset(facing, front).offset(facing.rotateY(), side));
+                    }
                 }
             }
         }
     }
     
-    private void quarterNineteen(BlockPos start, EnumFacing facing, Collection<BlockPos> leaves, Collection<BlockPos> nodes) {
+    private void quarterBase(BlockPos start, EnumFacing facing, Collection<BlockPos> leaves, Collection<BlockPos> nodes) {
         
         for (int front = 0; front <= 4; front++) {
             
             for (int side = 0; side <= 4; side++) {
                 
-                if (Math.abs(front) + Math.abs(side) > 5) {
+                if (front + side > 2 && front + side < 6 && front < 4 && side < 4) {
                     
-                } else if (front == 4 || side == 4) {
+                    nodes.add(start.offset(facing, front).offset(facing.rotateY(), side));
+                    
+                } else if (front + side > 2 && front + side < 7) {
                     
                     if (this.rand.nextInt(2) == 0) {
                         
                         leaves.add(start.offset(facing, front).offset(facing.rotateY(), side));
                     }
-                    
-                } else {
-                    
-                    leaves.add(start.offset(facing, front).offset(facing.rotateY(), side));
-                }
-                
-                if (front == 0) {
-                    
-                    nodes.add(start.offset(facing, front).offset(facing.rotateY(), side));
                 }
             }
         }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.straightClump(start.offset(facing, 4), facing, leaves, nodes);
+        }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.straightClump(start.offset(facing, 4).offset(facing.rotateY()), facing, leaves, nodes);
+        }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.straightClump(start.offset(facing.rotateY(), 4), facing.rotateY(), leaves, nodes);
+        }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.straightClump(start.offset(facing.rotateY(), 4).offset(facing), facing.rotateY(), leaves, nodes);
+        }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.edgeClump(start.offset(facing, 4).offset(facing.rotateY(), 2), facing, facing.rotateY(), leaves, nodes);
+        }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.edgeClump(start.offset(facing, 2).offset(facing.rotateY(), 4), facing.rotateY(), facing, leaves, nodes);
+        }
+        
+        if (this.rand.nextInt(2) == 0) {
+            
+            this.cornerClump(start.offset(facing, 3).offset(facing.rotateY(), 3), facing, leaves, nodes);
+        }
+    }
+    
+    private void straightClump(BlockPos start, EnumFacing facing, Collection<BlockPos> leaves, Collection<BlockPos> nodes) {
+        
+        leaves.add(start);
+        nodes.add(start.down());
+        leaves.add(start.down(2));
+        nodes.add(start.down().offset(facing.getOpposite()));
+        nodes.add(start.down().offset(facing));
+        leaves.add(start.down(2).offset(facing));
+        leaves.add(start.down(2).offset(facing, 2));
+    }
+    
+    private void edgeClump(BlockPos start, EnumFacing facing, EnumFacing offset, Collection<BlockPos> leaves, Collection<BlockPos> nodes) {
+        
+        leaves.add(start);
+        nodes.add(start.down());
+        nodes.add(start.down().offset(facing.getOpposite()));
+        nodes.add(start.down().offset(offset));
+        nodes.add(start.down().offset(offset).offset(facing));
+        leaves.add(start.down(2));
+        leaves.add(start.down(2).offset(facing).offset(offset));
+        leaves.add(start.down(2).offset(facing, 2).offset(offset));
+    }
+    
+    private void cornerClump(BlockPos start, EnumFacing facing, Collection<BlockPos> leaves, Collection<BlockPos> nodes) {
+        
+        leaves.add(start);
+        nodes.add(start.down());
+        nodes.add(start.down().offset(facing.rotateYCCW()));
+        nodes.add(start.down().offset(facing.rotateYCCW()).offset(facing.getOpposite()));
+        nodes.add(start.down().offset(facing));
+        nodes.add(start.down().offset(facing).offset(facing.rotateY()));
+        leaves.add(start.down(2));
+        leaves.add(start.down(2).offset(facing).offset(facing.rotateY()));
+        leaves.add(start.down(2).offset(facing, 2).offset(facing.rotateY()));
+        leaves.add(start.down(2).offset(facing, 2).offset(facing.rotateY(), 2));
     }
 }
