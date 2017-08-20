@@ -79,12 +79,12 @@ public class WorldGenTreeSpruceGiant extends WorldGenTreeAbstract {
         
         for (BlockPos aStump : stumps) {
             
-            this.setBlock(aStump, GeoBlocks.STUMP_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.LARCH));
+            this.setBlock(aStump, GeoBlocks.STUMP_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.SPRUCE));
         }
         
         for (BlockPos trunk : trunks) {
             
-            this.setBlock(trunk, GeoBlocks.TREE_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.LARCH));
+            this.setBlock(trunk, GeoBlocks.TREE_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.SPRUCE));
         }
         
         Set<BlockPos> leaves = Sets.newHashSet();
