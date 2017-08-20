@@ -36,6 +36,15 @@
                     "edgegrain": "geomastery:blocks/trees/edgegrainspruce",
                     "all": "geomastery:blocks/trees/leavesspruce"
                 }
+            },
+            "willow": {},
+            "beech": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize34beech",
+                    "cross": "geomastery:blocks/trees/crosssize4beech",
+                    "edgegrain": "geomastery:blocks/trees/edgegrainbeech",
+                    "all": "geomastery:blocks/trees/leavesbeech"
+                }
             }
         },
         "leaves": {

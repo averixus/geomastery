@@ -167,20 +167,20 @@ public abstract class WorldGenTreeAbstract extends WorldGenAbstract {
             }
         }
     }
-    
+        
     protected enum ECornerAmount {
         
-        OUTER_CHANCE, OUTER_REMOVED, INNER_CHANCE;
+        ALL_PRESENT, OUTER_CHANCE, OUTER_REMOVED, INNER_CHANCE;
         
         public boolean placeOuter(Random rand) {
             
-            return this == OUTER_CHANCE && rand.nextInt(2) == 0;
+            return this == ALL_PRESENT || (this == OUTER_CHANCE && rand.nextInt(2) == 0);
         }
         
         public boolean placeInner(Random rand) {
             
             switch (this) {
-                case OUTER_CHANCE: default:
+                case ALL_PRESENT: case OUTER_CHANCE: default:
                     return true;
                 case OUTER_REMOVED:
                     return true;

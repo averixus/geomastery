@@ -28,6 +28,18 @@
                     "stump": "geomastery:blocks/trees/stumpsize34spruce",
                     "cross": "geomastery:blocks/trees/crosssize3spruce"
                 }
+            },
+            "willow": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize3willow",
+                    "cross": "geomastery:blocks/trees/crosssize3willow"
+                }
+            },
+            "beech": {
+                "textures": {
+                    "stump": "geomastery:blocks/trees/stumpsize34beech",
+                    "cross": "geomastery:blocks/trees/crosssize3beech"
+                }
             }
         },
         "falling": {

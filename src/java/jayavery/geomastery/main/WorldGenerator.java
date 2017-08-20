@@ -16,9 +16,9 @@ import jayavery.geomastery.worldgen.WorldGenStone;
 import jayavery.geomastery.worldgen.WorldGenTar;
 import jayavery.geomastery.worldgen.WorldGenTreeApple;
 import jayavery.geomastery.worldgen.WorldGenTreeBanana;
+import jayavery.geomastery.worldgen.WorldGenTreeBeechGiant;
 import jayavery.geomastery.worldgen.WorldGenTreeOrange;
 import jayavery.geomastery.worldgen.WorldGenTreePear;
-import jayavery.geomastery.worldgen.WorldGenTreePineGiant;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
@@ -194,7 +194,7 @@ public class WorldGenerator implements IWorldGenerator {
      //           return;
 //        }
         
-        new WorldGenTreePineGiant(world, rand, true).generateTree(pos);
+        new WorldGenTreeBeechGiant(world, rand, true).generateTree(pos);
       //  new WorldGenTreeLarchSmall(world, rand, true).generateTree(pos);
     }
 }

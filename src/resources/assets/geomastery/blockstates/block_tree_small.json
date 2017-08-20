@@ -38,6 +38,20 @@
                     "endgrain": "geomastery:blocks/trees/endgrainspruce",
                     "all": "geomastery:blocks/trees/leavesspruce"
                 }
+            },
+            "willow": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1willow",
+                    "endgrain": "geomastery:blocks/trees/endgrainwillow",
+                    "all": "geomastery:blocks/trees/leaveswillow"
+                }
+            },
+            "beech": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1beech",
+                    "endgrain": "geomastery:blocks/trees/endgrainbeech",
+                    "all": "geomastery:blocks/trees/leavesbeech"
+                }
             }
         },
         "leaves": {

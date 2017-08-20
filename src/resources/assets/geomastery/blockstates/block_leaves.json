@@ -29,6 +29,16 @@
                 "textures": {
                     "all": "geomastery:blocks/trees/leavesspruce"
                 }
+            },
+            "willow": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leaveswillow"
+                }
+            },
+            "beech": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leavesbeech"
+                }
             }
         },
         "node": {
