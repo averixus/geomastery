@@ -10,9 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import com.google.common.collect.Maps;
 import io.netty.buffer.ByteBuf;
-import jayavery.geomastery.blocks.BlockStumpTest;
 import jayavery.geomastery.blocks.BlockTree;
-import jayavery.geomastery.blocks.BlockTreeTest;
 import jayavery.geomastery.main.Geomastery;
 import jayavery.geomastery.tileentities.TEStump;
 import net.minecraft.block.Block;
@@ -73,10 +71,14 @@ public class CPacketTrunkBlocks implements IMessage {
             
             this.blocks.put(pos, state);
         }
+        
+        System.out.println("reading message pos " + this.x + ", " + this.y + ", " + this.z);
     }
     
     @Override
     public void toBytes(ByteBuf buf) {
+        
+        System.out.println("writing message pos " + this.x + ", " + this.y + ", " + this.z);
         
         buf.writeInt(this.x);
         buf.writeInt(this.y);
@@ -121,13 +123,19 @@ public class CPacketTrunkBlocks implements IMessage {
             
             IBlockState state = world.getBlockState(pos);
             
-            if (!state.getValue(BlockStumpTest.FALLING)) {
+            if (((BlockTree) state.getBlock()).hasAlternate()) {
                 
-                world.setBlockState(pos, state.withProperty(BlockStumpTest.FALLING, true));
+                state = ((BlockTree) state.getBlock()).getAlternateState(state);
+                world.setBlockState(pos, state);
             }
             
+      /*      if (!state.getValue(BlockStumpTest.FALLING)) {
+                
+                world.setBlockState(pos, state.withProperty(BlockStumpTest.FALLING, true));
+            }*/
+            System.out.println("block at message pos " + state);
             TileEntity tileEntity = world.getTileEntity(pos);
-            
+            System.out.println("processing message for te at " + pos + " " + tileEntity);
             if (tileEntity instanceof TEStump) {
                 
                 TEStump tileTrunk = (TEStump) tileEntity;

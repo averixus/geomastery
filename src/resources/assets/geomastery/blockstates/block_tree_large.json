@@ -40,6 +40,24 @@
                     "bark": "geomastery:blocks/trees/barksize34beech",
                     "cross": "geomastery:blocks/trees/crosssize3beech"
                 }
+            },
+            "mahogany": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize234mahogany",
+                    "cross": "geomastery:blocks/trees/crosssize3mahogany"
+                }
+            },
+            "brazil": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize34brazil",
+                    "cross": "geomastery:blocks/trees/crosssize3brazil"
+                }
+            },
+            "ebony": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize34ebony",
+                    "cross": "geomastery:blocks/trees/crosssize3ebony"
+                }
             }
         },
         "inventory": [{}]

@@ -44,29 +44,24 @@ public class TEStump extends TileEntity implements ITickable {
     
     public float angle;
     public float prevAngle;
+    public boolean falling = false;
     public Map<BlockPos, IBlockState> blocks = Maps.newHashMap();
     
     @Override
     public void update() {
         
 
-        if (this.world.isRemote) {
+        if (this.world.isRemote || !this.falling) {
 
             return;
         }
-        
         this.prevAngle = this.angle;
         this.angle = Math.min(this.angle * 1.1F, 90);
-
-        for (BlockPos pos : this.blocks.keySet()) {
-            
-            this.world.setBlockToAir(pos);
-        }
         
         if (this.angle >= 90) {
                         
           //  EnumFacing fall = this.world.getBlockState(this.pos).getValue(BlockFacing.FACING);
-            System.out.println("placing fallen trunk blocks " + this);
+            System.out.println("placing fallen trunk blocks " + this.blocks);
             for (Entry<BlockPos, IBlockState> entry : this.blocks.entrySet()) {
                 
                 BlockPos offset = entry.getKey().subtract(this.pos);
@@ -79,26 +74,27 @@ public class TEStump extends TileEntity implements ITickable {
                 IBlockState state = entry.getValue();
                 Block block = state.getBlock();
                 
-                if (block instanceof BlockTree && ((BlockTree) block).hasFallen()) {
+                if (block instanceof BlockTree && ((BlockTree) block).hasAlternate()) {
                     
-                    state = ((BlockTree) block).getFallen().getDefaultState().withProperty(BlockTrunkTest.AXIS, ETrunkAxis.X_AXIS);
+                    state = ((BlockTree) block).getAlternate().getDefaultState().withProperty(BlockTrunkTest.AXIS, ETrunkAxis.X_AXIS);
                 }
                 
                 this.world.setBlockState(result, state);
             }
             System.out.println("setting trunk not falling " + this);
             IBlockState thisState = this.world.getBlockState(this.pos);
-            this.world.setBlockState(this.pos, thisState.withProperty(BlockTree.FALLING, false));
+            this.falling = false;
+          //  this.world.setBlockState(this.pos, thisState.withProperty(BlockTree.FALLING, false));
         }
 
         Geomastery.NETWORK.sendToAll(new CPacketTrunkAngle(this.angle,
-                this.prevAngle, this.pos));
+                this.prevAngle, this.pos, this.falling));
     }
     
     public void fall(EnumFacing direction) {
 
         IBlockState thisState = this.world.getBlockState(this.pos);
-        System.out.println("fall event " + this + " state is " + thisState);
+        System.out.println("fall event " + this + " at " + this.pos + " state is " + thisState);
         this.blocks = Maps.newHashMap();
         
 
@@ -172,11 +168,19 @@ public class TEStump extends TileEntity implements ITickable {
                         }
                     }
                 }
-System.out.println("setting trunk falling " + this);
+System.out.println("setting trunk falling " + this + " at " + this.pos);
                 this.angle = 0.1F;
               //  this.world.setBlockState(this.pos, thisState.withProperty(BlockStump.FALLING, true));
                 System.out.println("sending blocks " + this.blocks);
+                this.falling = true;
+                
+                for (BlockPos pos : this.blocks.keySet()) {
+                    
+                    this.world.setBlockToAir(pos);
+                }
+                
                 Geomastery.NETWORK.sendToAll(new CPacketTrunkBlocks(this.pos, this.blocks));
+                Geomastery.NETWORK.sendToAll(new CPacketTrunkAngle(this.angle, this.prevAngle, this.pos, this.falling));
          //   });
             
        //     thread.setDaemon(true);
@@ -184,14 +188,15 @@ System.out.println("setting trunk falling " + this);
         //    thread.start();
     }
     
-    public void setState(float angle, float prevAngle) {
+    public void setState(float angle, float prevAngle, boolean falling) {
 
         this.angle = angle;
         this.prevAngle = prevAngle;
+        this.falling = falling;
     }
     
     public void setBlocks(Map<BlockPos, IBlockState> blocks) {
-        
+        System.out.println("setting blocks from message " + blocks);
         this.blocks = blocks;
     }
     

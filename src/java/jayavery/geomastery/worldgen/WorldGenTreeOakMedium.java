@@ -65,7 +65,7 @@ public class WorldGenTreeOakMedium extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_MEDIUM.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_MEDIUM.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -186,7 +186,7 @@ public class WorldGenTreeOakMedium extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         
@@ -225,7 +225,7 @@ public class WorldGenTreeOakMedium extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_MEDIUM.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_MEDIUM.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -340,7 +340,7 @@ public class WorldGenTreeOakMedium extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         

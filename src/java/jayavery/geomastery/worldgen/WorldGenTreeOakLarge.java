@@ -69,7 +69,7 @@ public class WorldGenTreeOakLarge extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_LARGE.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_LARGE.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -175,8 +175,7 @@ public class WorldGenTreeOakLarge extends WorldGenTreeAbstract {
             if (this.world.getBlockState(node).getBlock()
                     .isReplaceable(this.world, node)) {
                 
-                this.setBlock(node, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, true));
+                this.setBlock(node, GeoBlocks.LEAVES_NODE.getDefaultState());
             }
         }
         
@@ -185,7 +184,7 @@ public class WorldGenTreeOakLarge extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         
@@ -222,7 +221,7 @@ public class WorldGenTreeOakLarge extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_LARGE.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_LARGE.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -346,8 +345,7 @@ public class WorldGenTreeOakLarge extends WorldGenTreeAbstract {
             if (this.world.getBlockState(node).getBlock()
                     .isReplaceable(this.world, node)) {
                 
-                this.setBlock(node, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, true));
+                this.setBlock(node, GeoBlocks.LEAVES_NODE.getDefaultState());
             }
         }
         
@@ -356,7 +354,7 @@ public class WorldGenTreeOakLarge extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         

@@ -75,7 +75,7 @@ public class WorldGenTreeBeechGiant extends WorldGenTreeAbstract {
                 
         for (BlockPos aStump : stumps) {
             
-            this.setBlock(aStump, GeoBlocks.STUMP_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.BEECH));
+            this.setBlock(aStump, GeoBlocks.BOLE_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.BEECH));
         }
         
         for (BlockPos trunk : trunks) {
@@ -189,18 +189,14 @@ public class WorldGenTreeBeechGiant extends WorldGenTreeAbstract {
                     }
                 }
             }
-        
-        
         }
-        
         
         for (BlockPos node : nodes) {
             
             if (this.world.getBlockState(node).getBlock()
                     .isReplaceable(this.world, node)) {
                 
-                this.setBlock(node, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, true).withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
+                this.setBlock(node, GeoBlocks.LEAVES_NODE.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
             }
         }
         
@@ -209,8 +205,7 @@ public class WorldGenTreeBeechGiant extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
             }
         }
         

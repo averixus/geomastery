@@ -52,6 +52,27 @@
                     "endgrain": "geomastery:blocks/trees/endgrainbeech",
                     "all": "geomastery:blocks/trees/leavesbeech"
                 }
+            },
+            "brazil": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1brazil",
+                    "endgrain": "geomastery:blocks/trees/endgrainbrazil",
+                    "all": "geomastery:blocks/trees/leavesbrazil"
+                }
+            },
+            "mahogany": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize1mahogany",
+                    "endgrain": "geomastery:blocks/trees/endgrainmahogany",
+                    "all": "geomastery:blocks/trees/leavesmahogany"
+                }
+            },
+            "ebony": {
+                "textures": {
+                    "bark": "geomastery:blocks/trees/barksize12ebony",
+                    "endgrain": "geomastery:blocks/trees/endgrainebony",
+                    "all": "geomastery:blocks/trees/leavesebony"
+                }
             }
         },
         "leaves": {

@@ -79,7 +79,7 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
         
         for (BlockPos aStump : stumps) {
             
-            this.setBlock(aStump, GeoBlocks.STUMP_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.LARCH));
+            this.setBlock(aStump, GeoBlocks.BOLE_GIANT.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.LARCH));
         }
         
         for (BlockPos trunk : trunks) {
@@ -149,8 +149,7 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
             if (this.world.getBlockState(node).getBlock()
                     .isReplaceable(this.world, node)) {
                 
-                this.setBlock(node, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, true).withProperty(BlockLeaves.TYPE, ETreeType.LARCH));
+                this.setBlock(node, GeoBlocks.LEAVES_NODE.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.LARCH));
             }
         }
         
@@ -159,8 +158,7 @@ public class WorldGenTreeLarchGiant extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.LARCH));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.LARCH));
             }
         }
         

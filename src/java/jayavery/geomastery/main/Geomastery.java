@@ -121,7 +121,13 @@ public class Geomastery {
               
         LOG.info("Registering blocks");
         IForgeRegistry<Block> registry = event.getRegistry();
-        GeoBlocks.BLOCKS.forEach(registry::register);
+        
+        for (Block block : GeoBlocks.BLOCKS) {
+            
+            System.out.println("registering " + block.getUnlocalizedName());
+            registry.register(block);
+        }
+   //     GeoBlocks.BLOCKS.forEach(registry::register);
     }
     
     @SubscribeEvent

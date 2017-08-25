@@ -1,0 +1,68 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "particle": "#bole"
+},
+"elements": [ 
+{
+    "from": [ 7, 0, 7 ],
+    "to": [ 9, 16, 9 ],
+    "faces": {
+        "down":  { "uv": [ 9, 9, 7, 7 ], "texture": "#bole" },
+        "up":    { "uv": [ 6, 5, 8, 7 ], "texture": "#endgrain" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#bole" },
+        "south": { "uv": [ 3, 0, 5, 16 ], "texture": "#bole" },
+        "west":  { "uv": [ 9, 0, 11, 16 ], "texture": "#bole" },
+        "east":  { "uv": [ 12, 0, 14, 16 ], "texture": "#bole" }
+    }
+},
+{
+    "from": [ 7, 0, 6 ],
+    "to": [ 9, 1, 7 ],
+    "faces": {
+        "down":  { "uv": [ 9, 7, 7, 6 ], "texture": "#bole" },
+        "up":    { "uv": [ 7, 6, 9, 7 ], "texture": "#bole" },
+        "north": { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" },
+        "south": { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" },
+        "west":  { "uv": [ 6, 15, 7, 16 ], "texture": "#bole" },
+        "east":  { "uv": [ 9, 15, 10, 16 ], "texture": "#bole" }
+    }
+},
+{
+    "from": [ 9, 0, 7 ],
+    "to": [ 10, 1, 9 ],
+    "faces": {
+        "down":  { "uv": [ 7, 9, 6, 7 ], "texture": "#bole" },
+        "up":    { "uv": [ 9, 7, 10, 9 ], "texture": "#bole" },
+        "north": { "uv": [ 6, 15, 7, 16 ], "texture": "#bole" },
+        "south": { "uv": [ 9, 15, 10, 16 ], "texture": "#bole" },
+        "west":  { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" },
+        "east":  { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" }
+    }
+},
+{
+    "from": [ 7, 0, 9 ],
+    "to": [ 9, 1, 10 ],
+    "faces": {
+        "down":  { "uv": [ 9, 10, 7, 9 ], "texture": "#bole" },
+        "up":    { "uv": [ 7, 9, 9, 10 ], "texture": "#bole" },
+        "north": { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" },
+        "south": { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" },
+        "west":  { "uv": [ 9, 15, 10, 16 ], "texture": "#bole" },
+        "east":  { "uv": [ 6, 15, 7, 16 ], "texture": "#bole" }
+    }
+},
+{
+    "from": [ 6, 0, 7 ],
+    "to": [ 7, 1, 9 ],
+    "faces": {
+        "down":  { "uv": [ 10, 9, 9, 7 ], "texture": "#bole" },
+        "up":    { "uv": [ 6, 7, 7, 9 ], "texture": "#bole" },
+        "north": { "uv": [ 9, 15, 10, 16 ], "texture": "#bole" },
+        "south": { "uv": [ 6, 15, 7, 16 ], "texture": "#bole" },
+        "west":  { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" },
+        "east":  { "uv": [ 7, 15, 9, 16 ], "texture": "#bole" }
+    }
+}
+]
+}

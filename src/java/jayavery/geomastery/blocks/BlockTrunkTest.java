@@ -87,7 +87,7 @@ public class BlockTrunkTest extends BlockBuildingAbstract<ItemPlacing.Building> 
     public int getMetaFromState(IBlockState state) {
         
         int meta = state.getValue(AXIS) == ETrunkAxis.X_AXIS ? 8 : 0;
-        meta += state.getValue(TYPE).ordinal();
+      // TODO  meta += state.getValue(TYPE).ordinal();
         return meta;
     }
     
@@ -96,7 +96,7 @@ public class BlockTrunkTest extends BlockBuildingAbstract<ItemPlacing.Building> 
         
         IBlockState state = this.getDefaultState();
         state = state.withProperty(AXIS, (meta & 8) > 0 ? ETrunkAxis.X_AXIS : ETrunkAxis.Z_AXIS);
-        state = state.withProperty(TYPE, ETreeType.values()[meta % 8]);
+    // TODO    state = state.withProperty(TYPE, ETreeType.values()[meta % 8]);
         return state;
     }
     

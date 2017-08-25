@@ -76,7 +76,7 @@ public class GeoBlocks {
     public static final Set<Item> OFFHAND_ONLY = Sets.newHashSet();
     
     /** Leaves which need to set transparency. */
-    public static final Set<BlockHarvestableLeaves> LEAVES = Sets.newHashSet();
+    public static final Set<BlockHarvestableLeaves> LEAF_BLOCKS = Sets.newHashSet();
     
     /** Blockfruit crops which need custom state mapper. */
     public static final Set<BlockCropBlockfruit> CROP_BLOCKFRUIT = Sets.newHashSet();
@@ -117,19 +117,24 @@ public class GeoBlocks {
  //   public static final BlockTrunkTest TRUNK_GIANT = makeItemBuilding(new BlockTrunkTest("trunk_giant"));
  //   public static final BlockTreeTest TREE_GIANT = makeItemBuilding(new BlockTreeTest("tree_giant", () -> TRUNK_GIANT));
     
-    public static final BlockTree STUMP_SMALL = makeItemless(new BlockTree("stump_small", true, false, false, null));
-    public static final BlockTree TREE_SMALL = makeItemless(new BlockTree("tree_small", true, false, false, null));
+    public static final BlockTree STUMP_SMALL = makeItemless(new BlockTree("stump_small", true, false, true, false, null));
+    public static final BlockTree BOLE_SMALL = makeItemless(new BlockTree("bole_small", true, false, false, false, () -> STUMP_SMALL));
+    public static final BlockTree TREE_SMALL = makeItemless(new BlockTree("tree_small", true, false, false, false, null));
     
-    public static final BlockTree STUMP_MEDIUM = makeItemless(new BlockTree("stump_medium", true, false, true, null));
-    public static final BlockTree TREE_MEDIUM = makeItemless(new BlockTree("tree_medium", true, false, false, () -> TRUNK_MEDIUM));
+    public static final BlockTree STUMP_MEDIUM = makeItemless(new BlockTree("stump_medium", true, false, true, false, null));
+    public static final BlockTree BOLE_MEDIUM = makeItemless(new BlockTree("bole_medium", true, false, false, true, () -> STUMP_MEDIUM));
+    public static final BlockTree TREE_MEDIUM = makeItemless(new BlockTree("tree_medium", true, false, false, false, () -> TRUNK_MEDIUM));
     
-    public static final BlockTree STUMP_LARGE = makeItemless(new BlockTree("stump_large", false, false, true, null));
-    public static final BlockTree TREE_LARGE = makeItemless(new BlockTree("tree_large", false, false, false, () -> TRUNK_LARGE));
+    public static final BlockTree STUMP_LARGE = makeItemless(new BlockTree("stump_large", false, false, true, false, null));
+    public static final BlockTree BOLE_LARGE = makeItemless(new BlockTree("bole_large", false, false, false, true, () -> STUMP_LARGE));
+    public static final BlockTree TREE_LARGE = makeItemless(new BlockTree("tree_large", false, false, false, false, () -> TRUNK_LARGE));
     
-    public static final BlockTree STUMP_GIANT = makeItemless(new BlockTree("stump_giant", true, true, true, null));
-    public static final BlockTree TREE_GIANT = makeItemless(new BlockTree("tree_giant", true, true, false, () -> TRUNK_LARGE));    
+    public static final BlockTree STUMP_GIANT = makeItemless(new BlockTree("stump_giant", true, true, true, false, null));
+    public static final BlockTree BOLE_GIANT = makeItemless(new BlockTree("bole_giant", true, true, false, true, () -> STUMP_GIANT));
+    public static final BlockTree TREE_GIANT = makeItemless(new BlockTree("tree_giant", true, true, false, false, () -> TRUNK_LARGE));    
     
-    public static final BlockLeaves LEAF = makeItemBlock(new BlockLeaves("leaves"));
+    public static final BlockLeaves LEAVES = makeItemBlock(new BlockLeaves("leaves", false));
+    public static final BlockLeaves LEAVES_NODE = makeItemBlock(new BlockLeaves("leaves_node", true));
     
     // Beds
     public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf());
@@ -216,10 +221,10 @@ public class GeoBlocks {
     public static final BlockSeedling SEEDLING_BANANA = makeItemBlock(new BlockSeedling.Banana());
     
     // Leaves
-    public static final BlockHarvestableLeaves LEAF_APPLE =  makeItemBlock(new BlockHarvestableLeaves("leaf_apple", () -> GeoItems.APPLE, () -> SEEDLING_APPLE, 0.05F), LEAVES);
-    public static final BlockHarvestableLeaves LEAF_BANANA = makeItemBlock(new BlockHarvestableLeaves("leaf_banana", () -> GeoItems.BANANA, () -> SEEDLING_BANANA, 0.15F), LEAVES);
-    public static final BlockHarvestableLeaves LEAF_PEAR =   makeItemBlock(new BlockHarvestableLeaves("leaf_pear", () -> GeoItems.PEAR, () -> SEEDLING_PEAR, 0.05F), LEAVES);
-    public static final BlockHarvestableLeaves LEAF_ORANGE = makeItemBlock(new BlockHarvestableLeaves("leaf_orange", () -> GeoItems.ORANGE, () -> SEEDLING_ORANGE, 0.1F), LEAVES);
+    public static final BlockHarvestableLeaves LEAF_APPLE =  makeItemBlock(new BlockHarvestableLeaves("leaf_apple", () -> GeoItems.APPLE, () -> SEEDLING_APPLE, 0.05F), LEAF_BLOCKS);
+    public static final BlockHarvestableLeaves LEAF_BANANA = makeItemBlock(new BlockHarvestableLeaves("leaf_banana", () -> GeoItems.BANANA, () -> SEEDLING_BANANA, 0.15F), LEAF_BLOCKS);
+    public static final BlockHarvestableLeaves LEAF_PEAR =   makeItemBlock(new BlockHarvestableLeaves("leaf_pear", () -> GeoItems.PEAR, () -> SEEDLING_PEAR, 0.05F), LEAF_BLOCKS);
+    public static final BlockHarvestableLeaves LEAF_ORANGE = makeItemBlock(new BlockHarvestableLeaves("leaf_orange", () -> GeoItems.ORANGE, () -> SEEDLING_ORANGE, 0.1F), LEAF_BLOCKS);
     
     // Logs
     public static final Block WOOD_APPLE =  makeItemBlock(new BlockWood("wood_apple", 2F));

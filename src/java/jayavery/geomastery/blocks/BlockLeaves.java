@@ -11,12 +11,12 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 import com.google.common.collect.Sets;
+import jayavery.geomastery.main.GeoBlocks;
 import jayavery.geomastery.utilities.EToolType;
 import jayavery.geomastery.utilities.ETreeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -25,11 +25,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,15 +34,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 // TEST
 public class BlockLeaves extends BlockNew {
 
-    public static final PropertyBool NODE = PropertyBool.create("node");
+  //  public static final PropertyBool NODE = PropertyBool.create("node");
     public static final PropertyEnum<ETreeType> TYPE = PropertyEnum.create("type", ETreeType.class);
     
-    public BlockLeaves(String name) {
+    private final boolean node;
+    
+    public BlockLeaves(String name, boolean node) {
         
         super(Material.LEAVES, name, CreativeTabs.DECORATIONS,
                 0.2F, EToolType.MACHETE);
         this.setTickRandomly(true);
         this.setLightOpacity(1);
+        this.node = node;
     }
     
     @Override
@@ -90,23 +90,20 @@ public class BlockLeaves extends BlockNew {
     @Override
     public BlockStateContainer createBlockState() {
         
-        return new BlockStateContainer(this, NODE, TYPE);
+        return new BlockStateContainer(this, TYPE);
     }
     
     @Override
     public int getMetaFromState(IBlockState state) {
         
-        int meta = state.getValue(NODE) ? 8 : 0;
-        meta += state.getValue(TYPE).ordinal();
-        return meta;
+        return state.getValue(TYPE).ordinal();
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
         IBlockState state = this.getDefaultState();
-        state = state.withProperty(NODE, (meta & 8) > 0);
-        state = state.withProperty(TYPE, ETreeType.values()[meta % 8]);
+        state = state.withProperty(TYPE, ETreeType.values()[meta]);
         return state;
     }
 
@@ -114,7 +111,7 @@ public class BlockLeaves extends BlockNew {
         
         if (this.shouldFall(world, pos, state)) {
             
-            this.fall(world, pos, state);
+            this.fall(world, pos);
         }
     }
     
@@ -124,7 +121,7 @@ public class BlockLeaves extends BlockNew {
         Queue<BlockPos> checkQueue = new LinkedList<BlockPos>();
         checkQueue.add(pos);
         
-        if (state.getValue(NODE)) {
+        if (this.node) {
             
             while (!checkQueue.isEmpty()) {
                 
@@ -137,7 +134,7 @@ public class BlockLeaves extends BlockNew {
                     
                     return false;
                     
-                } else if (nextBlock == this && nextState.getValue(NODE)) {
+                } else if (nextBlock instanceof BlockLeaves && ((BlockLeaves) nextState.getBlock()).node) {
                     
                     for (EnumFacing facing : EnumFacing.VALUES) {
                         
@@ -151,7 +148,7 @@ public class BlockLeaves extends BlockNew {
                 }  
             }
             
-            world.setBlockState(pos, state.withProperty(NODE, false));
+            world.setBlockState(pos, GeoBlocks.LEAVES.getDefaultState().withProperty(TYPE, state.getValue(TYPE)));
             return false;
             
         } else {
@@ -163,12 +160,12 @@ public class BlockLeaves extends BlockNew {
                 Block nextBlock = nextState.getBlock();
                 checked.add(nextPos);
                 
-                if ((nextBlock == this && nextState.getValue(NODE)) ||
+                if ((nextBlock instanceof BlockLeaves && ((BlockLeaves) nextState.getBlock()).node) ||
                         (nextBlock instanceof BlockTree)) {
                     
                     return false;
                     
-                } else if (nextState.getBlock() == this) {
+                } else if (nextBlock == this) {
                     
                     for (EnumFacing facing : EnumFacing.VALUES) {
                         
@@ -186,7 +183,7 @@ public class BlockLeaves extends BlockNew {
         }
     }
     
-    private void fall(World world, BlockPos pos, IBlockState state) {
+    private void fall(World world, BlockPos pos) {
         
         if (world.isRemote) {
             

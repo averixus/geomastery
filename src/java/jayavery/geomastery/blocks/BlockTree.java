@@ -42,36 +42,57 @@ public class BlockTree extends BlockNew {
     
     public static final PropertyEnum<ETreeType> TYPE = PropertyEnum.create("type", ETreeType.class);
     public static final PropertyBool LEAVES = PropertyBool.create("leaves");
-    public static final PropertyBool FALLING = PropertyBool.create("falling");
+//    public static final PropertyBool FALLING = PropertyBool.create("falling");
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     
     private final boolean leaves;
     private final boolean facing;
-    private final boolean fallableStump;
+    private final boolean fallenStump;
+    private boolean fallableStump;
     
-    private final Supplier<BlockTrunkTest> trunk;
+    private final Supplier<Block> alternate;
     
     private final BlockStateContainer stateContainer;
     
-    public BlockTree(String name, boolean leaves, boolean facing, boolean fallableStump, Supplier<BlockTrunkTest> trunk) {
+    public BlockTree(String name, boolean leaves, boolean facing, boolean fallenStump, boolean fallableStump, Supplier<Block> alternate) {
         
         super(BlockMaterial.TREES, name, null, 2F, EToolType.AXE);
         this.leaves = leaves;
         this.facing = facing;
+        this.fallenStump = fallenStump;
         this.fallableStump = fallableStump;
-        this.trunk = trunk;
+        this.alternate = alternate;
         this.stateContainer = this.createBlockState();
         this.setDefaultState(this.stateContainer.getBaseState());
     }
     
-    public BlockTrunkTest getFallen() {
+    /** @return Fallen or other version. TEST */
+    public Block getAlternate() {
         
-        return this.trunk.get();
+        return this.alternate.get();
     }
     
-    public boolean hasFallen() {
+    public boolean hasAlternate() {
         
-        return this.trunk != null;
+        return this.alternate != null;
+    }
+    
+    public IBlockState getAlternateState(IBlockState state) {
+        
+        Block block = this.alternate.get();
+        IBlockState result = block.getDefaultState().withProperty(TYPE, state.getValue(TYPE));
+        
+        if (this.leaves) {
+            
+            result = result.withProperty(LEAVES, state.getValue(LEAVES));
+        }
+        
+        if (this.facing) {
+            
+            result = result.withProperty(FACING, state.getValue(FACING));
+        }
+                
+        return result;
     }
     
     public void serialiseActualState(IBlockState state, ByteBuf buf) {
@@ -83,10 +104,10 @@ public class BlockTree extends BlockNew {
             buf.writeBoolean(state.getValue(LEAVES));
         }
         
-        if (this.fallableStump) {
+  /*      if (this.fallenStump) {
             
             buf.writeBoolean(state.getValue(FALLING));
-        }
+        }*/
         
         if (this.facing) {
             
@@ -104,10 +125,10 @@ public class BlockTree extends BlockNew {
             state = state.withProperty(LEAVES, buf.readBoolean());
         }
         
-        if (this.fallableStump) {
+   /*     if (this.fallenStump) {
             
             state = state.withProperty(FALLING, buf.readBoolean());
-        }
+        }*/
         
         if (this.facing) {
             
@@ -132,10 +153,10 @@ public class BlockTree extends BlockNew {
             props.add(FACING);
         }
         
-        if (this.fallableStump) {
+    /*    if (this.fallenStump) {
             
             props.add(FALLING);
-        }
+        }*/
         
         return new BlockStateContainer(this,
                 props.toArray(new IProperty<?>[] {}));
@@ -199,23 +220,23 @@ public class BlockTree extends BlockNew {
         
         int meta = state.getValue(TYPE).ordinal();
         
-        if (this.fallableStump && state.getValue(FALLING)) {
+    /*    if (this.fallenStump && state.getValue(FALLING)) {
             
             meta = meta + 8;
         }
-        
+        */
         return meta;
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
         
-        IBlockState state = this.getDefaultState().withProperty(TYPE, ETreeType.values()[meta % 8]);
+        IBlockState state = this.getDefaultState().withProperty(TYPE, ETreeType.values()[meta]);
         
-        if (this.fallableStump) {
+   /*     if (this.fallenStump) {
             
             state = state.withProperty(FALLING, (meta & 8) > 0);
-        }
+        }*/
         
         return state;
     }
@@ -223,13 +244,13 @@ public class BlockTree extends BlockNew {
     @Override
     public boolean hasTileEntity(IBlockState state) {
         
-        return this.fallableStump && state.getValue(FALLING);
+        return this.fallenStump /*&& state.getValue(FALLING)*/;
     }
 
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         
-        return this.fallableStump && state.getValue(FALLING) ?
+        return this.fallenStump /*&& state.getValue(FALLING)*/ ?
                 new TEStump() : null;
     }
     
@@ -245,7 +266,7 @@ public class BlockTree extends BlockNew {
     public final boolean removedByPlayer(IBlockState state, World world,
             BlockPos pos, EntityPlayer player, boolean willHarvest) {
         
-        if (willHarvest && this.trunk != null) {
+        if (willHarvest && this.alternate != null) {
             
             return true;
         }
@@ -257,19 +278,21 @@ public class BlockTree extends BlockNew {
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos,
             IBlockState state, @Nullable TileEntity te, ItemStack tool) {
         
-        if (this.trunk != null) {
+        if (this.alternate != null) {
             
             IBlockState stateBelow = world.getBlockState(pos.down());
             Block blockBelow = stateBelow.getBlock();
             
             if (blockBelow instanceof BlockTree &&
-                    ((BlockTree) blockBelow).fallableStump &&
-                    stateBelow.getValue(FALLING)) {
+                    ((BlockTree) blockBelow).fallableStump/*&&
+                    stateBelow.getValue(FALLING)*/) {
                 
-                world.setBlockState(pos.down(),
-                        stateBelow.withProperty(FALLING, true));
-                ((TEStump) world.getTileEntity(pos.down()))
-                        .fall(player.getHorizontalFacing().rotateY());
+               /* world.setBlockState(pos.down(),
+                        stateBelow.withProperty(FALLING, true));*/
+                world.setBlockState(pos.down(), ((BlockTree) blockBelow).getAlternateState(stateBelow));
+                TEStump tile = ((TEStump) world.getTileEntity(pos.down()));
+                System.out.println("te at " + pos.down() + " " + tile);
+                tile.fall(player.getHorizontalFacing().rotateY());
             }
             
             player.addExhaustion(0.005F);
@@ -284,7 +307,7 @@ public class BlockTree extends BlockNew {
     public final List<ItemStack> getDrops(IBlockAccess world,
             BlockPos pos, IBlockState state, int fortune) {
         
-        if (this.trunk == null) {
+        if (this.alternate == null) {
             
             return Lists.newArrayList(new ItemStack(GeoItems.TIMBER)); //drops
         }

@@ -43,7 +43,7 @@ public class WorldGenTreePineSmall extends WorldGenTreeAbstract {
             return false;
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
+        this.setBlock(stump, GeoBlocks.BOLE_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
         
         ArrayList<BlockPos> leaves = Lists.newArrayList();
         leaves.add(stump.up());
@@ -59,7 +59,7 @@ public class WorldGenTreePineSmall extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.PINE).withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.PINE));
             }
         }
         
@@ -91,7 +91,7 @@ public class WorldGenTreePineSmall extends WorldGenTreeAbstract {
             layer++;            
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
+        this.setBlock(stump, GeoBlocks.BOLE_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
         
         for (int i = layer; i <= layer + 1; i++) {
             
@@ -100,7 +100,7 @@ public class WorldGenTreePineSmall extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.PINE));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.PINE));
             }
         }
         
@@ -125,7 +125,7 @@ public class WorldGenTreePineSmall extends WorldGenTreeAbstract {
             return false;
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
+        this.setBlock(stump, GeoBlocks.BOLE_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
         this.setBlock(stump.up(), GeoBlocks.TREE_SMALL.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
 
         ArrayList<BlockPos> leaves = Lists.newArrayList();
@@ -142,7 +142,7 @@ public class WorldGenTreePineSmall extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false).withProperty(BlockTree.TYPE, ETreeType.PINE));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.PINE));
             }
         }
         

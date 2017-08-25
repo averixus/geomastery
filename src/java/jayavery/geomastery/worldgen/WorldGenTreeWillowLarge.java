@@ -59,7 +59,7 @@ public class WorldGenTreeWillowLarge extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_LARGE.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.WILLOW));
+        this.setBlock(stump, GeoBlocks.BOLE_LARGE.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.WILLOW));
         
         for (BlockPos trunk : trunks) {
             
@@ -99,7 +99,7 @@ public class WorldGenTreeWillowLarge extends WorldGenTreeAbstract {
             if (this.world.getBlockState(node).getBlock()
                     .isReplaceable(this.world, node)) {
             
-                this.setBlock(node, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, true).withProperty(BlockLeaves.TYPE, ETreeType.WILLOW));
+                this.setBlock(node, GeoBlocks.LEAVES_NODE.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.WILLOW));
             }
         }   
         
@@ -108,7 +108,7 @@ public class WorldGenTreeWillowLarge extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.WILLOW));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.WILLOW));
             }
         }
         

@@ -8,10 +8,8 @@ package jayavery.geomastery.render.tileentity;
 
 import java.util.Map.Entry;
 import org.lwjgl.opengl.GL11;
-import jayavery.geomastery.blocks.BlockStumpTest;
+import jayavery.geomastery.blocks.BlockTree;
 import jayavery.geomastery.tileentities.TEStump;
-import net.minecraft.block.BlockOldLog;
-import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelRenderer;
@@ -22,7 +20,6 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,55 +33,57 @@ public class RenderStump extends TileEntitySpecialRenderer<TEStump> {
 
         IBlockState state = te.getWorld().getBlockState(te.getPos()).getActualState(te.getWorld(), te.getPos());
         EnumFacing fallDir = /*state.getValue(BlockFacing.FACING)*/ EnumFacing.EAST;
-
-        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        GlStateManager.pushMatrix();
-        GlStateManager.disableLighting();
         BlockPos pos = te.getPos();
-        float angle = (float) (te.prevAngle + ((te.angle - te.prevAngle) * Math.pow(1.1, tick)));
-
-        
-        if (fallDir == EnumFacing.NORTH) {
-            
-            GlStateManager.translate(x, y, z);
-            GlStateManager.rotate(-angle, 1, 0, 0);
-            GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ());
-            
-        } else if (fallDir == EnumFacing.SOUTH) {
-            
-            GlStateManager.translate(x, y, z + 1);
-            GlStateManager.rotate(angle, 1, 0, 0);
-            GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ() - 1);
-            
-        } else if (fallDir == EnumFacing.WEST) {
-            
-            GlStateManager.translate(x, y, z);
-            GlStateManager.rotate(angle, 0, 0, 1);
-            GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ());
-            
-        } else if (fallDir == EnumFacing.EAST) {
-            
-            GlStateManager.translate(x + 1, y, z);
-            GlStateManager.rotate(-angle, 0, 0, 1);
-            GlStateManager.translate(-pos.getX() - 1, -pos.getY(), -pos.getZ());
-        }
-        
-        
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         Tessellator tess = Tessellator.getInstance();
         VertexBuffer vb = tess.getBuffer();
-        vb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
         BlockRendererDispatcher dispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         BlockModelRenderer render = dispatcher.getBlockModelRenderer();
         World world = te.getWorld();
-
-        for (Entry<BlockPos, IBlockState> entry : te.blocks.entrySet()) {
-
-            render.renderModel(world, dispatcher.getModelForState(entry.getValue()), entry.getValue(), entry.getKey(), vb, false);
+       
+        if (te.falling) {
+            
+            GlStateManager.pushMatrix();
+            GlStateManager.disableLighting();
+            float angle = (float) (te.prevAngle + ((te.angle - te.prevAngle) * Math.pow(1.1, tick)));
+    
+            
+            if (fallDir == EnumFacing.NORTH) {
+                
+                GlStateManager.translate(x, y, z);
+                GlStateManager.rotate(-angle, 1, 0, 0);
+                GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ());
+                
+            } else if (fallDir == EnumFacing.SOUTH) {
+                
+                GlStateManager.translate(x, y, z + 1);
+                GlStateManager.rotate(angle, 1, 0, 0);
+                GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ() - 1);
+                
+            } else if (fallDir == EnumFacing.WEST) {
+                
+                GlStateManager.translate(x, y, z);
+                GlStateManager.rotate(angle, 0, 0, 1);
+                GlStateManager.translate(-pos.getX(), -pos.getY(), -pos.getZ());
+                
+            } else if (fallDir == EnumFacing.EAST) {
+                
+                GlStateManager.translate(x + 1, y, z);
+                GlStateManager.rotate(-angle, 0, 0, 1);
+                GlStateManager.translate(-pos.getX() - 1, -pos.getY(), -pos.getZ());
+            }
+            
+            vb.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+    
+            for (Entry<BlockPos, IBlockState> entry : te.blocks.entrySet()) {
+    
+                render.renderModel(world, dispatcher.getModelForState(entry.getValue()), entry.getValue(), entry.getKey(), vb, false);
+            }
+            
+            tess.draw();
+            GlStateManager.enableLighting();
+            GlStateManager.popMatrix();
         }
-        
-        tess.draw();
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
         
         GlStateManager.pushMatrix();
         GlStateManager.disableLighting();

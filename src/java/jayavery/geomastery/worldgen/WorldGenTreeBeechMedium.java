@@ -67,7 +67,7 @@ public class WorldGenTreeBeechMedium extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_MEDIUM.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.BEECH));
+        this.setBlock(stump, GeoBlocks.BOLE_MEDIUM.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.BEECH));
         
         for (BlockPos trunk : trunks) {
             
@@ -188,7 +188,7 @@ public class WorldGenTreeBeechMedium extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
             }
         }
         
@@ -227,7 +227,7 @@ public class WorldGenTreeBeechMedium extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_MEDIUM.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.BEECH));
+        this.setBlock(stump, GeoBlocks.BOLE_MEDIUM.getDefaultState().withProperty(BlockTree.TYPE, ETreeType.BEECH));
         
         for (BlockPos trunk : trunks) {
             
@@ -342,7 +342,7 @@ public class WorldGenTreeBeechMedium extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false).withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState().withProperty(BlockLeaves.TYPE, ETreeType.BEECH));
             }
         }
         

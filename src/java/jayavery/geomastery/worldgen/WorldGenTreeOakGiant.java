@@ -13,9 +13,7 @@ import java.util.Random;
 import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import jayavery.geomastery.blocks.BlockLeaves;
 import jayavery.geomastery.main.GeoBlocks;
-import jayavery.geomastery.worldgen.WorldGenTreeAbstract.ECornerAmount;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.util.EnumFacing;
@@ -75,7 +73,7 @@ public class WorldGenTreeOakGiant extends WorldGenTreeAbstract {
                 
         for (BlockPos aStump : stumps) {
             
-            this.setBlock(aStump, GeoBlocks.STUMP_GIANT.getDefaultState());
+            this.setBlock(aStump, GeoBlocks.BOLE_GIANT.getDefaultState());
         }
         
         for (BlockPos trunk : trunks) {
@@ -158,8 +156,7 @@ public class WorldGenTreeOakGiant extends WorldGenTreeAbstract {
             if (this.world.getBlockState(node).getBlock()
                     .isReplaceable(this.world, node)) {
                 
-                this.setBlock(node, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, true));
+                this.setBlock(node, GeoBlocks.LEAVES_NODE.getDefaultState());
             }
         }
         
@@ -168,8 +165,7 @@ public class WorldGenTreeOakGiant extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState()
-                        .withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         

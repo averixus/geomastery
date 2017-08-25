@@ -69,7 +69,7 @@ public class WorldGenTreeOakSmall extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_SMALL.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_SMALL.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -81,7 +81,7 @@ public class WorldGenTreeOakSmall extends WorldGenTreeAbstract {
         if (this.world.getBlockState(leaf).getBlock()
                 .isReplaceable(this.world, leaf)) {
         
-            this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+            this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
         }
         
         return true;
@@ -117,7 +117,7 @@ public class WorldGenTreeOakSmall extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_SMALL.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_SMALL.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -142,7 +142,7 @@ public class WorldGenTreeOakSmall extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         
@@ -179,7 +179,7 @@ public class WorldGenTreeOakSmall extends WorldGenTreeAbstract {
             }
         }
         
-        this.setBlock(stump, GeoBlocks.STUMP_SMALL.getDefaultState());
+        this.setBlock(stump, GeoBlocks.BOLE_SMALL.getDefaultState());
         
         for (BlockPos trunk : trunks) {
             
@@ -211,7 +211,7 @@ public class WorldGenTreeOakSmall extends WorldGenTreeAbstract {
             if (this.world.getBlockState(leaf).getBlock()
                     .isReplaceable(this.world, leaf)) {
             
-                this.setBlock(leaf, GeoBlocks.LEAF.getDefaultState().withProperty(BlockLeaves.NODE, false));
+                this.setBlock(leaf, GeoBlocks.LEAVES.getDefaultState());
             }
         }
         

@@ -367,7 +367,7 @@ public class BlockEvents {
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         
-        if (block instanceof BlockLog && world.getBlockState(pos.down()).getBlock() == GeoBlocks.STUMP_MEDIUM) {
+        if (block instanceof BlockLog && world.getBlockState(pos.down()).getBlock() == GeoBlocks.BOLE_MEDIUM) {
 
             // TEST TreeFallUtils.fellTree(world, pos, event.getPlayer()
                   //  .getHorizontalFacing().rotateY());

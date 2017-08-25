@@ -85,7 +85,7 @@ public class ClientProxy implements IProxy {
         
         Geomastery.LOG.info("Setting leaves transparency");
         boolean fancy = Minecraft.getMinecraft().gameSettings.fancyGraphics;
-        for (BlockHarvestableLeaves block : GeoBlocks.LEAVES) {
+        for (BlockHarvestableLeaves block : GeoBlocks.LEAF_BLOCKS) {
             
             block.setGraphicsLevel(fancy);
         }
