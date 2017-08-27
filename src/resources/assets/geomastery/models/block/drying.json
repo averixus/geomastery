@@ -1,9 +1,8 @@
 {
 "textures": {
-    "panels1": "geomastery:blocks/complex/panels1",
-    "particle": "geomastery:blocks/complex/panels1"
+    "particle": "geomastery:blocks/complex/panels1",
+    "panels1": "geomastery:blocks/complex/wool"
 },
-"parent": "block/block",
 "elements": [ 
 {
     "from": [ 0, 0, 1 ],
