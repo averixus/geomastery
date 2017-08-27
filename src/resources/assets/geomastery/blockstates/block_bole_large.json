@@ -54,6 +54,7 @@
                 }
             },
             "ebony": {
+                "model": "geomastery:trees/bole_large_ebony",
                 "textures": {
                     "bole": "geomastery:blocks/trees/bolesize34ebony",
                     "cross": "geomastery:blocks/trees/crosssize3ebony"
