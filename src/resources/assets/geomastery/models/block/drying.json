@@ -1,8 +1,8 @@
 {
 "textures": {
-    "particle": "blocks/complex/polegrain",
-    "polebark": "blocks/complex/polebark",
-    "polegrain": "blocks/complex/polegrain"
+    "particle": "geomastery:blocks/complex/polegrain",
+    "polebark": "geomastery:blocks/complex/polebark",
+    "polegrain": "geomastery:blocks/complex/polegrain"
 },
 "elements": [ 
 {
