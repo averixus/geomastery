@@ -73,6 +73,13 @@
                     "cross": "geomastery:blocks/trees/crosssize2ebony",
                     "all": "geomastery:blocks/trees/leavesebony"
                 }
+            },
+            "acacia": {
+                "textures": {
+                    "bole": "geomastery:blocks/trees/bolesize2acacia",
+                    "cross": "geomastery:blocks/trees/crosssize2acacia",
+                    "all": "geomastery:blocks/trees/leavesacacia"
+                }
             }
         },
         "leaves": {

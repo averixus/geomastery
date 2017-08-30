@@ -12,7 +12,7 @@ import net.minecraft.util.IStringSerializable;
 public enum ETreeType implements IStringSerializable {
     
     OAK("oak"), BIRCH("birch"), LARCH("larch"), SPRUCE("spruce"), PINE("pine"),
-    WILLOW("willow"), BEECH("beech"), EBONY("ebony"), BRAZIL("brazil"), MAHOGANY("mahogany");
+    WILLOW("willow"), BEECH("beech"), EBONY("ebony"), BRAZIL("brazil"), MAHOGANY("mahogany"), ACACIA("acacia");
     
     private final String name;
 

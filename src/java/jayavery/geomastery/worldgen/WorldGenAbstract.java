@@ -153,4 +153,10 @@ public abstract class WorldGenAbstract {
         
         return -1;
     }
+    
+    protected EnumFacing randHorizontal() {
+        
+        return EnumFacing.HORIZONTALS[this.rand
+                .nextInt(EnumFacing.HORIZONTALS.length)];
+    }
 }

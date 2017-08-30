@@ -73,6 +73,13 @@
                     "endgrain": "geomastery:blocks/trees/endgrainebony",
                     "all": "geomastery:blocks/trees/leavesebony"
                 }
+            },
+            "acacia": {
+                "textures": {
+                    "bole": "geomastery:blocks/trees/bolesize1acacia",
+                    "endgrain": "geomastery:blocks/trees/endgrainacacia",
+                    "all": "geomastery:blocks/trees/leavesacacia"
+                }
             }
         },
         "leaves": {

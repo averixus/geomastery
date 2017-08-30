@@ -54,6 +54,11 @@
                 "textures": {
                     "all": "geomastery:blocks/trees/leavesebony"
                 }
+            },
+            "acacia": {
+                "textures": {
+                    "all": "geomastery:blocks/trees/leavesacacia"
+                }
             }
         },
         "inventory": [{}]

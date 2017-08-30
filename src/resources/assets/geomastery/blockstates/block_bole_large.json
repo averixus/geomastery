@@ -59,6 +59,12 @@
                     "bole": "geomastery:blocks/trees/bolesize34ebony",
                     "cross": "geomastery:blocks/trees/crosssize3ebony"
                 }
+            },
+            "acacia": {
+                "textures": {
+                    "bole": "geomastery:blocks/trees/bolesize3acacia",
+                    "cross": "geomastery:blocks/trees/crosssize3acacia"
+                }
             }
         },
         "inventory": [{}]
