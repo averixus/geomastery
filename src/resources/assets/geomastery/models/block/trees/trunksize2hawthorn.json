@@ -1,0 +1,88 @@
+{
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+"textures": {
+    "particle": "blocks/Trees/endgrainhawthorn",
+    "crosssize2hawthorn": "blocks/Trees/crosssize2hawthorn",
+    "barksize12hawthorn": "blocks/Trees/barksize12hawthorn"
+},
+"elements": [ 
+{
+    "from": [ 10.4375, 0.3125, 6 ],
+    "to": [ 12.4375, 16.3125, 10 ],
+    "rotation": { "origin": [ 10.4375, 16.3125, 6 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 12, 10, 10, 6 ], "texture": "#crosssize2hawthorn" },
+        "up":    { "uv": [ 4, 6, 6, 10 ], "texture": "#crosssize2hawthorn" },
+        "north": { "uv": [ 10, 0, 12, 16 ], "texture": "#barksize12hawthorn" },
+        "south": { "uv": [ 4, 0, 6, 16 ], "texture": "#barksize12hawthorn" },
+        "west":  { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize12hawthorn" },
+        "east":  { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize12hawthorn" }
+    }
+},
+{
+    "from": [ 12.25, -0.4375, 4 ],
+    "to": [ 16.25, 15.5625, 12 ],
+    "rotation": { "origin": [ 12.25, 15.5625, 4 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 10, 12, 6, 4 ], "texture": "#crosssize2hawthorn" },
+        "up":    { "uv": [ 6, 4, 10, 12 ], "texture": "#crosssize2hawthorn" },
+        "north": { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize12hawthorn" },
+        "south": { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize12hawthorn" },
+        "west":  { "uv": [ 4, 0, 12, 16 ], "texture": "#barksize12hawthorn" },
+        "east":  { "uv": [ 4, 0, 12, 16 ], "texture": "#barksize12hawthorn" }
+    }
+},
+{
+    "from": [ 16, -2, 6 ],
+    "to": [ 18, 14, 10 ],
+    "rotation": { "origin": [ 16, 14, 6 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 6, 10, 4, 6 ], "texture": "#crosssize2hawthorn" },
+        "up":    { "uv": [ 10, 6, 12, 10 ], "texture": "#crosssize2hawthorn" },
+        "north": { "uv": [ 10, 0, 12, 16 ], "texture": "#barksize12hawthorn" },
+        "south": { "uv": [ 4, 0, 6, 16 ], "texture": "#barksize12hawthorn" },
+        "west":  { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize12hawthorn" },
+        "east":  { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize12hawthorn" }
+    }
+},
+{
+    "from": [ 13.4375, 15.3125, 4 ],
+    "to": [ 17.4375, 18.3125, 12 ],
+    "rotation": { "origin": [ 13.4375, 18.3125, 4 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 10, 12, 6, 4 ], "texture": "#crosssize2hawthorn" },
+        "up":    { "uv": [ 6, 4, 10, 12 ], "texture": "#crosssize2hawthorn" },
+        "north": { "uv": [ 6, 0, 10, 3 ], "texture": "#barksize12hawthorn" },
+        "south": { "uv": [ 6, 0, 10, 3 ], "texture": "#barksize12hawthorn" },
+        "west":  { "uv": [ 4, 0, 12, 3 ], "texture": "#barksize12hawthorn" },
+        "east":  { "uv": [ 4, 0, 12, 3 ], "texture": "#barksize12hawthorn" }
+    }
+},
+{
+    "from": [ 17.125, 13.8125, 6 ],
+    "to": [ 19.125, 16.8125, 10 ],
+    "rotation": { "origin": [ 17.125, 16.8125, 6 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 6, 10, 4, 6 ], "texture": "#crosssize2hawthorn" },
+        "up":    { "uv": [ 10, 6, 12, 10 ], "texture": "#crosssize2hawthorn" },
+        "north": { "uv": [ 4, 0, 6, 3 ], "texture": "#barksize12hawthorn" },
+        "south": { "uv": [ 10, 0, 12, 3 ], "texture": "#barksize12hawthorn" },
+        "west":  { "uv": [ 6, 0, 10, 3 ], "texture": "#barksize12hawthorn" },
+        "east":  { "uv": [ 6, 0, 10, 3 ], "texture": "#barksize12hawthorn" }
+    }
+},
+{
+    "from": [ 11.5625, 16.0625, 6 ],
+    "to": [ 13.5625, 19.0625, 10 ],
+    "rotation": { "origin": [ 11.5625, 19.0625, 6 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 12, 10, 10, 6 ], "texture": "#crosssize2hawthorn" },
+        "up":    { "uv": [ 4, 6, 6, 10 ], "texture": "#crosssize2hawthorn" },
+        "north": { "uv": [ 10, 0, 12, 3 ], "texture": "#barksize12hawthorn" },
+        "south": { "uv": [ 4, 0, 6, 3 ], "texture": "#barksize12hawthorn" },
+        "west":  { "uv": [ 6, 0, 10, 3 ], "texture": "#barksize12hawthorn" },
+        "east":  { "uv": [ 6, 0, 10, 3 ], "texture": "#barksize12hawthorn" }
+    }
+}
+]
+}
