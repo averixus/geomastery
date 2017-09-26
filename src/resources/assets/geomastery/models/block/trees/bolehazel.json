@@ -1,9 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "particle": "blocks/Trees/endgrainhazel",
-    "barksize12hazel": "blocks/Trees/barksize12hazel",
-    "endgrainhazel": "blocks/Trees/endgrainhazel"
+    "particle": "geomastery:blocks/Trees/endgrainhazel",
+    "barksize12hazel": "geomastery:blocks/Trees/barksize12hazel",
+    "endgrainhazel": "geomastery:blocks/Trees/endgrainhazel"
 },
 "elements": [ 
 {

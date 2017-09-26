@@ -1,9 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "particle": "blocks/Trees/endgrainhawthorn",
-    "barkbolesize12hawthorn": "blocks/Trees/barkbolesize12hawthorn",
-    "crosssize2hawthorn": "blocks/Trees/crosssize2hawthorn"
+    "particle": "geomastery:blocks/Trees/endgrainhawthorn",
+    "barkbolesize12hawthorn": "geomastery:blocks/Trees/barkbolesize12hawthorn",
+    "crosssize2hawthorn": "geomastery:blocks/Trees/crosssize2hawthorn"
 },
 "elements": [ 
 {
