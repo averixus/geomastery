@@ -1,5 +1,4 @@
 {
-
 "textures": {
     "polebark": "geomastery:blocks/complex/polebark",
     "polegrainhoriz": "geomastery:blocks/complex/polegrain",
@@ -180,9 +179,9 @@
     }
 },
 {
-    "from": [ 8.5625, 9, 0.25 ],
-    "to": [ 13.5625, 11, 1.25 ],
-    "rotation": { "origin": [ 8.5625, 9, 0.25 ], "axis": "y", "angle": -22.5 },
+    "from": [ 8.0625, 9, 1.25 ],
+    "to": [ 13.0625, 11, 2.25 ],
+    "rotation": { "origin": [ 8.0625, 9, 1.25 ], "axis": "y", "angle": -22.5 },
     "faces": {
         "down":  { "uv": [ 7.5, 0, 2.5, 0 ], "texture": "#polegrainhoriz" },
         "up":    { "uv": [ 8.5, 0, 13.5, 0 ], "texture": "#polegrainhoriz" },
