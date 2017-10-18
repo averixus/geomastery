@@ -1,30 +1,91 @@
 {
+
 "textures": {
-    "panels1": "geomastery:blocks/complex/panels1",
-    "panels2": "geomastery:blocks/complex/panels2",
     "notexture": "geomastery:blocks/notexture",
-    "sawdust1": "geomastery:blocks/complex/sawdust1",
-    "particle": "geomastery:blocks/complex/panels1"
+    "sawdust": "geomastery:blocks/complex/sawdust1",
+    "polegrainvert": "geomastery:blocks/complex/polegrain",
+    "polegrainhoriz": "geomastery:blocks/complex/polegrain",
+    "polebark": "geomastery:blocks/complex/polebark"
 },
 "elements": [ 
 {
     "from": [ 13, 12, 0 ],
-    "to": [ 16, 14, 16 ],
+    "to": [ 16, 14, 2 ],
     "faces": {
-        "down":  { "uv": [ 3, 16, 0, 0 ], "texture": "#panels1" },
-        "up":    { "uv": [ 13, 0, 16, 16 ], "texture": "#panels1" },
-        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#panels2" },
-        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#panels2" },
-        "west":  { "uv": [ 0, 2, 16, 4 ], "texture": "#panels2" },
-        "east":  { "uv": [ 0, 2, 16, 4 ], "texture": "#panels2" }
+        "down":  { "uv": [ 3, 2, 0, 0 ], "texture": "#polebark" },
+        "up":    { "uv": [ 13, 0, 16, 2 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#polebark" },
+        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#polebark" },
+        "west":  { "uv": [ 0, 2, 2, 4 ], "texture": "#polegrainhoriz" },
+        "east":  { "uv": [ 14, 2, 16, 4 ], "texture": "#polebark" }
     }
 },
 {
-    "from": [ 9, 0, 0 ],
-    "to": [ 16, 0.001, 16 ],
+    "from": [ 9, -0.0625, 0 ],
+    "to": [ 16, 0, 16 ],
     "faces": {
         "down":  { "uv": [ 7, 16, 0, 0 ], "texture": "#notexture" },
-        "up":    { "uv": [ 0, 0, 7, 16 ], "texture": "#sawdust1" }
+        "up":    { "uv": [ 0, 0, 7, 16 ], "texture": "#sawdust" }
+    }
+},
+{
+    "from": [ 13, 12, 2.5 ],
+    "to": [ 16, 14, 4.5 ],
+    "faces": {
+        "down":  { "uv": [ 3, 4, 0, 2 ], "texture": "#polebark" },
+        "up":    { "uv": [ 13, 3, 16, 5 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#polebark" },
+        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#polebark" },
+        "west":  { "uv": [ 3, 2, 5, 4 ], "texture": "#polegrainhoriz" },
+        "east":  { "uv": [ 11, 2, 13, 4 ], "texture": "#polebark" }
+    }
+},
+{
+    "from": [ 12.5, 12, 5.5 ],
+    "to": [ 16, 14, 7.5 ],
+    "faces": {
+        "down":  { "uv": [ 3.5, 8, 0, 6 ], "texture": "#polebark" },
+        "up":    { "uv": [ 12.5, 5, 16, 7 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 2, 3.5, 4 ], "texture": "#polebark" },
+        "south": { "uv": [ 12.5, 2, 16, 4 ], "texture": "#polebark" },
+        "west":  { "uv": [ 6, 2, 8, 4 ], "texture": "#polegrainhoriz" },
+        "east":  { "uv": [ 8.5, 2, 10.5, 4 ], "texture": "#polebark" }
+    }
+},
+{
+    "from": [ 13, 12, 8 ],
+    "to": [ 16, 14, 10 ],
+    "faces": {
+        "down":  { "uv": [ 3, 10, 0, 8 ], "texture": "#polebark" },
+        "up":    { "uv": [ 13, 8, 16, 10 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#polebark" },
+        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#polebark" },
+        "west":  { "uv": [ 8, 2, 10, 4 ], "texture": "#polegrainhoriz" },
+        "east":  { "uv": [ 6, 2, 8, 4 ], "texture": "#polebark" }
+    }
+},
+{
+    "from": [ 13, 12, 11 ],
+    "to": [ 16, 14, 13 ],
+    "faces": {
+        "down":  { "uv": [ 3, 13, 0, 11 ], "texture": "#polebark" },
+        "up":    { "uv": [ 13, 11, 16, 13 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#polebark" },
+        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#polebark" },
+        "west":  { "uv": [ 11, 2, 13, 4 ], "texture": "#polegrainhoriz" },
+        "east":  { "uv": [ 3, 2, 5, 4 ], "texture": "#polebark" }
+    }
+},
+{
+    "from": [ 13, 12, 14 ],
+    "to": [ 16, 14, 16 ],
+    "faces": {
+        "down":  { "uv": [ 3, 16, 0, 14 ], "texture": "#polebark" },
+        "up":    { "uv": [ 13, 14, 16, 16 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 2, 3, 4 ], "texture": "#polebark" },
+        "south": { "uv": [ 13, 2, 16, 4 ], "texture": "#polebark" },
+        "west":  { "uv": [ 14, 2, 16, 4 ], "texture": "#polegrainhoriz" },
+        "east":  { "uv": [ 0, 2, 2, 4 ], "texture": "#polebark" }
     }
 }
 ]
