@@ -1,11 +1,11 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "notexture": "blocks/notexture",
-    "soot": "blocks/complex/soot",
-    "knappingSeat": "blocks/complex/knapping2",
-    "barkbolesize2oak": "blocks/trees/bolesize2oak",
-    "mottledmetal": "blocks/complex/mottledmetal"
+    "notexture": "geomastery:blocks/notexture",
+    "soot": "geomastery:blocks/complex/soot",
+    "knappingSeat": "geomastery:blocks/complex/knapping2",
+    "barkbolesize2oak": "geomastery:blocks/trees/bolesize2oak",
+    "mottledmetal": "geomastery:blocks/complex/mottledmetal"
 },
 "elements": [ 
 {

@@ -1,10 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "barksize2oak": "blocks/trees/barksize2oak",
-    "crosssize2oak": "blocks/trees/crosssize2oak",
-    "mottledmetal": "blocks/complex/mottledmetal",
-    "polegrain": "blocks/complex/polegrain"
+    "barksize2oak": "geomastery:blocks/trees/barksize2oak",
+    "crosssize2oak": "geomastery:blocks/trees/crosssize2oak",
+    "mottledmetal": "geomastery:blocks/complex/mottledmetal",
+    "polegrain": "geomastery:blocks/complex/polegrain"
 },
 "elements": [ 
 {

@@ -1,10 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "candle": "blocks/complex/candlewax",
-    "polebark": "blocks/complex/polebark",
-    "polegrainhoriz": "blocks/complex/polegrain",
-    "polegrainvert": "blocks/complex/polegrain"
+    "candle": "geomastery:blocks/complex/candlewax",
+    "polebark": "geomastery:blocks/complex/polebark",
+    "polegrainhoriz": "geomastery:blocks/complex/polegrain",
+    "polegrainvert": "geomastery:blocks/complex/polegrain"
 },
 "elements": [ 
 {

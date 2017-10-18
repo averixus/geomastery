@@ -1,13 +1,13 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "log_oak": "blocks/trees/bolesize34oak",
-    "log_oak_top": "blocks/trees/crosssize3oak",
-    "knappingSeat": "blocks/complex/knapping2",
-    "stonechips2": "blocks/complex/stonechips2",
-    "notexture": "blocks/notexture",
-    "bolesize2oak": "blocks/trees/bolesize2oak",
-    "crosssize2oak": "blocks/trees/crosssize2oak"
+    "log_oak": "geomastery:blocks/trees/bolesize34oak",
+    "log_oak_top": "geomastery:blocks/trees/crosssize3oak",
+    "knappingSeat": "geomastery:blocks/complex/knapping2",
+    "stonechips2": "geomastery:blocks/complex/stonechips2",
+    "notexture": "geomastery:blocks/notexture",
+    "bolesize2oak": "geomastery:blocks/trees/bolesize2oak",
+    "crosssize2oak": "geomastery:blocks/trees/crosssize2oak"
 },
 "elements": [ 
 {

@@ -1,11 +1,11 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "knappingSeat": "blocks/complex/knapping1",
-    "Polegrain": "blocks/complex/polegrain",
-    "notexture": "blocks/notexture",
-    "stonechips": "blocks/complex/stonechips2",
-    "polebark": "blocks/complex/polebark"
+    "knappingSeat": "geomastery:blocks/complex/knapping1",
+    "Polegrain": "geomastery:blocks/complex/polegrain",
+    "notexture": "geomastery:blocks/notexture",
+    "stonechips": "geomastery:blocks/complex/stonechips2",
+    "polebark": "geomastery:blocks/complex/polebark"
 },
 "elements": [ 
 {

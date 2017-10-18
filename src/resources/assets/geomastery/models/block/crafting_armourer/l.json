@@ -1,13 +1,13 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "sword": "blocks/complex/mottledmetal",
-    "stonechips1": "blocks/complex/stonechips1",
-    "notexture": "blocks/notexture",
-    "crosssize2oak": "blocks/trees/crosssize2oak",
-    "bolesize2oak": "blocks/trees/bolesize2oak",
-    "polebark": "blocks/complex/polebark",
-    "polegrain": "blocks/complex/polegrain"
+    "sword": "geomastery:blocks/complex/mottledmetal",
+    "stonechips1": "geomastery:blocks/complex/stonechips1",
+    "notexture": "geomastery:blocks/notexture",
+    "crosssize2oak": "geomastery:blocks/trees/crosssize2oak",
+    "bolesize2oak": "geomastery:blocks/trees/bolesize2oak",
+    "polebark": "geomastery:blocks/complex/polebark",
+    "polegrain": "geomastery:blocks/complex/polegrain"
 },
 "elements": [ 
 {

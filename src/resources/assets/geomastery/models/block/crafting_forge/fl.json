@@ -1,11 +1,11 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "notexture": "blocks/notexture",
-    "soot": "blocks/complex/soot",
-    "bellows": "blocks/complex/bellows",
-    "roughstone": "blocks/complex/roughstone",
-    "fire": "blocks/complex/fire"
+    "notexture": "geomastery:blocks/notexture",
+    "soot": "geomastery:blocks/complex/soot",
+    "bellows": "geomastery:blocks/complex/bellows",
+    "roughstone": "geomastery:blocks/complex/roughstone",
+    "fire": "geomastery:blocks/complex/fire"
 },
 "elements": [ 
 {

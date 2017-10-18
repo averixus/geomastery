@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "polegrain": "blocks/complex/polegrain",
-    "polebark": "blocks/complex/polebark"
+    "polegrain": "geomastery:blocks/complex/polegrain",
+    "polebark": "geomastery:blocks/complex/polebark"
 },
 "elements": [ 
 {

@@ -1,10 +1,10 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "polebark": "blocks/complex/polebark",
-    "polegrain": "blocks/complex/polegrain",
-    "linen": "blocks/complex/linen",
-    "cotton1": "blocks/complex/cotton1"
+    "polebark": "geomastery:blocks/complex/polebark",
+    "polegrain": "geomastery:blocks/complex/polegrain",
+    "linen": "geomastery:blocks/complex/linen",
+    "cotton1": "geomastery:blocks/complex/cotton1"
 },
 "elements": [ 
 {

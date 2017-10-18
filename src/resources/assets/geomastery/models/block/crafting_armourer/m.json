@@ -1,12 +1,12 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "chainmail": "blocks/complex/chainmail",
-    "stonechips2": "blocks/complex/stonechips2",
-    "notexture": "blocks/notexture",
-    "mottledmetal": "blocks/complex/mottledmetal",
-    "polegrain": "blocks/complex/polegrain",
-    "polebark": "blocks/complex/polebark"
+    "chainmail": "geomastery:blocks/complex/chainmail",
+    "stonechips2": "geomastery:blocks/complex/stonechips2",
+    "notexture": "geomastery:blocks/notexture",
+    "mottledmetal": "geomastery:blocks/complex/mottledmetal",
+    "polegrain": "geomastery:blocks/complex/polegrain",
+    "polebark": "geomastery:blocks/complex/polebark"
 },
 "elements": [ 
 {
