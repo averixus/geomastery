@@ -1,12 +1,12 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "notexture": "blocks/notexture",
-    "soot": "blocks/complex/soot",
-    "polebark": "blocks/complex/polebark",
-    "polegrain": "blocks/complex/polegrain",
-    "mottledmetal": "blocks/complex/mottledmetal",
-    "solidsoot": "blocks/complex/solidsoot"
+    "notexture": "geomastery:blocks/notexture",
+    "soot": "geomastery:blocks/complex/soot",
+    "polebark": "geomastery:blocks/complex/polebark",
+    "polegrain": "geomastery:blocks/complex/polegrain",
+    "mottledmetal": "geomastery:blocks/complex/mottledmetal",
+    "solidsoot": "geomastery:blocks/complex/solidsoot"
 },
 "elements": [ 
 {

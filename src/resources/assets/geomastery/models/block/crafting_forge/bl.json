@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "forgefire": "blocks/complex/fire",
-    "roughstone": "blocks/complex/roughstone"
+    "forgefire": "geomastery:blocks/complex/fire",
+    "roughstone": "geomastery:blocks/complex/roughstone"
 },
 "elements": [ 
 {

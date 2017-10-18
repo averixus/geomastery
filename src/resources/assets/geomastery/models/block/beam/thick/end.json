@@ -1,8 +1,8 @@
 {
-"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
+
 "textures": {
-    "sidegrainoak": "blocks/complex/sidegrainoak",
-    "endgrainoak": "blocks/trees/endgrainoak"
+    "sidegrainoak": "geomastery:blocks/complex/sidegrainoak",
+    "endgrainoak": "geomastery:blocks/trees/endgrainoak"
 },
 "elements": [ 
 {
