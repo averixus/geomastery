@@ -1,19 +1,20 @@
 {
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "panels1": "geomastery:blocks/complex/panels1",
-    "particle": "geomastery:blocks/complex/panels1"
+    "polegrain": "blocks/complex/polegrain",
+    "polebark": "blocks/complex/polebark"
 },
 "elements": [ 
 {
     "from": [ 7, 0, 7 ],
     "to": [ 9, 16, 9 ],
     "faces": {
-        "down":  { "uv": [ 8, 9, 6, 7 ], "texture": "#panels1" },
-        "up":    { "uv": [ 6, 7, 8, 9 ], "texture": "#panels1" },
-        "north": { "uv": [ 6, 0, 8, 16 ], "texture": "#panels1" },
-        "south": { "uv": [ 9, 0, 11, 16 ], "texture": "#panels1" },
-        "west":  { "uv": [ 5, 0, 7, 16 ], "texture": "#panels1" },
-        "east":  { "uv": [ 5, 0, 7, 16 ], "texture": "#panels1" }
+        "down":  { "uv": [ 8, 9, 6, 7 ], "texture": "#polegrain" },
+        "up":    { "uv": [ 6, 7, 8, 9 ], "texture": "#polegrain" },
+        "north": { "uv": [ 6, 0, 8, 16 ], "texture": "#polebark" },
+        "south": { "uv": [ 9, 0, 11, 16 ], "texture": "#polebark" },
+        "west":  { "uv": [ 5, 0, 7, 16 ], "texture": "#polebark" },
+        "east":  { "uv": [ 5, 0, 7, 16 ], "texture": "#polebark" }
     }
 }
 ]

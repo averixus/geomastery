@@ -1,19 +1,20 @@
 {
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "softwood1": "geomastery:blocks/complex/softwood1",
-    "particle": "geomastery:blocks/complex/softwood1"
+    "sidegrainoak": "blocks/complex/sidegrainoak",
+    "endgrainoak": "blocks/trees/endgrainoak"
 },
 "elements": [ 
 {
     "from": [ 16, 12, 7 ],
     "to": [ 24, 15.9, 9 ],
     "faces": {
-        "down":  { "uv": [ 8, 9, 0, 7 ], "texture": "#softwood1" },
-        "up":    { "uv": [ 8, 7, 16, 9 ], "texture": "#softwood1" },
-        "north": { "uv": [ 0, 0.1, 8, 4 ], "texture": "#softwood1" },
-        "south": { "uv": [ 8, 0.1, 16, 4 ], "texture": "#softwood1" },
-        "west":  { "uv": [ 7, 0.1, 9, 4 ], "texture": "#softwood1" },
-        "east":  { "uv": [ 7, 0.1, 9, 4 ], "texture": "#softwood1" }
+        "down":  { "uv": [ 8, 8, 6, 0 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "up":    { "uv": [ 8, 8, 10, 16 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "north": { "uv": [ 0, 0, 4, 8 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "south": { "uv": [ 8, 0.0625, 12, 8.0625 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "west":  { "uv": [ 6, 6, 8, 9.875 ], "texture": "#endgrainoak" },
+        "east":  { "uv": [ 4, 5, 6, 8.875 ], "texture": "#endgrainoak" }
     }
 }
 ]

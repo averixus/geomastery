@@ -1,20 +1,19 @@
 {
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "panels1": "geomastery:blocks/complex/panels1",
-    "floorboard": "geomastery:blocks/complex/floorboard",
-    "particle": "geomastery:blocks/complex/panels1"
+    "boardoak": "blocks/complex/boardoak"
 },
 "elements": [ 
 {
-    "from": [ -8, 15, -8 ],
-    "to": [ 0, 15.95, 0 ],
+    "from": [ 0, 15, 0 ],
+    "to": [ 8, 16, 8 ],
     "faces": {
-        "down":  { "uv": [ 16, 8, 8, 0 ], "texture": "#panels1" },
-        "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#panels1" },
-        "north": { "uv": [ 8, 0, 16, 1 ], "texture": "#floorboard" },
-        "south": { "uv": [ 0, 0, 8, 1 ], "texture": "#floorboard" },
-        "west":  { "uv": [ 0, 0, 8, 1 ], "texture": "#floorboard" },
-        "east":  { "uv": [ 8, 0, 16, 1 ], "texture": "#floorboard" }
+        "down":  { "uv": [ 16, 8, 8, 0 ], "rotation": 180, "texture": "#boardoak" },
+        "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#boardoak" },
+        "north": { "uv": [ 0, 1, 8, 2 ], "rotation": 180, "texture": "#boardoak" },
+        "south": { "uv": [ 8, 0, 16, 1 ], "texture": "#boardoak" },
+        "west":  { "uv": [ 0, 0, 1, 8 ], "rotation": 90, "texture": "#boardoak" },
+        "east":  { "uv": [ 2, 0, 3, 8 ], "rotation": 90, "texture": "#boardoak" }
     }
 }
 ]
