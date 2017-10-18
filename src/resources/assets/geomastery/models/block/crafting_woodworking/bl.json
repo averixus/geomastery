@@ -1,12 +1,12 @@
 {
-
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "sawdust": "geomastery:blocks/complex/sawdust1",
-    "polegrainvert": "geomastery:blocks/complex/polegrain",
-    "polegrainhoriz": "geomastery:blocks/complex/polegrain",
-    "polebark": "geomastery:blocks/complex/polebark",
-    "notexture": "geomastery:blocks/notexture",
-    "anvil": "geomastery:blocks/complex/mottledmetal"
+    "sawdust": "blocks/complex/sawdust1",
+    "polegrainvert": "blocks/complex/polegrain",
+    "polegrainhoriz": "blocks/complex/polegrain",
+    "polebark": "blocks/complex/polebark",
+    "notexture": "blocks/notexture",
+    "anvil": "blocks/complex/mottledmetal"
 },
 "elements": [ 
 {
@@ -85,8 +85,8 @@
     }
 },
 {
-    "from": [ 0, -0.0625, 0 ],
-    "to": [ 6, 0, 16 ],
+    "from": [ 0, -0.0525, 0 ],
+    "to": [ 6, 0.01, 16 ],
     "faces": {
         "down":  { "uv": [ 16, 16, 10, 0 ], "texture": "#notexture" },
         "up":    { "uv": [ 10, 0, 16, 16 ], "texture": "#sawdust" }
