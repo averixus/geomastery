@@ -1,43 +1,43 @@
 {
+"__comment": "Designed by Bdcraftjgrowe65 with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
-    "panels2": "geomastery:blocks/complex/panels2",
-    "particle": "geomastery:blocks/complex/panels2"
+    "polebark": "blocks/complex/polebark"
 },
 "elements": [ 
 {
     "from": [ 9, 13, 7.5 ],
     "to": [ 16, 15, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 7, 9, 0, 8 ], "texture": "#panels2" },
-        "up":    { "uv": [ 9, 8, 16, 9 ], "texture": "#panels2" },
-        "north": { "uv": [ 0, 1, 7, 3 ], "texture": "#panels2" },
-        "south": { "uv": [ 9, 1, 16, 3 ], "texture": "#panels2" },
-        "west":  { "uv": [ 8, 1, 9, 3 ], "texture": "#panels2" },
-        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#panels2" }
+        "down":  { "uv": [ 7, 9, 0, 8 ], "texture": "#polebark" },
+        "up":    { "uv": [ 9, 8, 16, 9 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 1, 7, 3 ], "texture": "#polebark" },
+        "south": { "uv": [ 9, 1, 16, 3 ], "texture": "#polebark" },
+        "west":  { "uv": [ 8, 1, 9, 3 ], "texture": "#polebark" },
+        "east":  { "uv": [ 7, 1, 8, 3 ], "texture": "#polebark" }
     }
 },
 {
     "from": [ 9, 8, 7.5 ],
     "to": [ 16, 10, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 7, 6, 0, 5 ], "texture": "#panels2" },
-        "up":    { "uv": [ 7, 8, 14, 9 ], "texture": "#panels2" },
-        "north": { "uv": [ 0, 8, 7, 10 ], "texture": "#panels2" },
-        "south": { "uv": [ 9, 12, 16, 14 ], "texture": "#panels2" },
-        "west":  { "uv": [ 5, 5, 6, 7 ], "texture": "#panels2" },
-        "east":  { "uv": [ 8, 5, 9, 7 ], "texture": "#panels2" }
+        "down":  { "uv": [ 7, 6, 0, 5 ], "texture": "#polebark" },
+        "up":    { "uv": [ 7, 8, 14, 9 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 8, 7, 10 ], "texture": "#polebark" },
+        "south": { "uv": [ 9, 12, 16, 14 ], "texture": "#polebark" },
+        "west":  { "uv": [ 5, 5, 6, 7 ], "texture": "#polebark" },
+        "east":  { "uv": [ 8, 5, 9, 7 ], "texture": "#polebark" }
     }
 },
 {
     "from": [ 9, 3, 7.5 ],
     "to": [ 16, 5, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 7, 6, 0, 5 ], "texture": "#panels2" },
-        "up":    { "uv": [ 9, 5, 16, 6 ], "texture": "#panels2" },
-        "north": { "uv": [ 0, 13, 7, 15 ], "texture": "#panels2" },
-        "south": { "uv": [ 9, 4, 16, 6 ], "texture": "#panels2" },
-        "west":  { "uv": [ 7, 12, 8, 14 ], "texture": "#panels2" },
-        "east":  { "uv": [ 5, 12, 6, 14 ], "texture": "#panels2" }
+        "down":  { "uv": [ 7, 6, 0, 5 ], "texture": "#polebark" },
+        "up":    { "uv": [ 9, 5, 16, 6 ], "texture": "#polebark" },
+        "north": { "uv": [ 0, 13, 7, 15 ], "texture": "#polebark" },
+        "south": { "uv": [ 9, 4, 16, 6 ], "texture": "#polebark" },
+        "west":  { "uv": [ 7, 12, 8, 14 ], "texture": "#polebark" },
+        "east":  { "uv": [ 5, 12, 6, 14 ], "texture": "#polebark" }
     }
 }
 ]
