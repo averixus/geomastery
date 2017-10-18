@@ -3,7 +3,7 @@
 "textures": {
     "polebark": "geomastery:blocks/complex/polebark",
     "polegrain": "geomastery:blocks/complex/polegrain",
-    "linen": "blocks/complex/linen"
+    "linen": "geomastery:blocks/complex/linen"
 },
 "elements": [ 
 {
