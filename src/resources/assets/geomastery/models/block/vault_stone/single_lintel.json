@@ -1,8 +1,8 @@
 {
 "textures": {
+    "particle": "geomastery:blocks/complex/stone2",
     "stone2": "geomastery:blocks/complex/stone2",
-    "stonebrick": "geomastery:blocks/complex/stonebrick",
-    "particle": "geomastery:blocks/complex/stone2"
+    "stonebrick": "geomastery:blocks/complex/stonebrick"
 },
 "elements": [ 
 {
@@ -44,8 +44,8 @@
     }
 },
 {
-    "from": [ 4, 0, 0 ],
-    "to": [ 12, 3, 8 ],
+    "from": [ 3.99, 0, 0 ],
+    "to": [ 12.01, 3, 8 ],
     "faces": {
         "down":  { "uv": [ 12, 8, 4, 0 ], "texture": "#stone2" },
         "up":    { "uv": [ 4, 0, 12, 8 ], "texture": "#stone2" },
@@ -54,8 +54,8 @@
     }
 },
 {
-    "from": [ 4, 0, 8 ],
-    "to": [ 12, 3, 16 ],
+    "from": [ 3.99, 0, 8 ],
+    "to": [ 12.01, 3, 16 ],
     "faces": {
         "down":  { "uv": [ 12, 16, 4, 8 ], "texture": "#stone2" },
         "up":    { "uv": [ 4, 8, 12, 16 ], "texture": "#stone2" },
@@ -64,8 +64,8 @@
     }
 },
 {
-    "from": [ 4, 0.01, -5 ],
-    "to": [ 12, 3, 0 ],
+    "from": [ 3.99, 0.01, -5 ],
+    "to": [ 12.01, 3, 0 ],
     "faces": {
         "down":  { "uv": [ 12, 16, 4, 11 ], "texture": "#stone2" },
         "up":    { "uv": [ 4, 11, 12, 16 ], "texture": "#stone2" },
@@ -75,8 +75,8 @@
     }
 },
 {
-    "from": [ 4, 0.01, 16 ],
-    "to": [ 12, 3, 21 ],
+    "from": [ 3.99, 0.01, 16 ],
+    "to": [ 12.01, 3, 21 ],
     "faces": {
         "down":  { "uv": [ 12, 5, 4, 0 ], "texture": "#stone2" },
         "up":    { "uv": [ 4, 0, 12, 5 ], "texture": "#stone2" },
