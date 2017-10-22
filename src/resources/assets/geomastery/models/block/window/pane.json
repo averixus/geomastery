@@ -1,7 +1,7 @@
 {
 "textures": {
-    "particle": "geomastery:blocks/complex/glass",
-    "glass": "geomastery:blocks/complex/glass",
+    "particle": "geomastery:blocks/trees/endgrainoak",
+    "glass": "blocks/complex/glass",
     "sidegrainoak": "geomastery:blocks/complex/sidegrainoak",
     "endgrainoak": "geomastery:blocks/trees/endgrainoak"
 },
