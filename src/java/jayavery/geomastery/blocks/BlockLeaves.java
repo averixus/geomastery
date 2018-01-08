@@ -140,7 +140,7 @@ public class BlockLeaves extends BlockNew {
                         
                         BlockPos toAdd = nextPos.offset(facing);
                         
-                        if (!checked.contains(toAdd) && !checkQueue.contains(toAdd) && Math.sqrt(pos.distanceSq(toAdd)) < 8) {
+                        if (!checked.contains(toAdd) && !checkQueue.contains(toAdd) && Math.sqrt(pos.distanceSq(toAdd)) <= 8) {
                             
                             checkQueue.add(toAdd);
                         }

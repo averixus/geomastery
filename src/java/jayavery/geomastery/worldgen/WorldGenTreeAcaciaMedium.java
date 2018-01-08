@@ -33,7 +33,7 @@ public class WorldGenTreeAcaciaMedium extends WorldGenTreeAbstract {
     @Override
     public boolean generateTree(BlockPos stump) {
         
-        int trunkCount = 4 + this.rand.nextInt(3);
+        int trunkCount = 6 + this.rand.nextInt(3);
         
         ArrayList<BlockPos> trunks = Lists.newArrayList();
         
@@ -146,14 +146,20 @@ public class WorldGenTreeAcaciaMedium extends WorldGenTreeAbstract {
             
             for (int side = -1; side <= 2; side++) {
                 
+                BlockPos pos = trunk.offset(facing, front).offset(facing.rotateY(), side);
+                
                 if ((front == -1 && (side == -1 || side == 2)) || (front == 2 && (side == -1 || side == 2))) {
+                                        
+                    if (this.rand.nextInt(2) == 0) {
+                        
+                        leaves.add(pos);
+                    }
                     
                 } else {
                     
-                    BlockPos pos = trunk.offset(facing, front).offset(facing.rotateY(), side);
                     leaves.add(pos);
                     
-                    if (front == 0 || side == 0) {
+                    if (front == 0 || front == 1 || side == 1 || side == 0) {
                         
                         nodes.add(pos);
                     }
