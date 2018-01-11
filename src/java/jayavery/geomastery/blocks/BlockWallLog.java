@@ -26,7 +26,7 @@ public class BlockWallLog extends BlockWall {
         
     public BlockWallLog() {
         
-        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, 0, 4);
+        super(BlockMaterial.WOOD_FURNITURE, "wall_log", 1F, 0, 6);
     }
     
     @Override

@@ -30,7 +30,7 @@ public class BlockWallComplex extends BlockWall {
         
     public BlockWallComplex(Material material, String name, float hardness) {
         
-        super(material, name, hardness, 0, 2);
+        super(material, name, hardness, 0, 4);
     }
     
     @Override

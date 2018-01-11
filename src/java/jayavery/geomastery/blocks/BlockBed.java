@@ -42,9 +42,9 @@ public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Buildin
     /** The amount to heal the player when sleeping in this bed. */
     protected final float healAmount;
 
-    public BlockBed(String name, float hardness, float healAmount) {
+    public BlockBed(String name, float hardness, float healAmount, int stackSize) {
 
-        super(BlockMaterial.WOOD_FURNITURE, name, null, hardness, 1);
+        super(BlockMaterial.WOOD_FURNITURE, name, null, hardness, stackSize);
         this.setDefaultState(this.blockState.getBaseState()
                 .withProperty(PART, EPartBed.FOOT)
                 .withProperty(OCCUPIED, false));
@@ -336,7 +336,7 @@ public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Buildin
 
         public Simple() {
             
-            super("bed_simple", 2F, 2F);
+            super("bed_simple", 2F, 2F, 1);
         }
 
         // Does not have limited weathering
@@ -363,7 +363,7 @@ public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Buildin
         
         public Leaf() {
             
-            super("bed_leaf", 0.2F, 0.33F);
+            super("bed_leaf", 0.2F, 0.33F, 1);
         }
         
         @Override
@@ -406,7 +406,7 @@ public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Buildin
         
         public Wool() {
             
-            super("bed_wool", 2F, 0.66F);
+            super("bed_wool", 2F, 0.66F, 1);
         }
         
         @Override
@@ -429,7 +429,7 @@ public abstract class BlockBed extends BlockBuildingAbstract<ItemPlacing.Buildin
         
         public Cotton() {
             
-            super("bed_cotton", 2F, 0.66F);
+            super("bed_cotton", 2F, 0.66F, 2);
         }
         
         @Override

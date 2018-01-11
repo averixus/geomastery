@@ -5,15 +5,15 @@
 },
 "elements": [ 
 {
-    "from": [ 16, 9, 6.5 ],
-    "to": [ 24, 15.9, 9.5 ],
+    "from": [ 16, 12, 7 ],
+    "to": [ 24, 15.9, 9 ],
     "faces": {
-        "down":  { "uv": [ 8, 9.5, 0, 6.5 ], "texture": "#softwood1" },
-        "up":    { "uv": [ 8, 6.5, 16, 9.5 ], "texture": "#softwood1" },
-        "north": { "uv": [ 0, 0, 8, 7 ], "texture": "#softwood1" },
-        "south": { "uv": [ 8, 0, 16, 7 ], "texture": "#softwood1" },
-        "west":  { "uv": [ 6.5, 0, 9.5, 7 ], "texture": "#softwood1" },
-        "east":  { "uv": [ 6.5, 0, 9.5, 7 ], "texture": "#softwood1" }
+        "down":  { "uv": [ 8, 9, 0, 7 ], "texture": "#softwood1" },
+        "up":    { "uv": [ 8, 7, 16, 9 ], "texture": "#softwood1" },
+        "north": { "uv": [ 0, 0.1, 8, 4 ], "texture": "#softwood1" },
+        "south": { "uv": [ 8, 0.1, 16, 4 ], "texture": "#softwood1" },
+        "west":  { "uv": [ 7, 0.1, 9, 4 ], "texture": "#softwood1" },
+        "east":  { "uv": [ 7, 0.1, 9, 4 ], "texture": "#softwood1" }
     }
 }
 ]

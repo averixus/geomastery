@@ -32,7 +32,7 @@ public class BlockWallFence extends BlockWallThin {
 
     public BlockWallFence() {
         
-        super(BlockMaterial.WOOD_FURNITURE, "fence", 2F, 90, 1);
+        super(BlockMaterial.WOOD_FURNITURE, "fence", 2F, 90, 10);
     }
     
     @Override

@@ -26,7 +26,7 @@ public class BlockRubble extends BlockBuildingAbstract<ItemLooseplacing> {
     public BlockRubble() {
         
         super(BlockMaterial.SOIL, "rubble",
-                CreativeTabs.BUILDING_BLOCKS, 1F, 1);
+                CreativeTabs.BUILDING_BLOCKS, 1F, 4);
     }
     
     @Override

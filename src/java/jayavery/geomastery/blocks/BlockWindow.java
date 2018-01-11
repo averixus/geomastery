@@ -35,7 +35,7 @@ public class BlockWindow extends BlockFacing {
     public BlockWindow() {
         
         super("window", BlockMaterial.WOOD_FURNITURE,
-                2F, 4, EBlockWeight.LIGHT);
+                2F, 6, EBlockWeight.LIGHT);
     }
     
     @Override

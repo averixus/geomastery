@@ -36,7 +36,7 @@ public class BlockFlatroof extends BlockFacing {
     public BlockFlatroof(String name, float hardness) {
         
         super(name, BlockMaterial.WOOD_FURNITURE, hardness,
-                4, EBlockWeight.NONE);
+                12, EBlockWeight.NONE);
     }
 
     @Override

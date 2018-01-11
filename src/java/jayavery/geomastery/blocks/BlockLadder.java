@@ -29,7 +29,7 @@ public class BlockLadder extends BlockFacing {
     public BlockLadder() {
         
         super("ladder", BlockMaterial.WOOD_FURNITURE,
-                0.4F, 8, EBlockWeight.NONE);
+                0.4F, 10, EBlockWeight.NONE);
     }
     
     @Override

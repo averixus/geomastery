@@ -40,7 +40,7 @@ public class BlockWallHeaping extends BlockWall implements IDoublingBlock {
     public BlockWallHeaping(Material material, String name, float hardness,
             int sideAngle) {
         
-        super(material, name, hardness, sideAngle, 2);
+        super(material, name, hardness, sideAngle, 4);
     }
     
     @Override

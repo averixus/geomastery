@@ -42,7 +42,7 @@ public class BlockSlab extends BlockBuildingAbstract<ItemPlacing.Building>
     public BlockSlab(String name) {
         
         super(BlockMaterial.STONE_FURNITURE, name,
-                CreativeTabs.BUILDING_BLOCKS, 2F, 2);
+                CreativeTabs.BUILDING_BLOCKS, 2F, 4);
     }
     
     @Override

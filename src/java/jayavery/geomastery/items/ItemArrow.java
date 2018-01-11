@@ -26,7 +26,7 @@ public abstract class ItemArrow extends net.minecraft.item.ItemArrow {
     public ItemArrow(String name, BiFunction<World, EntityLivingBase,
             EntityProjectile> arrow) {
     
-        ItemSimple.setupItem(this, name, 10, CreativeTabs.COMBAT);
+        ItemSimple.setupItem(this, name, 12, CreativeTabs.COMBAT);
         this.arrow = arrow;
     }
     

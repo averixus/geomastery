@@ -231,11 +231,8 @@ public class BlockEvents {
                     event.getDrops().remove(i);
                 }
             }
-            
-            if (world.rand.nextInt(4) == 0) {
-            
-                event.getDrops().add(new ItemStack(GeoItems.LEAVES));
-            }
+      
+            event.getDrops().add(new ItemStack(GeoItems.LEAVES));
 
             if (world.rand.nextInt(4) == 0) {
 
@@ -254,9 +251,9 @@ public class BlockEvents {
 
             event.getDrops().clear();
             int rand = world.rand.nextInt(6);
-            event.getDrops().add(new ItemStack(rand == 0 ?
-                    GeoItems.THICKLOG : rand == 1 ?
-                    GeoItems.LOG : GeoItems.POLE));
+            event.getDrops().add(rand == 0 ? new ItemStack(GeoItems.THICKLOG) :
+                rand == 1 ? new ItemStack(GeoItems.LOG, 2) :
+                    new ItemStack(GeoItems.POLE, 3));
         }
 
         if (block instanceof BlockDirt || block instanceof BlockGrass ||

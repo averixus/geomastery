@@ -99,8 +99,8 @@ public class GeoBlocks {
     
     // Beds
     public static final BlockBed BED_LEAF =   makeItemBuilding(new BlockBed.Leaf(), true);
-    public static final BlockBed BED_COTTON = makeItemBuilding(new BlockBed.Cotton(), true);
-    public static final BlockBed BED_WOOL =   makeItemBuilding(new BlockBed.Wool(), true);
+    public static final BlockBed BED_COTTON = makeItemBuilding(new BlockBed.Cotton());
+    public static final BlockBed BED_WOOL =   makeItemBuilding(new BlockBed.Wool());
     public static final BlockBed BED_SIMPLE = makeItemBuilding(new BlockBed.Simple(), true);
     
     // Antler
@@ -133,7 +133,7 @@ public class GeoBlocks {
     public static final BlockBuildingAbstract<?> COMPOSTHEAP =        makeItemBuilding(new BlockContainerFacing.Compostheap(), true);
     public static final BlockBuildingAbstract<?> FURNACE_CAMPFIRE =   makeItemBuilding(new BlockContainerSingle.Campfire());
     public static final BlockBuildingAbstract<?> FURNACE_POTFIRE =    makeItemBuilding(new BlockContainerSingle.Potfire());
-    public static final BlockBuildingAbstract<?> CHEST =              makeItemBuilding(new BlockContainerFacing.Chest());
+    public static final BlockBuildingAbstract<?> CHEST =              makeItemBuilding(new BlockContainerFacing.Chest(), true);
     public static final BlockBuildingAbstract<?> BASKET =             makeItemBuilding(new BlockContainerSingle.Basket());
     public static final BlockBuildingAbstract<?> BOX =                makeItemBuilding(new BlockContainerSingle.Box());
     
@@ -285,7 +285,7 @@ public class GeoBlocks {
         Blocks.LIT_REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.REDSTONE_ORE.setHardness(4F).setHarvestLevel("pickaxe", 1);
         Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 1);
-        Blocks.LEAVES.setHardness(0.2F)
+        Blocks.LEAVES.setHardness(5F)
                 .setHarvestLevel(EToolType.MACHETE.name(), 1);
         Blocks.REEDS.setHardness(0.2F)
                 .setHarvestLevel(EToolType.SICKLE.name(), 1);
