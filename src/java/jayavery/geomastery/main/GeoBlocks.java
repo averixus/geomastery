@@ -135,13 +135,13 @@ public class GeoBlocks {
     public static final BlockBuildingAbstract<?> FURNACE_POTFIRE =    makeItemBuilding(new BlockContainerSingle.Potfire());
     public static final BlockBuildingAbstract<?> CHEST =              makeItemBuilding(new BlockContainerFacing.Chest(), true);
     public static final BlockBuildingAbstract<?> BASKET =             makeItemBuilding(new BlockContainerSingle.Basket());
-    public static final BlockBuildingAbstract<?> BOX =                makeItemBuilding(new BlockContainerSingle.Box());
+    public static final BlockBuildingAbstract<?> BOX =                makeItemBuilding(new BlockContainerSingle.Box(), true);
     
     // Lights
-    public static final BlockBuildingAbstract<?> CANDLE_BEESWAX = makeItemBuilding(new BlockLight.Candle("candle_beeswax", 0.005F, 15));
-    public static final BlockBuildingAbstract<?> CANDLE_TALLOW =  makeItemBuilding(new BlockLight.Candle("candle_tallow", 0.02F, 15));
-    public static final BlockBuildingAbstract<?> TORCH_TALLOW =   makeItemBuilding(new BlockLight.Torch("torch_tallow", 0.005F, 4));
-    public static final BlockBuildingAbstract<?> TORCH_TAR =      makeItemBuilding(new BlockLight.Torch("torch_tar", 0.02F, 4));
+    public static final BlockBuildingAbstract<?> CANDLE_BEESWAX = makeItemBuilding(new BlockLight.Candle("candle_beeswax", 0.005F, 24));
+    public static final BlockBuildingAbstract<?> CANDLE_TALLOW =  makeItemBuilding(new BlockLight.Candle("candle_tallow", 0.02F, 24));
+    public static final BlockBuildingAbstract<?> TORCH_TALLOW =   makeItemBuilding(new BlockLight.Torch("torch_tallow", 0.005F, 6));
+    public static final BlockBuildingAbstract<?> TORCH_TAR =      makeItemBuilding(new BlockLight.Torch("torch_tar", 0.02F, 6));
     public static final BlockBuildingAbstract<?> LAMP_CLAY =      makeItemBuilding(new BlockLight.Lamp("lamp_clay", 4));
     
     // Single crops
@@ -213,27 +213,27 @@ public class GeoBlocks {
     // Walls (in rendering priority order)
     public static final BlockBuildingAbstract<?> WALL_LOG =     makeItemBuilding(new BlockWallLog(), RENDER_STRAIGHT, DELAYED_BAKE); 
     public static final BlockBuildingAbstract<?> FENCE =        makeItemBuilding(new BlockWallFence(), RENDER_SINGLE, DELAYED_BAKE);
-    public static final BlockBuildingAbstract<?> WALL_POLE =    makeItemBuilding(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, 180, 4), RENDER_SINGLE, DELAYED_BAKE);
-    public static final BlockBuildingAbstract<?> FRAME =        makeItemBuilding(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, 180, 6), RENDER_SINGLE, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> WALL_POLE =    makeItemBuilding(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "wall_pole", 2F, 180, 8), RENDER_SINGLE, DELAYED_BAKE);
+    public static final BlockBuildingAbstract<?> FRAME =        makeItemBuilding(new BlockWallThin(BlockMaterial.WOOD_FURNITURE, "frame", 2F, 180, 10), RENDER_SINGLE, DELAYED_BAKE);
     public static final BlockBuildingAbstract<?> WALL_MUD =     makeItemBuilding(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_mud", 1F, 0), RENDER_HEAPING, DELAYED_BAKE);
     public static final BlockBuildingAbstract<?> WALL_ROUGH =   makeItemBuilding(new BlockWallHeaping(BlockMaterial.STONE_FURNITURE, "wall_rough", 1.5F, 0), RENDER_HEAPING, DELAYED_BAKE);
     public static final BlockBuildingAbstract<?> WALL_BRICK =   makeItemBuilding(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_brick", 2F), RENDER_COMPLEX, DELAYED_BAKE); 
     public static final BlockBuildingAbstract<?> WALL_STONE =   makeItemBuilding(new BlockWallComplex(BlockMaterial.STONE_FURNITURE, "wall_stone", 2F), RENDER_COMPLEX, DELAYED_BAKE);
     
     // Complex stairs
-    public static final BlockBuildingAbstract<?> STAIRS_BRICK = makeItemBuilding(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, 2));
-    public static final BlockBuildingAbstract<?> STAIRS_STONE = makeItemBuilding(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, 2));
+    public static final BlockBuildingAbstract<?> STAIRS_BRICK = makeItemBuilding(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_brick", 3F, 4));
+    public static final BlockBuildingAbstract<?> STAIRS_STONE = makeItemBuilding(new BlockStairsComplex(BlockMaterial.STONE_FURNITURE, "stairs_stone", 3F, 4));
     
     // Double joining stairs
-    public static final BlockBuildingAbstract<?> STAIRS_WOOD = makeItemBuilding(new BlockStairsStraight.Joining("stairs_wood", 2F, 4));
+    public static final BlockBuildingAbstract<?> STAIRS_WOOD = makeItemBuilding(new BlockStairsStraight.Joining("stairs_wood", 2F, 6));
     
     // Single stairs
-    public static final BlockBuildingAbstract<?> STAIRS_POLE = makeItemBuilding(new BlockStairsStraight.Single("stairs_pole", 2F, 4));
+    public static final BlockBuildingAbstract<?> STAIRS_POLE = makeItemBuilding(new BlockStairsStraight.Single("stairs_pole", 2F, 8));
     
     // Vaults
-    public static final BlockVault VAULT_BRICK =        makeItemBuilding(new BlockVaultDoubling("vault_brick", EBlockWeight.HEAVY, 2));
-    public static final BlockVault VAULT_STONE =        makeItemBuilding(new BlockVaultDoubling("vault_stone", EBlockWeight.HEAVY, 2));
-    public static final BlockVault VAULT_FRAME =        makeItemBuilding(new BlockVault("vault_frame", BlockMaterial.WOOD_FURNITURE, EBlockWeight.LIGHT, 6));
+    public static final BlockVault VAULT_BRICK =        makeItemBuilding(new BlockVaultDoubling("vault_brick", EBlockWeight.HEAVY, 4));
+    public static final BlockVault VAULT_STONE =        makeItemBuilding(new BlockVaultDoubling("vault_stone", EBlockWeight.HEAVY, 4));
+    public static final BlockVault VAULT_FRAME =        makeItemBuilding(new BlockVault("vault_frame", BlockMaterial.WOOD_FURNITURE, EBlockWeight.LIGHT, 12));
         
     // Doors
     public static final BlockDoor DOOR_POLE = makeItemBuilding(new BlockDoor("door_pole"), true);
@@ -246,8 +246,8 @@ public class GeoBlocks {
     public static final BlockLadder LADDER = makeItemBuilding(new BlockLadder());
     
     // Beams
-    public static final BlockBeam BEAM_THIN =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8), true, DELAYED_BAKE);
-    public static final BlockBeam BEAM_THICK = makeItemBuilding(new BlockBeam("beam_thin", 2, 4), true, DELAYED_BAKE);
+    public static final BlockBeam BEAM_THICK =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8), true, DELAYED_BAKE);
+    public static final BlockBeam BEAM_THIN = makeItemBuilding(new BlockBeam("beam_thin", 2, 4), true, DELAYED_BAKE);
         
     // Slabs
     public static final BlockSlab SLAB_STONE = makeItemBuilding(new BlockSlab("slab_stone"));
@@ -257,7 +257,7 @@ public class GeoBlocks {
     public static final BlockBuildingAbstract<?> FLATROOF_POLE = makeItemBuilding(new BlockFlatroof("flatroof_pole", 1F));
     
     // Pitched roofs
-    public static final BlockBuildingAbstract<?> PITCHROOF_CLAY = makeItemBuilding(new BlockPitchroof(BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F, 4));
+    public static final BlockBuildingAbstract<?> PITCHROOF_CLAY = makeItemBuilding(new BlockPitchroof(BlockMaterial.WOOD_FURNITURE, "pitchroof_clay", 2F, 6));
     
     /** Adjusts vanilla blocks, register fluids. */
     public static void preInit() {

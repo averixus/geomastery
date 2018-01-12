@@ -98,8 +98,8 @@ public class GeoItems {
     
     // Non-decaying inedible seeds
     public static final Item CHICKPEAS =      make(new ItemSeed("chickpeas", 10, () -> GeoBlocks.CHICKPEA));
-    public static final Item CUTTING_COTTON = make(new ItemSeed("cutting_cotton", 1, () -> GeoBlocks.COTTON));
-    public static final Item CUTTING_HEMP =   make(new ItemSeed("cutting_hemp", 1, () -> GeoBlocks.HEMP));
+    public static final Item CUTTING_COTTON = make(new ItemSeed("cutting_cotton", 3, () -> GeoBlocks.COTTON));
+    public static final Item CUTTING_HEMP =   make(new ItemSeed("cutting_hemp", 3, () -> GeoBlocks.HEMP));
     public static final Item WHEAT =          make(new ItemSeed("wheat", 10, () -> GeoBlocks.WHEAT, EntityCow.class, EntitySheep.class, EntityChicken.class));
     public static final Item SEED_MELON =     make(new ItemSeed("seeds_melon", 15, () -> GeoBlocks.MELON_CROP));
 
@@ -128,7 +128,7 @@ public class GeoItems {
     public static final Item LOOSE_CLAY =     make(new ItemLooseplacing("loose_clay", () -> Blocks.CLAY));
     
     // Floors
-    public static final Item FLOOR_WOOD = make(new ItemFloor(6, ETypeFloor.WOOD));
+    public static final Item FLOOR_WOOD = make(new ItemFloor(12, ETypeFloor.WOOD));
     
     // Compost
     public static final Item COMPOST = make(new ItemCompost());
@@ -149,15 +149,15 @@ public class GeoItems {
     public static final Item SKIN_SHEEP =  make(new ItemSimple("skin_sheep", 4));
     public static final Item SKIN_WOLF =   make(new ItemSimple("skin_wolf", 4));
     
-    public static final Item TALLOW =  make(new ItemSimple("tallow", 2));
-    public static final Item BEESWAX = make(new ItemSimple("beeswax", 12));
+    public static final Item TALLOW =  make(new ItemSimple("tallow", 4));
+    public static final Item BEESWAX = make(new ItemSimple("beeswax", 4));
 
     public static final Item HONEYCOMB = make(new ItemSimple("honeycomb"));
     
-    public static final Item INGOT_COPPER = make(new ItemSimple("ingot_copper", 2));
-    public static final Item INGOT_SILVER = make(new ItemSimple("ingot_silver", 2));
-    public static final Item INGOT_STEEL =  make(new ItemSimple("ingot_steel", 2));
-    public static final Item INGOT_TIN =    make(new ItemSimple("ingot_tin", 2));
+    public static final Item INGOT_COPPER = make(new ItemSimple("ingot_copper", 3));
+    public static final Item INGOT_SILVER = make(new ItemSimple("ingot_silver", 3));
+    public static final Item INGOT_STEEL =  make(new ItemSimple("ingot_steel", 3));
+    public static final Item INGOT_TIN =    make(new ItemSimple("ingot_tin", 3));
     
     public static final Item LEAVES = make(new ItemSimple("leaves", 3));
     
@@ -166,7 +166,7 @@ public class GeoItems {
     public static final Item THICKLOG =   make(new ItemSimple("thicklog"));
     public static final Item TIMBER =     make(new ItemSimple("timber", 6));
     
-    public static final Item GLASS = make(new ItemSimple("glass", 6));
+    public static final Item GLASS = make(new ItemSimple("glass", 4));
     
     public static final Item CLAY = make(new ItemSimple("clay", 9));
     

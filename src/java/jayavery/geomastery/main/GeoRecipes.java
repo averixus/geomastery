@@ -189,7 +189,7 @@ public class GeoRecipes {
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.BED_SIMPLE.getItem()), "CCC", "WWW", "PPP", 'C', GeoItems.COTTON, 'W', GeoItems.WOOL, 'P', GeoItems.POLE);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.PITCHROOF_CLAY.getItem(), 6), "S C", " S ", "  S", 'S', GeoItems.TIMBER, 'C', GeoItems.LOOSE_CLAY);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FRAME.getItem(), 10), "SSS", " S ", 'S', GeoItems.TIMBER);
-        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_FRAME.getItem(), 12), "S ", "SS", 'S', GeoItems.TIMBER);
+        WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.VAULT_FRAME.getItem(), 12), "SS", "S ", 'S', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.WINDOW.getItem(), 6), "GSG", "SSS", "GSG", 'S', GeoItems.TIMBER, 'G', GeoItems.GLASS);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoItems.FLOOR_WOOD, 6), "TTT", 'T', GeoItems.TIMBER);
         WOODWORKING.addShapedRecipe(new ItemStack(GeoBlocks.FLATROOF_POLE.getItem(), 12), "LLL", "TTT", 'T', GeoItems.POLE, 'L', GeoItems.LEAVES);
