@@ -35,9 +35,9 @@ public class EquipMaterial {
     /** Fur apparel material. */
     public static final ArmorMaterial FUR_APPAREL =         EnumHelper.addArmorMaterial("fur_apparel", Geomastery.MODID + ":fur", 4, new int[] {0, 0, 0, 0}, -1, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F);
     /** Leather apparel material. */
-    public static final ArmorMaterial LEATHER_APPAREL =     EnumHelper.addArmorMaterial("leather_apparel", Geomastery.MODID + ":leather", 7, new int[] {1, 2, 3, 1}, -1, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
+    public static final ArmorMaterial LEATHER_APPAREL =     EnumHelper.addArmorMaterial("leather_apparel", Geomastery.MODID + ":leather", 16, new int[] {1, 3, 4, 2}, -1, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
     /** Steel chainmail apparel material. */
-    public static final ArmorMaterial STEELMAIL_APPAREL =   EnumHelper.addArmorMaterial("steelmail_apparel", Geomastery.MODID + ":steelmail", 11, new int[] {1, 4, 5, 2}, -1, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0F);
+    public static final ArmorMaterial STEELMAIL_APPAREL =   EnumHelper.addArmorMaterial("steelmail_apparel", Geomastery.MODID + ":steelmail", 24, new int[] {2, 4, 6, 3}, -1, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0F);
     /** Steel plate apparel material. */
-    public static final ArmorMaterial STEELPLATE_APPAREL =  EnumHelper.addArmorMaterial("steelplate_apparel", Geomastery.MODID + ":steelplate", 15, new int[] {2, 5, 6, 2}, -1, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
+    public static final ArmorMaterial STEELPLATE_APPAREL =  EnumHelper.addArmorMaterial("steelplate_apparel", Geomastery.MODID + ":steelplate", 32, new int[] {3, 5, 8, 4}, -1, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
 }

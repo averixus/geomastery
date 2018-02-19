@@ -151,7 +151,7 @@ public abstract class BlockCarcass extends BlockBuildingAbstract<ItemCarcassDeca
             ItemStack meat = new ItemStack(GeoItems.CHICKEN_RAW, 2);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             return Lists.newArrayList(meat, new ItemStack(Items.BONE),
-                    new ItemStack(Items.FEATHER));
+                    new ItemStack(Items.FEATHER, 8));
         }
         
         @Override
@@ -177,8 +177,8 @@ public abstract class BlockCarcass extends BlockBuildingAbstract<ItemCarcassDeca
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             return Lists.newArrayList(meat,
                     new ItemStack(GeoItems.SKIN_SHEEP, 4),
-                    new ItemStack(Items.BONE, 3),
-                    new ItemStack(GeoItems.TALLOW),
+                    new ItemStack(Items.BONE, 2),
+                    new ItemStack(GeoItems.TALLOW, 3),
                     new ItemStack(GeoItems.WOOL, 3));
         }
         
@@ -203,9 +203,9 @@ public abstract class BlockCarcass extends BlockBuildingAbstract<ItemCarcassDeca
             
             ItemStack meat = new ItemStack(GeoItems.BEEF_RAW, 5);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
-            return Lists.newArrayList(meat, new ItemStack(GeoItems.SKIN_COW, 6),
-                    new ItemStack(Items.BONE, 5),
-                    new ItemStack(GeoItems.TALLOW));
+            return Lists.newArrayList(meat, new ItemStack(GeoItems.SKIN_COW, 4),
+                    new ItemStack(Items.BONE, 3),
+                    new ItemStack(GeoItems.TALLOW, 5));
         }
         
         @Override
@@ -230,8 +230,8 @@ public abstract class BlockCarcass extends BlockBuildingAbstract<ItemCarcassDeca
             ItemStack meat = new ItemStack(GeoItems.PORK_RAW, 4);
             meat.getCapability(GeoCaps.CAP_DECAY, null).setBirthTime(age);
             return Lists.newArrayList(meat, new ItemStack(GeoItems.SKIN_PIG, 5),
-                    new ItemStack(Items.BONE, 4),
-                    new ItemStack(GeoItems.TALLOW));
+                    new ItemStack(Items.BONE, 2),
+                    new ItemStack(GeoItems.TALLOW, 4));
         }
         
         @Override

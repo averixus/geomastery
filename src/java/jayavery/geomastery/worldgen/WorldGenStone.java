@@ -212,7 +212,7 @@ public abstract class WorldGenStone extends WorldGenAbstract {
         public Tin(World world, Random rand) {
 
             super(world, rand, GeoBlocks.ORE_TIN.getDefaultState(),
-                    30, 120, 40, 1);
+                    30, 120, 80, 1);
         }
 
         @Override
@@ -251,7 +251,7 @@ public abstract class WorldGenStone extends WorldGenAbstract {
         public Iron(World world, Random rand) {
 
             super(world, rand, Blocks.IRON_ORE.getDefaultState(),
-                    15, 50, 20, 1);
+                    15, 50, 60, 1);
         }
 
         @Override

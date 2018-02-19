@@ -79,7 +79,7 @@ public class GeoItems {
     public static final Item MELON =               make(new ItemEdibleDecayable("melon", 12, 12, 2, EFoodType.FRUITVEG, 2));
     public static final Item APPLE =               make(new ItemEdibleDecayable("apple", 4, 4, 5, EFoodType.FRUITVEG, 2));
     public static final Item POTATO_COOKED =       make(new ItemEdibleDecayable("potato_cooked", 8, 6, 5, EFoodType.CARBS, 2));
-    public static final Item EGG =                 make(new ItemEdibleDecayable("egg", 5, 5, 6, EFoodType.PROTEIN, 4));
+    public static final Item EGG =                 make(new ItemEdibleDecayable("egg", 4, 5, 7, EFoodType.PROTEIN, 4));
     public static final Item BEEF_RAW =            make(new ItemEdibleDecayable("beef_raw", 3, 6, 5, EFoodType.PROTEIN, 1));
     public static final Item PORK_RAW =            make(new ItemEdibleDecayable("pork_raw", 2, 5, 6, EFoodType.PROTEIN, 1));
     public static final Item CHICKEN_RAW =         make(new ItemEdibleDecayable("chicken_raw", 1, 3, 10, EFoodType.PROTEIN, 1));

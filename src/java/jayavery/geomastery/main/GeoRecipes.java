@@ -210,8 +210,8 @@ public class GeoRecipes {
     /** Adds all recipes to textiles table. */
     private static void setupTextiles() {
 
-        TEXTILES.addShapedRecipe(new ItemStack(GeoBlocks.BED_COTTON.getItem()), "C", 'C', GeoItems.COTTON);
-        TEXTILES.addShapedRecipe(new ItemStack(GeoBlocks.BED_WOOL.getItem()), "W", 'W', GeoItems.WOOL);
+        TEXTILES.addShapedRecipe(new ItemStack(GeoBlocks.BED_COTTON.getItem()), "CCC", "CCC", 'C', GeoItems.COTTON);
+        TEXTILES.addShapedRecipe(new ItemStack(GeoBlocks.BED_WOOL.getItem()), "WWW", "WWW", 'W', GeoItems.WOOL);
         TEXTILES.addShapedRecipe(new ItemStack(GeoItems.COTTON_CHEST), "C C", "CCC", "CCC", 'C', GeoItems.COTTON);
         TEXTILES.addShapedRecipe(new ItemStack(GeoItems.COTTON_LEGS), "CCC", "C C", "C C", 'C', GeoItems.COTTON);
         TEXTILES.addShapedRecipe(new ItemStack(GeoItems.COTTON_HEAD), "CCC", "C C", 'C', GeoItems.COTTON);
@@ -367,8 +367,8 @@ public class GeoRecipes {
             recipes.addCookingRecipe(new ItemStack(GeoItems.POLE), new ItemStack(Items.COAL, 1, 1),60);
             recipes.addCookingRecipe(new ItemStack(GeoItems.LOG), new ItemStack(Items.COAL, 3, 1), 180);
             recipes.addCookingRecipe(new ItemStack(GeoItems.THICKLOG), new ItemStack(Items.COAL, 6, 1), 360);
-            recipes.addFuel(new ItemStack(GeoItems.PEAT_DRY), 2400);
-            recipes.addFuel(new ItemStack(Items.COAL, 1, 1), 3000);
+            recipes.addFuel(new ItemStack(GeoItems.PEAT_DRY), 3000);
+            recipes.addFuel(new ItemStack(Items.COAL, 1, 1), 4000);
         }
     }
 
@@ -381,8 +381,8 @@ public class GeoRecipes {
             recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_SILVER), new ItemStack(GeoItems.INGOT_SILVER), 300);
             recipes.addCookingRecipe(new ItemStack(GeoItems.ORE_GOLD), new ItemStack(Items.GOLD_INGOT), 200);
             recipes.addCookingRecipe(new ItemStack(GeoItems.LOOSE_SAND), new ItemStack(GeoItems.GLASS), 200);
-            recipes.addCookingRecipe(new ItemStack(GeoItems.LOOSE_CLAY), new ItemStack(Items.BRICK, 4), 200);
-            recipes.addFuel(new ItemStack(Items.COAL, 1, 0), 4000);
+            recipes.addCookingRecipe(new ItemStack(GeoItems.CLAY), new ItemStack(Items.BRICK, 4), 200);
+            recipes.addFuel(new ItemStack(Items.COAL, 1, 0), 5000);
         }
     }
 

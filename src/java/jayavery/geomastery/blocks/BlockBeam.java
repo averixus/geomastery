@@ -62,10 +62,10 @@ public class BlockBeam extends BlockBuildingAbstract<ItemPlacing.Building> {
     /** Maximum length of this beam structure. */
     private final int maxLength;
             
-    public BlockBeam(String name, int minLength, int maxLength) {
+    public BlockBeam(String name, int minLength, int maxLength, int stackSize) {
         
         super(BlockMaterial.WOOD_FURNITURE, name,
-                CreativeTabs.BUILDING_BLOCKS, 2F, 1);
+                CreativeTabs.BUILDING_BLOCKS, 2F, stackSize);
         this.minLength = minLength;
         this.maxLength = maxLength;
     }

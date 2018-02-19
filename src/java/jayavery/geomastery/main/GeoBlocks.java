@@ -246,8 +246,8 @@ public class GeoBlocks {
     public static final BlockLadder LADDER = makeItemBuilding(new BlockLadder());
     
     // Beams
-    public static final BlockBeam BEAM_THICK =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8), true, DELAYED_BAKE);
-    public static final BlockBeam BEAM_THIN = makeItemBuilding(new BlockBeam("beam_thin", 2, 4), true, DELAYED_BAKE);
+    public static final BlockBeam BEAM_THICK =  makeItemBuilding(new BlockBeam("beam_thick", 4, 8, 1), false, DELAYED_BAKE);
+    public static final BlockBeam BEAM_THIN = makeItemBuilding(new BlockBeam("beam_thin", 2, 4, 3), false, DELAYED_BAKE);
         
     // Slabs
     public static final BlockSlab SLAB_STONE = makeItemBuilding(new BlockSlab("slab_stone"));
