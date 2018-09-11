@@ -1,48 +1,47 @@
 {
+
 "textures": {
-    "stone1": "geomastery:blocks/complex/stone1",
-    "solidsoot": "geomastery:blocks/complex/solidsoot",
-    "fire": "geomastery:blocks/complex/fire",
-    "bellows": "geomastery:blocks/complex/bellows",
     "notexture": "geomastery:blocks/notexture",
     "soot": "geomastery:blocks/complex/soot",
-    "particle": "geomastery:blocks/complex/stone1"
+    "bellows": "geomastery:blocks/complex/bellows",
+    "roughstone": "geomastery:blocks/complex/roughstone",
+    "fire": "geomastery:blocks/complex/fire"
 },
 "elements": [ 
 {
     "from": [ 10, 0, 0 ],
     "to": [ 12, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 6, 16, 4, 0 ], "texture": "#stone1" },
-        "up":    { "uv": [ 10, 0, 12, 16 ], "texture": "#solidsoot" },
-        "north": { "uv": [ 4, 5, 6, 16 ], "texture": "#stone1" },
-        "south": { "uv": [ 10, 5, 12, 16 ], "texture": "#stone1" },
-        "west":  { "uv": [ 0, 5, 16, 16 ], "texture": "#stone1" },
-        "east":  { "uv": [ 0, 5, 16, 16 ], "texture": "#solidsoot" }
+        "down":  { "uv": [ 6, 16, 4, 0 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 10, 0, 12, 16 ], "texture": "#roughstone" },
+        "north": { "uv": [ 4, 5, 6, 16 ], "texture": "#roughstone" },
+        "south": { "uv": [ 10, 5, 12, 16 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 0, 5, 16, 16 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 0, 5, 16, 16 ], "texture": "#roughstone" }
     }
 },
 {
     "from": [ 12, 0, 0 ],
     "to": [ 16, 11, 2 ],
     "faces": {
-        "down":  { "uv": [ 4, 2, 0, 0 ], "texture": "#stone1" },
-        "up":    { "uv": [ 12, 0, 16, 2 ], "texture": "#solidsoot" },
-        "north": { "uv": [ 0, 5, 4, 16 ], "texture": "#stone1" },
-        "south": { "uv": [ 12, 5, 16, 16 ], "texture": "#solidsoot" },
-        "west":  { "uv": [ 0, 5, 2, 16 ], "texture": "#stone1" },
-        "east":  { "uv": [ 14, 5, 16, 16 ], "texture": "#stone1" }
+        "down":  { "uv": [ 4, 2, 0, 0 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 12, 0, 16, 2 ], "texture": "#roughstone" },
+        "north": { "uv": [ 0, 5, 4, 16 ], "texture": "#roughstone" },
+        "south": { "uv": [ 12, 5, 16, 16 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 0, 5, 2, 16 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 14, 5, 16, 16 ], "texture": "#roughstone" }
     }
 },
 {
     "from": [ 12, 0, 14 ],
     "to": [ 16, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 4, 16, 0, 14 ], "texture": "#stone1" },
-        "up":    { "uv": [ 12, 14, 16, 16 ], "texture": "#solidsoot" },
-        "north": { "uv": [ 0, 5, 4, 16 ], "texture": "#solidsoot" },
-        "south": { "uv": [ 12, 5, 16, 16 ], "texture": "#stone1" },
-        "west":  { "uv": [ 14, 5, 16, 16 ], "texture": "#stone1" },
-        "east":  { "uv": [ 0, 5, 2, 16 ], "texture": "#stone1" }
+        "down":  { "uv": [ 4, 16, 0, 14 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 12, 14, 16, 16 ], "texture": "#roughstone" },
+        "north": { "uv": [ 0, 5, 4, 16 ], "texture": "#roughstone" },
+        "south": { "uv": [ 12, 5, 16, 16 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 14, 5, 16, 16 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 0, 5, 2, 16 ], "texture": "#roughstone" }
     }
 },
 {
@@ -73,12 +72,12 @@
     "from": [ 0, 0, 4 ],
     "to": [ 10, 4, 12 ],
     "faces": {
-        "down":  { "uv": [ 16, 12, 6, 4 ], "texture": "#stone1" },
-        "up":    { "uv": [ 0, 4, 10, 12 ], "texture": "#solidsoot" },
-        "north": { "uv": [ 6, 12, 16, 16 ], "texture": "#stone1" },
-        "south": { "uv": [ 0, 12, 10, 16 ], "texture": "#stone1" },
-        "west":  { "uv": [ 4, 12, 12, 16 ], "texture": "#stone1" },
-        "east":  { "uv": [ 4, 12, 12, 16 ], "texture": "#solidsoot" }
+        "down":  { "uv": [ 16, 12, 6, 4 ], "texture": "#roughstone" },
+        "up":    { "uv": [ 0, 4, 10, 12 ], "texture": "#roughstone" },
+        "north": { "uv": [ 6, 12, 16, 16 ], "texture": "#roughstone" },
+        "south": { "uv": [ 0, 12, 10, 16 ], "texture": "#roughstone" },
+        "west":  { "uv": [ 4, 12, 12, 16 ], "texture": "#roughstone" },
+        "east":  { "uv": [ 4, 12, 12, 16 ], "texture": "#roughstone" }
     }
 },
 {
@@ -132,8 +131,8 @@
     }
 },
 {
-    "from": [ 0, 0, 12 ],
-    "to": [ 10, 0.001, 16 ],
+    "from": [ 0, -0.0525, 12 ],
+    "to": [ 10, 0.01, 16 ],
     "faces": {
         "down":  { "uv": [ 16, 16, 6, 12 ], "texture": "#notexture" },
         "up":    { "uv": [ 6, 0, 16, 4 ], "texture": "#soot" }

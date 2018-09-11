@@ -1,0 +1,125 @@
+{
+"textures": {
+    "particle": "geomastery:blocks/Trees/endgrainhawthorn",
+    "barkbolesize12hawthorn": "geomastery:blocks/Trees/barkbolesize12hawthorn"
+},
+"elements": [ 
+{
+    "from": [ 9.125, -1.1875, 7 ],
+    "to": [ 11.125, 14.8125, 9 ],
+    "rotation": { "origin": [ 9.125, 14.8125, 7 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 9, 9, 7, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 7, 7, 9, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 7, 0, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 7, 0, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 0, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 0, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 10.625, 14.5, 7 ],
+    "to": [ 12.625, 18.5, 9 ],
+    "rotation": { "origin": [ 10.625, 18.5, 7 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 6, 9, 4, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 10, 7, 12, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 4, 0, 6, 4 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 10, 0, 12, 4 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 0, 9, 4 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 0, 9, 4 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 6.75, -1.125, 7 ],
+    "to": [ 7.75, 3.875, 9 ],
+    "rotation": { "origin": [ 6.75, 3.875, 7 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 11, 9, 10, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 5, 7, 6, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 10, 11, 11, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 5, 11, 6, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 11, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 11, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 7.3125, -1.4375, 7 ],
+    "to": [ 8.3125, 2.5625, 9 ],
+    "rotation": { "origin": [ 7.3125, 2.5625, 7 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 10, 9, 9, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 6, 7, 7, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 9, 12, 10, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 6, 12, 7, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 12, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 12, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 3.625, -0.9375, 7 ],
+    "to": [ 4.625, 4.0625, 9 ],
+    "rotation": { "origin": [ 3.625, 4.0625, 7 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 14, 9, 13, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 2, 7, 3, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 13, 11, 14, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 2, 11, 3, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 11, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 11, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 7.8125, -1.75, 7.5 ],
+    "to": [ 11.8125, 1.25, 8.5 ],
+    "rotation": { "origin": [ 7.8125, 1.25, 7.5 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 9, 9, 5, 8 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 7, 8, 11, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 5, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 7, 13, 11, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 8, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 13, 8, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 4.125, -0.25, 6 ],
+    "to": [ 7.125, 2.75, 7 ],
+    "rotation": { "origin": [ 4.125, 2.75, 6 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 9, 9, 5, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 7, 7, 11, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 5, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 7, 13, 11, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 4.125, -0.25, 9 ],
+    "to": [ 7.125, 2.75, 10 ],
+    "rotation": { "origin": [ 4.125, 2.75, 9 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 9, 9, 5, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 7, 7, 11, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 5, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 7, 13, 11, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 13, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+},
+{
+    "from": [ 1.5625, -3.3125, 7 ],
+    "to": [ 2.5625, 1.6875, 9 ],
+    "rotation": { "origin": [ 1.5625, 1.6875, 7 ], "axis": "z", "angle": -22.5 },
+    "faces": {
+        "down":  { "uv": [ 15, 9, 14, 7 ], "texture": "#barkbolesize12hawthorn" },
+        "up":    { "uv": [ 1, 7, 2, 9 ], "texture": "#barkbolesize12hawthorn" },
+        "north": { "uv": [ 14, 11, 15, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "south": { "uv": [ 1, 11, 2, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "west":  { "uv": [ 7, 11, 9, 16 ], "texture": "#barkbolesize12hawthorn" },
+        "east":  { "uv": [ 7, 11, 9, 16 ], "texture": "#barkbolesize12hawthorn" }
+    }
+}
+]
+}

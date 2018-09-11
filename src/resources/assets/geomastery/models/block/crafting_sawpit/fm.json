@@ -1,45 +1,44 @@
 {
+
 "textures": {
-    "spruce1": "geomastery:blocks/complex/spruce1",
-    "logwall1": "geomastery:blocks/complex/logwall1",
-    "spruce2": "geomastery:blocks/complex/spruce2",
-    "particle": "geomastery:blocks/complex/spruce1"
+    "crosssize2oak": "geomastery:blocks/trees/crosssize2oak",
+    "barksize2oak": "geomastery:blocks/trees/barksize2oak"
 },
 "elements": [ 
 {
     "from": [ 6, 3, 0 ],
     "to": [ 10, 5, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
-        "north": { "uv": [ 6, 14, 10, 16 ], "texture": "#logwall1" },
-        "south": { "uv": [ 6, 14, 10, 16 ], "texture": "#logwall1" },
-        "west":  { "uv": [ 0, 11, 16, 13 ], "texture": "#spruce2" },
-        "east":  { "uv": [ 0, 11, 16, 13 ], "texture": "#spruce2" }
+        "down":  { "uv": [ 13, 16, 9, 0 ], "texture": "#barksize2oak" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize2oak" },
+        "north": { "uv": [ 6, 10, 10, 12 ], "texture": "#crosssize2oak" },
+        "south": { "uv": [ 6, 10, 10, 12 ], "texture": "#crosssize2oak" },
+        "west":  { "uv": [ 0, 0, 2, 16 ], "rotation": 90, "texture": "#barksize2oak" },
+        "east":  { "uv": [ 5, 0, 7, 16 ], "rotation": 90, "texture": "#barksize2oak" }
     }
 },
 {
     "from": [ 6, 9, 0 ],
     "to": [ 10, 11, 16 ],
     "faces": {
-        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#spruce1" },
-        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#spruce1" },
-        "north": { "uv": [ 6, 0, 10, 2 ], "texture": "#logwall1" },
-        "south": { "uv": [ 6, 0, 10, 2 ], "texture": "#logwall1" },
-        "west":  { "uv": [ 0, 5, 16, 7 ], "texture": "#spruce2" },
-        "east":  { "uv": [ 0, 5, 16, 7 ], "texture": "#spruce2" }
+        "down":  { "uv": [ 10, 16, 6, 0 ], "texture": "#barksize2oak" },
+        "up":    { "uv": [ 6, 0, 10, 16 ], "texture": "#barksize2oak" },
+        "north": { "uv": [ 6, 4, 10, 6 ], "texture": "#crosssize2oak" },
+        "south": { "uv": [ 6, 4, 10, 6 ], "texture": "#crosssize2oak" },
+        "west":  { "uv": [ 0, 0, 2, 16 ], "rotation": 90, "texture": "#barksize2oak" },
+        "east":  { "uv": [ 5, 0, 7, 16 ], "rotation": 90, "texture": "#barksize2oak" }
     }
 },
 {
     "from": [ 4, 5, 0 ],
     "to": [ 12, 9, 16 ],
     "faces": {
-        "down":  { "uv": [ 12, 16, 4, 0 ], "texture": "#spruce1" },
-        "up":    { "uv": [ 4, 0, 12, 16 ], "texture": "#spruce1" },
-        "north": { "uv": [ 4, 10, 12, 14 ], "texture": "#logwall1" },
-        "south": { "uv": [ 4, 10, 12, 14 ], "texture": "#logwall1" },
-        "west":  { "uv": [ 0, 7, 16, 11 ], "texture": "#spruce2" },
-        "east":  { "uv": [ 0, 7, 16, 11 ], "texture": "#spruce2" }
+        "down":  { "uv": [ 8, 16, 0, 0 ], "texture": "#barksize2oak" },
+        "up":    { "uv": [ 6, 0, 14, 16 ], "texture": "#barksize2oak" },
+        "north": { "uv": [ 4, 6, 12, 10 ], "texture": "#crosssize2oak" },
+        "south": { "uv": [ 4, 6, 12, 10 ], "texture": "#crosssize2oak" },
+        "west":  { "uv": [ 0, 0, 4, 16 ], "rotation": 90, "texture": "#barksize2oak" },
+        "east":  { "uv": [ 5, 0, 9, 16 ], "rotation": 90, "texture": "#barksize2oak" }
     }
 }
 ]

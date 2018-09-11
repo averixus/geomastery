@@ -1,19 +1,20 @@
 {
+
 "textures": {
-    "panels1": "geomastery:blocks/complex/panels1",
-    "panels2": "geomastery:blocks/complex/panels2",
-    "particle": "geomastery:blocks/complex/panels1"
+    "endgrainoak": "geomastery:blocks/trees/endgrainoak",
+    "sidegrainoak": "geomastery:blocks/complex/sidegrainoak"
 },
 "elements": [ 
 {
     "from": [ 6, 14, 7.5 ],
     "to": [ 16, 16, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 10, 9, 0, 8 ], "texture": "#panels2" },
-        "up":    { "uv": [ 6, 8, 16, 9 ], "texture": "#panels2" },
-        "north": { "uv": [ 0, 0, 10, 2 ], "texture": "#panels2" },
-        "south": { "uv": [ 6, 0, 16, 2 ], "texture": "#panels2" },
-        "west":  { "uv": [ 6, 4, 7, 6 ], "texture": "#panels1" }
+        "down":  { "uv": [ 12, 2.5, 11, 12.5 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "up":    { "uv": [ 9, 3, 10, 13 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "north": { "uv": [ 0, 0, 2, 10 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "south": { "uv": [ 11, 0, 13, 10 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "west":  { "uv": [ 6, 4, 7, 6 ], "texture": "#endgrainoak" },
+        "east":  { "uv": [ 9, 3, 10, 5 ], "texture": "#endgrainoak" }
     }
 },
 {
@@ -21,36 +22,37 @@
     "to": [ 20, 16, 9 ],
     "rotation": { "origin": [ 8, 16, 7 ], "axis": "z", "angle": -45 },
     "faces": {
-        "down":  { "uv": [ 16, 10, 4, 8 ], "texture": "#panels2" },
-        "up":    { "uv": [ 0, 8, 12, 10 ], "texture": "#panels2" },
-        "north": { "uv": [ 4, 0, 16, 2 ], "texture": "#panels2" },
-        "south": { "uv": [ 0, 0, 12, 2 ], "texture": "#panels2" },
-        "west":  { "uv": [ 5, 3, 7, 5 ], "texture": "#panels1" },
-        "east":  { "uv": [ 6, 1, 8, 3 ], "texture": "#panels1" }
+        "down":  { "uv": [ 16, 0, 14, 12 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "up":    { "uv": [ 1, 0, 3, 12 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "north": { "uv": [ 8, 0, 10, 12 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "south": { "uv": [ 0, 0, 2, 12 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "west":  { "uv": [ 7, 3, 8, 5 ], "texture": "#endgrainoak" },
+        "east":  { "uv": [ 7, 2, 8, 4 ], "texture": "#endgrainoak" }
     }
 },
 {
     "from": [ 16.5, 5.5, 7 ],
-    "to": [ 27, 7.5, 9 ],
+    "to": [ 28, 7.5, 9 ],
     "rotation": { "origin": [ 16.5, 7.5, 7 ], "axis": "z", "angle": -45 },
     "faces": {
-        "down":  { "uv": [ 11, 10, 0.5, 8 ], "texture": "#panels2" },
-        "up":    { "uv": [ 5, 9, 15.5, 11 ], "texture": "#panels2" },
-        "north": { "uv": [ 1, 5, 11.5, 7 ], "texture": "#panels2" },
-        "south": { "uv": [ 5, 5, 15.5, 7 ], "texture": "#panels2" },
-        "west":  { "uv": [ 5, 4, 7, 6 ], "texture": "#panels1" },
-        "east":  { "uv": [ 6, 6, 8, 8 ], "texture": "#panels1" }
+        "down":  { "uv": [ 16, 3, 14, 14 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "up":    { "uv": [ 1, 2, 3, 13 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "north": { "uv": [ 8, 0, 10, 11 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "south": { "uv": [ 0, 0, 2, 11 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "west":  { "uv": [ 7, 3, 8, 5 ], "texture": "#endgrainoak" },
+        "east":  { "uv": [ 7, 2, 8, 4 ], "texture": "#endgrainoak" }
     }
 },
 {
     "from": [ 16, 14, 7.5 ],
-    "to": [ 24, 16, 8.5 ],
+    "to": [ 23, 16, 8.5 ],
     "faces": {
-        "down":  { "uv": [ 16, 9, 8, 8 ], "texture": "#panels2" },
-        "up":    { "uv": [ 0, 8, 8, 9 ], "texture": "#panels2" },
-        "north": { "uv": [ 8, 1, 16, 3 ], "texture": "#panels2" },
-        "south": { "uv": [ 0, 1, 8, 3 ], "texture": "#panels2" },
-        "east":  { "uv": [ 7, 2, 8, 4 ], "texture": "#panels1" }
+        "down":  { "uv": [ 16, 0, 15, 7 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "up":    { "uv": [ 1, 0, 2, 7 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "north": { "uv": [ 8, 1, 10, 8 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "south": { "uv": [ 0, 1, 2, 8 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "west":  { "uv": [ 7, 3, 8, 5 ], "texture": "#endgrainoak" },
+        "east":  { "uv": [ 7, 2, 8, 4 ], "texture": "#endgrainoak" }
     }
 }
 ]

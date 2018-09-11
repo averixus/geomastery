@@ -1,19 +1,20 @@
 {
+
 "textures": {
-    "softwood1": "geomastery:blocks/complex/softwood1",
-    "particle": "geomastery:blocks/complex/softwood1"
+    "endgrainoak": "geomastery:blocks/trees/endgrainoak",
+    "sidegrainoak": "geomastery:blocks/complex/sidegrainoak"
 },
 "elements": [ 
 {
     "from": [ 0, 12, 7 ],
     "to": [ 16, 15.9, 9 ],
     "faces": {
-        "down":  { "uv": [ 16, 9, 0, 7 ], "texture": "#softwood1" },
-        "up":    { "uv": [ 0, 7, 16, 9 ], "texture": "#softwood1" },
-        "north": { "uv": [ 0, 0, 16, 4 ], "texture": "#softwood1" },
-        "south": { "uv": [ 0, 0, 16, 4 ], "texture": "#softwood1" },
-        "west":  { "uv": [ 7, 0, 9, 4 ], "texture": "#softwood1" },
-        "east":  { "uv": [ 7, 0, 9, 4 ], "texture": "#softwood1" }
+        "down":  { "uv": [ 16, 16, 14, 0 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "up":    { "uv": [ 0, 0, 2, 16 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "north": { "uv": [ 0, 0, 4, 16 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "south": { "uv": [ 4, 0, 8, 16 ], "rotation": 90, "texture": "#sidegrainoak" },
+        "west":  { "uv": [ 5, 4, 7, 8 ], "texture": "#endgrainoak" },
+        "east":  { "uv": [ 7, 4, 9, 8 ], "texture": "#endgrainoak" }
     }
 }
 ]
