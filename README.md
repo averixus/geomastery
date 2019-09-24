@@ -1,5 +1,10 @@
 # Geomastery
 
+#### **Announcement**
+As of September 2019, Geomastery is no longer being updated or maintained. Thank you to everyone who played and gave us feedback! It was great fun to work on.
+
+The code will remain available on GitHub, and is under an AGPL license. That means anyone is free to update, modify, or extend it, as long as you credit my original work. (I would love to hear about it if anyone does this!).
+
 #### **Overview**
 
 Geomastery is a mod for Minecraft survival mode which makes the early game harder and slower, while improving on the simulation of real-world ancient technology development.
